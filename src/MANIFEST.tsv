@@ -169,6 +169,7 @@ address	name	size	file
 0X108D48	RefCallRumble	184	new_100008/RefCallRumble.cpp
 0X108E00	RefCallExplode	200	new_100008/RefCallExplode.cpp
 0X108EC8	RefCallSetEyes	184	new_100008/RefCallSetEyes.cpp
+0X108F80	RefCallSoundEffect	260	new_100008/RefCallSoundEffect.cpp
 0X109088	RefCallStopSoundEffect	132	new_100008/RefCallStopSoundEffect.cpp
 0X109110	RefCallConfrontCamera	220	new_100008/RefCallConfrontCamera.cpp
 0X1091F0	RefCallEndConfrontCamera	220	new_100008/RefCallEndConfrontCamera.cpp
@@ -212,6 +213,7 @@ address	name	size	file
 0X10AF08	RefSetJtLookTargetHeld	168	new_100008/RefSetJtLookTargetHeld.cpp
 0X10B028	bevy_game_methods_cls_10b028	144	new_100008/bevy_game_methods_cls_10b028.cpp
 0X10B0B8	RefGiveJtLoot	132	new_100008/RefGiveJtLoot.cpp
+0X10B230	func_0010B230	272	new_100008/fun_0010b230.cpp
 0X10B340	RefSetJtPipeHandFoot	168	new_100008/RefSetJtPipeHandFoot.cpp
 0X10B3E8	RefEquipJtGadget	168	new_100008/RefEquipJtGadget.cpp
 0X10B510	func_0010B510	132	new_100008/fun_0010b510.cpp
@@ -1424,6 +1426,7 @@ address	name	size	file
 0X14E270	BuildCmFgfn__FP2CMfP4FGFN	176	cm/BuildCmFgfn__FP2CMfP4FGFN.cpp
 0X14E698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	52	cm/CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR.cpp
 0X14F030	func_0014F030	12	unsorted/fun_0014f030.cpp
+0X14F308	ConvertCmWorldToScreen	180	cm/ConvertCmWorldToScreen.cpp
 0X14F5F8	func_0014F5F8	24	unsorted/fun_0014f5f8.cpp
 0X14F610	SetCmNearClip	28	cm/SetCmNearClip.c
 0X14F630	bevy_camera_cm_14f630	60	cm/bevy_camera_cm_14f630.cpp
@@ -3011,6 +3014,7 @@ address	name	size	file
 0X1FCC90	StreamAmb_AddRef	16	new_1fbf20/StreamAmb_AddRef.c
 0X1FCCF0	PvAllocStreamAmb	32	new_1fbf20/PvAllocStreamAmb.c
 0X1FCD10	FreeStreamAmb	36	new_1fbf20/FreeStreamAmb.c
+0X1FCEA0	InitSndSystem	204	new_1fbf20/InitSndSystem.cpp
 0X1FCFA0	func_001FCFA0	48	new_1fbf20/fun_001fcfa0.cpp
 0X1FCFD0	FFindLevel	40	game/FFindLevel.cpp
 0X1FCFF8	func_001FCFF8	48	new_1fcff8/fun_001fcff8.cpp

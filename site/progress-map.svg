@@ -760,8 +760,8 @@
 <rect x="30.1" y="582.7" width="17.2" height="17.8" fill="#2f7af4"><title>RefCallAddBeam 0X1056A0 320 bytes (c)</title></rect>
 <rect x="47.7" y="582.7" width="14.6" height="17.8" fill="#2f7af4"><title>func_00102E28 0X102E28 272 bytes (c)</title></rect>
 <rect x="62.6" y="582.7" width="14.6" height="17.8" fill="#2f7af4"><title>func_00102F38 0X102F38 272 bytes (c)</title></rect>
-<rect x="77.6" y="582.7" width="14.6" height="17.8" fill="#4a45a8"><title>func_0010B230 0X10B230 272 bytes (draft)</title></rect>
-<rect x="92.6" y="582.7" width="14.1" height="17.8" fill="#4a45a8"><title>RefCallSoundEffect 0X108F80 264 bytes (draft)</title></rect>
+<rect x="77.6" y="582.7" width="14.6" height="17.8" fill="#2f7af4"><title>func_0010B230 0X10B230 272 bytes (c)</title></rect>
+<rect x="92.6" y="582.7" width="14.1" height="17.8" fill="#2f7af4"><title>RefCallSoundEffect 0X108F80 264 bytes (c)</title></rect>
 <rect x="107.1" y="582.7" width="13.2" height="17.8" fill="#2f7af4"><title>func_00102C38 0X102C38 248 bytes (c)</title></rect>
 <rect x="120.8" y="582.7" width="13.2" height="17.8" fill="#2f7af4"><title>func_00102D30 0X102D30 248 bytes (c)</title></rect>
 <rect x="134.4" y="582.7" width="12.8" height="17.8" fill="#2f7af4"><title>RefCallExplodeOvr 0X105BE0 240 bytes (c)</title></rect>
@@ -4667,7 +4667,7 @@
 <rect x="937.9" y="529.1" width="14.5" height="14.7" fill="#2f7af4"><title>bevy_camera_cm_14f768 0X14F768 232 bytes (c)</title></rect>
 <rect x="952.8" y="529.1" width="12.9" height="14.7" fill="#4a45a8"><title>SvSquishCmEyeConstraint 0X14F040 208 bytes (draft)</title></rect>
 <rect x="915.9" y="544.1" width="12.5" height="13.9" fill="#4a45a8"><title>func_0014F4E0 0X14F4E0 192 bytes (draft)</title></rect>
-<rect x="915.9" y="558.4" width="12.5" height="13.3" fill="#4a45a8"><title>ConvertCmWorldToScreen 0X14F308 184 bytes (draft)</title></rect>
+<rect x="915.9" y="558.4" width="12.5" height="13.3" fill="#2f7af4"><title>ConvertCmWorldToScreen 0X14F308 184 bytes (c)</title></rect>
 <rect x="915.9" y="572.1" width="12.5" height="12.7" fill="#2f7af4"><title>BuildCmFgfn__FP2CMfP4FGFN 0X14E270 176 bytes (c)</title></rect>
 <rect x="928.8" y="544.1" width="12.2" height="11.8" fill="#4a45a8"><title>GetCmCpdefi__FP2CMP2SOfP6CPDEFI 0X14E968 160 bytes (draft)</title></rect>
 <rect x="941.5" y="544.1" width="12.2" height="11.8" fill="#4a45a8"><title>ConvertCmScreenToWorld 0X14F268 160 bytes (draft)</title></rect>
@@ -5184,7 +5184,7 @@
 <rect x="1069.7" y="335.5" width="15.7" height="17.7" fill="#2f7af4"><title>func_001FC878 0X1FC878 304 bytes (c)</title></rect>
 <rect x="1085.8" y="335.5" width="12.3" height="17.7" fill="#4a45a8"><title>AddAmbSlotSource 0X1FC408 240 bytes (draft)</title></rect>
 <rect x="1053.3" y="353.6" width="16.7" height="12.1" fill="#4a45a8"><title>InitStreamAmb 0X1FC190 224 bytes (draft)</title></rect>
-<rect x="1070.4" y="353.6" width="15.5" height="12.1" fill="#4a45a8"><title>InitSndSystem 0X1FCEA0 208 bytes (draft)</title></rect>
+<rect x="1070.4" y="353.6" width="15.5" height="12.1" fill="#2f7af4"><title>InitSndSystem 0X1FCEA0 208 bytes (c)</title></rect>
 <rect x="1086.3" y="353.6" width="11.8" height="12.1" fill="#4a45a8"><title>SetAmbSlotVolume 0X1FC2E0 160 bytes (draft)</title></rect>
 <rect x="1053.3" y="366.1" width="11.6" height="11.1" fill="#2f7af4"><title>ApplyAmbParams 0X1FBF20 144 bytes (c)</title></rect>
 <rect x="1053.3" y="377.6" width="11.6" height="10.4" fill="#4a45a8"><title>SetAmbSlotPan 0X1FC380 136 bytes (draft)</title></rect>
