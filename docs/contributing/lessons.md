@@ -15,6 +15,14 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
 - **Compile through the same path the build uses.** `ee-gcc -S`, then the `.extern` lines hoisted, then `ps2eeas`, then `objcopy -L`.
   A source that matches in a hand-run compile can still differ in the image.
 
+- **Flip a callee's declared return type before rewriting a near miss's body.** A discarded result still steers register allocation and
+  scheduling around the call. `mutate.py` now tries `void` to `int` on `extern "C"` callee declarations (and back, when every call is a
+  statement of its own): on 119 near misses of score 3 or less, with the same seed and 50 compiles each, the earlier rewrites found 0
+  matches and the extended set found 4, all four by the return-type flip (one also with an explicit tail `return;`).
+- **A save-pattern profile separates compiler builds statistically**, not sharply: `scripts/build/prologue_profile.py` shows the SDK range
+  saves registers with `sd` only, game code mixes `sd` and `sq`, but 17 of 366 SDK functions use `sq` and 10 of 52 functions after the
+  SDK end are `sd`-only. Use it to spot ranges worth a second look, not to draw unit boundaries.
+
 ## 2026-10-28: Sly 2 code is not Sly 1 code
 
 - Different compiler setup (`sd`/`ld` register saves), real C++ (8-byte vtable slots, the vtable pointer at `+0xC`), regrouped classes
@@ -64,13 +72,11 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
 
 ## Reported by other PS2 decompilations, not tested here
 
-Each of these comes from another project's notes (Bokura no Kazoku, Ratchet & Clank 1) built with related compilers. Verify before relying on one.
+Each of these comes from another project's notes (Bokura no Kazoku, Ratchet & Clank 1) built with related compilers. Verify before relying on one. (The callee return-type flip from the same notes is tested, see above.)
 
 - **VIF packet writers are inline functions, not macros**: `inline u32 *PUT(u32 v) { u32 *p = PKT; PKT = p + 1; *p = v; return p; }`
   gives "load pointer, bump, store pointer, store value" with the pointer re-read every time. `*PKT++ = v` reorders. It needs
   `-fno-strict-aliasing`.
-- **A discarded callee result still steers register allocation**: for a near miss that differs only in a temporary around a call, change
-  the callee's return type (`void` to `s32`) before rewriting the body. A `lui $3` right after a call suggests the callee returns a value.
 - **A loop that retail does not strength-reduce** can be written `goto test; body: ...; test: e = &T[j++]; if (...) goto body;`.
 - **A dead store kept in retail is a load-order clue**: write the load before the stores.
 - **Clamps**: `v = v < lo ? lo : (v > hi ? hi : v);` gives the branchy shape; `if`/`else if` chains and inline helpers if-convert to `movz`.
