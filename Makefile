@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config src progress check test unit lint lint-shell compile-scripts links
+.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -17,7 +17,9 @@ elf: ## Split the executable, rebuild it from asm and check it byte for byte (th
 	.venv/bin/python scripts/build/pack_elf.py
 	.venv/bin/python scripts/verify_image.py build/image/image.bin
 
-objdiff: ## After `make elf`: objdiff.json, the objects it compares and site/data/objdiff-report.json
+objdiff: ## After `make elf`: objdiff.json, the objects it compares (matched functions and the non-matching sources) and site/data/objdiff-report.json
+	.venv/bin/python configure.py
+	.venv/bin/ninja -k 0 nonmatching
 	.venv/bin/python scripts/build/make_objdiff.py
 
 config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module for code, rodata and data
@@ -25,6 +27,9 @@ config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module
 	.venv/bin/python configure.py --split
 	python3 -I scripts/build/gen_splat_config.py --pieces
 	.venv/bin/python configure.py --split
+
+nonmatching: ## Publish the best compiling source of every unmatched function into nonmatching/ (slow: scores each candidate)
+	python3 -I scripts/matching/export_nonmatching.py
 
 src: ## Publish the matched functions from data/matching/src into src/
 	python3 -I scripts/matching/export_src.py

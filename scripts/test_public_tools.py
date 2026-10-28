@@ -6,13 +6,14 @@ import sys
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path[:0] = [HERE, os.path.join(HERE, 'build')]
+sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching')]
 
 import asm_units  # noqa: E402
 import check_cleanup  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
 import gen_context  # noqa: E402
+import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -125,6 +126,22 @@ class CategoryConfigTests(unittest.TestCase):
 
     def test_overrides_name_real_modules(self):
         self.assertEqual(sorted(set(self.config.get('modules', {})) - self.modules), [])
+
+
+class NonMatchingTests(unittest.TestCase):
+    def test_lowest_score_wins(self):
+        self.assertEqual(export_nonmatching.choose([(9, 'a.c', 'c'), (3, 'b.cpp', 'c++')]), (3, 'b.cpp', 'c++'))
+
+    def test_first_candidate_wins_a_tie(self):
+        self.assertEqual(export_nonmatching.choose([(3, 'hand.cpp', 'c++'), (3, 'draft.c', 'c')])[1], 'hand.cpp')
+
+    def test_sources_that_do_not_compile_are_skipped(self):
+        self.assertEqual(export_nonmatching.choose([(None, 'a.c', 'c'), (12, 'b.c', 'c')])[1], 'b.c')
+        self.assertIsNone(export_nonmatching.choose([(None, 'a.c', 'c')]))
+
+    def test_names_become_file_names(self):
+        self.assertEqual(export_nonmatching.file_name('func_001B2940'), 'fun_001b2940')
+        self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')
 
 
 class ListingTests(unittest.TestCase):

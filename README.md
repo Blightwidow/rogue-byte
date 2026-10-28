@@ -34,6 +34,7 @@
 | Path | What |
 |---|---|
 | `src/` | matched C/C++, one function per file, grouped by module ([src/README.md](src/README.md)) |
+| `nonmatching/` | the best source that compiles for each unmatched function: starting points that count as partial work in the report ([nonmatching/README.md](nonmatching/README.md)) |
 | `include/` | shared headers (`sly2.h`) and the assembler macros |
 | `config/` | the Splat configuration and the retail layout ([config/README.md](config/README.md)) |
 | `scripts/build/` | the image pipeline: split, link, pack, objdiff |

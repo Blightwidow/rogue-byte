@@ -16,7 +16,7 @@ def select(functions, module=None, status=None, unnamed=False, minimum=0, maximu
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--module')
-    parser.add_argument('--status', choices=['c', 'matched', 'asm'])
+    parser.add_argument('--status', choices=['c', 'matched', 'draft', 'asm'])
     parser.add_argument('--unnamed', action='store_true')
     parser.add_argument('--min-size', type=int, default=0)
     parser.add_argument('--max-size', type=int)

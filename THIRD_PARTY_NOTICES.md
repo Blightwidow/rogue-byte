@@ -4,10 +4,10 @@ Rogue Byte is GPL-3.0-or-later (`LICENSE`). It contains no game code or data. Th
 it uses or was informed by, and under which terms. A license listed as "reference only" means we read the project to
 check facts or learn how it is organised, and copied nothing from it.
 
-## Reconstructed game code (`src/`)
+## Reconstructed game code (`src/` and `nonmatching/`)
 
-Most of this repository is GPL-3.0-or-later. The files under `src/` are different: each reconstructs a function of
-Sly 2: Band of Thieves that matches the retail executable byte for byte, so the code remains the intellectual
+Most of this repository is GPL-3.0-or-later. The files under `src/` and `nonmatching/` are different: each reconstructs a function of
+Sly 2: Band of Thieves (the files of `src/` match the retail executable byte for byte; those of `nonmatching/` compile but do not match yet), so the code remains the intellectual
 property of its copyright holders (Sucker Punch Productions, Sony Interactive Entertainment). They are published for
 interoperability and preservation research, as other matching decompilation projects do; the GPL covers our
 tooling, not the game's own logic. The `.c` files started as output of [m2c](https://github.com/matt-kempster/m2c)

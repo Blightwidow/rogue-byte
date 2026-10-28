@@ -1,0 +1,51 @@
+#include "sly2.h"
+struct JT { char pad[0x190]; QW dir; char pad2[0x10DC - 0x1A0]; void *focus; };
+struct SMP;
+extern "C" QW PosLoWorld(void *);
+extern "C" void SetStepRadTargetDir(void *, QW);
+extern "C" void InvertMatrix3(void *, void *);
+extern "C" void GSmooth__FfffP3SMPPf(float, float, float, SMP *, float *);
+extern "C" SMP D_002BF418;
+extern "C" QW g_2a2da0;
+extern "C" float g_2bf414;
+extern "C" float g_2dded4;
+extern "C" void func_0018E1E0(void *self)
+{
+    struct { QW vecDir; QW row0; QW row1; QW row2; float matInverse[3][4]; QW scratch; float gScale; float pad[3]; QW posFocus; } l;
+    l.posFocus = PosLoWorld(*(void **)((char *)self + 0x10DC));
+    QW posSelf = PosLoWorld(self);
+    asm volatile("qmtc2.ni %0, vf2" : : "r" (posSelf));
+    float eps = 0.0001f;
+    asm volatile("lqc2 vf1, %0" : : "m" (l.posFocus));
+    register QW *pAxis asm("$2") = &g_2a2da0;
+    asm volatile("vsub.xyzw vf3, vf1, vf2\n\tvmul.xyz vf1, vf3, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tsqc2 vf3, %0\n\t.word 0x4A0103BD\n\tvwaitq\n\tvaddq.x vf2, vf0, Q" : "=m" (l.vecDir));
+    register QW distBits asm("$3");
+    asm volatile("qmfc2.ni %0, vf2" : "=r" (distBits));
+    float dist;
+    asm volatile("mtc1 %1, %0\n\tnop" : "=f" (dist) : "r" (distBits));
+    register QW axisValue asm("$2");
+    asm volatile(".set noreorder\n\tc.lt.s %2, %3\n\tnop\n\tbc1f 1f\n\tnop\n\tlq %1, 0(%4)\n\tb 2f\n\tsq %1, %0\n1:\n\tnop\n\tnop\n\tvdiv Q, vf0w, vf2x\n\tvwaitq\n\tvmulq.xyzw vf1, vf3, Q\n\tsqc2 vf1, %0\n2:\n\t.set reorder" : "=m" (l.vecDir), "=r" (axisValue) : "f" (dist), "f" (eps), "r" (pAxis));
+    register QW distBits2 asm("$2");
+    asm volatile("qmfc2.ni %0, vf2" : "=r" (distBits2));
+    float dist2;
+    asm("mtc1 %1, %0" : "=f" (dist2) : "r" (distBits2));
+    SetStepRadTargetDir(self, l.vecDir);
+    GSmooth__FfffP3SMPPf(dist2, g_2bf414, g_2dded4 * 0.5f, &D_002BF418, &l.gScale);
+    InvertMatrix3(l.matInverse, (char *)self + 0x1B0);
+    register int scaleBits asm("$3") = *(int *)&l.gScale;
+    asm volatile("qmtc2.ni %0, vf2" : : "r" (scaleBits));
+    asm volatile("lqc2 vf4, %0" : : "m" (l.matInverse[0][0]));
+    asm volatile("lqc2 vf5, %0" : : "m" (l.matInverse[1][0]));
+    asm volatile("vmulx.xyzw vf4, vf4, vf2x");
+    asm volatile("lqc2 vf3, %0" : : "m" (l.matInverse[2][0]));
+    asm volatile("vmulx.xyzw vf5, vf5, vf2x");
+    asm volatile("vmulx.xyzw vf3, vf3, vf2x");
+    asm volatile("lqc2 vf1, %0" : : "m" (l.vecDir));
+    asm volatile("vmulax.xyz ACC, vf4, vf1x");
+    asm volatile("vmadday.xyz ACC, vf5, vf1y");
+    asm volatile("vmaddz.xyz vf1, vf3, vf1z");
+    asm volatile("sqc2 vf2, %0" : "=m" (l.scratch));
+    asm volatile("sqc2 vf1, %0" : "=m" (((JT *)self)->dir));
+    asm("sqc2 vf4, %0\n\tsqc2 vf5, %1" : "=m" (l.row0), "=m" (l.row1));
+    asm("sqc2 vf3, %0" : "=m" (l.row2));
+}

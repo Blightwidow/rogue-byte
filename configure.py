@@ -55,4 +55,15 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'])
             units.append(unit)
         ninja.build('units', 'phony', units)
+
+    # the sources that compile but do not match (python3 scripts/matching/export_nonmatching.py): only objdiff looks at them
+    drafts = []
+    manifest = os.path.join(ROOT, 'nonmatching', 'MANIFEST.tsv')
+    if os.path.exists(manifest):
+        for line in list(open(manifest))[1:]:
+            source = os.path.join('nonmatching', line.rstrip('\n').split('\t')[3])
+            unit = os.path.join('build', 'nonmatching', source[len('nonmatching/'):] + '.o')
+            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'])
+            drafts.append(unit)
+        ninja.build('nonmatching', 'phony', drafts)
 print('wrote build.ninja')

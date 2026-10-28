@@ -12,12 +12,13 @@ Bytes of code, per function (`scripts/gen_progress_report.py`, after `make elf`)
 | :--- | :--- |
 | `c` | The function is compiled from `src/` in the image `make elf` rebuilds, and its bytes equal the retail ones |
 | `matched` | Matched, but the image still uses assembly for it (`build/image/fallbacks.tsv` says why) |
-| `asm` | Not matched yet |
+| `draft` | Not matched, but a source that compiles with the original compiler is published in [`nonmatching/`](../../nonmatching/README.md) |
+| `asm` | Not matched yet, no source |
 
 "Named" counts functions with a recovered name, not `func_<address>`. Names and matching are independent: a function can be
 named and unmatched, or matched and unnamed (`fun_<address>` in `src/`).
 
-`make objdiff` adds a second measure: objdiff's own report over the whole executable, SDK included
+`make objdiff` adds a second measure (it also compiles the `nonmatching/` sources, so the fuzzy figure counts partial work): objdiff's own report over the whole executable, SDK included
 (`site/data/objdiff-report.json`). The page prints both.
 
 ## Regenerating

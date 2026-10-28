@@ -1,0 +1,60 @@
+#include "sly2.h"
+struct XF { char pad[0x70]; QW pos; char pad2[0xA0 - 0x80]; void *parent; };
+struct SMP;
+struct JT {
+    char pad0[0x18C4]; void *pivot;
+    char pad1[0x1960 - 0x18C8]; QW grip;
+    char pad2[0x19C0 - 0x1970]; XF *xfFrame; char padf[8]; XF *xfLook;
+    char pad3[0x1A00 - 0x19CC - 4]; void *act;
+};
+extern "C" QW PosLoWorld(void *);
+extern "C" QW ConvertXfVec(int, void *, QW);
+extern "C" void BuildRotateVectorsMatrix(QW *, QW, QW);
+extern "C" void LoadRotateMatrixRad(QW *, QW, float);
+extern "C" QW DecomposeRotateMatrixEuler(QW *);
+extern "C" void func_0012D108(void *, QW);
+extern "C" QW PosSmooth(QW, QW, SMP *, int, float);
+extern "C" QW g_2a2da0;
+extern "C" QW g_2a2dd0;
+extern "C" float g_2dded4;
+extern float RO_002BF594;
+extern "C" SMP D_002BF598;
+extern "C" void UpdateJtHangPose(JT *pjt)
+{
+    struct { QW goal[3]; QW goalCopy[3]; QW aim[3]; QW tilt[3]; QW goalCopy2[3]; } l;
+    register QW v1 asm("vf1");
+    register QW v2 asm("vf2");
+    register QW v3 asm("vf3");
+    register QW v4 asm("vf4");
+    register QW v5 asm("vf5");
+    register QW v6 asm("vf6");
+    QW pivot = PosLoWorld(pjt->pivot);
+    v2 = pivot;
+    v1 = pjt->xfLook->pos;
+    asm("vsub.xyzw vf2, vf2, vf1" : "=j" (v2) : "j" (v2), "j" (v1));
+    QW diff = v2;
+    QW local = ConvertXfVec(0, pjt->xfFrame->parent, diff);
+    QW *pyaw = l.aim;
+    BuildRotateVectorsMatrix(pyaw, g_2a2da0, local);
+    LoadRotateMatrixRad(l.tilt, g_2a2da0, RO_002BF594);
+    v1 = l.aim[0];
+    v4 = l.aim[1];
+    v2 = l.aim[2];
+    v3 = l.tilt[0];
+    v5 = l.tilt[1];
+    asm("vmulax.xyz ACC, vf1, vf3x\n\tvmadday.xyz ACC, vf4, vf3y\n\tvmaddz.xyz vf3, vf2, vf3z" : "=j" (v3) : "j" (v1), "j" (v4), "j" (v2), "j" (v3));
+    asm("vmulax.xyz ACC, vf1, vf5x\n\tvmadday.xyz ACC, vf4, vf5y\n\tvmaddz.xyz vf5, vf2, vf5z" : "=j" (v5) : "j" (v1), "j" (v4), "j" (v2), "j" (v5));
+    v6 = l.tilt[2];
+    asm("vmulax.xyz ACC, vf1, vf6x\n\tvmadday.xyz ACC, vf4, vf6y\n\tvmaddz.xyz vf1, vf2, vf6z" : "=j" (v1) : "j" (v1), "j" (v4), "j" (v2), "j" (v6));
+    l.goal[2] = v1;
+    l.goalCopy2[0] = v3;
+    l.goalCopy[0] = v3;
+    l.goal[0] = v3;
+    l.goalCopy2[1] = v5;
+    l.goalCopy[1] = v5;
+    l.goal[1] = v5;
+    l.goalCopy[2] = v1;
+    l.goalCopy2[2] = v1;
+    func_0012D108(pjt->act, DecomposeRotateMatrixEuler(l.goal));
+    pjt->grip = PosSmooth(pjt->grip, g_2a2dd0, &D_002BF598, 0, g_2dded4);
+}

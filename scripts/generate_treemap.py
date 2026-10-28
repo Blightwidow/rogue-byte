@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """generate_treemap.py: site/progress-map.svg, a treemap of the code: one block per module, one cell per function, area =
 bytes, colour = status (blue: compiled from src/ in the verified image, gold: matched but still assembly in the image,
-navy: not matched, grey: Sony SDK, left out of the totals). Reads site/data/report.json (scripts/gen_progress_report.py)."""
+violet: compiles but does not match yet (nonmatching/), navy: not matched, grey: Sony SDK, left out of the totals). Reads site/data/report.json (scripts/gen_progress_report.py)."""
 import html
 import json
 import os
@@ -11,7 +11,7 @@ import squarify
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 WIDTH, HEIGHT = 1600, 900
-COLORS = {'c': '#2f7af4', 'matched': '#f3c25a', 'asm': '#2a2d6e', 'sdk': '#4b4f6e'}
+COLORS = {'c': '#2f7af4', 'matched': '#f3c25a', 'draft': '#4a45a8', 'asm': '#2a2d6e', 'sdk': '#4b4f6e'}
 BACKGROUND = '#05060f'
 
 report = json.load(open(os.path.join(ROOT, 'site', 'data', 'report.json')))

@@ -90,6 +90,7 @@ def run(command):
         sys.exit(' '.join(command[:3]) + ' failed: ' + result.stderr.strip())
 
 manifest = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('src/MANIFEST.tsv'))[1:]}
+drafts = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('nonmatching/MANIFEST.tsv'))[1:]} if os.path.exists('nonmatching/MANIFEST.tsv') else {}
 manifest_size = {int(line.split('\t')[0], 16): int(line.split('\t')[2]) for line in list(open('src/MANIFEST.tsv'))[1:]}
 
 def unit_source(unit):
@@ -117,7 +118,10 @@ def build_base(unit):
     for function in units[unit]:
         file = manifest.get(function['address'])
         path = os.path.join('build', 'units', file + '.o') if file else None
-        trimmed = os.path.join('build', 'image', 'trimmed', file.replace(os.sep, '_').replace('/', '_') + '.o') if file else None
+        if not file and function['address'] in drafts:  # a source that compiles but does not match: objdiff counts the partial work
+            file = drafts[function['address']]
+            path = os.path.join('build', 'nonmatching', file + '.o')
+        trimmed = os.path.join('build', 'image', 'trimmed', file.replace(os.sep, '_').replace('/', '_') + '.o') if function['address'] in manifest else None
         if trimmed and os.path.isfile(trimmed):
             path = trimmed
         if not path or not os.path.isfile(path):

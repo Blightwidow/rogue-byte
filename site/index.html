@@ -13,7 +13,7 @@
 <style>
 :root {
   --navy: #05060f; --sky: #0b0c26; --panel: #11133a; --panel-line: #23266a; --ink: #e8ecff; --muted: #9aa3d6;
-  --blue: #2f7af4; --blue-dark: #02307f; --gold: #f3c25a; --asm: #2a2d6e; --sdk: #4b4f6e;
+  --blue: #2f7af4; --blue-dark: #02307f; --gold: #f3c25a; --draft: #4a45a8; --asm: #2a2d6e; --sdk: #4b4f6e;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: radial-gradient(120% 80% at 20% 0%, #2a2d6e 0%, var(--sky) 45%, var(--navy) 100%) fixed;
@@ -60,7 +60,8 @@ a { color: #8fb4ff; }
   <p class="legend">
     <span style="--swatch: var(--blue)">compiled from C, verified in the rebuilt image</span>
     <span style="--swatch: var(--gold)">matched, still assembly in the image</span>
-    <span style="--swatch: var(--asm)">not matched yet</span>
+    <span style="--swatch: var(--draft)">compiles, does not match yet (published in nonmatching/)</span>
+    <span style="--swatch: var(--asm)">no source yet</span>
   </p>
   <p class="note" id="stamp"></p>
 
@@ -99,7 +100,7 @@ const element = (tag, attributes = {}, text = '') => {
   node.textContent = text;
   return node;
 };
-const segments = (row) => [['c', 'var(--blue)'], ['matched', 'var(--gold)']].map(([status, color]) => {
+const segments = (row) => [['c', 'var(--blue)'], ['matched', 'var(--gold)'], ['draft', 'var(--draft)']].map(([status, color]) => {
   const part = element('i'); part.style.width = percent(row[status + '_bytes'], row.bytes); part.style.background = color; return part; });
 
 Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history.json').then(r => r.json()),
@@ -108,6 +109,7 @@ Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history
   const cards = [
     [percent(game.c_bytes, game.bytes), 'of the code compiles from our C and is verified byte for byte'],
     [percent(game.c_bytes + game.matched_bytes, game.bytes), 'matched by the original compiler'],
+    [percent(game.draft_bytes || 0, game.bytes), `compile but do not match yet (${format.format(game.draft_functions || 0)} functions)`],
     [percent(game.named, game.functions), `functions named (${format.format(game.named)} of ${format.format(game.functions)})`],
     [format.format(game.c_functions), `functions rebuilt from C in the image`],
   ];

@@ -1123,6 +1123,7 @@ address	name	size	file
 0X1358A8	GetBentleyCpdefi	152	bbmark-blend/GetBentleyCpdefi.c
 0X135A48	AdjustBentleyNewXp	144	bbmark-blend/AdjustBentleyNewXp.cpp
 0X135AD8	HandleBentleyMessage	324	bbmark-blend/HandleBentleyMessage.cpp
+0X135D08	GetBentleyMode	120	bbmark-blend/GetBentleyMode.cpp
 0X135D80	func_00135D80	172	bbmark-blend/fun_00135d80.cpp
 0X135E30	func_00135E30	8	bbmark-blend/fun_00135e30.c
 0X135E38	func_00135E38	8	bbmark-blend/fun_00135e38.c
@@ -1303,6 +1304,7 @@ address	name	size	file
 0X1487A0	TriggerBtn	188	new_147f40/TriggerBtn.cpp
 0X148AF8	AddBtnAseg	28	button-alarm/AddBtnAseg.c
 0X148B18	AddBtnOffAseg	28	button-alarm/AddBtnOffAseg.c
+0X148B38	SetAlarmRsmg__FP5ALARMi3OIDN22	64	alarm/SetAlarmRsmg__FP5ALARMi3OIDN22.cpp
 0X148B78	func_00148B78	56	alarm-button/fun_00148b78.cpp
 0X148C08	LoadButtonFromBrx	48	alarm-button/LoadButtonFromBrx.c
 0X148C38	PostButtonLoad	56	alarm-button/PostButtonLoad.c
@@ -1722,6 +1724,7 @@ address	name	size	file
 0X175790	func_00175790	60	new_1715f0/fun_00175790.c
 0X1757D0	func_001757D0	60	new_1715f0/fun_001757d0.c
 0X175810	FGoalNoticeDone	16	new_1715f0/FGoalNoticeDone.c
+0X175FF0	func_00175FF0	112	new_1715f0/fun_00175ff0.c
 0X176060	func_00176060	56	new_1715f0/fun_00176060.cpp
 0X1766D8	GoalBrain_Init	44	new_1715f0/GoalBrain_Init.cpp
 0X177BA0	GoalBrain_ChooseNextCommand	384	new_1715f0/GoalBrain_ChooseNextCommand.cpp
@@ -1933,6 +1936,7 @@ address	name	size	file
 0X188468	func_00188468	32	joy-jt/fun_00188468.c
 0X188488	InitSly	300	joy-jt/InitSly.cpp
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp
+0X1894F8	FAllowBinocSly	56	joy-jt/FAllowBinocSly.cpp
 0X189530	SetSlyHide	228	joy-jt/SetSlyHide.cpp
 0X18A0C8	UpdateJtStand__FP2JT	368	jt/UpdateJtStand__FP2JT.cpp
 0X18A238	func_0018A238	64	jt-alo/fun_0018a238.c
@@ -1942,6 +1946,7 @@ address	name	size	file
 0X18C060	BindJtStepAseg	188	jt-alo/BindJtStepAseg.cpp
 0X18C120	SetJtLookats	304	jt-alo/SetJtLookats.c
 0X18D548	ClearJtJtcs	28	jt-alo/ClearJtJtcs.cpp
+0X18D620	func_0018D620	120	jt-alo/fun_0018d620.cpp
 0X18D698	func_0018D698	96	jt-alo/fun_0018d698.c
 0X18DD78	ReleaseSlyGadget	140	jt-alo/ReleaseSlyGadget.cpp
 0X18DE08	PchzSlySaveRoot	12	jt-alo/PchzSlySaveRoot.cpp
@@ -2240,6 +2245,7 @@ address	name	size	file
 0X1B7AE8	func_001B7AE8	192	mpeg-memcard/fun_001b7ae8.cpp
 0X1B7BA8	ReleaseMurrayObject	376	mpeg-memcard/ReleaseMurrayObject.cpp
 0X1B7D20	DetachMurrayObject	284	mpeg-memcard/DetachMurrayObject.cpp
+0X1B7F90	GetMurrayMode	120	mpeg-memcard/GetMurrayMode.cpp
 0X1B8008	SetMurrayAnimBase	228	mpeg-memcard/SetMurrayAnimBase.cpp
 0X1B80F0	NopMurray	8	mpeg-memcard/NopMurray.c
 0X1B80F8	FReturnFalseMurray	8	mpeg-memcard/FReturnFalseMurray.c
@@ -2377,6 +2383,7 @@ address	name	size	file
 0X1C7A08	func_001C7A08	8	new_1c76d0/fun_001c7a08.c
 0X1C7A10	func_001C7A10	44	new_1c76d0/fun_001c7a10.cpp
 0X1C7A40	func_001C7A40	24	unsorted/fun_001c7a40.cpp
+0X1C7A58	SelectCoinLootDef	180	new_1c76d0/SelectCoinLootDef.cpp
 0X1C7B18	PpathClueFlag	156	new_1c76d0/PpathClueFlag.cpp
 0X1C7D00	func_001C7D00	8	new_1c76d0/fun_001c7d00.c
 0X1C7E38	func_001C7E38	48	new_1c76d0/fun_001c7e38.c
