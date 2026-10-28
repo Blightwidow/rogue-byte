@@ -2,7 +2,7 @@
 # Usage:
 #   python3 -m venv .venv
 #   .venv/bin/pip install -r requirements.txt
-splat64==0.34.1
+splat64==0.50.1
 spimdisasm==1.35.0
 rabbitizer==1.16.2
 crunch64==0.6.2
