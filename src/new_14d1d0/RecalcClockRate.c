@@ -11,7 +11,7 @@ void RecalcClockRate(void *arg0) {
     do {
         temp_f0 = *var_v1;
         var_a1 += 1;
-        var_v1 += 4;
+        var_v1 += 1;
         M2C_FIELD(arg0, f32 *, 8) = (f32) (M2C_FIELD(arg0, f32 *, 8) * temp_f0);
     } while (var_a1 < 9U);
     M2C_FIELD(arg0, f32 *, 0xC) = (f32) M2C_FIELD(arg0, f32 *, 0x38);

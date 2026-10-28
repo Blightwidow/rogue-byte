@@ -141,7 +141,6 @@ address	name	size	file	score
 0X116918	PvAllocSlotheapClearImpl__FP8SLOTHEAP	88	slotheap/PvAllocSlotheapClearImpl__FP8SLOTHEAP.c	4
 0X116970	PvAllocCopyImpl	104	new_116970/PvAllocCopyImpl.c	6
 0X1169D8	PchzAllocCopyImpl	88	new_116970/PchzAllocCopyImpl.c	2
-0X116CE0	func_00116CE0	32	memory-bez/fun_00116ce0.c	1
 0X116D20	func_00116D20	80	memory-bez/fun_00116d20.cpp	1
 0X116D70	CAry_Reserve	192	memory-bez/CAry_Reserve.cpp	5
 0X116E30	func_00116E30	120	memory-bez/fun_00116e30.c	13
@@ -259,7 +258,6 @@ address	name	size	file	score
 0X120960	func_00120960	48	splice-bif/fun_00120960.cpp	1
 0X120990	func_00120990	32	splice-bif/fun_00120990.cpp	3
 0X120A20	func_00120A20	56	splice-bif/fun_00120a20.cpp	1
-0X120C00	RefOpCdr	72	lo-splice-bif/RefOpCdr.c	1
 0X120C48	RefOpSetCarOrCdr	128	lo-splice-bif/RefOpSetCarOrCdr.c	15
 0X120D28	RefOpLength	80	lo-splice-bif/RefOpLength.c	4
 0X120E10	RefOpIsMember	368	lo-splice-bif/RefOpIsMember.cpp	9
@@ -461,7 +459,6 @@ address	name	size	file	score
 0X13B5C8	PrimeBomb__FP4BOMBf	32	bomb/PrimeBomb__FP4BOMBf.cpp	2
 0X13BB80	Bomb_OnPoolClaim	120	bomb-crusher/Bomb_OnPoolClaim.c	2
 0X13BBF8	FIgnoreBombIntersection	104	bomb-crusher/FIgnoreBombIntersection.c	17
-0X13BF30	func_0013BF30	32	bomb-crusher/fun_0013bf30.c	1
 0X13C278	FIgnoreLootIntersection	96	bomb-crusher/FIgnoreLootIntersection.c	14
 0X13C490	SelectLootDef	72	bomb-crusher/SelectLootDef.c	9
 0X13C4E0	ReturnLootToGuard	128	bomb-crusher/ReturnLootToGuard.c	2
@@ -502,7 +499,6 @@ address	name	size	file	score
 0X1421F8	func_001421F8	128	new_13f888/fun_001421f8.c	4
 0X142340	SetJtAttach9	96	new_13f888/SetJtAttach9.c	6
 0X1423A0	func_001423A0	288	new_13f888/fun_001423a0.cpp	5
-0X1424E0	func_001424E0	80	new_13f888/fun_001424e0.c	1
 0X142540	func_00142540	112	new_13f888/fun_00142540.c	18
 0X142880	ScheduleJtGlance	88	new_13f888/ScheduleJtGlance.c	7
 0X1428D8	GetJtFocusScore	544	new_13f888/GetJtFocusScore.c	136
@@ -578,7 +574,6 @@ address	name	size	file	score
 0X14CC58	PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG	344	clip/PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG.c	68
 0X14CFE0	StaticInitClock	136	new_14cdb0/StaticInitClock.cpp	2
 0X14D068	InitClock	80	new_14cdb0/InitClock.c	12
-0X14D1F8	RecalcClockRate	72	new_14d1d0/RecalcClockRate.c	1
 0X14D240	TickReadCount	64	new_14d1d0/TickReadCount.c	10
 0X14D478	UpdateCmLast	472	cm_14d478/UpdateCmLast.cpp	54
 0X14D6D8	InitCm	488	cm_14d478/InitCm.c	136
@@ -676,7 +671,6 @@ address	name	size	file	score
 0X157278	__4DMAS	64	dmas/__4DMAS.c	2
 0X1572E0	AllocStack__4DMASi	80	dmas/AllocStack__4DMASi.c	17
 0X1574A8	func_001574A8	16	dmas/fun_001574a8.cpp	1
-0X1574B8	AddDmaCnt__4DMAS	72	dmas/AddDmaCnt__4DMAS.c	1
 0X157660	AddDmaBulk__4DMASiP2QW	80	dmas/AddDmaBulk__4DMASiP2QW.c	3
 0X1576F0	EndDmaCnt__4DMAS	168	dmas/EndDmaCnt__4DMAS.cpp	4
 0X157A50	CompareRecordsFarFirst	72	dmas-dzg/CompareRecordsFarFirst.c	6
@@ -727,7 +721,6 @@ address	name	size	file	score
 0X15F220	SetupDraw__8CFontBrxP8CTextBoxP4GIFS	456	font_15f000/SetupDraw__8CFontBrxP8CTextBoxP4GIFS.cpp	32
 0X15F480	DxDrawCh__8CFontBrxcffUiP4GIFS	640	font_15f000/DxDrawCh__8CFontBrxcffUiP4GIFS.c	132
 0X15F700	func_0015F700	16	font_15f000/fun_0015f700.cpp	1
-0X15F888	CFontBrx_Register	32	font_15f000/CFontBrx_Register.c	1
 0X15F8A8	PglyffFromCh__8CFontBrxc	128	font_15f000/PglyffFromCh__8CFontBrxc.c	32
 0X15F928	__9CRichTextPcP5CFont	72	font_15f000/__9CRichTextPcP5CFont.c	2
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.c	288
@@ -833,7 +826,6 @@ address	name	size	file	score
 0X16FAF8	BuildFbaGif	128	gs/BuildFbaGif.c	10
 0X170348	ClearFrameBuffers__Fv	112	gs/ClearFrameBuffers__Fv.c	7
 0X1703B8	func_001703B8	8	gs/fun_001703b8.c	1
-0X1703C0	NLog2__FUi	56	gs/NLog2__FUi.cpp	1
 0X1703F8	InitZpr__FP3ZPR3ZPKP2LO	80	stepzap/InitZpr__FP3ZPR3ZPKP2LO.c	8
 0X170448	ICeilLog2	112	new_170448/ICeilLog2.c	31
 0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	28
@@ -1252,7 +1244,6 @@ address	name	size	file	score
 0X1AEA40	PauseMenu_Hide	104	smartguard-ac/PauseMenu_Hide.c	6
 0X1AF490	func_001AF490	72	smartguard-ac/fun_001af490.c	4
 0X1AF608	PauseMenu_Pop	88	smartguard-ac/PauseMenu_Pop.c	1
-0X1AF660	PauseMenu_Close	64	smartguard-ac/PauseMenu_Close.c	1
 0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.c	181
 0X1AF9C8	RefreshOptionItem	448	smartguard-ac/RefreshOptionItem.c	92
 0X1AFB88	PauseMenu_ApplyOption	1024	smartguard-ac/PauseMenu_ApplyOption.c	317
@@ -1460,7 +1451,6 @@ address	name	size	file	score
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.c	149
 0X1C99D8	PcnodeFindOrAddClonePath	304	new_1c90d0/PcnodeFindOrAddClonePath.cpp	25
 0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.c	18
-0X1CA8C0	ClonePool_AcquireLeaseCallback	32	new_1c90d0/ClonePool_AcquireLeaseCallback.c	1
 0X1CA8E0	ClonePool_AddLoGrfEntry	80	new_1c90d0/ClonePool_AddLoGrfEntry.c	8
 0X1CB6D8	ClonePool_RemoveLoGrfEntry	152	new_1c90d0/ClonePool_RemoveLoGrfEntry.cpp	3
 0X1CB770	func_001CB770	64	new_1c90d0/fun_001cb770.c	13
@@ -1531,7 +1521,6 @@ address	name	size	file	score
 0X1D4B48	AddVehicleWheel	72	rip-rumble/AddVehicleWheel.c	11
 0X1D4C88	UpdateVehicleHpBlot	88	rip-rumble/UpdateVehicleHpBlot.c	3
 0X1D4D30	InitVehicleGun	176	rip-rumble/InitVehicleGun.cpp	8
-0X1D4EC8	PostAmmopickupLoad	72	rip-rumble/PostAmmopickupLoad.c	1
 0X1D4F50	UpdateAmmopickup	80	rip-rumble/UpdateAmmopickup.c	2
 0X1D4FA0	SetAmmopickupState	88	rip-rumble/SetAmmopickupState.c	1
 0X1D5150	InitRumble__FP6RUMBLEii	104	rumble/InitRumble__FP6RUMBLEii.c	1
@@ -1787,7 +1776,6 @@ address	name	size	file	score
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.cpp	23
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.c	105
 0X1F35F8	AdjustSoMomint__FP2SOf	176	so/AdjustSoMomint__FP2SOf.cpp	16
-0X1F3868	func_001F3868	64	so-po/fun_001f3868.c	1
 0X1F3900	func_001F3900	128	so-po/fun_001f3900.c	15
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	5
 0X1F3C10	func_001F3C10	96	so-po/fun_001f3c10.c	9
@@ -1977,16 +1965,9 @@ address	name	size	file	score
 0X207AA0	AsgsFromGrfsgs	112	step-rwm/AsgsFromGrfsgs.c	1
 0X207B10	GrfsgsFromRef	96	step-rwm/GrfsgsFromRef.c	12
 0X207D98	func_00207D98	112	step-rwm/fun_00207d98.c	2
-0X207FF8	func_00207FF8	32	step-rwm/fun_00207ff8.cpp	1
-0X208018	func_00208018	32	step-rwm/fun_00208018.cpp	1
-0X208038	func_00208038	32	step-rwm/fun_00208038.cpp	1
-0X208058	func_00208058	32	step-rwm/fun_00208058.cpp	1
-0X208078	func_00208078	32	step-rwm/fun_00208078.cpp	1
 0X208098	func_00208098	8	step-rwm/fun_00208098.c	1
-0X2081C8	ResetGuardAnimrefArrays	64	step-rwm/ResetGuardAnimrefArrays.c	1
 0X208208	CloneAnimrefArray	72	step-rwm/CloneAnimrefArray.c	2
 0X2082D0	func_002082D0	616	step-rwm/fun_002082d0.c	129
-0X2085B0	AddGuardSensedObject_thunk	32	step-rwm/AddGuardSensedObject_thunk.c	1
 0X2085D0	AddGuardSensedObject	304	step-rwm/AddGuardSensedObject.cpp	13
 0X208700	AddGuardPriorityClass	40	step-rwm/AddGuardPriorityClass.cpp	5
 0X2087E8	FIsGuardPriorityClass	120	step-rwm/FIsGuardPriorityClass.c	29
@@ -2019,7 +2000,6 @@ address	name	size	file	score
 0X20B140	func_0020B140	208	rwm-steprun/fun_0020b140.cpp	9
 0X20B2A8	SetGuardPathTarget	296	rwm-steprun/SetGuardPathTarget.cpp	38
 0X20B3D0	NGuardAlertLevel	104	rwm-steprun/NGuardAlertLevel.c	4
-0X20B438	AddGuardBusyGoal	64	rwm-steprun/AddGuardBusyGoal.c	1
 0X20B868	PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL	624	steprun/PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL.c	148
 0X20BAD8	CalculateBlrunV	112	steprun-stream/CalculateBlrunV.c	26
 0X20BB58	SetRunBlendU	176	steprun-stream/SetRunBlendU.cpp	12
