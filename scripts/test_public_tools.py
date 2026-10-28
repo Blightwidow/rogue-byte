@@ -7,6 +7,7 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching'), os.path.join(HERE, 'vu')]
+sys.path.insert(0, os.path.join(HERE, 'build'))
 
 import asm_units  # noqa: E402
 import check_cleanup  # noqa: E402
@@ -16,6 +17,8 @@ import compile_unit  # noqa: E402
 import gen_context  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
+import mutate  # noqa: E402
+import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
 import vudis  # noqa: E402
@@ -259,6 +262,60 @@ class PrepareReportTests(unittest.TestCase):
 
     def test_no_units_is_reported(self):
         self.assertEqual(prepare_report.problems({**self.GOOD, 'units': []}), ['no units'])
+
+
+SAMPLE_SOURCE = '''extern "C" void func_00100010(int);
+extern "C" int func_00100020(int);
+void f(int *p)
+{
+    func_00100010(1);
+    while (*p != 0) {
+        *p = func_00100020(*p);
+    }
+    func_00100010(2);
+}
+'''.split('\n')
+
+
+class MutationTests(unittest.TestCase):
+    def results(self, mutation):
+        rng = mutate.random.Random(1)
+        found = set()
+        for _ in range(50):
+            for index in range(len(SAMPLE_SOURCE)):
+                changed = mutation(SAMPLE_SOURCE, index, rng)
+                if changed and changed != SAMPLE_SOURCE:
+                    found.add('\n'.join(changed))
+        return found
+
+    def test_callee_returning_nothing_can_return_int(self):
+        self.assertTrue(any('extern "C" int func_00100010(int);' in text for text in self.results(mutate.flip_callee_return)))
+
+    def test_callee_used_in_an_expression_stays_int(self):
+        self.assertFalse(any('extern "C" void func_00100020' in text for text in self.results(mutate.flip_callee_return)))
+
+    def test_while_becomes_a_bottom_tested_goto_loop(self):
+        self.assertTrue(any('goto test_5;' in text and 'if (*p != 0) goto loop_5;' in text for text in self.results(mutate.while_to_goto)))
+
+    def test_while_with_break_is_left_alone(self):
+        lines = ['void g(int *p)', '{', '    while (*p) {', '        if (*p == 3) break;', '    }', '}']
+        self.assertIsNone(mutate.while_to_goto(lines, 2, mutate.random.Random(1)))
+
+    def test_last_call_gains_a_return(self):
+        self.assertTrue(any('    return;' in text for text in self.results(mutate.tail_return)))
+
+
+class PrologueProfileTests(unittest.TestCase):
+    def test_frame_with_ra_saved_first(self):
+        words = [0x27BDFFE0, 0xFFBF0010, 0xFFB00000]  # addiu sp,sp,-32; sd ra,16(sp); sd s0,0(sp)
+        self.assertEqual(prologue_profile.classify(words), 'sd stride 16, ra first')
+
+    def test_quadword_save_is_a_different_class(self):
+        words = [0x27BDFFC0, 0x7FB10010, 0xFFBF0000, 0x7FB00020]  # sq s1; sd ra; sq s0
+        self.assertTrue(prologue_profile.classify(words).startswith('sdsq'))
+
+    def test_function_without_frame_has_no_class(self):
+        self.assertIsNone(prologue_profile.classify([0x03E00008, 0x00000000]))
 
 
 class VuDisassemblerTests(unittest.TestCase):

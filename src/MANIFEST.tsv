@@ -1402,6 +1402,7 @@ address	name	size	file
 0X14C528	func_0014C528	32	new_14bff8/fun_0014c528.c
 0X14C548	StaticInitSlotheaps_14c548	308	new_14bff8/StaticInitSlotheaps_14c548.c
 0X14C680	func_0014C680	32	new_14bff8/fun_0014c680.c
+0X14C6A0	ClsgClipEdgeToObject	56	new_14bff8/ClsgClipEdgeToObject.cpp
 0X14CDB0	ClsgClipEdgeToObjects	216	new_14cdb0/ClsgClipEdgeToObjects.cpp
 0X14CE88	func_0014CE88	308	new_14cdb0/fun_0014ce88.c
 0X14CFC0	StaticInitSharedSlotheaps_thunk	32	new_14cdb0/StaticInitSharedSlotheaps_thunk.c
@@ -1656,6 +1657,7 @@ address	name	size	file
 0X1651D8	RestartAtTaskOid	168	sensor-geom/RestartAtTaskOid.cpp
 0X1657A8	PostTaskJobEvent	40	sensor-geom/PostTaskJobEvent.c
 0X165A60	SetTaskStateCascade	220	sensor-geom/SetTaskStateCascade.cpp
+0X165C98	OrderTasks	292	sensor-geom/OrderTasks.cpp
 0X165DC0	SetSwCurrentJob	40	sensor-geom/SetSwCurrentJob.cpp
 0X165DE8	SetSwCurrentTask	40	sensor-geom/SetSwCurrentTask.cpp
 0X165E10	SetSwRestartTask	40	sensor-geom/SetSwRestartTask.cpp
@@ -2297,6 +2299,7 @@ address	name	size	file
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp
 0X1B3EC0	CMpeg_Start	404	mpeg/CMpeg_Start.cpp
 0X1B4058	Update__5CMpeg	228	mpeg/Update__5CMpeg.cpp
+0X1B4140	Finish__5CMpeg	144	mpeg/Finish__5CMpeg.cpp
 0X1B41D0	CMpeg_CbDemuxed	236	mpeg-memcard/CMpeg_CbDemuxed.cpp
 0X1B42C0	func_001B42C0	12	mpeg-memcard/fun_001b42c0.c
 0X1B42D0	StaticInitMpeg	324	mpeg-memcard/StaticInitMpeg.c
@@ -3504,6 +3507,7 @@ address	name	size	file
 0X256318	func_00256318	12	unsorted/fun_00256318.c
 0X256328	func_00256328	36	sdk/fun_00256328.c
 0X256350	func_00256350	12	unsorted/fun_00256350.c
+0X256360	ConstructGuard	132	sdk/ConstructGuard.cpp
 0X2563E8	ConstructSly	88	sdk/ConstructSly.c
 0X256440	ConstructMurray	88	sdk/ConstructMurray.c
 0X2564B8	func_002564B8	8	sdk/fun_002564b8.c

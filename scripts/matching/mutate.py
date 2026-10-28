@@ -195,7 +195,69 @@ def toggle_cast(lines, index, rng):
     return lines[:index] + [lines[index][:match.start()] + f'({replacement} *)' + lines[index][match.end():]] + lines[index + 1:]
 
 
-MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
+EXTERN = re.compile(r'^(extern "C" )(void|int)(\s+)([A-Za-z_][A-Za-z_0-9]*)(\s*\(.*\);\s*)$')
+
+
+def flip_callee_return(lines, index, rng):
+    """A callee declared `void` becomes `int` or back: a discarded result still steers register allocation and scheduling around the call
+    (a `lui $3` right after a call whose result is ignored means the callee returns a value). `int` to `void` only when every call of the
+    function is a statement of its own."""
+    declarations = [position for position, line in enumerate(lines) if EXTERN.match(line)]
+    if not declarations:
+        return None
+    position = rng.choice(declarations)
+    match = EXTERN.match(lines[position])
+    name, kind = match.group(4), match.group(2)
+    statements = sum(1 for line in lines if re.match(rf'^\s+{re.escape(name)}\(.*\);\s*$', line))
+    uses = sum(len(re.findall(rf'\b{re.escape(name)}\(', line)) for index_, line in enumerate(lines) if index_ != position)
+    if kind == 'int' and statements != uses:
+        return None
+    flipped = 'int' if kind == 'void' else 'void'
+    return lines[:position] + [f'{match.group(1)}{flipped}{match.group(3)}{name}{match.group(5)}'] + lines[position + 1:]
+
+
+def while_to_goto(lines, index, rng):
+    """while (c) { body }  ->  goto test; top: body test: if (c) goto top;  the loop the compiler does not strength-reduce."""
+    match = re.match(r'^(\s*)while \((.+)\) \{\s*$', lines[index])
+    if not match:
+        return None
+    end = block_end(lines, index)
+    if end is None or any(re.search(r'\b(break|continue)\b', line) for line in lines[index + 1:end]):
+        return None
+    indent, condition = match.group(1), match.group(2)
+    top, test = f'loop_{index}', f'test_{index}'
+    if any(top in line for line in lines):
+        return None
+    return (lines[:index] + [f'{indent}goto {test};', f'{top}:'] + lines[index + 1:end] + [f'{test}:', f'{indent}if ({condition}) goto {top};'] + lines[end + 1:])
+
+
+def tail_return(lines, index, rng):
+    """The last statement of a function, a call, gains or loses its `return`: for a void function `f(x); return;` or `return f(x);`
+    makes the compiler end with a jump to the callee (a tail call) or with a call and a return."""
+    span = function_span(lines, index)
+    if not span:
+        return None
+    header, opening, closing = span
+    last = closing - 1
+    while last > opening and not lines[last].strip():
+        last -= 1
+    if last <= opening:
+        return None
+    call = re.match(r'^(\s+)([A-Za-z_][A-Za-z_0-9:>.-]*\(.*\));\s*$', lines[last])
+    if call and not re.match(r'^\s*(return|goto)\b', lines[last]):
+        if rng.random() < 0.5:
+            return lines[:last] + [f'{call.group(1)}return {call.group(2)};'] + lines[last + 1:]
+        return lines[:last + 1] + [f'{call.group(1)}return;'] + lines[last + 1:]
+    returned = re.match(r'^(\s+)return (.+\(.*\));\s*$', lines[last])
+    if returned:
+        return lines[:last] + [f'{returned.group(1)}{returned.group(2)};'] + lines[last + 1:]
+    if re.match(r'^\s+return;\s*$', lines[last]) and last - 1 > opening:
+        return lines[:last] + lines[last + 1:]
+    return None
+
+
+LEGACY_MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
+MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return]
 
 
 def mutate(text, rng, count=1):
@@ -276,7 +338,8 @@ def batch(arguments):
         original = open(path, encoding='utf-8').read()
         score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16) + arguments.seed)
         if score is not None and score < best:
-            open(path, 'w', encoding='utf-8').write(text)
+            if not arguments.no_write:
+                open(path, 'w', encoding='utf-8').write(text)
             improved += 1
             matched += score == 0
         print(f'[{position}/{len(pool)}] {address}: {best} -> {score} ({used} compiles){"  MATCH" if score == 0 else ""}', flush=True)
@@ -294,8 +357,13 @@ def main():
     parser.add_argument('--batch', action='store_true')
     parser.add_argument('--min-score', type=int, default=1)
     parser.add_argument('--max-score', type=int, default=10)
+    parser.add_argument('--mutations', choices=('all', 'legacy'), default='all', help='legacy: the rewrites before flip_callee_return, while_to_goto and tail_return')
+    parser.add_argument('--no-write', action='store_true', help='--batch: report only, leave the sources alone')
     parser.add_argument('--classes', help='comma list of classify_diffs.py classes to restrict --batch to')
     arguments = parser.parse_args()
+    if arguments.mutations == 'legacy':
+        global MUTATIONS
+        MUTATIONS = LEGACY_MUTATIONS
     if arguments.batch:
         batch(arguments)
         return 0
