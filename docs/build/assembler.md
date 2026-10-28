@@ -40,7 +40,7 @@ rules explain most of it (measured on the matched sources: each rule has no `ps2
 
 Together they cover about two thirds of the sources in the list; the rest (17 matched, 34 tried) was derived by scoring every source both
 ways, and a few more functions were added when their rodata (a string or float literal, a jump table) linked differently out of
-`ps2eeas`' object. `ps2eeas` itself hangs on some inputs, so `compile_unit.py` gives up on it after 60 seconds.
+`ps2eeas`' object. `ps2eeas` (under wibo) now and then never returns when many run in parallel, so `compile_unit.py` retries it twice after 20 seconds.
 
 Measured when the assembler went in: of 3,526 matched sources 3,473 stayed exact with `ps2eeas`; of 2,313 non-matching sources 45
 became exact, 269 got closer and 181 got worse (those are in the list). Add a function to the list when it only matches, or

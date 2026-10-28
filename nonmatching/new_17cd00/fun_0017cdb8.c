@@ -16,8 +16,8 @@ void func_0017CDB8(void *arg0, s32 arg1) {
     } else {
         var_f0 = SMinCrv(temp_a0);
     }
-    temp_v0 = M2C_FIELD(arg0, void **, 0x10);
     M2C_FIELD(arg0, f32 *, 0x3C) = var_f0;
+    temp_v0 = M2C_FIELD(arg0, void **, 0x10);
     var_v1 = 1;
     if (!(M2C_FIELD(temp_v0, f32 *, 0xF88) < M2C_FIELD(arg0, f32 *, 0x3C))) {
         var_v1 = 0;

@@ -709,6 +709,7 @@ address	name	size	file
 0X117650	bez__static_initialization_and_destruction_0	308	bez-geom/bez__static_initialization_and_destruction_0.c
 0X117788	func_00117788	32	bez-geom/fun_00117788.c
 0X1177A8	CBinaryInputStream_Constructor	68	bez-geom/CBinaryInputStream_Constructor.c
+0X1177F0	InitGeom__FP4GEOM	28	geom/InitGeom__FP4GEOM.cpp
 0X117810	CBinaryInputStream_Pump	136	new_117810/CBinaryInputStream_Pump.cpp
 0X117898	CBinaryInputStream_Read	204	new_117810/CBinaryInputStream_Read.cpp
 0X117968	CBinaryInputStream_Read_thunk	28	new_117810/CBinaryInputStream_Read_thunk.c
@@ -1656,6 +1657,7 @@ address	name	size	file
 0X166920	__4GIFS	72	gifs/__4GIFS.c
 0X166A50	CheckReg__4GIFSii	16	gifs/CheckReg__4GIFSii.c
 0X166A60	GIFS_AddPrimTag	176	gifs/GIFS_AddPrimTag.cpp
+0X166BD8	AddPrimPack__4GIFSiiUl	148	gifs/AddPrimPack__4GIFSiiUl.cpp
 0X1670B8	ListXYZF__4GIFSiiii	144	gifs/ListXYZF__4GIFSiiii.cpp
 0X1671B8	glob__static_initialization_and_destruction_0	308	new_1671b8/glob__static_initialization_and_destruction_0.c
 0X1672F0	func_001672F0	32	new_1671b8/fun_001672f0.c
@@ -2346,6 +2348,7 @@ address	name	size	file
 0X1BC030	func_001BC030	32	mpeg-memcard/fun_001bc030.c
 0X1BC050	Obstacle_Init	56	mpeg-memcard/Obstacle_Init.cpp
 0X1BC160	Obstacle_AddLoHierarchy	52	aseg/Obstacle_AddLoHierarchy.c
+0X1BC530	Obstacle_IposWrap	60	new_1bc198/Obstacle_IposWrap.cpp
 0X1BC570	Obstacle_PostLoad	276	new_1bc198/Obstacle_PostLoad.cpp
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	new_1bc198/Obstacle_RemoveFromPathzone.c
 0X1BD310	PobstacleFindEdgeBlocker	240	new_1bc198/PobstacleFindEdgeBlocker.cpp
@@ -2543,6 +2546,7 @@ address	name	size	file
 0X1D4CE0	func_001D4CE0	28	rip-rumble/fun_001d4ce0.cpp
 0X1D4D00	func_001D4D00	20	rip-rumble/fun_001d4d00.c
 0X1D4D18	func_001D4D18	20	rip-rumble/fun_001d4d18.c
+0X1D4D30	InitVehicleGun	176	rip-rumble/InitVehicleGun.cpp
 0X1D4DE0	CopyVehicleGun	36	rip-rumble/CopyVehicleGun.c
 0X1D4E08	FVehicleGunHasAmmo	40	rip-rumble/FVehicleGunHasAmmo.cpp
 0X1D4E30	SpendVehicleGunAmmo	56	rip-rumble/SpendVehicleGunAmmo.cpp
@@ -2918,6 +2922,7 @@ address	name	size	file
 0X1F7C68	FadeAloIn	168	so-sm/FadeAloIn.cpp
 0X1F7E08	CpartCollectAlo	192	so-sm/CpartCollectAlo.cpp
 0X1F7EC8	func_001F7EC8	36	unsorted/fun_001f7ec8.cpp
+0X1F7F08	func_001F7F08	20	unsorted/fun_001f7f08.cpp
 0X1F7F20	func_001F7F20	36	unsorted/fun_001f7f20.cpp
 0X1F7FA0	SetAloScrollingMasterSpeeds	152	so-sm/SetAloScrollingMasterSpeeds.cpp
 0X1F8038	func_001F8038	152	so-sm/fun_001f8038.cpp
@@ -3413,6 +3418,7 @@ address	name	size	file
 0X2296A0	PxaAllocSw	28	water-sw/PxaAllocSw.c
 0X229710	AddSoXa__FP2SOP2XA	40	so/AddSoXa__FP2SOP2XA.cpp
 0X2297F0	func_002297F0	8	so-wr/fun_002297f0.c
+0X229D60	func_00229D60	20	unsorted/fun_00229d60.cpp
 0X229D78	FPointInAloParts_thunk	28	so-wr/FPointInAloParts_thunk.c
 0X229D98	func_00229D98	308	so-wr/fun_00229d98.c
 0X229ED0	func_00229ED0	32	so-wr/fun_00229ed0.c

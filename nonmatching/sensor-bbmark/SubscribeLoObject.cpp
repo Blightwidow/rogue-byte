@@ -14,9 +14,10 @@ void SubscribeLoObject(LO *plo, LO *ploTarget)
             return;
         }
     }
-    SUBSCRIBER *psubNew = (SUBSCRIBER *)PvAllocSlotheapImpl(&B_003E1144);
-    psubNew->plo = ploTarget;
-    psubNew->csub = 1;
-    psubNew->pnext = plo->psubFirst;
+    SUBSCRIBER * psubNew;
     plo->psubFirst = psubNew;
+    psubNew = (SUBSCRIBER *)PvAllocSlotheapImpl(&B_003E1144);
+    psubNew->csub = 1;
+    psubNew->plo = ploTarget;
+    psubNew->pnext = plo->psubFirst;
 }

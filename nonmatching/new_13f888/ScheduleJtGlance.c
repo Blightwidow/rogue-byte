@@ -12,8 +12,8 @@ void ScheduleJtGlance(void *arg0) {
         var_f12 = M2C_FIELD(arg0, f32 *, 0x1138);
         var_f13 = M2C_FIELD(arg0, f32 *, 0x113C);
     } else {
-        var_f13 = M2C_FIELD(arg0, f32 *, 0x1144);
         var_f12 = M2C_FIELD(arg0, f32 *, 0x1140);
+        var_f13 = M2C_FIELD(arg0, f32 *, 0x1144);
     }
     temp_f20 = g_2dded0;
     M2C_FIELD(arg0, f32 *, 0x114C) = (f32) (temp_f20 + GRandInRange(var_f12, var_f13));

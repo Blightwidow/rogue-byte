@@ -12,8 +12,8 @@ extern "C" void InitBomb(BOMB *pbomb)
     pbomb->f154 = RO_FLT_002A4B08;
     pbomb->f160 = D_FLT_002BC9C8;
     pbomb->f1E0 = 1;
-    pbomb->f1EC = 0x100;
     pbomb->f150 = 0;
+    pbomb->f1EC = 0x100;
     pbomb->f1F0 = -10;
     if ((flags ^ 1) & 1)
         *(unsigned *)flags |= 2;

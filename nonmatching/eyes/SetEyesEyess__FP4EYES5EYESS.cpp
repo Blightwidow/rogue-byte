@@ -30,12 +30,13 @@ void SetEyesEyess(EYES *peyes, EYESS eyess)
         asm volatile("");
         float uClosed = peyes->uClosed;
         asm volatile("");
-        float twice = ToFloat(cframe * 2);
+        float  twice;
         float last = ToFloatAfter(cframe - 1, twice);
-        peyes->gframe = last * uClosed;
+        twice = ToFloat(cframe * 2);
         peyes->sviframe = twice * (1.0f - uClosed) / peyes->dtBlink;
+        peyes->gframe = last * uClosed;
         float roll = GRandInRange(0.0f, 1.0f);
-        if (roll < peyes->pBlinkAgain)
+        if (!(roll >= peyes->pBlinkAgain))
             peyes->dtOpen = 0.0f;
         else
             peyes->dtOpen = GRandInRange(peyes->dtOpenMin, peyes->dtOpenMax);
@@ -44,7 +45,8 @@ void SetEyesEyess(EYES *peyes, EYESS eyess)
     case EYESS_Closing:
         break;
     case EYESS_Closed: {
-        int iframeLast = peyes->cframe - 1;
+        int  iframeLast;
+        iframeLast = peyes->cframe - 1;
         if ((int)peyes->gframe != iframeLast)
             peyes->gframe = ToFloat(iframeLast);
         break;

@@ -12,8 +12,8 @@ s32 *PactAddStgAction(s32 arg1) {
     if (temp_v0_2 != NULL) {
         temp_a0 = M2C_FIELD(temp_v0_2, s32 *, 8);
         if (temp_a0 < 0x40) {
-            temp_v0 = M2C_FIELD(temp_v0_2, s32 *, 0xC) + (temp_a0 * 8);
             M2C_FIELD(temp_v0_2, s32 *, 8) = (s32) (temp_a0 + 1);
+            temp_v0 = M2C_FIELD(temp_v0_2, s32 *, 0xC) + (temp_a0 * 8);
             *temp_v0 = arg1;
             return temp_v0;
         }

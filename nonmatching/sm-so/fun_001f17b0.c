@@ -11,8 +11,8 @@ void func_001F17B0(void *arg0, s32 arg1) {
         M2C_FIELD(arg0, s32 *, 0x484) = (s32) (temp_v1 + 1);
         temp_v0 = arg0 + (var_v0 + 0x404);
         M2C_FIELD(temp_v0, s32 *, 0) = arg1;
-        M2C_FIELD(temp_v0, s32 *, 8) = -1;
         M2C_FIELD(temp_v0, s32 *, 0xC) = 1;
+        M2C_FIELD(temp_v0, s32 *, 8) = -1;
         M2C_FIELD(temp_v0, s32 *, 4) = 0;
     }
 }

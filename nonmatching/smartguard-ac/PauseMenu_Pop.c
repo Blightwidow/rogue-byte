@@ -10,8 +10,8 @@ void PauseMenu_Pop(void *arg0) {
         PauseMenu_SetState(2);
         if (func_001B0108(arg0) != 0) {
             temp_v0 = M2C_FIELD(arg0, s32 *, 0x24) - 1;
-            M2C_FIELD(arg0, s32 *, 0x24) = temp_v0;
             M2C_FIELD(arg0, s32 *, 0x1EC) = temp_v0;
+            M2C_FIELD(arg0, s32 *, 0x24) = temp_v0;
         }
     }
 }

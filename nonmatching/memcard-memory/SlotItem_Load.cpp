@@ -12,17 +12,17 @@ void SlotItem_Load(ITEM *item)
     char *base = B_002E6604;
     asm("" : "+r" (base));
     char *slot = base + item->slot * 0x5464;
+    char *saves = base + 0x7FDC;
     CRef ref;
     RefGetGameSaveValue(&ref, B_003E0FAC, slot);
     float value = ref.g;
     CRef_Destruct(&ref);
-    char *saves = base + 0x7FDC;
     *(char **)(saves + 0x7D50) = slot;
     float zero;
     asm("mtc1 $0, %0\n\tnop" : "=f" (zero));
     if (value == zero) {
         ResetSaveKeepingOptions(slot, 1);
-        StartGameFromSave(*(char **)(saves + 0x7D50));
+        StartGameFromSave(*(char **)(0x7D50 + saves));
     } else {
         StartGameFromSave(slot);
         if (item != 0)

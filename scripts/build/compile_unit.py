@@ -86,11 +86,14 @@ def compile_object(language, source, output, assembler=None, include=None, local
             os.remove(assembly)
         else:
             open(assembly, 'w').write(hoist_externs(text))
-            try:  # ps2eeas loops forever on some inputs
-                result = subprocess.run([WIBO, PS2EEAS, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=60)
-            except subprocess.TimeoutExpired:
-                os.remove(assembly)
-                return False, 'ps2eeas timed out'
+            for attempt in range(3):  # under a parallel build ps2eeas (under wibo) now and then never returns; a rerun takes a fraction of a second
+                try:
+                    result = subprocess.run([WIBO, PS2EEAS, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=20)
+                    break
+                except subprocess.TimeoutExpired:
+                    if attempt == 2:
+                        os.remove(assembly)
+                        return False, 'ps2eeas timed out'
             os.remove(assembly)
     if not use_ps2eeas:
         result = subprocess.run([*common, '-c', os.path.abspath(source), '-o', temporary], capture_output=True, text=True)

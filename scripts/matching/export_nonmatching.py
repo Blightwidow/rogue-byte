@@ -71,6 +71,7 @@ def main():
             jobs.append((address, candidates))
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         results = [(address, best) for address, best in pool.map(evaluate, jobs) if best]
+    readme = open(os.path.join(OUTPUT, 'README.md')).read() if os.path.exists(os.path.join(OUTPUT, 'README.md')) else None  # documentation, not generated
     shutil.rmtree(OUTPUT, ignore_errors=True)
     manifest = []
     for address, (points, path, language) in results:
@@ -87,6 +88,9 @@ def main():
         handle.write('address\tname\tsize\tfile\tscore\n')
         for entry in sorted(manifest):
             handle.write('\t'.join(entry) + '\n')
+    if readme is not None:
+        with open(os.path.join(OUTPUT, 'README.md'), 'w') as handle:
+            handle.write(readme)
     print(f'{len(manifest)} of {len(functions)} unmatched functions have a source that compiles -> {OUTPUT}/')
 
 

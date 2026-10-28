@@ -8,8 +8,8 @@ void PostWipeLoad(void *arg0) {
     void *temp_v1;
 
     PostSoLoad();
-    M2C_FIELD(arg0, s32 *, 0x150) = -1;
     SetSoProperties(arg0, 2, &D_002BD380);
     temp_v1 = M2C_FIELD(arg0, void **, 0xC);
+    M2C_FIELD(arg0, s32 *, 0x150) = -1;
     M2C_FIELD(temp_v1, M2C_UNK (**)(void *), 0x4C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x48));
 }

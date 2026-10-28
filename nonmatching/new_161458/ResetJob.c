@@ -10,8 +10,8 @@ void ResetJob(void *arg0) {
     if (var_s0 != NULL) {
         M2C_FIELD(var_s0, s32 *, 0x64) = 0;
 loop_2:
-        var_s0 = M2C_FIELD(var_s0, void **, 0x84);
         SaveTaskVariables(var_s0);
+        var_s0 = M2C_FIELD(var_s0, void **, 0x84);
         if (var_s0 != NULL) {
             M2C_FIELD(var_s0, s32 *, 0x64) = 0;
             goto loop_2;

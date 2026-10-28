@@ -9,7 +9,8 @@ extern "C" int func_00209098(Guard *);
 extern "C" void GoalIdle_Activate(Goal *goal)
 {
     func_001EEF70();
-    Guard *guard = goal->guard;
+    Guard * guard;
+    guard = goal->guard;
     int cmd = guard->cmd;
     if (cmd != 0) {
         goal->cmd = cmd;

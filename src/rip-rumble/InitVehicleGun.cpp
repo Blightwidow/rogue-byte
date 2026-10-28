@@ -16,9 +16,9 @@ void InitVehicleGun(GUN *gun, VEHICLE *vehicle)
     gun->f60 = D_002C2240;
     gun->f68 = -1750.0f;
     gun->f88 = 200.0f;
-    gun->f98 = 1.0f;
     gun->f8C = 400.0f;
     gun->f94 = 500.0f;
-    gun->f9C = 1.5f;
+    gun->f98 = 1.0f;
     gun->f90 = 0;
+    gun->f9C = 1.5f;
 }

@@ -18,8 +18,8 @@ void InitSmack__FP5SMACKP6VECTORfP2SO(SMACK *smack, QW pos, float scale, SO *so)
     float vy = GRandInRange(table->vmin[1], table->vmax[1]);
     float vz = GRandInRange(table->vmin[2], table->vmax[2]);
     smack->v[0] = vx;
-    smack->v[1] = vy;
     smack->v[2] = vz;
+    smack->v[1] = vy;
     smack->lifetime = D_002C2000;
     smack->alpha = D_002BBB50;
     smack->scale = table->scale;

@@ -8,6 +8,6 @@ void InitRumble__FP6RUMBLEii(void *arg0, s32 arg1, s32 arg2) {
     } else {
         SetRumbleRums__FP6RUMBLE4RUMS(arg0, 3);
     }
-    M2C_FIELD(arg0, s32 *, 0) = arg1;
     M2C_FIELD(arg0, s32 *, 4) = arg2;
+    M2C_FIELD(arg0, s32 *, 0) = arg1;
 }
