@@ -1,7 +1,6 @@
 <p align="center"><img src="assets/logo.png" alt="Rogue Byte" width="480"></p>
 <p align="center">
   <a href="https://bytematch.dev/Blightwidow/rogue-byte"><img src="https://bytematch.dev/Blightwidow/rogue-byte.svg?mode=shield&label=Matched+code&measure=matched_code_percent" alt="bytematch progress"></a>
-  <a href="https://blightwidow.github.io/rogue-byte/"><img src="https://img.shields.io/badge/Progress-Map-2f7af4?style=flat-square&logo=githubpages&logoColor=2f7af4&labelColor=0d1117" alt="Progress page"></a>
   <a href="docs/build/building.md"><img src="https://img.shields.io/badge/Build-Guide-c3cbd8?style=flat-square&logo=gnubash&logoColor=c3cbd8&labelColor=0d1117" alt="Build guide"></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/Contributing-Guide-c3cbd8?style=flat-square&logo=github&logoColor=c3cbd8&labelColor=0d1117" alt="Contributing guide"></a>
 </p>
@@ -16,11 +15,12 @@
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 <p align="center">
-  <a href="https://blightwidow.github.io/rogue-byte/">
+  <a href="https://bytematch.dev/Blightwidow/rogue-byte">
     <img src="site/progress-map.svg" alt="Progress map: one block per module, one cell per function, coloured by status" width="100%">
   </a>
   <br>
-  <sub>Progress map of the code (blue: rebuilt from C and verified byte for byte; dark: not matched yet; grey: Sony's SDK). <a href="https://blightwidow.github.io/rogue-byte/">Live page</a>.</sub>
+  <sub>Progress map of the code (blue: rebuilt from C and verified byte for byte; dark: not matched yet; grey: Sony's SDK).
+  Live numbers on <a href="https://bytematch.dev/Blightwidow/rogue-byte">bytematch.dev</a>, details on the <a href="https://blightwidow.github.io/rogue-byte/">progress page</a>.</sub>
 </p>
 
 <p align="center">
