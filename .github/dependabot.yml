@@ -11,5 +11,10 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    ignore:
+      # Splat 0.50 / spimdisasm 1.42 change the assembly format and the symbol rules the build relies on (tried 2026-10: `make elf` fails).
+      # Bump them together, by hand, after porting scripts/build and config/us.
+      - dependency-name: splat64
+      - dependency-name: spimdisasm
     commit-message:
       prefix: "build"
