@@ -71,6 +71,13 @@ a { color: #8fb4ff; }
   <h2>Over time</h2>
   <svg class="curve" id="curve" viewBox="0 0 1000 160" preserveAspectRatio="none" role="img" aria-label="Share of code compiled from C, by commit"></svg>
 
+  <h2>By category</h2>
+  <p class="note">The categories of the objdiff report that <a href="https://bytematch.dev/Blightwidow/rogue-byte">bytematch.dev</a> shows. Origin (Sony SDK, Sly 1 engine code, Sly 2-only code) and subsystem
+  (by the Sly 1 source file a module came from, so approximate; <a href="https://github.com/Blightwidow/rogue-byte/blob/main/config/us/categories.json">the mapping</a> is editable). <i>Fully linked</i> counts only modules whose every function matches.</p>
+  <div class="table-wrap">
+    <table id="categories"><thead><tr><th>Category</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Functions</th><th class="num">Modules complete</th></tr></thead><tbody></tbody></table>
+  </div>
+
   <h2>Modules</h2>
   <div class="table-wrap">
     <table id="modules"><thead><tr>
@@ -95,7 +102,8 @@ const element = (tag, attributes = {}, text = '') => {
 const segments = (row) => [['c', 'var(--blue)'], ['matched', 'var(--gold)']].map(([status, color]) => {
   const part = element('i'); part.style.width = percent(row[status + '_bytes'], row.bytes); part.style.background = color; return part; });
 
-Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history.json').then(r => r.json())]).then(([summary, history]) => {
+Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history.json').then(r => r.json()),
+  fetch('data/objdiff-report.json').then(r => r.json()).catch(() => null)]).then(([summary, history, objdiff]) => {
   const game = summary.game_code;
   const cards = [
     [percent(game.c_bytes, game.bytes), 'of the code compiles from our C and is verified byte for byte'],
@@ -118,6 +126,21 @@ Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history
     document.getElementById('curve').append(line);
   } else {
     document.getElementById('curve').replaceWith(element('p', { class: 'note' }, 'The curve starts with the next published run.'));
+  }
+
+  if (objdiff && objdiff.categories) {
+    const categoryBody = document.querySelector('#categories tbody');
+    for (const category of objdiff.categories) {
+      const measures = category.measures;
+      const tr = element('tr');
+      tr.append(element('td', {}, category.name), element('td', { class: 'num' }, format.format(Number(measures.total_code)) + ' B'),
+                element('td', { class: 'num' }, measures.matched_code_percent.toFixed(1) + '%'),
+                element('td', { class: 'num' }, `${format.format(measures.matched_functions)} / ${format.format(measures.total_functions)}`),
+                element('td', { class: 'num' }, `${measures.complete_units || 0} / ${measures.total_units}`));
+      categoryBody.append(tr);
+    }
+  } else {
+    document.getElementById('categories').replaceWith(element('p', { class: 'note' }, 'Category data is not available.'));
   }
 
   const body = document.querySelector('#modules tbody');

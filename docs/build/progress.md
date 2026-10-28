@@ -42,6 +42,20 @@ Commit the changed files under `site/`. `site/data/history.json` gets one point 
 
 The files list names, addresses, sizes and statuses only, never game bytes.
 
+## Categories
+
+`make objdiff` puts every unit (module) into categories of the objdiff report, which bytematch.dev and the progress page show:
+
+| Kind | Categories |
+| :--- | :--- |
+| Overall | Game code (everything but the SDK) |
+| Origin | Sony SDK, Sly 1 engine code (runs that match a Sly 1 source file), Sly 2-only code (`new_<address>` runs) |
+| Subsystem | Core and memory, Graphics and effects, Camera, Script, Sly and guards, World objects and physics, UI/menus/saves, Audio/video/input |
+
+A subsystem is chosen from the Sly 1 source-file name a module came from (the first one for a boundary run like `puffer+slotheap`); a Sly 2-only run takes the subsystem of the run before
+it. The mapping is `config/us/categories.json` (tokens, categories and per-module overrides); it is approximate by nature, so move a file to another subsystem
+by editing it and re-running `make objdiff`. A test checks that every file name is mapped. The top-level numbers cover all units, SDK included.
+
 ## In CI
 
 `progress.yml` validates `site/data/summary.json` and, on a pull request, `progress-comment.yml` posts how the change moves

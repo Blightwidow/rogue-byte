@@ -6,7 +6,9 @@ Per module unit (build/splat/asm/<unit>.s): the target object is that assembly a
 object links the unit's compiled functions from src/ (`ld -r`), with their symbols renamed to the names the assembly
 uses (function labels, D_<address> for data) so objdiff pairs functions and relocations by name. A unit without C gets an
 empty base object. Needs `make elf` (build/image/derived.tsv, build/units) and tools/objdiff/objdiff-cli."""
+import bisect
 import concurrent.futures
+import csv
 import json
 import os
 import re
@@ -24,9 +26,37 @@ BINUTILS = os.path.join('tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decomp
 OBJDIFF = os.path.join('tools', 'objdiff', 'objdiff-cli')
 EXPECTED, BASE = os.path.join('build', 'objdiff', 'expected'), os.path.join('build', 'objdiff', 'base')
 ADDRESS_NAME = re.compile(r'^([A-Z]{1,3})_([0-9A-Fa-f]{8})$')
-CATEGORY = {'id': 'game', 'name': 'Game code'}
 
 header, functions = read_units('build/splat')
+CATEGORY_CONFIG = json.load(open(os.path.join('config', 'us', 'categories.json')))
+module_entries = sorted((int(row['sly2_entry'], 16), row['module']) for row in csv.DictReader(open(os.path.join('config', 'recovered', 'modules.tsv')), delimiter='\t'))
+entry_addresses = [address for address, _ in module_entries]
+
+def module_at(address):
+    """The module (modules.tsv) of the function at or before the address."""
+    return module_entries[max(bisect.bisect_right(entry_addresses, address) - 1, 0)][1]
+
+def subsystem_of(index):
+    """Subsystem category of the module entry at `index`: by its first Sly 1 file; a Sly 2-only run takes the one of the run before it."""
+    while index >= 0:
+        module = module_entries[index][1]
+        if module in CATEGORY_CONFIG.get('modules', {}):
+            return CATEGORY_CONFIG['modules'][module]
+        if module != 'sdk' and not module.startswith('new_'):
+            token = module.split('+')[0]
+            return CATEGORY_CONFIG['files'].get(token) or CATEGORY_CONFIG['files'].get(module.split('+')[-1])
+        index -= 1
+    return None
+
+def categories_of(unit):
+    """Category ids of a unit: origin (sdk / sly1 / new), game code unless SDK, and the subsystem."""
+    address = units[unit][0]['address']
+    module = module_at(address)
+    if module == 'sdk':
+        return ['sdk']
+    ids = ['game', 'new' if module.startswith('new_') else 'sly1']
+    subsystem = subsystem_of(max(bisect.bisect_right(entry_addresses, address) - 1, 0))
+    return ids + ([subsystem] if subsystem else [])
 function_name = {function['address']: function['name'] for function in functions}
 units = {}
 for function in functions:
@@ -122,8 +152,8 @@ configuration = {
     '$schema': 'https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json',
     'custom_make': 'true', 'custom_args': [], 'build_target': False, 'build_base': False, 'watch_patterns': [],
     'units': [{'name': unit, 'target_path': os.path.join(EXPECTED, unit + '.o'), 'base_path': os.path.join(BASE, unit + '.o'),
-               'metadata': {'progress_categories': [CATEGORY['id']], 'complete': all(function['address'] in manifest for function in units[unit])}} for unit in sorted(units)],
-    'progress_categories': [CATEGORY],
+               'metadata': {'progress_categories': categories_of(unit), 'complete': all(function['address'] in manifest for function in units[unit])}} for unit in sorted(units)],
+    'progress_categories': [{'id': category['id'], 'name': category['name']} for category in CATEGORY_CONFIG['categories']],
 }
 with open('objdiff.json', 'w') as handle:
     json.dump(configuration, handle, indent=2)

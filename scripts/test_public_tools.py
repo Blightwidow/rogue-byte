@@ -103,6 +103,30 @@ class MergeTests(unittest.TestCase):
         self.assertEqual(len(asm_units.merge_spans(functions, {0x100000: 0x58})), 2)
 
 
+class CategoryConfigTests(unittest.TestCase):
+    ROOT = os.path.join(HERE, '..')
+
+    def setUp(self):
+        import csv
+        import json
+        self.config = json.load(open(os.path.join(self.ROOT, 'config', 'us', 'categories.json')))
+        rows = csv.DictReader(open(os.path.join(self.ROOT, 'config', 'recovered', 'modules.tsv')), delimiter='\t')
+        self.modules = {row['module'] for row in rows}
+
+    def test_every_sly1_file_has_a_subsystem(self):
+        tokens = {token for module in self.modules if module != 'sdk' and not module.startswith('new_') for token in module.split('+')}
+        missing = sorted(token for token in tokens - {'sdk'} if token not in self.config['files'])
+        self.assertEqual(missing, [])
+
+    def test_subsystems_are_defined_categories(self):
+        ids = {category['id'] for category in self.config['categories']}
+        used = set(self.config['files'].values()) | set(self.config.get('modules', {}).values())
+        self.assertEqual(sorted(used - ids), [])
+
+    def test_overrides_name_real_modules(self):
+        self.assertEqual(sorted(set(self.config.get('modules', {})) - self.modules), [])
+
+
 class ListingTests(unittest.TestCase):
     FUNCTIONS = [
         {'address': '0X100010', 'name': 'b', 'size': 40, 'module': 'm', 'status': 'asm', 'named': True},
