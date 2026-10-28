@@ -11,11 +11,16 @@
 
 > [!WARNING]
 > Rogue Byte does not include game data, executables, disc images, or proprietary toolchains.<br>
-> A legitimately obtained copy of the **USA / NTSC-U** release (`SCUS_97316`) is required.
+> A legitimately obtained copy of the **USA / NTSC-U** release (`SCUS_97316`) is required; the tools rebuild everything locally.<br>
+> `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-**No game data is included.** No executable, disc image, Ghidra project or raw decompiler output ships here. `src/` holds
-matched C/C++ for individual functions (see `src/README.md` and `THIRD_PARTY_NOTICES.md` for its status). You supply
-your own legitimate copy, and the tools rebuild everything locally.
+<p align="center">
+  <a href="https://blightwidow.github.io/rogue-byte/">
+    <img src="site/progress-map.svg" alt="Progress map: one block per module, one cell per function, coloured by status" width="100%">
+  </a>
+  <br>
+  <sub>Progress map of the code (blue: rebuilt from C and verified byte for byte; dark: not matched yet; grey: Sony's SDK). <a href="https://blightwidow.github.io/rogue-byte/">Live page</a>.</sub>
+</p>
 
 <p align="center">
   <a href="https://blightwidow.github.io/rogue-byte/naming.html">
