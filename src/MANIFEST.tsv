@@ -869,6 +869,7 @@ address	name	size	file
 0X123B30	func_00123B30	48	splice-bif/fun_00123b30.cpp
 0X123B60	RefOpGetSuck	60	splice-bif/RefOpGetSuck.c
 0X123BA0	func_00123BA0	52	splice-bif/fun_00123ba0.c
+0X123DD8	RefOpCancelCallback	64	splice-bif/RefOpCancelCallback.cpp
 0X123E18	RefOpDeferObjectUpdate	152	splice-bif/RefOpDeferObjectUpdate.cpp
 0X123EB0	RefOpObjectOption__FiP4CRefP6CFrame4BIFK	264	splice-bif/RefOpObjectOption__FiP4CRefP6CFrame4BIFK.cpp
 0X123FB8	RefOpAddO	44	splice-bif-splice-eval/RefOpAddO.cpp
@@ -883,6 +884,7 @@ address	name	size	file
 0X1247D8	RefOpFindObjectsInBoundingBox	212	splice-bif-splice-eval/RefOpFindObjectsInBoundingBox.cpp
 0X1248B0	RefOpFindObjectsInBoundingSphere	248	splice-bif-splice-eval/RefOpFindObjectsInBoundingSphere.cpp
 0X1250D8	RefOpConvertObjectMatrix	144	splice-bif-splice-eval/RefOpConvertObjectMatrix.cpp
+0X1251E8	RefOpStartSound	92	splice-bif-splice-eval/RefOpStartSound.cpp
 0X125248	RefOpStartRumble	132	splice-bif-splice-eval/RefOpStartRumble.cpp
 0X125398	bevy_audio_bif_stop_sound	184	splice-bif-splice-eval/bevy_audio_bif_stop_sound.cpp
 0X125450	RefOpSetSaveValue	188	splice-bif-splice-eval/RefOpSetSaveValue.cpp
@@ -1035,6 +1037,7 @@ address	name	size	file
 0X12E740	Camobj_AddFocalUser	16	missile-proxy/Camobj_AddFocalUser.c
 0X12E750	Camobj_RemoveFocalUser	16	missile-proxy/Camobj_RemoveFocalUser.c
 0X12E760	InitCplcyCamobj	52	missile-proxy/InitCplcyCamobj.c
+0X12E798	bevy_classes_k30_cam_activate	88	missile-proxy/bevy_classes_k30_cam_activate.cpp
 0X12E7F0	bevy_classes_k30_cam_deactivate	104	missile-proxy/bevy_classes_k30_cam_deactivate.c
 0X12E9F0	func_0012E9F0	308	missile-proxy/fun_0012e9f0.c
 0X12EB28	func_0012EB28	32	missile-proxy/fun_0012eb28.c
@@ -1126,6 +1129,7 @@ address	name	size	file
 0X136040	SetBentleyGadgetAnim	216	bbmark-blend/SetBentleyGadgetAnim.cpp
 0X1362F8	SetBentleyAimState	60	bbmark-blend/SetBentleyAimState.c
 0X1367D8	func_001367D8	152	bbmark-blend/fun_001367d8.cpp
+0X136A28	PslotBentleyGadget	100	bbmark-blend/PslotBentleyGadget.cpp
 0X136A90	UseBentleyGadget	444	bbmark-blend/UseBentleyGadget.cpp
 0X136C50	UpdateBentleyGadgetGlob	96	bbmark-blend/UpdateBentleyGadgetGlob.c
 0X136CB0	GetBentleySaveRoot	12	bbmark-blend/GetBentleySaveRoot.cpp
@@ -1224,6 +1228,7 @@ address	name	size	file
 0X142530	func_00142530	16	new_13f888/fun_00142530.c
 0X1425B0	RenderJt	312	new_13f888/RenderJt.cpp
 0X1426E8	InitJtLookRig	224	new_13f888/InitJtLookRig.cpp
+0X1427C8	SetJtLookTarget	104	new_13f888/SetJtLookTarget.cpp
 0X142830	SetJtLookTargetHeld	44	new_13f888/SetJtLookTargetHeld.cpp
 0X142860	ReleaseJtLookHold	8	new_13f888/ReleaseJtLookHold.c
 0X142868	func_00142868	20	new_13f888/fun_00142868.cpp
@@ -1242,6 +1247,8 @@ address	name	size	file
 0X144188	SetJtHealth	24	new_13f888/SetJtHealth.c
 0X1441A0	GetJtPower	28	new_13f888/GetJtPower.cpp
 0X1441C0	SetJtPower	36	new_13f888/SetJtPower.cpp
+0X1442D0	JT_RetainSmKinds	104	new_13f888/JT_RetainSmKinds.c
+0X144338	JT_ReleaseSmKinds	80	new_13f888/JT_ReleaseSmKinds.cpp
 0X1443D8	bevy_player_p15_binoc_active	12	new_13f888/bevy_player_p15_binoc_active.c
 0X1443E8	func_001443E8	12	unsorted/fun_001443e8.c
 0X1443F8	func_001443F8	16	unsorted/fun_001443f8.c
@@ -1381,6 +1388,7 @@ address	name	size	file
 0X14E270	BuildCmFgfn__FP2CMfP4FGFN	176	cm/BuildCmFgfn__FP2CMfP4FGFN.cpp
 0X14E698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	52	cm/CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR.cpp
 0X14F030	func_0014F030	12	unsorted/fun_0014f030.cpp
+0X14F5F8	func_0014F5F8	24	unsorted/fun_0014f5f8.cpp
 0X14F610	SetCmNearClip	28	cm/SetCmNearClip.c
 0X14F630	bevy_camera_cm_14f630	60	cm/bevy_camera_cm_14f630.cpp
 0X14F670	SetCmFarClip	28	cm/SetCmFarClip.c
@@ -1429,6 +1437,7 @@ address	name	size	file
 0X1520C8	RemoveDancer	52	rip-game/RemoveDancer.c
 0X152148	UpdateDancer	264	rip-game/UpdateDancer.cpp
 0X152250	HandleDancerMessage	256	rip-game/HandleDancerMessage.cpp
+0X152350	GetDancerCpdefi	60	rip-game/GetDancerCpdefi.cpp
 0X152390	PlayDancerMove	268	rip-game/PlayDancerMove.cpp
 0X1524A0	PlayDancerAnim	56	rip-game/PlayDancerAnim.cpp
 0X152578	ResolveDancerMoves	172	rip-game/ResolveDancerMoves.cpp
@@ -1560,6 +1569,7 @@ address	name	size	file
 0X161458	ClearDifficultySuckPaths_thunk	32	new_161458/ClearDifficultySuckPaths_thunk.c
 0X1619A0	bevy_camera_follow_activity	184	new_161458/bevy_camera_follow_activity.cpp
 0X161F10	func_00161F10	52	new_161458/fun_00161f10.cpp
+0X161F48	ApplyTaskStateRequests	128	new_161458/ApplyTaskStateRequests.c
 0X161FC8	GrfOfState	40	new_161458/GrfOfState.cpp
 0X1620B0	ApplyTaskToggles	412	new_161458/ApplyTaskToggles.cpp
 0X162250	func_00162250	380	new_161458/fun_00162250.cpp
@@ -1842,6 +1852,7 @@ address	name	size	file
 0X1829D8	Swarm_AbsorbTouch	224	pzo-hide/Swarm_AbsorbTouch.cpp
 0X182B18	StaticInitSlotheapsSwarm_182b18	308	pzo-hide/StaticInitSlotheapsSwarm_182b18.c
 0X182C50	StaticInitSlotheapsSwarm_thunk	32	pzo-hide/StaticInitSlotheapsSwarm_thunk.c
+0X182C70	bevy_player_p6_182c70	80	pzo-hide/bevy_player_p6_182c70.c
 0X182CC0	Member_FGetWrapRange	8	pzo-hide/Member_FGetWrapRange.c
 0X182CC8	Member_GetParam	8	pzo-hide/Member_GetParam.cpp
 0X182CD0	Member_GetPosFromParam	8	pzo-hide/Member_GetPosFromParam.c
@@ -1892,10 +1903,12 @@ address	name	size	file
 0X184D60	CBinaryFileStream_FOpenLocation	56	bis/CBinaryFileStream_FOpenLocation.cpp
 0X184DF8	bis__static_initialization_and_destruction_0	308	new_184df8/bis__static_initialization_and_destruction_0.c
 0X184F30	_GLOBAL_I_bis	32	new_184df8/_GLOBAL_I_bis.c
+0X184F98	func_00184F98	60	new_184f98/fun_00184f98.cpp
 0X184FD8	func_00184FD8	308	new_184f98/fun_00184fd8.c
 0X185110	func_00185110	32	new_184f98/fun_00185110.c
 0X185130	InitXfm_thunk	28	new_184f98/InitXfm_thunk.c
 0X185150	LoadSpireFromBrx	444	new_184f98/LoadSpireFromBrx.cpp
+0X1856B8	func_001856B8	8	new_184f98/fun_001856b8.cpp
 0X185BF8	InitSpire__FP5SPIRE	48	spire/InitSpire__FP5SPIRE.cpp
 0X185C28	Spire_AddLoHierarchy	52	spire/Spire_AddLoHierarchy.c
 0X185C60	Spire_RemoveLoHierarchy	52	spire/Spire_RemoveLoHierarchy.c
@@ -1932,6 +1945,7 @@ address	name	size	file
 0X18D698	func_0018D698	96	jt-alo/fun_0018d698.c
 0X18DD78	ReleaseSlyGadget	140	jt-alo/ReleaseSlyGadget.cpp
 0X18DE08	PchzSlySaveRoot	12	jt-alo/PchzSlySaveRoot.cpp
+0X18DE80	PredictSlyLead	96	jt-alo/PredictSlyLead.cpp
 0X18DF50	bevy_player_p13_18df50	8	jt-alo/bevy_player_p13_18df50.c
 0X18DF58	SetJtRideOffset	8	jt-alo/SetJtRideOffset.c
 0X18E3E8	func_0018E3E8	308	jt-alo/fun_0018e3e8.c
@@ -2117,6 +2131,7 @@ address	name	size	file
 0X1ACAE8	MemcardMenu_PostLoad	76	memcard-memory/MemcardMenu_PostLoad.c
 0X1ACB38	MemcardMenu_Reset	28	memcard-memory/MemcardMenu_Reset.c
 0X1ACC18	MemcardMenu_SetDir	32	memcard-memory/MemcardMenu_SetDir.c
+0X1ACC80	MemcardMenu_KindOfState	68	memcard-memory/MemcardMenu_KindOfState.cpp
 0X1AD168	func_001AD168	232	memcard-memory/fun_001ad168.cpp
 0X1AD250	func_001AD250	208	memcard-memory/fun_001ad250.cpp
 0X1AD3E0	func_001AD3E0	160	memcard-memory/fun_001ad3e0.cpp
@@ -2411,6 +2426,7 @@ address	name	size	file
 0X1CC288	Carry_SDistStartCurves	44	new_1c90d0/Carry_SDistStartCurves.cpp
 0X1CC2B8	Carry_SDistEndCurves	44	new_1c90d0/Carry_SDistEndCurves.cpp
 0X1CC9A8	func_001CC9A8	116	new_1c90d0/fun_001cc9a8.c
+0X1CCA20	Carry_UpdateReach_thunk	28	new_1c90d0/Carry_UpdateReach_thunk.cpp
 0X1CD2C0	Carry_Detach	72	new_1c90d0/Carry_Detach.c
 0X1CD308	func_001CD308	400	new_1c90d0/fun_001cd308.cpp
 0X1CD498	StaticInitSlotheaps_1cd498	308	new_1c90d0/StaticInitSlotheaps_1cd498.c
@@ -2456,6 +2472,7 @@ address	name	size	file
 0X1D2150	func_001D2150	240	rip-rumble/fun_001d2150.cpp
 0X1D2240	func_001D2240	144	rip-rumble/fun_001d2240.cpp
 0X1D22D0	func_001D22D0	332	rip-rumble/fun_001d22d0.cpp
+0X1D2DD0	func_001D2DD0	68	rip-rumble/fun_001d2dd0.cpp
 0X1D3E48	AddVehicleCustomXps	228	rip-rumble/AddVehicleCustomXps.cpp
 0X1D4940	SetVehicleState	484	rip-rumble/SetVehicleState.cpp
 0X1D4B28	SetVehicleAiState	32	rip-rumble/SetVehicleAiState.c
@@ -2551,9 +2568,12 @@ address	name	size	file
 0X1DD920	TitleMenu_Update	484	game-stepguard/TitleMenu_Update.cpp
 0X1DDBD0	TitleMenu_SetDirection	32	game-stepguard/TitleMenu_SetDirection.c
 0X1DDBF0	GetTitlePromptText	336	game-stepguard/GetTitlePromptText.cpp
+0X1DDD40	SidEpisodeName	116	game-stepguard/SidEpisodeName.cpp
 0X1DDDB8	GetEpisodeNameText	84	game-stepguard/GetEpisodeNameText.c
 0X1DDE10	func_001DDE10	72	game-stepguard/fun_001dde10.c
 0X1DDE58	func_001DDE58	72	game-stepguard/fun_001dde58.c
+0X1DDF60	GetTriangleHintText	76	game-stepguard/GetTriangleHintText.c
+0X1DDFB0	GetPercentCompleteText	84	game-stepguard/GetPercentCompleteText.c
 0X1DE260	StaticInitMenus_thunk	32	game-stepguard/StaticInitMenus_thunk.c
 0X1DE280	StaticDestructMenus_thunk	32	game-stepguard/StaticDestructMenus_thunk.c
 0X1DE2A0	func_001DE2A0	56	game-stepguard/fun_001de2a0.cpp
@@ -3190,6 +3210,7 @@ address	name	size	file
 0X21D4E0	func_0021D4E0	308	break-text/fun_0021d4e0.c
 0X21D618	func_0021D618	32	break-text/fun_0021d618.c
 0X21DB38	FNegTftUl__FP3TFTP2UL	224	text/FNegTftUl__FP3TFTP2UL.cpp
+0X21DC18	UnRadixFromChConversion__Fc	84	text/UnRadixFromChConversion__Fc.cpp
 0X21DC70	CchAchFromUl__FPciUlUi	208	text/CchAchFromUl__FPciUlUi.cpp
 0X21E048	ExpFirstFromG__Fd	144	text/ExpFirstFromG__Fd.cpp
 0X21EDF8	strchr	48	text/strchr.cpp
@@ -3225,6 +3246,7 @@ address	name	size	file
 0X224508	FGadgetObjAcceptsStick	136	new_2241d8/FGadgetObjAcceptsStick.cpp
 0X224590	FGadgetObjActive	36	new_2241d8/FGadgetObjActive.cpp
 0X224610	FGadgetObjKept	36	new_2241d8/FGadgetObjKept.cpp
+0X224638	FGadgetObjCanStick	80	new_2241d8/FGadgetObjCanStick.cpp
 0X224688	FGadgetObjIsKindB	16	new_2241d8/FGadgetObjIsKindB.c
 0X2252E0	InitDysh__FP4DYSH	28	dysh/InitDysh__FP4DYSH.c
 0X225880	StaticInitSlotheaps_225880	308	new_225300/StaticInitSlotheaps_225880.c

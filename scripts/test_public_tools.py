@@ -92,6 +92,17 @@ class AssemblyUnitTests(unittest.TestCase):
         self.assertEqual([line for line in pieces[1] if 'glabel' in line], ['  glabel inner\n'])
 
 
+class MergeTests(unittest.TestCase):
+    def test_chunk_inside_a_matched_function_is_folded_in(self):
+        functions = [{'address': 0x100000, 'lines': ['a\n']}, {'address': 0x100050, 'lines': ['b\n']}, {'address': 0x100058, 'lines': ['c\n']}]
+        merged = asm_units.merge_spans(functions, {0x100000: 0x58})
+        self.assertEqual([(f['address'], f['lines']) for f in merged], [(0x100000, ['a\n', 'b\n']), (0x100058, ['c\n'])])
+
+    def test_chunk_after_the_span_is_kept(self):
+        functions = [{'address': 0x100000, 'lines': ['a\n']}, {'address': 0x100058, 'lines': ['c\n']}]
+        self.assertEqual(len(asm_units.merge_spans(functions, {0x100000: 0x58})), 2)
+
+
 class ListingTests(unittest.TestCase):
     FUNCTIONS = [
         {'address': '0X100010', 'name': 'b', 'size': 40, 'module': 'm', 'status': 'asm', 'named': True},
