@@ -186,3 +186,24 @@ Names come in two kinds, kept in different files:
 
 `combine.py` merges both into the generated `sly2_combined_symbol_addrs.txt`, tagging every name with where it came from
 (`source:sly1`, `source:bevy`, `source:bevy-module`, `source:provisional`).
+
+## SDK libraries (2026-10-28, `scripts/sdk/identify_sdk.py`)
+
+Retail linked Sony's static libraries into the executable, so a library member (one object file) sits in it as a run of code that
+equals the member's `.text` except where the linker filled in a call target, a `%hi`/`%lo` half or a `$gp` offset. The tool reads
+libraries from a directory the user keeps (it never copies or publishes them; we used the `sce_ps2_sdk_24` mirror, SDK 2.4 with
+GCC 2.95.2/2.95.3 libc, libm and libgcc), masks the fields the member's relocation table marks, and finds each member in the SDK range
+by a three-word anchor. `config/recovered/sdk_identified.tsv` lists what matched (address, bytes, library, member, places, symbols).
+
+| | |
+| :--- | :--- |
+| Exact members | 122 of 237 members with code, from libc, libm, libgcc, libgraph, libcdvd and libkernl |
+| SDK functions inside them | 242 of 751 (42.6 of 152 KB) |
+| Names | 150 functions without a name get Sony's own (`config/recovered/sdk_symbol_addrs.txt`, `source:sdk`): named 4,104 -> 4,254, SDK range 204 -> 354 of 751 |
+| Control | of the 75 SDK functions that already had a name and are in a matched member, 67 agree (the 8 others are aliases or wrappers: `AtoiPchz`/`atoi`, `RFU091`/`GetEntryAddress`, `logf`/`log10`) |
+
+Only a name that is unique at its address is taken: a stub shared by several members (a bare `jr $ra`, 28 bytes at 0x238D40 fits
+13 of them) names nothing, and names already used elsewhere (`Copy`, `kCopy`) are left out. Libdma, libpad, libmc, libmpeg and libpkt
+have no exact member: Sly 2 was linked against a newer SDK than 2.4, so those need a later SDK build. `--near 0.8` also reports members
+that differ in a few words (libgraph `graph028` 0.96, libcdvd `cdvd014` 0.95, libgcc `dp-bit` 0.94): different build or small fixes, to be
+looked at by hand before any name is taken from them.

@@ -9,7 +9,8 @@
          path (engine/camera/follow.rs `activate` -> bevy_camera_follow_activate); its placeholders (FUN_..., ee_sub_...)
          keep only the module, which still tells the subsystem: bevy_camera_cm_14d478
 
-A function named by both keeps the Sly 1 name (the original one); the Rust module goes into the comment. Last,
+A function named by both keeps the Sly 1 name (the original one); the Rust module goes into the comment.
+config/recovered/sdk_symbol_addrs.txt (SDK function names, identified from library objects) fills functions that have none. Last,
 config/recovered/provisional_symbol_addrs.txt (names chosen while reading the code: provisional) overrides. Writes
 config/recovered/sly2_combined_symbol_addrs.txt (splat format, readable by ApplySplatSymbols.java) and prints the counts.
 """
@@ -55,6 +56,14 @@ def main():
         else:
             names[address] = (f"bevy_{module(row['file'])}_{address:x}", f"source:bevy-module file:{row['file']}")
             module_only += 1
+    sdk_count = 0
+    sdk_path = os.path.join(out, 'sdk_symbol_addrs.txt')
+    if os.path.exists(sdk_path):  # names of Sony SDK functions (scripts/sdk/identify_sdk.py); never replaces another name
+        for line in open(sdk_path, encoding='utf-8'):
+            match = re.match(r'^(\S+) = (0x[0-9A-Fa-f]+); // type:func (.*)$', line.rstrip('\n'))
+            if match and int(match.group(2), 16) not in names:
+                names[int(match.group(2), 16)] = (match.group(1), match.group(3))
+                sdk_count += 1
     provisional_count = 0
     provisional_path = os.path.join(out, 'provisional_symbol_addrs.txt')
     if os.path.exists(provisional_path):
@@ -81,7 +90,7 @@ def main():
             used[name] = used.get(name, 0) + 1
             unique = name if used[name] == 1 else f'{name}_{used[name]}'
             f.write(f'{unique} = 0x{address:X}; // {comment}\n')
-    print(f'functions: {len(names)} ({sly1_count} from Sly 1, {bevy_count} bevy names, {module_only} bevy module only, {both} in both, {provisional_count} provisional); globals: {globals_count}')
+    print(f'functions: {len(names)} ({sly1_count} from Sly 1, {bevy_count} bevy names, {module_only} bevy module only, {both} in both, {provisional_count} provisional, {sdk_count} from the SDK libraries); globals: {globals_count}')
 
 
 if __name__ == '__main__':
