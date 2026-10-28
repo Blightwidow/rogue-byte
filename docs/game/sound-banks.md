@@ -22,9 +22,19 @@ sector (`snd_BankLoadByLoc`), so they are not files. Scanning a disc image for t
 Version 3 with Flags `0x4` (neither the names flag `0x100` nor the user-data flag `0x200`), BankID 0. No `SBv2` (music bank) or
 `MMID` magic is present, which agrees with the no-MIDI build.
 
+The 86 are 43 pairs with identical headers:
+
+- 43 sit 24 bytes into a sector (the bank is the raw standalone copy, loaded from a sector number).
+- 43 sit at arbitrary offsets inside other data, 300 to 2,000 sectors later. After a literal prefix that equals the raw bank
+  they turn into a high-entropy stream (7.6 bits per byte, against 3.6 in the raw bank), so they are compressed copies of the
+  same banks (5 of them equal the raw bank in the part that was checked, i.e. stored without compression). They fail the table
+  checks below only because the bytes after the prefix are compressed.
+
+All figures below are for the 43 raw banks.
+
 ## SBlk header
 
-A header read with the OpenGOAL layout (little endian) is consistent on 74 of the 86 hits:
+A header read with the OpenGOAL layout (little endian) is consistent in all 43 raw banks:
 
 | Offset | Field | Observed |
 | :--- | :--- | :--- |
@@ -40,24 +50,34 @@ A header read with the OpenGOAL layout (little endian) is consistent on 74 of th
 | `0x34` | GrainData | |
 | `0x38` | BlockNames, SFXUserData (u32 each) | both 0 |
 
-The sound table starts at `FirstSound`; the 8-byte grain table (opcode word with the grain type in the top byte, then a signed
-delay) satisfies `FirstGrain + NumGrains * 8 == GrainData` in all 74. Tone, LFO, play-sound and plugin parameters live in the
-`GrainData` area at the offset held in the low 24 bits of the opcode, as in OpenGOAL's version 2 reader.
+The sound table (12 bytes per sound: volume, volume group, pan, grain count, instance limit, flags, first grain) runs from
+`FirstSound` to `FirstGrain`; the 8-byte grain table (opcode word with the grain type in the top byte, then a signed delay) runs
+from `FirstGrain` to `GrainData` (`FirstGrain + NumGrains * 8 == GrainData`). Tone, LFO and play-sound parameters live in the
+`GrainData` area at the offset held in the low 24 bits of the opcode, as in OpenGOAL's version 2 reader. Read that way, the 43 banks
+(12,995 sounds, 100,677 grains) give:
 
-Grain types seen: 0-9 and 20-44, every one of them in OpenGOAL's grain enum (null, tone, tone2, xref id and number, LFO, start and
-stop child sound, plugin message, branch, control null, loops, stop, random play, delay and pitch bend, pitch bend, registers,
-markers, goto, wait for voices, play cycle, key off and kill voices, on-stop marker, copy register).
+- 65,557 tone structures (24 bytes): every sample offset lies inside the VAG data, map low never exceeds map high, the reserved
+  word is always 0. 0 failures.
+- 5,022 LFO structures (16 bytes) and 77 start-child-sound grains (32-byte play-sound structure: every child is by sound id, none
+  by name, every id is below the sound count). 0 failures.
+- No plugin-message grains; the parameter area ends within the first 49,440 bytes after `GrainData`.
+
+So version 3 uses OpenGOAL's version 2 grain and structure layouts unchanged.
+
+Grain types seen (17, all in OpenGOAL's enum): tone 65,493, random pitch bend 10,968, random play 10,734, random delay 5,525, LFO
+5,022, control null 882, play cycle 596, loop start and end 466 each, random register set 249, start child sound 77, stop 75,
+tone2 64, add pitch bend 45, set register 13, loop continue 1, on-stop marker 1.
 
 ## Not checked yet
 
-- 12 of the 86 hits (the magic at odd sector offsets) do not fit the layout: their grain tables run past `GrainData` or carry
-  types above 44. They may be copies inside packed data rather than real headers.
-- OpenGOAL only branches on Version below or at least 2. Whether version 3 changes the size or meaning of the tone, LFO,
-  play-sound and plugin structures is open until a bank is parsed to the end.
+- The compressed copies: the codec, and whether the game loads banks from them on the EE side (`snd_BankLoadFromEE`) while the
+  raw copies go to the IOP.
+- The 24-byte offset: whether a container header precedes each raw bank.
 - The behaviour of the `snd989` module (voice allocation, tick rate, command set) against OpenGOAL's handlers.
-- Sly 2's plugin messages (`PLUGIN_MESSAGE` grains, 85 in the banks) and what the game registers for them.
+- Plugin messages: none in the banks, so any plugin hooks are used only by other code.
 
 ## Method
 
-Scan the image for `SBlk`, read the 0x40-byte header, check that the table offsets are consistent with the counts, then tally
-the grain type bytes. Nothing from the banks is stored here: the table above holds header field meanings and counts only.
+`scripts/sound/parse_banks.py <disc image>` scans the image for `SBlk`, reads the 0x40-byte header, checks the table offsets against the
+counts and every tone, LFO and play-sound structure against its bounds, and prints one line per bank. Nothing from the banks is stored
+here: the table above holds header field meanings and counts only.
