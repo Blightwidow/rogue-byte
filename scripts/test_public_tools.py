@@ -6,7 +6,7 @@ import sys
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching')]
+sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching'), os.path.join(HERE, 'vu')]
 
 import asm_units  # noqa: E402
 import check_cleanup  # noqa: E402
@@ -18,6 +18,7 @@ import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
+import vudis  # noqa: E402
 
 
 class CommitMessageTests(unittest.TestCase):
@@ -258,6 +259,29 @@ class PrepareReportTests(unittest.TestCase):
 
     def test_no_units_is_reported(self):
         self.assertEqual(prepare_report.problems({**self.GOOD, 'units': []}), ['no units'])
+
+
+class VuDisassemblerTests(unittest.TestCase):
+    def test_upper_nop(self):
+        self.assertEqual(vudis.decode_upper(0x000002FF), 'nop')
+
+    def test_lower_nop(self):
+        self.assertEqual(vudis.decode_lower(0x8000033C, 0), 'nop')
+
+    def test_upper_add_with_destination_mask(self):
+        self.assertEqual(vudis.decode_upper(0x01C208E8), 'add.xyz vf3, vf1, vf2')
+
+    def test_upper_broadcast_accumulator(self):
+        self.assertEqual(vudis.decode_upper(0x01E1003C), 'addax.xyzw ACC, vf0, vf1x')
+
+    def test_lower_load_quadword(self):
+        self.assertEqual(vudis.decode_lower(0x01E11004, 0), 'lq.xyzw vf1, 4(vi2)')
+
+    def test_lower_branch_target_is_relative_to_next_instruction(self):
+        self.assertEqual(vudis.decode_lower(0x520117FE, 10), 'ibne vi1, vi2, L9')
+
+    def test_lower_xgkick(self):
+        self.assertEqual(vudis.decode_lower(0x80002EFC, 0), 'xgkick vi5')
 
 
 if __name__ == '__main__':
