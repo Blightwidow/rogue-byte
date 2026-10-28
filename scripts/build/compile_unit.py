@@ -21,7 +21,7 @@ LEGACY_COMPILER = os.path.join(ROOT, 'work', 'matching', 'compilers', 'ee-gcc2.9
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
 PS2EEAS = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')
 OBJCOPY = os.path.join(ROOT, 'tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals-objcopy')
-FLAGS = ['-O2', '-G0', '-ffast-math', '-fno-exceptions']
+FLAGS = os.environ['COMPILE_FLAGS'].split() if os.environ.get('COMPILE_FLAGS') else ['-O2', '-G0', '-ffast-math', '-fno-exceptions']  # the variable is for flag sweeps
 
 
 def hoist_externs(assembly):

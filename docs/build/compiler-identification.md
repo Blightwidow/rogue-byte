@@ -218,3 +218,10 @@ It looks practical, at a per-function level.
 - Whether other SN 2.95.3 builds (after 1.36) exist and fit better. Only 136 was available.
 - -fno-exceptions rests on one file (vprintf/vsprintf). It could be per file in the original build.
 - -O2 against -O3 is decided by the Sly 1 sources (155 against 122), not by the 21 hand-written tests.
+- **Flag sweep per module (2026-10-28, `scripts/matching/flag_sweep.py`, `flag_report.py`).** 743 unmatched sources and 300 matched ones
+  (the control) judged under 16 flag variants. No module prefers other flags: of the controls, -O1, -fno-schedule-insns(2), -G4/-G8,
+  -fno-omit-frame-pointer and -fno-delayed-branch each break 78-300 of 300 matched functions; -O3, -fno-peephole and dropping
+  -ffast-math break none, so those cannot be told from the base flags with this data (-O3 gives the same code as -O2 on all 300).
+  Among the unmatched sources the improvements are one or two functions per module under a different variant each time, which is noise;
+  one function (0x1EA6C8) reaches 0, under -fno-schedule-insns, and its module's other functions don't follow. So the build keeps
+  `-O2 -G0 -ffast-math -fno-exceptions` for every module.
