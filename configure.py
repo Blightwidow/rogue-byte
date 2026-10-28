@@ -41,10 +41,10 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     ninja.build('pieces', 'phony', pieces)
 
     # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
-    # SN's compiler, then SN's assembler ps2eeas when tools/ps2eeas has it, GNU as for the functions of config/us/gnu_as.txt)
+    # SN's compiler, then SN's assembler ps2eeas when tools/ps2eeas has it, GNU as for the functions of config/us/gnu_as.txt, ps2eeas-loop5 for config/us/ps2eeas_loop5.txt)
     sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
     import compile_unit
-    gnu = compile_unit.gnu_functions()
+    assembler_for = compile_unit.assembler_for
     for language, rule in (('c++', 'compile_cpp'), ('c', 'compile_c')):
         ninja.rule(rule, command=f'python3 scripts/build/compile_unit.py {language} $in $out $assembler', description='CC $in')
     units = []
@@ -55,7 +55,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             unit = os.path.join('build', 'units', source[len('src/'):] + '.o')
             address = int(line.split('\t')[0], 16)
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
-                        variables={'assembler': '--assembler gnu' if address in gnu else ''})
+                        variables={'assembler': f'--assembler {assembler_for(address)}' if assembler_for(address) else ''})
             units.append(unit)
         ninja.build('units', 'phony', units)
 
@@ -68,7 +68,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             unit = os.path.join('build', 'nonmatching', source[len('nonmatching/'):] + '.o')
             address = int(line.split('\t')[0], 16)
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
-                        variables={'assembler': '--assembler gnu' if address in gnu else ''})
+                        variables={'assembler': f'--assembler {assembler_for(address)}' if assembler_for(address) else ''})
             drafts.append(unit)
         ninja.build('nonmatching', 'phony', drafts)
 print('wrote build.ninja')

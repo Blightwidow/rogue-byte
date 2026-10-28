@@ -24,6 +24,24 @@ third-party mirror of the SN ProDG 3.01 tools; it is never committed). Everythin
 If `Ps2EeAs.exe` is missing the same script falls back to GNU `as` and says nothing: the functions that need the nops then simply
 do not match.
 
+## Short loops: `config/us/ps2eeas_loop5.txt`
+
+Retail's shortest loop is five instructions from the branch target to the branch (offset -5, six with the delay slot): the game code
+has 238 backward branches of offset -5 and none shorter. `ps2eeas` 3.01 pads a loop up to six before the delay slot (offset -6), so
+a loop that retail left at five, or padded to five, comes out one `nop` too long: a four-instruction loop (`strlen`: `addiu`, `lbu`,
+`bnez` and its delay slot) has three padding nops where retail has two. GNU `as` pads the same way, so neither assembler reaches it.
+
+`ps2eeas-loop5` is `Ps2EeAs.exe` with the byte at file offset 0x4DEB (the `6` in "pad up to six") changed to 5. `compile_unit.py`
+makes `tools/ps2eeas/Ps2EeAs-loop5.exe` from the pinned download on first use (it checks that the byte is a 6 and refuses another build);
+the patched copy is never published. It is a per-function choice, like GNU `as`: `scripts/matching/assembler_scan.py --write` judges
+every source with it and with its current assembler and lists the ones that score lower in `config/us/ps2eeas_loop5.txt`, which takes
+priority over `gnu_as.txt`. First scan: 54 of 2,665 sources scored lower and 26 of them matched (3,585 to 3,611); 21 listed GNU
+functions scored worse with it and stay on GNU `as`, so the loop rule is not the whole story for those.
+
+Found by checking `ps2eeas`'s output on synthetic loops (the padding is the same whether or not the loop holds a load), then locating the
+threshold by patching each `6` of the executable in turn until a loop's offset changed. The Ratchet & Clank decompilation measured
+retail loops at exactly six instructions; here the count is the same six with the delay slot included.
+
 ## `config/us/gnu_as.txt`
 
 Not every retail function came out of `ps2eeas`: 53 of the 3,526 functions matched before the switch only match with GNU `as` (a loop

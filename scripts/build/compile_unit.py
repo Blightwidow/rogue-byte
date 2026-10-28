@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""compile_unit.py <c|c++> <source> <output.o> [--assembler ps2eeas|gnu]: compiles one source the way the retail build did.
+"""compile_unit.py <c|c++> <source> <output.o> [--assembler ps2eeas|ps2eeas-loop5|gnu]: compiles one source the way the retail build did.
 
 SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly, and retail's assembler was SN's own `ps2eeas`, which differs from the GNU `as`
 the compiler driver calls: it adds the hazard nops of the R5900 (between `mtc1` and the instruction that reads the register, between a
@@ -8,8 +8,10 @@ float compare and `bc1`), pads short loops, and picks other sequences for 64-bit
 tools/ps2eeas/Ps2EeAs.exe (`setup.sh --ps2eeas` downloads it, pinned) assembles the result under wibo. `--assembler gnu`, and the
 fallback when Ps2EeAs.exe is missing, use the driver's GNU `as`. `ps2eeas` assembles in one pass and only reaches a global through `$gp`
 when it has already seen the symbol's size, so the compiler's `.extern SYM,SIZE` lines, written at the end of the file, go to the top.
-Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together."""
+`--assembler ps2eeas-loop5` is the same assembler with its short-loop padding one nop shorter (retail's shortest loop is five
+instructions before the delay slot, `ps2eeas` 3.01 pads to six; see docs/build/assembler.md). Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together."""
 import argparse
+import functools
 import os
 import re
 import subprocess
@@ -20,6 +22,8 @@ COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.95.3-136')
 LEGACY_COMPILER = os.path.join(ROOT, 'work', 'matching', 'compilers', 'ee-gcc2.95.3-136')
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
 PS2EEAS = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')
+PS2EEAS_LOOP5 = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs-loop5.exe')
+LOOP_LENGTH_OFFSET = 0x4DEB  # in Ps2EeAs.exe 1.9.25.758: the 6 of "pad a backward-branch loop up to six instructions"
 OBJCOPY = os.path.join(ROOT, 'tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals-objcopy')
 FLAGS = os.environ['COMPILE_FLAGS'].split() if os.environ.get('COMPILE_FLAGS') else ['-O2', '-G0', '-ffast-math', '-fno-exceptions']  # the variable is for flag sweeps
 
@@ -50,17 +54,45 @@ def fills_delay_slot_from_asm(assembly):
     return False
 
 
-def gnu_functions():
-    """Addresses of the functions assembled with GNU as (config/us/gnu_as.txt)."""
-    path = os.path.join(ROOT, 'config', 'us', 'gnu_as.txt')
+@functools.lru_cache(maxsize=None)
+def listed_functions(name):
+    """Addresses listed in config/us/<name> (one per line, `#` comments)."""
+    path = os.path.join(ROOT, 'config', 'us', name)
     if not os.path.exists(path):
         return set()
     return {int(line.split()[0], 16) for line in open(path) if line.strip() and not line.startswith('#')}
 
 
+def gnu_functions():
+    """Addresses of the functions assembled with GNU as (config/us/gnu_as.txt)."""
+    return listed_functions('gnu_as.txt')
+
+
+def loop5_functions():
+    """Addresses of the functions assembled with ps2eeas-loop5 (config/us/ps2eeas_loop5.txt)."""
+    return listed_functions('ps2eeas_loop5.txt')
+
+
 def assembler_for(address):
-    """'gnu' for a function listed in config/us/gnu_as.txt, else None (ps2eeas when available)."""
+    """'ps2eeas-loop5' for a function listed in config/us/ps2eeas_loop5.txt, 'gnu' for one of config/us/gnu_as.txt, else None (ps2eeas when available)."""
+    if address in loop5_functions():
+        return 'ps2eeas-loop5'
     return 'gnu' if address in gnu_functions() else None
+
+
+def loop5_executable():
+    """tools/ps2eeas/Ps2EeAs-loop5.exe: Ps2EeAs.exe with one byte changed (made on first use, next to the original, never published)."""
+    if not os.path.isfile(PS2EEAS):
+        return None
+    if not os.path.isfile(PS2EEAS_LOOP5) or os.path.getmtime(PS2EEAS_LOOP5) < os.path.getmtime(PS2EEAS):
+        data = bytearray(open(PS2EEAS, 'rb').read())
+        if data[LOOP_LENGTH_OFFSET] != 6:
+            raise SystemExit(f'{PS2EEAS}: not the pinned 1.9.25.758 build (byte {LOOP_LENGTH_OFFSET:#x} is {data[LOOP_LENGTH_OFFSET]}, not 6)')
+        data[LOOP_LENGTH_OFFSET] = 5
+        temporary = f'{PS2EEAS_LOOP5}.{os.getpid()}'
+        open(temporary, 'wb').write(data)
+        os.replace(temporary, PS2EEAS_LOOP5)
+    return PS2EEAS_LOOP5
 
 
 def compiler_directory():
@@ -73,7 +105,8 @@ def compile_object(language, source, output, assembler=None, include=None, local
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
               f'-I{include or os.path.join(ROOT, "include")}', *FLAGS]
-    use_ps2eeas = assembler != 'gnu' and os.path.isfile(PS2EEAS)
+    executable = loop5_executable() if assembler == 'ps2eeas-loop5' else PS2EEAS
+    use_ps2eeas = assembler != 'gnu' and executable is not None and os.path.isfile(executable)
     temporary = output + '.tmp'
     if use_ps2eeas:
         assembly = output + '.s'
@@ -88,7 +121,7 @@ def compile_object(language, source, output, assembler=None, include=None, local
             open(assembly, 'w').write(hoist_externs(text))
             for attempt in range(3):  # under a parallel build ps2eeas (under wibo) now and then never returns; a rerun takes a fraction of a second
                 try:
-                    result = subprocess.run([WIBO, PS2EEAS, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=20)
+                    result = subprocess.run([WIBO, executable, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=20)
                     break
                 except subprocess.TimeoutExpired:
                     if attempt == 2:
@@ -112,7 +145,7 @@ def main():
     parser.add_argument('language', choices=['c', 'c++'])
     parser.add_argument('source')
     parser.add_argument('output')
-    parser.add_argument('--assembler', choices=['ps2eeas', 'gnu'])
+    parser.add_argument('--assembler', choices=['ps2eeas', 'ps2eeas-loop5', 'gnu'])
     arguments = parser.parse_args()
     ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler)
     if not ok:

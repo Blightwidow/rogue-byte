@@ -156,11 +156,17 @@ class CompileUnitTests(unittest.TestCase):
         self.assertEqual(compile_unit.hoist_externs('a\nb'), 'a\nb')
 
     def test_gnu_list_is_read(self):
-        listed = compile_unit.gnu_functions()
+        listed = compile_unit.gnu_functions() - compile_unit.loop5_functions()
         self.assertTrue(all(isinstance(address, int) for address in listed))
         if listed:
             self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'gnu')
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))
+
+    def test_loop5_list_wins_over_the_gnu_list(self):
+        listed = compile_unit.loop5_functions()
+        self.assertTrue(all(isinstance(address, int) for address in listed))
+        if listed:
+            self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'ps2eeas-loop5')
 
 
 class ListingTests(unittest.TestCase):
