@@ -9,7 +9,7 @@ permute.py only reorders statements. gcc 2.95 also ties on register allocation a
 written, so this tries small source rewrites that mean the same thing: swapped operands of + * & | ^, flipped comparisons (a < b -> b > a),
 `x == 0` against `!x`, `x++` against `++x`, `x += y` against `x = x + y`, a declaration split from or merged with its assignment, int
 against unsigned for a local, the order of declarations and of independent statements, and the arms of an if/else swapped under a negated
-test. It climbs: each generation judges a few mutated copies of the current source (scripts/matching/try.py), keeps the best (an equal
+test, one exit (`result = X; goto done;` for every return) and the element type of pointer casts. It climbs: each generation judges a few mutated copies of the current source (scripts/matching/try.py), keeps the best (an equal
 score is accepted now and then, to cross plateaus) and stops at score 0 or when the budget of compiles is spent. Lines with inline asm,
 declarations of types and the function header are never touched. --write saves the best source over the input when it beats it; --batch
 does that for every unmatched function with a source in data/matching/src/fn, lowest score first (re-judge them afterwards with
@@ -137,7 +137,65 @@ def swap_arms(lines, index, rng):
     return lines[:index] + [f'{indent}if ({condition}) {{'] + lines[first_end + 1:second_end] + [f'{indent}}} else {{'] + lines[index + 1:first_end] + lines[second_end:]
 
 
-MUTATIONS = [commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
+def function_span(lines, index):
+    """(header index, open brace index, close brace index) of the function holding lines[index], or None."""
+    header = index
+    while header >= 0 and not (lines[header] and not lines[header][0].isspace() and '(' in lines[header] and not lines[header].rstrip().endswith(';')
+                               and not lines[header].startswith(('#', 'struct', 'typedef', 'extern "C" {'))):
+        header -= 1
+    if header < 0:
+        return None
+    opening = header
+    while opening < len(lines) and '{' not in lines[opening]:
+        opening += 1
+    closing = block_end(lines, opening) if opening < len(lines) else None
+    return (header, opening, closing) if closing is not None and opening <= index <= closing else None
+
+
+RETURN = re.compile(r'\breturn\b([^;]*);')
+
+
+def single_exit(lines, index, rng):
+    """Every `return X;` of the function becomes `{ result = X; goto done; }` and one `done: return result;` ends it: gcc 2.95 cross-jumps
+    two equal returns only some of the time, and retail often has one epilogue where a straight transcription has two."""
+    if not RETURN.search(lines[index]):
+        return None
+    span = function_span(lines, index)
+    if not span:
+        return None
+    header, opening, closing = span
+    body = range(opening + 1, closing)
+    returns = [position for position in body if RETURN.search(lines[position]) and not SKIP.search(lines[position])]
+    if len(returns) < 2 or any(re.search(r'\bdone\b', lines[position]) for position in range(header, closing + 1)):
+        return None
+    name = re.search(r'(~?[A-Za-z_][A-Za-z_0-9:]*)\s*\(', lines[header])
+    kind = lines[header][:name.start()].replace('extern "C"', '').replace('static', '').replace('inline', '').strip() if name else None
+    if kind is None or not kind:
+        return None
+    result = list(lines)
+    chosen = set(returns) if rng.random() < 0.6 else set(rng.sample(returns, rng.randint(2, len(returns))))
+    for position in chosen:
+        if kind == 'void':
+            result[position] = RETURN.sub('{ goto done; }', lines[position])
+        else:
+            result[position] = RETURN.sub(lambda match: '{ result = ' + (match.group(1).strip() or '0') + '; goto done; }', lines[position])
+    tail = ['done:', '    return;'] if kind == 'void' else ['done:', '    return result;']
+    declaration = [] if kind == 'void' else [f'    {kind} result;']
+    return result[:opening + 1] + declaration + result[opening + 1:closing] + tail + result[closing:]
+
+
+def toggle_cast(lines, index, rng):
+    """A pointer cast of another element type: int * -> unsigned * -> long * -> short *, so a load or store is lw, ld or lh."""
+    kinds = ['int', 'unsigned int', 'unsigned', 'long', 'unsigned long', 'short', 'unsigned short', 'char', 'unsigned char']
+    matches = list(re.finditer(r'\(((?:unsigned )?(?:int|long|short|char)|unsigned) \*\)', lines[index]))
+    if not matches:
+        return None
+    match = rng.choice(matches)
+    replacement = rng.choice([kind for kind in kinds if kind != match.group(1)])
+    return lines[:index] + [lines[index][:match.start()] + f'({replacement} *)' + lines[index][match.end():]] + lines[index + 1:]
+
+
+MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
 
 
 def mutate(text, rng, count=1):
@@ -208,11 +266,15 @@ def batch(arguments):
         path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(row["address"], 16):06X}.cpp')
         if row['status'] == 'tried' and row['best'] != '' and arguments.min_score <= int(row['best']) <= arguments.max_score and os.path.exists(path):
             pool.append((int(row['best']), row['address'], path))
+    if arguments.classes:  # only functions of these kinds of difference (scripts/matching/classify_diffs.py, work/matching/classes.tsv), plus any with two returns
+        wanted = set(arguments.classes.split(','))
+        classes = {int(row['address'], 16): row['class'] for row in csv.DictReader(open(os.path.join(LAB, 'work', 'matching', 'classes.tsv'), encoding='utf-8'), delimiter='\t')}
+        pool = [entry for entry in pool if classes.get(int(entry[1], 16)) in wanted or len(re.findall(r'\breturn\b', open(entry[2], encoding='utf-8').read())) >= 2]
     pool.sort()
     matched = improved = 0
     for position, (best, address, path) in enumerate(pool, 1):
         original = open(path, encoding='utf-8').read()
-        score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16))
+        score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16) + arguments.seed)
         if score is not None and score < best:
             open(path, 'w', encoding='utf-8').write(text)
             improved += 1
@@ -232,6 +294,7 @@ def main():
     parser.add_argument('--batch', action='store_true')
     parser.add_argument('--min-score', type=int, default=1)
     parser.add_argument('--max-score', type=int, default=10)
+    parser.add_argument('--classes', help='comma list of classify_diffs.py classes to restrict --batch to')
     arguments = parser.parse_args()
     if arguments.batch:
         batch(arguments)

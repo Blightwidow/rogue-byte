@@ -11,7 +11,7 @@ extern int B_002DFB60;
 extern DISPENV B_002DEB80[];
 extern "C" void iSignalSema(int);
 void BlendDisplayOnBufferMismatch__Fv();
-extern "C" void func_00240600(DISPENV *);
+extern "C" void sceGsPutDispEnv(DISPENV *);
 int VBlankS_Interrupt__Fi(int)
 {
     if (B_002DFB58 != 0) {
@@ -32,7 +32,7 @@ int VBlankS_Interrupt__Fi(int)
     case 3:
         g_2dedb0 = g_2dedb0 + 1;
         B_002DFB60 = 1;
-        func_00240600(&B_002DEB80[g_2dedb0 & 1]);
+        sceGsPutDispEnv(&B_002DEB80[g_2dedb0 & 1]);
         break;
     }
     asm volatile("sync");

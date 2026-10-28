@@ -3,7 +3,7 @@ extern "C" void BlendDisplayOnBufferMismatch__Fv(void);
 extern "C" void EnterCritSect__FP8CRITSECT(void *);
 extern "C" void LeaveCritSect__FP8CRITSECT(void *);
 extern "C" void FlushCache(int);
-extern "C" void func_00240A40(void *, int);
+extern "C" void sceGsSwapDBuff(void *, int);
 extern "C" void sceGsSetHalfOffset(void *, int, int, short);
 extern "C" void sceGsSyncPath(int, int);
 extern "C" char B_002DEB80, B_002DEBE0, B_002DFB40, g_2decd0;
@@ -29,7 +29,7 @@ extern "C" void SwapGsBuffers__Fv(void)
     sceGsSetHalfOffset(drawenv, 0x800, 0x800, (short)B_002DEDB4);
     FlushCache(0);
     g_2dedb0 = g_2dedb0 + 1;
-    func_00240A40(&B_002DEB80, g_2dedb0);
+    sceGsSwapDBuff(&B_002DEB80, g_2dedb0);
     if ((unsigned)(g_2dedbc - 1) < 2U)
         BlendDisplayOnBufferMismatch__Fv();
     sceGsSyncPath(0, 0);

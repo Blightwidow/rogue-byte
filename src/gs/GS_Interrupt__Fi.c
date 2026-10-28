@@ -3,7 +3,7 @@
 M2C_UNK ClearFrameBuffers__Fv();                    /* extern */
 M2C_UNK FlushCache(M2C_UNK);                        /* extern */
 M2C_UNK SyncVBlank__Fv();                           /* extern */
-M2C_UNK func_00240A40(M2C_UNK *, s32);              /* extern */
+M2C_UNK sceGsSwapDBuff(M2C_UNK *, s32);              /* extern */
 M2C_UNK sceGsResetGraph(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK sceGsSetHalfOffset(M2C_UNK *, M2C_UNK, M2C_UNK, s16); /* extern */
 extern M2C_UNK B_002DEB80;
@@ -40,5 +40,5 @@ void GS_Interrupt__Fi(void) {
     FlushCache(0);
     temp_a1 = g_2dedb0 + 1;
     g_2dedb0 = temp_a1;
-    func_00240A40(&B_002DEB80, temp_a1);
+    sceGsSwapDBuff(&B_002DEB80, temp_a1);
 }

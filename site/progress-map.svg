@@ -2044,7 +2044,7 @@
 <rect x="521.6" y="50.4" width="15.4" height="14.2" fill="#2f7af4"><title>StartAnimref 0X209278 232 bytes (c)</title></rect>
 <rect x="537.4" y="50.4" width="15.4" height="14.2" fill="#2f7af4"><title>FDoneAnimref 0X209430 232 bytes (c)</title></rect>
 <rect x="553.2" y="50.4" width="14.8" height="14.2" fill="#2f7af4"><title>AddGuardSgs 0X209890 224 bytes (c)</title></rect>
-<rect x="472.2" y="64.9" width="14.2" height="14.8" fill="#4a45a8"><title>func_0020A298 0X20A298 224 bytes (draft)</title></rect>
+<rect x="472.2" y="64.9" width="14.2" height="14.8" fill="#2f7af4"><title>func_0020A298 0X20A298 224 bytes (c)</title></rect>
 <rect x="486.7" y="64.9" width="13.6" height="14.8" fill="#2f7af4"><title>func_00206380 0X206380 216 bytes (c)</title></rect>
 <rect x="500.8" y="64.9" width="13.6" height="14.8" fill="#4a45a8"><title>OnGuardRemove 0X206748 216 bytes (draft)</title></rect>
 <rect x="514.8" y="64.9" width="13.6" height="14.8" fill="#2f7af4"><title>func_00209EE0 0X209EE0 216 bytes (c)</title></rect>
@@ -3227,7 +3227,7 @@
 <rect x="781.0" y="789.7" width="6.4" height="4.2" fill="#2f7af4"><title>func_001F1748 0X1F1748 32 bytes (c)</title></rect>
 <rect x="781.0" y="794.3" width="6.4" height="4.2" fill="#2f7af4"><title>func_001F20E8 0X1F20E8 32 bytes (c)</title></rect>
 <rect x="787.8" y="789.7" width="4.5" height="6.1" fill="#2f7af4"><title>func_001F2688 0X1F2688 32 bytes (c)</title></rect>
-<rect x="792.7" y="789.7" width="3.2" height="6.1" fill="#4a45a8"><title>func_001F2740 0X1F2740 24 bytes (draft)</title></rect>
+<rect x="792.7" y="789.7" width="3.2" height="6.1" fill="#2f7af4"><title>func_001F2740 0X1F2740 24 bytes (c)</title></rect>
 <rect x="787.8" y="796.1" width="5.3" height="2.4" fill="#4a45a8"><title>func_001F2758 0X1F2758 16 bytes (draft)</title></rect>
 <rect x="793.5" y="796.1" width="2.4" height="2.4" fill="#4a45a8"><title>func_001F1608 0X1F1608 8 bytes (draft)</title></rect>
 <rect x="687.0" y="689.9" width="110.3" height="109.9" fill="none" stroke="#05060f" stroke-width="2"/>

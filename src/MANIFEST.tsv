@@ -2850,6 +2850,7 @@ address	name	size	file
 0X1F2468	func_001F2468	148	sm-so/fun_001f2468.cpp
 0X1F2688	func_001F2688	32	unsorted/fun_001f2688.cpp
 0X1F2718	func_001F2718	36	unsorted/fun_001f2718.cpp
+0X1F2740	func_001F2740	24	unsorted/fun_001f2740.cpp
 0X1F2768	func_001F2768	44	unsorted/fun_001f2768.cpp
 0X1F27F0	EnsureSoOxa	124	sm-so/EnsureSoOxa.c
 0X1F2870	AddSoGeomToOxa	192	sm-so/AddSoGeomToOxa.cpp
@@ -3140,6 +3141,7 @@ address	name	size	file
 0X209EE0	func_00209EE0	216	step-rwm/fun_00209ee0.cpp
 0X20A058	SetGuardRefLists	164	step-rwm/SetGuardRefLists.cpp
 0X20A100	SetGuardGotoTarget	104	step-rwm/SetGuardGotoTarget.c
+0X20A298	func_0020A298	224	step-rwm/fun_0020a298.cpp
 0X20A378	func_0020A378	144	step-rwm/fun_0020a378.c
 0X20A408	PhitfxChooseForGuard	272	step-rwm/PhitfxChooseForGuard.cpp
 0X20A518	func_0020A518	40	unsorted/fun_0020a518.cpp

@@ -297,7 +297,7 @@ address	name	size	file	score
 0X125060	RefOpConvertObjectVector	120	splice-bif-splice-eval/RefOpConvertObjectVector.c	19
 0X125168	RefOpNearClipCenter	128	splice-bif-splice-eval/RefOpNearClipCenter.c	28
 0X1252D0	ConvertListToSavePath	200	splice-bif-splice-eval/ConvertListToSavePath.cpp	6
-0X125510	func_00125510	176	splice-bif-splice-eval/fun_00125510.cpp	9
+0X125510	func_00125510	176	splice-bif-splice-eval/fun_00125510.cpp	7
 0X1255F0	func_001255F0	80	splice-bif-splice-eval/fun_001255f0.c	3
 0X125640	func_00125640	80	splice-bif-splice-eval/fun_00125640.c	3
 0X125690	func_00125690	80	splice-bif-splice-eval/fun_00125690.c	9
@@ -306,7 +306,7 @@ address	name	size	file	score
 0X126438	RefEvalSymbol	88	splice-bif-splice-eval/RefEvalSymbol.c	12
 0X126A18	RefEvalCond__FP5CPairP6CFrame	392	splice-eval/RefEvalCond__FP5CPairP6CFrame.c	80
 0X126BA0	RefEvalCase__FP5CPairP6CFrame	536	splice-eval/RefEvalCase__FP5CPairP6CFrame.c	117
-0X127838	RefEval	392	splice-eval-splice-frame/RefEval.cpp	8
+0X127838	RefEval	392	splice-eval-splice-frame/RefEval.cpp	6
 0X127D78	FFindBinding__6CFrameUiiP4CRef	64	splice-frame/FFindBinding__6CFrameUiiP4CRef.cpp	3
 0X127DB8	PrefFindBinding__6CFrameUii	216	splice-frame/PrefFindBinding__6CFrameUii.cpp	3
 0X129248	CRef_ConstructVectorValue	104	splice-ref/CRef_ConstructVectorValue.c	9
@@ -580,7 +580,7 @@ address	name	size	file	score
 0X14E6D0	SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR	152	cm_14e270/SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR.cpp	9
 0X14E768	AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI	440	cm_14e270/AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI.c	126
 0X14E920	ResetCmAdjust__FP2CMP2SOP6CPDEFI	72	cm_14e270/ResetCmAdjust__FP2CMP2SOP6CPDEFI.c	4
-0X14E968	GetCmCpdefi__FP2CMP2SOfP6CPDEFI	160	cm_14e270/GetCmCpdefi__FP2CMP2SOfP6CPDEFI.cpp	4
+0X14E968	GetCmCpdefi__FP2CMP2SOfP6CPDEFI	160	cm_14e270/GetCmCpdefi__FP2CMP2SOfP6CPDEFI.cpp	2
 0X14EA08	FFindCmClearInterval	360	cm_14e270/FFindCmClearInterval.cpp	52
 0X14EB70	FindCmClosestClearPos	560	cm_14e270/FindCmClosestClearPos.c	130
 0X14EDA0	SquishCmEye	656	cm_14e270/SquishCmEye.c	158
@@ -1728,7 +1728,6 @@ address	name	size	file	score
 0X1F21B8	SetSoParent	688	sm-so/SetSoParent.c	135
 0X1F2500	func_001F2500	392	sm-so/fun_001f2500.c	96
 0X1F26A8	func_001F26A8	112	sm-so/fun_001f26a8.c	2
-0X1F2740	func_001F2740	24	sm-so/fun_001f2740.c	1
 0X1F2758	func_001F2758	16	sm-so/fun_001f2758.cpp	2
 0X1F2798	func_001F2798	88	sm-so/fun_001f2798.c	14
 0X1F2930	RemoveSoGeomFromOxa	304	sm-so/RemoveSoGeomFromOxa.cpp	13
@@ -1771,7 +1770,7 @@ address	name	size	file	score
 0X1F6BC8	func_001F6BC8	64	so_1f58f0/fun_001f6bc8.c	6
 0X1F6C08	EnsureSogeomLvo	752	so_1f58f0/EnsureSogeomLvo.c	158
 0X1F70C0	CloneCloth	568	so-sm/CloneCloth.c	125
-0X1F72F8	FPointInAloParts	280	so-sm/FPointInAloParts.cpp	9
+0X1F72F8	FPointInAloParts	280	so-sm/FPointInAloParts.cpp	6
 0X1F7530	PaloFindWkrAbsorber	88	so-sm/PaloFindWkrAbsorber.c	17
 0X1F7598	PaloAbsorbWkr	552	so-sm/PaloAbsorbWkr.c	101
 0X1F77C0	ExpireSwWkrs	224	so-sm/ExpireSwWkrs.cpp	13
@@ -1939,7 +1938,6 @@ address	name	size	file	score
 0X209FB8	func_00209FB8	88	step-rwm/fun_00209fb8.c	3
 0X20A010	CHitClingingGuard	72	step-rwm/CHitClingingGuard.c	8
 0X20A168	NCompareHitfxForGuard	304	step-rwm/NCompareHitfxForGuard.cpp	2
-0X20A298	func_0020A298	224	step-rwm/fun_0020a298.cpp	3
 0X20A730	AddAlertGuard	96	rwm-steprun/AddAlertGuard.c	3
 0X20A818	func_0020A818	400	rwm-steprun/fun_0020a818.c	108
 0X20A9C0	func_0020A9C0	128	rwm-steprun/fun_0020a9c0.c	26

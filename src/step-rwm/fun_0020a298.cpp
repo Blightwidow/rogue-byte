@@ -10,6 +10,7 @@ extern float D_FLT_002C3DAC;
 }
 extern "C" int func_0020A298(GUARD *pguard, void *plo, unsigned long grfsgs)
 {
+    unsigned int result;
     if (pguard->blocked == 0) {
         if (FIsBasicDerivedFrom(plo, 0x36)) {
             if (!FIsBasicDerivedFrom(pguard, 0x3A)) {
@@ -17,12 +18,15 @@ extern "C" int func_0020A298(GUARD *pguard, void *plo, unsigned long grfsgs)
                     return 1;
             }
         }
-        ENTRY *pentry = PentryFindSensorLo(pguard->psensor, plo);
+        ENTRY * pentry;
+        pentry = PentryFindSensorLo(pguard->psensor, plo);
         if (pentry != 0 && pentry->state != 0 && (g_2dded0 - pentry->t < D_FLT_002C3DAC) == 0) {
             if ((pguard->grf & grfsgs) == 0)
-                return 0;
+                { result = 0; goto done; }
         }
         return 1;
     }
-    return 0;
+    { result = 0; goto done; }
+done:
+    return result;
 }

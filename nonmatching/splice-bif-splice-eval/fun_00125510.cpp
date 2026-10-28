@@ -11,6 +11,7 @@ struct CFrame {
 extern "C" CRef *CRef_CopyConstruct(CRef *, void *);
 extern "C" CRef *func_00125510(CRef *pret, int carg, CRef *aref, CFrame *pframe)
 {
+    CRef * result;
     if (pframe != 0 && pframe->cpframeParent == 1) {
         CFrame *pframeCur = pframe;
         while (pframeCur->unk0x24 == 0) {
@@ -21,11 +22,13 @@ extern "C" CRef *func_00125510(CRef *pret, int carg, CRef *aref, CFrame *pframe)
         void *pvBinding = pframeCur->pframeParent->PrefFindBinding(aref[0].n, 1);
         if (pvBinding != 0) {
             CRef_CopyConstruct(pret, pvBinding);
-            return pret;
+            { result = pret; goto done; }
         }
     }
 fail:
     pret->tagk = 0x19;
     pret->n = 0x86;
-    return pret;
+    { result = pret; goto done; }
+done:
+    return result;
 }
