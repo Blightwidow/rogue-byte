@@ -1,0 +1,12900 @@
+{
+"ACCMISS": [
+{
+"decomp": false,
+"name": "s1_0x350",
+"offset": 256,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 848,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x354",
+"offset": 260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 852,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x358",
+"offset": 264,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 856,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x35c",
+"offset": 268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 860,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x110",
+"offset": 272,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x114",
+"offset": 276,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x118",
+"offset": 280,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x11c",
+"offset": 284,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"ACSB": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 12,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined12",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"ACT": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"ACTLA": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.09
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "pc_lmTilt",
+"offset": 68,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 120,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x48",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x64",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x6c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x74",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0xec",
+"offset": 236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"ACTSEG": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x39a4",
+"offset": 14756,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"ALARM": [
+{
+"decomp": true,
+"name": "crsmg",
+"offset": 176,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 1580,
+"source": "mapped",
+"type": "char",
+"votes": 1.0
+},
+{
+"decomp": true,
+"name": "arsmg",
+"offset": 180,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 1584,
+"source": "mapped",
+"type": "char",
+"votes": 1.0
+}
+],
+"ALO": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x88",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x8c",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x9a",
+"offset": 154,
+"projectcane": false,
+"size": 2,
+"sly1_offset": null,
+"source": "observed",
+"type": "short",
+"votes": 0.02
+},
+{
+"decomp": true,
+"name": "palox",
+"offset": 168,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 548,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0xc0",
+"offset": 192,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xc8",
+"offset": 200,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xcc",
+"offset": 204,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xd0",
+"offset": 208,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xd4",
+"offset": 212,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xd8",
+"offset": 216,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xdc",
+"offset": 220,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe0",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xec",
+"offset": 236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf8",
+"offset": 248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x17d0",
+"offset": 6096,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x18d8",
+"offset": 6360,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"AMB": [
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x48",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+}
+],
+"ASEG": [
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x78",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x88",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x94",
+"offset": 148,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"ASEGA": [
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"BASIC": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"BL": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+}
+],
+"BLIP": [
+{
+"decomp": false,
+"name": "field_0x108c",
+"offset": 4236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"BLIPG": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x100",
+"offset": 256,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x120",
+"offset": 288,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x160",
+"offset": 352,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x170",
+"offset": 368,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "pc_dlBlip",
+"offset": 1084,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 1560,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "pc_dleBlipg",
+"offset": 1092,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 1568,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x624",
+"offset": 1096,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1572,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x62c",
+"offset": 1104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1580,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"BLIPX": [
+{
+"decomp": true,
+"name": "irgba",
+"offset": 0,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "long long",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "swRoll",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "radRoll",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+}
+],
+"BLOT": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x150",
+"offset": 336,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"BMP": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 8,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "short",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x2",
+"offset": 10,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 2,
+"source": "mapped",
+"type": "short",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 12,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "char",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x9",
+"offset": 13,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 9,
+"source": "mapped",
+"type": "char",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 32,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "long long",
+"votes": 12.0
+}
+],
+"BOMB": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x154",
+"offset": 340,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x158",
+"offset": 344,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1f4",
+"offset": 500,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"BRK": [
+{
+"decomp": false,
+"name": "field_0x148",
+"offset": 328,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"BSPC": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"BUBLET": [
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 112,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "undefined16",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 144,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "undefined16",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0xa0",
+"offset": 160,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CBSP": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"CBinaryAsyncStream": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 10.5
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 8.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 11.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 5.5
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 2.5
+}
+],
+"CBinaryInputStream": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "void *",
+"votes": 23.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 33.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "void *",
+"votes": 10.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x2c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 10.0
+},
+{
+"decomp": false,
+"name": "s1_0x3c",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 10.0
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"CByteQueue": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 11.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 21.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 15.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+}
+],
+"CFileLocation": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CFont": [
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+}
+],
+"CFontBrx": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "float",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 64,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "long long",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x60",
+"offset": 80,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "long long",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x68",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 104,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x6c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 108,
+"source": "mapped",
+"type": "void *",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x64",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x6c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x74",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x78",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x7c",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x88",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x8c",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x94",
+"offset": 148,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x98",
+"offset": 152,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x9c",
+"offset": 156,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc0",
+"offset": 192,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x70",
+"offset": 200,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 204,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "void *",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x130",
+"offset": 304,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x134",
+"offset": 308,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x78",
+"offset": 312,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 120,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x7c",
+"offset": 316,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 124,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"CFrame": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "m_cpframeParent",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": true,
+"name": "m_apframeParent",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "m_fVisited",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"CG": [
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"CGV": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "undefined16",
+"votes": 4.0
+}
+],
+"CGc": [
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"CHKMGR": [
+{
+"decomp": false,
+"name": "field_0x3bf0",
+"offset": 15344,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CIRCLER": [
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "sw",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": true,
+"name": "sRadius",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "du",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dv",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+}
+],
+"CLOCK": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 72,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "long long",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x204",
+"offset": 516,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CLQ": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 15.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 18.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 21.0
+}
+],
+"CLUT": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 8,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "short",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.02
+}
+],
+"CM": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_yScreenRange",
+"offset": 32,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 452,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "pc_rgbaFog",
+"offset": 60,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 480,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_fgfn",
+"offset": 64,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 496,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1f4",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 500,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x48",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x1e4",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 484,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1e8",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 488,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x100",
+"offset": 256,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x1f8",
+"offset": 576,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 504,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "field35",
+"offset": 580,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 508,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "field36",
+"offset": 584,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 512,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_grfzon",
+"offset": 588,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 516,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x208",
+"offset": 592,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 520,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x300",
+"offset": 768,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x30c",
+"offset": 780,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.09
+},
+{
+"decomp": false,
+"name": "field_0x310",
+"offset": 784,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x314",
+"offset": 788,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x318",
+"offset": 792,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x31c",
+"offset": 796,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x324",
+"offset": 804,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x328",
+"offset": 808,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x32c",
+"offset": 812,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x390",
+"offset": 912,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"CMpeg": [
+{
+"decomp": false,
+"name": "field_0x10c",
+"offset": 268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x114",
+"offset": 276,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 280,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "char",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x60",
+"offset": 352,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "char",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x70",
+"offset": 368,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 372,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 384,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "char",
+"votes": 5.5
+},
+{
+"decomp": false,
+"name": "s1_0x134",
+"offset": 576,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 308,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"CMpegAudio": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.08
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 8,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x2c",
+"offset": 48,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "char",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x3c",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 80,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "char",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x5c",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 92,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x6c",
+"offset": 112,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 108,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x8c",
+"offset": 160,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 140,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x90",
+"offset": 164,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 144,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"CNVO": [
+{
+"decomp": false,
+"name": "field_0xe8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CPDEFI": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+}
+],
+"CPLCY": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"CPTN": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.1
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "void *",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "float",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "s1_0x2c",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x44",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "float",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x3c",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "float",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x74",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x88",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x5c",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 92,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+}
+],
+"CProg": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"CQueueInput": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CQueueInputMemory": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+}
+],
+"CQueueOutput": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"CQueueOutputIop": [
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"CRFODB": [
+{
+"decomp": false,
+"name": "field_0x180",
+"offset": 384,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"CRITSECT": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 10.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 5.5
+}
+],
+"CRV": [
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+}
+],
+"CRVL": [
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CRef": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "field_0x4c",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CRichText": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 23.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 13.0
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x98",
+"offset": 336,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 152,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x9c",
+"offset": 340,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 156,
+"source": "mapped",
+"type": "int",
+"votes": 20.0
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 344,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "int",
+"votes": 16.0
+},
+{
+"decomp": false,
+"name": "s1_0xa4",
+"offset": 348,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 164,
+"source": "mapped",
+"type": "int",
+"votes": 17.0
+},
+{
+"decomp": false,
+"name": "s1_0xa8",
+"offset": 352,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 168,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"CSidebag": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CSplotheap": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"CTextBox": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"DIALOG": [
+{
+"decomp": false,
+"name": "field_0x1c8",
+"offset": 456,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"DIFFICULTY": [
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"DL": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 5.5
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.5
+}
+],
+"DMAS": [
+{
+"decomp": true,
+"name": "m_pbMax",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "void *",
+"votes": 5.0
+},
+{
+"decomp": true,
+"name": "m_ab",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": true,
+"name": "m_pqwCnt",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "QW *",
+"votes": 15.0
+},
+{
+"decomp": true,
+"name": "m_pb",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "void *",
+"votes": 30.0
+},
+{
+"decomp": true,
+"name": "m_fPad",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 3.5
+},
+{
+"decomp": true,
+"name": "m_fEndPrim",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 3.5
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+}
+],
+"DROPLET": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xa0",
+"offset": 160,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0xc0",
+"offset": 164,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 192,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xc4",
+"offset": 168,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 196,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xc8",
+"offset": 172,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 200,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+}
+],
+"DZG": [
+{
+"decomp": true,
+"name": "cdz",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 18.0
+},
+{
+"decomp": true,
+"name": "adz",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": true,
+"name": "dlPos",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 16.0
+},
+{
+"decomp": true,
+"name": "dlZero",
+"offset": 24,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "char",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "dlMax",
+"offset": 36,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "char",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "dlUncat",
+"offset": 48,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "char",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "cdzPos",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 30.0
+},
+{
+"decomp": true,
+"name": "aagPos",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "aagPosCrout",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "asdv",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "adsfPos",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+}
+],
+"EDGE": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "short",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x2",
+"offset": 2,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 2,
+"source": "mapped",
+"type": "short",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "short",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x6",
+"offset": 6,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 6,
+"source": "mapped",
+"type": "short",
+"votes": 1.0
+}
+],
+"EMITB": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x64",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x6c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0xd0",
+"offset": 112,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 208,
+"source": "mapped",
+"type": "undefined16",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0xe0",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 224,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x110",
+"offset": 176,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 272,
+"source": "mapped",
+"type": "long long",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x118",
+"offset": 184,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 280,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x11c",
+"offset": 188,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 284,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0xc0",
+"offset": 192,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc8",
+"offset": 200,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xd4",
+"offset": 212,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xd8",
+"offset": 216,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xdc",
+"offset": 220,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x1c4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 452,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 456,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1f0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 496,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1f4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 500,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x1f8",
+"offset": 248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 504,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0xfc",
+"offset": 252,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"EMITDV": [
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 16,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "undefined16",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+}
+],
+"EMITG": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "void *",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "void *",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"EMITGEN": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 16.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 10.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"EMITMESH": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "char",
+"votes": 1.5
+}
+],
+"EMITO": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+}
+],
+"EMITRIP": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 8,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "long long",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"EMITTER": [
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.03
+},
+{
+"decomp": true,
+"name": "fValuesChanged",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 844,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.1
+},
+{
+"decomp": false,
+"name": "pc_cParticle",
+"offset": 240,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 724,
+"source": "mapped",
+"type": "int",
+"votes": 7.0
+},
+{
+"decomp": false,
+"name": "pc_lmSvcParticle",
+"offset": 244,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 728,
+"source": "mapped",
+"type": "int",
+"votes": 15.0
+},
+{
+"decomp": false,
+"name": "pc_oidNextRender",
+"offset": 248,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 768,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0xfc",
+"offset": 252,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.09
+},
+{
+"decomp": false,
+"name": "s1_0xe8",
+"offset": 256,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 232,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x2dc",
+"offset": 260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 732,
+"source": "mapped",
+"type": "float",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "field_0x10c",
+"offset": 268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "s1_0xf8",
+"offset": 272,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 248,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0xfc",
+"offset": 276,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 252,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "pc_oidGroup",
+"offset": 280,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 784,
+"source": "mapped",
+"type": "int",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "pc_dlGroup",
+"offset": 284,
+"projectcane": true,
+"size": 1,
+"sly1_offset": 788,
+"source": "mapped",
+"type": "char",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "pc_rDensity",
+"offset": 304,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 808,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "field_0x134",
+"offset": 308,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_uParticle",
+"offset": 312,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 816,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x334",
+"offset": 316,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 820,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x338",
+"offset": 320,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 824,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x33c",
+"offset": 324,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 828,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": true,
+"name": "tUnpause",
+"offset": 328,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 832,
+"source": "mapped",
+"type": "float",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x344",
+"offset": 332,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 836,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x348",
+"offset": 336,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 840,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"EMITVX": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"EXPL": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"EXPLO": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"EXPLS": [
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0xf4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_tExplodeNext",
+"offset": 248,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 168,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0xfc",
+"offset": 252,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"EXPLSO": [
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"EYES": [
+{
+"decomp": true,
+"name": "cframe",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 92,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": true,
+"name": "eyess",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "int",
+"votes": 9.5
+},
+{
+"decomp": true,
+"name": "tEyess",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 100,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "dtOpen",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 104,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "sviframe",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 108,
+"source": "mapped",
+"type": "float",
+"votes": 2.5
+},
+{
+"decomp": true,
+"name": "gframe",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "float",
+"votes": 11.5
+},
+{
+"decomp": true,
+"name": "uClosed",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "float",
+"votes": 3.5
+}
+],
+"FLYING": [
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"FRM": [
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_dlBlipPending",
+"offset": 64,
+"projectcane": true,
+"size": 1,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "pc_dlShadowPending",
+"offset": 72,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"GEOM": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"GIFS": [
+{
+"decomp": true,
+"name": "m_ab",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "void *",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "m_pb",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "void *",
+"votes": 40.5
+},
+{
+"decomp": true,
+"name": "m_fEndPrim",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": true,
+"name": "m_pqwPrim",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "QW *",
+"votes": 9.5
+},
+{
+"decomp": true,
+"name": "m_creg",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": true,
+"name": "m_cregAll",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+}
+],
+"GLINT": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+}
+],
+"GSB": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"HBSK": [
+{
+"decomp": false,
+"name": "field_0x17c",
+"offset": 380,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x18c",
+"offset": 396,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"HSHAPE": [
+{
+"decomp": false,
+"name": "field_0xc0",
+"offset": 192,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe0",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"JOY": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4096,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 32.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 4100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 32.0
+},
+{
+"decomp": false,
+"name": "field_0x1008",
+"offset": 4104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 4108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 4112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 4116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 4120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "float",
+"votes": 3.5
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 4124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x1020",
+"offset": 4128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 4156,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 4160,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+},
+{
+"decomp": true,
+"name": "uDeflect",
+"offset": 4164,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 4168,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x4d",
+"offset": 4169,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 77,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 4172,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 4176,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 4208,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x78",
+"offset": 4212,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 120,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "uDeflect2",
+"offset": 4216,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 124,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 4220,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x81",
+"offset": 4221,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 129,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x84",
+"offset": 4224,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 132,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x88",
+"offset": 4228,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 136,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x10a4",
+"offset": 4260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10a8",
+"offset": 4264,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10ac",
+"offset": 4268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10b0",
+"offset": 4272,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10b4",
+"offset": 4276,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.07
+},
+{
+"decomp": false,
+"name": "field_0x10b8",
+"offset": 4280,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10bc",
+"offset": 4284,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x10c0",
+"offset": 4288,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10cc",
+"offset": 4300,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10e8",
+"offset": 4328,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10ec",
+"offset": 4332,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.04
+}
+],
+"JT": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.11
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.08
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x150",
+"offset": 336,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "s1_0x638",
+"offset": 424,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1592,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x208",
+"offset": 520,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x4d4",
+"offset": 1236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x23c4",
+"offset": 1248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 9156,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x4e4",
+"offset": 1252,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf00",
+"offset": 3840,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1028",
+"offset": 4136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_pasegaCur",
+"offset": 4144,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8752,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "pc_psmaCur",
+"offset": 4148,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8756,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x118c",
+"offset": 5396,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4492,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x1190",
+"offset": 5408,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 4496,
+"source": "mapped",
+"type": "char",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x1290",
+"offset": 5664,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 4752,
+"source": "mapped",
+"type": "char",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x2200",
+"offset": 6336,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8704,
+"source": "mapped",
+"type": "void *",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x2204",
+"offset": 6340,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8708,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": true,
+"name": "jts",
+"offset": 6344,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8736,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": true,
+"name": "jtbs",
+"offset": 6352,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8744,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "pc_tJtbs",
+"offset": 6356,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8748,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "pc_jtcs",
+"offset": 6360,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8764,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_pasegaJtcs",
+"offset": 6368,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8772,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_tHangDeflectLast",
+"offset": 6388,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8864,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "pc_jtbsHangLatch",
+"offset": 6392,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8868,
+"source": "mapped",
+"type": "int",
+"votes": 16.0
+},
+{
+"decomp": false,
+"name": "pc_fHangReverse",
+"offset": 6396,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 8872,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x1900",
+"offset": 6400,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x1910",
+"offset": 6416,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_ablSwing",
+"offset": 6512,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9056,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x236c",
+"offset": 6524,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 9068,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x2378",
+"offset": 6536,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 9080,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_jthk",
+"offset": 6548,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9092,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "pc_phshape",
+"offset": 6552,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9096,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "pc_sParamHshape",
+"offset": 6556,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9100,
+"source": "mapped",
+"type": "float",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "field_0x19d4",
+"offset": 6612,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x19d8",
+"offset": 6616,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x19dc",
+"offset": 6620,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x19e0",
+"offset": 6624,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "pc_pactvalHangHand",
+"offset": 6640,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9484,
+"source": "mapped",
+"type": "void *",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "pc_pactvalHangTool",
+"offset": 6644,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 9488,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+}
+],
+"LASEN": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xd0",
+"offset": 208,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"LEAF": [
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 64,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "undefined16",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x60",
+"offset": 80,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "undefined16",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x70",
+"offset": 96,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "undefined16",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 144,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "undefined16",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "field_0xc4",
+"offset": 196,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+}
+],
+"LIGHT": [
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "vecHighlight",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 736,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x2e4",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 740,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x2e8",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 744,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x2ec",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 748,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xa0",
+"offset": 160,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe0",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x104",
+"offset": 260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+}
+],
+"LM": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 14.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 12.5
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x48",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x4c",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"LO": [
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+}
+],
+"LOOP": [
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "dtLoopMin",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dtLoopMax",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dtPauseMin",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dtPauseMax",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "sviframe",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": true,
+"name": "gframe",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "dtPauseRequested",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "field_0x6c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"LSG": [
+{
+"decomp": false,
+"name": "field_0x48",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"MATCH": [
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "float",
+"votes": 2.5
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x5c",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 92,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x60",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x64",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 100,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x68",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 104,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x6c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 108,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x70",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x78",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 120,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x7c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 124,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x84",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 132,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x88",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 136,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x8c",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 140,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x90",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 144,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x94",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 148,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x98",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 152,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x9c",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 156,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 144,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "undefined16",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0xa0",
+"offset": 160,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x120",
+"offset": 240,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 288,
+"source": "mapped",
+"type": "char",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x130",
+"offset": 256,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 304,
+"source": "mapped",
+"type": "float",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x134",
+"offset": 260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 308,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"MATRIX3": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "float",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"MATRIX4": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "undefined16",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "undefined16",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "undefined16",
+"votes": 4.5
+}
+],
+"MEMCARD": [
+{
+"decomp": true,
+"name": "semaId",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 5.5
+},
+{
+"decomp": true,
+"name": "threadId",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 10.5
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "field",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 3.5
+}
+],
+"MJR": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"MQ": [
+{
+"decomp": false,
+"name": "field_0xac",
+"offset": 172,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"MRSG": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+}
+],
+"ONZ": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+}
+],
+"ORBIT": [
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"OSTRM": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 8.5
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 14.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 7.5
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 18.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 22.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "char",
+"votes": 1.5
+}
+],
+"PATHZONE": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x3c",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "pc_dlePathzone",
+"offset": 236,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "void *",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "void *",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x114",
+"offset": 276,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"PINGPONG": [
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "dtPingpongMin",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dtPingpongMax",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": true,
+"name": "dtPauseMin",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": true,
+"name": "dtPauseMax",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x6c",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"PROXY": [
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xec",
+"offset": 236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xf4",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"PUFFC": [
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.07
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+}
+],
+"QW": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "field_0x110",
+"offset": 272,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x118",
+"offset": 280,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x11c",
+"offset": 284,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"RAIL": [
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+}
+],
+"REMIT": [
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x84",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 132,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x120",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 288,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x124",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 292,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x128",
+"offset": 248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 296,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+}
+],
+"RGBA": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 10.0
+}
+],
+"RIP": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "float",
+"votes": 7.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "float",
+"votes": 7.0
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "float",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x38",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x3c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x44",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x84",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 132,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x88",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 136,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x60",
+"offset": 80,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 96,
+"source": "mapped",
+"type": "undefined16",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x50",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 80,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 108,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x80",
+"offset": 112,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 128,
+"source": "mapped",
+"type": "undefined16",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 144,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "undefined16",
+"votes": 9.0
+},
+{
+"decomp": false,
+"name": "s1_0xb0",
+"offset": 160,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 176,
+"source": "mapped",
+"type": "char",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x100",
+"offset": 208,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 256,
+"source": "mapped",
+"type": "undefined16",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "field_0xe0",
+"offset": 224,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x120",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 288,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x124",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 292,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x128",
+"offset": 248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 296,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+}
+],
+"RIPG": [
+{
+"decomp": false,
+"name": "s1_0x554",
+"offset": 344,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1364,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x15c",
+"offset": 348,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x560",
+"offset": 356,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1376,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+}
+],
+"RUMBLE": [
+{
+"decomp": true,
+"name": "nPort",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 7.0
+},
+{
+"decomp": true,
+"name": "nSlot",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": true,
+"name": "rums",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 13.0
+},
+{
+"decomp": true,
+"name": "prumpat",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "RUMPAT *",
+"votes": 6.0
+},
+{
+"decomp": true,
+"name": "irumins",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 11.0
+},
+{
+"decomp": true,
+"name": "dtRumble",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "float",
+"votes": 7.0
+},
+{
+"decomp": true,
+"name": "dtRumins",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "float",
+"votes": 12.0
+}
+],
+"RUMPAT": [
+{
+"decomp": true,
+"name": "crumins",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+}
+],
+"RWAC": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SAA": [
+{
+"decomp": true,
+"name": "tUpdated",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 6.0
+}
+],
+"SAAF": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 28,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "short",
+"votes": 1.0
+}
+],
+"SAVE": [
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x52",
+"offset": 82,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 82,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x53",
+"offset": 83,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 83,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 84,
+"source": "mapped",
+"type": "short",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x56",
+"offset": 86,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 86,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x57",
+"offset": 87,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 87,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 88,
+"source": "mapped",
+"type": "char",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "field_0xfd5c",
+"offset": 64860,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.03
+}
+],
+"SCROLLER": [
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 2,
+"sly1_offset": null,
+"source": "observed",
+"type": "short",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x26",
+"offset": 38,
+"projectcane": false,
+"size": 2,
+"sly1_offset": null,
+"source": "observed",
+"type": "short",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "svu",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "svv",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "duMod",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": true,
+"name": "dvMod",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 0.5
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x64",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SGG": [
+{
+"decomp": true,
+"name": "calarms",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 360,
+"source": "mapped",
+"type": "int",
+"votes": 4.5
+}
+],
+"SHD": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SHRAPNEL": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x120",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 288,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x124",
+"offset": 244,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 292,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x128",
+"offset": 248,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 296,
+"source": "mapped",
+"type": "int",
+"votes": 1.5
+}
+],
+"SHUFFLE": [
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 2,
+"sly1_offset": null,
+"source": "observed",
+"type": "short",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x54",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x58",
+"offset": 88,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+}
+],
+"SLOTHEAP": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SM": [
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "csms",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": true,
+"name": "asms",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "SMS *",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"SMACK": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x74",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x78",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x7c",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x80",
+"offset": 128,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x124",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 292,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x128",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 296,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x12c",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 300,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0x90",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 148,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 152,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0xa0",
+"offset": 256,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 160,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xa4",
+"offset": 260,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 164,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xa8",
+"offset": 264,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 168,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0xac",
+"offset": 268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 172,
+"source": "mapped",
+"type": "int",
+"votes": 1.0
+}
+],
+"SMARTGUARD": [
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SMP": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "float",
+"votes": 5.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+}
+],
+"SO": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "field_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x34",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x68",
+"offset": 104,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x7c",
+"offset": 124,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x84",
+"offset": 132,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x3a8",
+"offset": 144,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 936,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x3ac",
+"offset": 148,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 940,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "field_0x98",
+"offset": 152,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x9c",
+"offset": 156,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xa0",
+"offset": 160,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xa4",
+"offset": 164,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xe8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x138",
+"offset": 312,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x1e0",
+"offset": 480,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x210",
+"offset": 528,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x4f4",
+"offset": 1268,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SPIRE": [
+{
+"decomp": false,
+"name": "field_0x108",
+"offset": 264,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"SPLMISS": [
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x6f0",
+"offset": 624,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1776,
+"source": "mapped",
+"type": "float",
+"votes": 1.0
+},
+{
+"decomp": false,
+"name": "s1_0x6f4",
+"offset": 628,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1780,
+"source": "mapped",
+"type": "float",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x278",
+"offset": 632,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+}
+],
+"STEP": [
+{
+"decomp": false,
+"name": "field_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.06
+},
+{
+"decomp": false,
+"name": "field_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x5c",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x88",
+"offset": 136,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x8c",
+"offset": 140,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0xe8",
+"offset": 232,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x1a8",
+"offset": 424,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1f4",
+"offset": 500,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x258",
+"offset": 600,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x25c",
+"offset": 604,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x260",
+"offset": 608,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.02
+}
+],
+"STEPGUARD": [
+{
+"decomp": false,
+"name": "field_0xec",
+"offset": 236,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x18c",
+"offset": 396,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x230",
+"offset": 560,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"STUCK": [
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 8,
+"sly1_offset": null,
+"source": "observed",
+"type": "long long",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0xf0",
+"offset": 240,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+}
+],
+"SUV": [
+{
+"decomp": false,
+"name": "field_0xe4",
+"offset": 228,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"SW": [
+{
+"decomp": false,
+"name": "field_0x3ccc",
+"offset": 15564,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x3cd0",
+"offset": 15568,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "field_0x3d40",
+"offset": 15680,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": true,
+"name": "cHandsOff",
+"offset": 15740,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8988,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "field_0x40e8",
+"offset": 16616,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+}
+],
+"TANK": [
+{
+"decomp": false,
+"name": "field_0x1d0",
+"offset": 464,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"TEX": [
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 6,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "char",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0x5",
+"offset": 7,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 5,
+"source": "mapped",
+"type": "char",
+"votes": 4.5
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "void *",
+"votes": 1.5
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"TFT": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 16.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 22.0
+},
+{
+"decomp": false,
+"name": "s1_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x24",
+"offset": 36,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 36,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x28",
+"offset": 40,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 40,
+"source": "mapped",
+"type": "int",
+"votes": 8.0
+},
+{
+"decomp": false,
+"name": "s1_0x2c",
+"offset": 44,
+"projectcane": false,
+"size": 1,
+"sly1_offset": 44,
+"source": "mapped",
+"type": "char",
+"votes": 25.0
+},
+{
+"decomp": false,
+"name": "s1_0x30",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 48,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+}
+],
+"TIMER": [
+{
+"decomp": false,
+"name": "s1_0x260",
+"offset": 100,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 608,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": false,
+"name": "s1_0x264",
+"offset": 104,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 612,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"TNFN": [
+{
+"decomp": false,
+"name": "field_0x40",
+"offset": 64,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "float",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x70",
+"offset": 112,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "s1_0x70",
+"offset": 116,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 112,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x74",
+"offset": 120,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 116,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"UBG": [
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+}
+],
+"UL": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 2,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "short",
+"votes": 12.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"VECTOR": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 16,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "undefined16",
+"votes": 35.5
+},
+{
+"decomp": false,
+"name": "field_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.04
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x60",
+"offset": 96,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x160",
+"offset": 352,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x164",
+"offset": 356,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x168",
+"offset": 360,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x260",
+"offset": 608,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c0",
+"offset": 704,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x2d0",
+"offset": 720,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2d4",
+"offset": 724,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2d8",
+"offset": 728,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2e0",
+"offset": 736,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "void *",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2f0",
+"offset": 752,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2f4",
+"offset": 756,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2f8",
+"offset": 760,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"VIFS": [
+{
+"decomp": true,
+"name": "m_pb",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "void *",
+"votes": 81.0
+},
+{
+"decomp": true,
+"name": "m_fPad",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 24,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "m_unMask",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 28,
+"source": "mapped",
+"type": "int",
+"votes": 5.0
+},
+{
+"decomp": true,
+"name": "m_fCheckCnt",
+"offset": 32,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 32,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+}
+],
+"VOLBTN": [
+{
+"decomp": false,
+"name": "field_0x130",
+"offset": 304,
+"projectcane": false,
+"size": 1,
+"sly1_offset": null,
+"source": "observed",
+"type": "char",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1d4",
+"offset": 468,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x2c8",
+"offset": 712,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"VU_FLOAT": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "float",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"VU_VECTOR": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+],
+"WATER": [
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x178",
+"offset": 376,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.03
+},
+{
+"decomp": false,
+"name": "field_0x17c",
+"offset": 380,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.05
+},
+{
+"decomp": false,
+"name": "field_0x180",
+"offset": 384,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+}
+],
+"WR": [
+{
+"decomp": true,
+"name": "tLastUpdate",
+"offset": 80,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": true,
+"name": "cwre",
+"offset": 84,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 23.0
+},
+{
+"decomp": false,
+"name": "pc_cmat",
+"offset": 88,
+"projectcane": true,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 12.0
+},
+{
+"decomp": true,
+"name": "imatHalf",
+"offset": 92,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 9.0
+},
+{
+"decomp": true,
+"name": "iwreCur",
+"offset": 1760,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 1744,
+"source": "mapped",
+"type": "int",
+"votes": 15.0
+},
+{
+"decomp": false,
+"name": "s1_0x8e0",
+"offset": 2288,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 2272,
+"source": "mapped",
+"type": "void *",
+"votes": 2.0
+},
+{
+"decomp": true,
+"name": "fValuesChanged",
+"offset": 2300,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 2276,
+"source": "mapped",
+"type": "int",
+"votes": 7.0
+}
+],
+"XA": [
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "int",
+"votes": 6.0
+},
+{
+"decomp": true,
+"name": "pxaNextTarget",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "XA *",
+"votes": 2.0
+}
+],
+"XMG": [
+{
+"decomp": false,
+"name": "s1_0x0",
+"offset": 0,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 0,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x4",
+"offset": 4,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 4,
+"source": "mapped",
+"type": "int",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "float",
+"votes": 4.0
+},
+{
+"decomp": false,
+"name": "s1_0x10",
+"offset": 16,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 16,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x14",
+"offset": 20,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 20,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x18",
+"offset": 24,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x1c",
+"offset": 28,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x20",
+"offset": 32,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.02
+},
+{
+"decomp": false,
+"name": "s1_0x40",
+"offset": 48,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 64,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x44",
+"offset": 52,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 68,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x48",
+"offset": 56,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 72,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x4c",
+"offset": 60,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 76,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x34",
+"offset": 64,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 52,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x38",
+"offset": 68,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 56,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "s1_0x3c",
+"offset": 72,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 60,
+"source": "mapped",
+"type": "int",
+"votes": 2.0
+},
+{
+"decomp": false,
+"name": "field_0x4c",
+"offset": 76,
+"projectcane": false,
+"size": 4,
+"sly1_offset": null,
+"source": "observed",
+"type": "int",
+"votes": 0.01
+},
+{
+"decomp": false,
+"name": "field_0x50",
+"offset": 80,
+"projectcane": false,
+"size": 16,
+"sly1_offset": null,
+"source": "observed",
+"type": "undefined16",
+"votes": 0.01
+}
+],
+"sceMpegCbDataStr": [
+{
+"decomp": false,
+"name": "s1_0x8",
+"offset": 8,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 8,
+"source": "mapped",
+"type": "void *",
+"votes": 3.0
+},
+{
+"decomp": false,
+"name": "s1_0xc",
+"offset": 12,
+"projectcane": false,
+"size": 4,
+"sly1_offset": 12,
+"source": "mapped",
+"type": "int",
+"votes": 3.0
+}
+]
+}

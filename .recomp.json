@@ -1,0 +1,30 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "Sly 2: Band of Thieves",
+  "system": "PS2",
+  "type": "decomp",
+  "original": {
+    "region": "USA",
+    "serial": "SCUS-97316"
+  },
+  "project": "Rogue Byte",
+  "status": "in-progress",
+  "toolchain": [
+    "Splat",
+    "Ghidra",
+    "SN ProDG EE-GCC 2.95.3"
+  ],
+  "approach": "Name and type recovery plus matching decompilation: the executable is split into assembly and rebuilt byte for byte; matched functions are replaced by C.",
+  "tags": [
+    "matching",
+    "platformer",
+    "MIPS-R5900",
+    "EE-GCC"
+  ],
+  "links": [
+    {
+      "label": "Progress",
+      "url": "https://blightwidow.github.io/rogue-byte/"
+    }
+  ]
+}

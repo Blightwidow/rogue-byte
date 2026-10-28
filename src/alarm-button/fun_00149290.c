@@ -1,0 +1,7 @@
+#include "m2c_macros.h"
+
+M2C_UNK func_00148B78(s32);                         /* extern */
+
+void func_00149290(s32 arg0) {
+    func_00148B78(arg0 + 0x150);
+}

@@ -1,0 +1,12 @@
+#include "m2c_macros.h"
+
+M2C_UNK SetMurrayState(void *, M2C_UNK);            /* extern */
+M2C_UNK func_001B8D30(void *, M2C_UNK);             /* extern */
+M2C_UNK func_001EEF70();                            /* extern */
+
+void func_00146E98(void *arg0) {
+    func_001EEF70();
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), s32 *, 0x1AC0) = 1;
+    SetMurrayState(M2C_FIELD(arg0, void **, 0x10), 0xC);
+    func_001B8D30(M2C_FIELD(arg0, void **, 0x10), 0);
+}

@@ -1,0 +1,124 @@
+address	name	severity	findings
+00114590	FCanPuffcAttack__FP5PUFFC	low	unused: arg0
+0011c128	__ml__FRC7MATRIX4G8VU_FLOAT	high	missing: reads in_a2_lo; unused: arg1
+0011d898	GModPositive__Fff	low	unused: arg0
+0011d9d8	Force__FPv	low	unused: arg0
+0011e1a0	SetVectorCylind__FP6VECTORfff	low	unused: arg0
+0011e208	SetVectorSphere__FP6VECTORfff	low	unused: arg0
+0011e9f8	LimitVectorLength__FP6VECTORfT0	low	unused: arg2
+001204e8	RefOpG__FiP4CRefP6CFrame	low	unused: arg1
+00120518	RefOpGE__FiP4CRefP6CFrame	low	unused: arg1
+001207f0	RefOpEqual__FiP4CRefP6CFrame	low	unused: arg1
+00120bd0	SubscribeLoStruct__FP2LOPFPv5MSGIDPv_vPv	low	unused: arg1
+00120f80	RefOpList__FiP4CRefP6CFrame	low	unused: param_2
+00122530	RefOpSqrt__FiP4CRefP6CFrame	low	unused: param_2
+00122560	RefOpSin__FiP4CRefP6CFrame	low	unused: param_2
+00122590	RefOpCos__FiP4CRefP6CFrame	low	unused: param_2
+001225c0	RefOpTan__FiP4CRefP6CFrame	low	unused: param_2
+001225f0	RefOpAsin__FiP4CRefP6CFrame	low	unused: param_2
+00122620	RefOpAcos__FiP4CRefP6CFrame	low	unused: param_2
+00122650	RefOpAtan__FiP4CRefP6CFrame	low	unused: param_2
+00122680	RefOpRadNormalize__FiP4CRefP6CFrame	low	unused: param_2
+00123eb0	RefOpObjectOption__FiP4CRefP6CFrame4BIFK	low	unused: param_2,param_4
+0012cc60	ExplodeExploExplso__FP5EXPLOP6EXPLSO	low	unused: arg0,arg1
+0012d220	GetActlaRotationGoal__FP5ACTLAfP7MATRIX3P6VECTOR	low	unused: arg1,arg2,arg3
+0012d4d8	GetActPositionGoal__FP3ACTfP6VECTORT2	low	unused: arg1
+00132b00	OnLoAdd__FP2LO	low	unused: arg0
+001380f0	CalculateBlendAmrsg__FiiPviiP4MRSGPf	low	unused: arg5,arg6
+00138660	EvaluateAcsb__FP4ACSBP3ALOfiP7MATRIX3	low	unused: arg2,arg3
+00139ab8	ProjectBlipgTransformAccel__FP5BLIPGf	low	unused: arg1,in_a1
+0013aa70	SetLightDiffuse_Old__FP5LIGHTf	low	unused: arg1
+0013ab58	UpdateBomb__FP4BOMBf	low	unused: arg1
+0014c6d8	ClsgClipEdgeToObject__FP2SOP6VECTORT1iP3LSG	high	missing: reads in_t1_lo; unused: arg3
+0014e698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	low	unused: arg2,arg3
+0014e6d0	SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR	low	unused: arg2
+0014e768	AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI	high	conflict: arg3 SO * -> CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR arg2 CPDEFI *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; conflict: arg0 VECTOR * -> SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR arg3 CM *; unused: arg2
+0014e968	GetCmCpdefi__FP2CMP2SOfP6CPDEFI	low	unused: arg2
+0014fd30	SetCptn__FP4CPTNPv	low	unused: arg0,arg1
+0014fd38	RevokeCptn__FP4CPTNPv	low	unused: arg0,arg1
+00155228	SFromCrvlU__FP4CRVLf	low	unused: arg1
+00158988	SolveDzg__FP3DZGiiPP2XPPiPPP2SO	low	unused: arg2,arg3,arg4,arg5
+00158b20	SolveDzgFric__FP3DZGiiPP2XPPiPPP2SOf	low	unused: arg6
+00159c80	UpdateEmitter__FP7EMITTERf	low	unused: arg1
+0015b0c8	ChooseEmitvVelocityAge__FP5EMITVP6EMITVXP5EMITOiP6VECTORN24PfT7	low	unused: arg2
+0015bd20	EmitParticles__FiP5EMITBP5EMITG	high	conflict: arg1 CFileLocation * -> OriginateParticles__FiP5EMITBP7EMITGEN arg1 EMITO *; conflict: arg1 CFileLocation * -> EmitRips__FP5EMITBP5EMITGiP6VECTORT3PfT5 arg0 EMITB *; conflict: arg1 CFileLocation * -> OriginateSplineSinkParticles__FiP5EMITBR7EMITGENT2 arg1 EMITB *; conflict: arg1 CFileLocation * -> EmitBlips__FP5EMITBP5EMITGiP6VECTORT3PfT5T3T3 arg0 EMITB *
+0015f000	CleanupDraw__5CFontP8CTextBoxP4GIFS	low	unused: this_
+00160b70	FrameRenderLoop__FPv	low	unused: arg0
+00166a50	CheckReg__4GIFSii	low	unused: arg1,arg2
+0016f468	VBlankS_Interrupt__Fi	low	unused: arg0
+0016f788	GS_Interrupt__Fi	low	unused: arg0
+00170730	UploadBitmaps__FiP3GSB	low	unused: arg1
+0017cb80	PresetPuffcAccel__FP5PUFFCf	low	unused: arg1
+00183b00	PresetHbskAccel__FP4HBSKf	low	unused: arg1
+00187e28	TriggerJoyRumbleRumk__FP3JOY4RUMKf	low	unused: arg2
+00190520	UpdateJtActiveHang__FP2JTP3JOY	low	unused: arg1
+00199408	FCheckJtSingleEdge__FP2JTP2SOP4EDGEP6VECTOR	low	unused: arg0
+001999d0	FCheckJtEdgeGrab__FP2JTP2SOP6VECTOR3XPKPvT2	high	missing: reads in_a2_udw
+00199d48	PxpFindJtBestEdge__FP2JTPiP6VECTOR	high	missing: reads in_a2
+0019aa58	GMeasureJumpRail__FP3MJRf	low	unused: arg1
+001a5be8	FInflictStepguardZap__FP9STEPGUARDP2XPP3ZPR	low	unused: arg0,arg1,arg2
+001a6ee8	FDetectStepguard__FP9STEPGUARD	low	unused: arg0
+001aaf90	CreateMemcardThread__FP7MEMCARDii	low	unused: arg2
+001b10b0	LoadAcscFromBrx__FP4ACSCP18CBinaryInputStream	low	unused: arg1
+001b2fd0	FAsyncDrain__15CQueueOutputIop	low	unused: this_
+001b2fd8	CbWrite__15CQueueOutputIpuiPv	low	unused: this_
+001b3038	FAsyncDrain__15CQueueOutputIpu	low	unused: this_
+001b3388	FMpegAcceptVideo__FP7sceMpegP16sceMpegCbDataStrP5CMpeg	low	unused: arg0
+001b33c8	FMpegAcceptAudio__FP7sceMpegP16sceMpegCbDataStrP5CMpeg	low	unused: arg0
+001b33f0	FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg	low	unused: arg0,arg1
+001b3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	low	unused: arg1,arg2,arg3,arg4,arg5,arg6
+001b3bd0	Execute__5CMpeg	high	conflict: this_ QW * -> Finish__5CMpeg arg0 CMpeg *
+001be1e8	FChooseRobRoc__FP3ROBP3ROH	low	unused: arg0,arg1
+001bff28	CposFindPath__FP2CGP6VECTORT1iT1	high	conflict: arg0 CBSP * -> FindPathAStar__FP2CGP3CGVT1iPiPP3CGV arg0 CG *
+001cd5f0	FillScreenRect__FiiiiffffP4GIFS	low	unused: arg2,arg3,arg8
+001cd998	OnGameLoad__FP4GAME	low	unused: arg0
+001ce608	RenderRipgSelf__FP4RIPGP2CMP2RO	low	unused: arg1,arg2
+001cf0a0	ProjectRipTransform__FP3RIPf	low	unused: arg1
+001cf268	UpdateRip__FP3RIPf	low	unused: arg1
+001cf618	RenderFlying__FP6FLYINGP2CM	low	unused: arg1
+001cf968	FBounceFlying__FP6FLYINGP2SOP6VECTORT2	high	conflict: arg0 LIGHT * -> CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK arg0 RIP *
+001cfa40	RenderStuck__FP5STUCKP2CM	low	unused: arg1
+001cfc88	RenderOrbit__FP5ORBITP2CM	low	unused: arg1,in_a2
+001cfe88	ProjectMatchTransform__FP5MATCHf	low	unused: arg1
+001d0038	UpdateMatch__FP5MATCHf	high	conflict: arg0 LIGHT * -> LaunchMatch__FP5MATCH arg0 MATCH *; unused: arg1
+001d0190	RenderGlint__FP5GLINTP2CM	low	unused: arg1
+001d05a0	ProjectSmackTransform__FP5SMACKf	low	unused: arg1
+001d09a0	ProjectLeafTransform__FP4LEAFf	low	unused: arg1
+001d0bf8	FBounceLeaf__FP4LEAFP2SOP6VECTORT2	high	conflict: arg0 LIGHT * -> CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK arg0 RIP *
+001d5310	TriggerRumbleRumk__FP6RUMBLE4RUMKf	low	unused: arg2
+001d6848	FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO	low	unused: arg2,arg4
+001d9820	UpdateRecyclable__3CGc	low	unused: this_
+001eb960	FillShaders__Fi	low	unused: arg0
+001ec968	UpdateGlobset__FP7GLOBSETP3ALOf	low	unused: arg0,arg1,arg2
+001eda58	UCompleteSaa__FP3SAA	low	unused: arg0
+001edc40	UpdateLoop__FP4LOOPf	low	unused: arg1
+001ede10	UpdatePingpong__FP8PINGPONGf	low	unused: arg1
+001edfe0	UpdateShuffle__FP7SHUFFLEf	low	unused: arg1
+001ee228	UpdateEyes__FP4EYESf	low	unused: arg1
+001ee4e0	UpdateScroller__FP8SCROLLERf	low	unused: arg1
+001ee6d8	UpdateCircler__FP7CIRCLERf	low	unused: arg1
+001f58f0	GetSoCpdefi__FP2SOfP6CPDEFI	low	unused: arg1
+001f59a0	AccelSoTowardMatSmooth__FP2SOfP7MATRIX3P3SMP	low	unused: arg1
+001f5c30	AccelSoTowardMatSpring__FP2SOP7MATRIX3P3CLQP6VECTORT2f	low	unused: arg5
+001faf70	NewSfx__FPP3SFX	low	unused: arg0
+001fbe80	StopSound__FP3AMBi	low	unused: arg1
+00204248	SgasGetStepguard__FP9STEPGUARD	low	unused: arg0
+0020b868	PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL	low	unused: arg1,arg2
+0020fec0	FAddRsmg__FP4RSMGiPii3OIDN24	low	unused: param_1
+0021d6b0	CchParsePchzTft__FPcP3TFTPPc	low	unused: arg2
+0021e1b0	CchAchFromDouble__FPciP3TFTd	low	unused: arg1
+0021e718	WriteTft__FP3TFTP5OSTRMPPcPci	low	unused: in_t1
+0021eac8	CchOstrmPrintf__FP5OSTRMPcT1	low	unused: in_a3,in_t0,in_t1,in_t2
+00220dd8	GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN	low	unused: arg3,in_a3
+00221388	UpdateTn__FP2TNf	low	unused: arg1
+00221a18	ActivateCptn__FP4CPTNPv	low	unused: in_a3
+00221dd8	UpdateCptn__FP4CPTNP6CPDEFIP3JOYf	low	unused: arg3
+00226e88	UnpackHelper__4VIFS3UPKiiPiPPUi	low	unused: param_2,param_4
+00226f28	AddVifUnpack__4VIFS3UPKiPvi	high	missing: reads in_a3_lo
+00228d20	UpdateSwXaList__FP2SWPP2XA	low	unused: arg0
+0022c570	GetWrWavelength__FP2WRPf	low	unused: arg1
+0022cad0	ConvertDeulToW__FP6VECTORN20	low	unused: arg2
+00234640	_Exit	low	unused: __status
+00256d18	__as__6VECTORG9VU_VECTOR	high	missing: reads in_a1_hi,in_a1_lo,in_a1_udw; unused: arg1
+00256d28	__ml__FG8VU_FLOATG9VU_VECTOR	high	missing: reads in_a1_lo,in_a0_lo; unused: arg0,arg1
+00258480	VecCombo__FG8VU_FLOATG9VU_VECTORT0T1	high	missing: reads in_a1_lo,in_a0_lo,in_a3_lo,in_a2_lo; unused: arg0,arg1,arg2,arg3

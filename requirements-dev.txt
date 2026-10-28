@@ -1,0 +1,2 @@
+# Checks only (make check / CI): the linter.
+ruff==0.17.3

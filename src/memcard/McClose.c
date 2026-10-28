@@ -1,0 +1,8 @@
+#include "m2c_macros.h"
+
+M2C_UNK McSync(s32, s32, M2C_UNK, M2C_UNK);         /* extern */
+s32 sceMcClose(s32);                                /* extern */
+
+void McClose(s32 arg0, s32 arg1) {
+    McSync(arg0 + 0xFD5C, sceMcClose(arg1), 3, 0);
+}

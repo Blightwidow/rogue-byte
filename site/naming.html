@@ -1,0 +1,200 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogue Byte: Naming Desk</title>
+<meta name="description" content="Pick a function of Sly 2 that has no name or a provisional one, see who calls it and what it calls, and propose a name.">
+<meta property="og:title" content="Rogue Byte: Naming Desk">
+<meta property="og:description" content="Pick a Sly 2 function, read its callers, callees and strings, propose a name.">
+<meta property="og:image" content="assets/og.png">
+<link rel="icon" href="assets/favicon.png">
+<style>
+:root {
+  --navy: #05060f; --sky: #0b0c26; --panel: #11133a; --panel-line: #23266a; --ink: #e8ecff; --muted: #9aa3d6;
+  --blue: #2f7af4; --gold: #f3c25a; --green: #5ad1a0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(120% 80% at 20% 0%, #2a2d6e 0%, var(--sky) 45%, var(--navy) 100%) fixed;
+       color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 0 8px; }
+header img { height: 64px; width: auto; max-width: 100%; }
+header p { margin: 0; color: var(--muted); flex: 1 1 280px; }
+nav a { color: var(--ink); margin-right: 16px; text-decoration: none; border-bottom: 2px solid var(--blue); }
+h1 { margin: 24px 0 4px; font-size: 1.6rem; }
+.note { color: var(--muted); font-size: .9rem; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 16px 0 8px; }
+label { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 2px; }
+input, select { width: 100%; padding: 8px 10px; background: var(--panel); color: var(--ink); border: 1px solid var(--panel-line); border-radius: 8px; font: inherit; }
+.count { margin: 12px 0 6px; color: var(--muted); }
+.row { background: var(--panel); border: 1px solid var(--panel-line); border-radius: 10px; margin-bottom: 8px; }
+.row > summary { display: grid; grid-template-columns: 7.5em 1fr auto auto; gap: 4px 12px; align-items: center; padding: 10px 14px; cursor: pointer; list-style: none; }
+.row > summary::-webkit-details-marker { display: none; }
+.addr { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+.name { font-weight: 600; word-break: break-all; }
+.meta { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+.badge { font-size: .75rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--panel-line); white-space: nowrap; }
+.badge.none { color: var(--gold); border-color: var(--gold); }
+.badge.provisional { color: var(--blue); border-color: var(--blue); }
+.badge.sly1, .badge.bevy { color: var(--green); border-color: var(--green); }
+.detail { padding: 4px 14px 14px; border-top: 1px solid var(--panel-line); }
+.detail h3 { margin: 12px 0 4px; font-size: .85rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.detail ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.detail li { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }
+.detail a, .detail button.link { color: #8fb4ff; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; }
+.propose { display: inline-block; margin-top: 14px; padding: 8px 14px; background: var(--blue); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; }
+button.more { margin: 12px 0; padding: 8px 16px; background: var(--panel); color: var(--ink); border: 1px solid var(--panel-line); border-radius: 8px; font: inherit; cursor: pointer; }
+footer { margin-top: 40px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--panel-line); padding-top: 16px; }
+a { color: #8fb4ff; }
+@media (max-width: 640px) { .row > summary { grid-template-columns: 1fr auto; } .addr { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="assets/logo.svg" alt="Rogue Byte">
+    <p>Naming Desk: Sly 2's functions that still need a name.</p>
+  </header>
+  <nav><a href="index.html">Progress</a><a href="https://github.com/Blightwidow/rogue-byte">Source</a><a href="https://github.com/Blightwidow/rogue-byte/blob/main/docs/build/name-recovery.md">How names are recovered</a></nav>
+
+  <h1>Name a function</h1>
+  <p class="note">Open a function to see who calls it, what it calls and the identifier-like strings it points at, then propose a name: the button opens a
+  GitHub issue with the address filled in. <b>Sly 1 match</b> and <b>Rust port</b> names have outside evidence; <b>provisional</b> names are readings of the code and
+  are the ones most worth a second look. Names and addresses only: no game data is published here.</p>
+
+  <div class="filters">
+    <div><label for="search">Search (name or address)</label><input id="search" type="search" placeholder="0x1A5C28 or LoadLo"></div>
+    <div><label for="origin">Name</label><select id="origin">
+      <option value="needs">Needs a name or a second look</option>
+      <option value="none">No name yet</option>
+      <option value="provisional">Provisional</option>
+      <option value="sly1">Sly 1 match</option>
+      <option value="bevy">Rust port</option>
+      <option value="all">All</option></select></div>
+    <div><label for="module">Module</label><select id="module"><option value="">All game modules</option></select></div>
+    <div><label for="size">Size</label><select id="size">
+      <option value="">Any</option><option value="64">up to 64 bytes</option><option value="128">up to 128 bytes</option>
+      <option value="256">up to 256 bytes</option><option value="big">over 256 bytes</option></select></div>
+    <div><label for="sort">Sort</label><select id="sort">
+      <option value="callers">Most called first</option><option value="size">Smallest first</option><option value="address">Address</option></select></div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div id="list"></div>
+  <button class="more" id="more" hidden>Show more</button>
+
+  <footer>
+    <p>The code of Sly 2 belongs to Sucker Punch Productions and Sony Interactive Entertainment. This page lists names, addresses, sizes, call relations and a few
+    identifier-like strings for interoperability and preservation. Tooling is GPL-3.0-or-later; see THIRD_PARTY_NOTICES.md in the repository.</p>
+  </footer>
+</main>
+<script>
+const REPOSITORY = 'https://github.com/Blightwidow/rogue-byte';
+const PAGE = 50;
+const format = new Intl.NumberFormat('en-US');
+const ORIGINS = { none: 'no name', provisional: 'provisional', sly1: 'Sly 1 match', bevy: 'Rust port' };
+const element = (tag, attributes = {}, text = '') => {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+  node.textContent = text;
+  return node;
+};
+const controls = Object.fromEntries(['search', 'origin', 'module', 'size', 'sort'].map(id => [id, document.getElementById(id)]));
+let functions = [], byAddress = new Map(), context = {}, shown = PAGE;
+
+const originOf = fn => (context[fn.address] || {}).origin || (fn.named ? 'sly1' : 'none');
+const callerCount = fn => ((context[fn.address] || {}).callers || []).length;
+
+function matches(fn) {
+  const query = controls.search.value.trim().toLowerCase();
+  const origin = originOf(fn);
+  const choice = controls.origin.value;
+  if (choice === 'needs' ? !(origin === 'none' || origin === 'provisional') : choice !== 'all' && origin !== choice) return false;
+  if (controls.module.value && fn.module !== controls.module.value) return false;
+  const size = controls.size.value;
+  if (size === 'big' ? fn.size <= 256 : size && fn.size > Number(size)) return false;
+  return !query || fn.name.toLowerCase().includes(query) || fn.address.toLowerCase().includes(query.replace(/^0x/, '0x'));
+}
+
+function link(address, label) {
+  const button = element('button', { class: 'link', type: 'button' }, label);
+  button.addEventListener('click', () => { controls.search.value = address; controls.origin.value = 'all'; controls.module.value = ''; controls.size.value = ''; shown = PAGE; render(true); });
+  return button;
+}
+
+function list(title, addresses) {
+  const section = document.createDocumentFragment();
+  section.append(element('h3', {}, title));
+  const items = element('ul');
+  for (const address of addresses) {
+    const target = byAddress.get(address);
+    const item = element('li');
+    item.append(target ? link(address, target.name) : element('span', {}, address));
+    items.append(item);
+  }
+  section.append(items);
+  return section;
+}
+
+function issueUrl(fn, entry) {
+  const lines = ['### Address and current name', `${fn.address.toLowerCase().replace('0x', '0x')} ${fn.name} (module ${fn.module}, ${fn.size} bytes)`, '',
+                 '### Proposed name or type', '', '', '### Evidence'];
+  if ((entry.callers || []).length) lines.push('Callers: ' + entry.callers.slice(0, 6).map(a => (byAddress.get(a) || { name: a }).name).join(', '));
+  if ((entry.strings || []).length) lines.push('Strings: ' + entry.strings.join(', '));
+  const query = new URLSearchParams({ template: 'naming.md', title: `Name: ${fn.address.toLowerCase()} ${fn.name}`, body: lines.join('\n') });
+  return `${REPOSITORY}/issues/new?${query}`;
+}
+
+function row(fn) {
+  const entry = context[fn.address] || {};
+  const origin = originOf(fn);
+  const details = element('details', { class: 'row', id: fn.address.toLowerCase() });
+  const summary = element('summary');
+  summary.append(element('span', { class: 'addr' }, fn.address.toLowerCase().replace('0x', '0x')), element('span', { class: 'name' }, fn.name),
+                 element('span', { class: 'meta' }, `${fn.module} · ${format.format(fn.size)} B · ${callerCount(fn)} callers`), element('span', { class: `badge ${origin}` }, ORIGINS[origin] || origin));
+  details.append(summary);
+  details.addEventListener('toggle', () => {
+    if (!details.open || details.querySelector('.detail')) return;
+    const detail = element('div', { class: 'detail' });
+    detail.append(entry.callers ? list('Called by', entry.callers) : element('p', { class: 'note' }, 'No direct caller found (virtual calls are not traced).'));
+    if (entry.callees) detail.append(list('Calls', entry.callees));
+    if (entry.strings) {
+      detail.append(element('h3', {}, 'Strings it points at'));
+      const items = element('ul');
+      for (const text of entry.strings) items.append(element('li', {}, JSON.stringify(text)));
+      detail.append(items);
+    }
+    const propose = element('a', { class: 'propose', href: issueUrl(fn, entry), target: '_blank', rel: 'noopener' }, 'Propose a name');
+    detail.append(propose);
+    details.append(detail);
+  });
+  return details;
+}
+
+function render(reset) {
+  if (reset) shown = PAGE;
+  const order = controls.sort.value;
+  const chosen = functions.filter(matches).sort((a, b) => order === 'callers' ? callerCount(b) - callerCount(a) || a.size - b.size
+    : order === 'address' ? parseInt(a.address, 16) - parseInt(b.address, 16) : a.size - b.size || parseInt(a.address, 16) - parseInt(b.address, 16));
+  document.getElementById('count').textContent = `${format.format(chosen.length)} functions` + (chosen.length > shown ? `, showing ${shown}` : '');
+  document.getElementById('list').replaceChildren(...chosen.slice(0, shown).map(row));
+  document.getElementById('more').hidden = chosen.length <= shown;
+}
+
+Promise.all([fetch('data/report.json').then(r => r.json()), fetch('data/context.json').then(r => r.json())]).then(([report, extra]) => {
+  context = extra;
+  functions = report.functions.filter(fn => fn.module !== 'sdk');
+  byAddress = new Map(report.functions.map(fn => [fn.address, fn]));
+  const modules = [...new Set(functions.map(fn => fn.module))].sort();
+  controls.module.append(...modules.map(name => element('option', { value: name }, name)));
+  for (const control of Object.values(controls)) control.addEventListener(control.id === 'search' ? 'input' : 'change', () => render(true));
+  document.getElementById('more').addEventListener('click', () => { shown += PAGE; render(false); });
+  const wanted = decodeURIComponent(location.hash.slice(1)).toUpperCase().replace(/^0X/, '0X');
+  if (byAddress.has(wanted)) { controls.search.value = wanted; controls.origin.value = 'all'; }
+  render(true);
+  if (byAddress.has(wanted)) { const open = document.getElementById(wanted.toLowerCase()); if (open) open.open = true; }
+}).catch(error => { document.getElementById('count').textContent = 'Could not load the data: ' + error; });
+</script>
+</body>
+</html>

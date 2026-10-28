@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.html linguist-generated
+config/sly1/** linguist-generated
+config/recovered/** linguist-generated

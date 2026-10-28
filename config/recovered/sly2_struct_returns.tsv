@@ -1,0 +1,2 @@
+address	name	extent	before	after
+0011c128	__ml__FRC7MATRIX4G8VU_FLOAT	64	undefined __ml__FRC7MATRIX4G8VU_FLOAT(MATRIX4 * arg0, VU_FLOAT arg1)	MATRIX4 * __ml__FRC7MATRIX4G8VU_FLOAT(MATRIX4 * ret, MATRIX4 * arg0, VU_FLOAT arg1)

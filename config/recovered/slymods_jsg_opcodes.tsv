@@ -1,0 +1,86 @@
+# JSG/SEQ record kinds (instruction opcodes) from the SlyMods wiki spreadsheet "Sly 2 SEQ instructions" (linked from https://slymods.info/wiki/Sly_2:SEQ; CC BY-SA 4.0).
+# Names only, no descriptions. The sheet says: names from internal builds; official release names unknown.
+# Verdict is our code vs the sheet, checked 2026-10-26 on kinds we have code for (StartNextSeqnodeRecord, AddSeqRecord*); blank = not compared. Unverified against the binary beyond that.
+kind	slymods_name	verdict	ours
+0x00	THREAD	agree	block open (PseqnodeNew)
+0x01	END_THREAD	agree	block close (PseqnodeNew)
+0x02	DESTROY_THREAD	agree	stop a node
+0x03	SYNC	sheet unsure	ours: wait until no node runs any of the listed blocks (the sheet has ???)
+0x04	WAIT	agree	wait for a signal
+0x05	SIGNAL_SEQUENCE	agree	set a signal
+0x06	UNTRIGGER_SEQUENCE	agree	clear signals
+0x07	SET_PLAYER	agree	switch control to a character (class 0x32)
+0x08	SET_ACTOR	agree	subject override
+0x09	CALL_SPLICE	agree	script message call (sets +0x68)
+0x0A	CALL_ANIMATION	agree	pose a character / play an anim
+0x0B	CALL_SEQUENCE	agree	wait for another sequence
+0x0C	SET_CONTEXT		
+0x0D	SET_SM_GOAL	agree	SMA (state machine anim) goal
+0x0E	SHOW_SWF		
+0x0F	HIDE_SWF		
+0x10	SET_CLOCK_SPEED		
+0x11	ADD_TASK_REQUEST		
+0x12	HANDS_OFF		
+0x13	LABEL		
+0x14	SEEK		
+0x15	FIND_LABEL		
+0x16	CUT		
+0x17	CUT_CAMERA		
+0x18	SET_TUNNEL		
+0x19	SET_FOCUS		
+0x1A	CLIMB		
+0x1B	UNHIDE		
+0x1C	DAMAGE		
+0x1D	REACH		
+0x1E	TOSS		
+0x1F	GRAB_OBJECT		
+0x22	CATCH		
+0x23	PAUSE		
+0x24	MOVE_TO		
+0x27	MOVE_ALONG		
+0x29	CRAWL		
+0x2A	JUMP		
+0x2C	ADD_OBJECT		
+0x2D	REMOVE_OBJECT		
+0x2E	ADD_GEOM		
+0x2F	REMOVE_GEOM		
+0x30	ADD_PHYS		
+0x31	REMOVE_PHYS		
+0x32	JOLT		
+0x33	RUMBLE		
+0x34	EXPLODE		
+0x35	SET_EYES		
+0x36	SOUND_EFFECT		
+0x37	STOP_SOUND_EFFECT		
+0x38	CONFRONT_CAMERA		
+0x39	END_CONFRONT_CAMERA		
+0x3A	REVOKE_CONFRONT_CAMERA		
+0x3B	SHOW_BINOC		
+0x3C	HIDE_BINOC		
+0x3D	BINOC_ANCHOR		
+0x3E	BINOC_FOCUS		
+0x3F	BINOC_POS		
+0x40	BINOC_ZOOM		
+0x41	BINOC_CUT		
+0x42	WAIT_FOR_BUTTON		
+0x45	VOICE		
+0x47	GESTURE		
+0x48	END_GESTURE		
+0x49	SET_DANCE_STATE	conflict	ours: dialog choice
+0x4A	DANCE_MOVE	conflict	ours: choice option / speaker (float at +0x10 fits a time)
+0x4B	DANCE_INTERLUDE	conflict	ours: speaker target (two oids)
+0x4C	APPLY_MUSIC	agree	stream op 0x1FE150
+0x4D	RETRACT_MUSIC	agree	stream op 0x1FE310
+0x4E	WAIT_FOR_MUSIC	sheet unsure	ours: wait until the stream time reaches t
+0x4F	LIFT	sheet unsure	ours: subject class 0x36 action
+0x50	TAKE_OUT_BOMB	conflict	ours: drive the subject input, flagged
+0x51	DROP_BOMB	conflict	ours: drive the subject input, unflagged
+0x52	WAIT_FOR_VOICE	agree	wait for the voice (kind 0x45) stream
+0x53	SHOW_BRIEF	agree	timed op on the infobox object 0x3DA0C0
+0x54	HIDE_BRIEF	agree	op on 0x3DA0C0
+0x55	PLAY_GUARD_SCRIPT	agree	start a guard routine
+0x56	RETRACT_GUARD_SCRIPT	agree	stop a guard routine
+0x57		missing from sheet	ours has an Add function for this kind
+0x58		missing from sheet	ours has an Add function for this kind
+0x59		missing from sheet	ours has an Add function for this kind
+0x5A		missing from sheet	ours has an Add function for this kind

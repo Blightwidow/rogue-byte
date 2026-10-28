@@ -1,0 +1,41 @@
+# Posts the progress comment that progress.yml prepared for a pull request.
+#
+# It runs from main with a token that may write pull request comments and never checks out or runs code from the pull request: it
+# only reads the artifact's number (checked to be digits) and Markdown, and updates its own earlier comment, found by a marker.
+name: progress-comment
+
+on:
+  workflow_run:
+    workflows: [progress]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+jobs:
+  comment:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: progress-comment
+          path: comment
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+      - name: Post or update the comment
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number="$(cat comment/number)"
+          case "$number" in ''|*[!0-9]*) echo "bad pull request number" >&2; exit 1 ;; esac
+          existing="$(gh api "repos/$GH_REPO/issues/$number/comments" --paginate --jq '.[] | select(.body | contains("<!-- rogue-byte-progress -->")) | .id' | head -n 1)"
+          if [ -n "$existing" ]; then
+            gh api --method PATCH "repos/$GH_REPO/issues/comments/$existing" -F body=@comment/comment.md
+          else
+            gh api --method POST "repos/$GH_REPO/issues/$number/comments" -F body=@comment/comment.md
+          fi

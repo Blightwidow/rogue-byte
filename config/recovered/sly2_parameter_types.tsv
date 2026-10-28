@@ -1,0 +1,15 @@
+address	function	parameter	before	after	evidence
+0011c500	FInvertMatrix__FiPfT1	in_a3	undefined4	MATRIX4 *	1
+0014c6d8	ClsgClipEdgeToObject__FP2SOP6VECTORT1iP3LSG	in_t1	undefined4	LSG *	1
+0014e768	AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI	in_a3	undefined4	VECTOR *	1
+0014e920	ResetCmAdjust__FP2CMP2SOP6CPDEFI	in_a3	undefined4	VECTOR *	1
+00154d88	FUN_001dd9a0__Ff	in_a0	undefined4	DIFFICULTY *	1
+001cfc88	RenderOrbit__FP5ORBITP2CM	in_a3	undefined4	MATRIX3 *	1
+001d93d8	StartupJmt__Fv	in_a0	undefined4	DL *	1
+001f6c08	EnsureSoLvo__FP2SO	in_a1	undefined4	CFileLocation *	1
+00201110	RefSetPvsFromSplice__FiP4CRefP4OTYPPPv	in_t0	undefined4	int *	1
+00201360	RefSetArgsFromSplice__FiP4CRefP4OTYPe	in_a3	undefined4	void * *	1
+00201360	RefSetArgsFromSplice__FiP4CRefP4OTYPe	in_t1	undefined4	ALO * *	1
+00201360	RefSetArgsFromSplice__FiP4CRefP4OTYPe	in_t2	undefined4	VECTOR * *	1
+00201360	RefSetArgsFromSplice__FiP4CRefP4OTYPe	in_t3	undefined4	VECTOR * *	1
+00220dd8	GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN	in_a3	undefined4	float	1

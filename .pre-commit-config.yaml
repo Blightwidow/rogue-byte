@@ -1,0 +1,63 @@
+# prek is compatible with this standard pre-commit configuration format.
+#
+# Auto-fix hooks only touch documentation and metadata. They never rewrite scripts/, data/ or generated reports:
+# whitespace in recovered data (symbol lists, TSV) is meaningful and the tools parse it.
+
+default_stages: [pre-commit]
+# Install both stages: `pre-commit install --hook-type pre-commit --hook-type commit-msg` (or the prek equivalent).
+fail_fast: false
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # Read-only checks, safe over the whole tracked tree.
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-illegal-windows-names
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: forbid-new-submodules
+
+      # Auto-fix: public documentation and metadata only.
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        files: ^(README|CONTRIBUTING|THIRD_PARTY_NOTICES)\.md$|^docs/(contributing|game)/.+\.md$|^\.github/
+      - id: end-of-file-fixer
+        files: ^(README|CONTRIBUTING|THIRD_PARTY_NOTICES)\.md$|^docs/(contributing|game)/.+\.md$|^\.github/
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        files: ^(README|CONTRIBUTING|THIRD_PARTY_NOTICES)\.md$|^docs/(contributing|game)/.+\.md$|^\.github/
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        files: ^(scripts/.+|setup)\.sh$
+        args: [--severity=error]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      - id: ruff-check
+
+  - repo: local
+    hooks:
+      - id: commit-message
+        name: commit message (docs/contributing/commit-messages.md)
+        language: system
+        entry: python3 scripts/commit_msg.py
+        stages: [commit-msg]
+      - id: script-tests
+        name: script regression tests
+        language: system
+        entry: python3 scripts/test_public_tools.py
+        files: ^scripts/.+\.py$
+        pass_filenames: false

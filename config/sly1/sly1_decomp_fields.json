@@ -1,0 +1,3560 @@
+{
+"ACG": {
+"4": [
+"acgk",
+"ACGK"
+]
+},
+"ACGB": {
+"12": [
+"akgb",
+"KGB *"
+],
+"8": [
+"ckgb",
+"int"
+]
+},
+"ACGBW": {
+"12": [
+"akgbw",
+"KGBW *"
+],
+"8": [
+"ckgbw",
+"int"
+]
+},
+"ACGL": {
+"12": [
+"akgl",
+"KGL *"
+],
+"8": [
+"ckgl",
+"int"
+]
+},
+"ACP": {
+"4": [
+"acvk",
+"ACVK"
+],
+"8": [
+"fContiguous",
+"int"
+]
+},
+"ACPB": {
+"12": [
+"ckvb",
+"int"
+],
+"16": [
+"akvb",
+"KVB *"
+]
+},
+"ACPC": {
+"16": [
+"posDefault",
+"VECTOR"
+],
+"32": [
+"apacg",
+"ACG *[3]"
+]
+},
+"ACR": {
+"4": [
+"acvk",
+"ACVK"
+],
+"8": [
+"fContiguous",
+"int"
+]
+},
+"ACRB": {
+"12": [
+"ckvb",
+"int"
+],
+"16": [
+"akvb",
+"KVB *"
+]
+},
+"ACRC": {
+"16": [
+"eulDefault",
+"VECTOR"
+],
+"32": [
+"apacg",
+"ACG *[3]"
+]
+},
+"ACS": {
+"4": [
+"acvk",
+"ACVK"
+]
+},
+"ACSB": {
+"12": [
+"akvb",
+"KVB *"
+],
+"8": [
+"ckvb",
+"int"
+]
+},
+"ACSC": {
+"16": [
+"vecDefault",
+"VECTOR"
+],
+"32": [
+"apacg",
+"ACG *[3]"
+]
+},
+"ACT": {
+"0": [
+"pvtact",
+"VTACT *"
+],
+"20": [
+"nPriority",
+"int"
+],
+"24": [
+"tMatch",
+"float"
+],
+"4": [
+"palo",
+"ALO *"
+],
+"8": [
+"dleAlo",
+"DLE"
+]
+},
+"ACTBANK": {
+"28": [
+"uBank",
+"float"
+],
+"32": [
+"dtPredict",
+"float"
+]
+},
+"ACTLA": {
+"68": [
+"nPriorityEnabled",
+"int"
+],
+"72": [
+"nPriorityDisabled",
+"int"
+],
+"76": [
+"fPaused",
+"int"
+],
+"80": [
+"clqPanToPan",
+"CLQ"
+]
+},
+"ACTREF": {
+"44": [
+"pradTwistGoal",
+"float *"
+],
+"48": [
+"pdradTwistGoal",
+"float *"
+]
+},
+"ACTSEG": {
+"28": [
+"pasega",
+"ASEGA *"
+],
+"32": [
+"dleAsega",
+"DLE"
+]
+},
+"ACTVAL": {
+"128": [
+"radTwistGoal",
+"float"
+],
+"132": [
+"dradTwistGoal",
+"float"
+],
+"196": [
+"agPoses",
+"float *"
+]
+},
+"ALARM": {
+"1360": [
+"alarms",
+"ALARMS"
+],
+"1380": [
+"calbrks",
+"int"
+],
+"1384": [
+"aoidAlbrks",
+"OID[4]"
+],
+"1400": [
+"coidSensors",
+"int"
+],
+"1404": [
+"aoidSensors",
+"OID[16]"
+],
+"1468": [
+"cpsensors",
+"int"
+],
+"1472": [
+"apsensors",
+"SENSOR *[16]"
+],
+"1536": [
+"coidStepguards",
+"int"
+],
+"1540": [
+"aoidStepguards",
+"OID[6]"
+],
+"1564": [
+"calbrksDisabled",
+"int"
+],
+"1580": [
+"crsmg",
+"int"
+],
+"1584": [
+"arsmg",
+"RSMG[8]"
+],
+"1712": [
+"ichkDisabled",
+"int"
+]
+},
+"ALBRK": {
+"1728": [
+"palarm",
+"ALARM *"
+]
+},
+"ALO": {
+"108": [
+"cpmrg",
+"int"
+],
+"112": [
+"apmrg",
+"MRG *[4]"
+],
+"128": [
+"sMRD",
+"float"
+],
+"132": [
+"sCelBorderMRD",
+"float"
+],
+"136": [
+"grfzon",
+"int"
+],
+"140": [
+"dsMRDSnap",
+"float"
+],
+"208": [
+"xf",
+"XF"
+],
+"400": [
+"posOrig",
+"VECTOR"
+],
+"416": [
+"matOrig",
+"MATRIX3"
+],
+"464": [
+"eulOrig",
+"VECTOR"
+],
+"480": [
+"dlAct",
+"DL"
+],
+"492": [
+"pactPos",
+"ACT *"
+],
+"496": [
+"pactRot",
+"ACT *"
+],
+"500": [
+"pactScale",
+"ACT *"
+],
+"504": [
+"apactPose",
+"ACT **"
+],
+"508": [
+"pactRestore",
+"ACT *"
+],
+"512": [
+"pactla",
+"ACTLA *"
+],
+"516": [
+"pactbank",
+"ACTBANK *"
+],
+"52": [
+"dlChild",
+"DL"
+],
+"520": [
+"pikh",
+"IKH *"
+],
+"524": [
+"pclqPosSpring",
+"CLQ *"
+],
+"528": [
+"pclwPosDamping",
+"CLQ *"
+],
+"532": [
+"pclqRotSpring",
+"CLQ *"
+],
+"536": [
+"pclqRotDamping",
+"CLQ *"
+],
+"540": [
+"psmpaPos",
+"SMPA *"
+],
+"544": [
+"psmapaRot",
+"SMPA *"
+],
+"548": [
+"palox",
+"ALOX *"
+],
+"552": [
+"cframeStatic",
+"int"
+],
+"556": [
+"globset",
+"GLOBSET"
+],
+"64": [
+"dleBusy",
+"DLE"
+],
+"644": [
+"pshadow",
+"SHADOW *"
+],
+"648": [
+"pthrob",
+"THROB *"
+],
+"652": [
+"sFastShadowRadius",
+"float"
+],
+"656": [
+"sFastShadowDepth",
+"float"
+],
+"660": [
+"fRealClock",
+"int"
+],
+"664": [
+"pfader",
+"FADER *"
+],
+"668": [
+"dtUpdatePause",
+"float"
+],
+"672": [
+"pasegd",
+"ASEGD *"
+],
+"676": [
+"sRadiusRenderSelf",
+"float"
+],
+"680": [
+"sRadiusRenderAll",
+"float"
+],
+"684": [
+"psfx",
+"SFX *"
+],
+"688": [
+"ficg",
+"FICG"
+],
+"696": [
+"cposed",
+"int"
+],
+"700": [
+"aposec",
+"POSEC *"
+],
+"704": [
+"pactrefCombo",
+"ACTREF *"
+],
+"708": [
+"pdlrFirst",
+"DLR *"
+],
+"72": [
+"dleMRD",
+"DLE"
+],
+"80": [
+"paloRoot",
+"ALO *"
+],
+"84": [
+"paloFreezeRoot",
+"ALO *"
+],
+"88": [
+"dleFreeze",
+"DLE"
+],
+"96": [
+"dlFreeze",
+"DL"
+]
+},
+"ASEG": {
+"108": [
+"dlAsega",
+"DL"
+],
+"128": [
+"clqMasterSuck",
+"CLQ"
+],
+"144": [
+"lmMasterSuck",
+"LM"
+],
+"152": [
+"svtMasterSuck",
+"float"
+],
+"156": [
+"pchnStrip",
+"CHN *"
+],
+"52": [
+"tMax",
+"float"
+]
+},
+"ASEGA": {
+"20": [
+"tLocal",
+"float"
+],
+"24": [
+"svtLocal",
+"float"
+],
+"36": [
+"fHandsOff",
+"char"
+],
+"37": [
+"unk1",
+"undefined1"
+],
+"38": [
+"unk2",
+"undefined1"
+],
+"39": [
+"unk3",
+"undefined1"
+],
+"40": [
+"pactsegError",
+"ACTSEG *"
+],
+"68": [
+"dlActseg",
+"DL"
+],
+"8": [
+"paseg",
+"ASEG *"
+]
+},
+"ASEGD": {
+"0": [
+"paseg",
+"ASEG *"
+],
+"12": [
+"tLocal",
+"float"
+],
+"16": [
+"svtLocal",
+"float"
+],
+"4": [
+"oidAseg",
+"OID"
+],
+"8": [
+"iak",
+"IAK"
+]
+},
+"BARRIER": {
+"1364": [
+"coid",
+"int"
+],
+"1368": [
+"aoid",
+"OID[4]"
+],
+"1384": [
+"ccid",
+"int"
+],
+"1388": [
+"acid",
+"CID[4]"
+]
+},
+"BASIC": {
+"4": [
+"psidebag",
+"CSidebag *"
+]
+},
+"BEI": {
+"0": [
+"clq",
+"CLQ"
+],
+"16": [
+"cseg",
+"float"
+],
+"20": [
+"csegNotchHalf",
+"float"
+],
+"24": [
+"isegNotchFirst",
+"int"
+],
+"28": [
+"isegNotchMid",
+"int"
+],
+"32": [
+"isegNotchLast",
+"int"
+],
+"36": [
+"gNotchEdge",
+"float"
+],
+"40": [
+"gNotchCenter",
+"float"
+]
+},
+"BLIP": {
+"0": [
+"ablipf",
+"BLIPF[2]"
+],
+"4224": [
+"iblipfLatest",
+"int"
+],
+"4228": [
+"cblipe",
+"int"
+],
+"4232": [
+"pblipsp",
+"BLIPSP *"
+],
+"4236": [
+"pblipg",
+"BLIPG *"
+],
+"4240": [
+"dle",
+"DLE"
+]
+},
+"BLIPF": {
+"0": [
+"ablipp",
+"BLIPP[44]"
+],
+"1408": [
+"ablipx",
+"BLIPX[44]"
+],
+"704": [
+"ablipv",
+"BLIPV[44]"
+]
+},
+"BLIPP": {
+"0": [
+"x",
+"float"
+],
+"12": [
+"tCreated",
+"float"
+],
+"4": [
+"y",
+"float"
+],
+"8": [
+"z",
+"float"
+]
+},
+"BLIPV": {
+"0": [
+"x",
+"float"
+],
+"12": [
+"tDestroy",
+"float"
+],
+"4": [
+"y",
+"float"
+],
+"8": [
+"z",
+"float"
+]
+},
+"BLIPX": {
+"0": [
+"irgba",
+"uint"
+],
+"12": [
+"radRoll",
+"float"
+],
+"4": [
+"itex0",
+"uint"
+],
+"8": [
+"swRoll",
+"float"
+]
+},
+"BOMB": {
+"1364": [
+"tDetonate",
+"float"
+],
+"1664": [
+"psfxDet",
+"SFX *"
+]
+},
+"BREAK": {
+"1688": [
+"ccoin",
+"int"
+]
+},
+"BRK": {
+"1360": [
+"cbrp",
+"int"
+],
+"1364": [
+"abrp",
+"BRP[16]"
+],
+"1596": [
+"grfbrk",
+"GRFBRK"
+]
+},
+"BRKP": {
+"1360": [
+"brkps",
+"BRKPS"
+],
+"1364": [
+"tBrkps",
+"float"
+],
+"1368": [
+"dtMaxLifetime",
+"float"
+],
+"1372": [
+"dtFade",
+"float"
+],
+"1376": [
+"pbrk",
+"BRK *"
+],
+"1380": [
+"fIgnoreBrkp",
+"int"
+]
+},
+"BRP": {
+"0": [
+"brpt",
+"BRPT"
+],
+"4": [
+"oid",
+"OID"
+],
+"8": [
+"plo",
+"LO *"
+]
+},
+"BTN": {
+"0": [
+"unknown",
+"int"
+],
+"284": [
+"fCheckpointed",
+"int"
+],
+"288": [
+"ichkPushed",
+"int"
+],
+"320": [
+"oidDialog",
+"OID"
+],
+"4": [
+"paloOwner",
+"ALO *"
+],
+"8": [
+"aash",
+"ASH[2]"
+]
+},
+"BUTTON": {
+"1364": [
+"btn",
+"BTN"
+],
+"1824": [
+"coidPush",
+"int"
+],
+"1828": [
+"aoidPush",
+"OID[8]"
+],
+"1860": [
+"coidNoPush",
+"int"
+],
+"1864": [
+"aoidNoPush",
+"OID[8]"
+],
+"1896": [
+"ccidPush",
+"int"
+],
+"1900": [
+"acidPush",
+"CID[8]"
+],
+"1932": [
+"ccidNoPush",
+"int"
+],
+"1936": [
+"acidNoPush",
+"CID[8]"
+]
+},
+"CAMERA": {
+"720": [
+"oidTarget",
+"OID"
+],
+"724": [
+"ppntTarget",
+"PNT *"
+],
+"728": [
+"paloTarget",
+"ALO *"
+],
+"784": [
+"fSetCplcy",
+"int"
+]
+},
+"CAMSEN": {
+"1496": [
+"csdts",
+"CSDTS"
+]
+},
+"CFrame": {
+"0": [
+"m_cpframeParent",
+"int"
+],
+"20": [
+"m_pvarb",
+"CVarb *"
+],
+"24": [
+"m_fVisited",
+"int"
+],
+"4": [
+"m_apframeParent",
+"CFrame *[4]"
+]
+},
+"CHKMGR": {
+"1060": [
+"unk_oid_0x424",
+"OID"
+],
+"1064": [
+"unk_oid_0x428",
+"OID"
+],
+"8": [
+"unk_0x8",
+"undefined4"
+]
+},
+"CIRCLER": {
+"44": [
+"sw",
+"float"
+],
+"48": [
+"sRadius",
+"float"
+],
+"52": [
+"du",
+"float"
+],
+"56": [
+"dv",
+"float"
+]
+},
+"CM": {
+"1096": [
+"field77_0x448",
+"undefined8"
+],
+"1104": [
+"field78_0x450",
+"undefined8"
+],
+"1112": [
+"field79_0x458",
+"undefined8"
+],
+"152": [
+"field5_0x98",
+"undefined4"
+],
+"156": [
+"field6_0x9c",
+"undefined4"
+],
+"160": [
+"field7_0xa0",
+"undefined4"
+],
+"508": [
+"field35_0x1fc",
+"float"
+],
+"512": [
+"field36_0x200",
+"float"
+],
+"540": [
+"field39_0x21c",
+"undefined4"
+],
+"548": [
+"field41_0x224",
+"int"
+],
+"552": [
+"field42_0x228",
+"int"
+],
+"556": [
+"field43_0x22c",
+"float"
+],
+"560": [
+"field44_0x230",
+"undefined4"
+],
+"632": [
+"field52_0x278",
+"undefined4"
+],
+"636": [
+"field53_0x27c",
+"undefined4"
+],
+"64": [
+"pos",
+"VECTOR"
+],
+"640": [
+"field54_0x280",
+"undefined4"
+],
+"708": [
+"field59_0x2c4",
+"undefined4"
+],
+"712": [
+"field60_0x2c8",
+"undefined4"
+],
+"716": [
+"field61_0x2cc",
+"undefined4"
+],
+"828": [
+"field66_0x33c",
+"undefined4"
+],
+"832": [
+"coidFade",
+"int"
+],
+"836": [
+"aoidFade",
+"OID[8]"
+]
+},
+"CNVO": {
+"1360": [
+"svBelt",
+"float"
+],
+"1364": [
+"svuAvg",
+"float"
+],
+"1368": [
+"svvAvg",
+"float"
+]
+},
+"CPALIGN": {
+"0": [
+"field_1_0x0",
+"undefined4"
+],
+"12": [
+"field_4_0xc",
+"undefined4"
+],
+"16": [
+"field_5_0x10",
+"undefined4"
+],
+"20": [
+"field_6_0x14",
+"undefined4"
+],
+"24": [
+"field_7_0x18",
+"float"
+],
+"28": [
+"field_8_0x1c",
+"float"
+],
+"4": [
+"field_2_0x4",
+"undefined4"
+]
+},
+"CPDEFI": {
+"12": [
+"field3_0xc",
+"undefined4"
+],
+"4": [
+"field1_0x4",
+"undefined4"
+],
+"52": [
+"field10_0x34",
+"float"
+],
+"8": [
+"field2_0x8",
+"undefined4"
+]
+},
+"DART": {
+"1360": [
+"darts",
+"DARTS"
+],
+"1364": [
+"tDarts",
+"float"
+],
+"1368": [
+"svDart",
+"float"
+],
+"1372": [
+"sRadiusFireCloud",
+"float"
+],
+"1376": [
+"sRadiusStrikeCloud",
+"float"
+],
+"1380": [
+"dtFade",
+"float"
+],
+"1384": [
+"dtMaxStuck",
+"float"
+],
+"1388": [
+"dleDartFree",
+"DLE"
+],
+"1396": [
+"pasegSticking",
+"ASEG *"
+],
+"1400": [
+"pasegaSticking",
+"ASEGA *"
+],
+"1404": [
+"paloTarget",
+"ALO *"
+],
+"1408": [
+"dtLaunchToTarget",
+"float"
+],
+"1412": [
+"dzTarget",
+"float"
+],
+"1416": [
+"pdartgunFiredFrom",
+"DARTGUN *"
+],
+"1420": [
+"pexpl",
+"EXPL *"
+]
+},
+"DARTGUN": {
+"1860": [
+"coidRatTarget",
+"int"
+],
+"1864": [
+"aoidRatTarget",
+"OID[8]"
+],
+"1932": [
+"cpratInTargetArea",
+"int"
+],
+"1936": [
+"apratInTargetArea",
+"RAT *[8]"
+],
+"1968": [
+"fJtInTargetArea",
+"int"
+]
+},
+"DIALOG": {
+"720": [
+"dialogk",
+"DIALOGK"
+],
+"724": [
+"dialogs",
+"DIALOGS"
+],
+"732": [
+"cde",
+"int"
+],
+"744": [
+"dp",
+"DP"
+],
+"752": [
+"field_0x2f0",
+"undefined4"
+],
+"772": [
+"pfPlayed",
+"int *"
+]
+},
+"DIFFICULTYLEVEL": {
+"12": [
+"field4_0xc",
+"float"
+],
+"32": [
+"field10_0x20",
+"float"
+],
+"36": [
+"field11_0x24",
+"float"
+],
+"40": [
+"field12_0x28",
+"float"
+],
+"60": [
+"field17_0x3c",
+"float"
+],
+"64": [
+"field18_0x40",
+"float"
+],
+"68": [
+"field19_0x44",
+"float"
+],
+"72": [
+"field20_0x48",
+"float"
+],
+"76": [
+"field21_0x4c",
+"int"
+],
+"8": [
+"unk_lm_0x8",
+"LM"
+],
+"80": [
+"field22_0x50",
+"float"
+]
+},
+"DMAS": {
+"0": [
+"m_pbMax",
+"uchar*"
+],
+"12": [
+"m_pb",
+"uchar*"
+],
+"16": [
+"m_fPad",
+"int"
+],
+"20": [
+"m_fEndPrim",
+"int"
+],
+"4": [
+"m_ab",
+"uchar*"
+],
+"8": [
+"m_pqwCnt",
+"QW*"
+]
+},
+"DP": {
+"0": [
+"grfdp",
+"GRFDP"
+],
+"12": [
+"pspeakerRight",
+"SPEAKER *"
+],
+"16": [
+"pasegaLipsync",
+"ASEGA *"
+],
+"4": [
+"dpk",
+"DPK"
+],
+"8": [
+"pspeakerLeft",
+"SPEAKER *"
+]
+},
+"DZG": {
+"0": [
+"cdzMax",
+"int"
+],
+"12": [
+"dlPos",
+"DL"
+],
+"24": [
+"dlZero",
+"DL"
+],
+"36": [
+"dlMax",
+"DL"
+],
+"4": [
+"cdz",
+"int"
+],
+"48": [
+"dlUncat",
+"DL"
+],
+"60": [
+"cdzPos",
+"int"
+],
+"64": [
+"aagPos",
+"float *"
+],
+"68": [
+"aagPosCrout",
+"float *"
+],
+"72": [
+"asdv",
+"float *"
+],
+"76": [
+"adsfPos",
+"float *"
+],
+"8": [
+"adz",
+"DZ *"
+]
+},
+"EMITB": {
+"0": [
+"cref",
+"int"
+],
+"16": [
+"emito",
+"EMITO"
+]
+},
+"EMITTER": {
+"776": [
+"fAutoPause",
+"int"
+],
+"832": [
+"tUnpause",
+"float"
+],
+"844": [
+"fValuesChanged",
+"int"
+]
+},
+"EXIT": {
+"740": [
+"exits",
+"EXITS"
+],
+"744": [
+"tExits",
+"float"
+]
+},
+"EYES": {
+"100": [
+"tEyess",
+"float"
+],
+"104": [
+"dtOpen",
+"float"
+],
+"108": [
+"sviframe",
+"float"
+],
+"112": [
+"gframe",
+"float"
+],
+"116": [
+"uClosed",
+"float"
+],
+"44": [
+"dtBlink",
+"float"
+],
+"48": [
+"dtOpenMin",
+"float"
+],
+"52": [
+"dtOpenMax",
+"float"
+],
+"56": [
+"uDoubleBlink",
+"float"
+],
+"60": [
+"oidOther",
+"OID"
+],
+"64": [
+"saiOther",
+"SAI"
+],
+"92": [
+"cframe",
+"int"
+],
+"96": [
+"eyess",
+"EYESS"
+]
+},
+"FADER": {
+"0": [
+"palo",
+"ALO *"
+],
+"12": [
+"dle",
+"DLE"
+],
+"4": [
+"uAlpha",
+"float"
+],
+"8": [
+"duAlpha",
+"float"
+]
+},
+"FICG": {
+"0": [
+"grficSweep",
+"uchar"
+],
+"1": [
+"grficRush",
+"uchar"
+],
+"2": [
+"grficSmash",
+"uchar"
+],
+"3": [
+"grficBomb",
+"uchar"
+],
+"4": [
+"grficShock",
+"uchar"
+]
+},
+"FLASH": {
+"720": [
+"ctsurf",
+"int"
+],
+"724": [
+"atsurf",
+"TSURF *"
+],
+"728": [
+"ctbsp",
+"int"
+],
+"732": [
+"atbsp",
+"TBSP *"
+],
+"736": [
+"smpScale",
+"SMP"
+],
+"748": [
+"gScaleCur",
+"float"
+],
+"752": [
+"gScaleTarget",
+"float"
+]
+},
+"FRM": {
+"0": [
+"cqwGifs",
+"int"
+],
+"12": [
+"aqwVifs",
+"QW *"
+],
+"16": [
+"asli",
+"SLI *"
+],
+"20": [
+"cframe",
+"int"
+],
+"24": [
+"grffont",
+"int"
+],
+"28": [
+"fBackgroundUploadRequired",
+"int"
+],
+"4": [
+"aqwGifs",
+"QW *"
+],
+"68": [
+"grfzon",
+"GRFZON"
+],
+"8": [
+"cqwVifs",
+"int"
+]
+},
+"GIFS": {
+"28": [
+"m_pqwPrim",
+"QW *"
+],
+"32": [
+"m_creg",
+"uint"
+],
+"36": [
+"m_cregAll",
+"uint"
+]
+},
+"GLBS": {
+"0": [
+"m_rgld",
+"RGLD"
+],
+"176": [
+"m_cplightStatic",
+"int"
+],
+"180": [
+"m_cplightAll",
+"int"
+],
+"248": [
+"m_pshd",
+"SHD *"
+],
+"292": [
+"m_cvtxg",
+"int"
+],
+"296": [
+"m_avtxg",
+"VTXG[148]"
+]
+},
+"GLOBSET": {
+"0": [
+"cbnd",
+"int"
+],
+"12": [
+"cglob",
+"int"
+],
+"16": [
+"aglob",
+"GLOB *"
+],
+"20": [
+"aglobi",
+"GLOBI *"
+],
+"24": [
+"ltfn",
+"LTFN"
+],
+"4": [
+"abnd",
+"BND *"
+],
+"56": [
+"grfglobset",
+"GRFGLOBSET"
+],
+"60": [
+"rgbaCel",
+"RGBA"
+],
+"64": [
+"cpose",
+"int"
+],
+"68": [
+"agPoses",
+"float *"
+],
+"72": [
+"agPosesOrig",
+"float *"
+],
+"76": [
+"pwrbgFirst",
+"WRBG *"
+],
+"8": [
+"mpibndoid",
+"OID *"
+],
+"80": [
+"cpsaa",
+"int"
+],
+"84": [
+"apsaa",
+"SAA **"
+]
+},
+"GOMER": {
+"3136": [
+"fAbandonExternal",
+"int"
+]
+},
+"GS": {
+"0": [
+"gsv",
+"int"
+],
+"12": [
+"dt",
+"float"
+],
+"16": [
+"aws",
+"WS[6]"
+],
+"4": [
+"cbThis",
+"int"
+],
+"6616": [
+"gameworldCur",
+"GAMEWORLD"
+],
+"6620": [
+"worldlevelCur",
+"WORLDLEVEL"
+],
+"6624": [
+"clife",
+"int"
+],
+"6628": [
+"ccharm",
+"int"
+],
+"6632": [
+"ccoin",
+"int"
+],
+"6636": [
+"grfgs",
+"GRFGS"
+],
+"6640": [
+"grfvault",
+"GRFVAULT"
+],
+"6644": [
+"unlocked_cutscenes",
+"uint"
+],
+"6648": [
+"fgs",
+"uint"
+],
+"6652": [
+"fspLast",
+"int"
+],
+"8": [
+"nChecksum",
+"int"
+]
+},
+"HND": {
+"160": [
+"hndk",
+"uint"
+],
+"164": [
+"svzJumpBoost",
+"float"
+],
+"168": [
+"sfxidRelease",
+"SFXID"
+],
+"172": [
+"sfxidGrab",
+"SFXID"
+],
+"180": [
+"unk1",
+"float"
+]
+},
+"HOLOGRAM": {
+"44": [
+"dradAdjust",
+"float"
+],
+"48": [
+"dradSymmetry",
+"float"
+],
+"52": [
+"dradFrame",
+"float"
+]
+},
+"JMT": {
+"80": [
+"dleJmt",
+"DLE"
+],
+"88": [
+"sRadius",
+"float"
+],
+"92": [
+"oidSetIgnoreJt",
+"OID"
+],
+"96": [
+"psoSetIgnoreJt",
+"SO *"
+]
+},
+"JOY": {
+"124": [
+"uDeflect2",
+"float"
+],
+"72": [
+"uDeflect",
+"float"
+]
+},
+"JT": {
+"10064": [
+"unk_0x2750",
+"int"
+],
+"5400": [
+"paloMine_0x1518",
+"ALO *"
+],
+"8736": [
+"jts",
+"JTS"
+],
+"8740": [
+"unk_0x2224",
+"int"
+],
+"8744": [
+"jtbs",
+"JTBS"
+]
+},
+"KEY": {
+"20": [
+"psw",
+"SW*"
+],
+"44": [
+"pCFrame",
+"CFrame*"
+],
+"720": [
+"dprizes",
+"DPRIZES"
+]
+},
+"KGB": {
+"0": [
+"t",
+"float"
+],
+"16": [
+"kgbtOut",
+"KGBT"
+],
+"4": [
+"g",
+"float"
+],
+"8": [
+"kgbtIn",
+"KGBT"
+]
+},
+"KGBT": {
+"0": [
+"kgbtk",
+"KGBTK"
+],
+"4": [
+"gSlope",
+"float"
+]
+},
+"KGBW": {
+"0": [
+"t",
+"float"
+],
+"20": [
+"kgbwtOut",
+"KGBWT"
+],
+"4": [
+"g",
+"float"
+],
+"8": [
+"kgbwtIn",
+"KGBWT"
+]
+},
+"KGBWT": {
+"0": [
+"kgbtk",
+"KGBTK"
+],
+"4": [
+"dt",
+"float"
+],
+"8": [
+"g",
+"float"
+]
+},
+"KGL": {
+"0": [
+"t",
+"float"
+],
+"4": [
+"g",
+"float"
+]
+},
+"KVB": {
+"0": [
+"t",
+"float"
+],
+"16": [
+"vec",
+"VECTOR"
+],
+"32": [
+"dvecIn",
+"VECTOR"
+],
+"48": [
+"dvecOut",
+"VECTOR"
+]
+},
+"LANDING": {
+"56": [
+"dleLanding",
+"DLE"
+]
+},
+"LASEN": {
+"2808": [
+"fBusyLasen",
+"int"
+]
+},
+"LGN": {
+"3056": [
+"fFlash",
+"int"
+],
+"3060": [
+"tFlash",
+"float"
+]
+},
+"LIGHT": {
+"1040": [
+"dleLight",
+"DLE"
+],
+"736": [
+"vecHighlight",
+"VECTOR"
+],
+"752": [
+"gMidtone",
+"float"
+],
+"756": [
+"gShadow",
+"float"
+],
+"760": [
+"degHighlight",
+"float"
+],
+"764": [
+"degMidtone",
+"float"
+],
+"768": [
+"degShadow",
+"float"
+],
+"772": [
+"fDynamic",
+"int"
+],
+"824": [
+"degCone",
+"float"
+],
+"828": [
+"degHotSpot",
+"float"
+]
+},
+"LO": {
+"16": [
+"dleOid",
+"DLE"
+],
+"20": [
+"psw",
+"SW *"
+],
+"24": [
+"paloParent",
+"ALO *"
+],
+"28": [
+"dleChild",
+"DLE"
+],
+"36": [
+"ploCidNext",
+"LO *"
+],
+"40": [
+"pmqFirst",
+"MQ *"
+],
+"44": [
+"pframe",
+"CFrame *"
+],
+"48": [
+"ppxr",
+"PXR *"
+],
+"8": [
+"oid",
+"OID"
+]
+},
+"LOCKG": {
+"732": [
+"coidLock",
+"uint"
+],
+"736": [
+"aoidLock",
+"OID[8]"
+]
+},
+"LOOKER": {
+"44": [
+"uCenter",
+"float"
+],
+"48": [
+"vCenter",
+"float"
+],
+"52": [
+"duMin",
+"float"
+],
+"56": [
+"duMax",
+"float"
+],
+"60": [
+"dvMin",
+"float"
+],
+"64": [
+"dvMax",
+"float"
+],
+"68": [
+"cvtx",
+"int"
+],
+"72": [
+"puvqd",
+"UVQD *"
+],
+"76": [
+"pposad",
+"POSAD *"
+]
+},
+"LOOP": {
+"44": [
+"dtLoopMin",
+"float"
+],
+"48": [
+"dtLoopMax",
+"float"
+],
+"52": [
+"dtPauseMin",
+"float"
+],
+"56": [
+"dtPauseMax",
+"float"
+],
+"60": [
+"sviframe",
+"float"
+],
+"64": [
+"gframe",
+"float"
+],
+"68": [
+"dtPauseRequested",
+"float"
+],
+"72": [
+"dtPause",
+"float"
+]
+},
+"LS": {
+"0": [
+"fls",
+"FLS"
+],
+"100": [
+"cclue",
+"int"
+],
+"104": [
+"fclue",
+"uint"
+],
+"108": [
+"unk_field_0x6c",
+"int"
+],
+"112": [
+"unk_field_0x70",
+"int"
+],
+"116": [
+"unk_field_0x74",
+"char *"
+],
+"12": [
+"uSuck",
+"float"
+],
+"16": [
+"unk_suck_0x10",
+"float"
+],
+"20": [
+"afDialogPlayed",
+"int[12]"
+],
+"4": [
+"dt",
+"float"
+],
+"8": [
+"dtTimedBest",
+"float"
+]
+},
+"LSM": {
+"4": [
+"uMidtone",
+"float"
+]
+},
+"LTFN": {
+"0": [
+"ruShadow",
+"float"
+],
+"12": [
+"ruUnused",
+"float"
+],
+"16": [
+"duShadow",
+"float"
+],
+"20": [
+"duMidtone",
+"float"
+],
+"24": [
+"duHighlight",
+"float"
+],
+"28": [
+"duUnused",
+"float"
+],
+"4": [
+"ruMidtone",
+"float"
+],
+"8": [
+"ruHighlight",
+"float"
+]
+},
+"MEMCARD": {
+"0": [
+"semaId",
+"int"
+],
+"12": [
+"field_0x0c",
+"int"
+],
+"16": [
+"field_0x10",
+"int"
+],
+"4": [
+"threadId",
+"int"
+],
+"8": [
+"field_0x08",
+"int"
+]
+},
+"MISSILE": {
+"1716": [
+"pasegaCur",
+"ASEGA *"
+],
+"1720": [
+"fFollowTrajectory",
+"int"
+]
+},
+"MQ": {
+"0": [
+"pfnmq",
+"PFNMQ"
+],
+"12": [
+"pvCallbackData",
+"void *"
+],
+"16": [
+"pmqNext",
+"MQ *"
+],
+"4": [
+"pvContext",
+"void *"
+],
+"8": [
+"msgid",
+"MSGID"
+]
+},
+"PINGPONG": {
+"44": [
+"dtPingpongMin",
+"float"
+],
+"48": [
+"dtPingpongMax",
+"float"
+],
+"52": [
+"dtPauseMin",
+"float"
+],
+"56": [
+"dtPauseMax",
+"float"
+],
+"60": [
+"sviframe",
+"float"
+],
+"64": [
+"gframe",
+"float"
+],
+"68": [
+"dtPauseRequested",
+"float"
+],
+"72": [
+"dtPause",
+"float"
+]
+},
+"PIPE": {
+"100": [
+"oid",
+"OID"
+],
+"104": [
+"plo",
+"LO *"
+],
+"52": [
+"unk",
+"undefined4"
+],
+"56": [
+"dlePipe",
+"DLE"
+]
+},
+"PNT": {
+"64": [
+"posLocal",
+"VECTOR"
+]
+},
+"PO": {
+"1360": [
+"fPlayable",
+"int"
+]
+},
+"PROXY": {
+"12": [
+"unk_0xC",
+"undefined4"
+],
+"16": [
+"unk_0x10",
+"undefined4"
+],
+"8": [
+"unk_0x8",
+"undefined4"
+]
+},
+"PchzLevel": {
+"12": [
+"unk_0xc",
+"unsigned int"
+],
+"16": [
+"unk_0x10",
+"unsigned int"
+],
+"20": [
+"unk_0x14",
+"unsigned int"
+],
+"24": [
+"unk_0x18",
+"unsigned int"
+]
+},
+"RAIL": {
+"56": [
+"dleRail",
+"DLE"
+],
+"64": [
+"fSlippery",
+"int"
+],
+"68": [
+"svMax",
+"float"
+],
+"72": [
+"rdvGravity",
+"float"
+],
+"76": [
+"unk1",
+"float"
+],
+"80": [
+"unk2",
+"undefined4"
+],
+"84": [
+"oid",
+"OID"
+],
+"88": [
+"plo",
+"LO *"
+]
+},
+"RAT": {
+"1372": [
+"tRatSqueak",
+"float"
+],
+"1536": [
+"dleRat",
+"DLE"
+],
+"1544": [
+"lmDtStop",
+"LM"
+],
+"1636": [
+"ccoin",
+"int"
+]
+},
+"RCHM": {
+"128": [
+"fCenterSet",
+"int"
+],
+"52": [
+"oidHost",
+"OID"
+],
+"56": [
+"oidTouch",
+"OID"
+],
+"84": [
+"rclNatural",
+"float"
+],
+"88": [
+"ioNatural",
+"float"
+],
+"92": [
+"lhubNatural",
+"float"
+]
+},
+"ROB": {
+"736": [
+"coidRost",
+"int"
+],
+"740": [
+"aoidRost",
+"OID[16]"
+]
+},
+"ROV": {
+"1552": [
+"rovs",
+"ROVS"
+],
+"1556": [
+"rovts",
+"ROVTS"
+],
+"1560": [
+"radJoyLeft",
+"float"
+],
+"1564": [
+"uJoyDeflectLeft",
+"float"
+],
+"1568": [
+"radJoyRight",
+"float"
+],
+"1572": [
+"uJoyDeflectRight",
+"float"
+],
+"1576": [
+"svMax",
+"float"
+]
+},
+"RPL": {
+"120": [
+"palo",
+"ALO *"
+],
+"16": [
+"pos",
+"VECTOR"
+],
+"28": [
+"posTemp",
+"int"
+],
+"4": [
+"z",
+"float"
+],
+"8": [
+"rp",
+"RP"
+]
+},
+"RUMBLE": {
+"12": [
+"rums",
+"RUMS"
+],
+"16": [
+"prumpat",
+"RUMPAT *"
+],
+"20": [
+"irumins",
+"int"
+],
+"24": [
+"dtRumble",
+"float"
+],
+"28": [
+"dtRumins",
+"float"
+],
+"4": [
+"nPort",
+"int"
+],
+"8": [
+"nSlot",
+"int"
+]
+},
+"RUMINS": {
+"0": [
+"fHighSpeedMotor",
+"byte"
+],
+"1": [
+"bLowSpeedMotor",
+"byte"
+],
+"2": [
+"unk1",
+"byte"
+],
+"3": [
+"unk2",
+"byte"
+],
+"4": [
+"dt",
+"float"
+]
+},
+"RUMPAT": {
+"0": [
+"crumins",
+"int"
+],
+"4": [
+"arumins",
+"RUMINS[32]"
+]
+},
+"SAA": {
+"0": [
+"pvtsaa",
+"VTSAA *"
+],
+"12": [
+"oid",
+"OID"
+],
+"16": [
+"sai",
+"SAI"
+],
+"4": [
+"tUpdated",
+"float"
+],
+"8": [
+"saak",
+"SAAK"
+]
+},
+"SAAF": {
+"0": [
+"oid",
+"short"
+],
+"2": [
+"fInstanced",
+"ushort"
+]
+},
+"SAI": {
+"0": [
+"grfsai",
+"GRFSAI"
+],
+"12": [
+"txt",
+"TCX"
+],
+"20": [
+"psairFirst",
+"SAIR *"
+],
+"24": [
+"psaiNext",
+"SAI *"
+],
+"4": [
+"pshd",
+"SHD *"
+],
+"8": [
+"iframe",
+"int"
+]
+},
+"SAVE": {
+"0": [
+"field_0x00",
+"int"
+]
+},
+"SCROLLER": {
+"44": [
+"svu",
+"float"
+],
+"48": [
+"svv",
+"float"
+],
+"52": [
+"duMod",
+"float"
+],
+"56": [
+"dvMod",
+"float"
+],
+"60": [
+"svuMaster",
+"float"
+],
+"64": [
+"svvMaster",
+"float"
+]
+},
+"SENSOR": {
+"1360": [
+"palarm",
+"ALARM *"
+],
+"1364": [
+"sensm",
+"SENSM"
+],
+"1368": [
+"sensors",
+"SENSORS"
+],
+"1372": [
+"tSensors",
+"float"
+],
+"1376": [
+"sensorsInitial",
+"SENSORS"
+],
+"1380": [
+"coidTrigger",
+"uint"
+],
+"1384": [
+"aoidTrigger",
+"OID[4]"
+],
+"1400": [
+"coidNoTrigger",
+"uint"
+],
+"1404": [
+"aoidNoTrigger",
+"OID[4]"
+],
+"1420": [
+"ccidTrigger",
+"uint"
+],
+"1424": [
+"acidTrigger",
+"CID[4]"
+],
+"1440": [
+"ccidNoTrigger",
+"uint"
+],
+"1444": [
+"acidNoTrigger",
+"CID[4]"
+],
+"1460": [
+"fTriggerAll",
+"int"
+],
+"1480": [
+"pasegaPause",
+"ASEGA *"
+],
+"1484": [
+"svtRestore",
+"float"
+]
+},
+"SFX": {
+"0": [
+"sfxid",
+"SFXID"
+],
+"12": [
+"uVol",
+"float"
+],
+"28": [
+"pamb",
+"AMB *"
+],
+"32": [
+"uDoppler",
+"float"
+],
+"4": [
+"sStart",
+"float"
+],
+"8": [
+"sFull",
+"float"
+]
+},
+"SGFT": {
+"0": [
+"oidTarget",
+"OID"
+],
+"4": [
+"paloTarget",
+"ALO *"
+]
+},
+"SGG": {
+"360": [
+"calarms",
+"int"
+],
+"364": [
+"palarms",
+"ALARM **"
+],
+"384": [
+"oidSync",
+"OID"
+]
+},
+"SGVR": {
+"0": [
+"pcvtx",
+"int *"
+],
+"4": [
+"ppposad",
+"POSAD **"
+],
+"8": [
+"ppuvqd",
+"UVQD **"
+]
+},
+"SHADOW": {
+"0": [
+"pshd",
+"SHD *"
+],
+"176": [
+"oidDysh",
+"OID"
+],
+"192": [
+"cqwVifs",
+"int"
+],
+"4": [
+"sNearRadius",
+"float"
+],
+"64": [
+"sNearCast",
+"float"
+],
+"68": [
+"sFarCast",
+"float"
+],
+"8": [
+"sFarRadius",
+"float"
+]
+},
+"SHDF": {
+"0": [
+"shdk",
+"uchar"
+],
+"1": [
+"grfshd",
+"uchar"
+],
+"2": [
+"oid",
+"short"
+]
+},
+"SHUFFLE": {
+"44": [
+"dtPauseMin",
+"float"
+],
+"48": [
+"dtPauseMax",
+"float"
+],
+"52": [
+"dtPause",
+"float"
+]
+},
+"SLOT": {
+"0": [
+"pslotNext",
+"SLOT *"
+]
+},
+"SLOTHEAP": {
+"0": [
+"cb",
+"int"
+],
+"4": [
+"ab",
+"byte *"
+],
+"8": [
+"pslotFree",
+"SLOT *"
+]
+},
+"SM": {
+"52": [
+"csms",
+"int"
+],
+"56": [
+"asms",
+"SMS *"
+],
+"60": [
+"csmt",
+"int"
+],
+"64": [
+"asmt",
+"SMT *"
+],
+"68": [
+"fDefault",
+"int"
+],
+"72": [
+"dlSma",
+"DL"
+]
+},
+"SMA": {
+"16": [
+"dleSw",
+"DLE"
+],
+"24": [
+"psm",
+"SM *"
+],
+"28": [
+"paloRoot",
+"ALO *"
+],
+"32": [
+"grfapl",
+"int"
+],
+"36": [
+"pasegaCur",
+"ASEGA *"
+],
+"40": [
+"ismsCur",
+"int"
+],
+"44": [
+"ismsNext",
+"int"
+],
+"48": [
+"ismsGoal",
+"int"
+],
+"52": [
+"psmtCur",
+"SMT *"
+],
+"56": [
+"svtLocal",
+"float"
+],
+"60": [
+"pmqFirst",
+"MQ *"
+],
+"8": [
+"dleSm",
+"DLE"
+]
+},
+"SMARTGUARD": {
+"3128": [
+"mpsgssgft",
+"SGFT[SGS_Max]"
+]
+},
+"SMS": {
+"0": [
+"oid",
+"OID"
+]
+},
+"SMT": {
+"12": [
+"grfsmt",
+"GRFSMT"
+],
+"16": [
+"gProbability",
+"float"
+],
+"4": [
+"ismsFrom",
+"int"
+],
+"8": [
+"ismsTo",
+"int"
+]
+},
+"SNIP": {
+"0": [
+"grfsnip",
+"GRFSNIP"
+],
+"4": [
+"oid",
+"OID"
+],
+"8": [
+"ib",
+"int"
+]
+},
+"SPIRE": {
+"80": [
+"dleSpire",
+"DLE"
+],
+"88": [
+"unk1",
+"float"
+]
+},
+"STEP": {
+"1556": [
+"unk_0x614",
+"undefined4[3]"
+],
+"1624": [
+"unk_0x658",
+"undefined4[2]"
+],
+"1708": [
+"unk_0x6ac",
+"undefined4"
+],
+"1756": [
+"unk_0x6dc",
+"undefined4"
+]
+},
+"STEPGUARD": {
+"1824": [
+"psgg",
+"SGG *"
+],
+"1828": [
+"sgs",
+"SGS"
+],
+"1876": [
+"pasegaPatrol",
+"ASEGA *"
+],
+"2016": [
+"pasegaSgs",
+"ASEGA *"
+],
+"2832": [
+"ichkDead",
+"int"
+],
+"2932": [
+"pstepguardBase",
+"STEPGUARD *"
+]
+},
+"STSO": {
+"0": [
+"psoTouch",
+"SO *"
+],
+"4": [
+"pstsoNext",
+"STSO *"
+]
+},
+"SW": {
+"108": [
+"dlBusySo",
+"DL"
+],
+"120": [
+"dlMRDRealClock",
+"DL"
+],
+"132": [
+"adlHash",
+"DL[512]"
+],
+"52": [
+"cpsoAll",
+"int"
+],
+"56": [
+"cpsoRoot",
+"int"
+],
+"60": [
+"dlRoot",
+"DL"
+],
+"6276": [
+"aploCidHead",
+"LO *[154]"
+],
+"6892": [
+"fAaoxValid",
+"int"
+],
+"6896": [
+"slotheapOx",
+"SLOTHEAP"
+],
+"6920": [
+"slotheapXa",
+"SLOTHEAP"
+],
+"6932": [
+"slotheapMq",
+"SLOTHEAP"
+],
+"7000": [
+"slotheapAsega",
+"SLOTHEAP"
+],
+"7036": [
+"dlAsegaPending",
+"DL"
+],
+"7048": [
+"slotheapSma",
+"SLOTHEAP"
+],
+"7060": [
+"dlSma",
+"DL"
+],
+"7144": [
+"dlLight",
+"DL"
+],
+"7180": [
+"slotheapStso",
+"SLOTHEAP"
+],
+"7192": [
+"slotheapFader",
+"SLOTHEAP"
+],
+"72": [
+"dlChild",
+"DL"
+],
+"7204": [
+"dlFader",
+"DL"
+],
+"7216": [
+"dlRealClockFader",
+"DL"
+],
+"7228": [
+"dlProxy",
+"DL"
+],
+"7240": [
+"dlFly",
+"DL"
+],
+"7252": [
+"dlDprize",
+"DL"
+],
+"7264": [
+"dlRat",
+"DL"
+],
+"7276": [
+"dlRathole",
+"DL"
+],
+"7288": [
+"dlDartFree",
+"DL"
+],
+"7300": [
+"dlSpire",
+"DL"
+],
+"7312": [
+"dlRail",
+"DL"
+],
+"7324": [
+"dlLanding",
+"DL"
+],
+"7336": [
+"dlBusyLasen",
+"DL"
+],
+"7348": [
+"dlBlipg",
+"DL"
+],
+"7360": [
+"dlBlipgFree",
+"DL"
+],
+"7372": [
+"dlCrfod",
+"DL"
+],
+"7400": [
+"aploStock",
+"LO *[29]"
+],
+"7528": [
+"lsmDefault",
+"LSM"
+],
+"7876": [
+"pvismap",
+"VISMAP *"
+],
+"7880": [
+"pmqCallbackFirst",
+"MQ *"
+],
+"7884": [
+"pmqCallbackLast",
+"MQ *"
+],
+"7920": [
+"csplcSplice",
+"int"
+],
+"7924": [
+"asplcSplice",
+"SPLC *"
+],
+"7928": [
+"symidScheduledCallbackList",
+"uint"
+],
+"84": [
+"dlMRD",
+"DL"
+],
+"8984": [
+"gexcMenu",
+"float"
+],
+"8988": [
+"cHandsOff",
+"int"
+],
+"9036": [
+"rDarken",
+"float"
+],
+"9040": [
+"rDarkenSmooth",
+"float"
+],
+"96": [
+"dlBusy",
+"DL"
+]
+},
+"TARGET": {
+"128": [
+"dleTarget",
+"DLE"
+],
+"136": [
+"grftak",
+"int"
+],
+"140": [
+"sRadiusTarget",
+"float"
+],
+"144": [
+"fHitTest",
+"int"
+]
+},
+"THROB": {
+"0": [
+"throbk",
+"THROBK"
+],
+"48": [
+"dtInOut",
+"float"
+]
+},
+"TZP": {
+"1360": [
+"zpd",
+"ZPD"
+]
+},
+"UBG": {
+"3160": [
+"oidPatrolGoal",
+"OID"
+],
+"3164": [
+"cJump",
+"int"
+],
+"3172": [
+"apsoPads",
+"SO *[6]"
+]
+},
+"VBC": {
+"52": [
+"cEvents",
+"int"
+],
+"56": [
+"aevents",
+"VBEVENT *"
+],
+"60": [
+"iEvent",
+"int"
+],
+"64": [
+"pv40",
+"void *"
+],
+"68": [
+"n44",
+"int"
+]
+},
+"VBEVENT": {
+"0": [
+"nType",
+"int"
+],
+"12": [
+"pvContext",
+"void *"
+],
+"4": [
+"pvTarget",
+"void *"
+],
+"8": [
+"dt",
+"float"
+]
+},
+"VBSP": {
+"0": [
+"normal",
+"VECTOR"
+],
+"16": [
+"gDot",
+"float"
+],
+"20": [
+"pvbspNeg",
+"VBSP *"
+],
+"24": [
+"pvbspPos",
+"VBSP *"
+],
+"28": [
+"unk",
+"uint"
+]
+},
+"VIFS": {
+"28": [
+"m_unMask",
+"uint"
+],
+"32": [
+"m_fCheckCnt",
+"int"
+]
+},
+"VISMAP": {
+"48": [
+"cvbsp",
+"int"
+],
+"52": [
+"avbsp",
+"VBSP *"
+],
+"60": [
+"cgrfzon",
+"int"
+],
+"64": [
+"agrfzonOneHop",
+"GRFZON *"
+]
+},
+"VOLBTN": {
+"1360": [
+"coidPush",
+"int"
+],
+"1364": [
+"aoidPush",
+"OID[8]"
+],
+"1472": [
+"btn",
+"BTN"
+],
+"1936": [
+"fSendChangeEvents",
+"int"
+]
+},
+"WARP": {
+"12": [
+"unk2_0xC",
+"undefined4"
+],
+"4": [
+"unk0_0x4",
+"undefined4"
+],
+"8": [
+"unk1_0x8",
+"undefined4"
+]
+},
+"WATER": {
+"1360": [
+"pxaFirst",
+"XA *"
+],
+"1364": [
+"mrg",
+"MRG"
+],
+"1412": [
+"unk_0x584",
+"int"
+],
+"1416": [
+"unk_0x588",
+"int"
+],
+"1424": [
+"zpd",
+"ZPD"
+]
+},
+"WIPE": {
+"0": [
+"unk_0x0",
+"undefined4"
+]
+},
+"WKR": {
+"12": [
+"grfic",
+"GRFIC"
+],
+"32": [
+"pos",
+"VECTOR"
+],
+"48": [
+"v",
+"VECTOR"
+]
+},
+"WPSG": {
+"0": [
+"pvtwpsg",
+"VTWPSG *"
+],
+"4": [
+"cpwaypoint",
+"uint"
+],
+"40": [
+"fCallback",
+"int"
+],
+"44": [
+"psgg",
+"SGG *"
+],
+"8": [
+"apwaypoint",
+"WAYPOINT *[8]"
+]
+},
+"WR": {
+"1744": [
+"iwreCur",
+"int"
+],
+"2276": [
+"fValuesChanged",
+"int"
+],
+"52": [
+"tLastUpdate",
+"float"
+],
+"56": [
+"cwre",
+"int"
+],
+"64": [
+"imatHalf",
+"int"
+],
+"80": [
+"awre",
+"WRE[8]"
+]
+},
+"XA": {
+"12": [
+"pxaNextTarget",
+"XA *"
+],
+"4": [
+"pso",
+"SO *"
+]
+},
+"XF": {
+"0": [
+"mat",
+"MATRIX3"
+],
+"112": [
+"posWorld",
+"VECTOR"
+],
+"128": [
+"v",
+"VECTOR"
+],
+"144": [
+"w",
+"VECTOR"
+],
+"160": [
+"dv",
+"VECTOR"
+],
+"176": [
+"dw",
+"VECTOR"
+],
+"48": [
+"pos",
+"VECTOR"
+],
+"64": [
+"matWorld",
+"MATRIX3"
+]
+},
+"XFM": {
+"64": [
+"posLocal",
+"VECTOR"
+],
+"80": [
+"matLocal",
+"MATRIX3"
+]
+},
+"XP": {
+"0": [
+"axpd",
+"XPD[2]"
+]
+},
+"XPD": {
+"0": [
+"psoRoot",
+"SO *"
+],
+"16": [
+"pos",
+"VECTOR"
+],
+"32": [
+"posLeaf",
+"VECTOR"
+],
+"4": [
+"psoLeaf",
+"SO *"
+],
+"48": [
+"v",
+"VECTOR"
+],
+"8": [
+"mtlk",
+"MTLK"
+]
+},
+"ZPD": {
+"0": [
+"pso",
+"SO *"
+],
+"148": [
+"cploThrow",
+"int"
+],
+"152": [
+"aploThrow",
+"LO *[32]"
+],
+"4": [
+"zpk",
+"ZPK"
+]
+},
+"ZPR": {
+"0": [
+"zpk",
+"ZPK"
+],
+"12": [
+"pfnzap",
+"PFNZAP"
+],
+"8": [
+"pv",
+"void *"
+]
+}
+}

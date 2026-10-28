@@ -1,0 +1,571 @@
+# Splat config for Sly 1 NTSC-U (PS2)
+name: Sly Cooper and the Thievius Raccoonus (USA)
+sha1: 57dc305db57932ad3f1122966cdb695d2e62a47a
+
+options:
+  basename: SCUS_971.98
+  target_path: disc/SCUS_971.98
+  elf_path: SCUS_971.98
+  base_path: ../
+  platform: ps2
+  compiler: EEGCC
+
+  # Output paths
+  asm_path: asm
+  src_path: src
+  build_path: obj
+
+  # Assembly options
+  generate_asm_macros_files: False
+  named_regs_for_c_funcs: False
+  find_file_boundaries: False
+  disasm_unknown: True
+
+  # Rodata options
+  rodata_string_guesser_level: 0 # improve string detection
+  suggestion_rodata_section_start: True
+  pair_rodata_to_text: False
+  migrate_rodata_to_functions: True
+
+  # Auto-generate undefined functions and symbols
+  create_undefined_funcs_auto: True
+  undefined_funcs_auto_path: config/undefined_funcs_auto.txt
+  create_undefined_syms_auto: True
+  undefined_syms_auto_path: config/undefined_syms_auto.txt
+
+  # Manually defined symbols
+  symbol_addrs_path: config/symbol_addrs.txt
+
+  # Splat extensions
+  extensions_path: tools/splat_ext
+
+  # ELF sections
+  section_order: [".text", ".vutext", ".rodata", ".data", ".bss"]
+  auto_link_sections: [".rodata", ".data", ".bss"]
+
+  # Linker script options
+  subalign: 8
+
+segments:
+  - [0, databin, elf_header]
+
+  - name: main
+    type: code
+    start: 0x001000
+    vram: 0x100000
+    bss_size: 0x3B1304
+    subsegments:
+    - [0x001000, asm, sce/crt0] # starts with 2 nops
+    - [0x001178, asm, P2/ps2t/spaprops] # ext should be .ic
+
+    #--------------------------------------------------------
+    # Splice sources
+    # All .cpp files
+    #--------------------------------------------------------
+    - [0x13698, cpp, P2/splice/bif] #MARK: P2/splice
+    - [0x19d48, cpp, P2/splice/eval]
+    - [0x1b328, cpp, P2/splice/frame]
+    - [0x1b678, cpp, P2/splice/gc]
+    - [0x1be78, cpp, P2/splice/method]
+    - [0x1beb8, cpp, P2/splice/pair]
+    - [0x1bf98, cpp, P2/splice/proc]
+    - [0x1c008, cpp, P2/splice/ref]
+    - [0x1ca28, cpp, P2/splice/serialize]
+    - [0x1cd28, cpp, P2/splice/sidebag]
+    - [0x1cf70, cpp, P2/splice/spliceutils]
+    - [0x1d128, cpp, P2/splice/splotheap]
+    - [0x1d418, cpp, P2/splice/varb]
+    - [0x1d508, cpp, P2/splice/vecmat]
+
+    #--------------------------------------------------------
+    # P2 sources
+    # All .c files (but compiled as c++)
+    #--------------------------------------------------------
+    - [0x1dbb8, c, P2/989snd] #MARK: P2
+    - [0x1f560, c, P2/brx]
+    - [0x1fe70, c, P2/ac]
+    - [0x22228, c, P2/act]
+    - [0x23f28, c, P2/actseg]
+    - [0x243c0, c, P2/alarm]
+    - [0x24dc0, c, P2/alo]
+    # Note: Anticrack check for ITM firewall is 0x2c760, maybe it's own TU?
+    - [0x2c868, c, P2/aseg]
+    - [0x2e3f8, c, P2/asega]
+    - [0x30840, c, P2/barrier]
+    - [0x30cf0, c, P2/bas]
+    - [0x310e8, c, P2/basic]
+    - [0x31168, c, P2/bez]
+    - [0x31f48, c, P2/binoc]
+    - [0x38290, c, P2/bis]
+    - [0x395a0, c, P2/bbmark]
+    - [0x39ff0, c, P2/blend]
+    - [0x3ab70, c, P2/blip]
+    - [0x3c4c0, c, P2/bomb]
+    - [0x3d988, c, P2/bq]
+    - [0x3dcf8, c, P2/break]
+    - [0x3efd8, c, P2/bsp]
+    - [0x3f7c0, c, P2/button]
+    - [0x41790, c, P2/cat]
+    - [0x417a8, c, P2/cd]
+    - [0x41d90, c, P2/chkpnt]
+    - [0x429e8, c, P2/clip]
+    - [0x43ed0, c, P2/clock]
+    - [0x44140, c, P2/cm]
+    - [0x47100, c, P2/cnvo]
+    - [0x47340, c, P2/coin]
+    - [0x4a398, c, P2/cplcy]
+    - [0x4bbd0, c, P2/credit]
+    - [0x4c0c0, c, P2/crout]
+    - [0x4c550, c, P2/crusher]
+    - [0x4e0a8, c, P2/crv]
+    - [0x4fe40, c, P2/dart]
+    - [0x50740, c, P2/dartgun]
+    - [0x514e0, c, P2/dialog]
+    - [0x529e0, c, P2/difficulty]
+    - [0x53438, c, P2/dl]
+    - [0x53810, c, P2/dmas]
+    - [0x53e28, c, P2/dysh]
+    - [0x54528, c, P2/dzg]
+    - [0x559c8, c, P2/emitter]
+    - [0x5a680, c, P2/eyes]
+    - [0x5aad0, c, P2/fader]
+    - [0x5aca0, asm, P2/UNKNOWN1] # Not in the prototype.
+    - [0x5af20, c, P2/find]
+    - [0x5b8b0, c, P2/flash]
+    - [0x5bae0, c, P2/fly]
+    - [0x5d178, c, P2/font]
+    - [0x5f6a8, c, P2/frm]
+    - [0x60678, c, P2/freeze]
+    - [0x60f88, c, P2/frzg]
+    - [0x61070, c, P2/game]
+    - [0x61e80, c, P2/geom]
+    - [0x621b8, c, P2/gifs]
+    - [0x629c0, c, P2/glbs]
+    - [0x63810, c, P2/glob]
+    - [0x68d68, c, P2/gomer]
+    - [0x69130, c, P2/gs]
+    - [0x6ac58, c, P2/hide]
+    - [0x6ba18, asm, P2/hideout]
+    - [0x6d470, c, P2/hnd]
+    - [0x6d4e8, c, P2/ik]
+    - [0x6de00, c, P2/jlo]
+    - [0x6f0b8, c, P2/joy]
+    - [0x70608, c, P2/jt]
+    - [0x79008, asm, P2/jp] # Might be something else.
+    - [0x7c998, c, P2/jsg]
+    - [0x7e248, c, P2/jump]
+    - [0x80e90, c, P2/keyhole]
+    - [0x81eb0, c, P2/landing]
+    - [0x81f68, c, P2/lgn]
+    - [0x83c18, c, P2/lo]
+    - [0x84cc8, c, P2/light]
+    - [0x86358, c, P2/lookat]
+    - [0x86758, c, P2/main]
+    - [0x86c18, c, P2/mark]
+    - [0x894c0, c, P2/mat]
+    - [0x8b388, c, P2/mb]
+    - [0x8c580, c, P2/memcard]
+    - [0x8e430, c, P2/memory]
+    - [0x8e8e0, c, P2/missile]
+    - [0x8f410, c, P2/mpeg]
+    - [0x90988, c, P2/mrkv]
+    - [0x909d8, c, P2/ms]
+    - [0x90ef8, c, P2/murray]
+    - [0x917e0, c, P2/path]
+    - [0x92e70, c, P2/phasemem]
+    - [0x92ec0, c, P2/pipe]
+    - [0x93068, c, P2/pnt]
+    - [0x931a8, c, P2/po]
+    - [0x94210, c, P2/prog]
+    - [0x94598, c, P2/prompt]
+    - [0x973d8, c, P2/proxy]
+    - [0x97938, c, P2/puffer]
+    - [0x99980, c, P2/pzo]
+    - [0x9bf00, c, P2/rail]
+    - [0x9c038, c, P2/rat]
+    - [0x9d440, c, P2/rchm]
+    - [0x9e410, c, P2/render]
+    - [0x9f040, c, P2/rip]
+    - [0xa4ae0, c, P2/rog]
+    - [0xa8b20, c, P2/rumble]
+    - [0xa8fe8, c, P2/rwm]
+    - [0xaa8f8, c, P2/sb]
+    - [0xaac68, c, P2/screen]
+    - [0xafcb0, c, P2/sensor]
+    - [0xb2ac8, c, P2/shadow]
+    - [0xb3840, c, P2/shape]
+    - [0xb3988, c, P2/shd]
+    - [0xb5920, c, P2/shdanim]
+    - [0xb6cd8, c, P2/sky]
+    - [0xb6d80, c, P2/slotheap]
+    - [0xb6f50, c, P2/sm]
+    - [0xb7ec8, c, P2/smartguard]
+    - [0xb8968, c, P2/so]
+    - [0xbd760, c, P2/solve]
+    - [0xbf068, c, P2/sort]
+    - [0xbf1e8, c, P2/sound]
+    - [0xc1f30, c, P2/speaker]
+    - [0xc20a8, c, P2/spire]
+    - [0xc2190, c, P2/splicemap]
+    - [0xc24c0, c, P2/spliceobj]
+    - [0xc3430, c, P2/sprbuf]
+    - [0xc39e8, c, P2/sqtr]
+    - [0xc4390, asm, P2/squish] # Might be something else.
+    - [0xc5458, c, P2/step]
+    - [0xc6f18, c, P2/stepact]
+    - [0xc71e0, c, P2/stepcane]
+    - [0xc7f48, c, P2/stepguard]
+    - [0xcd410, c, P2/stephang]
+    - [0xcefb8, c, P2/stephide]
+    - [0xd24f0, c, P2/steppipe]
+    - [0xd39c8, c, P2/steppower]
+    - [0xd41d0, c, P2/steprail]
+    - [0xd46f0, c, P2/steprun]
+    - [0xd5148, c, P2/stepside]
+    - [0xd5848, asm, P2/stepzap]
+    - [0xd8100, c, P2/stream]
+    - [0xd83a8, c, P2/suv]
+    - [0xdc480, c, P2/sw]
+    - [0xdece0, c, P2/tail]
+    - [0xdf798, c, P2/tank]
+    - [0xe0d48, c, P2/target]
+    - [0xe0e80, asm, P2/tatk] # Not in the prototype. Related to master thief sprints.
+    - [0xe18f8, c, P2/text]
+    - [0xe3268, c, P2/thread]
+    - [0xe3420, c, P2/tn]
+    - [0xe5e38, c, P2/transition]
+    - [0xe6378, c, P2/turret]
+    - [0xe6e70, c, P2/tv]
+    - [0xe98d0, c, P2/ub]
+    - [0xea088, c, P2/ui]
+    - [0xeac78, c, P2/update]
+    - [0xeb408, c, P2/util]
+    - [0xec460, c, P2/vb]
+    - [0xee650, c, P2/vec]
+    - [0xef318, c, P2/vifs]
+    - [0xef900, c, P2/vis]
+    - [0xefc60, c, P2/water]
+    - [0xf0838, c, P2/waypoint]
+    - [0xf0ce8, c, P2/wipe]
+    - [0xf1468, c, P2/wm]
+    - [0xf3758, c, P2/wr]
+    - [0xf49f8, c, P2/xform]
+    - [0xf5f70, c, P2/zap]
+
+    ## Segments in prototype confirmed not present in release:
+    # P2/cycle.c - some kind of wheeled vehicle
+    # P2/dsp.c - unknown.
+    # P2/hg.c - hang glider
+    # P2/stepski.c - skiing
+    # P2/map2d.c - unknown
+    # P2/menu - debug menu
+    # P2/vife.c - vif encoder
+    # P2/wibu_ee.c - wibukey encryption
+    # P2/rope.c - unknown
+    # P2/sc.c - unknown
+    # P2/mouthgame.c - unknown
+
+    #--------------------------------------------------------
+    # Libs
+    # TODO: Verify start address.
+    #--------------------------------------------------------
+    - [0xF69C0, asm, sce/libs] # #MARK: libs
+    #- [0xF76F8, asm, sce/rand]
+    #- [0xF7738, asm]
+
+    #--------------------------------------------------------
+    # Vutext
+    #--------------------------------------------------------
+    - [0x112E10, textbin, vutext] #MARK: vutext
+
+    #--------------------------------------------------------
+    # Rodata (read-only data)
+    #--------------------------------------------------------
+    - [0x118380, rodata] #MARK: rodata
+    - [0x149fe0, .rodata, P2/splice/bif]
+    - [0x14a200, .rodata, P2/splice/eval]
+    - [0x14a2f0, .rodata, P2/splice/ref]
+    - [0x14a3a0, .rodata, P2/splice/serialize]
+    - [0x14a428, rodata] #, P2/989snd]
+    - [0x14a870, rodata]
+    #- [0x14a870, .rodata, P2/brx]
+    - [0x14a970, .rodata, P2/ac]
+    - [0x14a988, rodata] # TODO: Alignment issue. This should be 0x14a990.
+    #- [0x14a990, rodata] #, P2/act]
+    #- [0x14a9f0, .rodata, P2/alo]
+    #- [0x14aa20, .rodata, P2/aseg]
+    #- [0x14ab20, .rodata, P2/asega]
+    #- [0x14ac90, .rodata, P2/bez]
+    #- [0x14aca0, .rodata, P2/binoc]
+    #- [0x14ad64, .rodata, P2/blip]
+    #- [0x14ad74, .rodata, P2/bomb]
+    #- [0x14ad98, .rodata, P2/bq]
+    #- [0x14adb0, .rodata, P2/break]
+    #- [0x14add0, .rodata, P2/button]
+    #- [0x14ae18, .rodata, P2/cd]
+    #- [0x14ae3c, .rodata, P2/chkpnt]
+    #- [0x14ae44, .rodata, P2/clip]
+    #- [0x14ae4c, .rodata, P2/cm]
+    #- [0x14aed0, .rodata, P2/cplcy]
+    #- [0x14aef0, .rodata, P2/crusher]
+    #- [0x14afbc, .rodata, P2/crv]
+    - [0x14afe0, .rodata, P2/dart]
+    - [0x14aff8, rodata] # P2/dartgun Alignment issue, this should be 0x14b000.
+    #- [0x14b020, .rodata, P2/dialog]
+    - [0x14b0e0, .rodata, P2/dmas]
+    - [0x14b0f8, rodata]
+    #- [0x14b100, .rodata, P2/dzg]
+    #- [0x14b120, .rodata, P2/emitter]
+    #- [0x14b170, .rodata, P2/find]
+    #- [0x14b190, .rodata, P2/fly]
+    #- [0x14b220, .rodata, P2/font]
+    #- [0x14b2d0, .rodata, P2/game]
+    #- [0x14b6f8, .rodata, P2/gifs]
+    #- [0x14b710, .rodata, P2/glob]
+    #- [0x14b794, .rodata, P2/hide]
+    #- [0x14b7a0, .rodata, P2/hideout]
+    #- [0x14b7dc, .rodata, P2/hnd]
+    #- [0x14b7f0, .rodata, P2/jlo]
+    #- [0x14b848, .rodata, P2/joy]
+    #- [0x14b860, .rodata, P2/jt]
+    - [0x14c1e8, .rodata, P2/main]
+    - [0x14c258, rodata]
+    #- [0x14c258, .rodata, P2/mark]
+    #- [0x14c260, .rodata, P2/mat]
+    #- [0x14c270, .rodata, P2/mb]
+    #- [0x14c280, .rodata, P2/memcard]
+    #- [0x14c598, .rodata, P2/mpeg]
+    #- [0x14c5e0, .rodata, P2/ms]
+    #- [0x14c610, .rodata, P2/murray]
+    #- [0x14c64c, .rodata, P2/path]
+    #- [0x14c650, .rodata, P2/pipe]
+    #- [0x14c660, .rodata, P2/prompt]
+    #- [0x14d860, .rodata, P2/proxy]
+    #- [0x14d864, .rodata, P2/puffer]
+    #- [0x14d870, .rodata, P2/pzo]
+    #- [0x14d8c4, .rodata, P2/rail]
+    #- [0x14d8d0, .rodata, P2/rat]
+    #- [0x14d930, .rodata, P2/rip]
+    #- [0x14d9c0, .rodata, P2/rog]
+    #- [0x14dbb0, .rodata, P2/rumble]
+    #- [0x14dbc4, .rodata, P2/rwm]
+    #- [0x14dbd0, .rodata, P2/screen]
+    #- [0x14dfc0, .rodata, P2/sensor]
+    #- [0x14e164, .rodata, P2/shadow]
+    #- [0x14e170, .rodata, P2/shd]
+    - [0x14e220, .rodata, P2/shdanim]
+    - [0x14e268, rodata]
+    #- [0x14e280, .rodata, P2/so]
+    #- [0x14e2a8, .rodata, P2/sound]
+    #- [0x14e3b4, .rodata, P2/spire]
+    #- [0x14e3c0, .rodata, P2/spliceobj]
+    #- [0x14e560, .rodata, P2/squish] # TODO: Might be something else.
+    #- [0x14e588, .rodata, P2/step] # TODO: Verify.
+    #- [0x14e5a0, .rodata, P2/stepcane]
+    #- [0x14e650, .rodata, P2/stepguard]
+    #- [0x14eaa0, .rodata, P2/stephide]
+    #- [0x14eb20, .rodata, P2/steppower]
+    #- [0x14ebd0, .rodata, P2/stepside]
+    #- [0x14ebf0, .rodata, P2/stepzap]
+    #- [0x14ec90, .rodata, P2/stream]
+    #- [0x14ec94, .rodata, P2/suv]
+    #- [0x14ec98, .rodata, P2/sw]
+    #- [0x14eca8, .rodata, P2/tank] # Right after is a bunch of seemingly unused developer names?
+    #- [0x14f140, .rodata, P2/tatk]
+    #- [0x14f1c0, .rodata, P2/text]
+    #- [0x14f5f0, .rodata, P2/tn]
+    - [0x14f600, .rodata, P2/ub]
+    - [0x14f670, .rodata, P2/ui]
+    - [0x14f6d0, rodata] #, P2/vb]
+    #- [0x14f7d0, .rodata, P2/wm]
+    #- [0x14f840, .rodata, P2/wr]
+    #- [0x14f860, .rodata, P2/xform]
+
+    #--------------------------------------------------------
+    # Data (variable data)
+    #--------------------------------------------------------
+    - [0x151580, data] #MARK: data
+    - [0x15a938, .data, P2/splice/bif]
+    - [0x15af38, .data, P2/splice/gc]
+    - [0x15d250, .data, P2/splice/spliceutils]
+    - [0x15d2f0, data, P2/splice/vecmat]
+    - [0x15d340, .data, P2/989snd]
+    - [0x161e60, data, P2/act]
+    - [0x161e70, data, P2/alo]
+    - [0x162090, data, P2/binoc]
+    #- [0x162314, data, P2/blip] # TODO: Alignment issue.
+    - [0x162320, data, P2/bomb]
+    - [0x162390, data, P2/bsp]
+    #- [0x1623ec, data, P2/cd] # TODO: Alignment issue.
+    - [0x162420, data, P2/chkpnt]
+    - [0x162850, .data, P2/clock]
+    - [0x162880, data, P2/cm]
+    - [0x1629a0, data, P2/coin]
+    - [0x162bf0, data, P2/cplcy]
+    - [0x162c90, data, P2/crusher]
+    - [0x162cc8, data, P2/dart]
+    - [0x162ce0, data, P2/dartgun]
+    - [0x162d08, data, P2/dialog]
+    - [0x162d40, data, P2/difficulty]
+    #- [0x162f14, data, P2/dmas] # TODO: Alignment issue.
+    - [0x162f30, data, P2/dysh]
+    - [0x162f70, data, P2/emitter]
+    - [0x163180, data, P2/fly]
+    - [0x163250, data, P2/font]
+    - [0x163280, data, P2/frm]
+    - [0x1633c0, data, P2/game]
+    - [0x1633e0, data, P2/glob]
+    - [0x163480, data, P2/gs]
+    - [0x1636e8, .data, P2/hide]
+    - [0x163718, data, P2/hideout]
+    - [0x1639c8, data, P2/jlo]
+    - [0x163a30, data, P2/joy]
+    - [0x163e10, data, P2/jt]
+    - [0x1649c0, data, P2/jp]
+    #- [0x164e34, data, P2/jsg] # TODO: Alignment issue.
+    - [0x164e50, data, P2/jump]
+    - [0x165098, data, P2/keyhole]
+    - [0x1650b0, data, P2/lgn]
+    - [0x165260, data, P2/light]
+    - [0x165770, data, P2/lookat]
+    - [0x1657a8, .data, P2/main]
+    - [0x165840, data, P2/mark]
+    - [0x165910, data, P2/mb]
+    - [0x165a40, data, P2/memcard]
+    #- [0x16a9a4, data, P2/memory] # TODO: Alignment issue.
+    - [0x16a9b0, .data, P2/missile]
+    - [0x16a9c0, data, P2/mpeg]
+    - [0x16ab50, data, P2/ms]
+    - [0x16ab60, data, P2/murray]
+    - [0x16ab78, data, P2/path]
+    #- [0x16aba4, data, P2/phasemem] # TODO: Alignment issue.
+    - [0x16aba8, data, P2/pipe]
+    - [0x16abc0, data, P2/po]
+    - [0x16acd8, data, P2/prompt]
+    - [0x16b710, data, P2/puffer]
+    - [0x16b910, data, P2/pzo]
+    - [0x16bb90, data, P2/rat]
+    - [0x16bbd0, data, P2/rchm]
+    - [0x16bbf0, data, P2/render]
+    - [0x16c530, data, P2/rip]
+    - [0x16c778, data, P2/rog]
+    - [0x16c8b0, .data, P2/rumble]
+    - [0x16d3e0, data, P2/screen]
+    - [0x1754b8, .data, P2/sensor]
+    - [0x1754f0, .data, P2/shadow]
+    - [0x1754f8, data, P2/shd]
+    - [0x175568, data, P2/shdanim]
+    - [0x175620, data, P2/smartguard]
+    - [0x1756c0, data, P2/so]
+    - [0x175720, data, P2/sound]
+    - [0x1758f0, data, P2/sprbuf]
+    - [0x175998, data, P2/sqtr]
+    - [0x1759b0, data, P2/squish]
+    - [0x175ad0, data, P2/step]
+    - [0x175b90, data, P2/stepcane]
+    - [0x175c20, data, P2/stepguard]
+    - [0x175d40, data, P2/stephang]
+    - [0x175e00, data, P2/stephide]
+    - [0x175f30, data, P2/steppower]
+    - [0x175f90, data, P2/steprail]
+    - [0x175fa0, data, P2/steprun]
+    - [0x175fc0, data, P2/stepzap]
+    - [0x1761d0, data, P2/suv]
+    - [0x176630, data, P2/sw]
+    - [0x176730, data, P2/tail]
+    - [0x176740, data, P2/tank]
+    - [0x1768d0, .data, P2/target]
+    - [0x1768e0, data, P2/tatk]
+    - [0x176940, data, P2/text]
+    - [0x176958, data, P2/thread]
+    - [0x176970, data, P2/tn]
+    - [0x176af0, data, P2/transition]
+    - [0x176b28, data, P2/turret]
+    - [0x176b50, data, P2/tv]
+    - [0x176b60, data, P2/ub]
+    - [0x176bc0, data, P2/ui]
+    - [0x176c18, data, P2/update]
+    - [0x176c40, .data, P2/util]
+    - [0x176c70, data, P2/vb]
+    - [0x176dd0, data, P2/vifs]
+    - [0x176e10, data, P2/waypoint]
+    - [0x176f80, data, P2/wipe]
+    - [0x176fc0, data, P2/wm]
+    - [0x177680, databin]
+
+    ## Files with seemingly no data;
+    # - P2/splice/eval
+    # - P2/splice/frame
+    # - P2/splice/pair
+    # - P2/splice/serialize
+    # - P2/splice/sidebag
+    # - P2/splice/splotheap
+    # - P2/brx
+    # - P2/ac
+    # - P2/actseg
+    # - P2/alarm
+    # - P2/aseg
+    # - P2/asega
+    # - P2/barrier
+    # - P2/bas
+    # - P2/basic
+    # - P2/bbmark
+    # - P2/bez
+    # - P2/bis
+    # - P2/blend
+    # - P2/bq
+    # - P2/break
+    # - P2/button
+    # - P2/cat
+    # - P2/clip
+    # - P2/cnvo
+    # - P2/credit
+    # - P2/crout
+    # - P2/crv
+    # - P2/dl
+    # - P2/dsp
+    # - P2/dzg
+    # - P2/eyes
+    # - P2/fader
+    # - P2/UNKNOWN1
+    # - P2/find
+    # - P2/flash
+    # - P2/freeze
+    #-  P2/frzg
+    # - P2/geom
+    # - P2/gifs
+    # - P2/glbs
+    # - P2/gomer
+    # - P2/hnd
+    # - P2/ik
+    # - P2/landing
+    # - P2/lo
+    # - P2/mat
+    # - P2/mrkv
+    # - P2/pnt
+    # - P2/prog
+    # - P2/proxy
+    # - P2/rail
+    # - P2/rwm
+    # - P2/shape
+    # - P2/sky
+    # - P2/slotheap
+    # - P2/sm
+    # - P2/solve
+    # - P2/sort
+    # - P2/speaker
+    # - P2/spire
+    # - P2/splicemap
+    # - P2/spliceobj
+    # - P2/stepact
+    # - P2/steppipe
+    # - P2/stepside
+    # - P2/stream
+    # - P2/vec
+    # - P2/vis
+    # - P2/water
+    # - P2/xform
+    # - P2/zap
+
+  - [0x1A1C70, databin]
+  - [0x1A20D0]

@@ -1,0 +1,14 @@
+# Formatting only: whitespace and line breaks never change the generated code.
+# Formatting of C++ in this repository.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 120
+SortIncludes: Never
+ReflowComments: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+IndentCaseLabels: false
+PointerAlignment: Left
+BreakBeforeBraces: Attach
+SpaceBeforeParens: ControlStatements

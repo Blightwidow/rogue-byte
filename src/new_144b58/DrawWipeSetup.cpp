@@ -1,0 +1,43 @@
+struct GIFS { char pad[0x30]; };
+struct QW;
+extern "C" void AddPrimPack__4GIFSiiUl(GIFS *, int, int, unsigned long);
+extern "C" void PackAD__4GIFSll(GIFS *, long, long);
+extern "C" void PackRGBA__4GIFSUi(GIFS *, unsigned int);
+extern "C" void PackUV__4GIFSii(GIFS *, int, int);
+extern "C" void PackXYZ__4GIFSiii(GIFS *, int, int, int);
+extern "C" void EndDmaCnt__4DMAS(GIFS *);
+extern "C" void AddDmaRefs__4DMASiP2QW(GIFS *, int, QW *);
+extern "C" void AddDmaCnt__4DMAS(GIFS *);
+extern "C" GIFS B_002DEA00;
+extern "C" char B_002DFB00, B_002DFB20;
+extern "C" unsigned long g_2decd0[];
+extern "C" void DrawWipeSetup(void)
+{
+    GIFS *pgifs = &B_002DEA00;
+    unsigned long *pg = g_2decd0;
+    AddPrimPack__4GIFSiiUl(pgifs, 0, 1, 0xE);
+    PackAD__4GIFSll(pgifs, 0x4D, (pg[2] & 0x1FF) | (g_2decd0[0] & 0x3F0000));
+    PackAD__4GIFSll(pgifs, 0x48, 0x31001);
+    EndDmaCnt__4DMAS(pgifs);
+    AddDmaRefs__4DMASiP2QW(pgifs, 2, (QW *)&B_002DFB00);
+    AddDmaCnt__4DMAS(pgifs);
+    AddPrimPack__4GIFSiiUl(pgifs, 0x316, 7, 0x53531EE);
+    PackAD__4GIFSll(pgifs, 0x15, 0x61);
+    PackAD__4GIFSll(pgifs, 0x3F, 0);
+    PackRGBA__4GIFSUi(pgifs, 0x80808080);
+    PackUV__4GIFSii(pgifs, 8, 8);
+    PackXYZ__4GIFSiii(pgifs, 0x7000, 0x7900, 0);
+    PackUV__4GIFSii(pgifs, 0x2008, 0xE08);
+    PackXYZ__4GIFSiii(pgifs, 0x8000, 0x8700, 0);
+    EndDmaCnt__4DMAS(pgifs);
+    AddDmaRefs__4DMASiP2QW(pgifs, 2, (QW *)&B_002DFB20);
+    AddDmaCnt__4DMAS(pgifs);
+    AddPrimPack__4GIFSiiUl(pgifs, 0x316, 7, 0x53531EE);
+    PackAD__4GIFSll(pgifs, 0x15, 0x61);
+    PackAD__4GIFSll(pgifs, 0x3F, 0);
+    PackRGBA__4GIFSUi(pgifs, 0x80808080);
+    PackUV__4GIFSii(pgifs, 8, 8);
+    PackXYZ__4GIFSiii(pgifs, 0x8000, 0x7900, 0);
+    PackUV__4GIFSii(pgifs, 0x2008, 0xE08);
+    PackXYZ__4GIFSiii(pgifs, 0x9000, 0x8700, 0);
+}

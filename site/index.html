@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogue Byte: Sly 2 decompilation progress</title>
+<meta name="description" content="Progress of the Sly 2: Band of Thieves (PS2) decompilation: matched C, recovered names and a map of the code.">
+<meta property="og:title" content="Rogue Byte: Sly 2 decompilation progress">
+<meta property="og:description" content="Matched C, recovered names and a map of the code.">
+<meta property="og:image" content="assets/og.png">
+<link rel="icon" href="assets/favicon.png">
+<style>
+:root {
+  --navy: #05060f; --sky: #0b0c26; --panel: #11133a; --panel-line: #23266a; --ink: #e8ecff; --muted: #9aa3d6;
+  --blue: #2f7af4; --blue-dark: #02307f; --gold: #f3c25a; --asm: #2a2d6e; --sdk: #4b4f6e;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(120% 80% at 20% 0%, #2a2d6e 0%, var(--sky) 45%, var(--navy) 100%) fixed;
+       color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 0 8px; }
+header img { height: 72px; width: auto; max-width: 100%; }
+header p { margin: 0; color: var(--muted); flex: 1 1 280px; }
+nav a { color: var(--ink); margin-right: 16px; text-decoration: none; border-bottom: 2px solid var(--blue); }
+h2 { margin: 40px 0 12px; font-size: 1.25rem; letter-spacing: .02em; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 16px; }
+.card { background: var(--panel); border: 1px solid var(--panel-line); border-radius: 10px; padding: 14px 16px; }
+.card b { display: block; font-size: 2rem; line-height: 1.15; }
+.card span { color: var(--muted); font-size: .9rem; }
+.bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--asm); margin-top: 18px; border: 1px solid var(--panel-line); }
+.bar i { display: block; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: .9rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 11px; height: 11px; margin-right: 6px; border-radius: 2px; background: var(--swatch); vertical-align: -1px; }
+.map { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--panel-line); background: var(--navy); }
+.curve { width: 100%; height: 160px; display: block; background: var(--panel); border: 1px solid var(--panel-line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--panel-line); }
+th { color: var(--muted); font-weight: 600; cursor: pointer; user-select: none; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.share { width: 32%; }
+td.share .bar { margin: 0; height: 12px; }
+.table-wrap { overflow-x: auto; }
+.note { color: var(--muted); font-size: .9rem; }
+footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--panel-line); padding-top: 16px; }
+a { color: #8fb4ff; }
+@media (max-width: 520px) { header img { height: 56px; } .card b { font-size: 1.6rem; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="assets/logo.svg" alt="Rogue Byte">
+    <p>Decompilation of <i>Sly 2: Band of Thieves</i> (PS2, USA). Progress counts bytes of the game's code.</p>
+  </header>
+  <nav><a href="naming.html">Naming Desk</a><a href="https://github.com/Blightwidow/rogue-byte">Source</a><a href="data/report.json">report.json</a><a href="progress-map.svg">Map (SVG)</a></nav>
+
+  <div class="cards" id="cards"></div>
+  <div class="bar" id="bar" role="img" aria-label="Share of code bytes by status"></div>
+  <p class="legend">
+    <span style="--swatch: var(--blue)">compiled from C, verified in the rebuilt image</span>
+    <span style="--swatch: var(--gold)">matched, still assembly in the image</span>
+    <span style="--swatch: var(--asm)">not matched yet</span>
+  </p>
+  <p class="note" id="stamp"></p>
+
+  <h2>Map of the code</h2>
+  <p class="note">One block per module (named after the Sly 1 source file it matches, or by address), one cell per function. Area is bytes. The grey block is Sony's SDK, left out of the totals.</p>
+  <img class="map" src="progress-map.svg" alt="Treemap of the executable's code by module and function, coloured by status" width="1600" height="900">
+
+  <h2>Over time</h2>
+  <svg class="curve" id="curve" viewBox="0 0 1000 160" preserveAspectRatio="none" role="img" aria-label="Share of code compiled from C, by commit"></svg>
+
+  <h2>Modules</h2>
+  <div class="table-wrap">
+    <table id="modules"><thead><tr>
+      <th data-key="name">Module</th><th data-key="bytes" class="num">Bytes</th><th data-key="functions" class="num">Functions</th>
+      <th data-key="named" class="num">Named</th><th data-key="share">Status</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <footer>
+    <p>The code of Sly 2 belongs to Sucker Punch Productions and Sony Interactive Entertainment. This project publishes names, addresses, sizes and
+    matching C for interoperability and preservation; it contains no game data. Tooling is GPL-3.0-or-later; see THIRD_PARTY_NOTICES.md in the repository.</p>
+  </footer>
+</main>
+<script>
+const percent = (part, whole) => (whole ? (100 * part / whole).toFixed(1) : '0.0') + '%';
+const format = new Intl.NumberFormat('en-US');
+const element = (tag, attributes = {}, text = '') => {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+  node.textContent = text;
+  return node;
+};
+const segments = (row) => [['c', 'var(--blue)'], ['matched', 'var(--gold)']].map(([status, color]) => {
+  const part = element('i'); part.style.width = percent(row[status + '_bytes'], row.bytes); part.style.background = color; return part; });
+
+Promise.all([fetch('data/summary.json').then(r => r.json()), fetch('data/history.json').then(r => r.json())]).then(([summary, history]) => {
+  const game = summary.game_code;
+  const cards = [
+    [percent(game.c_bytes, game.bytes), 'of the code compiles from our C and is verified byte for byte'],
+    [percent(game.c_bytes + game.matched_bytes, game.bytes), 'matched by the original compiler'],
+    [percent(game.named, game.functions), `functions named (${format.format(game.named)} of ${format.format(game.functions)})`],
+    [format.format(game.c_functions), `functions rebuilt from C in the image`],
+  ];
+  const cardsNode = document.getElementById('cards');
+  for (const [value, label] of cards) {
+    const card = element('div', { class: 'card' }); card.append(element('b', {}, value), element('span', {}, label)); cardsNode.append(card);
+  }
+  document.getElementById('bar').append(...segments(game));
+  document.getElementById('stamp').textContent = `Game code only (the Sony SDK range is left out): ${format.format(game.bytes)} bytes. Generated ${summary.generated} at commit ${summary.commit}.` +
+    (summary.objdiff ? ` objdiff, whole executable code: ${summary.objdiff.matched_code_percent.toFixed(1)}% matched, ${format.format(summary.objdiff.matched_functions)} functions.` : '');
+
+  // the curve: share of code compiled from C, one point per commit
+  if (history.length > 1) {
+    const points = history.map((entry, index) => [1000 * index / (history.length - 1), 150 - 140 * entry.c_bytes / entry.bytes]);
+    const line = element('polyline', { points: points.map(p => p.join(',')).join(' '), fill: 'none', stroke: '#2f7af4', 'stroke-width': 3, 'vector-effect': 'non-scaling-stroke' });
+    document.getElementById('curve').append(line);
+  } else {
+    document.getElementById('curve').replaceWith(element('p', { class: 'note' }, 'The curve starts with the next published run.'));
+  }
+
+  const body = document.querySelector('#modules tbody');
+  let rows = summary.modules.filter(row => row.name !== 'sdk');
+  const render = () => {
+    body.replaceChildren(...rows.slice(0, 80).map(row => {
+      const tr = element('tr');
+      const share = element('td', { class: 'share' }); const bar = element('div', { class: 'bar' }); bar.append(...segments(row)); share.append(bar);
+      tr.append(element('td', {}, row.name), element('td', { class: 'num' }, format.format(row.bytes)), element('td', { class: 'num' }, format.format(row.functions)),
+                element('td', { class: 'num' }, percent(row.named, row.functions)), share);
+      return tr;
+    }));
+  };
+  document.querySelectorAll('#modules th').forEach(header => header.addEventListener('click', () => {
+    const key = header.dataset.key;
+    rows = [...rows].sort((a, b) => key === 'name' ? a.name.localeCompare(b.name) : key === 'share' ? (b.c_bytes / b.bytes) - (a.c_bytes / a.bytes) : b[key] - a[key]);
+    render();
+  }));
+  render();
+}).catch(error => { document.getElementById('stamp').textContent = 'Could not load the report: ' + error; });
+</script>
+</body>
+</html>

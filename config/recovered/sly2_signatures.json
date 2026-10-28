@@ -1,0 +1,6161 @@
+[
+{
+"address": 1131920,
+"name": "FCanPuffcAttack",
+"return": "int",
+"parameters": [
+"PUFFC *"
+]
+},
+{
+"address": 1141016,
+"name": "PvAllocSlotheapClearImpl",
+"return": "void *",
+"parameters": [
+"SLOTHEAP *"
+]
+},
+{
+"address": 1141432,
+"name": "PvAllocGlobalImpl",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1143072,
+"name": "EvaluateBezierPos",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1144816,
+"name": "InitGeom",
+"return": null,
+"parameters": [
+"GEOM *"
+]
+},
+{
+"address": 1145224,
+"name": "CBinaryInputStream_Align",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this",
+"int"
+]
+},
+{
+"address": 1145328,
+"name": "CBinaryInputStream_Decompress",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1145808,
+"name": "CBinaryInputStream_U8Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1145888,
+"name": "CBinaryInputStream_U16Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1145984,
+"name": "CBinaryInputStream_U32Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1146112,
+"name": "CBinaryInputStream_S8Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1146192,
+"name": "CBinaryInputStream_S16Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1146296,
+"name": "CBinaryInputStream_S32Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1146424,
+"name": "CBinaryInputStream_F32Read",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1146544,
+"name": "CBinaryInputStream_ReadVector",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this",
+"VECTOR *"
+]
+},
+{
+"address": 1147936,
+"name": "CBinaryInputStream_Unknown1",
+"return": null,
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1149576,
+"name": "PruneBsp",
+"return": "void *",
+"parameters": [
+"BSP *",
+"VECTOR *",
+"float",
+"BSP * *"
+]
+},
+{
+"address": 1150896,
+"name": "PcgtPointInCbspQuick",
+"return": "void *",
+"parameters": [
+"CBSP *",
+"VECTOR *"
+]
+},
+{
+"address": 1151464,
+"name": "CloneBspc",
+"return": null,
+"parameters": [
+"GEOM *",
+"BSPC *",
+"GEOM *",
+"BSPC *"
+]
+},
+{
+"address": 1152480,
+"name": "CroutDecomp",
+"return": null,
+"parameters": [
+"int",
+"float *",
+"float *"
+]
+},
+{
+"address": 1153272,
+"name": "CroutSolve",
+"return": null,
+"parameters": [
+"int",
+"float *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1155576,
+"name": "InitDl",
+"return": null,
+"parameters": [
+"DL *",
+"int"
+]
+},
+{
+"address": 1155584,
+"name": "ClearDl",
+"return": null,
+"parameters": [
+"DL *"
+]
+},
+{
+"address": 1155600,
+"name": "ClearDle",
+"return": null,
+"parameters": [
+"DLE *"
+]
+},
+{
+"address": 1156016,
+"name": "FIsDlEmpty",
+"return": "int",
+"parameters": [
+"DL *"
+]
+},
+{
+"address": 1156032,
+"name": "CPvDl",
+"return": "int",
+"parameters": [
+"DL *"
+]
+},
+{
+"address": 1156792,
+"name": "ClearDzgSolution",
+"return": null,
+"parameters": [
+"DZG *"
+]
+},
+{
+"address": 1156976,
+"name": "EnforceDzgDz",
+"return": null,
+"parameters": [
+"DZG *",
+"DZ *"
+]
+},
+{
+"address": 1159960,
+"name": "AddJsgContext",
+"return": null,
+"parameters": [
+"JSG *",
+"OID"
+]
+},
+{
+"address": 1160144,
+"name": "NormalizeRotateMatrix3",
+"return": null,
+"parameters": [
+"MATRIX3 *"
+]
+},
+{
+"address": 1160744,
+"name": "LoadRotateMatrixEuler",
+"return": null,
+"parameters": [
+"VECTOR *",
+"MATRIX3 *"
+]
+},
+{
+"address": 1161264,
+"name": "BuildOrthonormalMatrixY",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"MATRIX3 *"
+]
+},
+{
+"address": 1161528,
+"name": "TiltMatUpright",
+"return": null,
+"parameters": [
+"MATRIX3 *",
+"MATRIX3 *",
+"MATRIX3 *"
+]
+},
+{
+"address": 1162376,
+"name": "DecomposeRotateMatrixPanTilt",
+"return": null,
+"parameters": [
+"MATRIX3 *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1162488,
+"name": "DecomposeRotateMatrixRad",
+"return": null,
+"parameters": [
+"MATRIX3 *",
+"float *",
+"VECTOR *"
+]
+},
+{
+"address": 1163560,
+"name": "op_multiply",
+"return": null,
+"parameters": [
+"const MATRIX4 *",
+"VU_FLOAT"
+]
+},
+{
+"address": 1163688,
+"name": "op_multiply_2",
+"return": null,
+"parameters": [
+"const MATRIX4 *",
+"VU_VECTOR4"
+]
+},
+{
+"address": 1164016,
+"name": "FInvertMatrix4",
+"return": "int",
+"parameters": [
+"MATRIX4 *",
+"MATRIX4 *"
+]
+},
+{
+"address": 1164360,
+"name": "BuildSimpleProjectionMatrix",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"float",
+"float",
+"MATRIX4 *"
+]
+},
+{
+"address": 1164544,
+"name": "FInvertMatrix",
+"return": "int",
+"parameters": [
+"int",
+"float *",
+"float *"
+]
+},
+{
+"address": 1166808,
+"name": "SetAloShadowShader",
+"return": null,
+"parameters": [
+"ALO *",
+"OID"
+]
+},
+{
+"address": 1167200,
+"name": "RadNormalize",
+"return": "float",
+"parameters": [
+"float"
+]
+},
+{
+"address": 1167328,
+"name": "GLimitAbs",
+"return": "float",
+"parameters": [
+"float",
+"float"
+]
+},
+{
+"address": 1167384,
+"name": "GSmooth",
+"return": "float",
+"parameters": [
+"float",
+"float",
+"float",
+"SMP *",
+"float *"
+]
+},
+{
+"address": 1167808,
+"name": "GSmoothA",
+"return": "float",
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"SMPA *",
+"float *"
+]
+},
+{
+"address": 1168080,
+"name": "RadSmooth",
+"return": "float",
+"parameters": [
+"float",
+"float",
+"float",
+"SMP *",
+"float *"
+]
+},
+{
+"address": 1168192,
+"name": "RadSmoothA",
+"return": "float",
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"SMPA *",
+"float *"
+]
+},
+{
+"address": 1168592,
+"name": "FFloatsNear",
+"return": "int",
+"parameters": [
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 1168648,
+"name": "CSolveQuadratic",
+"return": "int",
+"parameters": [
+"float",
+"float",
+"float",
+"float *"
+]
+},
+{
+"address": 1168816,
+"name": "PrescaleClq",
+"return": null,
+"parameters": [
+"CLQ *",
+"float",
+"float",
+"CLQ *"
+]
+},
+{
+"address": 1168904,
+"name": "CalculateSinCos",
+"return": null,
+"parameters": [
+"float",
+"float *",
+"float *"
+]
+},
+{
+"address": 1169216,
+"name": "GTrunc",
+"return": "float",
+"parameters": [
+"double"
+]
+},
+{
+"address": 1169392,
+"name": "GTrunc_2",
+"return": "float",
+"parameters": [
+"float"
+]
+},
+{
+"address": 1169560,
+"name": "GModPositive",
+"return": "float",
+"parameters": [
+"float",
+"float"
+]
+},
+{
+"address": 1169624,
+"name": "FitClq",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"CLQ *"
+]
+},
+{
+"address": 1169680,
+"name": "FCheckLm",
+"return": "int",
+"parameters": [
+"LM *",
+"float"
+]
+},
+{
+"address": 1169736,
+"name": "GLimitLm",
+"return": "float",
+"parameters": [
+"LM *",
+"float"
+]
+},
+{
+"address": 1169880,
+"name": "Force",
+"return": null,
+"parameters": [
+"void *"
+]
+},
+{
+"address": 1169888,
+"name": "MinimizeRange",
+"return": null,
+"parameters": [
+"float (*)(void *, float)",
+"void *",
+"float",
+"float",
+"float",
+"float",
+"float *",
+"float *"
+]
+},
+{
+"address": 1170832,
+"name": "ConvertHsvToRgb",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1171360,
+"name": "ConvertUserHsvToUserRgb",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1171872,
+"name": "SetVectorCylind",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 1171976,
+"name": "SetVectorSphere",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 1172112,
+"name": "SProjectVector",
+"return": "float",
+"parameters": [
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1172184,
+"name": "GetNormalVectors",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1172656,
+"name": "RadBetweenVectors",
+"return": "float",
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1173040,
+"name": "FindClosestPointBetweenLines",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *",
+"VECTOR *"
+]
+},
+{
+"address": 1173448,
+"name": "FindClosestPointBetweenLineSegments",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"VECTOR *"
+]
+},
+{
+"address": 1173848,
+"name": "CalculateVectorPanTilt",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1174008,
+"name": "LimitVectorLength",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float",
+"VECTOR *"
+]
+},
+{
+"address": 1180904,
+"name": "RefOpG",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1180952,
+"name": "RefOpGE",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1181680,
+"name": "RefOpEqual",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1182672,
+"name": "SubscribeLoStruct",
+"return": null,
+"parameters": [
+"LO *",
+"void (*)(void *, MSGID, void *)",
+"void *"
+]
+},
+{
+"address": 1183616,
+"name": "RefOpList",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189032,
+"name": "RefUfo",
+"return": null,
+"parameters": [
+"CRef *",
+"UFOK"
+]
+},
+{
+"address": 1189168,
+"name": "RefOpSqrt",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189216,
+"name": "RefOpSin",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189264,
+"name": "RefOpCos",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189312,
+"name": "RefOpTan",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189360,
+"name": "RefOpAsin",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189408,
+"name": "RefOpAcos",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189456,
+"name": "RefOpAtan",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1189504,
+"name": "RefOpRadNormalize",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *"
+]
+},
+{
+"address": 1195696,
+"name": "RefOpObjectOption",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"CFrame *",
+"BIFK"
+]
+},
+{
+"address": 1205744,
+"name": "RefEvalAssert",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1206104,
+"name": "RefEvalIf",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1206336,
+"name": "RefEvalOr",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1206568,
+"name": "RefEvalAnd",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1206808,
+"name": "RefEvalCond",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1207200,
+"name": "RefEvalCase",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1208184,
+"name": "RefEvalWhile",
+"return": null,
+"parameters": [
+"CPair *",
+"CFrame *"
+]
+},
+{
+"address": 1211632,
+"name": "CFrame_RefSetBinding",
+"return": null,
+"parameters": [
+"CFrame *this",
+"unsigned int",
+"CRef *"
+]
+},
+{
+"address": 1211768,
+"name": "CFrame_FFindBinding",
+"return": "int",
+"parameters": [
+"CFrame *this",
+"unsigned int",
+"int",
+"CRef *"
+]
+},
+{
+"address": 1211832,
+"name": "CFrame_PrefFindBinding",
+"return": "void *",
+"parameters": [
+"CFrame *this",
+"unsigned int",
+"int"
+]
+},
+{
+"address": 1216936,
+"name": "CRef_SetTag",
+"return": null,
+"parameters": [
+"CRef *this",
+"TAGK"
+]
+},
+{
+"address": 1218136,
+"name": "CRef_op_assign",
+"return": null,
+"parameters": [
+"CRef *this",
+"const CRef *"
+]
+},
+{
+"address": 1219264,
+"name": "CRef_op_equal",
+"return": null,
+"parameters": [
+"CRef *this",
+"const CRef *"
+]
+},
+{
+"address": 1223464,
+"name": "CSidebag_FFindBinding",
+"return": "int",
+"parameters": [
+"CSidebag *this",
+"int",
+"CRef *"
+]
+},
+{
+"address": 1224216,
+"name": "StartupCatalog",
+"return": null,
+"parameters": []
+},
+{
+"address": 1231768,
+"name": "PacpNew",
+"return": "void *",
+"parameters": [
+"ACVK"
+]
+},
+{
+"address": 1231968,
+"name": "ExplodeExploExplso",
+"return": null,
+"parameters": [
+"EXPLO *",
+"EXPLSO *"
+]
+},
+{
+"address": 1232056,
+"name": "LoadExploFromBrx",
+"return": null,
+"parameters": [
+"EXPLO *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1233440,
+"name": "GetActlaRotationGoal",
+"return": null,
+"parameters": [
+"ACTLA *",
+"float",
+"MATRIX3 *",
+"VECTOR *"
+]
+},
+{
+"address": 1234136,
+"name": "GetActPositionGoal",
+"return": null,
+"parameters": [
+"ACT *",
+"float",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1237088,
+"name": "DupAloRo",
+"return": null,
+"parameters": [
+"ALO *",
+"RO *",
+"RO *"
+]
+},
+{
+"address": 1238528,
+"name": "InitAccmiss",
+"return": null,
+"parameters": [
+"ACCMISS *"
+]
+},
+{
+"address": 1240144,
+"name": "CloneProxy",
+"return": null,
+"parameters": [
+"PROXY *",
+"PROXY *"
+]
+},
+{
+"address": 1241672,
+"name": "InitAseg",
+"return": null,
+"parameters": [
+"ASEG *"
+]
+},
+{
+"address": 1243536,
+"name": "TFindAsegLabel",
+"return": null,
+"parameters": [
+"ASEG *",
+"OID"
+]
+},
+{
+"address": 1246376,
+"name": "PasegaFindAseg",
+"return": "void *",
+"parameters": [
+"ASEG *",
+"ALO *"
+]
+},
+{
+"address": 1246432,
+"name": "EnsureAseg",
+"return": null,
+"parameters": [
+"ASEG *",
+"ALO *",
+"SEEK",
+"float",
+"float",
+"int",
+"ASEGA * *"
+]
+},
+{
+"address": 1246616,
+"name": "PasegaEnsureAseg",
+"return": "void *",
+"parameters": [
+"ASEG *",
+"ALO *",
+"SEEK",
+"float",
+"float",
+"int"
+]
+},
+{
+"address": 1248944,
+"name": "UpdateAsegaIeaCur",
+"return": null,
+"parameters": [
+"ASEGA *"
+]
+},
+{
+"address": 1251904,
+"name": "SetAsegaPriority",
+"return": null,
+"parameters": [
+"ASEGA *",
+"int"
+]
+},
+{
+"address": 1254768,
+"name": "CBinaryAsyncStream_constructor",
+"return": "void",
+"parameters": [
+"CBinaryAsyncStream *this",
+"void *"
+]
+},
+{
+"address": 1254840,
+"name": "CBinaryAsyncStream_destructor",
+"return": "void",
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1254976,
+"name": "CBinaryAsyncStream_FOpenSector",
+"return": "int",
+"parameters": [
+"CBinaryAsyncStream *this",
+"unsigned int",
+"unsigned int"
+]
+},
+{
+"address": 1255048,
+"name": "CBinaryAsyncStream_Close",
+"return": null,
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255184,
+"name": "CBinaryAsyncStream_StartSpooling",
+"return": null,
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255376,
+"name": "CBinaryAsyncStream_FSpooling",
+"return": "int",
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255392,
+"name": "CBinaryAsyncStream_FSpoolingComplete",
+"return": "int",
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255592,
+"name": "CBinaryAsyncStream_FinishSpooling",
+"return": null,
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255728,
+"name": "CBinaryAsyncStream_Spool",
+"return": null,
+"parameters": [
+"CBinaryAsyncStream *this"
+]
+},
+{
+"address": 1255832,
+"name": "CBinaryAsyncStream_Skip",
+"return": null,
+"parameters": [
+"CBinaryAsyncStream *this",
+"int"
+]
+},
+{
+"address": 1256192,
+"name": "OnLoAdd",
+"return": null,
+"parameters": [
+"LO *"
+]
+},
+{
+"address": 1258304,
+"name": "EnableLasen",
+"return": null,
+"parameters": [
+"LASEN *",
+"SENSM"
+]
+},
+{
+"address": 1261184,
+"name": "UpdateSwAaox",
+"return": null,
+"parameters": [
+"SW *"
+]
+},
+{
+"address": 1277880,
+"name": "FillBlAmrsg",
+"return": null,
+"parameters": [
+"int",
+"int",
+"void *",
+"int",
+"int",
+"OID *"
+]
+},
+{
+"address": 1278192,
+"name": "CalculateBlendAmrsg",
+"return": null,
+"parameters": [
+"int",
+"int",
+"void *",
+"int",
+"int",
+"MRSG *",
+"float *"
+]
+},
+{
+"address": 1278832,
+"name": "ImrsgLookUp",
+"return": null,
+"parameters": [
+"float",
+"float",
+"int",
+"MRSG *",
+"float *"
+]
+},
+{
+"address": 1279584,
+"name": "EvaluateAcsb",
+"return": null,
+"parameters": [
+"ACSB *",
+"ALO *",
+"float",
+"int",
+"MATRIX3 *"
+]
+},
+{
+"address": 1281800,
+"name": "BuildBlipAqwGifs",
+"return": null,
+"parameters": [
+"int",
+"QW * *"
+]
+},
+{
+"address": 1281984,
+"name": "StartupBlips",
+"return": null,
+"parameters": []
+},
+{
+"address": 1282040,
+"name": "PblipNew",
+"return": "void *",
+"parameters": [
+"BLIPG *"
+]
+},
+{
+"address": 1282200,
+"name": "RemoveBlip",
+"return": null,
+"parameters": [
+"BLIP *"
+]
+},
+{
+"address": 1282640,
+"name": "OnBlipgRemove",
+"return": null,
+"parameters": [
+"BLIPG *"
+]
+},
+{
+"address": 1282928,
+"name": "PropagateBlipgShader",
+"return": null,
+"parameters": [
+"BLIPG *"
+]
+},
+{
+"address": 1283272,
+"name": "SetBlipgEmitb",
+"return": null,
+"parameters": [
+"BLIPG *",
+"EMITB *"
+]
+},
+{
+"address": 1284352,
+"name": "SubscribeBlipgObject",
+"return": null,
+"parameters": [
+"BLIPG *",
+"LO *"
+]
+},
+{
+"address": 1284432,
+"name": "CblipeProjectBlipTransformAccel",
+"return": null,
+"parameters": [
+"MATRIX4 *",
+"VU_FLOAT",
+"BLIPP *",
+"BLIPV *",
+"BLIPX *",
+"int",
+"BLIPOK",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1284792,
+"name": "ProjectBlipgTransformAccel",
+"return": "void *",
+"parameters": [
+"BLIPG *",
+"float"
+]
+},
+{
+"address": 1285568,
+"name": "ProjectBlipgTransform",
+"return": "void *",
+"parameters": [
+"BLIPG *",
+"float",
+"int"
+]
+},
+{
+"address": 1288816,
+"name": "SetLightDiffuse_Old",
+"return": null,
+"parameters": [
+"LIGHT *",
+"float"
+]
+},
+{
+"address": 1288936,
+"name": "HandleBombMessage",
+"return": null,
+"parameters": [
+"BOMB *",
+"MSGID",
+"void *"
+]
+},
+{
+"address": 1289048,
+"name": "UpdateBomb",
+"return": null,
+"parameters": [
+"BOMB *",
+"float"
+]
+},
+{
+"address": 1291720,
+"name": "PrimeBomb",
+"return": "void *",
+"parameters": [
+"BOMB *",
+"float"
+]
+},
+{
+"address": 1298104,
+"name": "InitCrfodb",
+"return": null,
+"parameters": [
+"CRFODB *"
+]
+},
+{
+"address": 1298168,
+"name": "PostCrfodbLoad",
+"return": "void *",
+"parameters": [
+"CRFODB *"
+]
+},
+{
+"address": 1299800,
+"name": "CByteQueue_Init",
+"return": null,
+"parameters": [
+"CByteQueue *this",
+"int",
+"void *"
+]
+},
+{
+"address": 1299840,
+"name": "CByteQueue_Reset",
+"return": null,
+"parameters": [
+"CByteQueue *this"
+]
+},
+{
+"address": 1299872,
+"name": "CByteQueue_CbFill",
+"return": null,
+"parameters": [
+"CByteQueue *this",
+"int",
+"CQueueInput *"
+]
+},
+{
+"address": 1300136,
+"name": "CByteQueue_CbDrain",
+"return": null,
+"parameters": [
+"CByteQueue *this",
+"int",
+"CQueueOutput *"
+]
+},
+{
+"address": 1300432,
+"name": "CByteQueue_CbFill_2",
+"return": null,
+"parameters": [
+"CByteQueue *this",
+"int",
+"unsigned char *"
+]
+},
+{
+"address": 1300504,
+"name": "CByteQueue_FreeDrain",
+"return": null,
+"parameters": [
+"CByteQueue *this",
+"int"
+]
+},
+{
+"address": 1300560,
+"name": "CQueueInputMemory_CbRead",
+"return": null,
+"parameters": [
+"CQueueInputMemory *this",
+"int",
+"void *"
+]
+},
+{
+"address": 1308688,
+"name": "LoadOptionsFromBrx",
+"return": null,
+"parameters": [
+"void *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1329960,
+"name": "InitLasen",
+"return": null,
+"parameters": [
+"LASEN *"
+]
+},
+{
+"address": 1343208,
+"name": "RetractActseg",
+"return": null,
+"parameters": [
+"ACTSEG *",
+"int"
+]
+},
+{
+"address": 1346168,
+"name": "SetBtnButtons",
+"return": null,
+"parameters": [
+"BTN *",
+"BUTTONS"
+]
+},
+{
+"address": 1346360,
+"name": "SetAlarmRsmg",
+"return": null,
+"parameters": [
+"ALARM *",
+"int",
+"OID",
+"OID",
+"OID"
+]
+},
+{
+"address": 1348440,
+"name": "LoadVolbtnFromBrx",
+"return": null,
+"parameters": [
+"VOLBTN *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1348600,
+"name": "CloneVolbtn",
+"return": null,
+"parameters": [
+"VOLBTN *",
+"VOLBTN *"
+]
+},
+{
+"address": 1357816,
+"name": "CpchzTokenizePath",
+"return": null,
+"parameters": [
+"char *"
+]
+},
+{
+"address": 1358272,
+"name": "FValidCdMmode",
+"return": "int",
+"parameters": []
+},
+{
+"address": 1358336,
+"name": "SetCdMmode",
+"return": null,
+"parameters": []
+},
+{
+"address": 1358392,
+"name": "UpdateCd",
+"return": null,
+"parameters": []
+},
+{
+"address": 1358768,
+"name": "CdPath",
+"return": null,
+"parameters": [
+"char *",
+"char *",
+"int"
+]
+},
+{
+"address": 1358968,
+"name": "ReadCdDirect",
+"return": null,
+"parameters": [
+"unsigned int",
+"unsigned int",
+"void *"
+]
+},
+{
+"address": 1359152,
+"name": "FCdCompleted",
+"return": "int",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1359640,
+"name": "CSplotheap_UnmarkAll",
+"return": null,
+"parameters": [
+"CSplotheap *this"
+]
+},
+{
+"address": 1359688,
+"name": "_MatchCodes",
+"return": null,
+"parameters": [
+"JOY *",
+"unsigned short"
+]
+},
+{
+"address": 1361624,
+"name": "ClsgClipEdgeToObject",
+"return": null,
+"parameters": [
+"SO *",
+"VECTOR *",
+"VECTOR *",
+"int",
+"LSG *"
+]
+},
+{
+"address": 1361736,
+"name": "ClsgClipEdgeToSphere",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float",
+"VECTOR *",
+"VECTOR *",
+"int",
+"LSG *"
+]
+},
+{
+"address": 1363032,
+"name": "PsoHitTestLineObjects",
+"return": "void *",
+"parameters": [
+"int",
+"VECTOR *",
+"VECTOR *",
+"int",
+"SO * *",
+"LSG *"
+]
+},
+{
+"address": 1364152,
+"name": "MarkClockTick",
+"return": null,
+"parameters": [
+"CLOCK *"
+]
+},
+{
+"address": 1366208,
+"name": "SetResetFlag",
+"return": null,
+"parameters": [
+"CM *"
+]
+},
+{
+"address": 1366896,
+"name": "RecalcCmFrustrum",
+"return": null,
+"parameters": [
+"CM *"
+]
+},
+{
+"address": 1368424,
+"name": "CFontBrx_CopyTo",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"CFontBrx *"
+]
+},
+{
+"address": 1368688,
+"name": "BuildCmFgfn",
+"return": null,
+"parameters": [
+"CM *",
+"float",
+"FGFN *"
+]
+},
+{
+"address": 1368872,
+"name": "SetCmPolicy",
+"return": null,
+"parameters": [
+"CM *",
+"CPP",
+"CPLCY *",
+"SO *",
+"void *"
+]
+},
+{
+"address": 1369288,
+"name": "RevokeCmPolicy",
+"return": null,
+"parameters": [
+"CM *",
+"int",
+"CPP",
+"CPLCY *",
+"SO *",
+"void *"
+]
+},
+{
+"address": 1369752,
+"name": "CalcCmAdjust",
+"return": null,
+"parameters": [
+"CM *",
+"SO *",
+"CPDEFI *",
+"VECTOR *"
+]
+},
+{
+"address": 1369808,
+"name": "SpringCm",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"CM *",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1369960,
+"name": "AdjustCmCpdefi",
+"return": null,
+"parameters": [
+"CM *",
+"SO *",
+"float",
+"CPDEFI *"
+]
+},
+{
+"address": 1370400,
+"name": "ResetCmAdjust",
+"return": null,
+"parameters": [
+"CM *",
+"SO *",
+"CPDEFI *"
+]
+},
+{
+"address": 1370472,
+"name": "GetCmCpdefi",
+"return": null,
+"parameters": [
+"CM *",
+"SO *",
+"float",
+"CPDEFI *"
+]
+},
+{
+"address": 1373936,
+"name": "SetCmRgbaFog",
+"return": null,
+"parameters": [
+"CM *",
+"RGBA *"
+]
+},
+{
+"address": 1375536,
+"name": "SetCptn",
+"return": null,
+"parameters": [
+"CPTN *",
+"void *"
+]
+},
+{
+"address": 1375544,
+"name": "RevokeCptn",
+"return": null,
+"parameters": [
+"CPTN *",
+"void *"
+]
+},
+{
+"address": 1382736,
+"name": "RenderSmack",
+"return": null,
+"parameters": [
+"SMACK *",
+"CM *"
+]
+},
+{
+"address": 1392984,
+"name": "PchzFriendlyFromWid",
+"return": "void *",
+"parameters": [
+"WID"
+]
+},
+{
+"address": 1395296,
+"name": "OnDifficultyGameLoad",
+"return": null,
+"parameters": [
+"DIFFICULTY *"
+]
+},
+{
+"address": 1396104,
+"name": "FUN_001dd9a0",
+"return": "int",
+"parameters": [
+"float"
+]
+},
+{
+"address": 1396168,
+"name": "ChangeSuck",
+"return": null,
+"parameters": [
+"float",
+"DIFFICULTY *"
+]
+},
+{
+"address": 1397288,
+"name": "SFromCrvlU",
+"return": "float",
+"parameters": [
+"CRVL *",
+"float"
+]
+},
+{
+"address": 1403160,
+"name": "SetLoSuckHideLimits",
+"return": null,
+"parameters": [
+"LO *",
+"LM *"
+]
+},
+{
+"address": 1405440,
+"name": "StartupDma",
+"return": null,
+"parameters": []
+},
+{
+"address": 1405560,
+"name": "DMAS_constructor",
+"return": "void",
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1405624,
+"name": "DMAS_Clear",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1405648,
+"name": "DMAS_Reset",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1405664,
+"name": "DMAS_AllocStack",
+"return": null,
+"parameters": [
+"DMAS *this",
+"int"
+]
+},
+{
+"address": 1405744,
+"name": "DMAS_AllocStatic",
+"return": null,
+"parameters": [
+"DMAS *this",
+"int",
+"QW *"
+]
+},
+{
+"address": 1405768,
+"name": "DMAS_Detach",
+"return": null,
+"parameters": [
+"DMAS *this",
+"int *",
+"QW * *"
+]
+},
+{
+"address": 1406136,
+"name": "DMAS_AddDmaCnt",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1406208,
+"name": "DMAS_AddDmaRefs",
+"return": null,
+"parameters": [
+"DMAS *this",
+"int",
+"QW *"
+]
+},
+{
+"address": 1406360,
+"name": "DMAS_AddDmaCall",
+"return": null,
+"parameters": [
+"DMAS *this",
+"QW *"
+]
+},
+{
+"address": 1406496,
+"name": "DMAS_AddDmaRet",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1406560,
+"name": "DMAS_AddDmaBulk",
+"return": null,
+"parameters": [
+"DMAS *this",
+"int",
+"QW *"
+]
+},
+{
+"address": 1406640,
+"name": "DMAS_AddDmaEnd",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1406704,
+"name": "DMAS_EndDmaCnt",
+"return": null,
+"parameters": [
+"DMAS *this"
+]
+},
+{
+"address": 1410664,
+"name": "AppendDzgDz",
+"return": null,
+"parameters": [
+"DZG *",
+"DZ *"
+]
+},
+{
+"address": 1411464,
+"name": "SolveDzg",
+"return": null,
+"parameters": [
+"DZG *",
+"int",
+"int",
+"XP * *",
+"int *",
+"SO * * *"
+]
+},
+{
+"address": 1411872,
+"name": "SolveDzgFric",
+"return": null,
+"parameters": [
+"DZG *",
+"int",
+"int",
+"XP * *",
+"int *",
+"SO * * *",
+"float"
+]
+},
+{
+"address": 1413552,
+"name": "InitEmitter",
+"return": null,
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1413696,
+"name": "LoadEmitmeshFromBrx",
+"return": null,
+"parameters": [
+"EMITMESH *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1414400,
+"name": "PostEmitterLoad",
+"return": "void *",
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1415712,
+"name": "ModifyEmitterParticles",
+"return": null,
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1416320,
+"name": "UpdateEmitter",
+"return": null,
+"parameters": [
+"EMITTER *",
+"float"
+]
+},
+{
+"address": 1417528,
+"name": "PauseEmitter",
+"return": "void *",
+"parameters": [
+"EMITTER *",
+"float"
+]
+},
+{
+"address": 1417552,
+"name": "PauseEmitterIndefinite",
+"return": "void *",
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1417568,
+"name": "UnpauseEmitter",
+"return": null,
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1417584,
+"name": "FPausedEmitter",
+"return": "int",
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1417664,
+"name": "OnEmitterValuesChanged",
+"return": null,
+"parameters": [
+"EMITTER *"
+]
+},
+{
+"address": 1417792,
+"name": "SetEmitterEnabled",
+"return": null,
+"parameters": [
+"EMITTER *",
+"int"
+]
+},
+{
+"address": 1417920,
+"name": "WakeSoWater",
+"return": null,
+"parameters": [
+"SO *",
+"WATER *",
+"float",
+"VECTOR *",
+"VECTOR *",
+"float",
+"float"
+]
+},
+{
+"address": 1420616,
+"name": "ConvertEmitoPosVec",
+"return": null,
+"parameters": [
+"EMITO *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1420856,
+"name": "CalculateEmitvx",
+"return": null,
+"parameters": [
+"int",
+"LM *",
+"int",
+"EMITVX *"
+]
+},
+{
+"address": 1421064,
+"name": "ChooseEmitVelocity",
+"return": null,
+"parameters": [
+"EMITVX *",
+"float",
+"float",
+"LM *",
+"VECTOR *",
+"int",
+"VECTOR *"
+]
+},
+{
+"address": 1421512,
+"name": "ChooseEmitvVelocityAge",
+"return": null,
+"parameters": [
+"EMITV *",
+"EMITVX *",
+"EMITO *",
+"int",
+"VECTOR *",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1421744,
+"name": "EmitRips",
+"return": null,
+"parameters": [
+"EMITB *",
+"EMITG *",
+"int",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1422376,
+"name": "EmitBlips",
+"return": null,
+"parameters": [
+"EMITB *",
+"EMITG *",
+"int",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1423336,
+"name": "OriginateParticles",
+"return": null,
+"parameters": [
+"int",
+"EMITB *",
+"EMITGEN *"
+]
+},
+{
+"address": 1423856,
+"name": "OriginateSplineSinkParticles",
+"return": null,
+"parameters": [
+"int",
+"EMITB *",
+"EMITGEN *",
+"EMITGEN *"
+]
+},
+{
+"address": 1424672,
+"name": "EmitParticles",
+"return": null,
+"parameters": [
+"int",
+"EMITB *",
+"EMITG *"
+]
+},
+{
+"address": 1424936,
+"name": "EmitRipsSphere",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"int",
+"EMITRIP *",
+"EMITV *",
+"RIPG * *",
+"LO *"
+]
+},
+{
+"address": 1425216,
+"name": "SetEmitdvEmitb",
+"return": null,
+"parameters": [
+"EMITDV *",
+"EMITB *"
+]
+},
+{
+"address": 1425816,
+"name": "ExplodeExplParams",
+"return": null,
+"parameters": [
+"EXPL *",
+"unsigned int",
+"ALO *",
+"VECTOR *",
+"VECTOR *",
+"float",
+"float"
+]
+},
+{
+"address": 1426888,
+"name": "CollectSuvPrize",
+"return": null,
+"parameters": [
+"SUV *",
+"PCK",
+"ALO *"
+]
+},
+{
+"address": 1427024,
+"name": "PsfxEnsureBomb",
+"return": "void *",
+"parameters": [
+"BOMB *",
+"ENSK"
+]
+},
+{
+"address": 1427088,
+"name": "FireExplsExplso",
+"return": null,
+"parameters": [
+"EXPLS *",
+"EXPLSO *"
+]
+},
+{
+"address": 1437696,
+"name": "CFont_CleanupDraw",
+"return": null,
+"parameters": [
+"CFont *this",
+"CTextBox *",
+"GIFS *"
+]
+},
+{
+"address": 1437816,
+"name": "CFont_PushScaling",
+"return": "void *",
+"parameters": [
+"CFont *this",
+"float",
+"float"
+]
+},
+{
+"address": 1437888,
+"name": "CFont_PopScaling",
+"return": "void *",
+"parameters": [
+"CFont *this"
+]
+},
+{
+"address": 1437936,
+"name": "CFontBrx_DxFromCh",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"char"
+]
+},
+{
+"address": 1438024,
+"name": "CFontBrx_FEnsureLoaded",
+"return": "int",
+"parameters": [
+"CFontBrx *this",
+"GIFS *"
+]
+},
+{
+"address": 1438240,
+"name": "CFontBrx_SetupDraw",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"CTextBox *",
+"GIFS *"
+]
+},
+{
+"address": 1438696,
+"name": "CFontBrx_SwitchTex0",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"GIFS *"
+]
+},
+{
+"address": 1438848,
+"name": "CFontBrx_DxDrawCh",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"char",
+"float",
+"float",
+"unsigned int",
+"GIFS *"
+]
+},
+{
+"address": 1439912,
+"name": "CFontBrx_PglyffFromCh",
+"return": "void *",
+"parameters": [
+"CFontBrx *this",
+"char"
+]
+},
+{
+"address": 1440040,
+"name": "CRichText_constructor",
+"return": "void",
+"parameters": [
+"CRichText *this",
+"char *",
+"CFont *"
+]
+},
+{
+"address": 1440112,
+"name": "CRichText_Reset",
+"return": null,
+"parameters": [
+"CRichText *this"
+]
+},
+{
+"address": 1440168,
+"name": "CRichText_SetBaseColor",
+"return": null,
+"parameters": [
+"CRichText *this",
+"RGBA *"
+]
+},
+{
+"address": 1440208,
+"name": "CRichText_ChNext",
+"return": null,
+"parameters": [
+"CRichText *this"
+]
+},
+{
+"address": 1441128,
+"name": "CRichText_ClineWrap",
+"return": null,
+"parameters": [
+"CRichText *this",
+"float"
+]
+},
+{
+"address": 1441600,
+"name": "CRichText_DxMaxLine",
+"return": null,
+"parameters": [
+"CRichText *this"
+]
+},
+{
+"address": 1441744,
+"name": "CRichText_Draw",
+"return": null,
+"parameters": [
+"CRichText *this",
+"CTextBox *",
+"CTextBox *",
+"GIFS *"
+]
+},
+{
+"address": 1443880,
+"name": "OpenFrame",
+"return": null,
+"parameters": []
+},
+{
+"address": 1444120,
+"name": "EnsureVu1Code",
+"return": null,
+"parameters": [
+"VIFS *",
+"void *",
+"void *"
+]
+},
+{
+"address": 1444160,
+"name": "FinalizeFrameVifs",
+"return": null,
+"parameters": [
+"VIFS *",
+"int *",
+"QW * *"
+]
+},
+{
+"address": 1444384,
+"name": "FinalizeFrameGifs",
+"return": null,
+"parameters": [
+"GIFS *",
+"int *",
+"QW * *"
+]
+},
+{
+"address": 1444504,
+"name": "CloseFrame",
+"return": null,
+"parameters": []
+},
+{
+"address": 1444720,
+"name": "FrameRenderLoop",
+"return": null,
+"parameters": [
+"void *"
+]
+},
+{
+"address": 1444992,
+"name": "RenderFrame",
+"return": null,
+"parameters": [
+"FRM *",
+"int"
+]
+},
+{
+"address": 1445088,
+"name": "ClearPendingFrame",
+"return": null,
+"parameters": [
+"FRM *"
+]
+},
+{
+"address": 1445480,
+"name": "FlushFrames",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 1445784,
+"name": "BlendPrevFrame",
+"return": null,
+"parameters": []
+},
+{
+"address": 1446904,
+"name": "PframeNew",
+"return": "void *",
+"parameters": []
+},
+{
+"address": 1455520,
+"name": "InitPrsen",
+"return": null,
+"parameters": [
+"PRSEN *"
+]
+},
+{
+"address": 1468704,
+"name": "GIFS_constructor",
+"return": "void",
+"parameters": [
+"GIFS *this"
+]
+},
+{
+"address": 1468776,
+"name": "GIFS_AddPrimEnd",
+"return": null,
+"parameters": [
+"GIFS *this"
+]
+},
+{
+"address": 1468896,
+"name": "GIFS_EndPrim",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int"
+]
+},
+{
+"address": 1469008,
+"name": "GIFS_CheckReg",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"int"
+]
+},
+{
+"address": 1469200,
+"name": "GIFS_AddPrimBulk",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"int",
+"int",
+"unsigned long",
+"QW * *"
+]
+},
+{
+"address": 1469400,
+"name": "GIFS_AddPrimPack",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"int",
+"unsigned long"
+]
+},
+{
+"address": 1469552,
+"name": "GIFS_PackRGBA",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"unsigned int"
+]
+},
+{
+"address": 1469664,
+"name": "GIFS_PackUV",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"int",
+"int"
+]
+},
+{
+"address": 1469752,
+"name": "GIFS_PackSTQ",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 1469856,
+"name": "GIFS_PackXYZ",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"int",
+"int",
+"int"
+]
+},
+{
+"address": 1469960,
+"name": "GIFS_PackXYZF",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"int",
+"int",
+"int",
+"int"
+]
+},
+{
+"address": 1470096,
+"name": "GIFS_PackAD",
+"return": "void *",
+"parameters": [
+"GIFS *this",
+"long",
+"long"
+]
+},
+{
+"address": 1470192,
+"name": "GIFS_AddPrimList",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"unsigned long"
+]
+},
+{
+"address": 1470320,
+"name": "GIFS_ListRGBAQ",
+"return": null,
+"parameters": [
+"GIFS *this",
+"unsigned int",
+"float"
+]
+},
+{
+"address": 1470440,
+"name": "GIFS_ListUV",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"int"
+]
+},
+{
+"address": 1470648,
+"name": "GIFS_ListXYZF",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int",
+"int",
+"int",
+"int"
+]
+},
+{
+"address": 1470800,
+"name": "GIFS_AddImage",
+"return": null,
+"parameters": [
+"GIFS *this",
+"int"
+]
+},
+{
+"address": 1471248,
+"name": "CRef_constructor",
+"return": "void",
+"parameters": [
+"CRef *this"
+]
+},
+{
+"address": 1503952,
+"name": "BlendDisplayOnBufferMismatch",
+"return": null,
+"parameters": []
+},
+{
+"address": 1504360,
+"name": "VBlankS_Interrupt",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 1504608,
+"name": "SyncVBlank",
+"return": null,
+"parameters": []
+},
+{
+"address": 1504656,
+"name": "SwapGsBuffers",
+"return": null,
+"parameters": []
+},
+{
+"address": 1504952,
+"name": "RestoreGsBuffers",
+"return": null,
+"parameters": []
+},
+{
+"address": 1505160,
+"name": "GS_Interrupt",
+"return": "float",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1505384,
+"name": "ResetGs",
+"return": null,
+"parameters": []
+},
+{
+"address": 1505464,
+"name": "SendDmaSyncGsFinish",
+"return": null,
+"parameters": [
+"sceDmaChan *",
+"QW *"
+]
+},
+{
+"address": 1505632,
+"name": "BuildClearGifs",
+"return": null,
+"parameters": [
+"QW *",
+"RGBA",
+"int"
+]
+},
+{
+"address": 1507536,
+"name": "StartupGs",
+"return": null,
+"parameters": []
+},
+{
+"address": 1507960,
+"name": "BlastAqwGifsBothFrames",
+"return": null,
+"parameters": [
+"QW *"
+]
+},
+{
+"address": 1508168,
+"name": "ClearFrameBuffers",
+"return": null,
+"parameters": []
+},
+{
+"address": 1508288,
+"name": "NLog2",
+"return": null,
+"parameters": [
+"unsigned int"
+]
+},
+{
+"address": 1508344,
+"name": "InitZpr",
+"return": null,
+"parameters": [
+"ZPR *",
+"ZPK",
+"LO *"
+]
+},
+{
+"address": 1508944,
+"name": "BuildImageGifs",
+"return": null,
+"parameters": [
+"int",
+"int",
+"int",
+"int",
+"int",
+"int",
+"GIFS *"
+]
+},
+{
+"address": 1509168,
+"name": "UploadBitmaps",
+"return": null,
+"parameters": [
+"int",
+"GSB *"
+]
+},
+{
+"address": 1510544,
+"name": "AddJsgClimb",
+"return": null,
+"parameters": [
+"JSG *",
+"OID",
+"float",
+"int"
+]
+},
+{
+"address": 1512888,
+"name": "SetJtPuppet",
+"return": null,
+"parameters": [
+"JT *",
+"ASEGA *"
+]
+},
+{
+"address": 1543832,
+"name": "InitHshape",
+"return": null,
+"parameters": [
+"HSHAPE *"
+]
+},
+{
+"address": 1559424,
+"name": "PresetPuffcAccel",
+"return": "void *",
+"parameters": [
+"PUFFC *",
+"float"
+]
+},
+{
+"address": 1563960,
+"name": "SetLightHighlightColor",
+"return": null,
+"parameters": [
+"LIGHT *",
+"VECTOR *"
+]
+},
+{
+"address": 1573024,
+"name": "UseStepguardDeathAnimation",
+"return": null,
+"parameters": [
+"STEPGUARD *",
+"int",
+"OID"
+]
+},
+{
+"address": 1573800,
+"name": "UntriggerDialog",
+"return": null,
+"parameters": [
+"DIALOG *"
+]
+},
+{
+"address": 1587456,
+"name": "InitHbsk",
+"return": null,
+"parameters": [
+"HBSK *"
+]
+},
+{
+"address": 1587608,
+"name": "OnHbskRemove",
+"return": null,
+"parameters": [
+"HBSK *"
+]
+},
+{
+"address": 1587664,
+"name": "OnHbskAdd",
+"return": null,
+"parameters": [
+"HBSK *"
+]
+},
+{
+"address": 1587720,
+"name": "CloneHbsk",
+"return": null,
+"parameters": [
+"HBSK *",
+"HBSK *"
+]
+},
+{
+"address": 1587968,
+"name": "PresetHbskAccel",
+"return": "void *",
+"parameters": [
+"HBSK *",
+"float"
+]
+},
+{
+"address": 1591632,
+"name": "CGc_destructor",
+"return": "void",
+"parameters": [
+"CGc *this"
+]
+},
+{
+"address": 1591712,
+"name": "CBinaryInputStream_PumpCd",
+"return": "void *",
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 1592728,
+"name": "CBinaryInputStream_FOpenSector",
+"return": "int",
+"parameters": [
+"CBinaryInputStream *this",
+"unsigned int",
+"unsigned int"
+]
+},
+{
+"address": 1593168,
+"name": "InitHnd",
+"return": null,
+"parameters": [
+"HND *"
+]
+},
+{
+"address": 1596408,
+"name": "InitSpire",
+"return": null,
+"parameters": [
+"SPIRE *"
+]
+},
+{
+"address": 1596568,
+"name": "CloneSpire",
+"return": null,
+"parameters": [
+"SPIRE *",
+"SPIRE *"
+]
+},
+{
+"address": 1601584,
+"name": "StartupJoy",
+"return": null,
+"parameters": []
+},
+{
+"address": 1601656,
+"name": "AddGrfusr",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 1601696,
+"name": "RemoveGrfusr",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 1601744,
+"name": "UpdateGrfjoytFromGrfusr",
+"return": null,
+"parameters": []
+},
+{
+"address": 1601984,
+"name": "UpdateJoy",
+"return": null,
+"parameters": [
+"JOY *"
+]
+},
+{
+"address": 1603000,
+"name": "SetJoyJoys",
+"return": null,
+"parameters": [
+"JOY *",
+"JOYS",
+"JOYK"
+]
+},
+{
+"address": 1603432,
+"name": "GetJoyXYDeflection",
+"return": null,
+"parameters": [
+"JOY *",
+"unsigned char",
+"unsigned char",
+"float *",
+"float *",
+"float *",
+"unsigned char *",
+"unsigned char *",
+"int *",
+"LM *"
+]
+},
+{
+"address": 1603992,
+"name": "FReadJoy",
+"return": "int",
+"parameters": [
+"JOY *"
+]
+},
+{
+"address": 1605160,
+"name": "TriggerJoyRumbleRumk",
+"return": null,
+"parameters": [
+"JOY *",
+"RUMK",
+"float"
+]
+},
+{
+"address": 1612864,
+"name": "RebuildJtXmg",
+"return": null,
+"parameters": [
+"JT *",
+"ALO *",
+"float",
+"ALO *",
+"ACTADJ *",
+"XMG *"
+]
+},
+{
+"address": 1614024,
+"name": "UpdateJtStand",
+"return": null,
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1633648,
+"name": "EnsureAloSfx",
+"return": null,
+"parameters": [
+"ALO *"
+]
+},
+{
+"address": 1634992,
+"name": "ChooseJtAttackTarget",
+"return": null,
+"parameters": [
+"JT *",
+"int",
+"VECTOR *",
+"float",
+"float",
+"TARGET * *",
+"VECTOR *"
+]
+},
+{
+"address": 1635680,
+"name": "ChooseJtSweepTarget",
+"return": null,
+"parameters": [
+"JT *",
+"BL *",
+"ASEGBL *"
+]
+},
+{
+"address": 1635976,
+"name": "ChooseJtRushTarget",
+"return": null,
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1636160,
+"name": "ChooseJtSmashTarget",
+"return": null,
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1636696,
+"name": "AnticipateJtForce",
+"return": null,
+"parameters": [
+"JT *",
+"SO *",
+"VECTOR *",
+"VECTOR *",
+"FX *"
+]
+},
+{
+"address": 1637472,
+"name": "CalculateJtHangAccel",
+"return": null,
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1639352,
+"name": "PresetJtAccelHang",
+"return": "void *",
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1639712,
+"name": "UpdateJtActiveHang",
+"return": null,
+"parameters": [
+"JT *",
+"JOY *"
+]
+},
+{
+"address": 1641440,
+"name": "GetJtHangHeading",
+"return": null,
+"parameters": [
+"JT *",
+"float *"
+]
+},
+{
+"address": 1653912,
+"name": "MatchJtXmgRail",
+"return": null,
+"parameters": [
+"JT *",
+"XMG *",
+"ACTADJ *"
+]
+},
+{
+"address": 1654960,
+"name": "SetJtHfdk",
+"return": null,
+"parameters": [
+"JT *",
+"HFDK"
+]
+},
+{
+"address": 1655064,
+"name": "ResetJtDynamicTunnel",
+"return": null,
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1655152,
+"name": "PresetJtAccelHide",
+"return": "void *",
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1676296,
+"name": "FCheckJtSingleEdge",
+"return": "int",
+"parameters": [
+"JT *",
+"SO *",
+"EDGE *",
+"VECTOR *"
+]
+},
+{
+"address": 1677272,
+"name": "FCheckJtEdgeNormal",
+"return": "int",
+"parameters": [
+"JT *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1677776,
+"name": "FCheckJtEdgeGrab",
+"return": "int",
+"parameters": [
+"JT *",
+"SO *",
+"VECTOR *",
+"XPK",
+"void *",
+"VECTOR *"
+]
+},
+{
+"address": 1678664,
+"name": "PxpFindJtBestEdge",
+"return": "void *",
+"parameters": [
+"JT *",
+"int *",
+"VECTOR *"
+]
+},
+{
+"address": 1680544,
+"name": "MeasureJtJumpToTarget",
+"return": null,
+"parameters": [
+"JT *",
+"VECTOR *",
+"ALO *",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1682008,
+"name": "GMeasureJumpRail",
+"return": "float",
+"parameters": [
+"MJR *",
+"float"
+]
+},
+{
+"address": 1690040,
+"name": "InitCnvo",
+"return": null,
+"parameters": [
+"CNVO *"
+]
+},
+{
+"address": 1695600,
+"name": "PresetJtAccelPipe",
+"return": "void *",
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1701184,
+"name": "CTransition_constructor",
+"return": "void",
+"parameters": [
+"CTransition *this"
+]
+},
+{
+"address": 1708184,
+"name": "PostJtLoadZap",
+"return": "void *",
+"parameters": [
+"JT *"
+]
+},
+{
+"address": 1711976,
+"name": "UpdateUbgSgs",
+"return": null,
+"parameters": [
+"UBG *"
+]
+},
+{
+"address": 1718064,
+"name": "FitLinearFunction",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"float *",
+"float *"
+]
+},
+{
+"address": 1718224,
+"name": "FitRecipFunction",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"float *",
+"float *"
+]
+},
+{
+"address": 1718440,
+"name": "ConvertAngleStrength",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float",
+"float",
+"float *",
+"float *"
+]
+},
+{
+"address": 1727464,
+"name": "FInflictStepguardZap",
+"return": "int",
+"parameters": [
+"STEPGUARD *",
+"XP *",
+"ZPR *"
+]
+},
+{
+"address": 1728992,
+"name": "CollectJtPrize",
+"return": null,
+"parameters": [
+"JT *",
+"PCK",
+"ALO *"
+]
+},
+{
+"address": 1731528,
+"name": "AddBtnAseg",
+"return": null,
+"parameters": [
+"BTN *",
+"ALO *",
+"OID"
+]
+},
+{
+"address": 1732328,
+"name": "FDetectStepguard",
+"return": "int",
+"parameters": [
+"STEPGUARD *"
+]
+},
+{
+"address": 1736208,
+"name": "FreeSwMqList",
+"return": null,
+"parameters": [
+"SW *",
+"MQ *"
+]
+},
+{
+"address": 1737744,
+"name": "CategorizeAlsg",
+"return": null,
+"parameters": [
+"int",
+"LSG *",
+"int *",
+"int *",
+"LSG * *",
+"LSG * *"
+]
+},
+{
+"address": 1738424,
+"name": "CplsgFindEdgePath",
+"return": null,
+"parameters": [
+"SURF *",
+"int",
+"int",
+"LSG *",
+"LSG * *"
+]
+},
+{
+"address": 1741768,
+"name": "CsbiIntersectSphereBsp",
+"return": null,
+"parameters": [
+"VECTOR *",
+"float",
+"int",
+"BSP *",
+"BSP *",
+"GEOM *",
+"int",
+"SBI *"
+]
+},
+{
+"address": 1747784,
+"name": "FUN_0018b910",
+"return": "int",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1747816,
+"name": "FUN_0018b930",
+"return": "int",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1748696,
+"name": "InitMemcard",
+"return": null,
+"parameters": [
+"MEMCARD *"
+]
+},
+{
+"address": 1748880,
+"name": "CreateMemcardThread",
+"return": null,
+"parameters": [
+"MEMCARD *",
+"int",
+"int"
+]
+},
+{
+"address": 1749056,
+"name": "SetMemcardThreadHighPrio",
+"return": null,
+"parameters": [
+"MEMCARD *"
+]
+},
+{
+"address": 1749128,
+"name": "FMemcardThreadValid",
+"return": "int",
+"parameters": [
+"MEMCARD *"
+]
+},
+{
+"address": 1749408,
+"name": "UpdateSave",
+"return": null,
+"parameters": [
+"SAVE *"
+]
+},
+{
+"address": 1749912,
+"name": "CompareSaves",
+"return": null,
+"parameters": [
+"SAVE *",
+"SAVE *"
+]
+},
+{
+"address": 1761736,
+"name": "CheckForOutOfMemory",
+"return": null,
+"parameters": []
+},
+{
+"address": 1761744,
+"name": "PvAllocSwImpl",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1761848,
+"name": "PvAllocSwCopyImpl",
+"return": "void *",
+"parameters": [
+"int",
+"void *"
+]
+},
+{
+"address": 1761952,
+"name": "PvAllocSwClearImpl",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1762048,
+"name": "FreeSw",
+"return": null,
+"parameters": []
+},
+{
+"address": 1762072,
+"name": "PvAllocStackImpl",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1762168,
+"name": "PvAllocStackClearImpl",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 1762264,
+"name": "InitStackImpl",
+"return": null,
+"parameters": []
+},
+{
+"address": 1762344,
+"name": "FreeStackImpl",
+"return": null,
+"parameters": []
+},
+{
+"address": 1762464,
+"name": "CRef_destructor",
+"return": "void",
+"parameters": [
+"CRef *this"
+]
+},
+{
+"address": 1762600,
+"name": "CopyAqw",
+"return": null,
+"parameters": [
+"void *",
+"void *",
+"int"
+]
+},
+{
+"address": 1762720,
+"name": "CopyAb",
+"return": null,
+"parameters": [
+"void *",
+"void *",
+"unsigned int"
+]
+},
+{
+"address": 1763752,
+"name": "FreezeSmartguard",
+"return": null,
+"parameters": [
+"SMARTGUARD *",
+"int"
+]
+},
+{
+"address": 1773744,
+"name": "LoadAcscFromBrx",
+"return": null,
+"parameters": [
+"ACSC *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1777776,
+"name": "InitRov",
+"return": null,
+"parameters": [
+"ROV *"
+]
+},
+{
+"address": 1778216,
+"name": "FireSplmiss",
+"return": null,
+"parameters": [
+"SPLMISS *",
+"ALO *",
+"VECTOR *"
+]
+},
+{
+"address": 1780352,
+"name": "CQueueOutputIop_Reset",
+"return": null,
+"parameters": [
+"CQueueOutputIop *this"
+]
+},
+{
+"address": 1781712,
+"name": "CQueueOutputIop_FAsyncDrain",
+"return": "int",
+"parameters": [
+"CQueueOutputIop *this"
+]
+},
+{
+"address": 1781720,
+"name": "CQueueOutputIpu_CbWrite",
+"return": null,
+"parameters": [
+"CQueueOutputIpu *this",
+"int",
+"void *"
+]
+},
+{
+"address": 1781816,
+"name": "CQueueOutputIpu_FAsyncDrain",
+"return": "int",
+"parameters": [
+"CQueueOutputIpu *this"
+]
+},
+{
+"address": 1781824,
+"name": "CMpegAudio_Init",
+"return": null,
+"parameters": [
+"CMpegAudio *this"
+]
+},
+{
+"address": 1782064,
+"name": "CMpegAudio_Reset",
+"return": null,
+"parameters": [
+"CMpegAudio *this"
+]
+},
+{
+"address": 1782160,
+"name": "CMpegAudio_Close",
+"return": null,
+"parameters": [
+"CMpegAudio *this"
+]
+},
+{
+"address": 1782240,
+"name": "CMpegAudio_FAccept",
+"return": "int",
+"parameters": [
+"CMpegAudio *this",
+"int",
+"unsigned char *"
+]
+},
+{
+"address": 1782456,
+"name": "CMpegAudio_Update",
+"return": null,
+"parameters": [
+"CMpegAudio *this"
+]
+},
+{
+"address": 1782664,
+"name": "FMpegAcceptVideo",
+"return": "int",
+"parameters": [
+"sceMpeg *",
+"sceMpegCbDataStr *",
+"CMpeg *"
+]
+},
+{
+"address": 1782728,
+"name": "FMpegAcceptAudio",
+"return": "int",
+"parameters": [
+"sceMpeg *",
+"sceMpegCbDataStr *",
+"CMpeg *"
+]
+},
+{
+"address": 1782768,
+"name": "FMpegDecodeVideo",
+"return": "int",
+"parameters": [
+"sceMpeg *",
+"sceMpegCbData *",
+"CMpeg *"
+]
+},
+{
+"address": 1783056,
+"name": "BuildMpegGifs",
+"return": null,
+"parameters": [
+"QW *",
+"sceIpuRGB32 *",
+"int",
+"int",
+"int",
+"int",
+"int"
+]
+},
+{
+"address": 1784784,
+"name": "CMpeg_Execute",
+"return": null,
+"parameters": [
+"CMpeg *this"
+]
+},
+{
+"address": 1785944,
+"name": "CMpeg_Update",
+"return": null,
+"parameters": [
+"CMpeg *this"
+]
+},
+{
+"address": 1786176,
+"name": "CMpeg_Finish",
+"return": null,
+"parameters": [
+"CMpeg *this"
+]
+},
+{
+"address": 1818976,
+"name": "CloneAseg",
+"return": null,
+"parameters": [
+"ASEG *",
+"LO *"
+]
+},
+{
+"address": 1827304,
+"name": "FChooseRobRoc",
+"return": "int",
+"parameters": [
+"ROB *",
+"ROH *"
+]
+},
+{
+"address": 1833328,
+"name": "IcgvFromPcgv",
+"return": null,
+"parameters": [
+"CG *",
+"CGV *"
+]
+},
+{
+"address": 1833344,
+"name": "FindPathAStar",
+"return": null,
+"parameters": [
+"CG *",
+"CGV *",
+"CGV *",
+"int",
+"int *",
+"CGV * *"
+]
+},
+{
+"address": 1834008,
+"name": "SimplifyApcgvNeighbor",
+"return": null,
+"parameters": [
+"CBSP *",
+"int *",
+"CGV * *"
+]
+},
+{
+"address": 1834792,
+"name": "CposFindPath",
+"return": null,
+"parameters": [
+"CG *",
+"VECTOR *",
+"VECTOR *",
+"int",
+"VECTOR *"
+]
+},
+{
+"address": 1835968,
+"name": "LoadPathzoneFromBrx",
+"return": null,
+"parameters": [
+"PATHZONE *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1837184,
+"name": "HookupCg",
+"return": null,
+"parameters": [
+"CG *"
+]
+},
+{
+"address": 1848208,
+"name": "InitPipe",
+"return": null,
+"parameters": [
+"PIPE *"
+]
+},
+{
+"address": 1848576,
+"name": "GetJtPipeGoalMat",
+"return": null,
+"parameters": [
+"JT *",
+"PIPE *",
+"float",
+"MATRIX3 *"
+]
+},
+{
+"address": 1850824,
+"name": "FUN_001dccc0",
+"return": "int",
+"parameters": [
+"CBinaryInputStream *"
+]
+},
+{
+"address": 1865288,
+"name": "InitCoin",
+"return": null,
+"parameters": [
+"COIN *"
+]
+},
+{
+"address": 1871040,
+"name": "CProg_constructor",
+"return": "void",
+"parameters": [
+"CProg *this",
+"RGBA *",
+"RGBA *",
+"RGBA *",
+"RGBA *"
+]
+},
+{
+"address": 1871136,
+"name": "CProg_Begin",
+"return": null,
+"parameters": [
+"CProg *this"
+]
+},
+{
+"address": 1871168,
+"name": "CProg_SetRemain",
+"return": null,
+"parameters": [
+"CProg *this",
+"int"
+]
+},
+{
+"address": 1871288,
+"name": "CProg_End",
+"return": null,
+"parameters": [
+"CProg *this"
+]
+},
+{
+"address": 1871320,
+"name": "CProg_Draw",
+"return": null,
+"parameters": [
+"CProg *this"
+]
+},
+{
+"address": 1872024,
+"name": "FUN_0018b600",
+"return": "int",
+"parameters": []
+},
+{
+"address": 1889776,
+"name": "FillScreenRect",
+"return": null,
+"parameters": [
+"int",
+"int",
+"int",
+"int",
+"float",
+"float",
+"float",
+"float",
+"GIFS *"
+]
+},
+{
+"address": 1890712,
+"name": "OnGameLoad",
+"return": null,
+"parameters": [
+"GAME *"
+]
+},
+{
+"address": 1891952,
+"name": "SetRipgEmitb",
+"return": null,
+"parameters": [
+"RIPG *",
+"EMITB *"
+]
+},
+{
+"address": 1893096,
+"name": "BounceRipgRips",
+"return": null,
+"parameters": [
+"RIPG *"
+]
+},
+{
+"address": 1893896,
+"name": "RenderRipgSelf",
+"return": null,
+"parameters": [
+"RIPG *",
+"CM *",
+"RO *"
+]
+},
+{
+"address": 1894688,
+"name": "InitRip",
+"return": null,
+"parameters": [
+"RIP *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1894784,
+"name": "RemoveLightFromSw",
+"return": null,
+"parameters": [
+"LIGHT *"
+]
+},
+{
+"address": 1894848,
+"name": "AddRipRef",
+"return": null,
+"parameters": [
+"RIP *"
+]
+},
+{
+"address": 1895048,
+"name": "TouchRip",
+"return": null,
+"parameters": [
+"RIP *",
+"int"
+]
+},
+{
+"address": 1895080,
+"name": "ForceRipFade",
+"return": null,
+"parameters": [
+"RIP *",
+"float"
+]
+},
+{
+"address": 1895176,
+"name": "FBounceRip",
+"return": "int",
+"parameters": [
+"RIP *",
+"SO *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1896392,
+"name": "FIsZeroV",
+"return": "int",
+"parameters": [
+"VECTOR *"
+]
+},
+{
+"address": 1896464,
+"name": "FIsZeroW",
+"return": "int",
+"parameters": [
+"VECTOR *"
+]
+},
+{
+"address": 1896536,
+"name": "FIsZeroDv",
+"return": "int",
+"parameters": [
+"VECTOR *"
+]
+},
+{
+"address": 1896608,
+"name": "ProjectRipTransform",
+"return": "void *",
+"parameters": [
+"RIP *",
+"float"
+]
+},
+{
+"address": 1897064,
+"name": "UpdateRip",
+"return": null,
+"parameters": [
+"RIP *",
+"float"
+]
+},
+{
+"address": 1897272,
+"name": "FRenderRipPosMat",
+"return": "int",
+"parameters": [
+"RIP *",
+"CM *",
+"VECTOR *",
+"MATRIX3 *"
+]
+},
+{
+"address": 1898008,
+"name": "RenderFlying",
+"return": null,
+"parameters": [
+"FLYING *",
+"CM *"
+]
+},
+{
+"address": 1898160,
+"name": "CreateStuck",
+"return": null,
+"parameters": [
+"RIP *",
+"ALO *",
+"SO *",
+"VECTOR *",
+"VECTOR *",
+"STUCK * *"
+]
+},
+{
+"address": 1898856,
+"name": "FBounceFlying",
+"return": "int",
+"parameters": [
+"FLYING *",
+"SO *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1899040,
+"name": "UpdateStuck",
+"return": null,
+"parameters": [
+"STUCK *",
+"float"
+]
+},
+{
+"address": 1899072,
+"name": "RenderStuck",
+"return": null,
+"parameters": [
+"STUCK *",
+"CM *"
+]
+},
+{
+"address": 1899192,
+"name": "PostShrapnelEmit",
+"return": "void *",
+"parameters": [
+"SHRAPNEL *",
+"EMITB *"
+]
+},
+{
+"address": 1899656,
+"name": "RenderOrbit",
+"return": null,
+"parameters": [
+"ORBIT *",
+"CM *"
+]
+},
+{
+"address": 1899736,
+"name": "InitMatch",
+"return": null,
+"parameters": [
+"MATCH *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1899824,
+"name": "LaunchMatch",
+"return": null,
+"parameters": [
+"MATCH *"
+]
+},
+{
+"address": 1900168,
+"name": "ProjectMatchTransform",
+"return": "void *",
+"parameters": [
+"MATCH *",
+"float"
+]
+},
+{
+"address": 1900600,
+"name": "UpdateMatch",
+"return": null,
+"parameters": [
+"MATCH *",
+"float"
+]
+},
+{
+"address": 1900752,
+"name": "RenderMatch",
+"return": null,
+"parameters": [
+"MATCH *",
+"CM *"
+]
+},
+{
+"address": 1900808,
+"name": "InitGlint",
+"return": null,
+"parameters": [
+"GLINT *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1900944,
+"name": "RenderGlint",
+"return": null,
+"parameters": [
+"GLINT *",
+"CM *"
+]
+},
+{
+"address": 1901800,
+"name": "InitSmack",
+"return": null,
+"parameters": [
+"SMACK *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1901984,
+"name": "ProjectSmackTransform",
+"return": "void *",
+"parameters": [
+"SMACK *",
+"float"
+]
+},
+{
+"address": 1902808,
+"name": "PostLeafEmit",
+"return": "void *",
+"parameters": [
+"LEAF *",
+"EMITB *"
+]
+},
+{
+"address": 1903008,
+"name": "ProjectLeafTransform",
+"return": "void *",
+"parameters": [
+"LEAF *",
+"float"
+]
+},
+{
+"address": 1903608,
+"name": "FBounceLeaf",
+"return": "int",
+"parameters": [
+"LEAF *",
+"SO *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 1903784,
+"name": "InitDroplet",
+"return": null,
+"parameters": [
+"DROPLET *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1903912,
+"name": "TouchDroplet",
+"return": null,
+"parameters": [
+"DROPLET *",
+"int"
+]
+},
+{
+"address": 1904200,
+"name": "InitBublet",
+"return": null,
+"parameters": [
+"BUBLET *",
+"VECTOR *",
+"float",
+"SO *"
+]
+},
+{
+"address": 1904312,
+"name": "ProjectBubletTransform",
+"return": "void *",
+"parameters": [
+"BUBLET *",
+"float"
+]
+},
+{
+"address": 1904872,
+"name": "TouchBublet",
+"return": null,
+"parameters": [
+"BUBLET *",
+"int"
+]
+},
+{
+"address": 1904904,
+"name": "PostRemitEmit",
+"return": "void *",
+"parameters": [
+"REMIT *",
+"EMITB *"
+]
+},
+{
+"address": 1904992,
+"name": "UpdateRemit",
+"return": null,
+"parameters": [
+"REMIT *",
+"float"
+]
+},
+{
+"address": 1921360,
+"name": "InitRumble",
+"return": null,
+"parameters": [
+"RUMBLE *",
+"int",
+"int"
+]
+},
+{
+"address": 1921464,
+"name": "UpdateRumble",
+"return": null,
+"parameters": [
+"RUMBLE *"
+]
+},
+{
+"address": 1921808,
+"name": "TriggerRumbleRumk",
+"return": null,
+"parameters": [
+"RUMBLE *",
+"RUMK",
+"float"
+]
+},
+{
+"address": 1921856,
+"name": "TriggerRumbleRumpat",
+"return": null,
+"parameters": [
+"RUMBLE *",
+"RUMPAT *",
+"float"
+]
+},
+{
+"address": 1921984,
+"name": "SetRumbleRums",
+"return": null,
+"parameters": [
+"RUMBLE *",
+"RUMS"
+]
+},
+{
+"address": 1922152,
+"name": "StopRumbleActuators",
+"return": null,
+"parameters": [
+"RUMBLE *"
+]
+},
+{
+"address": 1922200,
+"name": "RumbleUnknown1",
+"return": null,
+"parameters": []
+},
+{
+"address": 1927240,
+"name": "FCalculateMuzzleVelocity",
+"return": "int",
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"float",
+"VECTOR *",
+"SO *"
+]
+},
+{
+"address": 1931080,
+"name": "MatchStepguardAnimationPhase",
+"return": null,
+"parameters": [
+"STEPGUARD *",
+"OID",
+"OID",
+"OID",
+"OID"
+]
+},
+{
+"address": 1936400,
+"name": "DeletePair",
+"return": null,
+"parameters": [
+"CPair *"
+]
+},
+{
+"address": 1938392,
+"name": "StartupJmt",
+"return": null,
+"parameters": []
+},
+{
+"address": 1938720,
+"name": "ShutdownSplice",
+"return": null,
+"parameters": []
+},
+{
+"address": 1939488,
+"name": "CGc_UpdateRecyclable",
+"return": null,
+"parameters": [
+"CGc *this"
+]
+},
+{
+"address": 1943408,
+"name": "RetryGame",
+"return": null,
+"parameters": []
+},
+{
+"address": 1944072,
+"name": "StartGame",
+"return": null,
+"parameters": []
+},
+{
+"address": 1966112,
+"name": "EnsureSggAlarm",
+"return": null,
+"parameters": [
+"SGG *",
+"ALARM *"
+]
+},
+{
+"address": 1966816,
+"name": "AddJsgLabel",
+"return": null,
+"parameters": [
+"JSG *",
+"OID"
+]
+},
+{
+"address": 1967072,
+"name": "AddJsgJump",
+"return": null,
+"parameters": [
+"JSG *",
+"OID",
+"JSGJK",
+"JSGLK",
+"int"
+]
+},
+{
+"address": 1967232,
+"name": "AddJsgAttack",
+"return": null,
+"parameters": [
+"JSG *",
+"OID",
+"FTAK",
+"int"
+]
+},
+{
+"address": 1967968,
+"name": "CRef_SetS32",
+"return": null,
+"parameters": [
+"CRef *this",
+"int"
+]
+},
+{
+"address": 1968448,
+"name": "CRef_SetSymid",
+"return": null,
+"parameters": [
+"CRef *this",
+"unsigned int"
+]
+},
+{
+"address": 1968528,
+"name": "CRef_SetBifk",
+"return": null,
+"parameters": [
+"CRef *this",
+"BIFK"
+]
+},
+{
+"address": 1968592,
+"name": "CRef_SetPair",
+"return": null,
+"parameters": [
+"CRef *this",
+"CPair *"
+]
+},
+{
+"address": 1968800,
+"name": "CRef_SetMethod",
+"return": null,
+"parameters": [
+"CRef *this",
+"CMethod *"
+]
+},
+{
+"address": 1994168,
+"name": "FindCrvClosestPointOnLineSegmentFromU",
+"return": null,
+"parameters": [
+"CRV *",
+"VECTOR *",
+"VECTOR *",
+"float",
+"VECTOR *",
+"VECTOR *",
+"float *",
+"float *"
+]
+},
+{
+"address": 1997296,
+"name": "SetEmitterRipt",
+"return": null,
+"parameters": [
+"EMITTER *",
+"RIPT"
+]
+},
+{
+"address": 2010960,
+"name": "CFontBrx_LoadFromBrx",
+"return": null,
+"parameters": [
+"CFontBrx *this",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 2011560,
+"name": "LoadTexFromBrx",
+"return": null,
+"parameters": [
+"CBinaryInputStream *",
+"TEX *"
+]
+},
+{
+"address": 2013536,
+"name": "FillShaders",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 2017312,
+"name": "PshdFindShader",
+"return": "void *",
+"parameters": [
+"OID"
+]
+},
+{
+"address": 2017640,
+"name": "UpdateGlobset",
+"return": null,
+"parameters": [
+"GLOBSET *",
+"ALO *",
+"float"
+]
+},
+{
+"address": 2017744,
+"name": "BuildClutTex2",
+"return": null,
+"parameters": [
+"CLUT *",
+"int"
+]
+},
+{
+"address": 2017968,
+"name": "BuildClutGifs",
+"return": null,
+"parameters": [
+"CLUT *",
+"int",
+"GIFS *"
+]
+},
+{
+"address": 2018072,
+"name": "BuildBmpTex0",
+"return": null,
+"parameters": [
+"BMP *",
+"int"
+]
+},
+{
+"address": 2018288,
+"name": "BuildBmpGifs",
+"return": null,
+"parameters": [
+"BMP *",
+"int",
+"GIFS *"
+]
+},
+{
+"address": 2018344,
+"name": "FBuildUploadBitmapGifs",
+"return": "int",
+"parameters": [
+"int",
+"GSB *",
+"GIFS *"
+]
+},
+{
+"address": 2018904,
+"name": "PqwVifsBitmapUpload",
+"return": "void *",
+"parameters": [
+"int"
+]
+},
+{
+"address": 2021920,
+"name": "FUpdatableSaa",
+"return": "int",
+"parameters": [
+"SAA *"
+]
+},
+{
+"address": 2021976,
+"name": "UCompleteSaa",
+"return": null,
+"parameters": [
+"SAA *"
+]
+},
+{
+"address": 2022296,
+"name": "InitLoop",
+"return": null,
+"parameters": [
+"LOOP *",
+"SAAF *"
+]
+},
+{
+"address": 2022464,
+"name": "UpdateLoop",
+"return": null,
+"parameters": [
+"LOOP *",
+"float"
+]
+},
+{
+"address": 2022704,
+"name": "UCompleteLoop",
+"return": null,
+"parameters": [
+"LOOP *"
+]
+},
+{
+"address": 2022752,
+"name": "InitPingpong",
+"return": null,
+"parameters": [
+"PINGPONG *",
+"SAAF *"
+]
+},
+{
+"address": 2022928,
+"name": "UpdatePingpong",
+"return": null,
+"parameters": [
+"PINGPONG *",
+"float"
+]
+},
+{
+"address": 2023208,
+"name": "UCompletePingpong",
+"return": null,
+"parameters": [
+"PINGPONG *"
+]
+},
+{
+"address": 2023328,
+"name": "CloneActseg",
+"return": null,
+"parameters": [
+"ACTSEG *",
+"ACTSEG *"
+]
+},
+{
+"address": 2023392,
+"name": "UpdateShuffle",
+"return": null,
+"parameters": [
+"SHUFFLE *",
+"float"
+]
+},
+{
+"address": 2023568,
+"name": "InitEyes",
+"return": null,
+"parameters": [
+"EYES *",
+"SAAF *"
+]
+},
+{
+"address": 2023680,
+"name": "SetEyesEyess",
+"return": null,
+"parameters": [
+"EYES *",
+"EYESS"
+]
+},
+{
+"address": 2023976,
+"name": "UpdateEyes",
+"return": null,
+"parameters": [
+"EYES *",
+"float"
+]
+},
+{
+"address": 2024368,
+"name": "SetEyesClosed",
+"return": null,
+"parameters": [
+"EYES *",
+"float"
+]
+},
+{
+"address": 2024480,
+"name": "PsaiFromEyesShd",
+"return": "void *",
+"parameters": [
+"EYES *",
+"SHD *"
+]
+},
+{
+"address": 2024576,
+"name": "InitScroller",
+"return": null,
+"parameters": [
+"SCROLLER *",
+"SAAF *"
+]
+},
+{
+"address": 2024672,
+"name": "UpdateScroller",
+"return": null,
+"parameters": [
+"SCROLLER *",
+"float"
+]
+},
+{
+"address": 2024888,
+"name": "UCompleteScroller",
+"return": null,
+"parameters": [
+"SCROLLER *"
+]
+},
+{
+"address": 2025080,
+"name": "SetScrollerMasterSpeeds",
+"return": null,
+"parameters": [
+"SCROLLER *",
+"float",
+"float"
+]
+},
+{
+"address": 2025096,
+"name": "InitCircler",
+"return": null,
+"parameters": [
+"CIRCLER *",
+"SAAF *"
+]
+},
+{
+"address": 2025176,
+"name": "UpdateCircler",
+"return": null,
+"parameters": [
+"CIRCLER *",
+"float"
+]
+},
+{
+"address": 2025320,
+"name": "UCompleteCircler",
+"return": null,
+"parameters": [
+"CIRCLER *"
+]
+},
+{
+"address": 2030272,
+"name": "LoadSmFromBrx",
+"return": null,
+"parameters": [
+"SM *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 2032584,
+"name": "PsmaFindSm",
+"return": "void *",
+"parameters": [
+"SM *",
+"ALO *"
+]
+},
+{
+"address": 2032640,
+"name": "IsmsFindSmOptional",
+"return": null,
+"parameters": [
+"SM *",
+"OID"
+]
+},
+{
+"address": 2032696,
+"name": "IsmsFindSmRequired",
+"return": null,
+"parameters": [
+"SM *",
+"OID"
+]
+},
+{
+"address": 2033248,
+"name": "SetSmaGoal",
+"return": null,
+"parameters": [
+"SMA *",
+"OID"
+]
+},
+{
+"address": 2045384,
+"name": "SetSoMass",
+"return": null,
+"parameters": [
+"SO *",
+"float"
+]
+},
+{
+"address": 2045432,
+"name": "AdjustSoMomint",
+"return": null,
+"parameters": [
+"SO *",
+"float"
+]
+},
+{
+"address": 2054384,
+"name": "GetSoCpdefi",
+"return": null,
+"parameters": [
+"SO *",
+"float",
+"CPDEFI *"
+]
+},
+{
+"address": 2054560,
+"name": "AccelSoTowardMatSmooth",
+"return": null,
+"parameters": [
+"SO *",
+"float",
+"MATRIX3 *",
+"SMP *"
+]
+},
+{
+"address": 2055216,
+"name": "AccelSoTowardMatSpring",
+"return": null,
+"parameters": [
+"SO *",
+"MATRIX3 *",
+"CLQ *",
+"VECTOR *",
+"CLQ *",
+"float"
+]
+},
+{
+"address": 2059272,
+"name": "EnsureSoLvo",
+"return": null,
+"parameters": [
+"SO *"
+]
+},
+{
+"address": 2066240,
+"name": "PostSmLoad",
+"return": "void *",
+"parameters": [
+"SM *"
+]
+},
+{
+"address": 2076528,
+"name": "NewSfx",
+"return": null,
+"parameters": [
+"SFX * *"
+]
+},
+{
+"address": 2080384,
+"name": "StopSound",
+"return": null,
+"parameters": [
+"AMB *",
+"int"
+]
+},
+{
+"address": 2080480,
+"name": "PauseVag",
+"return": "void *",
+"parameters": []
+},
+{
+"address": 2080512,
+"name": "ContinueVag",
+"return": null,
+"parameters": []
+},
+{
+"address": 2089976,
+"name": "MarkClockTickRealOnly",
+"return": null,
+"parameters": [
+"CLOCK *"
+]
+},
+{
+"address": 2091464,
+"name": "SetLightDynamic",
+"return": null,
+"parameters": [
+"LIGHT *",
+"int"
+]
+},
+{
+"address": 2094008,
+"name": "InitButton",
+"return": null,
+"parameters": [
+"BUTTON *"
+]
+},
+{
+"address": 2096376,
+"name": "PeopidFind",
+"return": "void *",
+"parameters": [
+"BASIC *",
+"int"
+]
+},
+{
+"address": 2100264,
+"name": "RefSetOption",
+"return": null,
+"parameters": [
+"BASIC *",
+"int",
+"CRef *"
+]
+},
+{
+"address": 2100392,
+"name": "RefAddOption",
+"return": null,
+"parameters": [
+"BASIC *",
+"int",
+"CRef *"
+]
+},
+{
+"address": 2100496,
+"name": "RefEnsureOption",
+"return": null,
+"parameters": [
+"BASIC *",
+"int",
+"CRef *"
+]
+},
+{
+"address": 2101520,
+"name": "RefSetPvsFromSplice",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"OTYP *",
+"void * *"
+]
+},
+{
+"address": 2102112,
+"name": "RefSetArgsFromSplice",
+"return": null,
+"parameters": [
+"int",
+"CRef *",
+"OTYP *",
+"..."
+]
+},
+{
+"address": 2102816,
+"name": "LoadSprBuf",
+"return": null,
+"parameters": [
+"int",
+"..."
+]
+},
+{
+"address": 2103200,
+"name": "SaveSprBuf",
+"return": null,
+"parameters": [
+"void *",
+"..."
+]
+},
+{
+"address": 2111032,
+"name": "OnStepguardAdd",
+"return": null,
+"parameters": [
+"STEPGUARD *"
+]
+},
+{
+"address": 2111320,
+"name": "PaloGetActlaTarget",
+"return": "void *",
+"parameters": [
+"ACTLA *"
+]
+},
+{
+"address": 2113032,
+"name": "UpdateStepPhys",
+"return": null,
+"parameters": [
+"STEP *"
+]
+},
+{
+"address": 2114120,
+"name": "SgasGetStepguard",
+"return": null,
+"parameters": [
+"STEPGUARD *"
+]
+},
+{
+"address": 2116776,
+"name": "FixStepAngularVelocity",
+"return": null,
+"parameters": [
+"STEP *"
+]
+},
+{
+"address": 2116936,
+"name": "SetStepSpinRatio",
+"return": null,
+"parameters": [
+"STEP *",
+"float"
+]
+},
+{
+"address": 2117032,
+"name": "SetStepGravityRatio",
+"return": null,
+"parameters": [
+"STEP *",
+"float"
+]
+},
+{
+"address": 2139792,
+"name": "GetRwacPan",
+"return": null,
+"parameters": [
+"RWAC *",
+"float *"
+]
+},
+{
+"address": 2144360,
+"name": "PostStepLoadRun",
+"return": "void *",
+"parameters": [
+"STEP *",
+"BLRUN *",
+"ASEGBL * *"
+]
+},
+{
+"address": 2151888,
+"name": "OSTRM_constructor",
+"return": "void",
+"parameters": [
+"OSTRM *this",
+"int"
+]
+},
+{
+"address": 2151920,
+"name": "OSTRM_constructor_2",
+"return": "void",
+"parameters": [
+"OSTRM *this",
+"void *",
+"int"
+]
+},
+{
+"address": 2151960,
+"name": "OSTRM_destructor",
+"return": "void",
+"parameters": [
+"OSTRM *this"
+]
+},
+{
+"address": 2152032,
+"name": "OSTRM_CbWrite",
+"return": null,
+"parameters": [
+"OSTRM *this",
+"void *",
+"int"
+]
+},
+{
+"address": 2152344,
+"name": "OSTRM_Flush",
+"return": null,
+"parameters": [
+"OSTRM *this"
+]
+},
+{
+"address": 2154368,
+"name": "SaveChkmgrCheckpoint",
+"return": null,
+"parameters": [
+"CHKMGR *",
+"OID",
+"OID"
+]
+},
+{
+"address": 2158784,
+"name": "IncrementSwHandsOff",
+"return": null,
+"parameters": [
+"SW *"
+]
+},
+{
+"address": 2158832,
+"name": "DecrementSwHandsOff",
+"return": null,
+"parameters": [
+"SW *"
+]
+},
+{
+"address": 2162368,
+"name": "FAddRsmg",
+"return": "int",
+"parameters": [
+"RSMG *",
+"int",
+"int *",
+"int",
+"OID",
+"OID",
+"OID"
+]
+},
+{
+"address": 2165616,
+"name": "SwitchToPo",
+"return": null,
+"parameters": [
+"PO *"
+]
+},
+{
+"address": 2173520,
+"name": "SetTimerTimers",
+"return": null,
+"parameters": [
+"TIMER *",
+"TIMERS"
+]
+},
+{
+"address": 2186880,
+"name": "CRichText_Trim",
+"return": null,
+"parameters": [
+"CRichText *this",
+"int"
+]
+},
+{
+"address": 2210696,
+"name": "InitFragile",
+"return": null,
+"parameters": [
+"FRAGILE *"
+]
+},
+{
+"address": 2217528,
+"name": "CchParsePchzInt",
+"return": null,
+"parameters": [
+"char *",
+"int *"
+]
+},
+{
+"address": 2217648,
+"name": "CchParsePchzTft",
+"return": null,
+"parameters": [
+"char *",
+"TFT *",
+"char * *"
+]
+},
+{
+"address": 2218480,
+"name": "WriteTftPchz",
+"return": null,
+"parameters": [
+"TFT *",
+"OSTRM *",
+"char *"
+]
+},
+{
+"address": 2218808,
+"name": "FNegTftUl",
+"return": "int",
+"parameters": [
+"TFT *",
+"UL *"
+]
+},
+{
+"address": 2219032,
+"name": "UnRadixFromChConversion",
+"return": null,
+"parameters": [
+"char"
+]
+},
+{
+"address": 2219120,
+"name": "CchAchFromUl",
+"return": null,
+"parameters": [
+"char *",
+"int",
+"unsigned long",
+"unsigned int"
+]
+},
+{
+"address": 2219328,
+"name": "WriteTftUl",
+"return": null,
+"parameters": [
+"TFT *",
+"OSTRM *",
+"unsigned long"
+]
+},
+{
+"address": 2220104,
+"name": "ExpFirstFromG",
+"return": null,
+"parameters": [
+"double"
+]
+},
+{
+"address": 2220248,
+"name": "ChDigitFromG",
+"return": null,
+"parameters": [
+"double",
+"int",
+"int"
+]
+},
+{
+"address": 2220464,
+"name": "CchAchFromDouble",
+"return": null,
+"parameters": [
+"char *",
+"int",
+"TFT *",
+"double"
+]
+},
+{
+"address": 2221240,
+"name": "WriteTftDouble",
+"return": null,
+"parameters": [
+"TFT *",
+"OSTRM *",
+"double"
+]
+},
+{
+"address": 2221848,
+"name": "WriteTft",
+"return": null,
+"parameters": [
+"TFT *",
+"OSTRM *",
+"char * *",
+"char *",
+"int"
+]
+},
+{
+"address": 2222792,
+"name": "CchOstrmPrintf",
+"return": null,
+"parameters": [
+"OSTRM *",
+"char *",
+"char *"
+]
+},
+{
+"address": 2223664,
+"name": "UpperizePchz",
+"return": null,
+"parameters": [
+"char *"
+]
+},
+{
+"address": 2224080,
+"name": "ClearRwmAimConstraints",
+"return": null,
+"parameters": [
+"RWM *"
+]
+},
+{
+"address": 2224168,
+"name": "InitCritSect",
+"return": null,
+"parameters": [
+"CRITSECT *"
+]
+},
+{
+"address": 2224224,
+"name": "EnterCritSect",
+"return": null,
+"parameters": [
+"CRITSECT *"
+]
+},
+{
+"address": 2224320,
+"name": "LeaveCritSect",
+"return": null,
+"parameters": [
+"CRITSECT *"
+]
+},
+{
+"address": 2224384,
+"name": "StartupThread",
+"return": null,
+"parameters": []
+},
+{
+"address": 2231616,
+"name": "UpdateStepXfWorld",
+"return": null,
+"parameters": [
+"STEP *"
+]
+},
+{
+"address": 2231768,
+"name": "GetTnfnNose",
+"return": null,
+"parameters": [
+"TNFN *",
+"CPDEFI *",
+"VECTOR *",
+"TN *"
+]
+},
+{
+"address": 2232016,
+"name": "InitTn",
+"return": null,
+"parameters": [
+"TN *"
+]
+},
+{
+"address": 2232200,
+"name": "PostTnLoad",
+"return": "void *",
+"parameters": [
+"TN *"
+]
+},
+{
+"address": 2232640,
+"name": "RenderTnSelf",
+"return": null,
+"parameters": [
+"TN *",
+"CM *",
+"RO *"
+]
+},
+{
+"address": 2232696,
+"name": "SetTnTns",
+"return": null,
+"parameters": [
+"TN *",
+"TNS"
+]
+},
+{
+"address": 2232936,
+"name": "FUN_001e2840",
+"return": "int",
+"parameters": [
+"TN *",
+"TNS"
+]
+},
+{
+"address": 2233224,
+"name": "UpdateTn",
+"return": null,
+"parameters": [
+"TN *",
+"float"
+]
+},
+{
+"address": 2233304,
+"name": "FreezeTn",
+"return": null,
+"parameters": [
+"TN *",
+"int"
+]
+},
+{
+"address": 2233792,
+"name": "CalculateTnPos",
+"return": null,
+"parameters": [
+"TN *",
+"VECTOR *",
+"float",
+"float",
+"CLQ *",
+"LM *",
+"FTND",
+"VECTOR *"
+]
+},
+{
+"address": 2234904,
+"name": "ActivateCptn",
+"return": null,
+"parameters": [
+"CPTN *",
+"void *"
+]
+},
+{
+"address": 2235864,
+"name": "UpdateCptn",
+"return": null,
+"parameters": [
+"CPTN *",
+"CPDEFI *",
+"JOY *",
+"float"
+]
+},
+{
+"address": 2245008,
+"name": "HideBlot",
+"return": null,
+"parameters": [
+"BLOT *"
+]
+},
+{
+"address": 2249440,
+"name": "InitDysh",
+"return": null,
+"parameters": [
+"DYSH *"
+]
+},
+{
+"address": 2251368,
+"name": "OnTankActive",
+"return": null,
+"parameters": [
+"TANK *",
+"int",
+"PO *"
+]
+},
+{
+"address": 2255888,
+"name": "VIFS_constructor",
+"return": "void",
+"parameters": [
+"VIFS *this"
+]
+},
+{
+"address": 2255960,
+"name": "VIFS_Align",
+"return": null,
+"parameters": [
+"VIFS *this",
+"int"
+]
+},
+{
+"address": 2256040,
+"name": "VIFS_AddVifBaseOffset",
+"return": null,
+"parameters": [
+"VIFS *this",
+"int",
+"int"
+]
+},
+{
+"address": 2256096,
+"name": "VIFS_AddVifMscal",
+"return": null,
+"parameters": [
+"VIFS *this",
+"void *"
+]
+},
+{
+"address": 2256144,
+"name": "VIFS_AddVifFlush",
+"return": null,
+"parameters": [
+"VIFS *this"
+]
+},
+{
+"address": 2256168,
+"name": "VIFS_AddVifFlusha",
+"return": null,
+"parameters": [
+"VIFS *this"
+]
+},
+{
+"address": 2256192,
+"name": "VIFS_AddVifStcycl",
+"return": null,
+"parameters": [
+"VIFS *this",
+"int",
+"int"
+]
+},
+{
+"address": 2256232,
+"name": "VIFS_AddVifStrow",
+"return": null,
+"parameters": [
+"VIFS *this",
+"QW *"
+]
+},
+{
+"address": 2256336,
+"name": "VIFS_AddVifStmask",
+"return": null,
+"parameters": [
+"VIFS *this",
+"unsigned int"
+]
+},
+{
+"address": 2256520,
+"name": "VIFS_UnpackHelper",
+"return": null,
+"parameters": [
+"VIFS *this",
+"UPK",
+"int",
+"int",
+"int *",
+"unsigned int * *"
+]
+},
+{
+"address": 2256680,
+"name": "VIFS_AddVifUnpack",
+"return": null,
+"parameters": [
+"VIFS *this",
+"UPK",
+"int",
+"void *",
+"int"
+]
+},
+{
+"address": 2256912,
+"name": "VIFS_AddVifUnpackRefs",
+"return": null,
+"parameters": [
+"VIFS *this",
+"UPK",
+"int",
+"void *",
+"int",
+"void * * *"
+]
+},
+{
+"address": 2257096,
+"name": "VIFS_AddVifDirect",
+"return": null,
+"parameters": [
+"VIFS *this",
+"int",
+"QW *",
+"int"
+]
+},
+{
+"address": 2257224,
+"name": "VIFS_AddVifDirectRefs",
+"return": null,
+"parameters": [
+"VIFS *this",
+"int",
+"QW *",
+"int"
+]
+},
+{
+"address": 2257352,
+"name": "VIFS_AddVifGifs",
+"return": null,
+"parameters": [
+"VIFS *this",
+"GIFS *"
+]
+},
+{
+"address": 2263384,
+"name": "AddBrkTouchObject",
+"return": null,
+"parameters": [
+"BRK *",
+"OID"
+]
+},
+{
+"address": 2264088,
+"name": "LoadScaleMatrixVector",
+"return": null,
+"parameters": [
+"VECTOR *",
+"MATRIX3 *",
+"VECTOR *",
+"MATRIX4 *"
+]
+},
+{
+"address": 2264352,
+"name": "UpdateSwXaList",
+"return": null,
+"parameters": [
+"SW *",
+"XA * *"
+]
+},
+{
+"address": 2266816,
+"name": "FreeSwXaList",
+"return": null,
+"parameters": [
+"SW *",
+"XA *"
+]
+},
+{
+"address": 2266896,
+"name": "AddSoXa",
+"return": null,
+"parameters": [
+"SO *",
+"XA *"
+]
+},
+{
+"address": 2266936,
+"name": "RemoveSoXa",
+"return": null,
+"parameters": [
+"SO *",
+"XA *"
+]
+},
+{
+"address": 2275288,
+"name": "UpdateWrStateVectors",
+"return": null,
+"parameters": [
+"WR *"
+]
+},
+{
+"address": 2276872,
+"name": "UNoise",
+"return": null,
+"parameters": [
+"int"
+]
+},
+{
+"address": 2276960,
+"name": "UNoise_2",
+"return": null,
+"parameters": [
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 2277184,
+"name": "UBias",
+"return": null,
+"parameters": [
+"float",
+"float"
+]
+},
+{
+"address": 2277232,
+"name": "GFromOnz",
+"return": "float",
+"parameters": [
+"ONZ *"
+]
+},
+{
+"address": 2277416,
+"name": "UpdateWrMatrixes",
+"return": null,
+"parameters": [
+"WR *"
+]
+},
+{
+"address": 2278320,
+"name": "AddWrCircleWarp",
+"return": null,
+"parameters": [
+"WR *"
+]
+},
+{
+"address": 2278448,
+"name": "AddWrBendWarp",
+"return": null,
+"parameters": [
+"WR *"
+]
+},
+{
+"address": 2278560,
+"name": "PwreGetWrCur",
+"return": "void *",
+"parameters": [
+"WR *",
+"ENSK",
+"WREK"
+]
+},
+{
+"address": 2278616,
+"name": "PwreGetWrCircle",
+"return": "void *",
+"parameters": [
+"WR *",
+"ENSK"
+]
+},
+{
+"address": 2278648,
+"name": "PwreGetWrBend",
+"return": "void *",
+"parameters": [
+"WR *",
+"ENSK"
+]
+},
+{
+"address": 2278680,
+"name": "SetWrWavelength",
+"return": null,
+"parameters": [
+"WR *",
+"float"
+]
+},
+{
+"address": 2278768,
+"name": "GetWrWavelength",
+"return": null,
+"parameters": [
+"WR *",
+"float *"
+]
+},
+{
+"address": 2278840,
+"name": "AddOnzOnze",
+"return": null,
+"parameters": [
+"ONZ *",
+"float",
+"float",
+"float",
+"float"
+]
+},
+{
+"address": 2280144,
+"name": "ConvertDeulToW",
+"return": null,
+"parameters": [
+"VECTOR *",
+"VECTOR *",
+"VECTOR *"
+]
+},
+{
+"address": 2298224,
+"name": "LoadLoFromBrx",
+"return": null,
+"parameters": [
+"LO *",
+"CBinaryInputStream *"
+]
+},
+{
+"address": 2301584,
+"name": "snd_GotReturns",
+"return": null,
+"parameters": []
+},
+{
+"address": 2304056,
+"name": "snd_SendIOPCommandNoWait",
+"return": null,
+"parameters": [
+"int",
+"int",
+"char *",
+"void (*)(int, unsigned long)",
+"unsigned long"
+]
+},
+{
+"address": 2304952,
+"name": "snd_PostMessage",
+"return": null,
+"parameters": []
+},
+{
+"address": 2305016,
+"name": "snd_SendCurrentBatch",
+"return": null,
+"parameters": []
+},
+{
+"address": 2340824,
+"name": "__main",
+"return": null,
+"parameters": []
+},
+{
+"address": 2452712,
+"name": "VU_FLOAT_constructor",
+"return": "void",
+"parameters": [
+"VU_FLOAT *this",
+"float"
+]
+},
+{
+"address": 2452744,
+"name": "VU_VECTOR_constructor",
+"return": "void",
+"parameters": [
+"VU_VECTOR *this",
+"const VECTOR *"
+]
+},
+{
+"address": 2452760,
+"name": "VECTOR_op_assign",
+"return": null,
+"parameters": [
+"VECTOR *this",
+"VU_VECTOR"
+]
+},
+{
+"address": 2452776,
+"name": "op_multiply_3",
+"return": null,
+"parameters": [
+"VU_FLOAT",
+"VU_VECTOR"
+]
+},
+{
+"address": 2454240,
+"name": "CBinaryInputStream_destructor",
+"return": "void",
+"parameters": [
+"CBinaryInputStream *this"
+]
+},
+{
+"address": 2458184,
+"name": "CFileLocation_Clear",
+"return": null,
+"parameters": [
+"CFileLocation *this"
+]
+},
+{
+"address": 2458752,
+"name": "VecCombo",
+"return": null,
+"parameters": [
+"VU_FLOAT",
+"VU_VECTOR",
+"VU_FLOAT",
+"VU_VECTOR"
+]
+},
+{
+"address": 2459168,
+"name": "CloneEmitter",
+"return": null,
+"parameters": [
+"EMITTER *",
+"EMITTER *"
+]
+},
+{
+"address": 2461880,
+"name": "UpdateSuvXfWorld",
+"return": null,
+"parameters": [
+"SUV *"
+]
+}
+]

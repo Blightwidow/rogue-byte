@@ -1,0 +1,7 @@
+#include "m2c_macros.h"
+
+extern M2C_UNK D_002BAE80;
+
+M2C_UNK *func_00113CF0(void) {
+    return &D_002BAE80;
+}

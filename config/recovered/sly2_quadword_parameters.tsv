@@ -1,0 +1,36 @@
+address	function	parameter	before	after
+00118fb0	PcgtPointInCbspQuick__FP4CBSPP6VECTOR	in_a2	undefined8 in a2	VU_VECTOR in a2_qw
+0011b628	LoadRotateMatrixEuler__FP6VECTORP7MATRIX3	arg1	MATRIX3 * in a1_lo	VU_VECTOR in a1_qw
+0011e7c8	FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+0011e7c8	FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+0011e7c8	FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0	arg2	VECTOR * in a2_lo	VU_VECTOR in a2_qw
+0011e7c8	FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0	arg3	VECTOR * in a3_lo	VU_VECTOR in a3_qw
+0011e958	CalculateVectorPanTilt__FP6VECTORPfT1	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+0014c6d8	ClsgClipEdgeToObject__FP2SOP6VECTORT1iP3LSG	arg3	int in a3_lo	VU_VECTOR in a3_qw
+0014c748	ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+0015a2c0	WakeSoWater__FP2SOP5WATERfP6VECTORT3ff	arg4	VECTOR * in a3_lo	VU_VECTOR in a3_qw
+0015be28	EmitRipsSphere__FP6VECTORT0iP7EMITRIPP5EMITVPP4RIPGP2LO	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+0015be28	EmitRipsSphere__FP6VECTORT0iP7EMITRIPP5EMITVPP4RIPGP2LO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001999d0	FCheckJtEdgeGrab__FP2JTP2SOP6VECTOR3XPKPvT2	arg2	VECTOR * in a2_lo	VU_VECTOR in a2_qw
+0019f540	__11CTransition	in_a1	undefined8 in a1	VU_VECTOR in a1_qw
+001ce920	InitRip__FP3RIPP6VECTORfP2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001cf338	FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3	arg1	CM * in a1_lo	VU_VECTOR in a1_qw
+001cf6b0	CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK	arg3	VECTOR * in a3_lo	VU_VECTOR in a3_qw
+001cf6b0	CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK	arg4	VECTOR * in t0_lo	VU_VECTOR in t0_qw
+001cf968	FBounceFlying__FP6FLYINGP2SOP6VECTORT2	arg2	VECTOR * in a2_lo	VU_VECTOR in a2_qw
+001cfcd8	InitMatch__FP5MATCHP6VECTORfP2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001d0108	InitGlint__FP5GLINTP6VECTORfP2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001d0bf8	FBounceLeaf__FP4LEAFP2SOP6VECTORT2	arg2	VECTOR * in a2_lo	VU_VECTOR in a2_qw
+001d0ca8	InitDroplet__FP7DROPLETP6VECTORfP2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001d0e48	InitBublet__FP6BUBLETP6VECTORfP2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001d6848	FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+001d6848	FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+001d6848	FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO	arg3	VECTOR * in a2_lo	VU_VECTOR in a2_qw
+001f5c30	AccelSoTowardMatSpring__FP2SOP7MATRIX3P3CLQP6VECTORT2f	arg3	VECTOR * in a3_lo	VU_VECTOR in a3_qw
+00228c18	LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4	arg1	MATRIX3 * in a1_lo	VU_VECTOR in a1_qw
+0022cad0	ConvertDeulToW__FP6VECTORN20	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+0022cad0	ConvertDeulToW__FP6VECTORN20	arg1	VECTOR * in a1_lo	VU_VECTOR in a1_qw
+00118a88	PruneBsp__FP3BSPP6VECTORfPP3BSP	arg3	BSP * * in a2_lo	VU_VECTOR in a2_qw
+0014c6d8	ClsgClipEdgeToObject__FP2SOP6VECTORT1iP3LSG	arg4	int in a3_lo	VU_VECTOR in a3_qw
+001a93c8	CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI	arg0	VECTOR * in a0_lo	VU_VECTOR in a0_qw
+001997d8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	arg2	VECTOR * in a2_lo	VU_VECTOR in a2_qw

@@ -1,0 +1,118 @@
+address	name	reason
+0x11B318	FInvertMatrix3__FP7MATRIX3T0	mat.c thunk into FInvertMatrix; the Sly 1 match (AddJsgContext, bsim 1.0 on a 3-instruction thunk) is a collision
+0x13AA70	LoadBombFromBrx	bomb module, LoadSoFromBrx then the InferExpl call, as Sly 1's LoadBombFromBrx; SetLightDiffuse_Old (bsim 1.0, tiny) is a collision
+0x13AC18	UpdateBombCustomXps	called from UpdateBomb when fCustomXps, Sly 1 shape; the current name is a Sly 1 placeholder
+0x1715B8	PloFindScriptObject	disassembly: PloFindSwObject(g_psw, context ? 4 : 5, oid, context); SetJtPuppet (bsim 0.944) is a collision
+0x12CCB8	LoadAcgbFromBrx	U16 key count then frame/60 and 3 floats per 16-byte key, Sly 1 LoadAcgbFromBrx shape; LoadExploFromBrx was a weak class match (0.571)
+0x1291A8	CRef_CopyConstruct	it copies a CRef (Sly 1 name SetTag came from a calls match)
+0x129598	CRef_SetBool	naming convention Class_Method
+0x129A10	CRef_SetBasic	naming convention Class_Method
+0x15E650	CploFindSwObjects_thunk	tail call into 0x15E678
+0x15E678	CploFindSwObjects	ProjectCane shape (grffso, oid, context, count, output array)
+0x15E938	PloFindSwObject_thunk	tail call into 0x15E958
+0x15E958	PloFindSwObject	CploFindSwObjects(grffso | 0x200) with a one-entry output
+0x129EC8	CRef_Destruct	releases the ref's payload by tag
+0x1AE478	CStackFrame_Construct	pushes a stack-allocator frame, paired with 0x1AE4A0
+0x1AE4A0	CStackFrame_Destructor	calls FreeStackImpl (0x1AE428) for the frame, called as (frame, 2); the Sly 1 match _$_4CRef (callers 0.912) is wrong
+0x1C3DC8	LoadPoFromBrx	vtable slot 0x70 of the PO class: LoadSoFromBrx-style stream load then skips a string; current name is a Sly 1 placeholder
+0x1A62E8	PosLoWorld	reads as the LO's world position (names differed); the Rust name track_look_vel is wrong
+0x1A6318	PmatLoWorld	reads as the LO's world orientation; two used this name
+0x1A5478	AddLo	needs flag bit 56 (removed) set and clears it, relinks into the parent's child list
+0x1A5630	RemoveLo	returns if bit 56 is already set, then unlinks from the world lists (vtable slot 0xB0, RemoveDlEntry 0x3DD4BC)
+0x1635A0	InitTask	base init, ids and state to -1, increments the SW task count; the Sly 1 slot match InitPrsen (0.931) is wrong
+0x1FBEE0	PauseAmbVoice	vtable slot 0x58, snd_PauseSound on the voice at +0x40; Sly 1 PauseVag takes no argument (callers match 0.727)
+0x1FBF00	ContinueAmbVoice	vtable slot 0x60, snd_ContinueSound on the voice at +0x40; Sly 1 ContinueVag takes no argument
+0x12F9B8	ApplyAseg	Sly 1 ApplyAseg argument shape (paseg, palo, t, svt, grfapl, &pasega), called by ChooseSmaTransition; Rust bind start agrees
+0x130B18	RetractAsega	where Sly 1 SMA code calls RetractAsega; Rust bind retract agrees
+0x15C5C8	HandleExplsMessage	EXPLS (cid 33) vtable slot 0x28, message 1 unsubscribes +0x100/+0x104; CollectSuvPrize was a weak class match (0.535)
+0x15C650	PsfxEnsureExpls	NewSfx into +0xF0, read as the explosion's SFX, in the expls run; Sly 1 PsfxEnsureExpls is the same code as PsfxEnsureBomb, so the global match picked the wrong twin
+0x1D7748	AddHubEntry	appends a 12-byte {state, button, target} entry (max 12) at +0x190, count +0x18C, of the vtable-0x2D80D0 hub; MatchStepguardAnimationPhase was a bsim match on a tiny store run
+0x1DA728	Menu_Construct	stores vtable 0x2D85E8 at +0xC, oid -1; called first by the three derived menu constructors; WipeToWorldWarp (global 0.992) is wrong
+0x1DA770	Menu_PostLoad	vtable slot 0x60 of all four menu vtables, blot = PloFindSwObject(oid); RetryGame (global 0.92) is wrong
+0x1DAA08	GadgetMenu_Construct	Menu_Construct then vtable 0x2D8568; Rust p18_gadget gadget menu instance 0x3DA0F0; StartGame (callers 0.886) is wrong
+0x1F5040	FIsSoLocked	SO slot 0x1F0: no physics, or force and torque constraint kinds both 3 (locked); the current name is a Sly 1 placeholder
+0x117FD0	CBinaryInputStream_ReadGeom	reads vertices, surfaces and edges into a GEOM with BuildPlane per surface, Sly 1 ReadGeom shape; Rust geom.rs build_geom agrees
+0x118220	CBinaryInputStream_ReadBspc	BSPC node array of 0xC each, 0xFFFF to the leaf plane, Sly 1 ReadBspc shape; Rust geom.rs build_bsp agrees
+0x1F6068	CloneSo	SO vtable slot 0x148: kind-specific XF extra records and a cloth LVO clone agree; LoadSoFromBrx was the calibration guess
+0x1F66F0	CloneAloHierarchy	SO vtable slot 0x140, walks the child list (+0x64 .. +0x70)
+0x1F6C08	EnsureSogeomLvo	takes a SOGEOM (+0x10 lvo, world GEOM at +0x90), same algorithm as Sly 1 EnsureSoLvo; the SO signature came from a callers match (0.765)
+0x215E80	CMovieText_Trim	Sly 1 CRichText::Trim shape (bsim 0.937) on CMovieText, reads cch+1 characters
+0x1A6EE8	FReturnFalseLo	returns 0, shared by 133 vtables (default LO virtual); FDetectStepguard was a slot match on a one-instruction body
+0x1A5BE8	CReturnZeroLo	returns 0, shared by 132 vtable slots, LO slot 0xE0 (follower count); FInflictStepguardZap was a slot match on a one-instruction body
+0x1A6BC8	SetLoPosMatFromXf	calls 0x1A6BE8(plo, &pxf->matWorld); AddBtnAseg was a bsim 1.0 match on a short body
+0x1C9098	StopLoadingLogo	signals the stop semaphore, waits for done, clears 0x2DD314; current name is a Sly 1 placeholder
+0x21EFD0	NewSema	builds {max, init} and calls the CreateSema stub 0x234A20; ClearRwmAimConstraints (callers 0.784) is wrong
+0x256EE0	CFramePtr_Assign	add-ref the new frame, release the old (CFrame deleting destructor, 3), store; current name is a Sly 1 placeholder
+0x1AC7A0	McOpenFile	opens by path with mode 1 (read) or 0x202 (write, create) and syncs; current name is a Sly 1 placeholder
+0x1AC808	McClose	sceMcClose (0x244050) then sync on function 3; current name is a Sly 1 placeholder
+0x1AC850	McRead	sceMcRead (0x2441C0) then sync on function 5; current name is a Sly 1 placeholder
+0x1AC8A8	McWrite	sceMcWrite (0x2442D8) then sync on function 6; current name is a Sly 1 placeholder
+0x1AC900	WriteMemcardFile	open 0x202, write, short count gives 7, close; current name is a Sly 1 placeholder
+0x21EDA0	strcat	every call appends to the same buffer (0x1AD820, 0x1ADA20); strcpy1 (calls 0.962) was the twin
+0x1E6ED8	FindCrvClosestPointFromU	crvk 0 to FindCrvlClosestPointFromU, else 0x1E6DB8, Sly 1 dispatch; current name is a Sly 1 placeholder
+0x1E6DB8	FindCrvcClosestPointFromU	MinimizeRange over GMeasureCrvU for the cubic case, Sly 1 FindCrvcClosestPointFromU
+0x12E060	GetActvalPositionGoal	slot 0x28 of the kind-8 ACT vtable 0x2CA6E0 (ACT, two out vectors, dt in f12); DupAloRo (global 0.824) is wrong
+0x14C6D8	ClsgClipEdgeToObjectPruned	(geom, pbspPruned, pos0, pos1, 1, lsg) from AddStepCustomXps, Sly 1 ClsgClipEdgeToObjectPruned shape
+0x154D88	AddSuck	ChangeSuck(GetSuck() + du); current name is a Sly 1 placeholder
+0x17DD38	SetGoalTarget	copies a 0x20-byte goal target to the goto goal +0x40 and replans; it isn't a LIGHT function; SetLightHighlightColor (bsim 0.856) is wrong
+0x204248	CgeomExtraStep	STEP vtable slot 0x1F8 returns 1 where the SO base returns 0; SgasGetStepguard (slot 0.636) is wrong
+0x210B70	PdescHubOfCurrentEpisode	0x210B98(IEpisodeCurrent 0x210AE0()), Rust hub-level comment; SwitchToPo (bsim 1.0 on a two-call body) is wrong
+0x1AE9A8	PauseMenu_Freeze	base menu freeze 0x1D98A8 then resets the JOY at +0x10; FreezeSmartguard (global 0.93) is wrong
+0x204660	SetStepRadTarget	stores +0x1A8 and rebuilds the target matrix rows at 0x1B0 with LoadRotateMatrixRad about +Z, Sly 1 UpdateStepMatTarget role
+0x144B28	GoalFollowCrvVjoy_Init	calls GoalFollowCrv_Init and sets the +0xD0 stick scale to 1.0; InitLasen (global 1.0 on a short body) is wrong
+0x14E168	SetCmPosMat	copies a 4x4 into cm+0x60 then UpdateCmMat4, called with g_cm by every camera policy; CopyTo CFontBrx (bsim 0.973) is wrong
+0x14FD30	SetCplcy	empty set slot 0x20 shared by all six camera policy vtables; the Sly 1 name SetCptn is specific to one policy
+0x14FD38	RevokeCplcy	empty revoke slot 0x28 shared by all six camera policy vtables; the Sly 1 name RevokeCptn is specific to one policy
+0x19F540	WarpJtToPoint	clears a 0x20-byte safe point, position from a1, calls 0x19F590; CTransition constructor (callers 0.815) is wrong
+0x1BC160	Obstacle_AddLoHierarchy	LO AddLoHierarchy slot 0x58: AddLoHierarchy then appends to the active obstacles DL 0x3E1A4C; CloneAseg (class 0.584) is wrong
+0x1E79F0	SetCrvRopeLength	PattachCrv(pcrv, 1) then 0x1E95B0 with a float; SetEmitterRipt was a bsim 1.0 match on a 13-instruction wrapper
+0x203758	FReconTargetDone	job ? FTaskComplete(job) : +0xF0 on a recon target; PaloGetActlaTarget (global 0.894) is wrong
+0x20A690	GetAlertPan	the guard alert record's heading: camera heading in mode 0, object heading in mode 1; GetRwacPan (callers 0.732) is wrong
+0x2590B8	CloneSuv	base clone 0x2311B0 then add-ref of the shared block at +0xE4, Sly 1 CloneSuv shape; UpdateSuvXfWorld (class 0.592) is wrong
+0x11AD30	SolveInequalities	(limit, n, aag, ag, agSoln) called from SquishCmEye, Sly 1 SolveInequalities shape; the Rust label sweep_sphere is a module guess
+0x231170	LoadXfmFromBrx	XFM vtable slot 0x70 (xform TU, between InitXfm and CloneXfm); not the LO loader (the LO loader is 0x1A5C28)
+0x231100	InitXfm	XFM init in the xform TU; the InitAlo name was inconsistent with the ALO layout
+0x1A61E0	HandleLoSpliceEvent	LO vtable slot 0x18, the splice event handler; CollectJtPrize (bsim 1.0) is wrong
+0x156918	FHitFxCoversPos	(HITFX*, VEC4): z inside the parms range, XY distance within the intensity radius; SetLoSuckHideLimits was already found wrong
+0x1FE9C8	SetSndPlaybackMode	stores the mode at +0x104, snd_SetPlaybackMode on change; SetLightDynamic was found wrong
+0x170C90	AddScriptGoto	appends a goto command (op 7) read by the script executor 0x1715F0 case 7; AddJsgClimb (global 0.949) is wrong
+0x151950	UpdateCpattach	camera policy slot 0x30 of vtable 0x2CD3C0; RenderSmack (class 0.59) is wrong
+0x151900	ActivateCpattach	camera policy slot 0x10 of vtable 0x2CD3C0: base activate, near clip, fov target
+0x151BF0	ActivateCplookat	camera policy activate of vtable 0x2CD378
+0x151C38	UpdateCplookat	camera policy update of vtable 0x2CD378
+0x14D3D8	CM_Construct	stores the CM vtable at +0xC and constructs the eight embedded camera policies
+0x11CDD8	PrimeSlotheap	PvAllocSlotheapImpl then FreeSlotheapPv on the same heap, on four SW slot heaps right after creation; SetAloShadowShader was a bsim 1.0 match on a short body
+0x178E98	GoalFollowCrvAnim_Init	slot 0x38 of vtable 0x2D06D8, calls GoalFollowCrv init; InitHshape (bsim 0.94) is wrong
+0x1B10B0	AccelSlotSoRotation	AccelSoTowardMatSmooth(pso, dt, +0x1E0 matrix, +0x210); LoadAcscFromBrx (bsim 1.0) is wrong
+0x20DF80	SetSwLoadRequest	sets SW+0x3BF0 pending and copies a 0x4C-byte request to +0x3BF4, consumed by 0x20E890; SaveChkmgrCheckpoint (global 0.944) is wrong
+0x224190	FReleaseGadgetObj	slot 0x258, state 1/2 to 3, returns 1; HideBlot (global 0.876) is wrong
+0x1BE1E8	AssignObstaclesToPathzones	pops each entry of the active-obstacle DL 0x3E1A4C into Obstacle_AddToPathzone; FChooseRobRoc (callers 0.736) is wrong
+0x183998	OnHbskAdd	HBSK vtable slot 0xB8: base add 0x1F3EA8 then AppendDlEntry(0x3E13E4); the Sly 1 slot match had add and remove crossed
+0x1839D0	OnHbskRemove	HBSK vtable slot 0xB0: base remove 0x1F3E00 then RemoveDlEntry(0x3E13E4); the Sly 1 slot match had add and remove crossed
+0x1613F8	JobMgr_Construct	takes this in a0 (called with the job manager 0x2DEB30 at 0x1AA984): memsets 0x1C bytes, oids to -1, InitSaveSlot, OnDifficultyGameLoad, so a constructor; the Sly 1 name PframeNew belongs to 0x256DD0
+0x1305B8	ApplyAsegToHandle	RetractAsegaHandle(slot), then ApplyAseg 0x12F9B8 into the slot and AddRef; it held the name ApplyAseg too (plain-name clash)
+0x148BB0	InitButton	InitSo, the button init at +0x150, then flag bit 2, Sly 1 InitButton shape
+0x1FF3B8	InitXfmObject	InitXfm then 0x182C70 on a sub-object at +0xE0 (not the button init 0x148718): an XFM-based class not identified yet; the slot match had called it InitButton, which is 0x148BB0, and InitVolbtn is 0x1492F0
+0x1F00C8	PostSmLoad	PostLoLoad then applies the SM to the object of its default record (+0x74), Sly 1 PostSmLoad shape
+0x1F8740	Sm_Release	decrements the refcount at +0x10, tears down at zero, frees the slot; PostSmLoad was a weak class match (0.562) and belongs to 0x1F00C8
+0x147EE8	RetractSwRoot	removes a root record from the SW+0x20 list, sets the cursor SW+0x39A4 when empty, re-appends; RetractActseg (global 0.933) is wrong, ACTSEG here is the SW
+0x1D8C10	PvFindSaveVarPath	spills its varargs to BuildSavePath then PvFindSaveVar(0x3E0EA8, path, 0x3D4A60); DeletePair (callers 0.715) is wrong
+0x1EAF50	LoadBmpFromBrx	reads a 0x28-byte BMP record; the CFontBrx::LoadFromBrx callers match (0.751) is wrong
+0x16A000	LoadGlobFromBrx	reads GLOB records from the level stream and builds the VU1 DMA chain; the Rust module label material.rs is a module guess
+0x1CE980	RemoveRip	RemoveDlEntry(rip->pripg + 0x15C, rip) then ReleaseRip, Sly 1 RemoveRip; RemoveLightFromSw (bsim 1.0) was flagged wrong, the real one is 0x1A3E88
+0x225A68	CloneTank	TANK vtable slot 0x148: ClonePo, then repoints its self reference; OnTankActive (global 0.905) is wrong, it belongs to 0x225AE8
+0x20F128	IncrementSwShowCount	SW +0x3D80 counter, first increment calls 0x1A3078 on the object at 0x2E1E60; a second counter beside cHandsOff (the Sly 1 IncrementSwHandsOff is 0x20F0C0); also read as a show or HUD counter
+0x20F160	DecrementSwShowCount	decrements SW +0x3D80, at zero calls 0x1A30D0 on 0x2E1E60; the pair of 0x20F128 (DecrementSwHandsOff is 0x20F0F0), role unverified
+0x203A38	PostStepLoad	SO post-load, the CRV, two SetXfKind, the hull clone, GoalStack_AllocGoals; the base of the guard and dancer post-loads
+0x221140	CloneTn	XFM clone slot 0x148: CloneXfm then PloCloneLo of the curve under the parent, Sly 1 CloneTn; RenderTnSelf (class 0.562) is wrong
+0x2213D8	OnTnRemove	TN vtable slot 0xB0 (ALO remove): RemoveAloHierarchy then SetTnTns, Sly 1 OnTnRemove; FreezeTn (callers 0.846) is wrong
+0x220F88	RemoveTn	TN vtable slot 0x60 (LO remove): RemoveLoHierarchy then CancelSwCallbacks; PostTnLoad (class 0.502) is wrong
+0x184950	CBinaryFileStream_Destructor	stores vtable 0x2D2918 (slot +0x10 is Close 0x184CF0), calls Close, optional delete; the CGc destructor match (callers 0.803) is wrong
+0x1EC968	UpdateSaas	takes no arguments: walks the SAA list, FUpdatableSaa, then the update slot 0x40; UpdateGlobset (callers 0.705) is wrong
+0x154158	NGetSensorLoState	forwards (sensor, plo) to PentryFindSensorLo and returns the entry's state or -1; PchzFriendlyFromWid was a bsim 1.0 match on a short body
+0x1177F0	CBinaryInputStream_Close	base Close of CBinaryInputStream (vtable 0x2CA5C0 slot +0x10); InitGeom was an exact match on identical mnemonics but zeroes different offsets (sly1-ref pilot)
+0x167310	Globset_Construct	stores -1 at +0x4C = GLOBSET constructor; Sly 1 CRef::CRef stores -1 at +0 (sly1-ref pilot)
+0x1EDFA0	CloneSaa	Sly 1 CloneActseg saves pasega and dleAsega then calls CloneAct; ours calls InitSaa_1ed8e0 then copies two floats +0xC/+0x10 to +0x50/+0x54, a SAA clone. Name inferred from the InitSaa callee, unverified (sly1-ref slice 2)
+0x13CEF8	PostCrfodbLoad	Sly 2 CRFODB is the pickpocket guard (ATTACHPT, AttachPt_PostLoad); Sly 1 CRFODB is a STEPGUARD with a different body; same name, unrelated class, so the Sly 1 mangled signature is wrong (sly1-ref slice 2)
+0x18ED70	UpdateJtCarryReach	JT cane block: if the cane state is 0, Carry_UpdateReach on the JT at +0x17D0; Sly 1 EnsureAloSfx (NewSfx when psfx is null) is unrelated (sly1-ref slice 2)
+0x1A7E10	FreeSwXpList	sits in the mark module after PxpAdd, frees the XP chain via XP +0xAC; Sly 1 has two same-shape clones, FreeSwMqList (sw.c) and FreeSwXpList (mark.c), and the bsim match took the wrong one; argument is XP* (sly1-ref slice 2)

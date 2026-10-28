@@ -1,0 +1,38 @@
+[
+ {
+  "date": "2026-10-27",
+  "commit": "050b2b1",
+  "c_bytes": 351336,
+  "matched_bytes": 47568,
+  "bytes": 1273948,
+  "named": 3900,
+  "functions": 6262
+ },
+ {
+  "date": "2026-10-27",
+  "commit": "fc9616e",
+  "c_bytes": 396840,
+  "matched_bytes": 1776,
+  "bytes": 1264368,
+  "named": 3900,
+  "functions": 6051
+ },
+ {
+  "date": "2026-10-27",
+  "commit": "3ddd686",
+  "c_bytes": 396840,
+  "matched_bytes": 1776,
+  "bytes": 1264368,
+  "named": 3900,
+  "functions": 6051
+ },
+ {
+  "date": "2026-10-28",
+  "commit": "5e39c1e",
+  "c_bytes": 398232,
+  "matched_bytes": 0,
+  "bytes": 1264368,
+  "named": 3900,
+  "functions": 6060
+ }
+]
