@@ -40,19 +40,22 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
         pieces.append(object_path)
     ninja.build('pieces', 'phony', pieces)
 
-    # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled with the original compiler
-    compiler = os.path.join('tools', 'compilers', 'ee-gcc2.95.3-136')
+    # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
+    # SN's compiler, then SN's assembler ps2eeas when tools/ps2eeas has it, GNU as for the functions of config/us/gnu_as.txt)
+    sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
+    import compile_unit
+    gnu = compile_unit.gnu_functions()
     for language, rule in (('c++', 'compile_cpp'), ('c', 'compile_c')):
-        ninja.rule(rule, command='tools/wibo %s/bin/ee-gcc.exe -c -x %s -B%s/lib/gcc-lib/ee/2.95.3/ -O2 -G0 -ffast-math '
-                                 '-fno-exceptions -I include $in -o $out.tmp && ${binutils}-objcopy -w -L \'*\' $out.tmp $out && rm $out.tmp'
-                                 % (compiler, language, compiler), description='CC $in')
+        ninja.rule(rule, command=f'python3 scripts/build/compile_unit.py {language} $in $out $assembler', description='CC $in')
     units = []
     manifest = os.path.join(ROOT, 'src', 'MANIFEST.tsv')
     if os.path.exists(manifest):
         for line in list(open(manifest))[1:]:
             source = os.path.join('src', line.rstrip('\n').split('\t')[3])
             unit = os.path.join('build', 'units', source[len('src/'):] + '.o')
-            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'])
+            address = int(line.split('\t')[0], 16)
+            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
+                        variables={'assembler': '--assembler gnu' if address in gnu else ''})
             units.append(unit)
         ninja.build('units', 'phony', units)
 
@@ -63,7 +66,9 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
         for line in list(open(manifest))[1:]:
             source = os.path.join('nonmatching', line.rstrip('\n').split('\t')[3])
             unit = os.path.join('build', 'nonmatching', source[len('nonmatching/'):] + '.o')
-            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'])
+            address = int(line.split('\t')[0], 16)
+            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
+                        variables={'assembler': '--assembler gnu' if address in gnu else ''})
             drafts.append(unit)
         ninja.build('nonmatching', 'phony', drafts)
 print('wrote build.ninja')

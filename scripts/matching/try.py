@@ -69,9 +69,10 @@ def main():
     os.makedirs(build, exist_ok=True)
     source = os.path.abspath(arguments.source)
     obj = os.path.join(build, f'{arguments.address:06X}-{os.getpid()}.o')  # one per run: the permuter judges in parallel
-    compile_result = subprocess.run([WIBO, os.path.join(compiler, 'bin', 'ee-gcc.exe'), '-c', '-x', arguments.lang,
-                                     f'-B{os.path.join(compiler, "lib", "gcc-lib", "ee", version)}/', f'-I{INCLUDE}',
-                                     *FLAGS, source, '-o', obj], capture_output=True, text=True)
+    sys.path.insert(0, os.path.join(LAB, 'scripts', 'build'))
+    import compile_unit
+    ok, message = compile_unit.compile_object(arguments.lang, source, obj, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(arguments.address), include=INCLUDE, localize=False)
+    compile_result = subprocess.CompletedProcess([], 0 if ok else 1, '', message)
     if compile_result.returncode != 0:
         print('compile error')
         print((compile_result.stdout + compile_result.stderr).strip()[-3000:])

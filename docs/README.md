@@ -10,11 +10,13 @@ Then [CONTRIBUTING.md](../CONTRIBUTING.md).
 | :--- | :--- |
 | [build/building.md](build/building.md) | setting up, `make elf` |
 | [site Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) | finding a function to name, with its callers and strings |
+| [build/assembler.md](build/assembler.md) | a function is one instruction off and it is a `nop` (SN's assembler) |
 | [build/progress.md](build/progress.md) | regenerating the progress page and its numbers |
 | [build/name-recovery.md](build/name-recovery.md) | rebuilding the Ghidra projects and recovered names |
 | [build/decompilation.md](build/decompilation.md) | the decompilation and matching workflow |
 | [build/compiler-identification.md](build/compiler-identification.md) | working on matching decompilation (compiler setup) |
 | [contributing/commit-messages.md](contributing/commit-messages.md) | writing a commit message |
+| [contributing/matching.md](contributing/matching.md) | judging a function (what `score` counts) and fixing a near miss |
 | [contributing/code-cleanup.md](contributing/code-cleanup.md) | adding code to `src/` (the rules the `cleanup` check applies) |
 | [contributing/decompilation-tips.md](contributing/decompilation-tips.md) | before changing a heuristic or applying names |
 | [game/executable-layout.md](game/executable-layout.md) | looking for where something sits in `SCUS_973.16` |

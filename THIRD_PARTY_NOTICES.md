@@ -35,6 +35,7 @@ tooling, not the game's own logic. The `.c` files started as output of [m2c](htt
 | [Ghidra](https://ghidra-sre.org/) | Apache-2.0 | Disassembly and decompilation, and its BSim feature for function similarity; `scripts/ghidra/` are scripts for it. |
 | [Splat](https://github.com/ethteck/splat) (`splat64`) | MIT | Splits the executable into assembly and data (`make elf`). |
 | [spimdisasm](https://github.com/Decompollaborate/spimdisasm) and [rabbitizer](https://github.com/Decompollaborate/rabbitizer) | MIT | The MIPS disassembler behind Splat; rabbitizer also decodes instructions in the compare tools. |
+| [SN Systems ProDG for PS2 3.01](https://github.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01) (a third-party mirror) | Proprietary (SN Systems / Sony) | `Ps2EeAs.exe`, SN's assembler, downloaded by `setup.sh` (pinned SHA-256) into the git-ignored `tools/`, never committed or redistributed. |
 | [decompals binutils for PS2](https://github.com/decompals/binutils-mips-ps2-decompals) | GPL-3.0 | The R5900 assembler, linker and objcopy (`setup.sh` downloads a pinned release). |
 | [m2c](https://github.com/matt-kempster/m2c) | GPL-3.0 | First drafts of C from assembly (`include/m2c_macros.h`). |
 | Python libraries (`requirements.txt`): [ninja_syntax](https://github.com/ninja-build/ninja) (Apache-2.0), [pyelftools](https://github.com/eliben/pyelftools) (public domain), [capstone](https://www.capstone-engine.org/) (BSD-3-Clause), [PyYAML](https://pyyaml.org/) (MIT), [fonttools](https://github.com/fonttools/fonttools) (MIT), [squarify](https://github.com/laserson/squarify) (Apache-2.0), [Pillow](https://python-pillow.org/) (MIT-CMU), [NumPy](https://numpy.org/) (BSD-3-Clause) | as listed | Build, name recovery and the progress site. Installed into `.venv`, not included. |
@@ -51,6 +52,7 @@ tooling, not the game's own logic. The `.c` files started as output of [m2c](htt
 | ProjectCane (Sly 1 PC port, theclub654) | No license, all rights reserved | How a PC port of this engine handles rendering, input and files. No code, layouts or names from it are published here. |
 | [lombyte-project/Lombyte](https://github.com/lombyte-project/Lombyte) (Ratchet & Clank decompilation) | GPL-3.0 | Repository layout, dotfiles and contribution docs. Structure only. |
 | [decomp.wtf](https://decomp.wtf/) | not stated | The compile-and-diff workflow of `scripts/matching/try.py` follows its design; no code was taken. |
+| [OpenRAC/rac1-decomp](https://github.com/OpenRAC/rac1-decomp) (Ratchet & Clank 1 decompilation) | GPL-3.0 | What SN's assembler does that GNU `as` does not, and a list of compiler levers (`docs/build/assembler.md`, `docs/contributing/matching.md`). Read for its findings; nothing was copied. |
 | [morluto/rea](https://github.com/morluto/rea) | MIT | Evaluated as a reverse-engineering tool, not adopted. |
 
 ## The game

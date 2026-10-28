@@ -72,6 +72,15 @@ install_compiler() {
   fi
 }
 
+install_assembler() {
+  # SN's own assembler (ps2eeas): retail was assembled with it, and it adds R5900 hazard nops that GNU as does not (scripts/build/compile_unit.py)
+  [[ -f tools/ps2eeas/Ps2EeAs.exe ]] && return
+  mkdir -p tools/ps2eeas
+  curl -fsSL -o tools/ps2eeas/Ps2EeAs.exe "https://raw.githubusercontent.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01/d74f6fe08d24e7cf0df48cb570d85ad04db167c5/usr/local/sce/ee/gcc/ee/bin/Ps2EeAs.exe"
+  echo "cb5adda955e64626564212ef7e0c1434708c4e1ef423344a92ec8033306ed3aa  tools/ps2eeas/Ps2EeAs.exe" | shasum -a 256 -c - || { rm -f tools/ps2eeas/Ps2EeAs.exe; exit 1; }
+  echo "ok: tools/ps2eeas/Ps2EeAs.exe"
+}
+
 install_objdiff() {
   local asset sha256
   case "$(uname -s)-$(uname -m)" in
@@ -96,6 +105,7 @@ if [[ ! -x .venv/bin/python ]]; then
 fi
 install_binutils
 install_compiler
+install_assembler
 install_objdiff
 
 missing=0

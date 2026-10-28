@@ -10,8 +10,9 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 3. Change a script or data file. Run every tool from the repository root.
 4. `make check` before committing (ruff, compile, shellcheck, links, regression tests). After touching `src/` run `make elf`, then `make unit UNIT=<module>`: every matched function must still link from C. Commit messages: [docs/contributing/commit-messages.md](docs/contributing/commit-messages.md); the added code follows [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md).
 5. Optional: `pre-commit install --hook-type pre-commit --hook-type commit-msg` (or `prek install`) with `.pre-commit-config.yaml`.
-6. Finish a draft: `nonmatching/` holds the best compiling source of every unmatched function ([nonmatching/README.md](nonmatching/README.md)).
-7. Name a function: the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) lists the ones that need a name, with callers and strings, and opens a prefilled issue. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size`.
+6. Judge and fix a function: [docs/contributing/matching.md](docs/contributing/matching.md) (what `score` counts, the usual fixes).
+7. Finish a draft: `nonmatching/` holds the best compiling source of every unmatched function ([nonmatching/README.md](nonmatching/README.md)).
+8. Name a function: the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) lists the ones that need a name, with callers and strings, and opens a prefilled issue. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size`.
 
 ## Rules
 

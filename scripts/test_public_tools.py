@@ -12,6 +12,7 @@ import asm_units  # noqa: E402
 import check_cleanup  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
+import compile_unit  # noqa: E402
 import gen_context  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
@@ -142,6 +143,24 @@ class NonMatchingTests(unittest.TestCase):
     def test_names_become_file_names(self):
         self.assertEqual(export_nonmatching.file_name('func_001B2940'), 'fun_001b2940')
         self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')
+
+
+class CompileUnitTests(unittest.TestCase):
+    def test_extern_lines_move_to_the_top(self):
+        text = '\t.file 1 "a.c"\nfoo:\n\tlui $2,%hi(g)\n\t.extern g,4\n\t.extern h,8'
+        lines = compile_unit.hoist_externs(text).split('\n')
+        self.assertEqual(lines[:2], ['\t.extern g,4', '\t.extern h,8'])
+        self.assertEqual(len(lines), 5)
+
+    def test_text_without_externs_is_unchanged(self):
+        self.assertEqual(compile_unit.hoist_externs('a\nb'), 'a\nb')
+
+    def test_gnu_list_is_read(self):
+        listed = compile_unit.gnu_functions()
+        self.assertTrue(all(isinstance(address, int) for address in listed))
+        if listed:
+            self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'gnu')
+        self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))
 
 
 class ListingTests(unittest.TestCase):

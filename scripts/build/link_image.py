@@ -167,7 +167,7 @@ def retarget_rodata(address, object_path):
     base = FILE_OFFSET_OF_TEXT + address - TEXT_START
     signed = lambda value: value - 0x10000 if value & 0x8000 else value
     word = lambda offset, blob, origin: int.from_bytes(blob[origin + offset:origin + offset + 4], 'little')
-    cstring = lambda blob, start: blob[start:blob.index(0, start)]
+    cstring = lambda blob, start: blob[start:blob.find(0, start)] if blob.find(0, start) >= 0 else None
     patched = bytearray(open(object_path, 'rb').read())
     for index, (offset, kind, symbol) in enumerate(entries):
         if kind != 5 or symbol['st_shndx'] != rodata_index:
@@ -178,7 +178,7 @@ def retarget_rodata(address, object_path):
         retail_value = ((word(offset, retail, base) & 0xFFFF) << 16) + signed(word(low[0], retail, base) & 0xFFFF)
         object_value = ((word(offset, data, 0) & 0xFFFF) << 16) + signed(word(low[0], data, 0) & 0xFFFF)
         retail_at = FILE_OFFSET_OF_TEXT + retail_value - TEXT_START
-        if not 0 <= object_value < len(rodata_data) or retail_at < 0 or cstring(rodata_data, object_value) != cstring(retail, retail_at):
+        if not 0 <= object_value < len(rodata_data) or retail_at < 0 or cstring(rodata_data, object_value) is None or cstring(rodata_data, object_value) != cstring(retail, retail_at):
             return None
         for at in (offset, low[0]):
             patched[text_offset + at:text_offset + at + 2] = retail[base + at:base + at + 2]
@@ -247,6 +247,22 @@ for line in list(open(os.path.join('src', 'MANIFEST.tsv')))[1:]:
         elif not RODATA_START <= rodata_base < RODATA_END:
             continue
     candidates[address] = (object_path, found[1], found[2], rodata_base)
+# two functions can share a string (the later one's literal is the tail of the earlier one's): their rodata holes overlap, so the later
+# object links like a string-only one whose rodata stays out of the image and whose literal addresses are the retail ones
+holes_taken = []
+for address in sorted(candidates, key=lambda a: candidates[a][3] or 0):
+    object_path, names, size, base = candidates[address]
+    if not size:
+        continue
+    if any(base < end and start < base + size for start, end in holes_taken):
+        retargeted_path = retarget_rodata(address, object_path)
+        if retargeted_path is None:
+            del candidates[address]
+            continue
+        retargeted.add(address)
+        candidates[address] = (retargeted_path, names, 0, None)
+    else:
+        holes_taken.append((base, base + size))
 print(f'{len(candidates)} of {len(functions)} functions have a usable object', flush=True)
 
 def assemble_run(run_lines, address):
