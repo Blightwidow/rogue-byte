@@ -142,5 +142,14 @@
   "bytes": 1264368,
   "named": 3900,
   "functions": 6059
+ },
+ {
+  "date": "2026-10-28",
+  "commit": "fd8790b",
+  "c_bytes": 419040,
+  "matched_bytes": 64,
+  "bytes": 1264368,
+  "named": 3900,
+  "functions": 6059
  }
 ]

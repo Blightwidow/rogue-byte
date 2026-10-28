@@ -174,7 +174,7 @@
 <rect x="57.5" y="425.1" width="15.4" height="15.4" fill="#4b4f6e"><title>func_0023A420 0X23A420 248 bytes (asm)</title></rect>
 <rect x="57.5" y="440.9" width="15.4" height="15.4" fill="#4b4f6e"><title>func_00252B88 0X252B88 248 bytes (asm)</title></rect>
 <rect x="57.5" y="456.7" width="15.4" height="15.4" fill="#4b4f6e"><title>func_002547A0 0X2547A0 248 bytes (asm)</title></rect>
-<rect x="57.5" y="472.5" width="15.4" height="15.4" fill="#4b4f6e"><title>Vector_Load 0X2566D8 248 bytes (asm)</title></rect>
+<rect x="57.5" y="472.5" width="15.4" height="15.4" fill="#2f7af4"><title>Vector_Load 0X2566D8 248 bytes (c)</title></rect>
 <rect x="57.5" y="488.3" width="15.4" height="15.4" fill="#2f7af4"><title>HashTable_Insert 0X2569F8 248 bytes (c)</title></rect>
 <rect x="57.5" y="504.2" width="15.4" height="14.9" fill="#4b4f6e"><title>func_00235388 0X235388 240 bytes (asm)</title></rect>
 <rect x="57.5" y="519.5" width="15.4" height="14.9" fill="#4b4f6e"><title>func_002375E0 0X2375E0 240 bytes (asm)</title></rect>
@@ -757,7 +757,7 @@
 </g>
 <g><title>new_100008: 83344 bytes</title>
 <rect x="1.0" y="582.7" width="28.7" height="17.8" fill="#4a45a8"><title>func_00100008 0X100008 528 bytes (draft)</title></rect>
-<rect x="30.1" y="582.7" width="17.2" height="17.8" fill="#4a45a8"><title>RefCallAddBeam 0X1056A0 320 bytes (draft)</title></rect>
+<rect x="30.1" y="582.7" width="17.2" height="17.8" fill="#2f7af4"><title>RefCallAddBeam 0X1056A0 320 bytes (c)</title></rect>
 <rect x="47.7" y="582.7" width="14.6" height="17.8" fill="#2f7af4"><title>func_00102E28 0X102E28 272 bytes (c)</title></rect>
 <rect x="62.6" y="582.7" width="14.6" height="17.8" fill="#2f7af4"><title>func_00102F38 0X102F38 272 bytes (c)</title></rect>
 <rect x="77.6" y="582.7" width="14.6" height="17.8" fill="#4a45a8"><title>func_0010B230 0X10B230 272 bytes (draft)</title></rect>
@@ -2720,7 +2720,7 @@
 <rect x="601.7" y="522.4" width="26.1" height="18.9" fill="#4a45a8"><title>ConvertXfMat 0X22FD38 520 bytes (draft)</title></rect>
 <rect x="628.2" y="475.5" width="23.6" height="20.3" fill="#4a45a8"><title>SetXfKind 0X2303A0 504 bytes (draft)</title></rect>
 <rect x="652.2" y="475.5" width="18.2" height="20.3" fill="#4a45a8"><title>RefreshXfActSegment 0X22DD00 392 bytes (draft)</title></rect>
-<rect x="670.8" y="475.5" width="14.8" height="20.3" fill="#4a45a8"><title>ResortXfActList 0X2301D0 320 bytes (draft)</title></rect>
+<rect x="670.8" y="475.5" width="14.8" height="20.3" fill="#2f7af4"><title>ResortXfActList 0X2301D0 320 bytes (c)</title></rect>
 <rect x="628.2" y="496.2" width="18.1" height="16.2" fill="#2f7af4"><title>UpdateAloXfWorld 0X22FAA0 312 bytes (c)</title></rect>
 <rect x="628.2" y="512.7" width="18.1" height="16.2" fill="#2f7af4"><title>alo__static_initialization_and_destruction_0 0X230FA8 312 bytes (c)</title></rect>
 <rect x="628.2" y="529.3" width="18.1" height="11.9" fill="#2f7af4"><title>InsertXfAct 0X230018 232 bytes (c)</title></rect>
@@ -7294,7 +7294,7 @@
 <rect x="1411.7" y="808.7" width="20.7" height="23.1" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>gs_170650: 472 bytes</title>
-<rect x="1412.7" y="832.8" width="18.3" height="10.7" fill="#4a45a8"><title>UploadBitmaps__FiP3GSB 0X170730 248 bytes (draft)</title></rect>
+<rect x="1412.7" y="832.8" width="18.3" height="10.7" fill="#2f7af4"><title>UploadBitmaps__FiP3GSB 0X170730 248 bytes (c)</title></rect>
 <rect x="1412.7" y="843.9" width="18.3" height="9.6" fill="#2f7af4"><title>BuildImageGifs__FiiiiiiP4GIFS 0X170650 224 bytes (c)</title></rect>
 <rect x="1411.7" y="831.8" width="20.7" height="23.1" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>

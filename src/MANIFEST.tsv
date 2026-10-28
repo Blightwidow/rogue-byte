@@ -94,6 +94,7 @@ address	name	size	file
 0X105398	func_00105398	168	new_100008/fun_00105398.cpp
 0X105440	func_00105440	200	new_100008/fun_00105440.cpp
 0X105508	func_00105508	168	new_100008/fun_00105508.cpp
+0X1056A0	RefCallAddBeam	320	new_100008/RefCallAddBeam.cpp
 0X1057E0	RefCallAddBarrierObject	132	new_100008/RefCallAddBarrierObject.cpp
 0X105868	RefCallAddBarrierClass	132	new_100008/RefCallAddBarrierClass.cpp
 0X1058F0	func_001058F0	132	new_100008/fun_001058f0.cpp
@@ -1701,6 +1702,7 @@ address	name	size	file
 0X1703C0	NLog2__FUi	56	gs/NLog2__FUi.cpp
 0X1704B8	FlushZprPage	144	new_170448/FlushZprPage.cpp
 0X170650	BuildImageGifs__FiiiiiiP4GIFS	220	gs/BuildImageGifs__FiiiiiiP4GIFS.cpp
+0X170730	UploadBitmaps__FiP3GSB	244	gs/UploadBitmaps__FiP3GSB.cpp
 0X170828	func_00170828	36	gs-jsg/fun_00170828.c
 0X170850	StaticInitSlotheaps_170850	308	gs-jsg/StaticInitSlotheaps_170850.c
 0X170988	StaticInitSlotheaps_170850_thunk	32	gs-jsg/StaticInitSlotheaps_170850_thunk.c
@@ -3480,6 +3482,7 @@ address	name	size	file
 0X22FBD8	func_0022FBD8	8	alo-lo/fun_0022fbd8.c
 0X230018	InsertXfAct	232	alo-lo/InsertXfAct.cpp
 0X230100	RemoveXfAct	204	alo-lo/RemoveXfAct.cpp
+0X2301D0	ResortXfActList	320	alo-lo/ResortXfActList.cpp
 0X230310	FXfKindHasVelocity	56	alo-lo/FXfKindHasVelocity.cpp
 0X230348	FXfKindStatic	52	alo-lo/FXfKindStatic.cpp
 0X230380	FXfKindDynamic	32	alo-lo/FXfKindDynamic.cpp
@@ -3513,6 +3516,7 @@ address	name	size	file
 0X2564B8	func_002564B8	8	sdk/fun_002564b8.c
 0X2564C0	func_002564C0	8	sdk/fun_002564c0.c
 0X2566B0	func_002566B0	36	sdk/fun_002566b0.cpp
+0X2566D8	Vector_Load	244	sdk/Vector_Load.cpp
 0X2567D0	HashTable_Clear	204	sdk/HashTable_Clear.cpp
 0X2568A0	HashTable_Clear_thunk	28	sdk/HashTable_Clear_thunk.c
 0X2569F8	HashTable_Insert	248	sdk/HashTable_Insert.cpp
