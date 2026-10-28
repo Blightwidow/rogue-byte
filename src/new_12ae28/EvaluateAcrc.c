@@ -7,8 +7,8 @@ void EvaluateAcrc(s32 arg0, s32 arg1, void *arg2) {
         CopyAb__FPvT0Ui(arg1, arg0 + 4, 0xC);
     }
     if (arg2 != NULL) {
-        M2C_FIELD(arg2, s32 *, 0) = 0;
         M2C_FIELD(arg2, s32 *, 8) = 0;
         M2C_FIELD(arg2, s32 *, 4) = 0;
+        M2C_FIELD(arg2, s32 *, 0) = 0;
     }
 }

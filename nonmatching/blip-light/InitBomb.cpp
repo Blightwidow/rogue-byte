@@ -8,8 +8,8 @@ extern "C" void InitBomb(BOMB *pbomb)
 {
     InitSo(pbomb);
     unsigned flags = pbomb->flags;
-    pbomb->f154 = RO_FLT_002A4B08;
     pbomb->f15c = D_FLT_002BC9C8;
+    pbomb->f154 = RO_FLT_002A4B08;
     pbomb->f160 = D_FLT_002BC9C8;
     pbomb->f1E0 = 1;
     pbomb->f1EC = 0x100;

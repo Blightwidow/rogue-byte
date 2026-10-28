@@ -13,7 +13,7 @@ void ReleaseSeqnodeSma(void *arg0) {
         temp_a1 = M2C_FIELD(arg0, void **, 0x58);
         temp_v0 = M2C_FIELD(temp_a1, void **, 0xC);
         M2C_FIELD(temp_v0, M2C_UNK (**)(void *, void *), 0x14)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x10), temp_a1);
-        M2C_FIELD(arg0, s32 *, 0x5C) = 0;
         M2C_FIELD(arg0, void **, 0x58) = NULL;
+        M2C_FIELD(arg0, s32 *, 0x5C) = 0;
     }
 }

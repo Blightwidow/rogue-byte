@@ -15,8 +15,8 @@ int IdlootCrfodb(GUARD *guard)
     CStackFrame_Construct(frame);
     CRef ref;
     RefGetGameSaveValue(&ref, PpathCrfodbLoot(guard), B_003D4A60);
-    int id = ref.n;
     CRef_Destruct(&ref);
+    int id = ref.n;
     if (id == 0) {
         id = guard->idLootDefault;
     } else if (id >= 0) {

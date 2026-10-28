@@ -7,6 +7,6 @@ void UseGuardAnimation(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     void *temp_v0;
 
     temp_v0 = PguardanimEnsure(arg0, GrfsgsFromRef(arg1));
-    M2C_FIELD(temp_v0, s32 *, 0xC) = arg3;
     M2C_FIELD(temp_v0, s32 *, 4) = arg2;
+    M2C_FIELD(temp_v0, s32 *, 0xC) = arg3;
 }

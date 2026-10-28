@@ -8,8 +8,8 @@ extern M2C_UNK RO_002A3868;
 extern M2C_UNK RO_002A38A8;
 
 void StartBootQueue(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 0x1C4) = 0;
+    M2C_FIELD(arg0, s32 *, 0) = 0;
     AddBootQueueMovie(&RO_002A3868);
     AddBootQueueCardCheck(arg0);
     AddBootQueueLevel(arg0, &RO_002A38A8, 0x189, 1);

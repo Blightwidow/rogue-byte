@@ -12,7 +12,7 @@ void Warp_SetState(void *arg0, s32 arg1) {
             SetHandsOff(&B_003DD490, 3);
             M2C_FIELD(&B_003DD490, void **, 0x3C84) = arg0;
         }
-        M2C_FIELD(arg0, s32 *, 0x13C) = arg1;
         M2C_FIELD(arg0, f32 *, 0x140) = (f32) g_2dded0;
+        M2C_FIELD(arg0, s32 *, 0x13C) = arg1;
     }
 }

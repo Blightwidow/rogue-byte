@@ -79,5 +79,14 @@
   "bytes": 1264368,
   "named": 3900,
   "functions": 6059
+ },
+ {
+  "date": "2026-10-28",
+  "commit": "a5a7ca7",
+  "c_bytes": 403112,
+  "matched_bytes": 64,
+  "bytes": 1264368,
+  "named": 3900,
+  "functions": 6059
  }
 ]

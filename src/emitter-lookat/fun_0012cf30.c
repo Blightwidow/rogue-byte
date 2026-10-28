@@ -10,8 +10,8 @@ void func_0012CF30(void *arg0, s128 *arg1, void *arg2) {
         *arg1 = GetXfDofValue(temp_a0, temp_a0);
     }
     if (arg2 != NULL) {
-        M2C_FIELD(arg2, s32 *, 0) = 0;
         M2C_FIELD(arg2, s32 *, 8) = 0;
         M2C_FIELD(arg2, s32 *, 4) = 0;
+        M2C_FIELD(arg2, s32 *, 0) = 0;
     }
 }

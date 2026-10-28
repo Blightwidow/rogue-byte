@@ -6,8 +6,8 @@ void HideCountdownBlot(void *arg0) {
 
     temp_a1 = M2C_FIELD(arg0, void **, 0x3BC4);
     if (temp_a1 != NULL) {
-        temp_v0 = M2C_FIELD(temp_a1, void **, 0xC);
         M2C_FIELD(temp_v0, M2C_UNK (**)(void *, void *), 0x194)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x190), temp_a1);
+        temp_v0 = M2C_FIELD(temp_a1, void **, 0xC);
     }
     M2C_FIELD(arg0, s32 *, 0x476C) = 0;
 }

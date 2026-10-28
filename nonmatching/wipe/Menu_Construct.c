@@ -7,7 +7,7 @@ void *Menu_Construct(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
     M2C_FIELD(arg0, M2C_UNK **, 0xC) = &D_002D85E8;
-    M2C_FIELD(arg0, s32 *, 0x20) = -1;
     Menu_ResetState();
+    M2C_FIELD(arg0, s32 *, 0x20) = -1;
     return arg0;
 }

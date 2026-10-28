@@ -16,8 +16,8 @@ extern "C" void GoalIdle_Activate(Goal *goal)
     } else if ((guard->flags & 2) != 0) {
         goal->cmd = guard->cmd2; asm volatile("");
     } else {
-        goal->cmd = 0;
         GoalIdle_SetState(goal, 2);
+        goal->cmd = 0;
         return;
     }
     if (goal->guard->cmdPos != 0)

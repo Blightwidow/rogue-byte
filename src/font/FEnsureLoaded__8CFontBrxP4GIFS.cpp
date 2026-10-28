@@ -17,8 +17,8 @@ int CFontBrx::FEnsureLoaded(GIFS *pgifs)
     if (pgifs == &B_002DEA00) {
         unsigned bit = 1u << fontk;
         unsigned loaded = *(unsigned *)(g_2dea4c + 0x2C);
-        *(unsigned *)(g_2dea4c + 0x2C) = loaded | bit;
         fLoad = (loaded & bit) == 0;
+        *(unsigned *)(g_2dea4c + 0x2C) = loaded | bit;
     } else
         fLoad = 1;
     if (fLoad) {

@@ -11,12 +11,12 @@ void SlotItem_Load(ITEM *item)
 {
     char *base = B_002E6604;
     asm("" : "+r" (base));
-    char *saves = base + 0x7FDC;
     char *slot = base + item->slot * 0x5464;
     CRef ref;
     RefGetGameSaveValue(&ref, B_003E0FAC, slot);
     float value = ref.g;
     CRef_Destruct(&ref);
+    char *saves = base + 0x7FDC;
     *(char **)(saves + 0x7D50) = slot;
     float zero;
     asm("mtc1 $0, %0\n\tnop" : "=f" (zero));

@@ -5,7 +5,7 @@ extern f32 g_2be694;
 
 void GoalFollowCrvAnim_Init(void *arg0) {
     GoalFollowCrv_Init();
-    M2C_FIELD(arg0, s32 *, 0xC0) = 9;
     M2C_FIELD(arg0, f32 *, 0xE0) = (f32) g_2be694;
     M2C_FIELD(arg0, f32 *, 0xC4) = 1.0f;
+    M2C_FIELD(arg0, s32 *, 0xC0) = 9;
 }

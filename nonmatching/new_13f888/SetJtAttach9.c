@@ -8,7 +8,7 @@ void SetJtAttach9(void *arg0, s32 arg1) {
     if (arg1 != 0) {
         StartAttach(arg0 + 0x4C0, 9, arg1, 0);
     } else if (M2C_FIELD(arg0, s32 *, 0x4C8) == 9) {
-        temp_v0 = M2C_FIELD(arg0, void **, 0xC);
         M2C_FIELD(temp_v0, M2C_UNK (**)(void *, M2C_UNK, void *), 0x2C4)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x2C0), 0, arg0);
+        temp_v0 = M2C_FIELD(arg0, void **, 0xC);
     }
 }

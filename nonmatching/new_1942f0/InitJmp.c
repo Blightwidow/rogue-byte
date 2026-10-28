@@ -4,8 +4,8 @@ extern s128 D_002BF740;
 
 void InitJmp(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = arg1;
-    M2C_FIELD(arg0, s32 *, 0x1C) = -1;
     M2C_FIELD(arg0, s32 *, 4) = -1;
+    M2C_FIELD(arg0, s32 *, 0x1C) = -1;
     M2C_FIELD(arg0, s128 *, 0xF0) = (s128) D_002BF740;
     M2C_FIELD(arg0, f32 *, 0x164) = 1.0f;
     M2C_FIELD(arg0, f32 *, 0x108) = -60.0f;

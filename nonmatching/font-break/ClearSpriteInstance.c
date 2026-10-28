@@ -10,9 +10,9 @@ void ClearSpriteInstance(void *arg0, s32 arg1) {
     void *temp_a1;
     void *var_s0;
 
+    var_s0 = M2C_FIELD(temp_a1, void **, 4);
     temp_a1 = (arg1 * 0x18) + M2C_FIELD(arg0, s32 *, 8);
     temp_a1_2 = M2C_FIELD(temp_a1, s32 *, 0);
-    var_s0 = M2C_FIELD(temp_a1, void **, 4);
     if (temp_a1_2 > 0) {
         var_s1 = temp_a1_2;
         do {

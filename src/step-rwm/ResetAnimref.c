@@ -17,6 +17,6 @@ void ResetAnimref(void *arg0) {
 block_4:
         M2C_FIELD(arg0, s32 *, 4) = 0;
     }
-    M2C_FIELD(arg0, s32 *, 0) = -1;
     M2C_FIELD(arg0, s32 *, 4) = -1;
+    M2C_FIELD(arg0, s32 *, 0) = -1;
 }

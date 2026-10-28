@@ -10,6 +10,6 @@ void ReleaseBentleyGadget(void *arg0) {
         func_0018D698(arg0, M2C_FIELD(arg0, void **, 0x16B4), M2C_FIELD(arg0, void **, 0x186C));
     }
     UnlockLeaseOfPlo(M2C_FIELD(M2C_FIELD(arg0, void **, 0x16B4), s32 *, 4), M2C_FIELD(arg0, void **, 0x186C));
-    M2C_FIELD(arg0, void **, 0x16B4) = NULL;
     M2C_FIELD(arg0, void **, 0x186C) = NULL;
+    M2C_FIELD(arg0, void **, 0x16B4) = NULL;
 }

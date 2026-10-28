@@ -8,8 +8,8 @@ void TriggerRumbleRumpat__FP6RUMBLEP6RUMPATf(void *arg0, void *arg1, f32 fparg0)
         M2C_FIELD(arg0, f32 *, 0x14) = fparg0;
         M2C_FIELD(arg0, void **, 0xC) = arg1;
         M2C_FIELD(arg0, s32 *, 0x10) = 0;
-        M2C_FIELD(arg0, s32 *, 8) = -1;
         M2C_FIELD(arg0, f32 *, 0x18) = (f32) M2C_FIELD(arg1, f32 *, 8);
+        M2C_FIELD(arg0, s32 *, 8) = -1;
         SetRumbleRums__FP6RUMBLE4RUMS(arg0, 2);
     }
 }
