@@ -20,8 +20,8 @@ in 23 `.DVP.overlay.*` sections (`0x800`-byte chunks outside the loaded segments
 The game swaps VU1 programs in as overlays: each program is uploaded with VIF `MPG` packets in chunks of at most 256 micro
 instructions (2 KB) to VU1 addresses `0x0`, `0x800`, `0x1000`, ... and started with `MSCAL` (VIF code `0x14`, operand = byte address / 8).
 The `.DVP.overlay.*` ELF sections are zero-filled placeholders of those chunks (their names carry the chunk's VU1 offset); the code is
-in `.vutext`, where chunks of one program sit one instruction apart (pitch 257). A 14,000-frame run of the recompiled game with a log of every
-upload and start (`scripts/swapin/patches/vif-trace.patch`, `scripts/vu/place_programs.py`) shows 21 distinct chunks, every one equal word
+in `.vutext`, where chunks of one program sit one instruction apart (pitch 257). A 14,000-frame run of an emulator with a log of every VU1
+upload and start (`scripts/vu/place_programs.py` reads the log) shows 21 distinct chunks, every one equal word
 for word to a `.vutext` slice, and 6.8 million starts of the busiest program. Indices are `.vutext` micro instruction numbers.
 
 | Program | `.vutext` | VU1 range | Uploaded | Code that uploads it |

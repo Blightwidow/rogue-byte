@@ -4,8 +4,11 @@
 
   .venv/bin/python scripts/vu/place_programs.py work/ps2-web-recomp/games/sly2/vif-trace work/ps2-web-recomp/games/sly2/vif-trace/log3 work/elf/SCUS_973.16
 
-Input is a run of the recompiler with scripts/swapin/patches/vif-trace.patch applied and VIF_TRACE=1: its log has one line per distinct VU
-upload (MPG) and start (MSCAL, MSCNT) with the active program, and <trace dir>/chunks/ holds the uploaded bytes. Each uploaded chunk is found in
+Input is a trace of a run of the game in an emulator, written by whatever hooks the VIF: a log with one line per distinct VU1 upload (MPG)
+and start (MSCAL, MSCNT) in the form
+  [vif-trace] upload unit=1 dest=0800 instrs=216 hash=<hex> count=<n>
+  [vif-trace] start unit=1 op=14 addr=0870 program=<hash of the chunk last uploaded to address 0, hex> count=<n>
+and <trace dir>/chunks/u<unit>_<dest>_<instrs>_<hash>.bin holding the uploaded bytes. Each uploaded chunk is found in
 .vutext by comparing words; chunks that follow each other (VU1 address 0x0, 0x800, ...) form a program; a start address becomes an instruction
 index in .vutext. Prints addresses and counts only."""
 import collections
