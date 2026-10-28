@@ -79,6 +79,17 @@ def trim_object(object_path, start, size, keep):
     entries = [bytes(blob[header(relocation_index, 16) + at:header(relocation_index, 16) + at + 8]) for at in range(0, header(relocation_index, 20), 8)]
     kept = [(int.from_bytes(entry[:4], 'little') - start).to_bytes(4, 'little') + entry[4:] for entry in entries
             if start <= int.from_bytes(entry[:4], 'little') < start + keep]
+    symbol_table = next(index for index in range(count) if header(index, 4) == 2)  # SHT_SYMTAB: move the symbols into the cut text
+    symbols_at = header(symbol_table, 16)
+    for entry in range(0, header(symbol_table, 20), 16):
+        value, shndx = (int.from_bytes(blob[symbols_at + entry + at:symbols_at + entry + at + width], 'little') for at, width in ((4, 4), (14, 2)))
+        if shndx != text_index:
+            continue
+        if start <= value < start + keep:
+            blob[symbols_at + entry + 4:symbols_at + entry + 8] = (value - start).to_bytes(4, 'little')
+        else:  # the helper that was cut away: an inert local symbol
+            blob[symbols_at + entry + 4:symbols_at + entry + 12] = bytes(8)
+            blob[symbols_at + entry + 12] = 0
     text_at = header(text_index, 16)
     blob[text_at:text_at + keep] = blob[text_at + start:text_at + start + size] + bytes(keep - size)  # the padding is nops
     blob[header(relocation_index, 16):header(relocation_index, 16) + 8 * len(kept)] = b''.join(kept)

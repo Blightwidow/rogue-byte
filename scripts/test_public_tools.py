@@ -14,6 +14,7 @@ import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
 import gen_context  # noqa: E402
 import list_functions  # noqa: E402
+import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
 
 
@@ -162,6 +163,24 @@ class ContextTests(unittest.TestCase):
         self.assertEqual(context['0X100100']['callers'], ['0X100000'])
         self.assertEqual(context['0X100000']['origin'], 'sly1')
         self.assertEqual(context['0X100000']['strings'], ['hero'])
+
+
+class PrepareReportTests(unittest.TestCase):
+    GOOD = {'measures': {'total_code': '100', 'matched_code': '40', 'total_functions': 10, 'matched_functions': 4}, 'units': [{'name': 'a'}]}
+
+    def test_good_report_has_no_problems(self):
+        self.assertEqual(prepare_report.problems(self.GOOD), [])
+
+    def test_missing_measure_is_reported(self):
+        bad = {**self.GOOD, 'measures': {'total_code': '100'}}
+        self.assertEqual(len(prepare_report.problems(bad)), 3)
+
+    def test_matched_over_total_is_reported(self):
+        bad = {**self.GOOD, 'measures': {**self.GOOD['measures'], 'matched_code': '400'}}
+        self.assertTrue(prepare_report.problems(bad))
+
+    def test_no_units_is_reported(self):
+        self.assertEqual(prepare_report.problems({**self.GOOD, 'units': []}), ['no units'])
 
 
 if __name__ == '__main__':

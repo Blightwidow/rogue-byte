@@ -47,4 +47,12 @@ The files list names, addresses, sizes and statuses only, never game bytes.
 `progress.yml` validates `site/data/summary.json` and, on a pull request, `progress-comment.yml` posts how the change moves
 the numbers against `main`. Neither builds the game. `pages.yml` deploys `site/` when it changes.
 
+## bytematch.dev
+
+[bytematch.dev/Blightwidow/rogue-byte](https://bytematch.dev/Blightwidow/rogue-byte) reads the objdiff report. On every push to `main`,
+`progress.yml` uploads the committed `site/data/objdiff-report.json` (from `make objdiff`) as the artifact `SCUS_973.16_report`
+(`report.json`), which bytematch.dev picks up within its polling interval (15 minutes by default; the project's manage page has
+"Re-read latest run"). So the page shows what was last committed: run `make elf`, `make objdiff` and `make progress` and commit `site/` after
+changing `src/`. Each unit is a module, `complete` when all its functions are matched, and the one progress category is "Game code".
+
 To look at the page locally: `python3 -m http.server -d site`.

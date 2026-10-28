@@ -59,13 +59,26 @@ def run(command):
     if result.returncode:
         sys.exit(' '.join(command[:3]) + ' failed: ' + result.stderr.strip())
 
+manifest = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('src/MANIFEST.tsv'))[1:]}
+manifest_size = {int(line.split('\t')[0], 16): int(line.split('\t')[2]) for line in list(open('src/MANIFEST.tsv'))[1:]}
+
+def unit_source(unit):
+    """The unit's assembly from asm_units' chunks (cut at the matched functions' bounds), each function with a `.size` of its own."""
+    lines = list(header)
+    for function in units[unit]:
+        body = [line for line in function['lines'] if not line.startswith('.size ')] if function['address'] in manifest_size else function['lines']
+        lines += body
+        if not any(line.startswith('.size ') for line in body):
+            lines.append(f".size {function['name']}, {manifest_size.get(function['address'], function['end'] - function['address'])}\n")
+    return ''.join(lines)
+
 def assemble_target(unit):
     destination = os.path.join(EXPECTED, unit + '.o')
     os.makedirs(os.path.dirname(destination), exist_ok=True)
+    source = destination[:-2] + '.s'
+    open(source, 'w').write(unit_source(unit))
     run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-no-pad-sections', '-I', 'include',
-         '-I', os.path.join('build', 'splat', 'asm'), '-o', destination, os.path.join('build', 'splat', 'asm', unit + '.s')])
-
-manifest = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('src/MANIFEST.tsv'))[1:]}
+         '-I', os.path.join('build', 'splat', 'asm'), '-o', destination, source])
 
 def build_base(unit):
     destination = os.path.join(BASE, unit + '.o')
@@ -74,6 +87,9 @@ def build_base(unit):
     for function in units[unit]:
         file = manifest.get(function['address'])
         path = os.path.join('build', 'units', file + '.o') if file else None
+        trimmed = os.path.join('build', 'image', 'trimmed', file.replace(os.sep, '_').replace('/', '_') + '.o') if file else None
+        if trimmed and os.path.isfile(trimmed):
+            path = trimmed
         if not path or not os.path.isfile(path):
             continue
         with open(path, 'rb') as handle:
@@ -81,7 +97,7 @@ def build_base(unit):
             text_index = elf.get_section_index('.text')
             renames = {}
             for symbol in elf.get_section_by_name('.symtab').iter_symbols():
-                if symbol['st_shndx'] == text_index and symbol['st_info']['type'] == 'STT_FUNC' and symbol['st_value'] == 0 and function['name'] not in renames.values():
+                if symbol['st_shndx'] == text_index and symbol['st_info']['type'] == 'STT_FUNC' and function['name'] not in renames.values():
                     renames[symbol.name] = function['name']
                 elif symbol['st_shndx'] == 'SHN_UNDEF' and symbol.name:
                     target = target_name(symbol.name)
@@ -91,7 +107,7 @@ def build_base(unit):
         os.makedirs(os.path.dirname(renamed_path), exist_ok=True)
         rename_file = renamed_path + '.syms'
         open(rename_file, 'w').write(''.join(f'{old} {new}\n' for old, new in renames.items()))
-        run([BINUTILS + '-objcopy', '--redefine-syms', rename_file, path, renamed_path])
+        run([BINUTILS + '-objcopy', '--redefine-syms', rename_file, '-R', '.mdebug', path, renamed_path])
         renamed.append(renamed_path)
     if renamed:
         run([BINUTILS + '-ld', '-EL', '-r', '--no-warn-mismatch', '-o', destination, *renamed])
@@ -106,7 +122,7 @@ configuration = {
     '$schema': 'https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json',
     'custom_make': 'true', 'custom_args': [], 'build_target': False, 'build_base': False, 'watch_patterns': [],
     'units': [{'name': unit, 'target_path': os.path.join(EXPECTED, unit + '.o'), 'base_path': os.path.join(BASE, unit + '.o'),
-               'metadata': {'progress_categories': [CATEGORY['id']]}} for unit in sorted(units)],
+               'metadata': {'progress_categories': [CATEGORY['id']], 'complete': all(function['address'] in manifest for function in units[unit])}} for unit in sorted(units)],
     'progress_categories': [CATEGORY],
 }
 with open('objdiff.json', 'w') as handle:
