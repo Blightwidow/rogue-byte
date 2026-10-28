@@ -28,9 +28,19 @@ do not match.
 
 Not every retail function came out of `ps2eeas`: 53 of the 3,526 functions matched before the switch only match with GNU `as` (a loop
 of five instructions that retail left unpadded is the typical case), as do 181 draft sources whose score is lower that way. They are
-listed in `config/us/gnu_as.txt` and assembled with GNU `as` (`compile_unit.assembler_for(address)`). The rule behind the split is not
-understood (it is not by module); the list was derived by scoring every source both ways, and a few more functions were added when
-their rodata (a string or float literal, a jump table) linked differently out of `ps2eeas`' object.
+listed in `config/us/gnu_as.txt` and assembled with GNU `as` (`compile_unit.assembler_for(address)`). It is not a split by module. Two
+rules explain most of it (measured on the matched sources: each rule has no `ps2eeas` function on its side):
+
+- **A five-instruction loop in retail** (a backward branch with offset -5). `ps2eeas` pads such loops to six, so none of its functions
+  has one; 31 matched GNU functions do. `scripts/matching/gnu_as_rule.py --write` adds every function of the split that has one.
+- **An inline-asm block that ends with a VU0 instruction** (`qmfc2`, `qmtc2`, `sqc2`, `lqc2`, `v*`) right before a branch. GCC leaves
+  that branch's delay slot to the assembler, retail's assembler moved the VU0 instruction into it and `ps2eeas` does not.
+  `compile_unit.fills_delay_slot_from_asm` finds it in the compiler's output and picks GNU `as` for such a source by itself. (A block that
+  ends in `mtc1` or `nop` is no sign: `ps2eeas` handles those.)
+
+Together they cover about two thirds of the sources in the list; the rest (17 matched, 34 tried) was derived by scoring every source both
+ways, and a few more functions were added when their rodata (a string or float literal, a jump table) linked differently out of
+`ps2eeas`' object. `ps2eeas` itself hangs on some inputs, so `compile_unit.py` gives up on it after 60 seconds.
 
 Measured when the assembler went in: of 3,526 matched sources 3,473 stayed exact with `ps2eeas`; of 2,313 non-matching sources 45
 became exact, 269 got closer and 181 got worse (those are in the list). Add a function to the list when it only matches, or

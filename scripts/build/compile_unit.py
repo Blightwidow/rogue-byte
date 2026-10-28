@@ -31,6 +31,25 @@ def hoist_externs(assembly):
     return '\n'.join(externs + [line for line in lines if not re.match(r'\s*\.extern\s', line)])
 
 
+BRANCH = re.compile(r'\s*(b|j|jal|jr|jalr|beq|bne|beqz|bnez|bgez|bgtz|blez|bltz|bc1[tf]l?|beql|bnel|bgezal|bltzal)\s')
+COPROCESSOR_2 = re.compile(r'(qmtc2|qmfc2|lqc2|sqc2|ctc2|cfc2|v[a-z0-9]+)(\.\w+)?\s')
+
+
+def fills_delay_slot_from_asm(assembly):
+    """True when an inline-asm block ends with a VU0 instruction (qmfc2, qmtc2, sqc2, lqc2, v*) and a branch or jump follows it right away.
+    GCC leaves such a branch's delay slot for the assembler to fill, and retail's assembler moved the VU0 instruction into it; `ps2eeas`
+    does not. Of the 3,500 matched sources none that has this shape assembles with `ps2eeas`; an inline-asm block ending in `mtc1` or `nop` does."""
+    lines = assembly.split('\n')
+    for index, line in enumerate(lines):
+        if line.strip() == '#NO_APP' and index + 1 < len(lines) and BRANCH.match(lines[index + 1]):
+            back = index - 1
+            while back >= 0 and (not lines[back].strip() or lines[back].lstrip().startswith(('#', '.'))):
+                back -= 1
+            if back >= 0 and COPROCESSOR_2.match(lines[back].strip() + ' '):
+                return True
+    return False
+
+
 def gnu_functions():
     """Addresses of the functions assembled with GNU as (config/us/gnu_as.txt)."""
     path = os.path.join(ROOT, 'config', 'us', 'gnu_as.txt')
@@ -62,10 +81,18 @@ def compile_object(language, source, output, assembler=None, include=None, local
         if result.returncode:
             return False, result.stderr or result.stdout
         text = open(assembly).read()
-        open(assembly, 'w').write(hoist_externs(text))
-        result = subprocess.run([WIBO, PS2EEAS, '-G0', '-o', temporary, assembly], capture_output=True, text=True)
-        os.remove(assembly)
-    else:
+        if assembler is None and fills_delay_slot_from_asm(text):
+            use_ps2eeas = False
+            os.remove(assembly)
+        else:
+            open(assembly, 'w').write(hoist_externs(text))
+            try:  # ps2eeas loops forever on some inputs
+                result = subprocess.run([WIBO, PS2EEAS, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=60)
+            except subprocess.TimeoutExpired:
+                os.remove(assembly)
+                return False, 'ps2eeas timed out'
+            os.remove(assembly)
+    if not use_ps2eeas:
         result = subprocess.run([*common, '-c', os.path.abspath(source), '-o', temporary], capture_output=True, text=True)
     if result.returncode or not os.path.exists(temporary):
         return False, result.stderr or result.stdout

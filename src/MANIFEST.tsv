@@ -976,6 +976,7 @@ address	name	size	file
 0X129480	CRef_ConstructPair	32	splice-ref/CRef_ConstructPair.cpp
 0X1294A0	CRef_ConstructProc	32	splice-ref/CRef_ConstructProc.cpp
 0X129518	CRef_SetS32	64	splice-ref/CRef_SetS32.cpp
+0X129598	CRef_SetBool	64	splice-ref/CRef_SetBool.cpp
 0X1295D8	CRef_SetSymid	64	splice-ref/CRef_SetSymid.cpp
 0X129618	CRef_SetBifk	64	splice-ref/CRef_SetBifk.cpp
 0X129658	__as__4CRefRC4CRef	80	splice-ref/__as__4CRefRC4CRef.c
@@ -1371,6 +1372,7 @@ address	name	size	file
 0X14B640	GlobalCtor_14b640	32	button-cd/GlobalCtor_14b640.c
 0X14B660	func_0014B660	16	unsorted/fun_0014b660.c
 0X14B670	CFileLocation_Cb	28	button-cd/CFileLocation_Cb.c
+0X14B690	PchzFidName_14b690	12	button-cd/PchzFidName_14b690.cpp
 0X14B6A0	StaticInitSlotheaps_14b6a0	308	button-cd/StaticInitSlotheaps_14b6a0.c
 0X14B7D8	GlobalCtor_14b7d8	32	button-cd/GlobalCtor_14b7d8.c
 0X14B9C0	FValidCdMmode__Fv	60	cd/FValidCdMmode__Fv.c
@@ -2702,6 +2704,7 @@ address	name	size	file
 0X1E18E0	AddSeqRecordTakeOutBomb	48	splice-ref-crv/AddSeqRecordTakeOutBomb.cpp
 0X1E1910	AddSeqRecordDropBomb	48	splice-ref-crv/AddSeqRecordDropBomb.cpp
 0X1E1940	AddSeqRecordWaitForVoice	48	splice-ref-crv/AddSeqRecordWaitForVoice.cpp
+0X1E1970	AddSeqRecordShowBrief	60	splice-ref-crv/AddSeqRecordShowBrief.cpp
 0X1E19B0	AddSeqRecordHideBrief	48	splice-ref-crv/AddSeqRecordHideBrief.cpp
 0X1E1A60	func_001E1A60	48	splice-ref-crv/fun_001e1a60.cpp
 0X1E1B58	Seqnode_AddRef	16	splice-ref-crv/Seqnode_AddRef.c
@@ -2897,6 +2900,7 @@ address	name	size	file
 0X1F6030	PpartFindAlo	56	so/PpartFindAlo.cpp
 0X1F66F0	CloneAloHierarchy	148	so/CloneAloHierarchy.cpp
 0X1F6838	GetSoNoXpsAll	40	so/GetSoNoXpsAll.cpp
+0X1F6960	func_001F6960	20	unsorted/fun_001f6960.cpp
 0X1F7410	func_001F7410	288	so-sm/fun_001f7410.cpp
 0X1F7588	FAbsorbSoWkr	12	so-sm/FAbsorbSoWkr.cpp
 0X1F78A0	func_001F78A0	56	so-sm/fun_001f78a0.cpp
@@ -3340,6 +3344,7 @@ address	name	size	file
 0X221CC0	DeactivateCptn	36	tn/DeactivateCptn.cpp
 0X223E18	StaticInitSlotheaps_223e18	308	tn-screen/StaticInitSlotheaps_223e18.c
 0X223F50	func_00223F50	32	tn-screen/fun_00223f50.c
+0X223FE0	LoadGadgetObjFromBrx	72	tn-screen/LoadGadgetObjFromBrx.c
 0X224258	StickGadgetObj	132	new_2241d8/StickGadgetObj.cpp
 0X224350	AdjustGadgetObjNewXp	48	new_2241d8/AdjustGadgetObjNewXp.cpp
 0X224508	FGadgetObjAcceptsStick	136	new_2241d8/FGadgetObjAcceptsStick.cpp
@@ -3364,6 +3369,7 @@ address	name	size	file
 0X226C10	__4VIFS	68	vifs/__4VIFS.c
 0X226CA8	AddVifBaseOffset__4VIFSii	52	vifs/AddVifBaseOffset__4VIFSii.cpp
 0X226CE0	AddVifMscal__4VIFSPv	48	vifs/AddVifMscal__4VIFSPv.cpp
+0X226D10	AddVifFlush__4VIFS	24	vifs/AddVifFlush__4VIFS.cpp
 0X226D28	AddVifFlusha__4VIFS	24	vifs/AddVifFlusha__4VIFS.cpp
 0X226D40	AddVifStcycl__4VIFSii	36	vifs/AddVifStcycl__4VIFSii.cpp
 0X226DD0	AddVifStmask__4VIFSUi	56	vifs/AddVifStmask__4VIFSUi.cpp
