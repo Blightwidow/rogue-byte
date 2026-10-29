@@ -27,6 +27,7 @@ m2c does not read VU0 macro instructions. `scripts/matching/m2c_vu.patch` teache
 `ctc2`, `cfc2`, `v*`) as an ordered opaque call, and `harvest.py` turns those calls into `asm volatile` statements (GPR operands become
 `"r"` inputs, `qmfc2`/`cfc2` results become temporaries). Apply it once in your m2c checkout:
 `cd work/matching/tools/m2c && git apply ../../../../scripts/matching/m2c_vu.patch`. Drafts cached before the patch live in `m2c-stack/`;
-patched ones go to `m2c-vu/`. Result on the 951 unsourced functions: unsupported 531 to 392, drafts that compile 120 to 168, 25 within
-20 words of retail (none before). Multimedia (MMI) and unaligned (`ldl`/`ldr`) instructions are still refused. The drafts are a starting
+patched ones go to `m2c-vu/`. Result on the 945 unsourced functions (with `--repair`): unsupported 531 to 392, drafts that compile 120 to 222, 51 within
+20 words of retail and 7 within 5 (none before). The stack fields m2c names (`sp0`, `sp10`) become `#define`s into the local `sp` buffer, and a callee
+called with fewer arguments than its first declaration gets a `(...)` prototype in the repair loop. Multimedia (MMI) and unaligned (`ldl`/`ldr`) instructions are still refused. The drafts are a starting
 point: see matching.md ("VU0 functions") for how to bring them to a match, and keep register pins and barriers out.

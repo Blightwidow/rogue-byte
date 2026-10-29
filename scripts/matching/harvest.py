@@ -178,6 +178,24 @@ def lift_vu(body):
     return '\n'.join(out)
 
 
+STACK_FIELD = re.compile(r'/\*\s*(0x[0-9A-Fa-f]+)\s*\*/\s*([\w ]+?)\s*(\**)\s*(\w+)(\[[^\]]*\])?;')
+
+
+def stack_field_macros(body):
+    """`#define`s that make the fields of m2c's `struct _m2c_stack_<name>` (sp0, sp10, ...) views into the local `sp` buffer."""
+    match = re.search(r'struct _m2c_stack_\w+ \{(.*?)\};', body, re.S)
+    if not match:
+        return ''
+    lines = []
+    for field in STACK_FIELD.finditer(match.group(1)):
+        offset, kind, stars, name, array = field.groups()
+        if name.startswith('pad') or kind.strip() == 'char' and name.startswith('pad'):
+            continue
+        kind = (kind.strip() + ' ' + stars).strip()
+        lines.append(f'#define {name} ((' + kind + ' *)(sp + ' + offset + '))' if array else f'#define {name} (*({kind} *)(sp + {offset}))')
+    return '\n'.join(lines) + '\n' if lines else ''
+
+
 def build(draft, signatures=None):
     """C++ source for a draft: prelude, then everything in an extern "C" block. `signatures` (name -> 'void'|'int'|'float') retypes callees."""
     if REJECT.search(draft):
@@ -195,6 +213,9 @@ def build(draft, signatures=None):
     stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
     if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
         body = re.sub(rf'(\b{re.escape(stack.group(1))}\([^)]*\)\s*\{{\n)', rf'\1    s8 sp[{stack.group(2)}] __attribute__((aligned(16)));\n', body, count=1)
+    macros = stack_field_macros(body)
+    if macros:  # after the struct: the names are also its members
+        body = re.sub(r'(struct _m2c_stack_\w+ \{.*?\};[^\n]*\n)', lambda found: found.group(1) + macros, body, count=1, flags=re.S)
     return PRELUDE + 'extern "C" {\n' + body + '\n}\n'
 
 
@@ -267,6 +288,14 @@ def repair_once(text, message):
             if index < len(pieces):
                 pieces[index] = f' ({types[index]})({pieces[index].strip()})' if index else f'({types[index]})({pieces[index].strip()})'
                 lines[number] = line[:start] + ','.join(pieces) + line[end - 1:]
+                return '\n'.join(lines)
+    few = re.search(r"too few arguments to function `[^`']*?(\w+)\([^']*'", reason)
+    if few:  # a callee declared from one call and called with fewer arguments elsewhere: any argument list
+        name = few.group(1)
+        for index, candidate in enumerate(lines):
+            declaration = re.match(rf'^([^\s(][^(]*\b{re.escape(name)})\([^)]*\);(.*)$', candidate)
+            if declaration and '...' not in candidate:
+                lines[index] = f'{declaration.group(1)}(...);{declaration.group(2)}'
                 return '\n'.join(lines)
     return None
 
