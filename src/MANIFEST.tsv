@@ -1033,6 +1033,7 @@ address	name	size	file
 0X12CF20	func_0012CF20	8	emitter-lookat/fun_0012cf20.c
 0X12CF28	func_0012CF28	8	emitter-lookat/fun_0012cf28.c
 0X12CF30	func_0012CF30	84	emitter-lookat/fun_0012cf30.c
+0X12CF88	CloneAct	84	emitter-lookat/CloneAct.cpp
 0X12CFE0	AddLookat	60	emitter-lookat/AddLookat.c
 0X12D020	RemoveLookat	56	emitter-lookat/RemoveLookat.c
 0X12D058	FLookatInList	48	emitter-lookat/FLookatInList.cpp
@@ -1071,6 +1072,7 @@ address	name	size	file
 0X12F0D0	StaticInitSlotheaps_12ef98_thunk	32	proxy-aseg/StaticInitSlotheaps_12ef98_thunk.c
 0X12F0F0	StaticInitSlotheaps_12f0f0	308	proxy-aseg/StaticInitSlotheaps_12f0f0.c
 0X12F228	StaticInitSlotheaps_12f0f0_thunk	32	proxy-aseg/StaticInitSlotheaps_12f0f0_thunk.c
+0X12F248	InitAseg__FP4ASEG	96	aseg/InitAseg__FP4ASEG.cpp
 0X12F8C0	PostAsegLoadCallback	48	aseg/PostAsegLoadCallback.cpp
 0X12F990	TFindAsegLabel__FP4ASEG3OID	40	aseg/TFindAsegLabel__FP4ASEG3OID.cpp
 0X12FE58	BindAsegChn	180	aseg/BindAsegChn.cpp
@@ -1195,6 +1197,7 @@ address	name	size	file
 0X13B5E8	GetBombVictims	440	bomb-crusher/GetBombVictims.cpp
 0X13B7A0	func_0013B7A0	24	unsorted/fun_0013b7a0.c
 0X13B7B8	SortUniquePso	168	bomb-crusher/SortUniquePso.cpp
+0X13BBF8	FIgnoreBombIntersection	100	bomb-crusher/FIgnoreBombIntersection.cpp
 0X13BC60	InferExpl	52	bomb-crusher/InferExpl.c
 0X13BC98	bomb__static_initialization_and_destruction_0	308	bomb-crusher/bomb__static_initialization_and_destruction_0.c
 0X13BDD0	func_0013BDD0	32	bomb-crusher/fun_0013bdd0.c
@@ -1474,6 +1477,7 @@ address	name	size	file
 0X150E60	func_00150E60	60	tn-rip/fun_00150e60.c
 0X150EA0	func_00150EA0	68	tn-rip/fun_00150ea0.c
 0X150EE8	func_00150EE8	8	tn-rip/fun_00150ee8.c
+0X150EF0	bevy_classes_k30_cam_150ef0	104	tn-rip/bevy_classes_k30_cam_150ef0.cpp
 0X151130	bevy_classes_k30_cam_deactivate_2	212	tn-rip/bevy_classes_k30_cam_deactivate_2.cpp
 0X151208	func_00151208	52	tn-rip/fun_00151208.c
 0X1512E0	bevy_camera_looks_deactivate	92	tn-rip/bevy_camera_looks_deactivate.c
@@ -1810,6 +1814,7 @@ address	name	size	file
 0X178E98	GoalFollowCrvAnim_Init	68	hide/GoalFollowCrvAnim_Init.c
 0X1795E8	GoalHit_Update	180	hide-puffer/GoalHit_Update.cpp
 0X1796A0	func_001796A0	44	hide-puffer/fun_001796a0.cpp
+0X1796D0	func_001796D0	124	hide-puffer/fun_001796d0.cpp
 0X179750	func_00179750	44	hide-puffer/fun_00179750.cpp
 0X179780	func_00179780	160	hide-puffer/fun_00179780.cpp
 0X179868	func_00179868	44	hide-puffer/fun_00179868.cpp
@@ -1918,6 +1923,7 @@ address	name	size	file
 0X180478	func_00180478	132	new_1803e0/fun_00180478.cpp
 0X180500	Chaser_Init	148	new_1803e0/Chaser_Init.cpp
 0X180598	Chaser_ResetToNone	48	new_1803e0/Chaser_ResetToNone.c
+0X1805C8	Chaser_PostLoad	108	new_1803e0/Chaser_PostLoad.cpp
 0X180638	Chaser_OnAdd	48	new_1803e0/Chaser_OnAdd.c
 0X181238	Chaser_Reset	48	pzo-hide/Chaser_Reset.c
 0X181268	Chaser_SetState	160	pzo-hide/Chaser_SetState.cpp
@@ -2566,6 +2572,7 @@ address	name	size	file
 0X1CDE70	SetRipgEmitb__FP4RIPGP5EMITB	12	rip/SetRipgEmitb__FP4RIPGP5EMITB.c
 0X1CE6C0	func_001CE6C0	16	rip/fun_001ce6c0.c
 0X1CE888	PripNewRipg	152	rip/PripNewRipg.cpp
+0X1CE920	InitRip__FP3RIPP6VECTORfP2SO	92	rip/InitRip__FP3RIPP6VECTORfP2SO.cpp
 0X1CE980	RemoveRip	56	light/RemoveRip.c
 0X1CE9B8	func_001CE9B8	8	light-rip/fun_001ce9b8.c
 0X1CE9C0	AddRipRef__FP3RIP	16	rip/AddRipRef__FP3RIP.c
@@ -2580,6 +2587,7 @@ address	name	size	file
 0X1CF968	FBounceFlying__FP6FLYINGP2SOP6VECTORT2	184	rip/FBounceFlying__FP6FLYINGP2SOP6VECTORT2.cpp
 0X1CFA20	UpdateStuck__FP5STUCKf	28	rip/UpdateStuck__FP5STUCKf.c
 0X1CFBE0	FBounceShrapnel	164	rip/FBounceShrapnel.cpp
+0X1CFCD8	InitMatch__FP5MATCHP6VECTORfP2SO	88	rip/InitMatch__FP5MATCHP6VECTORfP2SO.cpp
 0X1D0038	UpdateMatch__FP5MATCHf	152	rip/UpdateMatch__FP5MATCHf.cpp
 0X1D00D0	RenderMatch__FP5MATCHP2CM	56	rip/RenderMatch__FP5MATCHP2CM.cpp
 0X1D0108	InitGlint__FP5GLINTP6VECTORfP2SO	80	rip/InitGlint__FP5GLINTP6VECTORfP2SO.c
@@ -2996,6 +3004,7 @@ address	name	size	file
 0X1F7C68	FadeAloIn	168	so-sm/FadeAloIn.cpp
 0X1F7E08	CpartCollectAlo	192	so-sm/CpartCollectAlo.cpp
 0X1F7EC8	func_001F7EC8	36	unsorted/fun_001f7ec8.cpp
+0X1F7EF0	func_001F7EF0	24	unsorted/fun_001f7ef0.cpp
 0X1F7F08	func_001F7F08	20	unsorted/fun_001f7f08.cpp
 0X1F7F20	func_001F7F20	36	unsorted/fun_001f7f20.cpp
 0X1F7FA0	SetAloScrollingMasterSpeeds	152	so-sm/SetAloScrollingMasterSpeeds.cpp
@@ -3435,6 +3444,7 @@ address	name	size	file
 0X223F50	func_00223F50	32	tn-screen/fun_00223f50.c
 0X223FE0	LoadGadgetObjFromBrx	72	tn-screen/LoadGadgetObjFromBrx.c
 0X224258	StickGadgetObj	132	new_2241d8/StickGadgetObj.cpp
+0X2242E0	FIgnoreGadgetObjIntersection	108	new_2241d8/FIgnoreGadgetObjIntersection.cpp
 0X224350	AdjustGadgetObjNewXp	48	new_2241d8/AdjustGadgetObjNewXp.cpp
 0X224508	FGadgetObjAcceptsStick	136	new_2241d8/FGadgetObjAcceptsStick.cpp
 0X224590	FGadgetObjActive	36	new_2241d8/FGadgetObjActive.cpp

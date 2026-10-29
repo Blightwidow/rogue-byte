@@ -2666,7 +2666,7 @@
 <rect x="672.9" y="349.4" width="12.8" height="11.6" fill="#2f7af4"><title>func_00179780 0X179780 160 bytes (c)</title></rect>
 <rect x="629.4" y="361.4" width="11.7" height="10.6" fill="#2f7af4"><title>func_0017A670 0X17A670 136 bytes (c)</title></rect>
 <rect x="629.4" y="372.5" width="11.7" height="10.6" fill="#2f7af4"><title>func_0017A730 0X17A730 136 bytes (c)</title></rect>
-<rect x="629.4" y="383.5" width="11.7" height="10.0" fill="#4a45a8"><title>func_001796D0 0X1796D0 128 bytes (draft)</title></rect>
+<rect x="629.4" y="383.5" width="11.7" height="10.0" fill="#2f7af4"><title>func_001796D0 0X1796D0 128 bytes (c)</title></rect>
 <rect x="629.4" y="393.9" width="11.7" height="9.3" fill="#4a45a8"><title>func_00179E80 0X179E80 120 bytes (draft)</title></rect>
 <rect x="629.4" y="403.6" width="11.7" height="9.3" fill="#4a45a8"><title>func_00179EF8 0X179EF8 120 bytes (draft)</title></rect>
 <rect x="641.5" y="361.4" width="10.9" height="9.3" fill="#4a45a8"><title>func_0017A4E8 0X17A4E8 112 bytes (draft)</title></rect>
@@ -3822,7 +3822,7 @@
 <rect x="854.2" y="437.3" width="10.6" height="10.2" fill="#4a45a8"><title>RenderStuck__FP5STUCKP2CM 0X1CFA40 120 bytes (draft)</title></rect>
 <rect x="854.2" y="447.9" width="10.6" height="9.5" fill="#4a45a8"><title>InitBublet__FP6BUBLETP6VECTORfP2SO 0X1D0E48 112 bytes (draft)</title></rect>
 <rect x="854.2" y="457.8" width="10.6" height="7.4" fill="#4a45a8"><title>RenderRip 0X1CF518 88 bytes (draft)</title></rect>
-<rect x="865.2" y="437.3" width="9.2" height="8.6" fill="#4a45a8"><title>InitMatch__FP5MATCHP6VECTORfP2SO 0X1CFCD8 88 bytes (draft)</title></rect>
+<rect x="865.2" y="437.3" width="9.2" height="8.6" fill="#2f7af4"><title>InitMatch__FP5MATCHP6VECTORfP2SO 0X1CFCD8 88 bytes (c)</title></rect>
 <rect x="874.8" y="437.3" width="9.2" height="8.6" fill="#2f7af4"><title>PostRemitEmit__FP5REMITP5EMITB 0X1D1108 88 bytes (c)</title></rect>
 <rect x="884.4" y="437.3" width="8.3" height="8.6" fill="#4a45a8"><title>RenderOrbit__FP5ORBITP2CM 0X1CFC88 80 bytes (draft)</title></rect>
 <rect x="865.2" y="446.3" width="7.3" height="9.8" fill="#2f7af4"><title>InitGlint__FP5GLINTP6VECTORfP2SO 0X1D0108 80 bytes (c)</title></rect>
@@ -4129,7 +4129,7 @@
 <rect x="1236.6" y="133.1" width="9.1" height="11.9" fill="#4a45a8"><title>bevy_classes_k30_cam_150780 0X150780 120 bytes (draft)</title></rect>
 <rect x="1246.1" y="133.1" width="8.4" height="11.9" fill="#4a45a8"><title>PosCplookAnchor 0X14FE58 112 bytes (draft)</title></rect>
 <rect x="1254.9" y="133.1" width="8.4" height="11.9" fill="#4a45a8"><title>PosCplookEye 0X14FEC8 112 bytes (draft)</title></rect>
-<rect x="1224.0" y="145.4" width="8.2" height="11.3" fill="#4a45a8"><title>bevy_classes_k30_cam_150ef0 0X150EF0 104 bytes (draft)</title></rect>
+<rect x="1224.0" y="145.4" width="8.2" height="11.3" fill="#2f7af4"><title>bevy_classes_k30_cam_150ef0 0X150EF0 104 bytes (c)</title></rect>
 <rect x="1224.0" y="157.2" width="8.2" height="11.3" fill="#4a45a8"><title>bevy_camera_policy_deactivate 0X151698 104 bytes (draft)</title></rect>
 <rect x="1224.0" y="168.9" width="8.2" height="10.4" fill="#2f7af4"><title>bevy_camera_looks_deactivate 0X1512E0 96 bytes (c)</title></rect>
 <rect x="1232.6" y="145.4" width="10.3" height="7.6" fill="#2f7af4"><title>func_00150728 0X150728 88 bytes (c)</title></rect>
@@ -4308,7 +4308,7 @@
 <rect x="946.7" y="220.0" width="13.8" height="8.8" fill="#2f7af4"><title>func_0013C3B8 0X13C3B8 136 bytes (c)</title></rect>
 <rect x="960.9" y="220.0" width="13.0" height="8.8" fill="#4a45a8"><title>ReturnLootToGuard 0X13C4E0 128 bytes (draft)</title></rect>
 <rect x="946.7" y="229.2" width="9.7" height="11.1" fill="#4a45a8"><title>Bomb_OnPoolClaim 0X13BB80 120 bytes (draft)</title></rect>
-<rect x="956.8" y="229.2" width="8.3" height="11.1" fill="#4a45a8"><title>FIgnoreBombIntersection 0X13BBF8 104 bytes (draft)</title></rect>
+<rect x="956.8" y="229.2" width="8.3" height="11.1" fill="#2f7af4"><title>FIgnoreBombIntersection 0X13BBF8 104 bytes (c)</title></rect>
 <rect x="965.5" y="229.2" width="8.3" height="11.1" fill="#2a2d6e"><title>InitPickLoot 0X13BDF0 104 bytes (asm)</title></rect>
 <rect x="946.7" y="240.7" width="8.8" height="9.7" fill="#4a45a8"><title>FIgnoreLootIntersection 0X13C278 96 bytes (draft)</title></rect>
 <rect x="946.7" y="250.8" width="8.8" height="8.0" fill="#2f7af4"><title>FAbsorbLootWkr 0X13C368 80 bytes (c)</title></rect>
@@ -4388,7 +4388,7 @@
 <rect x="1115.8" y="248.8" width="7.0" height="4.8" fill="#2f7af4"><title>func_001F7EC8 0X1F7EC8 40 bytes (c)</title></rect>
 <rect x="1115.8" y="254.0" width="7.0" height="4.8" fill="#2f7af4"><title>func_001F7F20 0X1F7F20 40 bytes (c)</title></rect>
 <rect x="1123.2" y="242.5" width="5.4" height="3.6" fill="#2f7af4"><title>func_001F7B40 0X1F7B40 24 bytes (c)</title></rect>
-<rect x="1129.0" y="242.5" width="5.4" height="3.6" fill="#4a45a8"><title>func_001F7EF0 0X1F7EF0 24 bytes (draft)</title></rect>
+<rect x="1129.0" y="242.5" width="5.4" height="3.6" fill="#2f7af4"><title>func_001F7EF0 0X1F7EF0 24 bytes (c)</title></rect>
 <rect x="1123.2" y="246.5" width="4.6" height="4.3" fill="#2f7af4"><title>func_001F7F08 0X1F7F08 24 bytes (c)</title></rect>
 <rect x="1128.2" y="246.5" width="2.9" height="4.3" fill="#2f7af4"><title>FAbsorbSoWkr 0X1F7588 16 bytes (c)</title></rect>
 <rect x="1131.5" y="246.5" width="2.9" height="4.3" fill="#2f7af4"><title>func_001F7B58 0X1F7B58 16 bytes (c)</title></rect>
@@ -4960,7 +4960,7 @@
 <rect x="1433.7" y="304.7" width="11.3" height="14.7" fill="#2f7af4"><title>EnsureAseg__FP4ASEGP3ALO4SEEKffiPP5ASEGA 0X1304E0 184 bytes (c)</title></rect>
 <rect x="1433.7" y="319.7" width="11.3" height="13.4" fill="#2f7af4"><title>func_00130010 0X130010 168 bytes (c)</title></rect>
 <rect x="1445.4" y="304.7" width="9.9" height="10.0" fill="#4a45a8"><title>func_0012FDE8 0X12FDE8 112 bytes (draft)</title></rect>
-<rect x="1455.7" y="304.7" width="8.4" height="10.0" fill="#4a45a8"><title>InitAseg__FP4ASEG 0X12F248 96 bytes (draft)</title></rect>
+<rect x="1455.7" y="304.7" width="8.4" height="10.0" fill="#2f7af4"><title>InitAseg__FP4ASEG 0X12F248 96 bytes (c)</title></rect>
 <rect x="1445.4" y="315.1" width="7.9" height="9.7" fill="#4a45a8"><title>PeaFindAsegLabel 0X12F938 88 bytes (draft)</title></rect>
 <rect x="1445.4" y="325.2" width="7.9" height="7.9" fill="#4a45a8"><title>PostAsegLoad 0X12F8F0 72 bytes (draft)</title></rect>
 <rect x="1453.7" y="315.1" width="5.4" height="8.8" fill="#2f7af4"><title>PasegaFindAseg__FP4ASEGP3ALO 0X1304A8 56 bytes (c)</title></rect>
@@ -5166,7 +5166,7 @@
 <rect x="1007.2" y="864.4" width="12.2" height="9.9" fill="#2f7af4"><title>StickGadgetObj 0X224258 136 bytes (c)</title></rect>
 <rect x="1019.8" y="864.4" width="12.2" height="9.9" fill="#2f7af4"><title>FGadgetObjAcceptsStick 0X224508 136 bytes (c)</title></rect>
 <rect x="1007.2" y="874.7" width="9.1" height="12.6" fill="#4a45a8"><title>HandleGadgetObjMessage 0X2241D8 128 bytes (draft)</title></rect>
-<rect x="1007.2" y="887.7" width="9.1" height="10.9" fill="#4a45a8"><title>FIgnoreGadgetObjIntersection 0X2242E0 112 bytes (draft)</title></rect>
+<rect x="1007.2" y="887.7" width="9.1" height="10.9" fill="#2f7af4"><title>FIgnoreGadgetObjIntersection 0X2242E0 112 bytes (c)</title></rect>
 <rect x="1016.7" y="874.7" width="7.5" height="10.3" fill="#4a45a8"><title>ReleaseGadgetObj 0X2245B8 88 bytes (draft)</title></rect>
 <rect x="1024.6" y="874.7" width="7.5" height="10.3" fill="#4a45a8"><title>DetonateGadgetObj 0X224E70 88 bytes (draft)</title></rect>
 <rect x="1016.7" y="885.4" width="8.6" height="8.1" fill="#2f7af4"><title>FGadgetObjCanStick 0X224638 80 bytes (c)</title></rect>
@@ -5742,7 +5742,7 @@
 <rect x="1511.1" y="437.0" width="16.4" height="8.2" fill="#2f7af4"><title>func_001803E0 0X1803E0 152 bytes (c)</title></rect>
 <rect x="1511.1" y="445.6" width="16.4" height="8.2" fill="#2f7af4"><title>Chaser_Init 0X180500 152 bytes (c)</title></rect>
 <rect x="1527.9" y="437.0" width="13.3" height="9.0" fill="#2f7af4"><title>func_00180478 0X180478 136 bytes (c)</title></rect>
-<rect x="1527.9" y="446.4" width="13.3" height="7.3" fill="#4a45a8"><title>Chaser_PostLoad 0X1805C8 112 bytes (draft)</title></rect>
+<rect x="1527.9" y="446.4" width="13.3" height="7.3" fill="#2f7af4"><title>Chaser_PostLoad 0X1805C8 112 bytes (c)</title></rect>
 <rect x="1541.6" y="437.0" width="4.9" height="8.2" fill="#2f7af4"><title>Chaser_ResetToNone 0X180598 48 bytes (c)</title></rect>
 <rect x="1541.6" y="445.6" width="4.9" height="8.2" fill="#2f7af4"><title>Chaser_OnAdd 0X180638 48 bytes (c)</title></rect>
 <rect x="1495.5" y="395.2" width="52.4" height="59.9" fill="none" stroke="#05060f" stroke-width="2"/>
@@ -5858,7 +5858,7 @@
 <rect x="1115.1" y="778.2" width="18.0" height="13.1" fill="#4a45a8"><title>OnRipgRemove 0X1CDE80 264 bytes (draft)</title></rect>
 <rect x="1133.5" y="763.4" width="18.0" height="9.0" fill="#4a45a8"><title>RenderRipgSelf__FP4RIPGP2CMP2RO 0X1CE608 184 bytes (draft)</title></rect>
 <rect x="1133.5" y="772.9" width="10.9" height="12.3" fill="#2f7af4"><title>PripNewRipg 0X1CE888 152 bytes (c)</title></rect>
-<rect x="1144.7" y="772.9" width="6.7" height="12.3" fill="#4a45a8"><title>InitRip__FP3RIPP6VECTORfP2SO 0X1CE920 96 bytes (draft)</title></rect>
+<rect x="1144.7" y="772.9" width="6.7" height="12.3" fill="#2f7af4"><title>InitRip__FP3RIPP6VECTORfP2SO 0X1CE920 96 bytes (c)</title></rect>
 <rect x="1133.5" y="785.6" width="13.1" height="5.8" fill="#4a45a8"><title>func_001CE170 0X1CE170 88 bytes (draft)</title></rect>
 <rect x="1146.9" y="785.6" width="4.5" height="2.7" fill="#2f7af4"><title>SetRipgEmitb__FP4RIPGP5EMITB 0X1CDE70 16 bytes (c)</title></rect>
 <rect x="1146.9" y="788.7" width="4.5" height="2.7" fill="#2f7af4"><title>func_001CE6C0 0X1CE6C0 16 bytes (c)</title></rect>
@@ -6813,7 +6813,7 @@
 <rect x="1362.3" y="622.8" width="12.3" height="18.4" fill="#4a45a8"><title>func_0012D108 0X12D108 264 bytes (draft)</title></rect>
 <rect x="1362.3" y="641.6" width="12.3" height="12.1" fill="#4a45a8"><title>EvaluateAcgb 0X12CDA0 176 bytes (draft)</title></rect>
 <rect x="1375.0" y="622.8" width="9.9" height="7.3" fill="#2f7af4"><title>func_0012CF30 0X12CF30 88 bytes (c)</title></rect>
-<rect x="1385.2" y="622.8" width="9.9" height="7.3" fill="#4a45a8"><title>CloneAct 0X12CF88 88 bytes (draft)</title></rect>
+<rect x="1385.2" y="622.8" width="9.9" height="7.3" fill="#2f7af4"><title>CloneAct 0X12CF88 88 bytes (c)</title></rect>
 <rect x="1375.0" y="630.6" width="7.5" height="8.7" fill="#4a45a8"><title>func_0012D088 0X12D088 80 bytes (draft)</title></rect>
 <rect x="1382.8" y="630.6" width="5.9" height="8.7" fill="#2f7af4"><title>ActivateAct 0X12CE98 64 bytes (c)</title></rect>
 <rect x="1389.2" y="630.6" width="5.9" height="8.7" fill="#2f7af4"><title>FActDrivesXf 0X12CEE0 64 bytes (c)</title></rect>
