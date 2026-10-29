@@ -36,3 +36,9 @@ point: see matching.md ("VU0 functions") for how to bring them to a match, and k
 The repair loop also casts a dereferenced integer expression (`*(temp + var)` where m2c could not type the pointer) to `*(s32 *)` (`f32` on a
 line with floats), leaves alone any operand that mentions a pointer, and declares the callee-saved registers m2c reads first (`saved_reg_s1`)
 as locals.
+
+`harvest.py --shape` then tries the fixes that recurred in hand-shaped matches on every draft that compiles, keeping a variant only when it scores
+lower: `(int)` around a shifted 64-bit bit test, sign-extended 32-bit masks (`& (s64)(s32)0xFBFFFFFF`), `L` on shifts of 32 and more
+(`0x8000L << 0x23`), and pass-through leading arguments (`arg0`, `arg0, arg1`) for callees the repair loop declared `(...)`. On the 283 compiling
+drafts it improved 26 (for example 8 to 3 on two of them) and matched none by itself: it finds the cheap fixes, the rest is shaping by hand.
+

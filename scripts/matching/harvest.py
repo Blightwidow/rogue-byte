@@ -390,6 +390,74 @@ def judge_with_repair(address, text, attempts=8):
     return scorer.judge(address, text), text
 
 
+def wrap_bit_tests(text):
+    """`(X >> 0x3C) & 1` with a 64-bit X gets a dsll32/dsra32 pair retail lacks: the shifted value is cast to `(int)`."""
+    out, index = '', 0
+    marker = re.compile(r'>> (?:0x[0-9A-Fa-f]+|\d+)\) & 1\b')
+    while True:
+        found = marker.search(text, index)
+        if not found:
+            return out + text[index:]
+        depth, start = 0, found.end() - len(found.group(0)) + len(found.group(0).split(')')[0])  # position of the closing parenthesis
+        position = start
+        while position >= 0:
+            depth += (text[position] == ')') - (text[position] == '(')
+            if depth == 0:
+                break
+            position -= 1
+        if position < 0 or text[max(0, position - 5):position] == '(int)':
+            out += text[index:found.end()]
+        else:
+            out += text[index:position] + '(int)' + text[position:found.end()]
+        index = found.end()
+
+
+def sign_extend_masks(text):
+    """A 32-bit constant with its top bit set, used as a 64-bit mask (`& 0xFBFFFFFF`), is a sign-extended constant in retail."""
+    return re.sub(r'(&\s*)(0x[89A-Fa-f][0-9A-Fa-f]{7})\b(?!\s*[uUlL])', lambda found: f'{found.group(1)}(s64)(s32){found.group(2)}', text)
+
+
+def long_shifts(text):
+    """`0x8000 << 0x23` is an int shift: a 64-bit constant needs `0x8000L`."""
+    return re.sub(r'\b(0x[0-9A-Fa-f]+)(\s*<<\s*(?:0x[2-9A-Fa-f][0-9A-Fa-f]|[3-6]\d)\b)', lambda found: f'{found.group(1)}L{found.group(2)}', text)
+
+
+def pass_through_arguments(text):
+    """Variants that give every call of a `(...)` callee its pass-through leading arguments (`arg0`, then `arg0, arg1`): m2c drops an
+    untouched `$a0`/`$a1`, and the repair loop's variadic prototype hides it."""
+    variants = []
+    names = re.findall(r'^[^\s(][^(]*?\b(\w+)\(\.\.\.\);', text, re.M)
+    for name in names:
+        for prefix in ('arg0', 'arg0, arg1'):
+            if prefix.split(',')[-1].strip() not in text:
+                continue
+            changed = re.sub(rf'(?<![\w.>])({re.escape(name)})\((?!\.\.\.|\))', rf'\1({prefix}, ', text)
+            changed = re.sub(rf'(?<![\w.>])({re.escape(name)})\(\)', rf'\1({prefix})', changed)
+            if changed != text:
+                variants.append((f'{name}+{prefix}', changed))
+    return variants
+
+
+def shape(address, text, score):
+    """The draft after the shape fixes that recur in hand-shaped matches (bit-test cast, sign-extended masks, long shifts, pass-through
+    arguments): each variant is judged and kept when it scores lower. Returns (score, text)."""
+    for _round in range(3):
+        before = score
+        candidates = [(label, function(text)) for label, function in (('bit', wrap_bit_tests), ('mask', sign_extend_masks), ('shift', long_shifts))]
+        candidates += pass_through_arguments(text)
+        for _label, variant in candidates:
+            if variant == text:
+                continue
+            result = scorer.judge(address, variant)
+            if result is not None and result < score:
+                score, text = result, variant
+                if score == 0:
+                    return score, text
+        if score == before:
+            break
+    return score, text
+
+
 def harvest_one(arguments, signatures, row):
     address = int(row['address'], 16)
     draft = run_m2c(arguments, row)
@@ -404,6 +472,8 @@ def harvest_one(arguments, signatures, row):
     if not scored:
         return address, 'does not compile', None, None
     score, text = min(scored, key=lambda item: item[0])
+    if arguments.shape and score > 0:
+        score, text = shape(address, text, score)
     return address, 'ok', score, text
 
 
@@ -418,6 +488,7 @@ def main():
     parser.add_argument('--context', action='store_true', help='give m2c prototypes of every function (real signatures from matched sources, the rest inferred from the code)')
     parser.add_argument('--repair', action='store_true', help='when a draft does not compile, add the casts the compiler asks for (up to 8 edits)')
     parser.add_argument('--keep', type=int, default=-1, metavar='SCORE', help='also save drafts scoring at most SCORE as sources (for mutate.py, neighborhood.py)')
+    parser.add_argument('--shape', action='store_true', help='try the recurring shape fixes (bit-test cast, sign-extended masks, long shifts, pass-through arguments) on every draft that compiles')
     parser.add_argument('--near', type=int, default=0, metavar='N', help='list the N closest drafts')
     arguments = parser.parse_args()
     if not scorer.compare:
