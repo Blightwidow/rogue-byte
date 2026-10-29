@@ -2582,6 +2582,7 @@ address	name	size	file
 0X1CE9D0	ReleaseRip	184	rip/ReleaseRip.cpp
 0X1CEA88	TouchRip__FP3RIPi	32	rip/TouchRip__FP3RIPi.cpp
 0X1CEAA8	ForceRipFade__FP3RIPf	96	rip/ForceRipFade__FP3RIPf.c
+0X1CF010	FIsZeroW__FP6VECTOR	72	alo/FIsZeroW__FP6VECTOR.cpp
 0X1CF268	UpdateRip__FP3RIPf	204	rip/UpdateRip__FP3RIPf.cpp
 0X1CF570	OnRipRemoveNop	8	rip/OnRipRemoveNop.c
 0X1CF578	SubscribeRipObject	72	rip/SubscribeRipObject.c

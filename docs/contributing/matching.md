@@ -112,3 +112,9 @@ What moved the score:
   register. Read each callee's real argument list from the asm first.
 - **Left over.** Scheduling and register allocation around the asm (which s-register holds which parameter, where `ld $ra` lands,
   `beql` against `beqz` with the VU move in the delay slot). Run the permuter after the first compile: it fixed a load order in five compiles.
+- **Second round (pin-free).** Scores moved most from: a `"=r"(fence)` output on the first asm consumed as an input by the next
+  (it also fixes branch and delay-slot layout, not only order); writing a compare as `eps > sum`; `"+r"(obj)` on the main asm to
+  force a hidden `daddu v0,a0` copy; repeating an `"m"` operand to raise a pointer's use count (flips `s0`/`s1` allocation).
+  Non-volatile store asms scheduled after `ld $ra`. Not reachable without pins or barriers: a `sqc2` that retail places after the
+  epilogue loads, and a VU instruction in a branch delay slot (the filler never moves an `asm` there).
+
