@@ -1,0 +1,3 @@
+# Functions built with Sony's ee-gcc 2.9-ee-991111 and its own as.exe instead of SN 2.95.3 (the libgcc and libc units of the SDK range, see scripts/build/compile_unit.py).
+# One address per line; listed once a source matches only with it (docs/build/compiler-identification.md, "SDK range").
+0x23D748

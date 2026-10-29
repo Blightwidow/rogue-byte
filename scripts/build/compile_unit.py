@@ -20,6 +20,9 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.95.3-136')
 LEGACY_COMPILER = os.path.join(ROOT, 'work', 'matching', 'compilers', 'ee-gcc2.95.3-136')
+SONY_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111b')
+LEGACY_SONY_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111b')
+SONY_FLAGS = ['-O2', '-G0']
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
 PS2EEAS = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')
 PS2EEAS_LOOP5 = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs-loop5.exe')
@@ -73,8 +76,15 @@ def loop5_functions():
     return listed_functions('ps2eeas_loop5.txt')
 
 
+def sony_functions():
+    """Addresses of the functions built with Sony's gcc 2.9 (config/us/sony_gcc29.txt): the libgcc and libc units of the SDK range."""
+    return listed_functions('sony_gcc29.txt')
+
+
 def assembler_for(address):
-    """'ps2eeas-loop5' for a function listed in config/us/ps2eeas_loop5.txt, 'gnu' for one of config/us/gnu_as.txt, else None (ps2eeas when available)."""
+    """'sony29' for a function listed in config/us/sony_gcc29.txt (compiler and assembler both Sony's), 'ps2eeas-loop5' for a function listed in config/us/ps2eeas_loop5.txt, 'gnu' for one of config/us/gnu_as.txt, else None (ps2eeas when available)."""
+    if address in sony_functions():
+        return 'sony29'
     if address in loop5_functions():
         return 'ps2eeas-loop5'
     return 'gnu' if address in gnu_functions() else None
@@ -99,8 +109,27 @@ def compiler_directory():
     return COMPILER if os.path.isdir(os.path.join(COMPILER, 'bin')) else LEGACY_COMPILER
 
 
+def compile_sony(language, source, output, include=None, localize=True):
+    """The SDK range: Sony's ee-gcc 2.9-ee-991111 and the `ee/bin/as.exe` its driver runs (SN's compiler and ps2eeas give other saves and slots there)."""
+    directory = SONY_COMPILER if os.path.isdir(os.path.join(SONY_COMPILER, 'bin')) else LEGACY_SONY_COMPILER
+    version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
+    temporary = output + '.tmp'
+    result = subprocess.run([WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
+                             f'-I{include or os.path.join(ROOT, "include")}', *SONY_FLAGS, '-c', os.path.abspath(source), '-o', temporary], capture_output=True, text=True)
+    if result.returncode or not os.path.exists(temporary):
+        return False, result.stderr or result.stdout
+    if localize:
+        subprocess.run([OBJCOPY, '-w', '-L', '*', temporary, output], check=True)
+        os.remove(temporary)
+    else:
+        os.replace(temporary, output)
+    return True, ''
+
+
 def compile_object(language, source, output, assembler=None, include=None, localize=True):
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
+    if assembler == 'sony29':
+        return compile_sony(language, source, output, include, localize)
     directory = compiler_directory()
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
@@ -145,7 +174,7 @@ def main():
     parser.add_argument('language', choices=['c', 'c++'])
     parser.add_argument('source')
     parser.add_argument('output')
-    parser.add_argument('--assembler', choices=['ps2eeas', 'ps2eeas-loop5', 'gnu'])
+    parser.add_argument('--assembler', choices=['ps2eeas', 'ps2eeas-loop5', 'gnu', 'sony29'])
     arguments = parser.parse_args()
     ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler)
     if not ok:

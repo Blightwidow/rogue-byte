@@ -178,6 +178,12 @@ class CompileUnitTests(unittest.TestCase):
         if listed:
             self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'ps2eeas-loop5')
 
+    def test_sony_list_wins_over_every_other_list(self):
+        listed = compile_unit.sony_functions()
+        self.assertTrue(all(isinstance(address, int) for address in listed))
+        if listed:
+            self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'sony29')
+
 
 class ListingTests(unittest.TestCase):
     FUNCTIONS = [
