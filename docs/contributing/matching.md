@@ -181,3 +181,25 @@ the object pointer in `$a3`). They show what the scheduler needs, not what the o
 is what to look for. `PseqnodeFind` is landed: retail has a 16-byte frame with no stores, and an unused local `s8 frame[0x10]` is what a dead
 variable looks like after optimisation.
 
+
+From the fourth round (119 of 246 functions that were 1 or 2 words from retail matched; 93 of the rest are not functions):
+
+- **Some "functions" are fragments of the split.** A chunk that is a lone `addiu $sp,$sp,N` plus a `nop`, a single store, or a stray `daddu`, with no `jr $ra`, is
+  the delay slot or tail of the previous function, cut off at a wrong boundary (93 of the 2,156 unmatched functions at this point, 65 of them two instructions).
+  C cannot express them: skip them at once, and fix the split instead.
+- **Hidden leading arguments and prototypes decided most of the matches again.** An untouched `$a0`/`$a1` before a `jal` is a passed-through argument (`this`);
+  `$t0`/`$t1` set before it are a 5th/6th argument; `mtc1`/`lui` + `mtc1 $f12` is a float argument; `daddu $a1,$zero,$zero` with `$a0` untouched is `(arg0, 0)`.
+  A callee that returns nothing is `void` (this changes which of `$v0`/`$v1` holds a constant afterwards); sometimes the reverse (`void *`) fixes a swap.
+- **Pointer scaling in m2c drafts.** `s32 *p += 4` is a 16-byte step (`+= 1`), `p + 0x30` on an `s32 *` is `0xC0` bytes (cast to `char *` or write `+ 0xC`), and an
+  `sll 4` where retail has `sll 2` means the element type is wrong (`extern s32 T[]`, or a typed entry struct).
+- **Store and statement order.** The compiler emits the last-written store first, so rotate the source until the store retail emits first is written last. For two to
+  five independent stores, generate random orders and judge them (about 60 compiles found score 0 in two functions); they are plain statement reorderings.
+- **Compare shape.** `x <= 0 ? 2 : 1` and `x > 0 ? 1 : 2` give `slt/movn` and `slti/movz`; `id != x[j].id` over `x[j].id != id` flips `bnel`; `if (b < a) return -1;
+  if (a < b) return 1;` replaces `!(a < b)`; `min.s`/`max.s` operand order follows how the ternary reads.
+- **Link-check names.** The check knows `D_`, `B_`, `RO_`, `jtbl_` plus eight hex digits, so a float named `D_FLT_...` or `g_...` is a link mismatch even when the
+  instructions agree: use `RO_<addr>`/`D_<addr>`. A symbol absent from `config/matching/symbol_addrs.txt` also scores 1 for a function whose words are right.
+- **Assembler, not source.** A short loop retail leaves unpadded (a `nop` that ps2eeas adds before the branch) is fixed by listing the address in
+  `config/us/ps2eeas_loop5.txt` (or `gnu_as.txt`); run `TRY_ASSEMBLER=ps2eeas-loop5` before trying wordings on a 1 to 2 word loop miss.
+- **Not reachable in C or without a trick:** a VU instruction in a branch delay slot (`VecMaxOfVerts`, `VecMinOfVerts`, `Swarm_PriderNearest`), a float taken from the low
+  word of a `QW` (`lq` then `mtc1`), `j exit` thunks, and a redundant conditional re-store written only to move a scheduler decision (`SetAmbRange` reaches 0 that way and
+  stays in `nonmatching/`).
