@@ -15,3 +15,4 @@ One commit, one primary area. `scripts/commit_msg.py` checks this (the `commit-m
 
 Put the new numbers (names recovered, matched share) in the body or in the matching log. Never commit game data:
 executables, disc images, Ghidra projects, decompiler output (`.gitignore` lists what stays local).
+No `Co-authored-by:` or other attribution trailers for AI tools.

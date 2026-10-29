@@ -76,3 +76,18 @@ Patterns the source cannot reach (record them in the file and move on):
   question, not a C question.
 - A register-allocation difference that three different wordings leave unchanged.
 - A delay slot that retail leaves unfilled where ours fills it, with no visible trigger.
+
+## Teams of workers
+
+Several workers (people or AI assistants) can match in parallel; AGENTS.md has the rules. The procedure:
+
+1. The lead picks the functions (`python3 scripts/list_functions.py --status asm --sort size`) and splits them: no two workers
+   share a function, contiguous functions go to one worker (they often belong to one class).
+2. Each worker keeps its sources in its own scratch folder, runs `try.py` until `score 0` or about ten compiles without progress,
+   and reports one line per function: `EXACT`, `NEAR` (what still differs) or `SKIP` (why).
+3. A worker's `EXACT` is not a match. The lead puts each source in place, runs `make elf` and `make unit UNIT=<module>`, and sends a
+   function that breaks the build back to `nonmatching/`.
+4. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),
+   is hand-written, needs an instruction C cannot ask for, or three different wordings give the same wrong bytes.
+5. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames
+   them when it lands related functions together.

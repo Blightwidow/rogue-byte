@@ -23,3 +23,9 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 - New source files start with `SPDX-License-Identifier: GPL-3.0-or-later`.
 - Every recovered name keeps its source visible. Measure a new heuristic against a control before trusting it.
 - Tips: [docs/contributing/decompilation-tips.md](docs/contributing/decompilation-tips.md).
+
+## Working with an AI assistant
+
+Welcome; the rules above apply the same way. You are responsible for what you contribute, however it was written, and you have
+to be able to explain it. An assistant also follows [AGENTS.md](AGENTS.md): it reports what it checked as it is (failures
+included), adds no attribution trailers to commits, and pushes, opens pull requests or publishes only when asked.
