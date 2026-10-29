@@ -21,10 +21,10 @@ s32 bevy_ui_binoc_recon_2022d8(s8 *arg0) {
             var_a0 = (s8 **)(arg0 + 0x34);
 loop_6:
             temp_v1 = *var_a0;
-            if (((u64) M2C_FIELD(temp_v1, u64 *, 0x28) >> 0x3C) & 1) {
+            if ((int)((u64) M2C_FIELD(temp_v1, u64 *, 0x28) >> 0x3C) & 1) {
                 temp_v0_2 = M2C_FIELD(temp_v1, s8 **, 0x100);
                 if (temp_v0_2 != NULL) {
-                    if (((u64) M2C_FIELD(temp_v0_2, u64 *, 0x28) >> 0x3C) & 1) {
+                    if ((int)((u64) M2C_FIELD(temp_v0_2, u64 *, 0x28) >> 0x3C) & 1) {
                         goto block_11;
                     }
                     /* Duplicate return node #3. Try simplifying control flow for better match */

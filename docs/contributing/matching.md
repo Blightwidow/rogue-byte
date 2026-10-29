@@ -136,3 +136,20 @@ From hand-shaping 31 near misses (25 matched, mostly drafts at 1 to 8 words):
   `for (i...)` over `base + i * stride`, or over an array of the real element type.
 - **Still open** after 15 to 25 compiles each: `this`/flag in swapped saved registers (`s0`/`s1`) and the operand order of a commutative
   `and`. Neither responded to source reordering.
+
+More fixes from the second round (22 of 29 matched):
+
+- **A draft's `sp[N]` buffer is often too big.** Take retail's frame size, subtract the saved registers and the `$ra` slot: that is the local's real size
+  (`sp[0x460]` became `sp[0x420]`, `sp[0x50]` became `sp[0x30]`). A typed struct local of that size (16 bytes for a `CRef`) gives retail's frame.
+- **Hidden leading parameters.** A draft parameter named `arg2`/`arg3`, or an untouched `$a0`/`$a1` before a `jal`, is a parameter the draft lost; the
+  prototype that m2c prints for the callee can be one short for the same reason. Declare real argument lists, and `void f(s8 *)` for callees that
+  return nothing.
+- **64-bit flag tests.** Both `(int)(x >> n) & 1` and a signed local (`s64 flags = x; if ((flags & 1) == 0)`) remove the `dsll32/dsra32` pair;
+  which one matches depends on the function, so try both.
+- **Loops.** A loop that returns the element on a compare or null exit: `for (;;) { e = table[i]; if (e == NULL || *e == key) return e; i = (i + 1) % N; }`
+  over a typed `extern T **table`. A search loop: `while ((node = node->next) != NULL) { if (match) { ...; break; } link = &node->next; }`.
+- **VU0 functions taking or returning a vector.** Type the parameter and result `s128`, make the `qmtc2`/`qmfc2` asms non-volatile, feed the first one's
+  `"=r"(fence)` to the next asm, and leave the last `qmfc2` non-volatile so it is scheduled after `ld $ra`. Computing an address into a local before
+  the `sqc2` asm puts the `addiu` in the delay slot.
+- **Still open** after this round: `this`/flags kept in a different register than retail's (`$a0` against `$a3`, `$a1` against `$a2`) and a
+  delay slot that retail fills with `sd $ra` where ps2eeas picks another instruction.

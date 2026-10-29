@@ -12,14 +12,17 @@ struct _m2c_stack_func_001A6CA8 {
 };                                                  /* size = 0x10 */
 M2C_UNK ReinsertSwRoot(M2C_UNK *, s32, u64);        /* extern */
 extern M2C_UNK B_003DD490;
-void func_001A6CA8(s8 *arg0, s32 arg1) {
-    u64 temp_a2;
-    u64 temp_a2_2;
-    temp_a2 = M2C_FIELD(arg0, u64 *, 0x28);
-    if ((arg1 != ((s64) (temp_a2 << 8) >> 0x3C)) && (temp_a2_2 = (temp_a2 & ((((((0xFF0F << 0x10) | 0xFFFF) << 0x10) | 0xFFFF) << 0x10) | 0xFFFF)) | ((arg1 & 0xF) << 0x34), M2C_FIELD(arg0, u64 *, 0x28) = temp_a2_2, (M2C_FIELD(arg0, s32 *, 0x10) == 0))) {
-        if ((temp_a2_2 >> 0x3C) & 1) {
-            ReinsertSwRoot(&B_003DD490, M2C_FIELD(arg0, s32 *, 0x14), temp_a2_2);
-        }
+extern struct { int x; } B_003DD490_t;
+struct S6CA8 { char pad[0x10]; s32 field10; s32 field14; char pad18[0x10]; u64 flags; };
+void func_001A6CA8(S6CA8 *self, s32 arg1) {
+    u64 flags = self->flags;
+    if (arg1 == ((s64) (flags << 8) >> 0x3C)) return;
+    flags = (flags & ~(0xFL << 0x34)) | ((u64) (arg1 & 0xF) << 0x34);
+    self->flags = flags;
+    if (self->field10 != 0) return;
+    if ((int)(flags >> 0x3C) & 1) {
+        s32 key = self->field14;
+        ReinsertSwRoot(&B_003DD490, key, flags);
     }
 }
 }

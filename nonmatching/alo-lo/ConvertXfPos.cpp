@@ -12,9 +12,10 @@ struct _m2c_stack_ConvertXfPos {
 };                                                  /* size = 0x60 */
 M2C_UNK InvertMatrix4Affine(s8 *, s32);           /* extern */
 s32 ConvertXfPos(s32 arg0, s32 arg1, s32 arg2) {
-    s8 sp[0x60] __attribute__((aligned(16)));
+    s8 sp[0x50] __attribute__((aligned(16)));
     s32 temp_v0;
-    asm volatile("qmtc2.ni %0, vf5" : : "r"(arg2));
+    s32 fence;
+    asm volatile("qmtc2.ni %0, vf5" : "=r"(fence) : "r"(arg2));
     if (arg0 != 0) {
         temp_v0 = arg0 + 0x40;
         asm volatile("lqc2 vf4, 0x40(%0)" : : "r"(arg0));
@@ -27,8 +28,9 @@ s32 ConvertXfPos(s32 arg0, s32 arg1, s32 arg2) {
         asm volatile("vmaddw.xyz vf5, vf3, vf0w");
     }
     if (arg1 != 0) {
+        s32 inverse_arg = arg1 + 0x40;
         asm volatile("sqc2 vf5, 0x40(%0)" : : "r"(sp));
-        InvertMatrix4Affine(sp, arg1 + 0x40);
+        InvertMatrix4Affine(sp, inverse_arg);
         asm volatile("lqc2 vf4, (%0)" : : "r"(sp));
         asm volatile("lqc2 vf3, 0x10(%0)" : : "r"(sp));
         asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(sp));
@@ -40,7 +42,7 @@ s32 ConvertXfPos(s32 arg0, s32 arg1, s32 arg2) {
         asm volatile("vmaddw.xyz vf5, vf1, vf0w");
     }
     s32 vu_1;
-    asm volatile("qmfc2.ni %0, vf5" : "=r"(vu_1));
+    asm("qmfc2.ni %0, vf5" : "=r"(vu_1));
     return vu_1;
 }
 }

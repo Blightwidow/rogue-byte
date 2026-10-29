@@ -11,9 +11,9 @@ struct _m2c_stack_AddLoHierarchy {
     /* 0x00 */ char pad0[0x10];
 };                                                  /* size = 0x10 */
 void AddLoHierarchy(s8 *arg0) {
-    s8 *temp_a3;
-    M2C_FIELD(arg0, s64 *, 0x28) = (s64) (M2C_FIELD(arg0, s64 *, 0x28) | (0x8000 << 0x2D));
-    M2C_FIELD(temp_a3, M2C_UNK (**)(s8 *, M2C_UNK, s8 *, s8 *), 0x24)(arg0 + M2C_FIELD(temp_a3, s16 *, 0x20), 0, arg0, temp_a3);
-    temp_a3 = M2C_FIELD(arg0, s8 **, 0xC);
+    s8 *vtable;
+    M2C_FIELD(arg0, s64 *, 0x28) |= 0x8000L << 0x2D;
+    vtable = M2C_FIELD(arg0, s8 **, 0xC);
+    M2C_FIELD(vtable, void (**)(s8 *, s32), 0x24)(arg0 + M2C_FIELD(vtable, s16 *, 0x20), 0);
 }
 }

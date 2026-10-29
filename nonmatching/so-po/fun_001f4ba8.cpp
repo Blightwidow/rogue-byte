@@ -12,16 +12,14 @@ struct _m2c_stack_func_001F4BA8 {
 };                                                  /* size = 0x10 */
 M2C_UNK RemoveDlEntry(M2C_UNK *, s8 *, s8 *);   /* extern */
 extern M2C_UNK B_003E11B8;
-void func_001F4BA8(s8 *arg0) {
-    s64 temp_a1;
-    s8 *temp_v1;
-    temp_v1 = M2C_FIELD(arg0, s8 **, 0xEC);
-    if (temp_v1 != NULL) {
-        temp_a1 = M2C_FIELD(temp_v1, s64 *, 0x70);
-        if (temp_a1 & 1) {
-            M2C_FIELD(temp_v1, s64 *, 0x70) = (s64) (temp_a1 & ~1);
-            RemoveDlEntry(&B_003E11B8, M2C_FIELD(arg0, s8 **, 0xEC), arg0);
-        }
-    }
+struct Dl4BA8 { char pad[0x70]; u64 flags; };
+struct Obj4BA8 { char pad[0xEC]; Dl4BA8 *list; };
+void func_001F4BA8(Obj4BA8 *self) {
+    Dl4BA8 *list = self->list;
+    if (list == NULL) return;
+    s64 flags = list->flags;
+    if ((flags & 1) == 0) return;
+    list->flags = flags & ~(s64) 1;
+    RemoveDlEntry(&B_003E11B8, (s8 *) self->list, (s8 *) self);
 }
 }

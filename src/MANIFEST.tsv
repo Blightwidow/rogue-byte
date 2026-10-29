@@ -754,6 +754,7 @@ address	name	size	file
 0X11A060	ClearSl	12	crout-dl/ClearSl.cpp
 0X11A070	AppendSlEntry	40	crout-dl/AppendSlEntry.cpp
 0X11A098	PrependSlEntry	40	crout-dl/PrependSlEntry.cpp
+0X11A0C0	InsertSlEntryAfter	88	crout-dl/InsertSlEntryAfter.cpp
 0X11A118	RemoveSlEntry	160	crout-dl/RemoveSlEntry.cpp
 0X11A1B8	FFindSlEntry	44	crout-dl/FFindSlEntry.cpp
 0X11A1E8	FIsSlEmpty	12	crout-dl/FIsSlEmpty.c
@@ -762,6 +763,7 @@ address	name	size	file
 0X11A210	ClearDle__FP3DLE	12	dl/ClearDle__FP3DLE.cpp
 0X11A220	AppendDlEntry	48	dl/AppendDlEntry.cpp
 0X11A250	PrependDlEntry	48	dl/PrependDlEntry.cpp
+0X11A280	InsertDlEntryBefore	104	dl/InsertDlEntryBefore.cpp
 0X11A2E8	RemoveDlEntry	152	dl/RemoveDlEntry.cpp
 0X11A380	FFindDlEntry	44	dl/FFindDlEntry.cpp
 0X11A3B0	FIsDlEmpty__FP2DL	12	dl/FIsDlEmpty__FP2DL.c
@@ -868,11 +870,14 @@ address	name	size	file
 0X122650	RefOpAtan__FiP4CRefP6CFrame	48	splice-bif/RefOpAtan__FiP4CRefP6CFrame.cpp
 0X122680	RefOpRadNormalize__FiP4CRefP6CFrame	48	splice-bif/RefOpRadNormalize__FiP4CRefP6CFrame.cpp
 0X122770	RefOpVectorCrossProduct	92	splice-bif/RefOpVectorCrossProduct.cpp
+0X122EA0	RefOpMatrixCalculateDmat	96	splice-bif/RefOpMatrixCalculateDmat.cpp
 0X123118	RefOpMatrixDecomposeToRadianNormal	240	splice-bif/RefOpMatrixDecomposeToRadianNormal.cpp
 0X123208	RefOpMatrixLookAt	196	splice-bif/RefOpMatrixLookAt.cpp
 0X1232D0	RefOpMatrixTiltUpright	176	splice-bif/RefOpMatrixTiltUpright.cpp
 0X1233F0	RefOpClqEvaluateLm	168	splice-bif/RefOpClqEvaluateLm.cpp
 0X123498	RefOpClqFit	268	splice-bif/RefOpClqFit.cpp
+0X1235A8	RefOpLmLimit	92	splice-bif/RefOpLmLimit.cpp
+0X123608	RefOpLmCheck	96	splice-bif/RefOpLmCheck.cpp
 0X123688	func_00123688	40	unsorted/fun_00123688.cpp
 0X1236B0	func_001236B0	40	unsorted/fun_001236b0.cpp
 0X1236F8	RefOpAbs	140	splice-bif/RefOpAbs.cpp
@@ -1138,6 +1143,7 @@ address	name	size	file
 0X133598	StaticInitBasic	308	sensor-bbmark/StaticInitBasic.c
 0X1336D0	GlobalCtorBasic	32	sensor-bbmark/GlobalCtorBasic.c
 0X1336F0	PoxaAllocSw	224	sensor-bbmark/PoxaAllocSw.cpp
+0X133CB8	PoxExtractFromPoxa	80	sensor-bbmark/PoxExtractFromPoxa.cpp
 0X133D08	FPoxaPairInteracts	292	sensor-bbmark/FPoxaPairInteracts.cpp
 0X134310	IMax	16	bbmark-blend/IMax.c
 0X134398	StaticInitBbmark	308	bbmark-blend/StaticInitBbmark.c
@@ -1701,6 +1707,7 @@ address	name	size	file
 0X166EF0	AddPrimList__4GIFSiUl	128	gifs/AddPrimList__4GIFSiUl.cpp
 0X167048	GIFS_ListXYZ	112	gifs/GIFS_ListXYZ.cpp
 0X1670B8	ListXYZF__4GIFSiiii	144	gifs/ListXYZF__4GIFSiiii.cpp
+0X167150	AddImage__4GIFSi	100	gifs/AddImage__4GIFSi.cpp
 0X1671B8	glob__static_initialization_and_destruction_0	308	new_1671b8/glob__static_initialization_and_destruction_0.c
 0X1672F0	func_001672F0	32	new_1671b8/fun_001672f0.c
 0X1681B0	func_001681B0	68	new_167320/fun_001681b0.c
@@ -2064,6 +2071,7 @@ address	name	size	file
 0X1904E0	AddJtHangBodyReaction	64	stephang/AddJtHangBodyReaction.cpp
 0X190F38	StaticInitSlotheaps_190f38	308	new_190c58/StaticInitSlotheaps_190f38.c
 0X191070	StaticInitSlotheaps_190f38_thunk	32	new_190c58/StaticInitSlotheaps_190f38_thunk.c
+0X191090	InitAttach	100	new_190c58/InitAttach.cpp
 0X1910F8	LoadAttach	176	new_190c58/LoadAttach.cpp
 0X1928F8	StartAttach	304	new_190c58/StartAttach.cpp
 0X193C98	MatchJtXmgRail__FP2JTP3XMGP6ACTADJ	332	stephide/MatchJtXmgRail__FP2JTP3XMGP6ACTADJ.cpp
@@ -2151,6 +2159,8 @@ address	name	size	file
 0X1A3610	func_001A3610	28	ub-light/fun_001a3610.c
 0X1A3630	func_001A3630	28	ub-light/fun_001a3630.c
 0X1A3650	SetLightFallOff	48	ub-light/SetLightFallOff.cpp
+0X1A3680	SetLightFExcludeDynamicObjects	84	ub-light/SetLightFExcludeDynamicObjects.cpp
+0X1A36D8	SetLightDynamic	84	ub-light/SetLightDynamic.cpp
 0X1A3730	FitLinearFunction__FffffPfT4	160	light/FitLinearFunction__FffffPfT4.cpp
 0X1A37D0	FitRecipFunction__FffffPfT4	216	light/FitRecipFunction__FffffPfT4.cpp
 0X1A38A8	ConvertAngleStrength__FffffPfT4	188	light/ConvertAngleStrength__FffffPfT4.cpp
@@ -2209,6 +2219,8 @@ address	name	size	file
 0X1A6EF8	func_001A6EF8	8	stepguard-sw/fun_001a6ef8.c
 0X1A6F00	ConvertAloPos	188	stepguard-sw/ConvertAloPos.cpp
 0X1A6FC0	bevy_camera_follow_track_heading_weight	144	stepguard-sw/bevy_camera_follow_track_heading_weight.cpp
+0X1A72D0	ConvertMatPos	120	stepguard-sw/ConvertMatPos.cpp
+0X1A7348	ConvertAloVec	104	stepguard-sw/ConvertAloVec.cpp
 0X1A73C0	StaticInitSlotheaps_1a73c0	308	stepguard-sw/StaticInitSlotheaps_1a73c0.c
 0X1A74F8	GlobalCtorSlotheaps_1a74f8	32	stepguard-sw/GlobalCtorSlotheaps_1a74f8.c
 0X1A7518	main	276	stepguard-sw/main.cpp
@@ -2321,6 +2333,7 @@ address	name	size	file
 0X1B0F88	FAbsorbSlotSoWkr	168	smartguard-ac/FAbsorbSlotSoWkr.cpp
 0X1B10B0	AccelSlotSoRotation	32	ac/AccelSlotSoRotation.cpp
 0X1B1140	RenderSoSelf_thunk	28	ac-rog/RenderSoSelf_thunk.c
+0X1B1818	SetSlotSoHeading	80	ac-rog/SetSlotSoHeading.cpp
 0X1B1868	FSlotSoFacingHeading	148	ac-rog/FSlotSoFacingHeading.cpp
 0X1B1A38	GSpeedSlotSoAseg	216	ac-rog/GSpeedSlotSoAseg.cpp
 0X1B1B10	func_001B1B10	8	ac-rog/fun_001b1b10.c
@@ -2644,6 +2657,7 @@ address	name	size	file
 0X1D4F50	UpdateAmmopickup	80	rip-rumble/UpdateAmmopickup.cpp
 0X1D4FF8	StaticInitSlotheaps_1d4ff8	308	rip-rumble/StaticInitSlotheaps_1d4ff8.c
 0X1D5130	StaticInitSlotheaps_thunk_1d5130	32	rip-rumble/StaticInitSlotheaps_thunk_1d5130.c
+0X1D5150	InitRumble__FP6RUMBLEii	100	rumble/InitRumble__FP6RUMBLEii.cpp
 0X1D51B8	UpdateRumble__FP6RUMBLE	344	rumble/UpdateRumble__FP6RUMBLE.cpp
 0X1D5310	TriggerRumbleRumk__FP6RUMBLE4RUMKf	44	rumble/TriggerRumbleRumk__FP6RUMBLE4RUMKf.cpp
 0X1D5340	TriggerRumbleRumpat__FP6RUMBLEP6RUMPATf	128	rumble/TriggerRumbleRumpat__FP6RUMBLEP6RUMPATf.c
@@ -2670,6 +2684,7 @@ address	name	size	file
 0X1D7A30	save__static_initialization_and_destruction_0	308	new_1d7780/save__static_initialization_and_destruction_0.c
 0X1D7B68	func_001D7B68	32	new_1d7780/fun_001d7b68.c
 0X1D7B88	LoadSaveVarsFromBis	244	new_1d7780/LoadSaveVarsFromBis.cpp
+0X1D7E80	PvFindSaveVar	88	new_1d7780/PvFindSaveVar.cpp
 0X1D8690	AddSymtabEntry	144	new_1d7780/AddSymtabEntry.cpp
 0X1D8720	SymidFindSymtab	160	new_1d7780/SymidFindSymtab.cpp
 0X1D88D0	PsavepathNew	216	new_1d7780/PsavepathNew.cpp
@@ -2865,6 +2880,8 @@ address	name	size	file
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp
 0X1ED3A8	InitIdHashTables_1ed3a8	156	new_1ed1a8/InitIdHashTables_1ed3a8.cpp
+0X1ED4E0	PidFindInIdTableA_1ed4e0	124	new_1ed1a8/PidFindInIdTableA_1ed4e0.cpp
+0X1ED5D0	PidFindInIdTableB_1ed5d0	124	new_1ed1a8/PidFindInIdTableB_1ed5d0.cpp
 0X1ED650	StaticInitSlotheaps_1ed650	308	new_1ed1a8/StaticInitSlotheaps_1ed650.c
 0X1ED788	GlobalCtorSlotheaps_1ed788	32	new_1ed1a8/GlobalCtorSlotheaps_1ed788.c
 0X1ED7A8	func_001ED7A8	164	new_1ed1a8/fun_001ed7a8.cpp
@@ -2964,6 +2981,7 @@ address	name	size	file
 0X1F37C8	func_001F37C8	160	so-po/fun_001f37c8.cpp
 0X1F3868	func_001F3868	60	so-po/fun_001f3868.c
 0X1F38A8	func_001F38A8	84	so-po/fun_001f38a8.c
+0X1F3900	func_001F3900	128	so-po/fun_001f3900.cpp
 0X1F3980	ProjectSoTransform	424	so-po/ProjectSoTransform.cpp
 0X1F3C70	func_001F3C70	88	so-po/fun_001f3c70.c
 0X1F3CC8	func_001F3CC8	308	so-po/fun_001f3cc8.cpp
@@ -3163,6 +3181,7 @@ address	name	size	file
 0X2041C0	TranslateStepToPos	56	new_203fc0/TranslateStepToPos.c
 0X2041F8	RotateStepToMat	76	new_203fc0/RotateStepToMat.c
 0X204248	CgeomExtraStep	8	stepguard/CgeomExtraStep.c
+0X204660	SetStepRadTarget	80	new_204250/SetStepRadTarget.cpp
 0X204740	RadYawSo	36	new_204250/RadYawSo.c
 0X204C60	func_00204C60	72	new_204250/fun_00204c60.c
 0X204CA8	FixStepAngularVelocity__FP4STEP	156	step/FixStepAngularVelocity__FP4STEP.cpp
@@ -3441,8 +3460,10 @@ address	name	size	file
 0X21DC70	CchAchFromUl__FPciUlUi	208	text/CchAchFromUl__FPciUlUi.cpp
 0X21E048	ExpFirstFromG__Fd	144	text/ExpFirstFromG__Fd.cpp
 0X21E0D8	ChDigitFromG__Fdii	216	text/ChDigitFromG__Fdii.cpp
+0X21EC60	vsprintf	116	text/vsprintf.cpp
 0X21ED28	strlen	48	text/strlen.cpp
 0X21ED58	strcpy	72	text/strcpy.cpp
+0X21EDA0	strcat	88	text/strcat.cpp
 0X21EDF8	strchr	48	text/strchr.cpp
 0X21EE78	func_0021EE78	308	new_21ee78/fun_0021ee78.c
 0X21EFB0	InitSharedSlotheaps_thunk	32	new_21ee78/InitSharedSlotheaps_thunk.c
@@ -3522,6 +3543,7 @@ address	name	size	file
 0X227E90	StaticInitSlotheaps_227e90	308	new_2271f8/StaticInitSlotheaps_227e90.c
 0X227FC8	func_00227FC8	32	new_2271f8/fun_00227fc8.c
 0X228140	func_00228140	44	new_2271f8/fun_00228140.cpp
+0X228250	func_00228250	96	new_2271f8/fun_00228250.cpp
 0X2282B0	LoadWarpFromBrx	164	new_2271f8/LoadWarpFromBrx.cpp
 0X2283D0	Warp_Start	268	new_2271f8/Warp_Start.cpp
 0X2284E0	func_002284E0	56	new_2271f8/fun_002284e0.cpp
