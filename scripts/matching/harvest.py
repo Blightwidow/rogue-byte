@@ -575,13 +575,26 @@ def pass_through_arguments(text):
     return variants
 
 
-def shape(address, text, score):
+STACK_BUFFER = re.compile(r'\b((?:char|s8|u8)\s+sp\[)(0x[0-9A-Fa-f]+)(\])')
+
+
+def stack_sizes(text, frame):
+    """Variants of a draft with its `sp[N]` stack buffer at every other multiple of 0x10 that fits in the retail frame (m2c's size is a guess)."""
+    found = STACK_BUFFER.search(text)
+    if not found or not frame:
+        return []
+    return [(f'sp[{size:#x}]', text[:found.start(2)] + f'{size:#x}'.replace('0X', '0x') + text[found.end(2):])
+            for size in range(0x10, min(frame, 0x200), 0x10) if size != int(found.group(2), 16)]
+
+
+def shape(address, text, score, frame=None):
     """The draft after the shape fixes that recur in hand-shaped matches (bit-test cast, sign-extended masks, long shifts, pass-through
     arguments): each variant is judged and kept when it scores lower. Returns (score, text)."""
     for _round in range(3):
         before = score
         candidates = [(label, function(text)) for label, function in (('bit', wrap_bit_tests), ('mask', sign_extend_masks), ('shift', long_shifts))]
         candidates += pass_through_arguments(text)
+        candidates += stack_sizes(text, frame)
         for _label, variant in candidates:
             if variant == text:
                 continue
@@ -610,7 +623,8 @@ def harvest_one(arguments, signatures, row):
         return address, 'does not compile', None, None
     score, text = min(scored, key=lambda item: item[0])
     if arguments.shape and score > 0:
-        score, text = shape(address, text, score)
+        import fix_stack
+        score, text = shape(address, text, score, fix_stack.frame_size(row['name']))
     return address, 'ok', score, text
 
 

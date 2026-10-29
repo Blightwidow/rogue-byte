@@ -10,9 +10,10 @@ extern "C" {
 struct _m2c_stack_func_001B4438 {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-M2C_UNK InitSo();                                   /* extern */
+void InitSo(s8 *);                                   /* extern */
 void func_001B4438(s8 *arg0) {
-    InitSo();
-    M2C_FIELD(arg0, s64 *, 0x148) = (s64) (M2C_FIELD(arg0, s64 *, 0x148) & ((0xBFFFFFFF << 5) | 0x1F));
+    InitSo(arg0);
+    M2C_FIELD(arg0, s64 *, 0x148) = (s64) (M2C_FIELD(arg0, s64 *, 0x148) & ((0xBFFFFFFFL << 5) | 0x1F));
+    return;
 }
 }

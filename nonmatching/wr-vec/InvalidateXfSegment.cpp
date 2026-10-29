@@ -40,14 +40,15 @@ void InvalidateXfSegment(s8 *arg0, s8 *arg1) {
     case 18:
     case 19:
         M2C_FIELD(arg1, f32 *, 0x84) = -3.4028235e38f;
-        M2C_FIELD(arg1, f32 *, 0x80) = -3.4028235e38f;
         M2C_FIELD(arg1, M2C_UNK **, 0x8C) = &D_002C44E0;
+        M2C_FIELD(arg1, f32 *, 0x80) = -3.4028235e38f;
         M2C_FIELD(arg1, M2C_UNK **, 0x88) = &D_002C44E0;
         break;
     }
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
     M2C_FIELD(arg1, s16 *, 0x9A) = 0;
+    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
     M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x17C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x178), 4, arg0);
+    return;
 }
 
 }

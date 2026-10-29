@@ -12,7 +12,7 @@ struct _m2c_stack_func_001B90B8 {
 };                                                  /* size = 0x30 */
 s32 func_00204E38(s8 *, s8 *, f32);             /* extern */
 void func_001B90B8(s8 *arg0) {
-    s8 sp[0x30] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s32 temp_v1;
     s8 *temp_a1;
     temp_v1 = M2C_FIELD(arg0, s32 *, 0x1840);

@@ -7,12 +7,12 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK ApplyAsegToHandle(M2C_UNK, M2C_UNK, M2C_UNK, s32, M2C_UNK, M2C_UNK); /* extern */
+M2C_UNK ApplyAsegToHandle(f32, M2C_UNK, M2C_UNK, s32, M2C_UNK, f32); /* extern */
 s32 func_0020CA98();                                /* extern */
 
 void func_0020CA48(s32 arg0) {
     if (func_0020CA98() == 0) {
-        ApplyAsegToHandle(0, 0, 0, arg0 + 0x24, 0, 0x3F800000);
+        ApplyAsegToHandle(0, 0, 0, 0x24 + arg0, 0, 0x3F800000);
     }
 }
 

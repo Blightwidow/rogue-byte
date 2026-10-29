@@ -9,7 +9,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 extern "C" {
 M2C_UNK Carry_Attach(s32, s32);                     /* extern */
 M2C_UNK Carry_Detach(s32);                          /* extern */
-M2C_UNK SetJtAttach5(M2C_UNK);                      /* extern */
+M2C_UNK SetJtAttach5(f32);                      /* extern */
 
 void func_001421A0(s32 arg0, s32 arg1) {
     SetJtAttach5(0);

@@ -13,7 +13,7 @@ struct _m2c_stack_func_00227380 {
 
 M2C_UNK CBinaryInputStream_ReadBspc(s32, s32, s8 *); /* extern */
 M2C_UNK CBinaryInputStream_ReadGeom(s32, s32);      /* extern */
-M2C_UNK LoadOptionsFromBrx__FPvP18CBinaryInputStream(s8 *, s32); /* extern */
+void LoadOptionsFromBrx__FPvP18CBinaryInputStream(s8 *, s32); /* extern */
 M2C_UNK LoadXfmBaseFromBrx();                       /* extern */
 s32 U32Read__18CBinaryInputStream(s32);             /* extern */
 
@@ -26,6 +26,7 @@ void func_00227380(s8 *arg0, s32 arg1) {
     CBinaryInputStream_ReadBspc(arg1, temp_s2, arg0 + 0xE8);
     M2C_FIELD(arg0, s32 *, 0xE0) = U32Read__18CBinaryInputStream(arg1);
     LoadOptionsFromBrx__FPvP18CBinaryInputStream(arg0, arg1);
+    return;
 }
 
 }

@@ -26,7 +26,7 @@ void bevy_splice_bif_transpose(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 do {
                     temp_f0 = *var_v1;
                     var_t0_2 -= 1;
-                    var_v1 += 4;
+                    var_v1 += 1;
                     *var_v0 = temp_f0;
                     var_v0 += arg0 * 4;
                 } while (var_t0_2 != 0);

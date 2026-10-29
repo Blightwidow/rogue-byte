@@ -27,7 +27,7 @@ s32 GrfbtnVjoyPressedWithin(s32 arg0, u32 arg1, f32 fparg0) {
                 var_a2 |= 1 << var_v1;
             }
             var_a1 = var_a1 >> 1;
-            var_a0 += 4;
+            var_a0 += 1;
             var_v1 += 1;
         } while (var_a1 != 0);
     }

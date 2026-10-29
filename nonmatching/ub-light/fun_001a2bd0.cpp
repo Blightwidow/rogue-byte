@@ -13,7 +13,7 @@ struct _m2c_stack_func_001A2BD0 {
     /* 0x08 */ char pad8[0x18];
 };                                                  /* size = 0x20 */
 
-M2C_UNK func_001A2C48(s8 *, s32 **);              /* extern */
+void func_001A2C48(s8 *, s32 **);              /* extern */
 extern s32 B_002E1E54;
 
 void func_001A2BD0(s32 arg0) {

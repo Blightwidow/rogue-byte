@@ -12,7 +12,7 @@ struct _m2c_stack_UpdateJtBounds {
 };                                                  /* size = 0x40 */
 
 void ExtendSoBounds(s8 *, s128, f32);
-void UpdateSoBounds();
+void UpdateSoBounds(s8 *);
 
 void UpdateJtBounds(s8 *arg0) {
     s128 *var_s1;
@@ -20,7 +20,7 @@ void UpdateJtBounds(s8 *arg0) {
     s32 var_s2;
 
     var_s2 = 0;
-    UpdateSoBounds();
+    UpdateSoBounds(arg0);
     var_s1 = (s128 *)(arg0 + 0x1890);
     if (M2C_FIELD(arg0, s32 *, 0x1880) > 0) {
         do {

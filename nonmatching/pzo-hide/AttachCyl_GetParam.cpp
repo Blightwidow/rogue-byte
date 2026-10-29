@@ -13,7 +13,7 @@ struct _m2c_stack_AttachCyl_GetParam {
 s32 PosLoWorld(s128);                               /* extern */
 f32 atan2f(M2C_UNK, M2C_UNK);                       /* extern */
 void AttachCyl_GetParam(s8 *arg0, s8 *arg1, f32 *arg2) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK temp_v0;
     asm volatile("qmtc2.ni %0, vf2" : : "r"(PosLoWorld(*M2C_FIELD(arg1, s128 **, 0x218))));
     asm volatile("lqc2 vf1, (%0)" : : "r"(sp));

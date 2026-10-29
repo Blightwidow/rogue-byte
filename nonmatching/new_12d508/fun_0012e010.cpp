@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK func_0022C818(s32, s8 *, M2C_UNK);        /* extern */
+M2C_UNK func_0022C818(s32, s8 *, f32);        /* extern */
 
 void func_0012E010(s8 *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, s8 **, 8), f32 *, 0xA8) = (f32) M2C_FIELD(arg0, f32 *, 0x1C);

@@ -16,7 +16,7 @@ s32 FIsBasicDerivedFrom(s32, M2C_UNK);
 s32 PosLoWorld(s32);
 extern M2C_UNK g_2a2dc0;
 s128 PosCplookAnchor(s32 *arg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s128 sp10;
     sp10 = PosLoWorld(*arg0);
     if (FIsBasicDerivedFrom(*arg0, 0x34) != 0) {

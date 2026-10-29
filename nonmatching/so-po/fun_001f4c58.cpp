@@ -8,6 +8,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 s8 *func_001F4C58(s8 *arg0, s32 arg1, s32 arg2) {
+    s8 * result;
     s32 temp_a3;
     s32 var_v0;
     s32 var_v1;
@@ -22,7 +23,7 @@ loop_2:
         if (M2C_FIELD(var_a0, s32 *, 0x9C) == arg1) {
             var_v0 = var_v1 < temp_a3;
             if (M2C_FIELD(var_a0, s32 *, 0x94) == arg2) {
-                return var_a0;
+                { result = var_a0; goto done; }
             }
             goto block_6;
         }
@@ -31,11 +32,13 @@ block_6:
         var_a0 += 0x100;
         if (var_v0 == 0) {
             /* Duplicate return node #7. Try simplifying control flow for better match */
-            return NULL;
+            { result = NULL; goto done; }
         }
         goto loop_2;
     }
     return NULL;
+done:
+    return result;
 }
 
 }

@@ -27,7 +27,7 @@ s8 *Blot_Construct(s8 *arg0) {
     do {
         *var_v1 = -1;
         var_a0 += 1;
-        var_v1 += 4;
+        var_v1 += 1;
     } while (var_a0 < 0xAU);
     InitSl(arg0 + 0xFC, 0x68);
     return arg0;

@@ -18,7 +18,7 @@ void FixStepAngularVelocity__FP4STEP(s8 *);
 void SetStepRadTargetDir(s8 *, s128);
 extern M2C_UNK D_002BF4E0;
 void ChooseJtSmashTarget__FP2JT(s8 *arg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s32 sp10;
     ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(4, &D_002BF4E0, &sp10, M2C_FIELD(arg0, f32 *, 0x1A8), 0x3E800000, 0x4049999A);
     M2C_FIELD(arg0, s32 *, 0x18C0) = sp10;

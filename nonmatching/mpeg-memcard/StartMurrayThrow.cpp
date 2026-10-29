@@ -14,7 +14,7 @@ s128 PosLoWorld(...);                      /* extern */
 M2C_UNK SetMurrayState(M2C_UNK);                    /* extern */
 M2C_UNK SetStepRadTargetDir(s8 *, M2C_UNK);       /* extern */
 void StartMurrayThrow(s8 *arg0, s8 *arg1) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s128 temp_v0;
     SetMurrayState(7);
     if (arg1 != NULL) {

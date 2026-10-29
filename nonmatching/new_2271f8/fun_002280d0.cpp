@@ -28,9 +28,9 @@ s8 *func_002280D0(void) {
         var_a1 = temp_v0;
         var_a0 = (s8 **)(sp);
         do {
-            temp_v1 = *var_a0;
             var_a1 -= 1;
-            var_a0 += 4;
+            temp_v1 = *var_a0;
+            var_a0 += 1;
             var_s0 = (M2C_FIELD(temp_v1, s32 *, 0x130) != 0) ? temp_v1 : var_s0;
         } while (var_a1 != 0);
     }

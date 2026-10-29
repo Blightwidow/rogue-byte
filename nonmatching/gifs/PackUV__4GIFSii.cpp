@@ -7,15 +7,15 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK CheckReg__4GIFSii(M2C_UNK, M2C_UNK);        /* extern */
+void CheckReg__4GIFSii(s8 *, M2C_UNK, M2C_UNK);        /* extern */
 
 void PackUV__4GIFSii(s8 *arg0, s32 arg1, s32 arg2) {
     s8 *temp_v0;
 
-    CheckReg__4GIFSii(1, 3);
+    CheckReg__4GIFSii(arg0, 1, 3);
     temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
     M2C_FIELD(temp_v0, s32 *, 4) = arg2;
+    M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
     M2C_FIELD(temp_v0, s32 *, 0) = arg1;
 }
 

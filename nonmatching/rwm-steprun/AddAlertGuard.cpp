@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK SetAlertState(M2C_UNK);                     /* extern */
+void SetAlertState(s8 *, M2C_UNK);                     /* extern */
 extern f32 g_2dded0;
 
 void AddAlertGuard(s8 *arg0, s32 arg1) {
@@ -15,7 +15,7 @@ void AddAlertGuard(s8 *arg0, s32 arg1) {
 
     if (M2C_FIELD(arg0, s32 *, 0x28) == 0) {
         M2C_FIELD(arg0, f32 *, 0) = (f32) g_2dded0;
-        SetAlertState(0);
+        SetAlertState(arg0, 0);
     }
     temp_v1 = M2C_FIELD(arg0, s32 *, 0x28);
     M2C_FIELD((arg0 + (temp_v1 * 4)), s32 *, 0x2C) = arg1;

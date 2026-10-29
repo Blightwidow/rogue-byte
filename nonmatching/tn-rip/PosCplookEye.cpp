@@ -14,7 +14,7 @@ M2C_UNK LoadRotateMatrixPanTilt(s8 *, f32, f32, s128); /* extern */
 s32 PosCplookAnchor(s8 *);                        /* extern */
 extern s128 RO_002A5000;
 s32 PosCplookEye(s8 *arg0) {
-    s8 sp[0x60] __attribute__((aligned(16)));
+    s8 sp[0x40] __attribute__((aligned(16)));
     LoadRotateMatrixPanTilt(sp, M2C_FIELD(arg0, f32 *, 0x10), M2C_FIELD(arg0, f32 *, 0x14), RO_002A5000);
     asm volatile("lqc2 vf2, 0x10(%0)" : : "r"(sp));
     asm volatile("lqc2 vf3, (%0)" : : "r"(sp));

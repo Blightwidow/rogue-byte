@@ -13,8 +13,8 @@ s8 *func_001D3FA8(s8 *arg0, s32 arg1) {
     s8 * result;
     s32 temp_v0;
     s32 var_a2;
-    s8 **var_a0;
     s8 *temp_v1;
+    s8 **var_a0;
 
     temp_v0 = M2C_FIELD(arg0, s32 *, 0x4F8);
     var_a2 = 0;
@@ -26,7 +26,7 @@ loop_2:
         if (M2C_FIELD(temp_v1, s32 *, 0x14) == arg1) {
             { result = temp_v1; goto done; }
         }
-        var_a0 += 4;
+        var_a0 += 1;
         if (var_a2 >= temp_v0) {
             /* Duplicate return node #5. Try simplifying control flow for better match */
             { result = NULL; goto done; }

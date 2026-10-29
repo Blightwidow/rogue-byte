@@ -7,9 +7,9 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FButtonPressedWithin(s32, M2C_UNK, M2C_UNK);    /* extern */
+s32 FButtonPressedWithin(s32, M2C_UNK, f32);    /* extern */
 M2C_UNK StopBinoc(s8 *);                          /* extern */
-M2C_UNK UpdateBinoc(s8 *);                        /* extern */
+void UpdateBinoc(s8 *);                        /* extern */
 s32 bevy_player_p15_binoc_active();                 /* extern */
 
 void UpdateBentleyBinoc(s8 *arg0) {

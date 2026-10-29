@@ -11,7 +11,7 @@ struct _m2c_stack_func_00112100 {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 
-M2C_UNK __4CRef(s32);                               /* extern */
+void __4CRef(s32);                               /* extern */
 s8 *__builtin_new(M2C_UNK);                       /* extern */
 extern M2C_UNK D_002D2090;
 extern M2C_UNK D_002D20D0;

@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-f32 GModPositive__Fff(f32, M2C_UNK);                /* extern */
+f32 GModPositive__Fff(f32, f32);                /* extern */
 extern f32 g_2dded0;
 
 f32 UCompleteCircler__FP7CIRCLER(s8 *arg0) {

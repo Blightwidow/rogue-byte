@@ -15,12 +15,14 @@ void CBinaryFileStream_Pump(s8 *arg0) {
         if (M2C_FIELD(arg0, s32 *, 0x50) < 0) {
             M2C_FIELD(arg0, s32 *, 0x14) = 0;
             M2C_FIELD(arg0, s32 *, 0x10) = 0;
-            return;
+            { goto done; }
         }
         PumpCd__18CBinaryInputStream();
-        return;
+        { goto done; }
     }
-    CBinaryFileStream_PumpFile();
+    { goto done; }
+done:
+    return;
 }
 
 }

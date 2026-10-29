@@ -7,8 +7,8 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FButtonPressedWithin(s32, M2C_UNK, M2C_UNK);    /* extern */
-M2C_UNK StopBinoc(s8 *);                          /* extern */
+s32 FButtonPressedWithin(s8 *, s32, M2C_UNK, f32);    /* extern */
+s32 StopBinoc(s8 *);                          /* extern */
 M2C_UNK UpdateBinoc(s8 *);                        /* extern */
 s32 bevy_player_p15_binoc_active();                 /* extern */
 
@@ -17,7 +17,7 @@ void UpdateMurrayBinoc(s8 *arg0) {
 
     if (bevy_player_p15_binoc_active() != 0) {
         temp_s1 = arg0 + 0xF00;
-        if ((M2C_FIELD(arg0, s32 *, 0xF04) == 1) && (M2C_FIELD(arg0, s32 *, 0xF20) == 0) && (FButtonPressedWithin(M2C_FIELD(arg0, s32 *, 0x150), 0x4F0, 0x3E800000) != 0)) {
+        if ((M2C_FIELD(arg0, s32 *, 0xF04) == 1) && (M2C_FIELD(arg0, s32 *, 0xF20) == 0) && (FButtonPressedWithin(arg0, M2C_FIELD(arg0, s32 *, 0x150), 0x4F0, 0x3E800000) != 0)) {
             StopBinoc(temp_s1);
         }
         UpdateBinoc(temp_s1);

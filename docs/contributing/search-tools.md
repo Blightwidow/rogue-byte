@@ -89,3 +89,9 @@ and matched 3 (the first pass took 5 minutes, the second found 2 more: the small
 
 `fix_stack.py` replaces the placeholder `sp[0x400]` buffer of the near-miss sources by each size the retail frame allows (multiples of 0x10 below the `addiu $sp` frame) and keeps
 the best; better sources go to `work/matching/fix-stack/`. On the 349 near misses with the placeholder it improved 325 and matched 87 in under three minutes.
+
+`mutate.py` has the rewrites the shaping rounds found useful on m2c drafts: a pass-through `arg0` added to a callee's prototype and calls (`leading_argument`), a callee's return type `void` against `s32`/`M2C_UNK`
+(`callee_return_kind`), a prototype parameter `s32`/`M2C_UNK` against `f32` (`float_parameter`), `p += 4` against `p += 1` and a byte cast on `p + 0x30` (`pointer_stride`), the `(int)` cast on a shifted
+bit test (`bit_test_cast`), and `0x8000L << n` (`long_shift`). The `volatile` pointer read it used to try is gone: it only steers the scheduler, which AGENTS.md does not allow. `--batch --manifest` takes the
+current scores of `nonmatching/MANIFEST.tsv`. On the near misses scoring 1 to 10 (590 functions, 50 compiles each, about 25 minutes in all) it matched 26 and improved 72; the first pass over scores 1 to 4 matched
+17, the second over 5 to 10 matched 9.

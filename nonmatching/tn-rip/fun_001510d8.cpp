@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FFloatsNear__Ffff(f32, f32, M2C_UNK);           /* extern */
+s32 FFloatsNear__Ffff(f32, f32, f32);           /* extern */
 
 s32 func_001510D8(s8 *arg0) {
     f32 temp_f13;

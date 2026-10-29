@@ -14,7 +14,7 @@ struct _m2c_stack_S8Read__18CBinaryInputStream {
 #define sp0 (*(s8 *)(sp + 0x00))
 M2C_UNK CBinaryInputStream_Read_thunk(s8 *, M2C_UNK, s8 *); /* extern */
 s8 S8Read__18CBinaryInputStream(s8 *arg0) {
-    s8 sp[0x20] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s32 temp_a0;
     s8 *temp_v1;
     temp_a0 = M2C_FIELD(arg0, s32 *, 8);

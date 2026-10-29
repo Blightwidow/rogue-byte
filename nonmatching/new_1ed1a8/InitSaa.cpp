@@ -11,8 +11,8 @@ struct _m2c_stack_InitSaa {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 
-s32 AppendSlEntry(M2C_UNK *, s8 *);
-void InitSl(s32, M2C_UNK, s8 *);
+void AppendSlEntry(M2C_UNK *, s8 *);
+void InitSl(s32, f32, s8 *);
 s32 PrependSlEntry(M2C_UNK *, s8 *);
 extern M2C_UNK B_003E159C;
 

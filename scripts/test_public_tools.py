@@ -203,6 +203,49 @@ class PermuteMarkedTests(unittest.TestCase):
         self.assertFalse(permute.MARK.search('    x->a = 1;'))
 
 
+
+class MutateM2cTests(unittest.TestCase):
+    def rng(self):
+        return mutate.random.Random(3)
+
+    def test_leading_argument_declares_and_passes_arg0(self):
+        lines = ['M2C_UNK Callee(s32);', 'void F(s8 *arg0) {', '    Callee(1);', '}']
+        changed = mutate.leading_argument(lines, 2, self.rng())
+        self.assertEqual(changed[0], 'M2C_UNK Callee(s8 *, s32);')
+        self.assertEqual(changed[2], '    Callee(arg0, 1);')
+
+    def test_leading_argument_needs_arg0(self):
+        self.assertIsNone(mutate.leading_argument(['M2C_UNK Callee(s32);', 'void F(s8 *p) {', '    Callee(1);', '}'], 2, self.rng()))
+
+    def test_return_kind_only_voids_a_discarded_result(self):
+        lines = ['s32 Callee(s32);', 'void F(void) {', '    x = Callee(1);', '}']
+        self.assertIsNone(mutate.callee_return_kind(lines, 2, self.rng()))
+        lines[2] = '    Callee(1);'
+        self.assertEqual(mutate.callee_return_kind(lines, 2, self.rng())[0], 'void Callee(s32);')
+
+    def test_float_parameter_toggles_one_parameter(self):
+        changed = mutate.float_parameter(['M2C_UNK SetRate(s8 *, M2C_UNK);', 'void F(void) {', '    SetRate(p, 1);', '}'], 2, self.rng())
+        self.assertEqual(changed[0], 'M2C_UNK SetRate(s8 *, f32);')
+
+    def test_pointer_stride_scales_back(self):
+        lines = ['void F(void) {', '    s32 *cursor;', '    cursor += 4;', '}']
+        changed = mutate.pointer_stride(lines, 2, mutate.random.Random(0))
+        self.assertIn(changed[2], ('    cursor += 1;', '    cursor += 4;'))
+
+    def test_bit_test_cast_adds_and_removes_the_int_cast(self):
+        added = mutate.bit_test_cast(['    if ((x >> 0x3C) & 1) {'], 0, self.rng())
+        self.assertIn('>> 0x3C) & 1', added[0])
+        self.assertTrue('(int)' in added[0] or '(u32)' in added[0])
+        removed = mutate.bit_test_cast(['    if ((int)(x >> 0x3C) & 1) {'], 0, self.rng())
+        self.assertNotIn('(int)', removed[0])
+
+    def test_long_shift_marks_the_constant_long(self):
+        self.assertEqual(mutate.long_shift(['    f |= 0x8000 << 0x23;'], 0, self.rng())[0], '    f |= 0x8000L << 0x23;')
+
+    def test_volatile_reads_are_not_a_mutation(self):
+        self.assertNotIn(mutate.volatile_slot, mutate.MUTATIONS)
+
+
 class ListingTests(unittest.TestCase):
     FUNCTIONS = [
         {'address': '0X100010', 'name': 'b', 'size': 40, 'module': 'm', 'status': 'asm', 'named': True},

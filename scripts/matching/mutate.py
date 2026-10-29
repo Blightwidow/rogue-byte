@@ -297,8 +297,128 @@ def volatile_slot(lines, index, rng):
     return lines[:index] + [changed] + lines[index + 1:]
 
 
+PROTOTYPE = re.compile(r'^(\s*(?:extern "C" )?)((?:const |unsigned |struct )*[A-Za-z_][\w ]*?\s*\**)\s*([A-Za-z_]\w*)\s*\(([^()]*)\)\s*;(\s*/\*.*\*/)?\s*$')
+LOCAL_POINTER = re.compile(r'^\s+((?:const |unsigned |struct )*[A-Za-z_]\w*)\s*(\*+)\s*([A-Za-z_]\w*)\s*(?:=[^;]*)?;\s*$')
+
+
+def callee_prototypes(lines):
+    """[(line index, match)] of the function prototypes of a draft (`M2C_UNK f(void *, s32);` and `extern "C" void f(...);`), not its own definition."""
+    found = []
+    for position, line in enumerate(lines):
+        match = PROTOTYPE.match(line)
+        if match and not line.rstrip().endswith('{') and match.group(3) not in ('if', 'while', 'switch', 'return') and '...' not in match.group(4):
+            found.append((position, match))
+    return found
+
+
+def leading_argument(lines, index, rng):
+    """m2c drops a callee's pass-through first argument (an untouched $a0 before the jal): declare it and pass `arg0` at every call."""
+    if not any(re.search(r'\barg0\b', line) for line in lines):
+        return None
+    declarations = callee_prototypes(lines)
+    if not declarations:
+        return None
+    position, match = rng.choice(declarations)
+    name, params = match.group(3), match.group(4).strip()
+    if params.startswith('void *') or params.startswith('s8 *'):
+        return None
+    inserted = 's8 *' + (', ' + params if params and params != 'void' else '')
+    changed = list(lines)
+    changed[position] = f'{match.group(1)}{match.group(2).rstrip()} {name}({inserted});' + (match.group(5) or '')
+    calls = 0
+    for number, line in enumerate(changed):
+        if number == position or not re.search(rf'(?<![\w.>]){re.escape(name)}\(', line):
+            continue
+        replaced = re.sub(rf'(?<![\w.>]){re.escape(name)}\(\s*\)', f'{name}(arg0)', line)
+        replaced = re.sub(rf'(?<![\w.>]){re.escape(name)}\((?!\s*\)|arg0\b)', f'{name}(arg0, ', replaced)
+        calls += replaced != line
+        changed[number] = replaced
+    return changed if calls else None
+
+
+def callee_return_kind(lines, index, rng):
+    """A callee prototype's return type void <-> s32/M2C_UNK: a discarded result changes which register holds later constants."""
+    declarations = [(position, match) for position, match in callee_prototypes(lines) if match.group(2).strip() in ('void', 's32', 'M2C_UNK', 'int')]
+    if not declarations:
+        return None
+    position, match = rng.choice(declarations)
+    kind = match.group(2).strip()
+    name = match.group(3)
+    statements = sum(1 for line in lines if re.match(rf'^\s+{re.escape(name)}\(.*\);\s*$', line))
+    uses = sum(len(re.findall(rf'(?<![\w.>]){re.escape(name)}\(', line)) for number, line in enumerate(lines) if number != position)
+    if kind != 'void' and statements != uses:
+        return None
+    replacement = rng.choice(['void'] if kind != 'void' else ['s32', 'M2C_UNK'])
+    changed = list(lines)
+    changed[position] = f'{match.group(1)}{replacement} {match.group(3)}({match.group(4)});' + (match.group(5) or '')
+    return changed
+
+
+def float_parameter(lines, index, rng):
+    """A callee parameter m2c typed as an integer is a float when $f12/$f13 are set before the call: M2C_UNK/s32 <-> f32 in one prototype parameter."""
+    declarations = [(position, match) for position, match in callee_prototypes(lines) if match.group(4).strip() not in ('', 'void')]
+    if not declarations:
+        return None
+    position, match = rng.choice(declarations)
+    params = [param.strip() for param in match.group(4).split(',')]
+    choices = [number for number, param in enumerate(params) if param in ('M2C_UNK', 's32', 'f32', 'int', 'float')]
+    if not choices:
+        return None
+    number = rng.choice(choices)
+    params[number] = 'f32' if params[number] != 'f32' else 's32'
+    changed = list(lines)
+    changed[position] = f'{match.group(1)}{match.group(2).rstrip()} {match.group(3)}({", ".join(params)});' + (match.group(5) or '')
+    return changed
+
+
+def pointer_stride(lines, index, rng):
+    """m2c scales pointer arithmetic by the element size: `p += 4` on an `s32 *` is 16 bytes (use `+= 1`), and `p + 0x30` is 0xC0 bytes (a byte cast)."""
+    line = lines[index]
+    pointers = {}
+    for text in lines:
+        match = LOCAL_POINTER.match(text)
+        if match and not match.group(1).startswith('return'):
+            pointers[match.group(3)] = match.group(1)
+    step = re.search(r'\b(\w+) \+= (\d+);', line)
+    if step and step.group(1) in pointers:
+        amount = int(step.group(2))
+        replacement = 1 if amount > 1 else 4
+        return lines[:index] + [line[:step.start(2)] + str(replacement) + line[step.end(2):]] + lines[index + 1:]
+    offset = re.search(r'(?<![\w.>])(\w+) \+ (0x[0-9A-Fa-f]+|\d+)(?![\w.])', line)
+    if offset and offset.group(1) in pointers:
+        return lines[:index] + [line[:offset.start()] + f'(s8 *){offset.group(1)} + {offset.group(2)}' + line[offset.end():]] + lines[index + 1:]
+    cast = re.search(r'\(s8 \*\)(\w+) \+ (0x[0-9A-Fa-f]+|\d+)', line)
+    if cast:
+        return lines[:index] + [line[:cast.start()] + f'{cast.group(1)} + {cast.group(2)}' + line[cast.end():]] + lines[index + 1:]
+    return None
+
+
+def bit_test_cast(lines, index, rng):
+    """`(x >> n) & 1` on a 64-bit value gets a dsll32/dsra32 pair retail lacks: cast the shifted value to int, or back."""
+    line = lines[index]
+    match = re.search(r'\(\(int\)\((.*?) >> (0x[0-9A-Fa-f]+|\d+)\)\) & 1', line) or re.search(r'\(int\)\((.*?) >> (0x[0-9A-Fa-f]+|\d+)\) & 1', line)
+    if match:
+        return lines[:index] + [line[:match.start()] + f'(({match.group(1)} >> {match.group(2)}) & 1)' + line[match.end():]] + lines[index + 1:]
+    match = re.search(r'\(\((.*?) >> (0x[0-9A-Fa-f]+|\d+)\) & 1\)', line) or re.search(r'\((.*?) >> (0x[0-9A-Fa-f]+|\d+)\) & 1', line)
+    if not match or '(int)' in match.group(0):
+        return None
+    cast = rng.choice(['(int)', '(u32)'])
+    return lines[:index] + [line[:match.start()] + f'{cast}({match.group(1)} >> {match.group(2)}) & 1' + line[match.end():]] + lines[index + 1:]
+
+
+def long_shift(lines, index, rng):
+    """`0x8000 << 0x23` shifts an int: a 64-bit constant is `0x8000L << 0x23`, or `1UL << 0x32`."""
+    match = re.search(r'\b(0x[0-9A-Fa-f]+)(L?)(\s*<<\s*(?:0x[0-9A-Fa-f]+|\d+))', lines[index])
+    if not match:
+        return None
+    replacement = match.group(1) + ('' if match.group(2) else 'L') + match.group(3)
+    return lines[:index] + [lines[index][:match.start()] + replacement + lines[index][match.end():]] + lines[index + 1:]
+
+
 LEGACY_MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
-MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return, volatile_slot, volatile_slot, while_to_dowhile]
+# volatile_slot is not a mutation any more: reading a pointer through `volatile` only steers the scheduler, which AGENTS.md does not allow.
+MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, while_to_goto, tail_return, tail_return, while_to_dowhile,
+                                leading_argument, callee_return_kind, callee_return_kind, float_parameter, pointer_stride, pointer_stride, bit_test_cast, long_shift]
 
 
 def mutate(text, rng, count=1):
@@ -365,7 +485,12 @@ def climb(address, text, budget, jobs, lang, seed=0, log=None):
 def batch(arguments):
     rows = list(csv.DictReader(open(os.path.join(LAB, 'data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t'))
     pool = []
-    for row in rows:
+    if arguments.manifest:  # the current scores of nonmatching/MANIFEST.tsv instead of the registry's best
+        for row in csv.DictReader(open(os.path.join(LAB, 'nonmatching', 'MANIFEST.tsv'), encoding='utf-8'), delimiter='\t'):
+            path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(row["address"], 16):06X}.cpp')
+            if arguments.min_score <= int(row['score']) <= arguments.max_score and os.path.exists(path):
+                pool.append((int(row['score']), f"0x{int(row['address'], 16):06X}", path))
+    for row in [] if arguments.manifest else rows:
         path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(row["address"], 16):06X}.cpp')
         if row['status'] == 'tried' and row['best'] != '' and arguments.min_score <= int(row['best']) <= arguments.max_score and os.path.exists(path):
             pool.append((int(row['best']), row['address'], path))
@@ -400,6 +525,7 @@ def main():
     parser.add_argument('--max-score', type=int, default=10)
     parser.add_argument('--mutations', choices=('all', 'legacy'), default='all', help='legacy: the rewrites before flip_callee_return, while_to_goto and tail_return')
     parser.add_argument('--no-write', action='store_true', help='--batch: report only, leave the sources alone')
+    parser.add_argument('--manifest', action='store_true', help='--batch: take the scores of nonmatching/MANIFEST.tsv, not the registry best')
     parser.add_argument('--classes', help='comma list of classify_diffs.py classes to restrict --batch to')
     arguments = parser.parse_args()
     if arguments.mutations == 'legacy':

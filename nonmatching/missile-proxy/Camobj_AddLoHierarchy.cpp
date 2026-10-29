@@ -11,8 +11,8 @@ struct _m2c_stack_Camobj_AddLoHierarchy {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 
-M2C_UNK AddLoHierarchy();                           /* extern */
-M2C_UNK SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, s8 *, M2C_UNK); /* extern */
+void AddLoHierarchy();                           /* extern */
+void SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, s8 *, f32); /* extern */
 extern M2C_UNK B_002DDF40;
 
 void Camobj_AddLoHierarchy(s8 *arg0) {

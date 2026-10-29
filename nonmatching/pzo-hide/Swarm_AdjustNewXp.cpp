@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FIsBasicDerivedFrom(s32, M2C_UNK);
+s32 FIsBasicDerivedFrom(s8 *, s32, M2C_UNK);
 void func_0017F1A0();
 void func_0017F5B0(s8 *, s32);
 
@@ -17,7 +17,7 @@ void Swarm_AdjustNewXp(s8 *arg0, s32 arg1, s32 arg2) {
     func_0017F1A0();
     if (M2C_FIELD(arg0, s32 *, 0x188) != 0) {
         temp_s0 = M2C_FIELD((arg1 + ((1 - arg2) << 6)), s32 *, 0xC);
-        if (FIsBasicDerivedFrom(temp_s0, 0x47) != 0) {
+        if (FIsBasicDerivedFrom(arg0, temp_s0, 0x47) != 0) {
             func_0017F5B0(arg0, temp_s0);
         }
     }

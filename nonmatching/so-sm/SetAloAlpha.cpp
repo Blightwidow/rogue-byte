@@ -7,14 +7,14 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FIsBasicDerivedFrom(M2C_UNK);                   /* extern */
+s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);                   /* extern */
 
 void SetAloAlpha(s8 *arg0, f32 fparg0) {
     s8 *temp_v0;
     s8 *temp_v0_2;
 
     if (fparg0 <= 0.0f) {
-        if (FIsBasicDerivedFrom(0x69) == 0) {
+        if (FIsBasicDerivedFrom(arg0, 0x69) == 0) {
             temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
             M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *), 0x4C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x48));
         }

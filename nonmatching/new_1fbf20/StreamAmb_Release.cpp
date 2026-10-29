@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK BASIC_Destruct(M2C_UNK);                    /* extern */
+M2C_UNK BASIC_Destruct(s8 *, M2C_UNK);                    /* extern */
 M2C_UNK FreeStreamAmb(s8 *);                      /* extern */
 
 void StreamAmb_Release(s8 *arg0) {
@@ -16,7 +16,7 @@ void StreamAmb_Release(s8 *arg0) {
     temp_v0 = M2C_FIELD(arg0, u16 *, 0x4C) - 1;
     M2C_FIELD(arg0, u16 *, 0x4C) = temp_v0;
     if (((temp_v0 << 0x10) == 0) && (arg0 != NULL)) {
-        BASIC_Destruct(0);
+        BASIC_Destruct(arg0, 0);
         FreeStreamAmb(arg0);
     }
 }

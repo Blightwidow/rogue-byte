@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK sprintf(M2C_UNK *, s32);                    /* extern */
+void sprintf(s8 *, M2C_UNK *, s32);                    /* extern */
 extern M2C_UNK B_003DA150;
 extern M2C_UNK D_002C3288;
 extern M2C_UNK RO_002A79A0;
@@ -22,7 +22,7 @@ void GetLootRowPrice(s8 *arg0, s32 arg1) {
         var_a2 = *((temp_a1 * 0xC) + &D_002C3288);
     }
     if (var_a2 != 0) {
-        sprintf(&RO_002A79A0, var_a2);
+        sprintf(arg0, &RO_002A79A0, var_a2);
         return;
     }
     *arg0 = 0;
