@@ -12,8 +12,8 @@ struct _m2c_stack_func_001B4478 {
 };                                                  /* size = 0x430 */
 
 M2C_UNK InitRenderNodeStack(s8 *);                /* extern */
-M2C_UNK RenderGlobset(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK RenderGlobsetTree(s8 *, s8 *);          /* extern */
+void RenderGlobset(s8 *, M2C_UNK, M2C_UNK, f32, f32); /* extern */
+void RenderGlobsetTree(s8 *, s8 *);          /* extern */
 
 void func_001B4478(s8 *arg0) {
     s8 sp[0x430] __attribute__((aligned(16)));

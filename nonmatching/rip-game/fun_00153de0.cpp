@@ -12,7 +12,7 @@ struct _m2c_stack_func_00153DE0 {
 };                                                  /* size = 0x40 */
 
 s32 NNextSensorState(s8 *, s32, s32);             /* extern */
-M2C_UNK SetSensorEntryState(s8 *, s32 *, s32);    /* extern */
+void SetSensorEntryState(s8 *, s32 *, s32);    /* extern */
 
 void func_00153DE0(s8 *arg0) {
     s32 *temp_a1;
@@ -29,8 +29,8 @@ loop_2:
         var_s2 += 1;
         temp_a2 = NNextSensorState(arg0, var_a1, M2C_FIELD(var_s0, s32 *, 4));
         temp_a1 = var_s0;
-        var_s0 += 0x10;
         SetSensorEntryState(arg0, temp_a1, temp_a2);
+        var_s0 += 0x10;
         if (var_s2 < M2C_FIELD(arg0, s32 *, 0xFC)) {
             var_a1 = *var_s0;
             goto loop_2;

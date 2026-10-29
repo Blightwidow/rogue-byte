@@ -1,8 +1,8 @@
 #include "m2c_macros.h"
 extern "C" {
 
-void *PactAddStgAction(M2C_UNK);                    /* extern */
-s32 *PvAllocStackImpl__Fi(void *, s32, s32);        /* extern */
+void * PactAddStgAction(s32);                    /* extern */
+s32 * PvAllocStackImpl__Fi(void *, f32, f32);        /* extern */
 
 void func_001BBD48(s32 arg1, s32 arg2) {
     char sp[0x10];

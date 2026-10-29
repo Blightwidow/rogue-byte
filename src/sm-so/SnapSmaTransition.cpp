@@ -8,8 +8,8 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 M2C_UNK EndSmaTransition(s8 *);                   /* extern */
-M2C_UNK RetractAsega(s8 *);                       /* extern */
-M2C_UNK SeekAsega(s8 *, M2C_UNK, M2C_UNK, f32);   /* extern */
+void RetractAsega(s8 *);                       /* extern */
+M2C_UNK SeekAsega(s8 *, M2C_UNK, f32, f32);   /* extern */
 
 void SnapSmaTransition(s8 *arg0) {
     f32 temp_f13;

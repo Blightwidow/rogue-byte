@@ -7,12 +7,21 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK ApplyAsegToHandle(M2C_UNK, M2C_UNK, M2C_UNK, s32, M2C_UNK, f32); /* extern */
-M2C_UNK RemoveSoLoHierarchy();                      /* extern */
+s32 PentryFindSensorLo(s8 *);
+void SetSensorEntryState(s8 *, s32, M2C_UNK);
+void memmove(s32, s32, s32);
 
-void func_001B0C68(s32 arg0) {
-    RemoveSoLoHierarchy();
-    ApplyAsegToHandle(0, 0, 0, arg0 + 0x1C4, 0, 0);
+void RemoveSensorLo(s8 *arg0) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    temp_v0 = PentryFindSensorLo(arg0);
+    if (temp_v0 != 0) {
+        SetSensorEntryState(arg0, temp_v0, 0);
+        temp_v0_2 = M2C_FIELD(arg0, s32 *, 0xFC) - 1;
+        M2C_FIELD(arg0, s32 *, 0xFC) = temp_v0_2;
+        memmove(temp_v0, temp_v0 + 0x10, ((s32) ((arg0 + ((temp_v0_2 * 0x10) + 0x100)) - temp_v0) >> 4) * 0x10);
+    }
 }
 
 }

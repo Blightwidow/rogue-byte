@@ -7,21 +7,18 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 PentryFindSensorLo();
-void SetSensorEntryState(s8 *, s32, M2C_UNK);
-s32 memmove(s32, s32, s32);
+s32 FGoalAnimDone(s32);                             /* extern */
+s32 func_001C1FA0(s8 *, s8 *, f32);         /* extern */
 
-void RemoveSensorLo(s8 *arg0) {
-    s32 temp_v0;
-    s32 temp_v0_2;
-
-    temp_v0 = PentryFindSensorLo();
-    if (temp_v0 != 0) {
-        SetSensorEntryState(arg0, temp_v0, 0);
-        temp_v0_2 = M2C_FIELD(arg0, s32 *, 0xFC) - 1;
-        M2C_FIELD(arg0, s32 *, 0xFC) = temp_v0_2;
-        memmove(temp_v0, temp_v0 + 0x10, ((s32) ((arg0 + ((temp_v0_2 * 0x10) + 0x100)) - temp_v0) >> 4) * 0x10);
+s32 func_0017EAE8(s8 *arg0) {
+    if (!(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x10), s32 *, 0xFE8) & 1)) {
+        goto block_7;
     }
+    if (FGoalAnimDone(M2C_FIELD(arg0, s32 *, 0x18)) != 0) {
+block_7:
+        return func_001C1FA0(arg0 + 0x30, M2C_FIELD(arg0, s8 **, 0x10), 0x41C80000);
+    }
+    return 0;
 }
 
 }

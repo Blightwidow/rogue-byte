@@ -20,15 +20,15 @@ struct _m2c_stack_CalculateDmat4 {
 #define sp20 (*(s128 *)(sp + 0x20))
 #define sp30 (*(s128 *)(sp + 0x30))
 M2C_UNK InvertMatrix4Affine(M2C_UNK *, s32);        /* extern */
-M2C_UNK __ml__FRC7MATRIX4T0(s8 *, s32, M2C_UNK *); /* extern */
+void __ml__FRC7MATRIX4T0(s8 *, s32, M2C_UNK *); /* extern */
 void CalculateDmat4(s32 arg0, s32 arg1, s8 *arg2) {
     s8 sp[0x70] __attribute__((aligned(16)));
     M2C_UNK sp40;
     InvertMatrix4Affine(&sp40, arg0);
     __ml__FRC7MATRIX4T0(sp, arg1, &sp40);
     M2C_FIELD(arg2, s128 *, 0) = sp0;
-    M2C_FIELD(arg2, s128 *, 0x30) = sp30;
     M2C_FIELD(arg2, s128 *, 0x10) = sp10;
     M2C_FIELD(arg2, s128 *, 0x20) = sp20;
+    M2C_FIELD(arg2, s128 *, 0x30) = sp30;
 }
 }

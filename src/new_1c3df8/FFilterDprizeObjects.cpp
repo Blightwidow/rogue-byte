@@ -12,16 +12,19 @@ struct _m2c_stack_FFilterDprizeObjects {
 };                                                  /* size = 0x20 */
 s32 FIsBasicDerivedFrom(s32, M2C_UNK);              /* extern */
 s32 FFilterDprizeObjects(s32 arg0, s8 *arg1) {
+    s32 result;
     if (M2C_FIELD(arg1, s64 *, 0x10) & (0x8000L << 0x21)) {
         return 0;
     }
     s32 temp_s0 = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg1, s8 **, 4), s8 **, 0xEC), s32 *, 0x60);
     if (FIsBasicDerivedFrom(temp_s0, 0x32) != 0) {
-        return 0;
+        { result = 0; goto done; }
     }
     if (FIsBasicDerivedFrom(temp_s0, 0x4F) != 0) {
         return 0;
     }
-    return 1;
+    { result = 1; goto done; }
+done:
+    return result;
 }
 }

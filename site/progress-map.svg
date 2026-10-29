@@ -2784,10 +2784,10 @@
 <rect x="640.0" y="633.4" width="9.9" height="11.0" fill="#4a45a8"><title>func_001C4848 0X1C4848 120 bytes (draft)</title></rect>
 <rect x="640.0" y="644.9" width="9.9" height="10.3" fill="#2f7af4"><title>HandlePoMessage 0X1C3E20 112 bytes (c)</title></rect>
 <rect x="640.0" y="655.6" width="9.9" height="10.3" fill="#4a45a8"><title>func_001C41B8 0X1C41B8 112 bytes (draft)</title></rect>
-<rect x="650.3" y="621.3" width="11.5" height="8.9" fill="#4a45a8"><title>FFilterDprizeObjects 0X1C5570 112 bytes (draft)</title></rect>
+<rect x="650.3" y="621.3" width="11.5" height="8.9" fill="#2f7af4"><title>FFilterDprizeObjects 0X1C5570 112 bytes (c)</title></rect>
 <rect x="662.2" y="621.3" width="11.5" height="8.9" fill="#4a45a8"><title>func_001C6588 0X1C6588 112 bytes (draft)</title></rect>
 <rect x="674.1" y="621.3" width="11.5" height="8.9" fill="#4a45a8"><title>func_001C6880 0X1C6880 112 bytes (draft)</title></rect>
-<rect x="650.3" y="630.5" width="9.2" height="11.1" fill="#4a45a8"><title>func_001C6AB8 0X1C6AB8 112 bytes (draft)</title></rect>
+<rect x="650.3" y="630.5" width="9.2" height="11.1" fill="#2f7af4"><title>func_001C6AB8 0X1C6AB8 112 bytes (c)</title></rect>
 <rect x="660.0" y="630.5" width="8.5" height="11.1" fill="#2f7af4"><title>VJOY_constructor 0X1C4280 104 bytes (c)</title></rect>
 <rect x="668.9" y="630.5" width="8.5" height="11.1" fill="#2f7af4"><title>LoadDprizeFromBrx 0X1C4EF8 104 bytes (c)</title></rect>
 <rect x="677.8" y="630.5" width="7.8" height="11.1" fill="#4a45a8"><title>GrfbtnVjoyPressedWithin 0X1C4660 96 bytes (draft)</title></rect>
@@ -3209,7 +3209,7 @@
 <rect x="755.3" y="752.8" width="10.0" height="11.6" fill="#4a45a8"><title>SetSmaSvt 0X1F0850 128 bytes (draft)</title></rect>
 <rect x="765.7" y="752.8" width="10.0" height="11.6" fill="#4a45a8"><title>func_001F1EB8 0X1F1EB8 128 bytes (draft)</title></rect>
 <rect x="776.1" y="752.8" width="10.0" height="11.6" fill="#2f7af4"><title>EnsureSoOxa 0X1F27F0 128 bytes (c)</title></rect>
-<rect x="786.6" y="752.8" width="9.4" height="11.6" fill="#4a45a8"><title>SnapSmaTransition 0X1F08D0 120 bytes (draft)</title></rect>
+<rect x="786.6" y="752.8" width="9.4" height="11.6" fill="#2f7af4"><title>SnapSmaTransition 0X1F08D0 120 bytes (c)</title></rect>
 <rect x="755.3" y="764.8" width="9.7" height="11.2" fill="#4a45a8"><title>HandleSmaMessage 0X1F1078 120 bytes (draft)</title></rect>
 <rect x="755.3" y="776.4" width="9.7" height="11.2" fill="#4a45a8"><title>func_001F1F38 0X1F1F38 120 bytes (draft)</title></rect>
 <rect x="755.3" y="788.0" width="9.7" height="10.4" fill="#2f7af4"><title>func_001F26A8 0X1F26A8 112 bytes (c)</title></rect>
@@ -3396,7 +3396,7 @@
 <rect x="985.1" y="68.1" width="7.6" height="8.4" fill="#2f7af4"><title>func_001B06D8 0X1B06D8 72 bytes (c)</title></rect>
 <rect x="993.1" y="68.1" width="6.7" height="8.4" fill="#2f7af4"><title>PauseMenu_Close 0X1AF660 64 bytes (c)</title></rect>
 <rect x="1000.3" y="68.1" width="6.7" height="8.4" fill="#2f7af4"><title>func_001B0808 0X1B0808 64 bytes (c)</title></rect>
-<rect x="985.1" y="76.9" width="8.2" height="6.9" fill="#4a45a8"><title>func_001B0C68 0X1B0C68 64 bytes (draft)</title></rect>
+<rect x="985.1" y="76.9" width="8.2" height="6.9" fill="#2f7af4"><title>func_001B0C68 0X1B0C68 64 bytes (c)</title></rect>
 <rect x="985.1" y="84.2" width="8.2" height="6.0" fill="#2f7af4"><title>PauseMenu_CancelOption 0X1AFF88 56 bytes (c)</title></rect>
 <rect x="985.1" y="90.5" width="8.2" height="6.0" fill="#2f7af4"><title>func_001B0970 0X1B0970 56 bytes (c)</title></rect>
 <rect x="993.7" y="76.9" width="6.4" height="6.5" fill="#2f7af4"><title>func_001AF6A0 0X1AF6A0 48 bytes (c)</title></rect>
@@ -3549,7 +3549,7 @@
 <rect x="1267.9" y="54.1" width="11.7" height="11.9" fill="#2f7af4"><title>func_00153E60 0X153E60 152 bytes (c)</title></rect>
 <rect x="1267.9" y="66.4" width="11.7" height="10.0" fill="#2f7af4"><title>SetRhythmState 0X153128 128 bytes (c)</title></rect>
 <rect x="1267.9" y="76.8" width="11.7" height="10.0" fill="#4a45a8"><title>func_00153DE0 0X153DE0 128 bytes (draft)</title></rect>
-<rect x="1267.9" y="87.2" width="11.7" height="9.3" fill="#4a45a8"><title>RemoveSensorLo 0X153F80 120 bytes (draft)</title></rect>
+<rect x="1267.9" y="87.2" width="11.7" height="9.3" fill="#2f7af4"><title>RemoveSensorLo 0X153F80 120 bytes (c)</title></rect>
 <rect x="1280.0" y="54.1" width="11.1" height="8.4" fill="#2f7af4"><title>AddSensorLo 0X153F18 104 bytes (c)</title></rect>
 <rect x="1291.5" y="54.1" width="9.4" height="8.4" fill="#4a45a8"><title>PaloFindDancerAnim 0X152520 88 bytes (draft)</title></rect>
 <rect x="1301.2" y="54.1" width="9.4" height="8.4" fill="#4a45a8"><title>ICheerFromOid 0X152628 88 bytes (draft)</title></rect>
@@ -5951,7 +5951,7 @@
 <rect x="1189.9" y="592.5" width="10.7" height="9.8" fill="#4a45a8"><title>F32Read__18CBinaryInputStream 0X117E38 120 bytes (draft)</title></rect>
 <rect x="1167.7" y="602.7" width="10.9" height="8.3" fill="#4a45a8"><title>S16Read__18CBinaryInputStream 0X117D50 104 bytes (draft)</title></rect>
 <rect x="1167.7" y="611.4" width="10.9" height="7.6" fill="#4a45a8"><title>U16Read__18CBinaryInputStream 0X117C20 96 bytes (draft)</title></rect>
-<rect x="1167.7" y="619.4" width="10.9" height="6.9" fill="#4a45a8"><title>CBinaryInputStream_ReadMatrix4 0X117F18 88 bytes (draft)</title></rect>
+<rect x="1167.7" y="619.4" width="10.9" height="6.9" fill="#2f7af4"><title>CBinaryInputStream_ReadMatrix4 0X117F18 88 bytes (c)</title></rect>
 <rect x="1179.0" y="602.7" width="7.2" height="9.5" fill="#4a45a8"><title>U8Read__18CBinaryInputStream 0X117BD0 80 bytes (draft)</title></rect>
 <rect x="1186.6" y="602.7" width="7.2" height="9.5" fill="#4a45a8"><title>S8Read__18CBinaryInputStream 0X117D00 80 bytes (draft)</title></rect>
 <rect x="1194.1" y="602.7" width="6.4" height="9.5" fill="#2f7af4"><title>CBinaryInputStream_ReadMatrix 0X117ED0 72 bytes (c)</title></rect>
@@ -6194,7 +6194,7 @@
 <rect x="1575.8" y="477.2" width="11.2" height="8.0" fill="#4a45a8"><title>PackXYZ__4GIFSiii 0X166DA0 104 bytes (draft)</title></rect>
 <rect x="1587.4" y="477.2" width="11.2" height="8.0" fill="#2f7af4"><title>AddImage__4GIFSi 0X167150 104 bytes (c)</title></rect>
 <rect x="1575.8" y="485.6" width="10.5" height="7.8" fill="#4a45a8"><title>ListUV__4GIFSii 0X166FE8 96 bytes (draft)</title></rect>
-<rect x="1575.8" y="493.8" width="10.5" height="7.1" fill="#4a45a8"><title>PackUV__4GIFSii 0X166CE0 88 bytes (draft)</title></rect>
+<rect x="1575.8" y="493.8" width="10.5" height="7.1" fill="#2f7af4"><title>PackUV__4GIFSii 0X166CE0 88 bytes (c)</title></rect>
 <rect x="1586.7" y="485.6" width="11.9" height="6.3" fill="#4a45a8"><title>PackAD__4GIFSll 0X166E90 88 bytes (draft)</title></rect>
 <rect x="1586.7" y="492.2" width="7.0" height="8.7" fill="#2f7af4"><title>__4GIFS 0X166920 72 bytes (c)</title></rect>
 <rect x="1594.1" y="492.2" width="4.5" height="2.6" fill="#2f7af4"><title>CheckReg__4GIFSii 0X166A50 16 bytes (c)</title></rect>
@@ -6594,7 +6594,7 @@
 <rect x="1448.9" y="560.0" width="9.1" height="11.9" fill="#4a45a8"><title>AddVifDirect__4VIFSiP2QWi 0X2270C8 128 bytes (draft)</title></rect>
 <rect x="1448.9" y="572.3" width="9.1" height="11.9" fill="#4a45a8"><title>AddVifDirectRefs__4VIFSiP2QWi 0X227148 128 bytes (draft)</title></rect>
 <rect x="1458.4" y="560.0" width="7.9" height="12.8" fill="#4a45a8"><title>VIFS_AddUnpackCommand 0X226E10 120 bytes (draft)</title></rect>
-<rect x="1458.4" y="573.2" width="7.9" height="11.1" fill="#4a45a8"><title>AddVifStrow__4VIFSP2QW 0X226D68 104 bytes (draft)</title></rect>
+<rect x="1458.4" y="573.2" width="7.9" height="11.1" fill="#2f7af4"><title>AddVifStrow__4VIFSP2QW 0X226D68 104 bytes (c)</title></rect>
 <rect x="1466.7" y="560.0" width="9.7" height="6.8" fill="#4a45a8"><title>Align__4VIFSi 0X226C58 80 bytes (draft)</title></rect>
 <rect x="1476.8" y="560.0" width="8.7" height="6.8" fill="#2f7af4"><title>__4VIFS 0X226C10 72 bytes (c)</title></rect>
 <rect x="1466.7" y="567.2" width="5.9" height="8.9" fill="#4a45a8"><title>VIFS_AddVifUnpackFromStream 0X226FD0 64 bytes (draft)</title></rect>

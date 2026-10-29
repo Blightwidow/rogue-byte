@@ -95,3 +95,7 @@ the best; better sources go to `work/matching/fix-stack/`. On the 349 near misse
 bit test (`bit_test_cast`), and `0x8000L << n` (`long_shift`). The `volatile` pointer read it used to try is gone: it only steers the scheduler, which AGENTS.md does not allow. `--batch --manifest` takes the
 current scores of `nonmatching/MANIFEST.tsv`. On the near misses scoring 1 to 10 (590 functions, 50 compiles each, about 25 minutes in all) it matched 26 and improved 72; the first pass over scores 1 to 4 matched
 17, the second over 5 to 10 matched 9.
+
+A third `mutate.py` pass (scores 1 to 12, 690 functions, 100 compiles each, a new seed, about 70 minutes) matched 8 and improved 30, against 17 and 9 for the first two passes over the same
+rewrites: the rewrites are close to exhausted, and the next gains come from new kinds of rewrite or from hand shaping.
+

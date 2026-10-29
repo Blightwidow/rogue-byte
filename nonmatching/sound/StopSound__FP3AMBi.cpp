@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK snd_AutoVol(s32, M2C_UNK, f32, M2C_UNK);    /* extern */
+M2C_UNK snd_AutoVol(s32, M2C_UNK, s32, M2C_UNK);    /* extern */
 M2C_UNK snd_StopSound(s32, M2C_UNK);                /* extern */
 
 void StopSound__FP3AMBi(s8 *arg0) {

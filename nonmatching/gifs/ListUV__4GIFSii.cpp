@@ -10,11 +10,11 @@ extern "C" {
 struct _m2c_stack_ListUV__4GIFSii {
     /* 0x00 */ char pad0[0x40];
 };                                                  /* size = 0x40 */
-M2C_UNK CheckReg__4GIFSii(M2C_UNK, M2C_UNK);        /* extern */
+M2C_UNK CheckReg__4GIFSii(s8 *, M2C_UNK, M2C_UNK);        /* extern */
 void ListUV__4GIFSii(s8 *arg0, s32 arg1, s32 arg2) {
     s64 *temp_v1;
     M2C_FIELD(arg0, s64 **, 0xC) = (s64 *) (temp_v1 + 8);
-    CheckReg__4GIFSii(0, 3);
+    CheckReg__4GIFSii(arg0, 0, 3);
     *temp_v1 = arg1 | (arg2 << 0x10);
     temp_v1 = M2C_FIELD(arg0, s64 **, 0xC);
 }

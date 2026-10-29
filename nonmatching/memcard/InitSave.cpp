@@ -20,9 +20,9 @@ void InitSave(s8 *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0) = arg1;
     M2C_FIELD(arg0, s32 *, 4) = arg2;
     M2C_FIELD(arg0, s32 *, 8) = -1;
-    M2C_FIELD(arg0, f32 *, 0x10) = 0.0f;
     M2C_FIELD(arg0, s32 *, 0x20) = 0;
     M2C_FIELD(arg0, s32 *, 0xC) = 0;
+    M2C_FIELD(arg0, f32 *, 0x10) = 0.0f;
     M2C_FIELD(arg0, s32 *, 0x18) = 0;
     M2C_FIELD(arg0, s32 *, 0x1C) = 0;
     M2C_FIELD(arg0, f32 *, 0x14) = 0.0f;

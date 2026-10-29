@@ -808,6 +808,7 @@ address	name	size	file
 0X1179D8	func_001179D8	24	bis/fun_001179d8.c
 0X117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	32	bis/ReadVector__18CBinaryInputStreamP6VECTOR.cpp
 0X117ED0	CBinaryInputStream_ReadMatrix	72	bis/CBinaryInputStream_ReadMatrix.c
+0X117F18	CBinaryInputStream_ReadMatrix4	84	bis/CBinaryInputStream_ReadMatrix4.cpp
 0X117F70	CBinaryInputStream_ReadVector4	32	bis/CBinaryInputStream_ReadVector4.cpp
 0X117F90	func_00117F90	32	bis/fun_00117f90.cpp
 0X117FB0	func_00117FB0	32	bis/fun_00117fb0.cpp
@@ -1662,6 +1663,7 @@ address	name	size	file
 0X153E60	func_00153E60	148	rip-game/fun_00153e60.cpp
 0X153EF8	func_00153EF8	32	rip-game/fun_00153ef8.cpp
 0X153F18	AddSensorLo	104	rip-game/AddSensorLo.c
+0X153F80	RemoveSensorLo	116	rip-game/RemoveSensorLo.cpp
 0X154038	func_00154038	68	rip-game/fun_00154038.cpp
 0X154080	SetSensorEntryState	216	rip-game/SetSensorEntryState.cpp
 0X154158	NGetSensorLoState	40	game/NGetSensorLoState.cpp
@@ -1865,6 +1867,7 @@ address	name	size	file
 0X166A60	GIFS_AddPrimTag	176	gifs/GIFS_AddPrimTag.cpp
 0X166BD8	AddPrimPack__4GIFSiiUl	148	gifs/AddPrimPack__4GIFSiiUl.cpp
 0X166C70	PackRGBA__4GIFSUi	108	gifs/PackRGBA__4GIFSUi.cpp
+0X166CE0	PackUV__4GIFSii	88	gifs/PackUV__4GIFSii.cpp
 0X166EF0	AddPrimList__4GIFSiUl	128	gifs/AddPrimList__4GIFSiUl.cpp
 0X167048	GIFS_ListXYZ	112	gifs/GIFS_ListXYZ.cpp
 0X1670B8	ListXYZF__4GIFSiiii	144	gifs/ListXYZF__4GIFSiiii.cpp
@@ -2546,6 +2549,7 @@ address	name	size	file
 0X1B0A20	StaticInitSlotheaps_1b0a20	308	smartguard-ac/StaticInitSlotheaps_1b0a20.c
 0X1B0B58	func_001B0B58	32	smartguard-ac/fun_001b0b58.c
 0X1B0B78	func_001B0B78	240	smartguard-ac/fun_001b0b78.cpp
+0X1B0C68	func_001B0C68	64	smartguard-ac/fun_001b0c68.cpp
 0X1B0CA8	func_001B0CA8	92	smartguard-ac/fun_001b0ca8.cpp
 0X1B0D08	func_001B0D08	84	smartguard-ac/fun_001b0d08.c
 0X1B0D60	func_001B0D60	44	smartguard-ac/fun_001b0d60.c
@@ -2756,6 +2760,7 @@ address	name	size	file
 0X1C4EF8	LoadDprizeFromBrx	104	new_1c3df8/LoadDprizeFromBrx.c
 0X1C4F60	PostDprizeLoad	308	new_1c3df8/PostDprizeLoad.cpp
 0X1C5098	func_001C5098	172	new_1c3df8/fun_001c5098.cpp
+0X1C5570	FFilterDprizeObjects	108	new_1c3df8/FFilterDprizeObjects.cpp
 0X1C5D18	CheckDprizeCollect	216	new_1c3df8/CheckDprizeCollect.cpp
 0X1C5FA0	RenderDprizeAll	276	new_1c3df8/RenderDprizeAll.cpp
 0X1C64F8	func_001C64F8	16	new_1c3df8/fun_001c64f8.cpp
@@ -2764,6 +2769,7 @@ address	name	size	file
 0X1C67D8	func_001C67D8	168	new_1c3df8/fun_001c67d8.cpp
 0X1C68F0	func_001C68F0	448	new_1c3df8/fun_001c68f0.cpp
 0X1C6AB0	func_001C6AB0	8	new_1c3df8/fun_001c6ab0.c
+0X1C6AB8	func_001C6AB8	108	new_1c3df8/fun_001c6ab8.cpp
 0X1C6B28	func_001C6B28	164	new_1c3df8/fun_001c6b28.cpp
 0X1C6BD0	func_001C6BD0	280	new_1c3df8/fun_001c6bd0.cpp
 0X1C6CE8	func_001C6CE8	256	new_1c3df8/fun_001c6ce8.cpp
@@ -3224,6 +3230,7 @@ address	name	size	file
 0X1F0730	SetSmaGoalIfReachable	148	sm-so/SetSmaGoalIfReachable.cpp
 0X1F07C8	GetSmaGoal	32	sm-so/GetSmaGoal.c
 0X1F07E8	GetSmaCur	32	sm-so/GetSmaCur.c
+0X1F08D0	SnapSmaTransition	120	sm-so/SnapSmaTransition.cpp
 0X1F0948	SnapSmaToGoal	140	sm-so/SnapSmaToGoal.cpp
 0X1F09D8	SeekSma	244	sm-so/SeekSma.cpp
 0X1F0AD0	PsmtChooseRandom	176	sm-so/PsmtChooseRandom.cpp
@@ -3861,6 +3868,7 @@ address	name	size	file
 0X226D10	AddVifFlush__4VIFS	24	vifs/AddVifFlush__4VIFS.cpp
 0X226D28	AddVifFlusha__4VIFS	24	vifs/AddVifFlusha__4VIFS.cpp
 0X226D40	AddVifStcycl__4VIFSii	36	vifs/AddVifStcycl__4VIFSii.cpp
+0X226D68	AddVifStrow__4VIFSP2QW	104	vifs/AddVifStrow__4VIFSP2QW.cpp
 0X226DD0	AddVifStmask__4VIFSUi	56	vifs/AddVifStmask__4VIFSUi.cpp
 0X226E88	UnpackHelper__4VIFS3UPKiiPiPPUi	156	vifs/UnpackHelper__4VIFS3UPKiiPiPPUi.cpp
 0X227010	AddVifUnpackRefs__4VIFS3UPKiPviPPPv	180	vifs/AddVifUnpackRefs__4VIFS3UPKiPviPPPv.cpp

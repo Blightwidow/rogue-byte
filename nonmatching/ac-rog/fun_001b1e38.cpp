@@ -7,8 +7,8 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK ApplyAsegToHandle(M2C_UNK, s32, M2C_UNK, s32, f32, M2C_UNK); /* extern */
-M2C_UNK RemoveSoLoHierarchy();                      /* extern */
+M2C_UNK ApplyAsegToHandle(M2C_UNK, s32, M2C_UNK, s32, f32, f32); /* extern */
+void RemoveSoLoHierarchy();                      /* extern */
 M2C_UNK func_0012E460(s32);                         /* extern */
 
 void func_001B1E38(s32 arg0) {

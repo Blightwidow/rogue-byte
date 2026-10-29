@@ -11,12 +11,12 @@ struct _m2c_stack_StartMurrayThrow {
     /* 0x00 */ char pad0[0x40];
 };                                                  /* size = 0x40 */
 s128 PosLoWorld(...);                      /* extern */
-M2C_UNK SetMurrayState(M2C_UNK);                    /* extern */
+M2C_UNK SetMurrayState(s8 *, M2C_UNK);                    /* extern */
 M2C_UNK SetStepRadTargetDir(s8 *, M2C_UNK);       /* extern */
 void StartMurrayThrow(s8 *arg0, s8 *arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s128 temp_v0;
-    SetMurrayState(7);
+    SetMurrayState(arg0, 7);
     if (arg1 != NULL) {
         temp_v0 = PosLoWorld(arg0, arg1);
         M2C_FIELD(arg0, s128 *, 0x1420) = temp_v0;

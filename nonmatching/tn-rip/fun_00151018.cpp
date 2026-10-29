@@ -7,7 +7,7 @@ int func_00151018(char *self)
 {
     register QW zeroReg asm("$0");
     QW b;
-    QW a = *(QW *)(self + 0x30);
+    QW a = *(QW *)(0x30 + self);
     b = bevy_classes_k30_cam_1507f8(self);
     int result;
     asm("" : "=r"(result) : "0"(0));
@@ -19,11 +19,11 @@ int func_00151018(char *self)
         QW b1 = __builtin_prot3w(b);
         float fb = Lane(b1);
         if (FFloatsNear__Ffff(fa, fb, tol)) {
-            QW a2 = __builtin_pextuw(zeroReg, a);
             tol = Tol();
-            fa = Lane(a2);
+            QW a2 = __builtin_pextuw(zeroReg, a);
             QW b2 = __builtin_pextuw(zeroReg, b);
             fb = Lane(b2);
+            fa = Lane(a2);
             result = FFloatsNear__Ffff(fa, fb, tol) != 0;
         }
     }
