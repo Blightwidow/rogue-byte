@@ -243,3 +243,17 @@ From the second Haiku trial (8 workers, the 120 smallest unmatched functions, 8 
 - **Structs.** A struct of `char[4]` or `char[8]` assigned whole gives `lw/sw` and `ldl/ldr/sdl/sdr`; a struct of arguments on the stack takes its store order from the assignment order; a `QW` result of `qmtc2.ni`/`vmulx`/`qmfc2.ni` in one `asm` statement matches at once.
 - **Still open:** eleven constructors (`0x110CD0` to `0x111380`: `new(N)`, two vtable stores, two zero stores) keep the new object in `$v0` where retail copies it to `$v1` right after the call and uses `$v0` and `$a0` for the vtable
   addresses; no statement or declaration order moved it, and the same blocker appears in all eleven, so it is one source pattern. `TickReadCount` needs `mfc0 Count` (COP0) and stays assembled; `ExitThreadStub` is `addiu $v1,0x23; syscall`.
+
+From the third Haiku trial (8 workers, the next 120 smallest unmatched functions, up to 90 bytes; 73 of 120 matched, 61%):
+
+- **A float argument written as a hex int** (`0x3F800000`) is converted to a float, not reinterpreted: write `0.0f`/`1.0f` for `f32` parameters. A named `float zero = 0.0f` local gives `mtc1`+`swc1` where a bare `0` gives `sw $zero`.
+- **Unused middle parameters count.** A dropped parameter moves later arguments into the wrong registers: a dummy `int unused_a1` puts `arg2` in `$a2` (three functions). A stack constant stored before a call is
+  usually a field of a local object passed by address (`{int type = 0x16; float value}`), not a 5th argument.
+- **Store order rotates.** The compiler emits the last source store first: for retail order `[a..z]` write `[b..z, a]`; a store that retail puts in a `jal` delay slot is usually the last store in the source; a load
+  retail does in a delay slot is read into a temp before the call (`next = cursor->next; Free(cursor);`).
+- **Data widths.** A byte table is `unsigned char[]`; a 16-bit field read by `lhu` and tested as 32 bits is an `int` (`sll 16`, not `andi 0xFFFF`); address math `B + 0x8000 + 0x7D50` folds into the symbol, so use a separate base pointer
+  inside a nested if; `float *rates = &g_...;` keeps struct offsets from folding into a global's address.
+- **Mangled callee names** (`Name__F...`) are declared `extern "C"` with the exact mangled identifier; the parameter list follows the registers, not the mangled name. Many drafts' callee prototypes were wrong in argument
+  count: grep `src/` for an existing matched declaration before guessing.
+- **Not C:** `TickReadCount`, `ResetGs` and `Vif1InterruptHandler` need COP0 `mfc0`/`ei` and `sync`; `printf`/`sprintf` spill the variadic float registers and need a `stdarg.h`; `ExitThreadStub` is `addiu $v1,0x23; syscall`.
+  `CMovieText_Cch` needed the `ps2eeas-loop5` assembler (two `nop`s before its loop), not a source change.
