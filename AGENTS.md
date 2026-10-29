@@ -25,8 +25,12 @@ counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` 
 
 - **A match is retail's bytes in a build that equals retail.** Not a compiled object alone, not a masked comparison, not a
   model's say-so. Report the command you ran and what it printed, failures included.
-- **Plain C++.** Inline assembly only for what C cannot express (VU0 macro code, MMI, unaligned accesses: the matched sources in `src/` use
-  `asm` blocks with constraints for these), no register pins, no artificial barriers.
+- **Plain C++.** Inline assembly only for what C cannot express (VU0 macro code and MMI: the matched sources in `src/` use `asm` blocks with
+  constraints for these; unaligned 8-byte accesses are plain struct copies, see docs/contributing/matching.md), no register pins.
+- **The test for a trick.** A construct is allowed when it could plausibly be in the original source and changes no behaviour: casts, types,
+  statement order, and a dead local that retail's frame shows (a stack area with no stores). It is not allowed when its only purpose is to steer
+  the compiler: `volatile` on ordinary data, an empty `asm` with clobbers, register pins, or a variable that exists only to move a register.
+  A function that matches only with such a construct stays in `nonmatching/` at the score it reaches without it.
 - **One flag set per source file** (and one assembler per function listed in `config/us/`), never ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.

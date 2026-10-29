@@ -257,7 +257,7 @@ address	name	size	file	score
 0X122810	RefOpVectorDistance	224	splice-bif_120f80/RefOpVectorDistance.cpp	11
 0X1228F0	RefOpVectorDistanceSquared	200	splice-bif_120f80/RefOpVectorDistanceSquared.cpp	9
 0X1229B8	RefOpVectorNormalize	336	splice-bif_120f80/RefOpVectorNormalize.cpp	20
-0X122B08	RefOpVectorProjectNormal	104	splice-bif_120f80/RefOpVectorProjectNormal.cpp	13
+0X122B08	RefOpVectorProjectNormal	104	splice-bif_120f80/RefOpVectorProjectNormal.cpp	4
 0X122B70	RefOpVectorProjectTangent	112	splice-bif_120f80/RefOpVectorProjectTangent.cpp	2
 0X122BE0	RefOpVectorBallisticVelocity	256	splice-bif_120f80/RefOpVectorBallisticVelocity.cpp	31
 0X122CE0	RefOpVectorRadianNormal	256	splice-bif_120f80/RefOpVectorRadianNormal.cpp	2
@@ -1428,7 +1428,6 @@ address	name	size	file	score
 0X1DFEB8	StopJsg	288	game-stepguard/StopJsg.cpp	14
 0X1E0020	EnsureSggAlarm__FP3SGGP5ALARM	80	stepguard_1e0020/EnsureSggAlarm__FP3SGGP5ALARM.cpp	2
 0X1E0070	func_001E0070	120	stepguard-jsg/fun_001e0070.cpp	18
-0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.cpp	11
 0X1E03A0	AddSeqRecordWait	64	jsg_1e02e0/AddSeqRecordWait.cpp	4
 0X1E03E0	AddSeqRecordSignalSequence	64	jsg_1e02e0/AddSeqRecordSignalSequence.cpp	4
 0X1E04E0	AddSeqRecordCallAnimation	80	jsg-splice-ref/AddSeqRecordCallAnimation.c	16

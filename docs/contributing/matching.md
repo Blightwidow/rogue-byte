@@ -173,3 +173,11 @@ From the third round (59 of 71 matched; most drafts held an `ldl`/`ldr`/`sdl`/`s
 - **Typed structs for virtual-call loops.** A vtable struct (`s16 offset; fn method`) and an object struct (`vtable`, `next`) matched where an `M2C_FIELD`
   chain gave other registers; `for (node = head; node != end; node = node->next)` gives retail's bottom test.
 - **Lifted VU0 code can lose an instruction** (a `vsqrt Q, vf1x` was dropped in one function): compare the asm blocks with retail.
+
+Three functions reach score 0 only with a construct `AGENTS.md` does not allow, so they stay in `nonmatching/` at their clean scores:
+`func_0017A468` (2) and `RefOpVectorProjectNormal` (4) match when the two pointer loads that feed the `lqc2`s are read through `volatile` pointers
+(which fixes the load order the scheduler otherwise swaps), and `GetActadjPositionGoal` (3) when `asm("" ::: "$5", "$6")` sits before the call (which keeps
+the object pointer in `$a3`). They show what the scheduler needs, not what the original source had; a different original shape that gives the same order
+is what to look for. `PseqnodeFind` is landed: retail has a 16-byte frame with no stores, and an unused local `s8 frame[0x10]` is what a dead
+variable looks like after optimisation.
+

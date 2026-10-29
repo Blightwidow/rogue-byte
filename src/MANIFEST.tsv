@@ -2832,6 +2832,7 @@ address	name	size	file
 0X1E0120	func_001E0120	8	stepguard-jsg/fun_001e0120.c
 0X1E0128	func_001E0128	44	unsorted/fun_001e0128.cpp
 0X1E0158	func_001E0158	36	unsorted/fun_001e0158.cpp
+0X1E0180	PseqnodeFind	68	stepguard-jsg/PseqnodeFind.cpp
 0X1E01C8	func_001E01C8	48	unsorted/fun_001e01c8.cpp
 0X1E01F8	PjsgeAllocJsg	152	stepguard-jsg/PjsgeAllocJsg.cpp
 0X1E0290	AddJsgContext	48	stepguard-jsg/AddJsgContext.cpp

@@ -6918,7 +6918,7 @@
 <rect x="1326.8" y="753.7" width="20.7" height="16.2" fill="#2f7af4"><title>UpdateEyes__FP4EYESf 0X1EE228 392 bytes (c)</title></rect>
 <rect x="1326.8" y="770.3" width="20.7" height="12.2" fill="#4a45a8"><title>SetEyesEyess__FP4EYES5EYESS 0X1EE100 296 bytes (draft)</title></rect>
 <rect x="1347.9" y="753.7" width="9.4" height="9.8" fill="#4a45a8"><title>InitEyes__FP4EYESP4SAAF 0X1EE090 112 bytes (draft)</title></rect>
-<rect x="1347.9" y="763.9" width="9.4" height="9.8" fill="#2a2d6e"><title>SetEyesClosed__FP4EYESf 0X1EE3B0 112 bytes (asm)</title></rect>
+<rect x="1347.9" y="763.9" width="9.4" height="9.8" fill="#4a45a8"><title>SetEyesClosed__FP4EYESf 0X1EE3B0 112 bytes (draft)</title></rect>
 <rect x="1347.9" y="774.1" width="9.4" height="8.4" fill="#4a45a8"><title>PsaiFromEyesShd__FP4EYESP3SHD 0X1EE420 96 bytes (draft)</title></rect>
 <rect x="1325.8" y="752.7" width="32.8" height="31.2" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
@@ -7217,7 +7217,7 @@
 <g><title>stepguard-jsg: 624 bytes</title>
 <rect x="1412.7" y="711.3" width="9.7" height="12.5" fill="#2f7af4"><title>PjsgeAllocJsg 0X1E01F8 152 bytes (c)</title></rect>
 <rect x="1412.7" y="724.2" width="9.7" height="9.8" fill="#4a45a8"><title>func_001E0070 0X1E0070 120 bytes (draft)</title></rect>
-<rect x="1422.9" y="711.3" width="7.0" height="8.0" fill="#4a45a8"><title>PseqnodeFind 0X1E0180 72 bytes (draft)</title></rect>
+<rect x="1422.9" y="711.3" width="7.0" height="8.0" fill="#2f7af4"><title>PseqnodeFind 0X1E0180 72 bytes (c)</title></rect>
 <rect x="1430.3" y="711.3" width="5.3" height="8.0" fill="#2f7af4"><title>FSggHasAlarm 0X1E00E8 56 bytes (c)</title></rect>
 <rect x="1422.9" y="719.7" width="6.2" height="5.9" fill="#2f7af4"><title>func_001E0128 0X1E0128 48 bytes (c)</title></rect>
 <rect x="1429.4" y="719.7" width="6.2" height="5.9" fill="#2f7af4"><title>func_001E01C8 0X1E01C8 48 bytes (c)</title></rect>
