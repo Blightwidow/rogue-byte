@@ -1,7 +1,7 @@
 # Matching a function
 
 How a function is judged, and what usually fixes a near miss. Setup: [compiler-identification.md](../build/compiler-identification.md);
-the assembler step: [assembler.md](../build/assembler.md). Surprises that cost time: [lessons.md](lessons.md).
+the assembler step: [assembler.md](../build/assembler.md). Surprises that cost time: [lessons.md](lessons.md). Tools that search for the fix: [search-tools.md](search-tools.md).
 
 ## The score
 

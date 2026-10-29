@@ -256,8 +256,36 @@ def tail_return(lines, index, rng):
     return None
 
 
+def volatile_slot(lines, index, rng):
+    """A local pointer whose address is handed to a call (`f(..., &p)`) is re-read from the stack before every use in retail; reading it
+    through a volatile pointer does that: `p[1] = x` becomes `(*(T *volatile *)&p)[1] = x`, and again for the one use that undoes it."""
+    declared = {}
+    for line in lines:
+        match = re.match(r'^\s+((?:const |unsigned |struct )*[A-Za-z_][A-Za-z_0-9]*)\s*(\*+)\s*([A-Za-z_][A-Za-z_0-9]*)\s*(?:=[^;]*)?;\s*$', line)
+        if match and not match.group(1).startswith('return'):
+            declared[match.group(3)] = match.group(1) + ' ' + match.group(2)
+    escaped = [name for name in declared if any(re.search(rf'&{name}\b', line) for line in lines)]
+    if not escaped:
+        return None
+    name = rng.choice(escaped)
+    volatile = f'(*({declared[name]} volatile *)&{name})'
+    plain = re.compile(rf'(?<![\w&.>]){name}\[')
+    cast = re.compile(rf'\(\(([A-Za-z_][A-Za-z_0-9 ]*\s*\*+)\)\s*{name}\)\[')
+    undo = re.compile(rf'\(\*\([^()]*volatile \*\)&{name}\)\[')
+    line = lines[index]
+    if undo.search(line):
+        changed = undo.sub(f'{name}[', line, count=1)
+    elif cast.search(line):
+        changed = cast.sub(lambda match: f'(({match.group(1)})*(void *volatile *)&{name})[', line, count=1)
+    elif plain.search(line):
+        changed = plain.sub(volatile + '[', line, count=1)
+    else:
+        return None
+    return lines[:index] + [changed] + lines[index + 1:]
+
+
 LEGACY_MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
-MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return]
+MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return, volatile_slot, volatile_slot]
 
 
 def mutate(text, rng, count=1):

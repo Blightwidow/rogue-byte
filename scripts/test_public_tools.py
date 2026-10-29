@@ -17,7 +17,9 @@ import compile_unit  # noqa: E402
 import gen_context  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
+import idioms  # noqa: E402
 import mutate  # noqa: E402
+import neighborhood  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -339,6 +341,82 @@ class VuDisassemblerTests(unittest.TestCase):
 
     def test_lower_xgkick(self):
         self.assertEqual(vudis.decode_lower(0x80002EFC, 0), 'xgkick vi5')
+
+
+class VolatileSlotTests(unittest.TestCase):
+    SOURCE = ['void f(void *vifs)', '{', '    unsigned *header;', '    Unpack(vifs, &header);', '    header[1] = 5;', '}']
+
+    def rewritten(self, lines, index):
+        return mutate.volatile_slot(lines, index, mutate.random.Random(1))
+
+    def test_store_through_an_escaped_pointer_rereads_the_slot(self):
+        self.assertEqual(self.rewritten(self.SOURCE, 4)[4], '    (*(unsigned * volatile *)&header)[1] = 5;')
+
+    def test_second_rewrite_undoes_the_first(self):
+        once = self.rewritten(self.SOURCE, 4)
+        self.assertEqual(self.rewritten(once, 4)[4], '    header[1] = 5;')
+
+    def test_pointer_whose_address_never_escapes_is_left_alone(self):
+        lines = ['void f(void)', '{', '    unsigned *header;', '    header[1] = 5;', '}']
+        self.assertIsNone(self.rewritten(lines, 3))
+
+
+class NeighborhoodTests(unittest.TestCase):
+    SOURCE = 'void f(int *p)\n{\n    int a;\n    int b;\n    int c;\n    a = p[0];\n    b = p[1];\n    c = a + b;\n    p[2] = c;\n}'
+
+    def test_every_order_of_three_declarations_is_offered(self):
+        orders = neighborhood.declaration_orders(self.SOURCE)
+        self.assertEqual(len({text.split('{')[1].split('a = ')[0] for text in orders}), 5)  # 3! - the original
+
+    def test_orders_keep_the_function_body(self):
+        for text in neighborhood.declaration_orders(self.SOURCE):
+            self.assertEqual(sorted(text.split('\n')), sorted(self.SOURCE.split('\n')))
+
+    def test_single_edits_reach_swapped_operands(self):
+        self.assertTrue(any('c = b + a;' in text for text in neighborhood.single_edits(self.SOURCE, 4)))
+
+
+class IdiomTests(unittest.TestCase):
+    def test_volatile_slot_and_goto_are_found(self):
+        text = '    (*(unsigned * volatile *)&p)[0] = 1;\n    goto top;\n'
+        self.assertEqual(idioms.idioms_of(text), {'volatile slot read', 'goto loop'})
+
+    def test_callees_leave_keywords_out(self):
+        self.assertEqual(idioms.callees('    if (x) Draw(a);\n    while (y) Step(b);'), {'Draw', 'Step'})
+
+
+try:
+    import callee_sigs
+    import rabbitizer  # noqa: F401
+except ImportError:
+    callee_sigs = None
+
+
+@unittest.skipIf(callee_sigs is None, 'needs rabbitizer and pyelftools (.venv)')
+class CalleeSignatureTests(unittest.TestCase):
+    CALL = 0x0C000000
+    NOP = 0
+    RETURN = 0x03E00008
+
+    def test_result_read_after_the_call_is_an_int(self):
+        words = [self.CALL, self.NOP, 0x00441021, self.RETURN, self.NOP]  # jal, nop, addu $v0, $v0, $a0
+        self.assertEqual(callee_sigs.call_use(words, 0), 'int')
+
+    def test_result_overwritten_before_use_is_unused(self):
+        words = [self.CALL, self.NOP, 0x24020001, 0x00441021, self.RETURN, self.NOP]  # addiu $v0, $zero, 1 first
+        self.assertEqual(callee_sigs.call_use(words, 0), 'unused')
+
+    def test_float_result_is_read_from_f0(self):
+        words = [self.CALL, self.NOP, 0xE7A00010, self.RETURN, self.NOP]  # swc1 $f0, 0x10($sp)
+        self.assertEqual(callee_sigs.call_use(words, 0), 'float')
+
+    def test_value_written_to_v0_before_return_marks_the_callee(self):
+        words = [0x24020001, self.RETURN, self.NOP]  # addiu $v0, $zero, 1; jr $ra
+        self.assertEqual(callee_sigs.returns_in_tail(words, 0, 3), (True, False))
+
+    def test_callee_without_a_result_is_void(self):
+        words = [0x27BDFFF0, 0x27BD0010, self.RETURN, self.NOP]  # no write to $v0 or $f0
+        self.assertEqual(callee_sigs.returns_in_tail(words, 0, 4), (False, False))
 
 
 if __name__ == '__main__':

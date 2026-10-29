@@ -58,6 +58,25 @@ def orders(count):
 
 
 def judge(address, text, lang):
+    """The score of a source, in process when scorer.py can run (the repository's .venv python), else through try.py."""
+    scorer = in_process_scorer()
+    if scorer:
+        return scorer.judge(address, text, lang)
+    return judge_with_try(address, text, lang)
+
+
+_scorer = []
+
+
+def in_process_scorer():
+    if not _scorer:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import scorer
+        _scorer.append(scorer if scorer.compare else None)
+    return _scorer[0]
+
+
+def judge_with_try(address, text, lang):
     with tempfile.NamedTemporaryFile('w', suffix='.cpp' if lang == 'c++' else '.c', delete=False, dir=os.path.join(LAB, 'work', 'matching')) as handle:
         handle.write(text)
         path = handle.name

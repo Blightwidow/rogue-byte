@@ -9,6 +9,7 @@ the binary has there (the addend is the object's own immediates). A wrong or unk
 """
 import argparse
 import difflib
+import functools
 import json
 import sys
 
@@ -26,6 +27,15 @@ RELOCATION_NAMES = {4: "%26", 5: "%hi", 6: "%lo", 7: "%gp_rel"}
 
 
 def read_target_words(elf_path, address, size):
+    return list(_target_words(elf_path, address, size))
+
+
+@functools.lru_cache(maxsize=4096)
+def _target_words(elf_path, address, size):
+    return tuple(_read_target_words(elf_path, address, size))
+
+
+def _read_target_words(elf_path, address, size):
     with open(elf_path, "rb") as elf_file:
         elf = ELFFile(elf_file)
         for segment in elf.iter_segments():
@@ -118,6 +128,7 @@ def rodata_matches(object_path, object_start, addend, actual, address, size, elf
     return count > 0
 
 
+@functools.lru_cache(maxsize=None)
 def read_symbol_addresses(path):
     """name -> address from a splat-style symbol_addrs file; C++ names also under their unmangled prefix."""
     import re
@@ -161,17 +172,9 @@ def disassemble(word, relocation=None):
     return text
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("object")
-    parser.add_argument("address", type=lambda text: int(text, 0))
-    parser.add_argument("--elf", required=True)
-    parser.add_argument("--symbol", help="function symbol (or mangled prefix) in the object")
-    parser.add_argument("--size", type=lambda text: int(text, 0), help="target size in bytes")
-    parser.add_argument("--export", help="jsonl with entry/size/name (sizes for the target)")
-    parser.add_argument("--quiet", action="store_true")
-    parser.add_argument("--symbols", help="symbol_addrs file: check calls and %%hi/%%lo targets as if linked")
-    arguments = parser.parse_args()
+def compare(arguments):
+    """The report `main` prints, as text: `score N ...` first, then the side-by-side diff unless `arguments.quiet`. `arguments` has the
+    attributes of the command line (object, address, elf, symbol, size, export, quiet, symbols); safe to call from several threads."""
 
     export_name = None
     size = arguments.size
@@ -261,11 +264,24 @@ def main():
     header = (f"score {score}  ({register_only} same-mnemonic{f', {len(link_errors)} link' if link_errors else ''})  target {len(target_words)} instr"
               f"{' ' + export_name if export_name else ''}  ours {len(object_words)} instr {symbol_name}"
               f"{f'  prefix {first_bad}/{len(target_words)} first-mismatch +{first_bad * 4:#x}' if score else ''}")
-    print(header)
     if not arguments.quiet and score:
-        print("\n".join(lines))
-    elif not arguments.quiet:
-        print("MATCH")
+        return header + "\n" + "\n".join(lines)
+    return header + ("" if arguments.quiet or score else "\nMATCH")
+
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("object")
+    parser.add_argument("address", type=lambda text: int(text, 0))
+    parser.add_argument("--elf", required=True)
+    parser.add_argument("--symbol", help="function symbol (or mangled prefix) in the object")
+    parser.add_argument("--size", type=lambda text: int(text, 0), help="target size in bytes")
+    parser.add_argument("--export", help="jsonl with entry/size/name (sizes for the target)")
+    parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--symbols", help="symbol_addrs file: check calls and %%hi/%%lo targets as if linked")
+    arguments = parser.parse_args()
+    print(compare(arguments))
     return 0
 
 
