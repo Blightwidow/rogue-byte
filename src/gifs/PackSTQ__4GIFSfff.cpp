@@ -15,9 +15,9 @@ void PackSTQ__4GIFSfff(s8 *arg0, f32 fparg0, f32 fparg1, f32 fparg2) {
     CheckReg__4GIFSii(arg0, 1, 2);
     temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
     M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
-    M2C_FIELD(temp_v0, f32 *, 8) = fparg2;
-    M2C_FIELD(temp_v0, f32 *, 4) = fparg1;
     M2C_FIELD(temp_v0, f32 *, 0) = fparg0;
+    M2C_FIELD(temp_v0, f32 *, 4) = fparg1;
+    M2C_FIELD(temp_v0, f32 *, 8) = fparg2;
 }
 
 }

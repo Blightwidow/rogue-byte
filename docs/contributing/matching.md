@@ -271,3 +271,7 @@ The match rate fell to about 50% (rounds 2 and 3: about 60%) as the easy cases r
 - **Float compares:** `if (x == 0.0f) {store 0} else {store 1/x}` first; `fabs(d) > eps ? 1 : 0` instead of negating the `if` when `c.le`/`bc1f` comes out wrong.
 - **64-bit flag tests use `long`** (`0x8000L << 19`); `long long` is 128-bit under SN.
 - **Remaining near misses are register choice** (`$a1`/`$a2`/`$a3`, `$v0`/`$s0`) or sunk/hoisted stores. Once the same wording gives the same register map twice, stop.
+
+### Permuted round on the nearest misses (distance 1 to 5, 2026-10-30)
+
+`permute_stores.py --min 1 --max 5 --budget 200` searched 75 functions with straight-line store regions: 2 improved, 1 matched (`PackSTQ__4GIFSfff`). `neighborhood.py --batch --max-score 5 --budget 3000` covered 177: 14 improved (best 5 to 1), none reached 0; a deeper pass (`--depth 4 --beam 12 --budget 12000`, scores 1 to 3) improved 3 more. The nearest misses are now the walls the search cannot cross by statement order or one-line rewrites: register choice and instruction selection that need a different wording. Run `record_round.py` after a batch search, then `make progress` and `export_nonmatching.py`, or the improved sources do not reach `nonmatching/`.
