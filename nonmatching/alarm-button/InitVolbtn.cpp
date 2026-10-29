@@ -11,19 +11,18 @@ struct _m2c_stack_InitVolbtn {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 M2C_UNK InitBtn(s32);                               /* extern */
-M2C_UNK InitXfm();                                  /* extern */
+M2C_UNK InitXfm(s8 *);                               /* extern */
 M2C_UNK func_001A6CA8(s8 *, M2C_UNK);             /* extern */
 void InitVolbtn(s8 *arg0) {
-    s32 temp_v1;
-    InitXfm();
+    InitXfm(arg0);
     InitBtn((int)(arg0 + 0x130));
     M2C_FIELD(arg0, s32 *, 0x1CC) = 1;
     func_001A6CA8(arg0, 0);
-    temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
-    if ((temp_v1 ^ 1) & 1) {
-        *(s32 *)temp_v1 = (s32) (*(s32 *)temp_v1 | 2);
+    u32 *flags = M2C_FIELD(arg0, u32 **, 0x40);
+    if (((s32)flags ^ 1) & 1) {
+        *flags |= 2;
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_v1 | 2);
+    M2C_FIELD(arg0, u32 *, 0x40) = (u32)flags | 2;
 }
 }

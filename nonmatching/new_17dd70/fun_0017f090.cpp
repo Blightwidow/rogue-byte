@@ -7,30 +7,21 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_func_0017F090 {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-M2C_UNK InitSo();                                   /* extern */
+struct Bytes8 { u8 b[8]; };
+M2C_UNK InitSo();
 extern s128 D_002BE7D0;
-extern M2C_UNK D_002BE7E0;
-void func_0017F090(s8 *arg0) {
-    M2C_UNK temp_v0;
-    s32 temp_v1;
+extern Bytes8 D_002BE7E0;
+struct Obj17F090 { char pad0[0x40]; s32 flags; char pad44[0x13C]; s32 state; char pad184[0x1C]; s128 vec; Bytes8 bytes; };
+void func_0017F090(Obj17F090 *self) {
     InitSo();
-    M2C_FIELD(arg0, s32 *, 0x180) = 0xA;
-    M2C_FIELD(arg0, s128 *, 0x1A0) = (s128) D_002BE7D0;
-    s32 vu_1;
-    asm volatile("ldl %0, 0x7(%1)" : "=r"(vu_1) : "r"(&D_002BE7E0));
-    s32 vu_2;
-    asm volatile("ldr %0, (%1)" : "=r"(vu_2) : "r"(&D_002BE7E0), "0"(vu_1));
-    temp_v0 = vu_2;
-    asm volatile("sdl %0, 0x1b7(%1)" : : "r"(temp_v0), "r"(arg0));
-    asm volatile("sdr %0, 0x1b0(%1)" : : "r"(temp_v0), "r"(arg0));
-    temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
-    if ((temp_v1 ^ 1) & 1) {
-        *(s32 *)temp_v1 = (s32) (*(s32 *)temp_v1 | 2);
-        return;
+    self->state = 0xA;
+    self->vec = D_002BE7D0;
+    self->bytes = D_002BE7E0;
+    s32 flags = self->flags;
+    if ((flags ^ 1) & 1) {
+        *(s32 *)flags = (s32) (*(s32 *)flags | 2);
+    } else {
+        self->flags = flags | 2;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_v1 | 2);
 }
 }

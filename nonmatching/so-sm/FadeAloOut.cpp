@@ -7,15 +7,12 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_FadeAloOut {
-    /* 0x00 */ char pad0[0x30];
-};                                                  /* size = 0x30 */
-M2C_UNK SetAloAlpha(s32, M2C_UNK);                  /* extern */
-M2C_UNK SetAloFadeRate(...);                   /* extern */
+void SetAloAlpha(s32, f32);
+void SetAloFadeRate(s32, f32);
 void FadeAloOut(s32 arg0, f32 fparg0) {
     if (fparg0 <= 0.0f) {
-        SetAloFadeRate(0);
-        SetAloAlpha(arg0, 0);
+        SetAloFadeRate(arg0, 0.0f);
+        SetAloAlpha(arg0, 0.0f);
         return;
     }
     SetAloFadeRate(arg0, -1.0f / fparg0);

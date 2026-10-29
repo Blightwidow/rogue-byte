@@ -22,11 +22,14 @@ s32 GoalFollowCrv_FAtEnd(s8 *arg0) {
         asm volatile("vsub.xyzw vf1, vf3, vf2");
         asm volatile("vmul.xy vf1, vf1, vf1");
         asm volatile("vaddy.x vf1, vf1, vf1y");
+        asm volatile("vsqrt Q, vf1x");
         asm volatile("vwaitq");
         asm volatile("vaddq.x vf1, vf0, Q");
-        s32 vu_1;
-        asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        if (!(vu_1 <= M2C_FIELD(arg0, f32 *, 0x64))) {
+        f32 distance;
+        s32 scratch;
+        asm volatile("qmfc2.ni %1, vf1\n\tmtc1 %1, %0" : "=f"(distance), "=r"(scratch));
+        if (distance <= M2C_FIELD(arg0, f32 *, 0x64)) {
+        } else {
             var_v1 = 0;
         }
         var_v0 = var_v1;

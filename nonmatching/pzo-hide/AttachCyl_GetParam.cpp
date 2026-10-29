@@ -21,7 +21,7 @@ void AttachCyl_GetParam(s8 *arg0, s8 *arg1, f32 *arg2) {
     s32 vu_1;
     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
     temp_v0 = vu_1;
-    s128 vu_2;
+    s64 vu_2;
     asm volatile("prot3w %0, %1" : "=r"(vu_2) : "r"(temp_v0));
     *arg2 = atan2f(vu_2, temp_v0) * M2C_FIELD(arg0, f32 *, 0x10C);
 }

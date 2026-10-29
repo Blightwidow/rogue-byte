@@ -6,20 +6,20 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_BITWISE(type, expr) ((type)(expr))
 #define M2C_ERROR(desc) (0)
 #define NULL 0
+struct Obj;
+struct Vtbl { char pad[0x260]; s16 adjust; s16 pad2; void (*handler)(s8 *, s32, Obj *); };
+struct Obj { char pad0[0xC]; Vtbl *vtbl; char pad1[0x140]; s32 state; };
+struct Msg { char pad[4]; Obj *obj; };
+struct Obj2;
 extern "C" {
-struct _m2c_stack_HandleGadgetObjMessage {
-    /* 0x00 */ char pad0[0x40];
-};                                                  /* size = 0x40 */
-void HandleLoMessage();
-void HandleGadgetObjMessage(s32 arg0, s32 arg1, s8 *arg2) {
-    s8 *temp_a2;
-    s8 *temp_v0;
-    HandleLoMessage();
+void HandleLoMessage(s32, s32, Obj *);
+void HandleGadgetObjMessage(s32 arg0, s32 arg1, Obj *arg2) {
+    HandleLoMessage(arg0, arg1, arg2);
     if (arg1 == 4) {
-        temp_a2 = M2C_FIELD(arg2, s8 **, 4);
-        if (((s32)temp_a2 == arg0) && ((u32) (M2C_FIELD(temp_a2, s32 *, 0x150) - 1) < 2U)) {
-            temp_v0 = M2C_FIELD(temp_a2, s8 **, 0xC);
-            M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x264)(temp_a2 + M2C_FIELD(temp_v0, s16 *, 0x260), 3, temp_a2);
+        arg2 = ((Msg *)arg2)->obj;
+        Obj *obj = arg2;
+        if ((s32)obj == arg0 && (u32)(obj->state - 1) < 2U) {
+            obj->vtbl->handler((s8 *)obj + obj->vtbl->adjust, 3, obj);
         }
     }
 }

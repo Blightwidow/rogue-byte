@@ -10,18 +10,18 @@ extern "C" {
 struct _m2c_stack_func_001C8280 {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-M2C_UNK InitPo();                                   /* extern */
+void InitPo();                                   /* extern */
 void func_001C8280(s8 *arg0) {
     s32 temp_a1;
     InitPo();
     temp_a1 = M2C_FIELD(arg0, s32 *, 0x40);
-    M2C_FIELD(arg0, s32 *, 0x194) = -1;
     M2C_FIELD(arg0, s32 *, 0x1F0) = 0x7B;
     M2C_FIELD(arg0, s32 *, 0x1FC) = -1;
     M2C_FIELD(arg0, s32 *, 0x1F8) = -1;
     M2C_FIELD(arg0, s32 *, 0x1F4) = -1;
     M2C_FIELD(arg0, s32 *, 0x200) = -1;
     M2C_FIELD(arg0, s32 *, 0x180) = -1;
+    M2C_FIELD(arg0, s32 *, 0x194) = -1;
     if ((temp_a1 ^ 1) & 1) {
         *(s32 *)temp_a1 = (s32) (*(s32 *)temp_a1 | 2);
         return;

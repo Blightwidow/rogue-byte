@@ -10,22 +10,19 @@ extern "C" {
 struct _m2c_stack_RefOpVectorProjectTangent {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
-M2C_UNK CRef_ConstructVectorValue(s8 *, M2C_UNK); /* extern */
-M2C_UNK CRef_CopyConstruct(s32, s8 *);            /* extern */
-M2C_UNK CRef_Destruct(s8 *);                      /* extern */
-s32 RefOpVectorProjectTangent(s32 arg0, s8 *arg2) {
-    s8 sp[0x30] __attribute__((aligned(16)));
-    asm volatile("lqc2 vf2, (%0)" : : "r"(M2C_FIELD(arg2, s32 *, 0xC)));
-    asm volatile("lqc2 vf3, (%0)" : : "r"(M2C_FIELD(arg2, s32 *, 4)));
-    asm volatile("vmul.xyz vf1, vf3, vf2");
-    asm volatile("vaddw.x vf4, vf0, vf0w");
-    asm volatile("vadday.x ACC, vf1, vf1y");
-    asm volatile("vmaddz.x vf1, vf4, vf1z");
-    asm volatile("vmulx.xyzw vf1, vf2, vf1x");
-    asm volatile("vsub.xyzw vf2, vf3, vf1");
-    s32 vu_1;
-    asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_1));
-    CRef_ConstructVectorValue(sp, vu_1);
+M2C_UNK CRef_ConstructVectorValue(s8 *, s128);
+M2C_UNK CRef_CopyConstruct(s32, s8 *);
+M2C_UNK CRef_Destruct(s8 *);
+s32 RefOpVectorProjectTangent(s32 arg0, s32 arg1, s8 *arg2) {
+    s8 sp[0x10] __attribute__((aligned(16)));
+    s32 fence;
+    s32 first = M2C_FIELD(arg2, s32 *, 4);
+    s32 second = M2C_FIELD(arg2, s32 *, 0xC);
+    asm("lqc2 vf2, (%1)\n\tlqc2 vf3, (%2)" : "=&r"(fence) : "r"(second), "r"(first));
+    asm("vmul.xyz vf1, vf3, vf2\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf4, vf1z\n\tvmulx.xyzw vf1, vf2, vf1x\n\tvsub.xyzw vf2, vf3, vf1" : "=r"(fence) : "r"(fence));
+    s128 result;
+    asm("qmfc2.ni %0, vf2" : "=r"(result) : "r"(fence));
+    CRef_ConstructVectorValue(sp, result);
     CRef_CopyConstruct(arg0, sp);
     CRef_Destruct(sp);
     return arg0;
