@@ -19,8 +19,9 @@ s32 LimitVectorLength__FP6VECTORfT0(s32 arg0, f32 fparg0) {
     asm volatile("vaddw.x vf2, vf0, vf0w");
     asm volatile("vadday.x ACC, vf1, vf1y");
     asm volatile("vmaddz.x vf1, vf2, vf1z");
+    asm volatile("vsqrt Q, vf1x");
     asm volatile("vwaitq");
-    asm volatile("vaddq.x vf1, vf0, q");
+    asm volatile("vaddq.x vf1, vf0, Q");
     s32 vu_1;
     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
     temp_v0 = vu_1;

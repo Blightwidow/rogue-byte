@@ -156,6 +156,15 @@ def patch_assembly(path):
     return '\n'.join(lines)
 
 
+UNDECODED_WORD = re.compile(r'^(\s*/\*[^*]*\*/\s+)\.word\s+0x[0-9A-Fa-f]+\s+#\s+(\S+)\s*(.*?)\s*(?:#.*)?$')
+
+
+def decode_words(text):
+    """The assembly with the instructions the split left as `.word 0x... # mnemonic operands` (`vsqrt`, `cvt.w.s`) written as instructions: m2c
+    reads a `.word` as data and drops it, and a float-to-int conversion or a square root missing from a draft means it cannot match."""
+    return '\n'.join(UNDECODED_WORD.sub(lambda found: f'{found.group(1)}{found.group(2)} {found.group(3)}'.rstrip(), line) for line in text.split('\n'))
+
+
 def run_m2c(arguments, row):
     """The draft text for a function, from the cache or a fresh m2c run; None when m2c fails."""
     folder = 'm2c-context' if arguments.context else 'm2c-vu'
@@ -167,6 +176,14 @@ def run_m2c(arguments, row):
     path = os.path.join(SPLIT, row['name'] + '.s')
     if not os.path.exists(path):
         return None
+    with open(path, encoding='utf-8') as handle:
+        original = handle.read()
+    decoded = decode_words(original)
+    if decoded != original:
+        os.makedirs(os.path.join(OUT, 'decoded'), exist_ok=True)
+        path = os.path.join(OUT, 'decoded', row['name'] + '.s')
+        with open(path, 'w', encoding='utf-8') as handle:
+            handle.write(decoded)
     command = [sys.executable, arguments.m2c, '-t', 'mipsee-gcc-c', '--valid-syntax', '--stack-structs'] + (['--context', arguments.context] if arguments.context else [])
     result = subprocess.run(command + [path], capture_output=True, text=True, timeout=120)
     if result.returncode or not result.stdout.strip():

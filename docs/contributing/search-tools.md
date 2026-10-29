@@ -70,3 +70,8 @@ stack buffer `sp` is declared whenever stack-field macros use it; `jtbl_` symbol
 also `name + offset`) is cast to the parameter type the compiler names. About 16 drafts still fail without a message: m2c writes `case` labels
 outside a `switch` when it could not rebuild a jump table.
 
+
+The split writes two instructions it does not decode as `.word 0x... # mnemonic operands`: `vsqrt` (406 lines) and `cvt.w.s` (191 lines), in 308 functions. m2c reads a
+`.word` as data and drops it, so a draft of such a function lacked a square root or a float-to-integer conversion and could not match. `harvest.py` now writes
+them as instructions before running m2c (`decode_words`), and a check of the lifted VU0/MMI calls against retail's instruction counts shows nothing else lost
+(15 of 452 functions miss one `lqc2`/`sqc2`). Re-running over those functions refreshed two sources and gave two more drafts that match with no editing.

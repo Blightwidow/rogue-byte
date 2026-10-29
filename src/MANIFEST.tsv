@@ -1546,6 +1546,7 @@ address	name	size	file
 0X154A60	OnDifficultyGameLoad__FP10DIFFICULTY	32	difficulty/OnDifficultyGameLoad__FP10DIFFICULTY.cpp
 0X154A80	func_00154A80	16	new_154a80/fun_00154a80.cpp
 0X154D88	AddSuck	60	sw/AddSuck.c
+0X155228	SFromCrvlU__FP4CRVLf	108	crv/SFromCrvlU__FP4CRVLf.cpp
 0X155298	difficulty__static_initialization_and_destruction_0	308	crv-lo/difficulty__static_initialization_and_destruction_0.c
 0X1553D0	difficulty__static_initialization_and_destruction_0_thunk	32	crv-lo/difficulty__static_initialization_and_destruction_0_thunk.c
 0X155450	PostLoadGuardPosts	220	crv-lo/PostLoadGuardPosts.cpp
@@ -2950,6 +2951,7 @@ address	name	size	file
 0X1EDD30	UCompleteLoop__FP4LOOP	44	shdanim/UCompleteLoop__FP4LOOP.c
 0X1EDD60	InitPingpong__FP8PINGPONGP4SAAF	176	shdanim/InitPingpong__FP8PINGPONGP4SAAF.cpp
 0X1EDFE0	UpdateShuffle__FP7SHUFFLEf	172	shdanim/UpdateShuffle__FP7SHUFFLEf.cpp
+0X1EE228	UpdateEyes__FP4EYESf	388	eyes/UpdateEyes__FP4EYESf.cpp
 0X1EE4E0	UpdateScroller__FP8SCROLLERf	212	shdanim/UpdateScroller__FP8SCROLLERf.cpp
 0X1EE678	SetScrollerMasterSpeeds__FP8SCROLLERff	12	shdanim/SetScrollerMasterSpeeds__FP8SCROLLERff.cpp
 0X1EE688	InitCircler__FP7CIRCLERP4SAAF	80	shdanim/InitCircler__FP7CIRCLERP4SAAF.c

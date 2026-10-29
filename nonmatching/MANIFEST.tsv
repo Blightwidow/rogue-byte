@@ -213,7 +213,7 @@ address	name	size	file	score
 0X11D978	RadLimitLm	96	util_11cf60/RadLimitLm.cpp	15
 0X11D9E0	MinimizeRange__FPFPvf_fPvffffPfT6	752	util_11cf60/MinimizeRange__FPFPvf_fPvffffPfT6.c	242
 0X11DCD0	func_0011DCD0	8	util_11cf60/fun_0011dcd0.c	1
-0X11DD30	PackColorVecToU8_11dd30	96	new_11dcd8/PackColorVecToU8_11dd30.c	23
+0X11DD30	PackColorVecToU8_11dd30	96	new_11dcd8/PackColorVecToU8_11dd30.cpp	2
 0X11DFA0	ConvertUserHsvToUserRgb__FP6VECTORT0	128	shd/ConvertUserHsvToUserRgb__FP6VECTORT0.cpp	16
 0X11E020	func_0011E020	32	shd/fun_0011e020.c	6
 0X11E198	func_0011E198	8	new_11e040/fun_0011e198.c	1
@@ -224,7 +224,7 @@ address	name	size	file	score
 0X11E4B0	RadBetweenVectors__FP6VECTORN20	384	vec/RadBetweenVectors__FP6VECTORN20.c	90
 0X11E7C8	FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0	400	vec/FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0.cpp	2
 0X11E958	CalculateVectorPanTilt__FP6VECTORPfT1	160	vec/CalculateVectorPanTilt__FP6VECTORPfT1.cpp	10
-0X11E9F8	LimitVectorLength__FP6VECTORfT0	104	vec/LimitVectorLength__FP6VECTORfT0.cpp	6
+0X11E9F8	LimitVectorLength__FP6VECTORfT0	104	vec/LimitVectorLength__FP6VECTORfT0.cpp	5
 0X11EBA0	func_0011EBA0	16	new_11ea60/fun_0011eba0.cpp	3
 0X11ED38	func_0011ED38	8	new_11ea60/fun_0011ed38.c	1
 0X11ED40	ClosestPointOnLine	200	new_11ea60/ClosestPointOnLine.cpp	3
@@ -310,7 +310,7 @@ address	name	size	file	score
 0X129A70	CRef_SetMethod	80	splice-ref/CRef_SetMethod.cpp	5
 0X129AC0	__eq__4CRefRC4CRef	264	splice-ref/__eq__4CRefRC4CRef.cpp	6
 0X129D50	func_00129D50	8	splice-ref-splice-sidebag/fun_00129d50.c	1
-0X129D58	CRef_RefCoerceS32	80	splice-ref-splice-sidebag/CRef_RefCoerceS32.c	4
+0X129D58	CRef_RefCoerceS32	80	splice-ref-splice-sidebag/CRef_RefCoerceS32.cpp	2
 0X129EC8	CRef_Destruct	488	splice-ref-splice-sidebag/CRef_Destruct.cpp	9
 0X12A3D8	PpairSerializeIn	1104	splice-ref-splice-sidebag/PpairSerializeIn.c	271
 0X12AA70	CSidebag_RefSetBinding	184	splice-ref-splice-sidebag/CSidebag_RefSetBinding.cpp	6
@@ -534,7 +534,7 @@ address	name	size	file	score
 0X14D478	UpdateCmLast	472	cm_14d478/UpdateCmLast.cpp	54
 0X14D6D8	InitCm	488	cm_14d478/InitCm.c	136
 0X14D8F8	CombineEyeLookAtProj	272	cm_14d478/CombineEyeLookAtProj.cpp	10
-0X14DA08	BuildFrustrum	360	cm_14d478/BuildFrustrum.cpp	20
+0X14DA08	BuildFrustrum	360	cm_14d478/BuildFrustrum.cpp	16
 0X14DB70	RecalcCmFrustrum__FP2CM	232	cm_14d478/RecalcCmFrustrum__FP2CM.cpp	44
 0X14DC58	UpdateCmMat4	936	cm_14d478/UpdateCmMat4.cpp	194
 0X14E000	func_0014E000	120	cm_14d478/fun_0014e000.cpp	8
@@ -598,7 +598,6 @@ address	name	size	file	score
 0X154C90	GetSuck	248	new_154a80/GetSuck.cpp	5
 0X154DC8	ChangeSuck__FfP10DIFFICULTY	72	difficulty_154dc8/ChangeSuck__FfP10DIFFICULTY.cpp	5
 0X154E10	OnDifficultyBreak	1048	difficulty-crv/OnDifficultyBreak.c	213
-0X155228	SFromCrvlU__FP4CRVLf	112	crv/SFromCrvlU__FP4CRVLf.c	22
 0X1553F0	func_001553F0	96	crv-lo/fun_001553f0.cpp	13
 0X155660	func_00155660	296	crv-lo/fun_00155660.cpp	9
 0X155868	func_00155868	328	crv-lo/fun_00155868.cpp	13
@@ -1553,6 +1552,7 @@ address	name	size	file	score
 0X1EDFA0	CloneSaa	64	actseg_1edfa0/CloneSaa.cpp	4
 0X1EE090	InitEyes__FP4EYESP4SAAF	112	eyes/InitEyes__FP4EYESP4SAAF.cpp	2
 0X1EE100	SetEyesEyess__FP4EYES5EYESS	296	eyes/SetEyesEyess__FP4EYES5EYESS.cpp	4
+0X1EE3B0	SetEyesClosed__FP4EYESf	112	eyes/SetEyesClosed__FP4EYESf.cpp	1
 0X1EE420	PsaiFromEyesShd__FP4EYESP3SHD	96	eyes/PsaiFromEyesShd__FP4EYESP3SHD.cpp	16
 0X1EE480	InitScroller__FP8SCROLLERP4SAAF	96	shdanim_1ee480/InitScroller__FP8SCROLLERP4SAAF.cpp	2
 0X1EE5B8	UCompleteScroller__FP8SCROLLER	192	shdanim_1ee480/UCompleteScroller__FP8SCROLLER.cpp	5
