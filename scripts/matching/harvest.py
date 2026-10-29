@@ -38,7 +38,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 '''
-VU_CALL = re.compile(r'M2C_VU_([SO])([0-9a-f]+)\(')
+VU_CALL = re.compile(r'M2C_VU_([SOQM])([0-9a-f]+)\(')
 REJECT = re.compile(r'M2C_ERROR|M2C_LWL|M2C_FIRST3BYTES|M2C_UNALIGNED|Decompilation failure|unknown instruction')
 DECLARATION = re.compile(r'^(M2C_UNK|s32|void|f32|\w+)(\s+\**)(\w+)\((.*)\);\s*(/\*.*\*/)?\s*$')
 
@@ -209,8 +209,10 @@ def lift_vu(body):
     out, counter = [], 0
     for line in body.split('\n'):
         while True:
-            match = VU_CALL.search(line)
-            if not match:
+            match = None
+            for match in VU_CALL.finditer(line):  # the last one is the innermost of a nested call
+                pass
+            if match is None:
                 break
             depth, end = 1, match.end()
             while end < len(line) and depth:
@@ -219,12 +221,15 @@ def lift_vu(body):
             arguments = split_arguments_top(line[match.end():end - 1])
             text = bytes.fromhex(match.group(2)).decode()
             text = re.sub(r'\b(acc|q|p|i|r)\b', lambda found: found.group(1).upper(), text).replace('"', '\\"')  # the VU special registers are upper case for the assembler
+            text = re.sub(r'%(?!\d)', '%%', text)  # a relocation operator (%lo) is not an operand marker
             inputs = ', '.join(f'"r"({argument})' for argument in arguments)
             indent = re.match(r'\s*', line).group(0)
-            if match.group(1) == 'O':
+            if match.group(1) in 'OQM':
                 counter += 1
                 temporary = f'vu_{counter}'
-                out.append(f'{indent}s32 {temporary};')
+                out.append(f'{indent}{"s128" if match.group(1) == "Q" else "s32"} {temporary};')
+                if match.group(1) == 'M':  # the second argument is the value the instruction merges into
+                    inputs = f'"r"({arguments[0]}), "0"({arguments[1]})'
                 out.append(f'{indent}asm volatile("{text}" : "=r"({temporary}){" : " + inputs if inputs else ""});')
                 line = line[:match.start()] + temporary + line[end:]
             else:
@@ -281,6 +286,16 @@ def build(draft, signatures=None):
         opening = re.search(r'^[^\s#/][^;{}]*\)\s*\{\n', body, re.M)
         if opening:
             body = body[:opening.end()] + ''.join(f'    {"f32" if "_f" in name else "s32"} {name};\n' for name in saved) + body[opening.end():]
+    extra = []
+    if re.search(r'(?<![\w.>])sp(?!\w)', body) and not re.search(r's8 sp\[', body):  # the address of a stack area m2c did not size
+        extra.append('    s8 sp[0x100] __attribute__((aligned(16)));\n')
+    for name in sorted(set(re.findall(r'\bunksp\w+', body))):  # stack slots m2c used without declaring
+        if not re.search(rf'^\s+\w[\w ]*\*?\s*{name}\b', body, re.M):
+            extra.append(f'    s32 {name};\n')
+    if extra:
+        opening = re.search(r'^[^\s#/][^;{}]*\)\s*\{\n', body, re.M)
+        if opening:
+            body = body[:opening.end()] + ''.join(extra) + body[opening.end():]
     macros = stack_field_macros(body)
     if macros:  # after the struct: the names are also its members
         body = re.sub(r'(struct _m2c_stack_\w+ \{.*?\};[^\n]*\n)', lambda found: found.group(1) + macros, body, count=1, flags=re.S)

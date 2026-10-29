@@ -54,3 +54,12 @@ where m2c printed a pointer type is replaced by `s8 **`; the VU special register
 asm, which the assembler needs (`vdiv`, `vmulq` were rejected otherwise). Of the 208 functions that still failed after the first repairs, 115
 fail now; the rest are mostly argument-passing mismatches on indirect calls (about 25) and a few assembler errors.
 
+The same patch keeps the 128-bit multimedia instructions on general registers (`por`, `pextuw`, `pextlw`, `prot3w`, `pcpyld`, `padduw`, ...), `max`/`min`
+and the unaligned 64-bit pairs (`ldl`/`ldr`, `sdl`/`sdr`) as ordered opaque calls; `harvest.py` lifts them like the VU0 ones (a 128-bit result is an
+`s128` temporary, an `ldr` merges into the value its `ldl` wrote through a tied `"0"` operand, and a `%lo` relocation operator is escaped as `%%lo`).
+Re-apply it to your m2c checkout (`git apply` on a fresh one, or revert and apply again) and clear the cached drafts in `m2c-vu/` of the functions
+that were unsupported. Functions m2c refuses fell from 407 to 193, drafts that compile rose from 370 to 518, drafts within 20 words of retail from 69
+to 113, and one more draft matched with no editing. Left unsupported: the 32-bit `lwl`/`lwr`/`swl`/`swr` forms m2c already knows (its own
+`M2C_UNALIGNED` calls), `c1`, `ei`/`di`, `mtsah`, `sync` and `syscall`. A stack slot m2c uses without declaring (`unksp8`) is declared as an `s32`, and a bare `sp`
+gets a 0x100-byte buffer.
+

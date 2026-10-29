@@ -2880,6 +2880,7 @@ address	name	size	file
 0X1EAD98	CopyPaletteHeader	164	new_1e7a28/CopyPaletteHeader.cpp
 0X1EAE40	func_001EAE40	272	new_1e7a28/fun_001eae40.cpp
 0X1EAF50	LoadBmpFromBrx	252	font/LoadBmpFromBrx.cpp
+0X1EB050	CopyBmpHeader	72	font-shd/CopyBmpHeader.cpp
 0X1EB098	LoadBitmapsFromBrx	272	font-shd/LoadBitmapsFromBrx.cpp
 0X1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	328	shd/LoadTexFromBrx__FP18CBinaryInputStreamP3TEX.cpp
 0X1EB678	func_001EB678	204	shd/fun_001eb678.cpp

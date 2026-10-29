@@ -1,5 +1,5 @@
 --- a/m2c/arch_mips.py	2026-10-29 13:40:04
-+++ b/m2c/arch_mips.py	2026-10-29 13:40:37
++++ b/m2c/arch_mips.py	2026-10-29 15:06:19
 @@ -1,5 +1,6 @@
  from __future__ import annotations
  from dataclasses import replace
@@ -7,11 +7,13 @@
  from typing import (
      Callable,
      Dict,
-@@ -1313,6 +1314,36 @@
+@@ -1313,6 +1314,44 @@
              output_reg = hi_reg if base_mult_mnemonic == "mthi" else lo_reg
              outputs = [output_reg]
              eval_fn = lambda s, a: s.set_reg(output_reg, a.reg(0))
-+        elif re.match(r"^(lqc2|sqc2|qmfc2|qmtc2|ctc2|cfc2|v[a-z0-9]+)(\.\w+)?$", mnemonic) and not re.match(r"^v[01]$", mnemonic):
++        elif (
++            re.match(r"^(lqc2|sqc2|qmfc2|qmtc2|ctc2|cfc2|v[a-z0-9]+)(\.\w+)?$", mnemonic) and not re.match(r"^v[01]$", mnemonic)
++        ) or re.match(r"^(p(?!ref$)[a-z0-9]+|max|min|ldl|ldr|sdl|sdr)$", mnemonic):
 +            # VU0 macro-mode instruction: kept as an opaque, ordered statement M2C_VU_<S|O><hex of the asm text>(GPR inputs)
 +            vu_name = re.compile(r"^(vf\d+[xyzw]?|vi\d+|ACC|Q|P|I|R|vq|vp)$", re.IGNORECASE)
 +            gpr_args: List[Register] = []
@@ -20,17 +22,23 @@
 +                    gpr_args.append(arg.base)
 +                elif isinstance(arg, Register) and not vu_name.match(arg.register_name):
 +                    gpr_args.append(arg)
-+            has_output = mnemonic in ("qmfc2", "cfc2") or mnemonic.split(".")[0] in ("qmfc2", "cfc2")
++            base_mnemonic = mnemonic.split(".")[0]
++            is_mmi = bool(re.match(r"^p(?!ref$)[a-z0-9]+$", mnemonic))  # 128-bit multimedia op on general registers
++            is_modify = mnemonic == "ldr"  # merges into its destination, which the matching ldl wrote
++            has_output = (
++                base_mnemonic in ("qmfc2", "cfc2") or is_mmi or mnemonic in ("max", "min", "ldl", "ldr")
++            )
 +            head, _, operands = instr_str.partition(" ")
 +            operands = operands.replace("$", "")
 +            for index, gpr in enumerate(gpr_args):
 +                operands = re.sub(r"\b" + re.escape(gpr.register_name) + r"\b", f"%{index}", operands)
 +            operands = re.sub(r"\bacc\b", "ACC", operands)
 +            vu_text = (head + " " + operands).strip()
-+            vu_function = "M2C_VU_" + ("O" if has_output else "S") + vu_text.encode().hex()
++            kind = "Q" if is_mmi else "M" if is_modify else "O" if has_output else "S"
++            vu_function = "M2C_VU_" + kind + vu_text.encode().hex()
 +            if has_output:
 +                outputs = [gpr_args[0]]
-+                inputs = gpr_args[1:]
++                inputs = gpr_args[1:] + ([gpr_args[0]] if is_modify else [])
 +                eval_fn = lambda s, a: s.set_reg_real(
 +                    a.reg_ref(0),
 +                    fn_op(vu_function, [a.regs[r] for r in inputs], Type.any_reg()),
