@@ -235,3 +235,14 @@ gives retail's 22 words exactly with Sony's `ee-gcc2.9-991111b` (Win32, runs und
 0x70, and the `$a0`/`$a2` setup order swapped. So the SDK range needs a per-unit compiler: Sony 2.9-ee-991111 with its
 own cc1 and `ee/bin/as.exe`. Reached independently by sly1-decomp's team on Sly 1 (five soft-float functions).
 Next: the rest of 0x23D338-0x23E290 and libc/libm units; `compile_unit.py` needs a compiler column in config.
+
+### SDK soft-float: 12 functions matched (2026-10-29)
+
+`__adddf3`, `__subdf3`, `dpcmp`, `__floatsidf`, `__fixdfsi`, `fptodp` and `func_0023DED0/DF70/DFA0/E108/E1C8/E260` (0x23D748-0x23E290)
+match with Sony 2.9-991111b; the byte gate passes with them linked from C. They are libgcc's fp-bit.c: a 0x20-byte `fp_number_type`
+(class, sign, exponent, 64-bit fraction at +0x10) on the stack, `unpack_d`/`pack_d` calls. Sources are plain C inside `extern "C"`.
+What it took: `double` arguments arrive in GPRs (stored with `sd`); the class field is unsigned (`xori`+`beqz` against 2 and 4
+instead of `addiu`+`beq`, `sltiu` for `< 2`), reached through one-line `static inline` predicates (`iszero`, `isnan`, `isinf`)
+tested in that order; a `while` loop normalises in `__floatsidf` (a `do`/`while` gives other registers); `in.frac = a` for a
+signed `int` keeps the sign-extending `sd`. Still open in the range: 0x23D338 (`pack_d`), 0x23D468 (`unpack_d`), 0x23D508,
+0x23D808 (`__muldf3`), 0x23DAB0, 0x23DC18, 0x23DFF8, and the libc/libm units around them.
