@@ -867,6 +867,7 @@ address	name	size	file
 0X122620	RefOpAcos__FiP4CRefP6CFrame	48	splice-bif/RefOpAcos__FiP4CRefP6CFrame.cpp
 0X122650	RefOpAtan__FiP4CRefP6CFrame	48	splice-bif/RefOpAtan__FiP4CRefP6CFrame.cpp
 0X122680	RefOpRadNormalize__FiP4CRefP6CFrame	48	splice-bif/RefOpRadNormalize__FiP4CRefP6CFrame.cpp
+0X122770	RefOpVectorCrossProduct	92	splice-bif/RefOpVectorCrossProduct.cpp
 0X123118	RefOpMatrixDecomposeToRadianNormal	240	splice-bif/RefOpMatrixDecomposeToRadianNormal.cpp
 0X123208	RefOpMatrixLookAt	196	splice-bif/RefOpMatrixLookAt.cpp
 0X1232D0	RefOpMatrixTiltUpright	176	splice-bif/RefOpMatrixTiltUpright.cpp
@@ -1243,6 +1244,7 @@ address	name	size	file
 0X140558	UpdateJtFocus	288	new_13f888/UpdateJtFocus.cpp
 0X1409B8	func_001409B8	44	new_13f888/fun_001409b8.c
 0X1409E8	func_001409E8	272	new_13f888/fun_001409e8.cpp
+0X140C30	func_00140C30	84	new_13f888/fun_00140c30.cpp
 0X140C88	func_00140C88	116	new_13f888/fun_00140c88.c
 0X140D70	func_00140D70	60	new_13f888/fun_00140d70.c
 0X140EB0	func_00140EB0	40	new_13f888/fun_00140eb0.c
@@ -1447,6 +1449,7 @@ address	name	size	file
 0X14F730	SetCmMrdRatio	28	cm/SetCmMrdRatio.c
 0X14F750	JoltCm	20	cm/JoltCm.cpp
 0X14F768	bevy_camera_cm_14f768	228	cm/bevy_camera_cm_14f768.cpp
+0X14F850	FInsideCmFrustrum	72	cm/FInsideCmFrustrum.cpp
 0X14F898	FInsideCmMrd	148	cm/FInsideCmMrd.cpp
 0X14F930	cm__static_initialization_and_destruction_0	344	cm-tn/cm__static_initialization_and_destruction_0.c
 0X14FA88	func_0014FA88	32	cm-tn/fun_0014fa88.c
@@ -3036,6 +3039,7 @@ address	name	size	file
 0X1F8DD8	SolveSw	184	new_1f88d8/SolveSw.cpp
 0X1F8E90	func_001F8E90	236	new_1f88d8/fun_001f8e90.cpp
 0X1F8F80	func_001F8F80	332	new_1f88d8/fun_001f8f80.cpp
+0X1FAA48	DwFromImpulseAtPos	80	new_1f88d8/DwFromImpulseAtPos.cpp
 0X1FAB48	VecVelocityAtPos	44	new_1f88d8/VecVelocityAtPos.cpp
 0X1FAE18	StaticInitSlotheaps_1fae18	308	new_1f88d8/StaticInitSlotheaps_1fae18.c
 0X1FAF50	func_001FAF50	32	new_1f88d8/fun_001faf50.c
@@ -3095,6 +3099,7 @@ address	name	size	file
 0X1FF3B8	InitXfmObject	44	button/InitXfmObject.c
 0X1FF438	AddXfmObject	52	button-spliceobj/AddXfmObject.c
 0X1FF470	RemoveXfmObject	52	button-spliceobj/RemoveXfmObject.c
+0X1FF4F0	func_001FF4F0	72	button-spliceobj/fun_001ff4f0.cpp
 0X1FF538	button__static_initialization_and_destruction_0	308	button-spliceobj/button__static_initialization_and_destruction_0.c
 0X1FF670	_GLOBAL__I_button	32	button-spliceobj/_GLOBAL__I_button.c
 0X1FF690	func_001FF690	308	button-spliceobj/fun_001ff690.c

@@ -25,7 +25,8 @@ counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` 
 
 - **A match is retail's bytes in a build that equals retail.** Not a compiled object alone, not a masked comparison, not a
   model's say-so. Report the command you ran and what it printed, failures included.
-- **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers.
+- **Plain C++.** Inline assembly only for what C cannot express (VU0 macro code, MMI, unaligned accesses: the matched sources in `src/` use
+  `asm` blocks with constraints for these), no register pins, no artificial barriers.
 - **One flag set per source file** (and one assembler per function listed in `config/us/`), never ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.
