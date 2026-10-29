@@ -62,6 +62,15 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
   ([vu1-microcode.md](../game/vu1-microcode.md)).
 - Lower-word values `0x14000000` and `0x70000000` in the microcode are constants embedded in code, not instructions.
 
+## 2026-10-29: packet writers
+
+- **A packet pointer returned through an out-parameter is re-read from the stack before every store.** When retail shows
+  `lw $v0, 0($sp)` ahead of each `sw`/`swc1` into a block that `UnpackHelper(..., &slot)` handed back, read the slot through a
+  volatile pointer: `static inline unsigned *Slot(void *const *slot) { return *(unsigned *volatile *)slot; }` and write
+  `Slot(&pqw)[1] = x;`. 0x13A688 went from score 21 to 2. A volatile read cannot fill a branch delay slot, so where retail's
+  delay slot holds the reload (here the `|= 1` under an `if`), use a plain `((unsigned *)pqw)[0] |= 1;` for that one access: score 0.
+  Tested here only on that function; `UploadRelightLights` already reloads and its remaining difference is elsewhere.
+
 ## Tools and environment
 
 - **Slicing a memory-mapped file with an open end copies the rest of it**: `image[offset:]` on a 2.7 GB disc image made a scan run for
@@ -72,11 +81,8 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
 
 ## Reported by other PS2 decompilations, not tested here
 
-Each of these comes from another project's notes (Bokura no Kazoku, Ratchet & Clank 1) built with related compilers. Verify before relying on one. (The callee return-type flip from the same notes is tested, see above.)
+Each of these comes from another project's notes (Bokura no Kazoku, Ratchet & Clank 1) built with related compilers. Verify before relying on one. (The callee return-type flip from the same notes is tested, see above. The inline packet-writer `PUT` form is already used in `src/vifs/`.)
 
-- **VIF packet writers are inline functions, not macros**: `inline u32 *PUT(u32 v) { u32 *p = PKT; PKT = p + 1; *p = v; return p; }`
-  gives "load pointer, bump, store pointer, store value" with the pointer re-read every time. `*PKT++ = v` reorders. It needs
-  `-fno-strict-aliasing`.
 - **A loop that retail does not strength-reduce** can be written `goto test; body: ...; test: e = &T[j++]; if (...) goto body;`.
 - **A dead store kept in retail is a load-order clue**: write the load before the stores.
 - **Clamps**: `v = v < lo ? lo : (v > hi ? hi : v);` gives the branchy shape; `if`/`else if` chains and inline helpers if-convert to `movz`.

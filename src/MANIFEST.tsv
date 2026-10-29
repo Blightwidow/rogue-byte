@@ -1181,6 +1181,7 @@ address	name	size	file
 0X1391C8	InitBlipg	132	blip/InitBlipg.cpp
 0X1398E0	func_001398E0	28	blip/fun_001398e0.c
 0X139900	SubscribeBlipgObject__FP5BLIPGP2LO	80	blip/SubscribeBlipgObject__FP5BLIPGP2LO.c
+0X13A688	func_0013A688	420	blip-light/fun_0013a688.cpp
 0X13A830	EnsureBlipVu1Code	40	blip-light/EnsureBlipVu1Code.cpp
 0X13A858	func_0013A858	52	blip-light/fun_0013a858.c
 0X13A890	blip__static_initialization_and_destruction_0	308	blip-light/blip__static_initialization_and_destruction_0.c

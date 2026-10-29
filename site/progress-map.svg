@@ -6199,7 +6199,7 @@
 </g>
 <g><title>blip-light: 2184 bytes</title>
 <rect x="1202.9" y="503.3" width="41.4" height="26.0" fill="#4a45a8"><title>DrawBlipg 0X13A1E8 1184 bytes (draft)</title></rect>
-<rect x="1202.9" y="529.7" width="17.3" height="21.9" fill="#4a45a8"><title>func_0013A688 0X13A688 424 bytes (draft)</title></rect>
+<rect x="1202.9" y="529.7" width="17.3" height="21.9" fill="#2f7af4"><title>func_0013A688 0X13A688 424 bytes (c)</title></rect>
 <rect x="1220.7" y="529.7" width="12.6" height="21.9" fill="#2f7af4"><title>blip__static_initialization_and_destruction_0 0X13A890 312 bytes (c)</title></rect>
 <rect x="1233.7" y="529.7" width="10.6" height="11.1" fill="#4a45a8"><title>InitBomb 0X13A9E8 136 bytes (draft)</title></rect>
 <rect x="1233.7" y="541.2" width="7.9" height="5.9" fill="#2f7af4"><title>func_0013A858 0X13A858 56 bytes (c)</title></rect>
