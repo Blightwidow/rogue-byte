@@ -225,3 +225,13 @@ It looks practical, at a per-function level.
   Among the unmatched sources the improvements are one or two functions per module under a different variant each time, which is noise;
   one function (0x1EA6C8) reaches 0, under -fno-schedule-insns, and its module's other functions don't follow. So the build keeps
   `-O2 -G0 -ffast-math -fno-exceptions` for every module.
+
+## SDK range: Sony's gcc 2.9 (2026-10-29)
+
+The libgcc double-precision support (`__adddf3` at 0x23D748, and its neighbours down to `__fixdfsi`) was not built by the
+game's compiler. A C analogue of `__adddf3` (`unpack_d(&a,&x); unpack_d(&b,&y); return pack_d(addsub(&x,&y,&z));`, `-O2 -G0`)
+gives retail's 22 words exactly with Sony's `ee-gcc2.9-991111b` (Win32, runs under wibo): `s0` saved with `sd` at 0x70,
+`$ra` at 0x80, `addiu $a2` in the first delay slot position retail has. SN 2.95.3-136 differs: `sq s0` at 0x80, `$ra` at
+0x70, and the `$a0`/`$a2` setup order swapped. So the SDK range needs a per-unit compiler: Sony 2.9-ee-991111 with its
+own cc1 and `ee/bin/as.exe`. Reached independently by sly1-decomp's team on Sly 1 (five soft-float functions).
+Next: the rest of 0x23D338-0x23E290 and libc/libm units; `compile_unit.py` needs a compiler column in config.
