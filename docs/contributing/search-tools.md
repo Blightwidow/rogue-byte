@@ -63,3 +63,10 @@ to 113, and one more draft matched with no editing. Left unsupported: the 32-bit
 `M2C_UNALIGNED` calls), `c1`, `ei`/`di`, `mtsah`, `sync` and `syscall`. A stack slot m2c uses without declaring (`unksp8`) is declared as an `s32`, and a bare `sp`
 gets a 0x100-byte buffer.
 
+Further compile repairs on the lifted drafts (non-compiling 167 to 139, compiling 518 to 541, within 20 words 113 to 117): quad (`por` ...) results are
+64-bit temporaries because SN's compiler has no 128-bit arithmetic (`unsupported wide integer operation` came from converting an `s128` to a float); a
+stack buffer `sp` is declared whenever stack-field macros use it; `jtbl_` symbols get an `extern s32 jtbl_X[];`; a draft with m2c's
+`second half of f64` pseudo-expression counts as unsupported; and an argument of the wrong pointer type in an indirect call (`s8 **` for `s8 *`,
+also `name + offset`) is cast to the parameter type the compiler names. About 16 drafts still fail without a message: m2c writes `case` labels
+outside a `switch` when it could not rebuild a jump table.
+

@@ -39,7 +39,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 '''
 VU_CALL = re.compile(r'M2C_VU_([SOQM])([0-9a-f]+)\(')
-REJECT = re.compile(r'M2C_ERROR|M2C_LWL|M2C_FIRST3BYTES|M2C_UNALIGNED|Decompilation failure|unknown instruction')
+REJECT = re.compile(r'M2C_ERROR|M2C_LWL|M2C_FIRST3BYTES|M2C_UNALIGNED|Decompilation failure|unknown instruction|second half of')
 DECLARATION = re.compile(r'^(M2C_UNK|s32|void|f32|\w+)(\s+\**)(\w+)\((.*)\);\s*(/\*.*\*/)?\s*$')
 
 
@@ -227,7 +227,7 @@ def lift_vu(body):
             if match.group(1) in 'OQM':
                 counter += 1
                 temporary = f'vu_{counter}'
-                out.append(f'{indent}{"s128" if match.group(1) == "Q" else "s32"} {temporary};')
+                out.append(f'{indent}{"s64" if match.group(1) == "Q" else "s32"} {temporary};')  # SN's compiler has no 128-bit arithmetic
                 if match.group(1) == 'M':  # the second argument is the value the instruction merges into
                     inputs = f'"r"({arguments[0]}), "0"({arguments[1]})'
                 out.append(f'{indent}asm volatile("{text}" : "=r"({temporary}){" : " + inputs if inputs else ""});')
@@ -279,7 +279,7 @@ def build(draft, signatures=None):
     body = lift_vu(body)
     body = re.sub(r'\bvoid\s*\*', 's8 *', body)  # C++ forbids arithmetic on void *
     stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
-    if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
+    if stack and (re.search(r'(?<![\w.>])sp(?!\w)', body) or stack_field_macros(body)):  # `sp` is the address of the function's stack area: a local buffer of that size
         body = re.sub(rf'(\b{re.escape(stack.group(1))}\([^)]*\)\s*\{{\n)', rf'\1    s8 sp[{stack.group(2)}] __attribute__((aligned(16)));\n', body, count=1)
     saved = sorted(set(re.findall(r'\bsaved_reg_\w+', body)))
     if saved:  # callee-saved registers m2c reads before any write (the function saves and restores them): locals
@@ -287,6 +287,7 @@ def build(draft, signatures=None):
         if opening:
             body = body[:opening.end()] + ''.join(f'    {"f32" if "_f" in name else "s32"} {name};\n' for name in saved) + body[opening.end():]
     extra = []
+    tables = sorted(set(re.findall(r'\bjtbl_[0-9A-Fa-f]+\b', body)) - set(re.findall(r'\bextern\s+\w+\s+(jtbl_\w+)', body)))
     if re.search(r'(?<![\w.>])sp(?!\w)', body) and not re.search(r's8 sp\[', body):  # the address of a stack area m2c did not size
         extra.append('    s8 sp[0x100] __attribute__((aligned(16)));\n')
     for name in sorted(set(re.findall(r'\bunksp\w+', body))):  # stack slots m2c used without declaring
@@ -296,6 +297,9 @@ def build(draft, signatures=None):
         opening = re.search(r'^[^\s#/][^;{}]*\)\s*\{\n', body, re.M)
         if opening:
             body = body[:opening.end()] + ''.join(extra) + body[opening.end():]
+    if tables:
+        body = re.sub(r'(extern "C" \{\n)?', r'\1', body, count=1)
+        body = ''.join(f'extern s32 {name}[];\n' for name in tables) + body
     macros = stack_field_macros(body)
     if macros:  # after the struct: the names are also its members
         body = re.sub(r'(struct _m2c_stack_\w+ \{.*?\};[^\n]*\n)', lambda found: found.group(1) + macros, body, count=1, flags=re.S)
@@ -414,6 +418,23 @@ def cast_compared_pointers(text, number):
     return '\n'.join(lines)
 
 
+def cast_passed_arguments(text, number, wanted, given):
+    """The line `number` (0-based) with each variable of type `given` that is passed whole as an argument cast to `wanted` (an indirect call
+    has no prototype name to find the argument by)."""
+    lines = text.split('\n')
+    squash = lambda kind: re.sub(r'\s+', '', kind)
+    names = [name for kind, name in re.findall(r'^\s+([A-Za-z_][\w ]*?\s*\*+)\s*(\w+)\s*;', text, re.M) if squash(kind) == squash(given)]
+    names += [name for kind, name in re.findall(r'[(,]\s*([A-Za-z_][\w ]*?\s*\*+)\s*(\w+)\s*[,)]', text) if squash(kind) == squash(given)]
+    changed = lines[number]
+    for name in set(names):
+        term = r'(?:[\w.]+|M2C_FIELD\([^()]*\))'
+        changed = re.sub(rf'(?<=[(,])(\s*)({re.escape(name)}(?:\s*[+-]\s*{term})*)(?=\s*[,)])', rf'\1({wanted.strip()})(\2)', changed)
+    if changed == lines[number]:
+        return None
+    lines[number] = changed
+    return '\n'.join(lines)
+
+
 def repair_once(text, message):
     """One edit that answers the first pointer or integer conversion error of a compile message, or None: the right side of an assignment or
     the argument the compiler names gets a cast to the type it expects."""
@@ -429,6 +450,9 @@ def repair_once(text, message):
         return cast_integer_dereferences(text, number)
     if 'comparison between pointer and integer' in reason:
         return cast_compared_pointers(text, number)
+    passing = re.match(r"argument passing to `([^']+)' from `([^']+)'", reason)
+    if passing:
+        return cast_passed_arguments(text, number, passing.group(1), passing.group(2))
     assign = re.search(r"assignment to `([^']+)' from", reason)
     if assign and '=' in line:
         match = re.match(r'^(\s*[^=]*[^=!<>+\-*/&|^]=)\s*([^=].*?);\s*$', line)
