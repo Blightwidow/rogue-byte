@@ -121,9 +121,10 @@ class CategoryConfigTests(unittest.TestCase):
     def setUp(self):
         import csv
         import json
-        self.config = json.load(open(os.path.join(self.ROOT, 'config', 'us', 'categories.json')))
-        rows = csv.DictReader(open(os.path.join(self.ROOT, 'config', 'recovered', 'modules.tsv')), delimiter='\t')
-        self.modules = {row['module'] for row in rows}
+        with open(os.path.join(self.ROOT, 'config', 'us', 'categories.json')) as categories_file:
+            self.config = json.load(categories_file)
+        with open(os.path.join(self.ROOT, 'config', 'recovered', 'modules.tsv')) as modules_file:
+            self.modules = {row['module'] for row in csv.DictReader(modules_file, delimiter='\t')}
 
     def test_every_sly1_file_has_a_subsystem(self):
         tokens = {token for module in self.modules if module != 'sdk' and not module.startswith('new_') for token in module.split('+')}

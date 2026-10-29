@@ -63,7 +63,8 @@ def listed_functions(name):
     path = os.path.join(ROOT, 'config', 'us', name)
     if not os.path.exists(path):
         return set()
-    return {int(line.split()[0], 16) for line in open(path) if line.strip() and not line.startswith('#')}
+    with open(path) as listing:
+        return {int(line.split()[0], 16) for line in listing if line.strip() and not line.startswith('#')}
 
 
 def gnu_functions():

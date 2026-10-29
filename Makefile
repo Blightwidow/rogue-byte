@@ -47,7 +47,7 @@ lint: ## ruff: syntax errors and undefined names in the scripts
 	.venv/bin/ruff check .
 
 test: ## Regression tests of the scripts
-	python3 -I scripts/test_public_tools.py
+	.venv/bin/python -I scripts/test_public_tools.py
 
 unit: ## After `make elf`: do the matched functions of UNIT (module, address or src file; default all) link from C?
 	.venv/bin/python scripts/check_unit.py $(UNIT)
