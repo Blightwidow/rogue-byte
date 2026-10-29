@@ -123,6 +123,35 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
   plain C or C with VU0 instructions that have no C form; 1.5% hold an empty `asm` barrier or a register-pinned local, 1.5% other inline
   assembly, one a volatile cast, 0.6% an inline helper.
 
+## 2026-10-29: from other PS2 decompilations (SOTC, DQ8)
+
+Read from two CC0 projects; each item says whether it applied here.
+
+- **Repair a draft from the compiler's own error message.** A decompiler draft is nearly right and the compiler says where it is not: an
+  assignment to `T *` from `U *` needs `(T *)`, an argument the compiler names needs a cast to the parameter type, an address-of-stack
+  name needs a declared buffer. `harvest.py --repair` applies up to eight such edits per draft and judges the result: on the 300 smallest
+  unsourced functions the drafts that compile rose from 21 to 90 (23 within five words). Tested here, kept.
+- **Read the stack area from m2c.** `--stack-structs` prints the frame's size; an undeclared `sp` in a draft becomes a local `s8 sp[N]` of that
+  size (declared `s8`, not `char`: C++ treats the two pointer types as different). Drafts that compile went from 61 to 244.
+- **Keep a blocker class for every function and report yield per size bucket.** `harvest.py` writes `work/matching/harvest/blockers.tsv`
+  (outcome per function: no draft, instruction m2c cannot read, does not compile, compiles with its score) and prints draft yield by size,
+  so effort goes where it pays. Tested here, kept.
+- **A loop the compiler tests once at the top and again at the bottom is `if (c) do { } while (c);`.** Added to `mutate.py` as
+  `while_to_dowhile`. Not yet measured on its own.
+- **Twins and near-twins settle several functions at once.** Hide call targets, `%hi`/`%lo` halves and immediates; a function equal to a
+  matched one in that shape gets its source with the symbols and constants swapped (`twins.py` already does this; after 46 new matches it
+  found one more, and the pool is nearly empty).
+- **Tail-call thunks** (a `j` plus delay-slot setup, written `return target(...)`) are a family worth a tool when there are many; here only
+  3 unmatched functions have the shape, so none was written.
+- **Source-file boundaries can be inferred where a binary has relocations** (a reference to a static is section-relative, to a global by
+  name; `ld -r` keeps a file's code contiguous). The retail executable here is linked and has none; shared static data is a possible
+  substitute, not tried.
+- **The "define the callee first" effect belongs to one compiler.** The branch-likely residue it explains is from EE GCC 2.96; SN GCC
+  2.95.3 showed no effect (see above).
+- **Native `long` is 64 bits on the EE.** m2c's `--context` reads `long` as 32 bits, so contexts handed to it need `long long` for the
+  integer `long`.
+- **Count progress in code bytes of committed sources**, not functions: a generated assembly file or an uncommitted source is not progress.
+
 ## Tools and environment
 
 - **Slicing a memory-mapped file with an open end copies the rest of it**: `image[offset:]` on a 2.7 GB disc image made a scan run for

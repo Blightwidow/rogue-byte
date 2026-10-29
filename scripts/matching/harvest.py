@@ -108,7 +108,7 @@ def build_context(path):
 
 def run_m2c(arguments, row):
     """The draft text for a function, from the cache or a fresh m2c run; None when m2c fails."""
-    folder = 'm2c-context' if arguments.context else 'm2c'
+    folder = 'm2c-context' if arguments.context else 'm2c-stack'
     os.makedirs(os.path.join(OUT, folder), exist_ok=True)
     cached = os.path.join(OUT, folder, f'{int(row["address"], 16):06X}.c')
     if os.path.exists(cached):
@@ -117,7 +117,7 @@ def run_m2c(arguments, row):
     path = os.path.join(SPLIT, row['name'] + '.s')
     if not os.path.exists(path):
         return None
-    command = [sys.executable, arguments.m2c, '-t', 'mipsee-gcc-c', '--valid-syntax'] + (['--context', arguments.context] if arguments.context else []) + [path]
+    command = [sys.executable, arguments.m2c, '-t', 'mipsee-gcc-c', '--valid-syntax', '--stack-structs'] + (['--context', arguments.context] if arguments.context else []) + [path]
     result = subprocess.run(command, capture_output=True, text=True, timeout=120)
     if result.returncode or not result.stdout.strip():
         return None
@@ -139,6 +139,9 @@ def build(draft, signatures=None):
             line = f'{signatures[match.group(3)]}{match.group(2)}{match.group(3)}({match.group(4)});'
         lines.append(line)
     body = re.sub(r'\bvoid\s*\*', 's8 *', '\n'.join(lines))  # C++ forbids arithmetic on void *
+    stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
+    if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
+        body = re.sub(rf'(\b{re.escape(stack.group(1))}\([^)]*\)\s*\{{\n)', rf'\1    s8 sp[{stack.group(2)}] __attribute__((aligned(16)));\n', body, count=1)
     return PRELUDE + 'extern "C" {\n' + body + '\n}\n'
 
 
@@ -150,6 +153,95 @@ def read_signatures():
         return {row['name']: kinds[row['inferred']] for row in csv.DictReader(handle, delimiter='\t')}
 
 
+CAST_RULES = (
+    (re.compile(r"assignment to `([^']+)' from `[^']+'"), 'assign'),
+    (re.compile(r"passing `[^']+' (?:to|as) argument (\d+) of `([^']+)'"), 'argument'),
+    (re.compile(r"argument passing to `[^']+' from `[^']+'"), None),
+)
+
+
+def split_arguments(text):
+    """The top-level comma-separated pieces of an argument list."""
+    pieces, depth, current = [], 0, ''
+    for character in text:
+        if character in '([':
+            depth += 1
+        elif character in ')]':
+            depth -= 1
+        if character == ',' and depth == 0:
+            pieces.append(current)
+            current = ''
+        else:
+            current += character
+    return pieces + [current]
+
+
+def parameter_types(signature):
+    """The parameter types in a compiler message's `name(type, type)` text."""
+    inner = signature[signature.index('(') + 1:signature.rindex(')')]
+    return [part.strip() for part in split_arguments(inner)] if inner.strip() else []
+
+
+def repair_once(text, message):
+    """One edit that answers the first pointer or integer conversion error of a compile message, or None: the right side of an assignment or
+    the argument the compiler names gets a cast to the type it expects."""
+    error = re.search(r'^[^:]+:(\d+): (?!warning)(.*)$', message, re.M)
+    if not error:
+        return None
+    number, reason = int(error.group(1)) - 1, error.group(2)
+    lines = text.split('\n')
+    if number >= len(lines):
+        return None
+    line = lines[number]
+    assign = re.search(r"assignment to `([^']+)' from", reason)
+    if assign and '=' in line:
+        match = re.match(r'^(\s*[^=]*[^=!<>+\-*/&|^]=)\s*([^=].*?);\s*$', line)
+        if match:
+            lines[number] = f'{match.group(1)} ({assign.group(1)})({match.group(2)});'
+            return '\n'.join(lines)
+    argument = re.search(r"argument (\d+) of `([^']+)'", reason)
+    if argument:
+        index = int(argument.group(1)) - 1
+        types = parameter_types(argument.group(2))
+        name = argument.group(2).split('(')[0].split()[-1]
+        call = re.search(rf'\b{re.escape(name)}\s*\(', line)
+        if call and index < len(types):
+            start, depth, end = call.end(), 1, call.end()
+            while end < len(line) and depth:
+                depth += (line[end] == '(') - (line[end] == ')')
+                end += 1
+            pieces = split_arguments(line[start:end - 1])
+            if index < len(pieces):
+                pieces[index] = f' ({types[index]})({pieces[index].strip()})' if index else f'({types[index]})({pieces[index].strip()})'
+                lines[number] = line[:start] + ','.join(pieces) + line[end - 1:]
+                return '\n'.join(lines)
+    return None
+
+
+def judge_with_repair(address, text, attempts=8):
+    """(score, text): the draft judged, after up to `attempts` cast repairs when it does not compile."""
+    import compile_unit
+    for _ in range(attempts):
+        score = scorer.judge(address, text)
+        if score is not None:
+            return score, text
+        os.makedirs(scorer.BUILD, exist_ok=True)
+        stem = os.path.join(scorer.BUILD, f'repair-{address:06X}-{os.getpid()}-{next(scorer._counter)}')
+        with open(stem + '.cpp', 'w') as handle:
+            handle.write(text)
+        ok, message = compile_unit.compile_object('c++', stem + '.cpp', stem + '.o', assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False)
+        for leftover in (stem + '.cpp', stem + '.o', stem + '.o.tmp', stem + '.o.s'):
+            if os.path.exists(leftover):
+                os.remove(leftover)
+        if ok:
+            return None, text
+        edited = repair_once(text, message)
+        if edited is None or edited == text:
+            return None, text
+        text = edited
+    return scorer.judge(address, text), text
+
+
 def harvest_one(arguments, signatures, row):
     address = int(row['address'], 16)
     draft = run_m2c(arguments, row)
@@ -159,7 +251,7 @@ def harvest_one(arguments, signatures, row):
     for text in (build(draft), build(draft, signatures)):
         if text is None:
             return address, 'unsupported', None, None
-        results.append((scorer.judge(address, text), text))
+        results.append(judge_with_repair(address, text) if arguments.repair else (scorer.judge(address, text), text))
     scored = [(score, text) for score, text in results if score is not None]
     if not scored:
         return address, 'does not compile', None, None
@@ -176,6 +268,7 @@ def main():
     parser.add_argument('--jobs', type=int, default=12)
     parser.add_argument('--write', action='store_true', help='save drafts that score 0 as data/matching/src/fn/<ADDRESS>.cpp')
     parser.add_argument('--context', action='store_true', help='give m2c prototypes of every function (real signatures from matched sources, the rest inferred from the code)')
+    parser.add_argument('--repair', action='store_true', help='when a draft does not compile, add the casts the compiler asks for (up to 8 edits)')
     parser.add_argument('--keep', type=int, default=-1, metavar='SCORE', help='also save drafts scoring at most SCORE as sources (for mutate.py, neighborhood.py)')
     parser.add_argument('--near', type=int, default=0, metavar='N', help='list the N closest drafts')
     arguments = parser.parse_args()
@@ -192,9 +285,12 @@ def main():
     print(f'{len(rows)} functions without source, {arguments.min_size}-{arguments.max_size} bytes')
     outcomes = {}
     scores = []
+    table = []
+    sizes = {int(row['address'], 16): int(row['size']) for row in rows}
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for address, outcome, score, text in pool.map(lambda row: harvest_one(arguments, signatures, row), rows):
             outcomes[outcome] = outcomes.get(outcome, 0) + 1
+            table.append((address, sizes[address], outcome, score))
             if score is None:
                 continue
             scores.append((score, address, text))
@@ -212,7 +308,16 @@ def main():
         handle.write('address\tscore\n')
         for score, address, _text in scores:
             handle.write(f'{address:#x}\t{score}\n')
+    with open(os.path.join(OUT, 'blockers.tsv'), 'w', encoding='utf-8') as handle:
+        handle.write('address\tsize\toutcome\tscore\n')
+        for address, size, outcome, score in sorted(table):
+            handle.write(f'{address:#x}\t{size}\t{outcome}\t{"" if score is None else score}\n')
     print(', '.join(f'{count} {name}' for name, count in sorted(outcomes.items())))
+    print('by size (bytes): functions / draft compiles / within 5 words / match')
+    for low, high in ((8, 64), (65, 128), (129, 256), (257, 512), (513, 1024), (1025, 4096)):
+        group = [entry for entry in table if low <= entry[1] <= high]
+        compiled = [entry for entry in group if entry[3] is not None]
+        print(f'  {low:5d}-{high:<5d} {len(group):5d} {len(compiled):5d} {sum(1 for e in compiled if e[3] <= 5):5d} {sum(1 for e in compiled if e[3] == 0):4d}')
     print(f'{sum(1 for score, _, _ in scores if score == 0)} match, {sum(1 for score, _, _ in scores if 0 < score <= 5)} within 5, {sum(1 for score, _, _ in scores if 5 < score <= 20)} within 20')
     for score, address, _text in scores[:arguments.near]:
         print(f'  {address:#x} score {score}')

@@ -256,6 +256,19 @@ def tail_return(lines, index, rng):
     return None
 
 
+def while_to_dowhile(lines, index, rng):
+    """`while (c) { body }` becomes `if (c) do { body } while (c);`, the form of a loop the compiler tests once at the top and then at the bottom
+    (a rotated loop); the reverse turns it back."""
+    match = re.match(r'^(\s*)while \((.+)\) \{\s*$', lines[index])
+    if match:
+        end = block_end(lines, index)
+        if end is None or any(re.search(r'\b(break|continue)\b', line) for line in lines[index + 1:end]):
+            return None
+        indent, condition = match.group(1), match.group(2)
+        return lines[:index] + [f'{indent}if ({condition}) {{', f'{indent}do {{'] + lines[index + 1:end] + [f'{indent}}} while ({condition});', f'{indent}}}'] + lines[end + 1:]
+    return None
+
+
 def volatile_slot(lines, index, rng):
     """A local pointer whose address is handed to a call (`f(..., &p)`) is re-read from the stack before every use in retail; reading it
     through a volatile pointer does that: `p[1] = x` becomes `(*(T *volatile *)&p)[1] = x`, and again for the one use that undoes it."""
@@ -285,7 +298,7 @@ def volatile_slot(lines, index, rng):
 
 
 LEGACY_MUTATIONS = [single_exit, single_exit, toggle_cast, toggle_cast, commute, commute, flip_comparison, zero_test, increment, split_declaration, merge_declaration, toggle_type, swap_adjacent, swap_adjacent, swap_arms]
-MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return, volatile_slot, volatile_slot]
+MUTATIONS = LEGACY_MUTATIONS + [flip_callee_return, flip_callee_return, while_to_goto, tail_return, tail_return, volatile_slot, volatile_slot, while_to_dowhile]
 
 
 def mutate(text, rng, count=1):

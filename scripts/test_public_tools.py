@@ -307,6 +307,16 @@ class MutationTests(unittest.TestCase):
         lines = ['void g(int *p)', '{', '    while (*p) {', '        if (*p == 3) break;', '    }', '}']
         self.assertIsNone(mutate.while_to_goto(lines, 2, mutate.random.Random(1)))
 
+    def test_while_becomes_a_guarded_do_while(self):
+        lines = ['void g(int *p)', '{', '    while (*p > 0) {', '        *p = *p - 1;', '    }', '}']
+        text = '\n'.join(mutate.while_to_dowhile(lines, 2, mutate.random.Random(1)))
+        self.assertIn('if (*p > 0) {', text)
+        self.assertIn('} while (*p > 0);', text)
+
+    def test_while_with_continue_is_not_rotated(self):
+        lines = ['void g(int *p)', '{', '    while (*p) {', '        if (*p == 3) continue;', '    }', '}']
+        self.assertIsNone(mutate.while_to_dowhile(lines, 2, mutate.random.Random(1)))
+
     def test_last_call_gains_a_return(self):
         self.assertTrue(any('    return;' in text for text in self.results(mutate.tail_return)))
 
@@ -423,6 +433,21 @@ class HarvestTests(unittest.TestCase):
     def test_callee_return_type_follows_the_signatures(self):
         text = harvest.build(self.DRAFT, {'helper': 'void'})
         self.assertIn('void helper(M2C_UNK);', text)
+
+
+class HarvestRepairTests(unittest.TestCase):
+    def test_assignment_gets_a_cast_to_the_type_the_compiler_names(self):
+        text = 'void f(void) {\n    p = q;\n}'
+        message = "x.cpp:2: assignment to `s8 *' from `int *'"
+        self.assertIn('p = (s8 *)(q);', harvest.repair_once(text, message))
+
+    def test_argument_gets_a_cast_to_the_parameter_type(self):
+        text = 'void f(void) {\n    g(a, b);\n}'
+        message = "x.cpp:2: passing `char *' as argument 2 of `g(int, s8 *)' changes signedness"
+        self.assertIn('(s8 *)(b)', harvest.repair_once(text, message))
+
+    def test_unknown_error_is_left_alone(self):
+        self.assertIsNone(harvest.repair_once('void f(void) {\n}', 'x.cpp:1: parse error'))
 
 
 class CreditAuditTests(unittest.TestCase):
