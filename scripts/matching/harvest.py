@@ -187,9 +187,11 @@ def stack_field_macros(body):
     if not match:
         return ''
     lines = []
+    after = body[match.end():]
+    declared = set(re.findall(r'^\s+[\w ]+?\s*\**\s*(\w+)(?:\[[^\]]*\])?;', after, re.M))  # m2c made these locals of the function
     for field in STACK_FIELD.finditer(match.group(1)):
         offset, kind, stars, name, array = field.groups()
-        if name.startswith('pad') or kind.strip() == 'char' and name.startswith('pad'):
+        if name.startswith('pad') or name in declared:
             continue
         kind = (kind.strip() + ' ' + stars).strip()
         lines.append(f'#define {name} ((' + kind + ' *)(sp + ' + offset + '))' if array else f'#define {name} (*({kind} *)(sp + {offset}))')
@@ -213,6 +215,11 @@ def build(draft, signatures=None):
     stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
     if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
         body = re.sub(rf'(\b{re.escape(stack.group(1))}\([^)]*\)\s*\{{\n)', rf'\1    s8 sp[{stack.group(2)}] __attribute__((aligned(16)));\n', body, count=1)
+    saved = sorted(set(re.findall(r'\bsaved_reg_\w+', body)))
+    if saved:  # callee-saved registers m2c reads before any write (the function saves and restores them): locals
+        opening = re.search(r'^[^\s#/][^;{}]*\)\s*\{\n', body, re.M)
+        if opening:
+            body = body[:opening.end()] + ''.join(f'    {"f32" if "_f" in name else "s32"} {name};\n' for name in saved) + body[opening.end():]
     macros = stack_field_macros(body)
     if macros:  # after the struct: the names are also its members
         body = re.sub(r'(struct _m2c_stack_\w+ \{.*?\};[^\n]*\n)', lambda found: found.group(1) + macros, body, count=1, flags=re.S)
@@ -256,6 +263,63 @@ def parameter_types(signature):
     return [part.strip() for part in split_arguments(inner)] if inner.strip() else []
 
 
+POINTER_NAME = re.compile(r'[\w )]\s*\*+\s*(\w+)\s*[;,)=\[]')
+
+
+def cast_integer_dereferences(text, number):
+    """The line `number` (0-based) with every dereference of an integer expression made `*(s32 *)expr` (`f32` on a line that uses floats):
+    m2c leaves a pointer it could not type as an `s32`, and C++ cannot dereference one. An operand that mentions a pointer is left alone."""
+    lines = text.split('\n')
+    line = lines[number]
+    pointers = set(POINTER_NAME.findall(text))
+    kind = 'f32' if re.search(r'\b(var|temp)_f\w*|\d\.\d*f\b|\bf32\b', line) else 's32'
+    result, index, changed = '', 0, False
+    while index < len(line):
+        character = line[index]
+        before = result.rstrip()
+        unary = character == '*' and (not before or before[-1] in '(=,;{[+-*/<>!&|?:' or before.endswith('return'))
+        if not unary:
+            result += character
+            index += 1
+            continue
+        end = index + 1
+        while end < len(line) and line[end] == ' ':
+            end += 1
+        start = end
+        if end < len(line) and line[end] == '(':
+            depth = 0
+            while end < len(line):
+                depth += (line[end] == '(') - (line[end] == ')')
+                end += 1
+                if depth == 0:
+                    break
+        else:
+            while end < len(line) and (line[end].isalnum() or line[end] == '_'):
+                end += 1
+            if end < len(line) and line[end] == '(':
+                depth = 0
+                while end < len(line):
+                    depth += (line[end] == '(') - (line[end] == ')')
+                    end += 1
+                    if depth == 0:
+                        break
+        operand = line[start:end]
+        names = set(re.findall(r'[A-Za-z_]\w*', operand))
+        already_cast = re.match(r'^\(\s*[\w ]+\*+\s*\)$', operand)
+        field_pointer = re.search(r'M2C_FIELD\([^;]*?,\s*[\w ]+\*\s*\*', operand)
+        if already_cast or '&' in operand or names & pointers or field_pointer or operand.startswith('sp'):
+            result += character
+            index += 1
+            continue
+        result += f'*({kind} *){operand}'
+        changed = True
+        index = end
+    if not changed:
+        return None
+    lines[number] = result
+    return '\n'.join(lines)
+
+
 def repair_once(text, message):
     """One edit that answers the first pointer or integer conversion error of a compile message, or None: the right side of an assignment or
     the argument the compiler names gets a cast to the type it expects."""
@@ -267,6 +331,8 @@ def repair_once(text, message):
     if number >= len(lines):
         return None
     line = lines[number]
+    if "invalid type argument of `unary *'" in reason:
+        return cast_integer_dereferences(text, number)
     assign = re.search(r"assignment to `([^']+)' from", reason)
     if assign and '=' in line:
         match = re.match(r'^(\s*[^=]*[^=!<>+\-*/&|^]=)\s*([^=].*?);\s*$', line)
