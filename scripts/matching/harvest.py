@@ -217,7 +217,8 @@ def lift_vu(body):
                 depth += {'(': 1, ')': -1}.get(line[end], 0)
                 end += 1
             arguments = split_arguments_top(line[match.end():end - 1])
-            text = bytes.fromhex(match.group(2)).decode().replace('"', '\\"')
+            text = bytes.fromhex(match.group(2)).decode()
+            text = re.sub(r'\b(acc|q|p|i|r)\b', lambda found: found.group(1).upper(), text).replace('"', '\\"')  # the VU special registers are upper case for the assembler
             inputs = ', '.join(f'"r"({argument})' for argument in arguments)
             indent = re.match(r'\s*', line).group(0)
             if match.group(1) == 'O':
@@ -246,7 +247,7 @@ def stack_field_macros(body):
         return ''
     lines = []
     after = body[match.end():]
-    declared = set(re.findall(r'^\s+[\w ]+?\s*\**\s*(\w+)(?:\[[^\]]*\])?;', after, re.M))  # m2c made these locals of the function
+    declared = set(re.findall(r'^[ \t]+(?![ \t]|return\b)[\w ]+?\s*\**\s*(\w+)(?:\[[^\]]*\])?;', after, re.M))  # m2c made these locals of the function
     for field in STACK_FIELD.finditer(match.group(1)):
         offset, kind, stars, name, array = field.groups()
         if name.startswith('pad') or name in declared:
@@ -268,7 +269,9 @@ def build(draft, signatures=None):
         if signatures is not None and match and match.group(3) in signatures and line.rstrip().endswith(('*/', ');')) and not line.startswith(' '):
             line = f'{signatures[match.group(3)]}{match.group(2)}{match.group(3)}({match.group(4)});'
         lines.append(line)
-    body = lift_vu('\n'.join(lines))
+    body = '\n'.join(lines)
+    body = re.sub(r'(M2C_FIELD\((?:[^()]|\([^()]*\))*?,\s*)[\w ]+\*+\s*\([^()*][^()]*\)(\s*,)', r'\1s8 **\2', body)  # a function type where a pointer type belongs
+    body = lift_vu(body)
     body = re.sub(r'\bvoid\s*\*', 's8 *', body)  # C++ forbids arithmetic on void *
     stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
     if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
@@ -321,7 +324,7 @@ def parameter_types(signature):
     return [part.strip() for part in split_arguments(inner)] if inner.strip() else []
 
 
-POINTER_NAME = re.compile(r'[\w )]\s*\*+\s*(\w+)\s*[;,)=\[]')
+POINTER_NAME = re.compile(r'(?:^|[(,])[ \t]*(?:const\s+)?[A-Za-z_]\w*(?:[ \t]+[A-Za-z_]\w*)*[ \t]*\*+[ \t]*(\w+)[ \t]*[;,)=\[]', re.M)
 
 
 def cast_integer_dereferences(text, number):
@@ -362,7 +365,8 @@ def cast_integer_dereferences(text, number):
                     if depth == 0:
                         break
         operand = line[start:end]
-        names = set(re.findall(r'[A-Za-z_]\w*', operand))
+        integer_free = re.sub(r'M2C_FIELD\((?:[^()]|\([^()]*\))*?,\s*[\w ]+\*\s*,\s*[^,()]+\)', ' ', operand)  # a field read as a scalar is an integer term
+        names = set(re.findall(r'[A-Za-z_]\w*', integer_free))
         already_cast = re.match(r'^\(\s*[\w ]+\*+\s*\)$', operand)
         field_pointer = re.search(r'M2C_FIELD\([^;]*?,\s*[\w ]+\*\s*\*', operand)
         if already_cast or '&' in operand or names & pointers or field_pointer or operand.startswith('sp'):
@@ -375,6 +379,23 @@ def cast_integer_dereferences(text, number):
     if not changed:
         return None
     lines[number] = result
+    return '\n'.join(lines)
+
+
+def cast_compared_pointers(text, number):
+    """The line `number` (0-based) with each pointer variable that is an operand of a comparison cast to `(s32)`: m2c compares a pointer with
+    a scalar it could not type."""
+    lines = text.split('\n')
+    pointers = set(POINTER_NAME.findall(text))
+    line = lines[number]
+    comparator = r'(?:==|!=|<=|>=|<|>)'
+    changed = line
+    for name in pointers:
+        changed = re.sub(rf'(?<![\w.>*&])({re.escape(name)})(?=\s*{comparator}\s*(?!0\b|NULL))', r'(s32)\1', changed)
+        changed = re.sub(rf'({comparator}\s+)({re.escape(name)})\b(?!\s*[\[(.-])', r'\1(s32)\2', changed)
+    if changed == line:
+        return None
+    lines[number] = changed
     return '\n'.join(lines)
 
 
@@ -391,6 +412,8 @@ def repair_once(text, message):
     line = lines[number]
     if "invalid type argument of `unary *'" in reason:
         return cast_integer_dereferences(text, number)
+    if 'comparison between pointer and integer' in reason:
+        return cast_compared_pointers(text, number)
     assign = re.search(r"assignment to `([^']+)' from", reason)
     if assign and '=' in line:
         match = re.match(r'^(\s*[^=]*[^=!<>+\-*/&|^]=)\s*([^=].*?);\s*$', line)

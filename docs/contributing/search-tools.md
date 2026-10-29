@@ -46,3 +46,11 @@ drafts it improved 26 (for example 8 to 3 on two of them) and matched none by it
 When m2c fails on a function's split assembly, `harvest.py` retries on a patched copy: the delay slot that follows a final `jr $ra` (the split
 records the function without it; 38 functions) and branch labels the split did not write (3 functions) are added from the whole-text split.
 That took the functions with no draft from 41 to 6. `--write --refresh` replaces a saved source only when the new draft scores strictly lower.
+
+Compile-error repairs added after the first harvest numbers (drafts that compile 120 to 370, 14 drafts that match with no editing, 11 within 5 words):
+a `return sp0;` is no longer mistaken for a local declaration of `sp0` (the stack-field `#define` was skipped); a dereferenced integer expression is
+cast unless it contains a pointer outside the scalar `M2C_FIELD` reads; a pointer variable compared with an integer gets `(s32)`; a function type
+where m2c printed a pointer type is replaced by `s8 **`; the VU special registers (`ACC`, `Q`, `P`, `I`, `R`) are written upper case in the lifted
+asm, which the assembler needs (`vdiv`, `vmulq` were rejected otherwise). Of the 208 functions that still failed after the first repairs, 115
+fail now; the rest are mostly argument-passing mismatches on indirect calls (about 25) and a few assembler errors.
+
