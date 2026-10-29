@@ -11,12 +11,12 @@ extern "C" Rows *BuildXfSpinRateMatrix(Rows *pmatResult, void *pxf, Rows *pmat, 
     float z = Lane(__builtin_pextuw(zeroReg, vecW));
     float y = Lane(__builtin_prot3w(vecW));
     float *ag = (float *)pmatResult;
-    ag[8] = y;
     ag[1] = z;
-    ag[4] = -z;
     ag[6] = x;
     ag[9] = -x;
+    ag[4] = -z;
     ag[2] = -y;
+    ag[8] = y;
     asm("lqc2 vf2, %0" : : "m" (pmatResult->row[1]));
     asm("lqc2 vf5, %0" : : "m" (pmat->row[2]));
     asm("lqc2 vf4, %0" : : "m" (pmat->row[0]));

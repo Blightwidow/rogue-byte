@@ -19,9 +19,9 @@ void AddBootQueueLevel(s8 *arg1, s32 arg2, s32 arg3) {
     }
     if (var_v0 != 0) {
         temp_v0 = PentryAddBootQueue(2);
-        M2C_FIELD(temp_v0, s32 *, 0x10) = arg3;
-        M2C_FIELD(temp_v0, s32 *, 0xC) = arg2;
         M2C_FIELD(temp_v0, s8 **, 8) = arg1;
+        M2C_FIELD(temp_v0, s32 *, 0xC) = arg2;
+        M2C_FIELD(temp_v0, s32 *, 0x10) = arg3;
     }
 }
 

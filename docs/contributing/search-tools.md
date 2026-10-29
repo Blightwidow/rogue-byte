@@ -81,3 +81,8 @@ them as instructions before running m2c (`decode_words`), and a check of the lif
 trying orders, not by reading. Without markers it still reorders runs of consecutive statements (all orders up to five, rotations and swaps beyond); a run is
 only consecutive simple statements, which is why scattered stores need the marks. On a matched function with its four stores reversed, the search found the
 order again in 24 compiles.
+
+`permute_stores.py` runs that search over the whole near-miss list: for each non-matching source scoring between `--min` and `--max` it marks the stores of every
+straight-line region with at least two, searches their orders (`--budget` compiles per function, `--seed` for another sample) and writes better sources to
+`work/matching/permute-stores/`; a later run starts from them. Over the 330 near misses scoring 1 to 20 that have such a region, two passes improved 39
+and matched 3 (the first pass took 5 minutes, the second found 2 more: the small regions are searched exhaustively).

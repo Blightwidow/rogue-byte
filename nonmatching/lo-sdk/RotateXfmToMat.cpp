@@ -27,8 +27,8 @@ void RotateXfmToMat(s8 *arg0, s32 arg1) {
     M2C_FIELD(arg0, s128 *, 0x60) = sp0;
     M2C_FIELD(temp_v1, s32 *, 0xC) = 0;
     M2C_FIELD(temp_v1, s128 *, 0x20) = sp20;
-    M2C_FIELD(temp_v1, s32 *, 0x2C) = 0;
     M2C_FIELD(temp_v1, s32 *, 0x1C) = 0;
+    M2C_FIELD(temp_v1, s32 *, 0x2C) = 0;
     InvalidateXfmMatWorld(arg0, sp10);
 }
 }

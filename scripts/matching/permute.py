@@ -63,22 +63,24 @@ def orders(count):
 
 
 def sampled_orders(count, sample, seed=1):
-    """All orders of up to five statements, else `sample` distinct random orders (seeded, so a rerun judges the same ones)."""
-    if count <= 5:
+    """All orders of up to five statements when there are at most `sample` of them, else `sample` distinct random orders (seeded, so a rerun judges the same ones)."""
+    if count <= 5 and len(list(itertools.permutations(range(count)))) - 1 <= sample:
         return list(itertools.permutations(range(count)))[1:]
     generator = random.Random(seed)
     chosen = set()
+    identity = tuple(range(count))
     while len(chosen) < min(sample, 100000):
         order = list(range(count))
         generator.shuffle(order)
-        chosen.add(tuple(order))
+        if tuple(order) != identity:
+            chosen.add(tuple(order))
     return sorted(chosen)
 
 
 MARK = re.compile(r'//P\s*$')
 
 
-def marked_search(address, text, budget, jobs, lang, sample, log=None):
+def marked_search(address, text, budget, jobs, lang, sample, log=None, seed=1):
     """(score, text, compiles): the best order of the lines marked `//P`, which may be anywhere in the function."""
     lines = text.split('\n')
     slots = [index for index, line in enumerate(lines) if MARK.search(line)]
@@ -88,7 +90,7 @@ def marked_search(address, text, budget, jobs, lang, sample, log=None):
         return best_score, best_text, used
     statements = [lines[index] for index in slots]
     candidates = []
-    for order in sampled_orders(len(slots), min(sample, budget)):
+    for order in sampled_orders(len(slots), min(sample, budget), seed):
         new = list(lines)
         for slot, source in zip(slots, order):
             new[slot] = statements[source]

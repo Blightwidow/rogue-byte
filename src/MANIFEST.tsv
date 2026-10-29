@@ -792,6 +792,7 @@ address	name	size	file
 0X11C1A8	__ml__FRC7MATRIX4G10VU_VECTOR4	44	mat/__ml__FRC7MATRIX4G10VU_VECTOR4.cpp
 0X11C1D8	TransposeMatrix4	56	mat/TransposeMatrix4.c
 0X11C2F0	FInvertMatrix4__FP7MATRIX4T0	40	mat/FInvertMatrix4__FP7MATRIX4T0.c
+0X11C448	BuildSimpleProjectionMatrix__FffffffP7MATRIX4	172	mat/BuildSimpleProjectionMatrix__FffffffP7MATRIX4.cpp
 0X11C950	SmoothMatrix	348	util/SmoothMatrix.cpp
 0X11CB50	StaticInitSlotheaps_11cb50	308	util-alo/StaticInitSlotheaps_11cb50.c
 0X11CC88	func_0011CC88	32	util-alo/fun_0011cc88.c
@@ -2065,6 +2066,7 @@ address	name	size	file
 0X1841F0	func_001841F0	20	hide-splice-gc/fun_001841f0.c
 0X184208	AttachPt_GetAimPos	48	hide-splice-gc/AttachPt_GetAimPos.cpp
 0X184238	func_00184238	44	unsorted/fun_00184238.cpp
+0X184268	func_00184268	68	hide-splice-gc/fun_00184268.cpp
 0X1842B0	func_001842B0	124	hide-splice-gc/fun_001842b0.c
 0X184330	LiftPt_OnGrab	76	hide-splice-gc/LiftPt_OnGrab.c
 0X1843C0	func_001843C0	44	hide-splice-gc/fun_001843c0.c
@@ -3568,6 +3570,7 @@ address	name	size	file
 0X2113B8	func_002113B8	36	unsorted/fun_002113b8.c
 0X2113E0	BindTextMarquee	64	po-screen/BindTextMarquee.c
 0X211A80	func_00211A80	400	po-screen/fun_00211a80.cpp
+0X211C58	func_00211C58	76	po-screen/fun_00211c58.cpp
 0X211D08	PromptBlot_Init	44	po-screen/PromptBlot_Init.cpp
 0X211D38	bevy_jobs_restart_current	264	po-screen/bevy_jobs_restart_current.cpp
 0X211E40	JobBlot_Init	44	po-screen/JobBlot_Init.cpp

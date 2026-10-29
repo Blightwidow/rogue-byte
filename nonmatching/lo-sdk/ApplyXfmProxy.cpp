@@ -22,9 +22,9 @@ M2C_UNK InvalidateXfmMatWorld(s8 *, s128, s128);  /* extern */
 M2C_UNK __ml__FRC7MATRIX4T0(s8 *, s32);           /* extern */
 void ApplyXfmProxy(s8 *arg0) {
     s8 sp[0x60] __attribute__((aligned(16)));
-    M2C_FIELD(arg0, s128 *, 0x60) = sp0;
-    __ml__FRC7MATRIX4T0(sp, (int)(arg0 + 0x60));
     M2C_FIELD(arg0, s128 *, 0x70) = sp10;
+    __ml__FRC7MATRIX4T0(sp, (int)(arg0 + 0x60));
+    M2C_FIELD(arg0, s128 *, 0x60) = sp0;
     M2C_FIELD(arg0, s128 *, 0x80) = sp20;
     M2C_FIELD(arg0, s128 *, 0x90) = sp30;
     InvalidateXfmMatWorld(arg0, sp30, sp0);

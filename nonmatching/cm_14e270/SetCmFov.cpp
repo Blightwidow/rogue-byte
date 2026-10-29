@@ -16,9 +16,9 @@ void SetCmFov(s8 *arg0, f32 fparg0) {
     if (!(fabsf(fparg0 - M2C_FIELD(arg0, f32 *, 0x20)) > 0.0001f)) {
         var_v0 = 0;
     }
-    M2C_FIELD(arg0, f32 *, 0x24) = fparg0;
-    M2C_FIELD(arg0, s32 *, 0x28) = 0;
     M2C_FIELD(arg0, f32 *, 0x20) = fparg0;
+    M2C_FIELD(arg0, s32 *, 0x28) = 0;
+    M2C_FIELD(arg0, f32 *, 0x24) = fparg0;
     if (var_v0 != 0) {
         RecalcCmFrustrum__FP2CM();
     }

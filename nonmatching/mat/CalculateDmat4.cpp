@@ -27,8 +27,8 @@ void CalculateDmat4(s32 arg0, s32 arg1, s8 *arg2) {
     InvertMatrix4Affine(&sp40, arg0);
     __ml__FRC7MATRIX4T0(sp, arg1, &sp40);
     M2C_FIELD(arg2, s128 *, 0) = sp0;
-    M2C_FIELD(arg2, s128 *, 0x30) = sp30;
     M2C_FIELD(arg2, s128 *, 0x10) = sp10;
     M2C_FIELD(arg2, s128 *, 0x20) = sp20;
+    M2C_FIELD(arg2, s128 *, 0x30) = sp30;
 }
 }
