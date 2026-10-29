@@ -231,3 +231,15 @@ C++ virtual call, other parameter lists):
   (`target->v4()` with `virtual` methods, vptr at `+0x18`) compiles to the same code as the hand-written vtable, so the call is not the cause; extra, wider or float parameters did not change it.
 
 Both are best left until another function with the same pattern shows what the original source did.
+
+From the second Haiku trial (8 workers, the 120 smallest unmatched functions, 8 to 72 bytes; 72 of 120 matched, 60%):
+
+- **Arguments are `$a0`..`$a3` and `$t0`..`$t3`.** On this target `$t0`-`$t3` are the 5th to 8th arguments (an 8-argument call matched), and a callee that returns another function's result leaves `$v0` untouched after the `jal`.
+- **A `lui` with no `addiu` before a store is a common-subexpression leftover, not an argument.** `ResetSlotheap(&B, &C, &D)` with `$a1`/`$a2` loaded as `0x2E0000` is `ResetSlotheap(&B)`
+  (`void ResetSlotheap(char *)`, the object declared `extern char`): five `Reset*Heap` functions matched once the prototype lost its two extra arguments. Check the callee before adding arguments.
+- **Widths.** `int x` with `1UL << x` matches where `long x` gives `dsll32/dsra32`; `dsrl32` by 1 then `andi` is `(u64 >> 33) & 1` with a `u64` return; a `short` store of `(short)(f * 1000.0f)` is an `s16` field.
+- **Branch shape.** `if (cond) ; else result = 0;` flips the `c.lt.s` direction where `!(f < 0)` does not; a separate `return 0` for a null case keeps a dedicated `jr`; `beql` to a `return 0` is
+  `if (x != 0) { ...; return 1; } return 0;`; flipping a compare operand (`nKey == pEntry->nKey`) fixes a `bnel` operand order. A do-while against for/while changes the `bnel`-delay layout more than the operators.
+- **Structs.** A struct of `char[4]` or `char[8]` assigned whole gives `lw/sw` and `ldl/ldr/sdl/sdr`; a struct of arguments on the stack takes its store order from the assignment order; a `QW` result of `qmtc2.ni`/`vmulx`/`qmfc2.ni` in one `asm` statement matches at once.
+- **Still open:** eleven constructors (`0x110CD0` to `0x111380`: `new(N)`, two vtable stores, two zero stores) keep the new object in `$v0` where retail copies it to `$v1` right after the call and uses `$v0` and `$a0` for the vtable
+  addresses; no statement or declaration order moved it, and the same blocker appears in all eleven, so it is one source pattern. `TickReadCount` needs `mfc0 Count` (COP0) and stays assembled; `ExitThreadStub` is `addiu $v1,0x23; syscall`.
