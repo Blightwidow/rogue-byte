@@ -10,6 +10,7 @@ objdiff something to compare (`make objdiff`), so the progress report counts par
 `make elf`; needs the compiler (see docs/build/compiler-identification.md) and your executable."""
 import argparse
 import concurrent.futures
+import csv
 import json
 import os
 import re
@@ -56,9 +57,11 @@ def main():
     report = json.load(open(os.path.join('site', 'data', 'report.json')))
     swept = {address: (path, 'c' if path.endswith('.c') else 'c++') for address, _, _, path in json.load(open(arguments.sweep)) if path}
     jobs, functions = [], {}
+    fragments = {int(row['address'], 16) for row in csv.DictReader(open(os.path.join('data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t')
+                 if row['status'] == 'fragment'}  # words between two functions: no source to publish for them
     for function in report['functions']:
         address = int(function['address'], 16)
-        if function['status'] == 'c' or function['module'] == 'sdk':
+        if function['status'] == 'c' or function['module'] == 'sdk' or address in fragments:
             continue
         functions[address] = function
         candidates = []

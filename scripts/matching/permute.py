@@ -3,6 +3,10 @@
 """permute.py <address> <source.cpp> [--budget N] [--jobs N] [--write] - decomp.wtf's permuter for near misses: tries
 other orders of independent statements and keeps the best.
 
+Statements marked with a trailing `//P` comment are permuted wherever they are in the function (all orders of up to five,
+else a seeded sample of --random orders): mark the stores retail emits in some order, which the source order only decides
+through the scheduler (the compiler emits the last-written store first), and let the search find it.
+
   python3 scripts/matching/permute.py 0x11A060 data/matching/src/fn/11A060.cpp --write      (from the lab root)
 
 gcc 2.95 emits independent stores and loads in an order that follows the source in no simple way, and the order of
@@ -16,6 +20,7 @@ goes through scripts/matching/try.py (the score with the link check) on --jobs t
 import argparse
 import concurrent.futures
 import itertools
+import random
 import os
 import re
 import subprocess
@@ -57,6 +62,49 @@ def orders(count):
     return variants
 
 
+def sampled_orders(count, sample, seed=1):
+    """All orders of up to five statements, else `sample` distinct random orders (seeded, so a rerun judges the same ones)."""
+    if count <= 5:
+        return list(itertools.permutations(range(count)))[1:]
+    generator = random.Random(seed)
+    chosen = set()
+    while len(chosen) < min(sample, 100000):
+        order = list(range(count))
+        generator.shuffle(order)
+        chosen.add(tuple(order))
+    return sorted(chosen)
+
+
+MARK = re.compile(r'//P\s*$')
+
+
+def marked_search(address, text, budget, jobs, lang, sample, log=None):
+    """(score, text, compiles): the best order of the lines marked `//P`, which may be anywhere in the function."""
+    lines = text.split('\n')
+    slots = [index for index, line in enumerate(lines) if MARK.search(line)]
+    best_score = judge(address, text, lang)
+    best_text, used = text, 1
+    if len(slots) < 2 or best_score in (None, 0):
+        return best_score, best_text, used
+    statements = [lines[index] for index in slots]
+    candidates = []
+    for order in sampled_orders(len(slots), min(sample, budget)):
+        new = list(lines)
+        for slot, source in zip(slots, order):
+            new[slot] = statements[source]
+        candidates.append('\n'.join(new))
+    candidates = candidates[:max(0, budget - 1)]
+    with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+        scores = list(pool.map(lambda candidate: judge(address, candidate, lang), candidates))
+    used += len(candidates)
+    for score, candidate in zip(scores, candidates):
+        if score is not None and score < best_score:
+            best_score, best_text = score, candidate
+            if log:
+                log(f'marked statements reordered: score {score}')
+    return best_score, best_text, used
+
+
 def judge(address, text, lang):
     """The score of a source, in process when scorer.py can run (the repository's .venv python), else through try.py."""
     scorer = in_process_scorer()
@@ -89,12 +137,17 @@ def judge_with_try(address, text, lang):
     return int(first.split()[1]) if first.startswith('score ') else None
 
 
-def permute(address, text, budget=200, jobs=8, lang='c++', log=None):
+def permute(address, text, budget=200, jobs=8, lang='c++', log=None, sample=60):
     """(best score, best source, compiles used)."""
     best_score = judge(address, text, lang)
     best_text, used = text, 1
     if best_score in (None, 0):
         return best_score, best_text, used
+    if any(MARK.search(line) for line in text.split('\n')):
+        best_score, best_text, used = marked_search(address, text, budget, jobs, lang, sample, log)
+        if best_score == 0 or used >= budget:
+            return best_score, best_text, used
+        text = best_text
     improved = True
     while improved and used < budget and best_score:
         improved = False
@@ -131,12 +184,13 @@ def main():
     parser.add_argument('source')
     parser.add_argument('--budget', type=int, default=200)
     parser.add_argument('--jobs', type=int, default=8)
+    parser.add_argument('--random', type=int, default=60, help='orders sampled for //P-marked statements when there are more than five')
     parser.add_argument('--write', action='store_true')
     arguments = parser.parse_args()
     lang = 'c' if arguments.source.endswith('.c') else 'c++'
     original = open(arguments.source, encoding='utf-8').read()
     start = judge(arguments.address, original, lang)
-    score, text, used = permute(arguments.address, original, arguments.budget, arguments.jobs, lang, log=print)
+    score, text, used = permute(arguments.address, original, arguments.budget, arguments.jobs, lang, log=print, sample=arguments.random)
     print(f'best {score} (was {start}, {used} compiles)')
     if arguments.write and score is not None and (start is None or score < start):
         open(arguments.source, 'w', encoding='utf-8').write(text)

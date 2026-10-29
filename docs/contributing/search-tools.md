@@ -75,3 +75,9 @@ The split writes two instructions it does not decode as `.word 0x... # mnemonic 
 `.word` as data and drops it, so a draft of such a function lacked a square root or a float-to-integer conversion and could not match. `harvest.py` now writes
 them as instructions before running m2c (`decode_words`), and a check of the lifted VU0/MMI calls against retail's instruction counts shows nothing else lost
 (15 of 452 functions miss one `lqc2`/`sqc2`). Re-running over those functions refreshed two sources and gave two more drafts that match with no editing.
+
+`permute.py` also searches the statements you mark with a trailing `//P` comment, wherever they are in the function: all orders of up to five, else a seeded sample of
+`--random` orders (default 60). Use it for a store-order miss: the compiler emits the last-written store first, so the order retail shows is found by
+trying orders, not by reading. Without markers it still reorders runs of consecutive statements (all orders up to five, rotations and swaps beyond); a run is
+only consecutive simple statements, which is why scattered stores need the marks. On a matched function with its four stores reversed, the search found the
+order again in 24 compiles.

@@ -425,6 +425,7 @@ address	name	size	file
 0X112A88	func_00112A88	52	new_100008/fun_00112a88.cpp
 0X112AC0	func_00112AC0	52	new_100008/fun_00112ac0.cpp
 0X112AF8	func_00112AF8	52	new_100008/fun_00112af8.cpp
+0X112B30	func_00112B30	128	new_100008/fun_00112b30.cpp
 0X112BB0	func_00112BB0	52	new_100008/fun_00112bb0.cpp
 0X112BE8	func_00112BE8	36	new_100008/fun_00112be8.c
 0X112C10	func_00112C10	64	new_100008/fun_00112c10.c
@@ -1151,6 +1152,7 @@ address	name	size	file
 0X1331F8	PostScriptMessage	324	new_132b08/PostScriptMessage.cpp
 0X133340	EnableLasen__FP5LASEN5SENSM	60	sensor/EnableLasen__FP5LASEN5SENSM.cpp
 0X133380	func_00133380	60	sensor-bbmark/fun_00133380.cpp
+0X1334A8	Basic_FreeSubscribers	92	sensor-bbmark/Basic_FreeSubscribers.cpp
 0X133508	PostLoMessage	136	sensor-bbmark/PostLoMessage.cpp
 0X133590	HandleLoMessage	8	sensor-bbmark/HandleLoMessage.c
 0X133598	StaticInitBasic	308	sensor-bbmark/StaticInitBasic.c
@@ -1171,7 +1173,7 @@ address	name	size	file
 0X1358A8	GetBentleyCpdefi	152	bbmark-blend/GetBentleyCpdefi.c
 0X135A48	AdjustBentleyNewXp	144	bbmark-blend/AdjustBentleyNewXp.cpp
 0X135AD8	HandleBentleyMessage	324	bbmark-blend/HandleBentleyMessage.cpp
-0X135D08	GetBentleyMode	120	bbmark-blend/GetBentleyMode.cpp
+0X135D08	GetBentleyMode	48	bbmark-blend/GetBentleyMode.cpp
 0X135D80	func_00135D80	172	bbmark-blend/fun_00135d80.cpp
 0X135E30	func_00135E30	8	bbmark-blend/fun_00135e30.c
 0X135E38	func_00135E38	8	bbmark-blend/fun_00135e38.c
@@ -2036,12 +2038,14 @@ address	name	size	file
 0X183340	AttachCyl_Init	44	pzo-hide/AttachCyl_Init.c
 0X183370	AttachCyl_OnAdd	52	pzo-hide/AttachCyl_OnAdd.c
 0X1833A8	AttachCyl_OnRemove	52	pzo-hide/AttachCyl_OnRemove.c
+0X1833E0	AttachCyl_PostLoad	108	pzo-hide/AttachCyl_PostLoad.cpp
 0X183450	AttachCyl_Clone	72	pzo-hide/AttachCyl_Clone.cpp
 0X183498	func_00183498	56	unsorted/fun_00183498.c
 0X183540	AttachCyl_GetPosFromParam	192	pzo-hide/AttachCyl_GetPosFromParam.cpp
 0X1836C8	AttachFlat_Init	44	pzo-hide/AttachFlat_Init.c
 0X1836F8	AttachFlat_OnAdd	52	pzo-hide/AttachFlat_OnAdd.c
 0X183730	AttachFlat_OnRemove	52	pzo-hide/AttachFlat_OnRemove.c
+0X183768	AttachFlat_PostLoad	100	pzo-hide/AttachFlat_PostLoad.cpp
 0X1837D0	AttachFlat_Clone	72	pzo-hide/AttachFlat_Clone.cpp
 0X183818	AttachFlat_GetPosFromParam	232	pzo-hide/AttachFlat_GetPosFromParam.cpp
 0X183900	InitHbsk__FP4HBSK	108	hide/InitHbsk__FP4HBSK.c
@@ -2052,6 +2056,7 @@ address	name	size	file
 0X183A50	FIgnoreHbskIntersection	172	hide/FIgnoreHbskIntersection.cpp
 0X183E08	FAbsorbHbskWkr	252	hide-splice-gc/FAbsorbHbskWkr.cpp
 0X183F08	func_00183F08	68	hide-splice-gc/fun_00183f08.c
+0X183F50	func_00183F50	100	hide-splice-gc/fun_00183f50.cpp
 0X183FB8	AttachPt_OnAdd	52	hide-splice-gc/AttachPt_OnAdd.c
 0X183FF0	AttachPt_OnRemove	52	hide-splice-gc/AttachPt_OnRemove.c
 0X184028	func_00184028	20	unsorted/fun_00184028.c
@@ -2110,7 +2115,7 @@ address	name	size	file
 0X188488	InitSly	300	joy-jt/InitSly.cpp
 0X1885B8	LoadSlyFromBrx	80	joy-jt/LoadSlyFromBrx.cpp
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp
-0X1894F8	FAllowBinocSly	56	joy-jt/FAllowBinocSly.cpp
+0X1894F8	FAllowBinocSly	48	joy-jt/FAllowBinocSly.cpp
 0X189530	SetSlyHide	228	joy-jt/SetSlyHide.cpp
 0X18A0C8	UpdateJtStand__FP2JT	368	jt/UpdateJtStand__FP2JT.cpp
 0X18A238	func_0018A238	64	jt-alo/fun_0018a238.c
@@ -2120,7 +2125,7 @@ address	name	size	file
 0X18C060	BindJtStepAseg	188	jt-alo/BindJtStepAseg.cpp
 0X18C120	SetJtLookats	304	jt-alo/SetJtLookats.c
 0X18D548	ClearJtJtcs	28	jt-alo/ClearJtJtcs.cpp
-0X18D620	func_0018D620	120	jt-alo/fun_0018d620.cpp
+0X18D620	func_0018D620	48	jt-alo/fun_0018d620.cpp
 0X18D698	func_0018D698	96	jt-alo/fun_0018d698.c
 0X18DD78	ReleaseSlyGadget	140	jt-alo/ReleaseSlyGadget.cpp
 0X18DE08	PchzSlySaveRoot	12	jt-alo/PchzSlySaveRoot.cpp
@@ -2476,7 +2481,7 @@ address	name	size	file
 0X1B7AE8	func_001B7AE8	192	mpeg-memcard/fun_001b7ae8.cpp
 0X1B7BA8	ReleaseMurrayObject	376	mpeg-memcard/ReleaseMurrayObject.cpp
 0X1B7D20	DetachMurrayObject	284	mpeg-memcard/DetachMurrayObject.cpp
-0X1B7F90	GetMurrayMode	120	mpeg-memcard/GetMurrayMode.cpp
+0X1B7F90	GetMurrayMode	48	mpeg-memcard/GetMurrayMode.cpp
 0X1B8008	SetMurrayAnimBase	228	mpeg-memcard/SetMurrayAnimBase.cpp
 0X1B80F0	NopMurray	8	mpeg-memcard/NopMurray.c
 0X1B80F8	FReturnFalseMurray	8	mpeg-memcard/FReturnFalseMurray.c
@@ -2635,7 +2640,7 @@ address	name	size	file
 0X1C7A08	func_001C7A08	8	new_1c76d0/fun_001c7a08.c
 0X1C7A10	func_001C7A10	44	new_1c76d0/fun_001c7a10.cpp
 0X1C7A40	func_001C7A40	24	unsorted/fun_001c7a40.cpp
-0X1C7A58	SelectCoinLootDef	180	new_1c76d0/SelectCoinLootDef.cpp
+0X1C7A58	SelectCoinLootDef	176	new_1c76d0/SelectCoinLootDef.cpp
 0X1C7B18	PpathClueFlag	156	new_1c76d0/PpathClueFlag.cpp
 0X1C7D00	func_001C7D00	8	new_1c76d0/fun_001c7d00.c
 0X1C7E38	func_001C7E38	48	new_1c76d0/fun_001c7e38.c
@@ -2674,6 +2679,7 @@ address	name	size	file
 0X1CB7B0	func_001CB7B0	308	new_1c90d0/fun_001cb7b0.c
 0X1CB8E8	StaticInitCloneFile_thunk	32	new_1c90d0/StaticInitCloneFile_thunk.c
 0X1CB908	func_001CB908	68	new_1c90d0/fun_001cb908.c
+0X1CB950	Pipe_PostLoLoad	96	new_1c90d0/Pipe_PostLoLoad.cpp
 0X1CB9B0	Pipe_AddLoGrfEntry	52	new_1c90d0/Pipe_AddLoGrfEntry.c
 0X1CB9E8	Pipe_RemoveLoGrfEntry	52	new_1c90d0/Pipe_RemoveLoGrfEntry.c
 0X1CBA20	func_001CBA20	72	new_1c90d0/fun_001cba20.cpp
@@ -2841,6 +2847,7 @@ address	name	size	file
 0X1DB490	GadgetMenu_Open	144	game-stepguard/GadgetMenu_Open.c
 0X1DB7A8	ShopMenu_Construct	68	game-stepguard/ShopMenu_Construct.cpp
 0X1DB7F0	ShopMenu_Reset	44	game-stepguard/ShopMenu_Reset.c
+0X1DB820	ShopMenu_InitPage	80	game-stepguard/ShopMenu_InitPage.cpp
 0X1DBBA0	ShopMenu_IrowEnd	60	game-stepguard/ShopMenu_IrowEnd.cpp
 0X1DC260	ShopMenu_SetPage	592	game-stepguard/ShopMenu_SetPage.cpp
 0X1DC598	GetGadgetMenuText	500	game-stepguard/GetGadgetMenuText.cpp
@@ -3042,6 +3049,8 @@ address	name	size	file
 0X1EEF98	func_001EEF98	8	shdanim-sm/fun_001eef98.c
 0X1EEFA0	func_001EEFA0	20	shdanim-sm/fun_001eefa0.c
 0X1EEFB8	func_001EEFB8	8	shdanim-sm/fun_001eefb8.c
+0X1EEFC0	func_001EEFC0	120	shdanim-sm/fun_001eefc0.cpp
+0X1EF038	func_001EF038	112	shdanim-sm/fun_001ef038.cpp
 0X1EF0A8	func_001EF0A8	12	shdanim-sm/fun_001ef0a8.c
 0X1EF0B8	Goal_FHandleMessage	8	shdanim-sm/Goal_FHandleMessage.c
 0X1EF0C0	Goal_FillVjoy	20	shdanim-sm/Goal_FillVjoy.c
@@ -3171,6 +3180,7 @@ address	name	size	file
 0X1F7B88	func_001F7B88	12	unsorted/fun_001f7b88.cpp
 0X1F7B98	func_001F7B98	84	so-sm/fun_001f7b98.c
 0X1F7BF0	func_001F7BF0	8	unsorted/fun_001f7bf0.c
+0X1F7BF8	FadeAloOut	108	so-sm/FadeAloOut.cpp
 0X1F7C68	FadeAloIn	168	so-sm/FadeAloIn.cpp
 0X1F7D90	SetAloFadeRate	120	so-sm/SetAloFadeRate.cpp
 0X1F7E08	CpartCollectAlo	192	so-sm/CpartCollectAlo.cpp
@@ -3279,6 +3289,7 @@ address	name	size	file
 0X1FF378	StaticInitDestroySndbank_thunk	32	light-button/StaticInitDestroySndbank_thunk.c
 0X1FF398	StaticInitDestroySndbank_thunk2	32	light-button/StaticInitDestroySndbank_thunk2.c
 0X1FF3B8	InitXfmObject	44	button/InitXfmObject.c
+0X1FF3E8	PostXfmObjectLoad	80	button-spliceobj/PostXfmObjectLoad.cpp
 0X1FF438	AddXfmObject	52	button-spliceobj/AddXfmObject.c
 0X1FF470	RemoveXfmObject	52	button-spliceobj/RemoveXfmObject.c
 0X1FF4A8	CloneXfmObject	72	button-spliceobj/CloneXfmObject.cpp
@@ -3383,6 +3394,7 @@ address	name	size	file
 0X2080F0	BindGuardAnimrefs	132	step-rwm/BindGuardAnimrefs.c
 0X208178	ResetAnimrefArray	80	step-rwm/ResetAnimrefArray.c
 0X2081C8	ResetGuardAnimrefArrays	64	step-rwm/ResetGuardAnimrefArrays.c
+0X208208	CloneAnimrefArray	68	step-rwm/CloneAnimrefArray.cpp
 0X208250	CloneGuardAnimrefs	128	step-rwm/CloneGuardAnimrefs.c
 0X208538	func_00208538	8	unsorted/fun_00208538.c
 0X208540	func_00208540	112	step-rwm/fun_00208540.c
@@ -3610,6 +3622,7 @@ address	name	size	file
 0X21D120	func_0021D120	308	break-text/fun_0021d120.c
 0X21D258	func_0021D258	32	break-text/fun_0021d258.c
 0X21D278	InitTarget	76	break-text/InitTarget.c
+0X21D2C8	func_0021D2C8	88	break-text/fun_0021d2c8.cpp
 0X21D320	RemoveTarget	52	break-text/RemoveTarget.c
 0X21D358	AddTarget	52	break-text/AddTarget.c
 0X21D390	CloneTarget	72	break-text/CloneTarget.cpp
@@ -3732,6 +3745,7 @@ address	name	size	file
 0X228BF8	PostBrkLoad	28	break-mat/PostBrkLoad.c
 0X228D20	UpdateSwXaList__FP2SWPP2XA	300	water/UpdateSwXaList__FP2SWPP2XA.cpp
 0X2292D8	AddWaterExternalAccelerations	48	water-sw/AddWaterExternalAccelerations.cpp
+0X229308	RemoveWater	104	water-sw/RemoveWater.cpp
 0X229680	UpdateSoBounds_thunk	28	water-sw/UpdateSoBounds_thunk.c
 0X2296A0	PxaAllocSw	28	water-sw/PxaAllocSw.c
 0X229710	AddSoXa__FP2SOP2XA	40	so/AddSoXa__FP2SOP2XA.cpp

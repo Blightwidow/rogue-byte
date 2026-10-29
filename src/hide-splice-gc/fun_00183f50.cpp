@@ -8,7 +8,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 f32 PostLoLoad();
-extern f32 D_FLT_002BE900;
+extern f32 RO_002BE900;
 
 void func_00183F50(s8 *arg0) {
     PostLoLoad();
@@ -16,7 +16,7 @@ void func_00183F50(s8 *arg0) {
         M2C_FIELD(arg0, s32 *, 0xFC) = 7;
     }
     if (M2C_FIELD(arg0, f32 *, 0x38) == 1e10f) {
-        M2C_FIELD(arg0, f32 *, 0x38) = (f32) D_FLT_002BE900;
+        M2C_FIELD(arg0, f32 *, 0x38) = (f32) RO_002BE900;
     }
 }
 

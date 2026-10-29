@@ -7,6 +7,7 @@ by spimdisasm from the ELF with work/matching/split/symbol_addrs.txt).
 
 One row per function the split found: address, name (the symbol spimdisasm used), size in bytes, status, best score,
 tries, source. Status: `todo`, `library` (the Sony SDK range 0x2319E8-0x254CA0, built from Sony's own objects), or
+`fragment` (a chunk of at most 32 bytes with no jump: the words between two functions, never matched as C), or
 whatever an earlier run recorded (`tried`, `matched`): rows already in the registry keep their status, score, tries
 and source.
 
@@ -26,7 +27,7 @@ SPLIT = 'work/matching/split/asm/functions/SCUS_973'
 REGISTRY = 'data/matching/functions.tsv'
 SDK = (0x2319E8, 0x254CA0)
 TEXT_END = 0x259DF0  # .text ends here; the split's .late_rodata files (jump tables) sit above it and are not functions
-FIELDS = ['address', 'name', 'size', 'status', 'best', 'tries', 'source', 'name_source']  # name_source: where the name comes from
+FIELDS = ['address', 'name', 'size', 'status', 'best', 'tries', 'source', 'name_source', 'option_name']  # name_source: where the name comes from
 JUMP = re.compile(r'\*/\s+(jr|j|jal|jalr|b[a-z]*)\s')
 
 
@@ -52,10 +53,15 @@ def main():
             continue
         key = f'0x{address:06X}'
         row = old.get(key) or {'address': key, 'name': head.group(1), 'size': str(int(head.group(2), 16)),
-                               'status': 'library' if SDK[0] <= address < SDK[1] else 'todo', 'best': '', 'tries': '0', 'source': '', 'name_source': ''}
+                               'status': 'library' if SDK[0] <= address < SDK[1] else 'todo', 'best': '', 'tries': '0', 'source': '', 'name_source': '', 'option_name': ''}
         row['name'], row['size'] = head.group(1), str(int(head.group(2), 16))
         lines = [line for line in body.split('\n') if re.match(r'\s*/\* [0-9A-F]+ [0-9A-F]{8} ', line)]
         row['_ends_in_jump'] = bool(lines and JUMP.search(lines[-1]))
+        # A chunk with no jump or return at all (a lone `addiu $sp`, a stray store) is words between two functions that stay assembled from the
+        # retail bytes: C cannot express it, so it is not a function to match (status `fragment`).
+        if (row['name'].startswith('func_') and int(row['size']) <= 32 and not any(JUMP.search(line) for line in lines)
+                and row['status'] in ('todo', 'tried', '')):
+            row['status'] = 'fragment'
         rows.append(row)
     rows.sort(key=lambda row: int(row['address'], 16))
     folded = []

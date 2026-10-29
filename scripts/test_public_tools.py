@@ -23,6 +23,7 @@ import list_functions  # noqa: E402
 import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
+import permute  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -184,6 +185,22 @@ class CompileUnitTests(unittest.TestCase):
         self.assertTrue(all(isinstance(address, int) for address in listed))
         if listed:
             self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'sony29')
+
+
+
+class PermuteMarkedTests(unittest.TestCase):
+    def test_all_orders_up_to_five(self):
+        self.assertEqual(len(permute.sampled_orders(3, 10)), 5)
+
+    def test_sample_is_distinct_and_seeded(self):
+        first = permute.sampled_orders(7, 10)
+        self.assertEqual(len(set(first)), 10)
+        self.assertEqual(first, permute.sampled_orders(7, 10))
+
+    def test_marker_needs_the_trailing_comment(self):
+        self.assertTrue(permute.MARK.search('    x->a = 1; //P'))
+        self.assertFalse(permute.MARK.search('    x->a = 1; // P in the middle //P later'))
+        self.assertFalse(permute.MARK.search('    x->a = 1;'))
 
 
 class ListingTests(unittest.TestCase):

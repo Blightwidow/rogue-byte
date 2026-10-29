@@ -8,12 +8,14 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 M2C_UNK PostLoLoad();                               /* extern */
-extern f32 D_FLT_002C3C58;
+f32 SRadiusCrv(s8 *);                             /* extern */
 
-void PostXfmObjectLoad(s8 *arg0) {
+extern f32 RO_002C1EC0;
+
+void Pipe_PostLoLoad(s8 *arg0) {
     PostLoLoad();
     if (M2C_FIELD(arg0, f32 *, 0x38) == 1e10f) {
-        M2C_FIELD(arg0, f32 *, 0x38) = (f32) D_FLT_002C3C58;
+        M2C_FIELD(arg0, f32 *, 0x38) = (f32) (SRadiusCrv(arg0) + RO_002C1EC0);
     }
 }
 
