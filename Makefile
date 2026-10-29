@@ -16,6 +16,7 @@ elf: ## Split the executable, rebuild it from asm and check it byte for byte (th
 	.venv/bin/python scripts/build/link_image.py
 	.venv/bin/python scripts/build/pack_elf.py
 	.venv/bin/python scripts/verify_image.py build/image/image.bin
+	.venv/bin/python scripts/vu/vuasm.py verify build/image/SCUS_973.16
 
 objdiff: ## After `make elf`: objdiff.json, the objects it compares (matched functions and the non-matching sources) and site/data/objdiff-report.json
 	.venv/bin/python configure.py

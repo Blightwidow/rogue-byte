@@ -13,8 +13,11 @@ import asm_units  # noqa: E402
 import check_cleanup  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
+import boundaries  # noqa: E402
 import compile_unit  # noqa: E402
+import credit_audit  # noqa: E402
 import gen_context  # noqa: E402
+import harvest  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
 import idioms  # noqa: E402
@@ -23,6 +26,7 @@ import neighborhood  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
+import vuasm  # noqa: E402
 import vudis  # noqa: E402
 
 
@@ -385,6 +389,62 @@ class IdiomTests(unittest.TestCase):
         self.assertEqual(idioms.callees('    if (x) Draw(a);\n    while (y) Step(b);'), {'Draw', 'Step'})
 
 
+class BoundaryTests(unittest.TestCase):
+    ROWS = [{'address': '0x100000', 'size': '16', 'status': 'tried', 'best': '3'},
+            {'address': '0x100010', 'size': '32', 'status': 'todo', 'best': ''},
+            {'address': '0x100030', 'size': '8', 'status': 'todo', 'best': ''}]
+    MERGE = [{'lead': '0x100000', 'end': '0x100030', 'members': '0x100000,0x100010', 'evidence': ''}]
+
+    def test_group_becomes_one_function_with_the_whole_size(self):
+        merged = boundaries.apply_merges([dict(row) for row in self.ROWS], self.MERGE)
+        self.assertEqual([(row['address'], row['size']) for row in merged], [('0x100000', '48'), ('0x100030', '8')])
+
+    def test_score_kept_from_the_partial_size_is_cleared(self):
+        merged = boundaries.apply_merges([dict(row) for row in self.ROWS], self.MERGE)
+        self.assertEqual(merged[0]['best'], '')
+
+    def test_merging_twice_changes_nothing(self):
+        once = boundaries.apply_merges([dict(row) for row in self.ROWS], self.MERGE)
+        twice = boundaries.apply_merges([dict(row) for row in once], self.MERGE)
+        self.assertEqual(once, twice)
+
+
+class HarvestTests(unittest.TestCase):
+    DRAFT = 'M2C_UNK helper(M2C_UNK);\nvoid f(void *arg0) {\n    return;\n}\n'
+
+    def test_draft_is_wrapped_and_pointers_stop_being_void(self):
+        text = harvest.build(self.DRAFT)
+        self.assertIn('extern "C" {', text)
+        self.assertIn('void f(s8 *arg0)', text)
+
+    def test_draft_with_an_unhandled_instruction_is_refused(self):
+        self.assertIsNone(harvest.build('M2C_ERROR(/* unknown instruction: ldl */);'))
+
+    def test_callee_return_type_follows_the_signatures(self):
+        text = harvest.build(self.DRAFT, {'helper': 'void'})
+        self.assertIn('void helper(M2C_UNK);', text)
+
+
+class CreditAuditTests(unittest.TestCase):
+    def test_empty_asm_is_a_barrier(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('asm volatile("" : "+f" (x));')), 'barrier')
+
+    def test_register_pinned_local_is_a_barrier(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('    register int bits asm("$2");')), 'barrier')
+
+    def test_vu0_instruction_alone_does_not_lower_the_tier(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('asm("lqc2 vf1, 0(%0)" : : "r" (p));')), 'plain')
+
+    def test_other_instruction_in_asm_is_asm(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('asm("mtc1 %1, %0" : "=f" (r) : "r" (v));')), 'asm')
+
+    def test_volatile_pointer_cast_is_its_own_tier(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('(*(unsigned * volatile *)&p)[0] = 1;')), 'volatile')
+
+    def test_plain_source_is_plain(self):
+        self.assertEqual(credit_audit.tier_of(credit_audit.flags_of('int f(int a) { return a + 1; }')), 'plain')
+
+
 try:
     import callee_sigs
     import rabbitizer  # noqa: F401
@@ -417,6 +477,49 @@ class CalleeSignatureTests(unittest.TestCase):
     def test_callee_without_a_result_is_void(self):
         words = [0x27BDFFF0, 0x27BD0010, self.RETURN, self.NOP]  # no write to $v0 or $f0
         self.assertEqual(callee_sigs.returns_in_tail(words, 0, 4), (False, False))
+
+
+    def test_argument_register_read_before_written_is_a_parameter(self):
+        self.assertEqual(callee_sigs.params_read([0x00851021, self.RETURN, self.NOP], 0, 3), 2)  # addu $v0, $a0, $a1
+
+    def test_argument_register_written_first_is_not(self):
+        self.assertEqual(callee_sigs.params_read([0x24050001, 0x00851021, self.RETURN, self.NOP], 0, 4), 1)  # addiu $a1, $zero, 1 first
+
+    def test_call_arities_count_arguments(self):
+        text = '    Draw(a, b + 1, c);\n    Reset();\n    x = Pair(f(1), 2);'
+        self.assertEqual([(name, count) for name, _, count in callee_sigs.call_arities(text)], [('Draw', 3), ('Reset', 0), ('Pair', 2), ('f', 1)])
+
+
+class VuAssemblerTests(unittest.TestCase):
+    def roundtrip(self, upper, lower, flags='', index=0):
+        upper_text, lower_text = vudis.decode_upper(upper), vudis.decode_lower(lower, index)
+        return vuasm.assemble_pair(upper_text, lower_text, flags, index)
+
+    def test_arithmetic_with_broadcast_field(self):
+        word = 0x000207BC | (0b1110 << 21)
+        self.assertEqual(self.roundtrip(word, 0x8000033C), (0x8000033C, word))
+
+    def test_load_with_negative_offset(self):
+        lower = 0x00000000 | (0b1111 << 21) | (3 << 16) | (4 << 11) | (0x7FE)  # lq.xyzw vf3, -2(vi4)
+        self.assertEqual(self.roundtrip(0x000002FF, lower)[0], lower)
+
+    def test_branch_target_is_the_instruction_index(self):
+        lower = 0x20 << 25 | 5  # b, 5 instructions past the next one
+        self.assertEqual(vudis.decode_lower(lower, 10), 'b L16')
+        self.assertEqual(vuasm.assemble_lower('b L16', 10), lower)
+
+    def test_float_constant_sets_the_i_flag(self):
+        lower, upper = vuasm.assemble_pair('nop', 'loi 1.5', 'i', 0)
+        self.assertEqual((lower, upper >> 31), (0x3FC00000, 1))
+
+    def test_unreproducible_instruction_is_kept_as_raw_words(self):
+        data = bytes.fromhex('0000000000000000') + bytes.fromhex('3c03000700000003')  # a lower word the text cannot express
+        lines, raw = vuasm.source_lines(data)
+        self.assertEqual((raw, vuasm.assemble('\n'.join(lines))), (1, data))
+
+    def test_listing_of_vudis_is_accepted(self):
+        text = '    0  0x000  nop                                          | nop                                      [e]\n'
+        self.assertEqual(vuasm.assemble(text), bytes.fromhex('3c030080ff020040'))
 
 
 if __name__ == '__main__':

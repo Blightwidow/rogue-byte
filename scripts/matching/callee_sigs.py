@@ -5,6 +5,7 @@
   .venv/bin/python scripts/matching/callee_sigs.py build                  writes work/matching/callee_sigs.tsv
   .venv/bin/python scripts/matching/callee_sigs.py check [--control]      sources whose extern declarations disagree with it
   .venv/bin/python scripts/matching/callee_sigs.py apply ADDRESS [--write]  rewrite one source's declarations to the inferred types, judge it
+  .venv/bin/python scripts/matching/callee_sigs.py arity [--limit N]   calls that pass fewer arguments than the callee reads
   .venv/bin/python scripts/matching/callee_sigs.py sweep [--max-score N] [--write]  single and paired return-type changes on every near miss
 
 Why: a callee's declared return type steers register allocation and scheduling around its call even when the caller throws the result
@@ -130,6 +131,29 @@ def returns_in_tail(words, start, end):
     return wrote_int, wrote_float
 
 
+ARGUMENT_REGISTERS = {4: 1, 5: 2, 6: 3, 7: 4, 8: 5, 9: 6, 10: 7, 11: 8}  # $a0-$a3, $t0-$t3 (the EE passes arguments five to eight there)
+
+
+def params_read(words, start, end):
+    """A lower bound on the integer parameters of the function in words[start:end]: one past the highest argument register its code reads
+    before writing it (a straight scan in address order; a register written on one path and read on another counts as written)."""
+    written = set()
+    top = 0
+    for position in range(start, end):
+        instruction = decode(words[position])
+        for reads, field in ((instruction.readsRs, 'rs'), (instruction.readsRt, 'rt'), (instruction.readsRd, 'rd')):
+            if reads():
+                register = register_value(getattr(instruction, field))
+                if register in ARGUMENT_REGISTERS and register not in written:
+                    top = max(top, ARGUMENT_REGISTERS[register])
+        destination = instruction.getDestinationGpr()
+        if destination is not None:
+            written.add(register_value(destination))
+        if instruction.isJump() and instruction.isJumpWithAddress():  # a call: the argument registers are the callee's now
+            written.update(ARGUMENT_REGISTERS)
+    return top
+
+
 def build():
     base, words = load_code()
     with open(REGISTRY, encoding='utf-8') as handle:
@@ -146,7 +170,7 @@ def build():
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
     counts = collections.Counter()
     with open(OUTPUT, 'w', encoding='utf-8') as out:
-        out.write('address\tname\tcallers\tint\tfloat\tunused\ttail\tends_v0\tends_f0\tinferred\n')
+        out.write('address\tname\tcallers\tint\tfloat\tunused\ttail\tends_v0\tends_f0\tinferred\tparams\n')
         for address, size, name in functions:
             start = (address - base) // 4
             ends_int, ends_float = returns_in_tail(words, start, start + size // 4) if size else (False, False)
@@ -165,7 +189,7 @@ def build():
             else:
                 inferred = 'unknown'
             counts[inferred] += 1
-            out.write(f'{address:#x}\t{name}\t{callers}\t{counter["int"]}\t{counter["float"]}\t{counter["unused"]}\t{counter["tail"]}\t{int(ends_int)}\t{int(ends_float)}\t{inferred}\n')
+            out.write(f'{address:#x}\t{name}\t{callers}\t{counter["int"]}\t{counter["float"]}\t{counter["unused"]}\t{counter["tail"]}\t{int(ends_int)}\t{int(ends_float)}\t{inferred}\t{params_read(words, start, start + size // 4) if size else 0}\n')
     print(f'{len(functions)} functions -> {OUTPUT}: {dict(counts)}')
 
 
@@ -279,6 +303,64 @@ def apply(arguments):
     return 0
 
 
+CALL = re.compile(r'(?<![\w.>])([A-Za-z_][A-Za-z_0-9]*)\s*\(')
+
+
+def call_arities(text):
+    """[(callee, line number, argument count)] for each call in a source (declarations and the function's own header are skipped)."""
+    found = []
+    for number, line in enumerate(text.split('\n')):
+        stripped = line.strip()
+        if not line.startswith((' ', '\t')) or stripped.startswith(('extern', 'static', 'struct', 'typedef', '#', '//', 'asm', '__asm__')) or 'asm' in stripped.split('(')[0]:
+            continue
+        for match in CALL.finditer(line):
+            name = match.group(1)
+            if name in ('if', 'while', 'for', 'switch', 'return', 'sizeof'):
+                continue
+            depth, index, commas, empty = 1, match.end(), 0, True
+            while index < len(line) and depth:
+                character = line[index]
+                depth += (character == '(') - (character == ')')
+                if depth == 1 and character == ',':
+                    commas += 1
+                if depth and not character.isspace():
+                    empty = False
+                index += 1
+            if depth == 0:
+                found.append((name, number, 0 if empty else commas + 1))
+    return found
+
+
+def arity(arguments):
+    addresses, by_name, by_address = load_signatures()
+    import scorer
+    registry = scorer.registry()
+    groups = {'unmatched': [0, 0, []], 'matched': [0, 0, []]}
+    for name in sorted(os.listdir(SOURCES)):
+        address = int(name.split('.')[0], 16)
+        row = registry.get(address)
+        if not row or row['status'] in ('library', 'todo'):
+            continue
+        group = groups['matched' if row['status'] == 'matched' else 'unmatched']
+        with open(os.path.join(SOURCES, name), encoding='utf-8') as handle:
+            text = handle.read()
+        short = []
+        for callee, number, passed in call_arities(text):
+            signature = lookup(callee, addresses, by_name, by_address)
+            if not signature or signature['params'] == '':
+                continue
+            group[0] += 1
+            if passed < int(signature['params']):
+                group[1] += 1
+                short.append(f'{callee} passes {passed}, reads {signature["params"]}')
+        if short:
+            group[2].append((row['best'], address, short))
+    for label, (calls, under, found) in groups.items():
+        print(f'{label}: {calls} calls checked, {under} pass fewer arguments than the callee reads, in {len(found)} sources')
+    for best, address, short in sorted(groups['unmatched'][2], key=lambda item: int(item[0]) if item[0].isdigit() else 9999)[:arguments.limit]:
+        print(f'  {address:#x} score {best}: ' + '; '.join(short[:3]))
+
+
 def declaration_lines(text):
     """[(line number, type text, name)] of the extern "C" function declarations of a source whose return type is a plain scalar or void."""
     found = []
@@ -367,11 +449,13 @@ def main():
     sweeper.add_argument('--budget', type=int, default=40)
     sweeper.add_argument('--jobs', type=int, default=12)
     sweeper.add_argument('--write', action='store_true')
+    arities = sub.add_parser('arity', help='calls that pass fewer arguments than the callee reads (matched sources are the control)')
+    arities.add_argument('--limit', type=int, default=25)
     applier = sub.add_parser('apply')
     applier.add_argument('address')
     applier.add_argument('--write', action='store_true')
     arguments = parser.parse_args()
-    {'build': lambda _: build(), 'check': check, 'apply': apply, 'sweep': sweep}[arguments.command](arguments)
+    {'build': lambda _: build(), 'check': check, 'apply': apply, 'sweep': sweep, 'arity': arity}[arguments.command](arguments)
     return 0
 
 

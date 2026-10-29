@@ -5,7 +5,8 @@ in 23 `.DVP.overlay.*` sections (`0x800`-byte chunks outside the loaded segments
 `.mdebug` or line information, so names come from the code that uploads and starts the programs.
 
 `scripts/vu/vudis.py <executable>` disassembles all of it (upper and lower word, I/E/M/D/T flags, `loi` constants, branch labels).
-`scripts/vu/find_uploads.py` lists where the game code refers into `.vutext`. Instruction indices below are byte offset / 8.
+`scripts/vu/vuasm.py` assembles that text again and proves it rebuilds every byte (`vuasm.py verify`; `make elf` runs it): an instruction whose
+text leaves out a field is kept as raw words, 40 of 4,264 in `.vutext` and none in the overlays. `scripts/vu/find_uploads.py` lists where the game code refers into `.vutext`. Instruction indices below are byte offset / 8.
 
 ## What the disassembly shows
 

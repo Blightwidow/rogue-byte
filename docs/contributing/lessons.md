@@ -84,9 +84,44 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
   score: 5 functions improved by 1 or 2 words, none matched. The four earlier matches were what the random search could reach.
 - **So is the one-edit neighbourhood.** Every `mutate.py` rewrite at every line plus every order of five declarations, then a beam
   from the best few: 300 near misses of score 1 to 10, 5 improved by 1 to 3 words, none matched. What is left needs an idea about the
-  source, not more compiles.
+  source, not more compiles. On fresh m2c drafts (see below) the same search matched 14 of 342 new near misses: a draft is far from the
+  shape the original author wrote, so a few mechanical edits reach many more of them.
 - **Wholesale rewrites hurt.** Setting every disputed callee declaration to the inferred type at once made 22 of 122 sources worse and
   2 better; a declaration only matters where the original compiler's scheduling depended on it.
+
+## 2026-10-29: unsourced functions, boundaries, VU1 source
+
+- **A plain m2c draft matches a share of unsourced functions with no editing.** `scripts/matching/harvest.py` (m2c with its macro header,
+  `void *` read as `s8 *` because C++ forbids arithmetic on it, callees in an `extern "C"` block, `NULL` defined) judged 1,711 functions in
+  one minute: 32 matched outright, 178 more were within 5 words and 317 within 20. The neighbourhood search on the kept drafts then
+  matched 14 more (100 improved). The smallest functions are not the easy ones here: every function under 64 bytes was already done, and
+  the yield is highest for medium functions (64 to 300 bytes). 531 drafts are refused by m2c (unaligned `ldl`/`ldr`, VU0 and multimedia
+  instructions) and about 580 fail to compile as C++ (implicit pointer conversions).
+- **A function the split cut in two can never match.** A conditional branch that lands inside another function, not at its first
+  instruction, proves the two pieces are one function (a switch behind a second `jr $ra`, or an early return). 11 groups were found
+  (`RefOpMult` with `func_0011FAD8`, `RefOpDiv`, `SetBentleyMode`, ...) and a branch into the gap after a function's recorded end shows
+  the end was lost. A near-miss score kept from the old, partial size is meaningless once the size is corrected, so the merge clears it.
+  `scripts/matching/boundaries.py`, `config/matching/merges.tsv`.
+- **Compiling callees first in the same file does nothing with this compiler.** Another project traced a branch against branch-likely
+  residue on EE GCC 2.96 to file order (functions already compiled in the unit are marked as not throwing, which lets the delay-slot filler
+  use more registers). Defining `GRandInRange` and `FIsSlEmpty` ahead of `UpdatePingpong` in one file left it at score 2 in every
+  arrangement. 126 unmatched diffs still show branch against branch-likely; at least one (`0x120A20`) calls nothing.
+- **Parameter counts read from a callee's code are weak evidence.** The highest argument register a callee reads before writing is only a
+  lower bound, and matched sources pass fewer arguments than that at 6.2% of their calls (10.4% in unmatched ones). Adding zero
+  arguments to the 400 under-passing calls in unmatched sources improved 6 functions by one or two words and matched none. Giving m2c
+  those counts as prototypes made its drafts worse (it then reads registers the caller never set), so the context handed to m2c leaves
+  parameter lists open.
+- **Matched signatures do not clearly help Ghidra.** The real prototypes of 3,086 matched, non-mangled functions applied to Ghidra:
+  unknown-type tokens in 60 callers fell 9% and `extraout_` went from 2 to 0, but register leaks (`in_`) rose from 69 to 80 and `param_`
+  from 592 to 600, because matched C drops parameters the function never uses. Not kept: the project was restored from its backup.
+  `scripts/matching/export_signatures.py` writes the file for another try (restricted to names without a mangling, which already
+  carry their parameter types).
+- **VU1 microcode round-trips through text.** `scripts/vu/vuasm.py` assembles the text of `vudis.py`; each instruction is reassembled and
+  compared with its bytes, and 40 of 4,264 (0.9%) stay as raw `.vu` words because the disassembly leaves out fields the compiler never sets.
+  All sections rebuild identically, and `make elf` checks it. The source is generated (`vuasm.py source`): keep it in `work/`.
+- **Quote progress in tiers.** `scripts/matching/credit_audit.py` over the 3,658 matched sources: 96.4% of functions (91.6% of bytes) are
+  plain C or C with VU0 instructions that have no C form; 1.5% hold an empty `asm` barrier or a register-pinned local, 1.5% other inline
+  assembly, one a volatile cast, 0.6% an inline helper.
 
 ## Tools and environment
 

@@ -17,6 +17,10 @@ import csv
 import glob
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import boundaries  # noqa: E402
 
 SPLIT = 'work/matching/split/asm/functions/SCUS_973'
 REGISTRY = 'data/matching/functions.tsv'
@@ -64,6 +68,7 @@ def main():
             continue
         folded.append(row)
     rows = [{key: value for key, value in row.items() if not key.startswith('_')} for row in folded]
+    rows = boundaries.apply_merges(rows, boundaries.read_merges())  # functions the split cut in two (scripts/matching/boundaries.py)
     os.makedirs(os.path.dirname(REGISTRY), exist_ok=True)
     with open(REGISTRY, 'w', encoding='utf-8', newline='') as out:
         writer = csv.DictWriter(out, FIELDS, delimiter='\t', lineterminator='\n')
