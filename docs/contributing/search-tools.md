@@ -42,3 +42,7 @@ lower: `(int)` around a shifted 64-bit bit test, sign-extended 32-bit masks (`& 
 (`0x8000L << 0x23`), and pass-through leading arguments (`arg0`, `arg0, arg1`) for callees the repair loop declared `(...)`. On the 283 compiling
 drafts it improved 26 (for example 8 to 3 on two of them) and matched none by itself: it finds the cheap fixes, the rest is shaping by hand.
 
+
+When m2c fails on a function's split assembly, `harvest.py` retries on a patched copy: the delay slot that follows a final `jr $ra` (the split
+records the function without it; 38 functions) and branch labels the split did not write (3 functions) are added from the whole-text split.
+That took the functions with no draft from 41 to 6. `--write --refresh` replaces a saved source only when the new draft scores strictly lower.

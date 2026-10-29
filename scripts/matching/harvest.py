@@ -107,6 +107,55 @@ def build_context(path):
     return count
 
 
+TEXT_ASSEMBLY = os.path.join(LAB, 'work', 'matching', 'split', 'asm', 'SCUS_973.text.s')
+INSTRUCTION_LINE = re.compile(r'^\s*/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/')
+_text_index = {}
+
+
+def instruction_at(address):
+    """The assembly line of the whole-text split at a virtual address (the file is read once), or None."""
+    if not _text_index and os.path.exists(TEXT_ASSEMBLY):
+        with open(TEXT_ASSEMBLY, encoding='utf-8') as handle:
+            for line in handle:
+                found = INSTRUCTION_LINE.match(line)
+                if found:
+                    _text_index[int(found.group(1), 16)] = line.rstrip('\n')
+    return _text_index.get(address)
+
+
+def patch_assembly(path):
+    """The function's assembly with what the split left out, or None when nothing needed fixing: the delay slot after a final `jr $ra`
+    (it belongs to the function but sits past its recorded size) and the labels of branch targets inside the function that the split
+    did not write."""
+    with open(path, encoding='utf-8') as handle:
+        lines = handle.read().split('\n')
+    changed = False
+    instructions = [(index, int(found.group(1), 16)) for index, line in enumerate(lines) if (found := INSTRUCTION_LINE.match(line))]
+    if not instructions:
+        return None
+    last_index, last_address = instructions[-1]
+    if re.match(r'^\s*/\*[^*]*\*/\s+jr\s+\$ra\s*$', lines[last_index]):
+        slot = instruction_at(last_address + 4)
+        if slot:
+            lines.insert(last_index + 1, slot)
+            changed = True
+    text = '\n'.join(lines)
+    defined = set(re.findall(r'^\s*(\.L\w+):', text, re.M))
+    insertions = []
+    for target in sorted(set(re.findall(r'(?<![\w.])(\.L[0-9A-F]{8})\b', text)) - defined):
+        address = int(target[2:], 16)
+        for index, instruction_address in instructions:
+            if instruction_address == address:
+                insertions.append((index, f'  {target}:'))
+                break
+    for index, label in sorted(insertions, reverse=True):
+        lines.insert(index, label)
+        changed = True
+    if not changed:
+        return None
+    return '\n'.join(lines)
+
+
 def run_m2c(arguments, row):
     """The draft text for a function, from the cache or a fresh m2c run; None when m2c fails."""
     folder = 'm2c-context' if arguments.context else 'm2c-vu'
@@ -118,10 +167,19 @@ def run_m2c(arguments, row):
     path = os.path.join(SPLIT, row['name'] + '.s')
     if not os.path.exists(path):
         return None
-    command = [sys.executable, arguments.m2c, '-t', 'mipsee-gcc-c', '--valid-syntax', '--stack-structs'] + (['--context', arguments.context] if arguments.context else []) + [path]
-    result = subprocess.run(command, capture_output=True, text=True, timeout=120)
+    command = [sys.executable, arguments.m2c, '-t', 'mipsee-gcc-c', '--valid-syntax', '--stack-structs'] + (['--context', arguments.context] if arguments.context else [])
+    result = subprocess.run(command + [path], capture_output=True, text=True, timeout=120)
     if result.returncode or not result.stdout.strip():
-        return None
+        patched = patch_assembly(path)  # the split can leave out a final delay slot or a branch label
+        if patched is None:
+            return None
+        os.makedirs(os.path.join(OUT, 'patched'), exist_ok=True)
+        patched_path = os.path.join(OUT, 'patched', row['name'] + '.s')
+        with open(patched_path, 'w', encoding='utf-8') as handle:
+            handle.write(patched)
+        result = subprocess.run(command + [patched_path], capture_output=True, text=True, timeout=120)
+        if result.returncode or not result.stdout.strip():
+            return None
     with open(cached, 'w', encoding='utf-8') as handle:
         handle.write(result.stdout)
     return result.stdout
@@ -489,6 +547,7 @@ def main():
     parser.add_argument('--repair', action='store_true', help='when a draft does not compile, add the casts the compiler asks for (up to 8 edits)')
     parser.add_argument('--keep', type=int, default=-1, metavar='SCORE', help='also save drafts scoring at most SCORE as sources (for mutate.py, neighborhood.py)')
     parser.add_argument('--shape', action='store_true', help='try the recurring shape fixes (bit-test cast, sign-extended masks, long shifts, pass-through arguments) on every draft that compiles')
+    parser.add_argument('--refresh', action='store_true', help='with --write: replace a saved source when the new draft scores strictly lower')
     parser.add_argument('--near', type=int, default=0, metavar='N', help='list the N closest drafts')
     arguments = parser.parse_args()
     if not scorer.compare:
@@ -521,6 +580,13 @@ def main():
                     if not os.path.exists(path):
                         with open(path, 'w', encoding='utf-8') as handle:
                             handle.write(text)
+                    elif arguments.refresh:  # a saved source is replaced only by a draft that scores strictly lower
+                        with open(path, encoding='utf-8') as handle:
+                            current = scorer.judge(address, handle.read())
+                        if current is None or score < current:
+                            with open(path, 'w', encoding='utf-8') as handle:
+                                handle.write(text)
+                            print(f'{address:#x}: refreshed {current} -> {score}', flush=True)
     scores.sort()
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, 'scores.tsv'), 'w', encoding='utf-8') as handle:
