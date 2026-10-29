@@ -1,0 +1,22 @@
+#include "m2c_macros.h"
+extern "C" {
+
+M2C_UNK CRef_CopyConstruct(s32, void *);            /* extern */
+M2C_UNK CRef_Destruct(void *);                      /* extern */
+M2C_UNK CRef_SetF32(void *, f32);                   /* extern */
+M2C_UNK RefSetArgsFromSplice__FiP4CRefP4OTYPe(void *, M2C_UNK, s32, s32 *); /* extern */
+f32 TFindAsegLabel__FP4ASEG3OID(s32, s32);          /* extern */
+
+s32 RefCallTFindAsegLabel(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    char sp[0x10];
+    s32 sp10;
+    s32 sp14;
+
+    sp10 = 6;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(sp, 1, arg3, &sp10);
+    CRef_SetF32(sp, TFindAsegLabel__FP4ASEG3OID(arg1, sp14));
+    CRef_CopyConstruct(arg0, sp);
+    CRef_Destruct(sp);
+    return arg0;
+}
+}

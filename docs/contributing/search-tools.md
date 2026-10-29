@@ -86,3 +86,6 @@ order again in 24 compiles.
 straight-line region with at least two, searches their orders (`--budget` compiles per function, `--seed` for another sample) and writes better sources to
 `work/matching/permute-stores/`; a later run starts from them. Over the 330 near misses scoring 1 to 20 that have such a region, two passes improved 39
 and matched 3 (the first pass took 5 minutes, the second found 2 more: the small regions are searched exhaustively).
+
+`fix_stack.py` replaces the placeholder `sp[0x400]` buffer of the near-miss sources by each size the retail frame allows (multiples of 0x10 below the `addiu $sp` frame) and keeps
+the best; better sources go to `work/matching/fix-stack/`. On the 349 near misses with the placeholder it improved 325 and matched 87 in under three minutes.
