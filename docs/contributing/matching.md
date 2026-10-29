@@ -257,3 +257,17 @@ From the third Haiku trial (8 workers, the next 120 smallest unmatched functions
   count: grep `src/` for an existing matched declaration before guessing.
 - **Not C:** `TickReadCount`, `ResetGs` and `Vif1InterruptHandler` need COP0 `mfc0`/`ei` and `sync`; `printf`/`sprintf` spill the variadic float registers and need a `stdarg.h`; `ExitThreadStub` is `addiu $v1,0x23; syscall`.
   `CMovieText_Cch` needed the `ps2eeas-loop5` assembler (two `nop`s before its loop), not a source change.
+
+### Haiku round 4 (120 functions of 48 to 96 bytes, 61 matched)
+
+The match rate fell to about 50% (rounds 2 and 3: about 60%) as the easy cases ran out. What fixed the misses:
+
+- **A pointer to a stack object with stores at `sp+0`, `sp+4` before the call is a local struct passed by address**, not extra arguments (`EnsureOption*`, `AddJobAnim`, `FFindClosestPointInCg`). Frame size minus saved registers gives the object sizes.
+- **Count every argument register read before a `jal`**, including ones the draft dropped (`arg0` passed through untouched) and stack arguments.
+- **Virtual calls:** `char *child = *(char **)(self + 0xC); call(self + *(short *)(child + h), ...)`; vtable as a local, call through a `void **` read with the `s16` offset inline.
+- **One shared epilogue:** retail jumps to a single exit; write one `return` at the end instead of early returns. `if (a || f(...)) result = 1;` gives a single fall-through block.
+- **A global loaded before a branch** in retail: copy it into a local at the top. A repeated `&GLOBAL` stays in a local for the saved-register base.
+- **A frame bigger than the locals** shows a dead local: `char sp[0x10] __attribute__((aligned(16)))` with a comment (a plain unused array is dropped).
+- **Float compares:** `if (x == 0.0f) {store 0} else {store 1/x}` first; `fabs(d) > eps ? 1 : 0` instead of negating the `if` when `c.le`/`bc1f` comes out wrong.
+- **64-bit flag tests use `long`** (`0x8000L << 19`); `long long` is 128-bit under SN.
+- **Remaining near misses are register choice** (`$a1`/`$a2`/`$a3`, `$v0`/`$s0`) or sunk/hoisted stores. Once the same wording gives the same register map twice, stop.
