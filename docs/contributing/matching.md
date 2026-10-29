@@ -220,3 +220,14 @@ about ten compiles each, `EXACT`/`NEAR`/`SKIP` reports, only the lead lands; 67 
 - **Haiku's profile:** it matched the small, mechanical cases (callee arity, buffer size, float parameters, return shape) and stopped at register allocation and scheduling, as
   the Sonnet rounds did; it also refused to copy sources with pins or empty `asm` and rewrote or skipped them. Stop after two or three wordings when the only difference is
   store order, a float constant's load position or which of `$v0`/`$v1` holds a vtable pointer.
+
+The two functions that match only with a trick, after a longer search (five seeds of 500 mutation compiles each, hand-built load placements, a single `asm` block with both pointers as inputs, a real
+C++ virtual call, other parameter lists):
+
+- `func_0017A468` stays at 2. Retail loads `rot` (`0xF90`) then `pos` (`0x60`) before the first dependent `lqc2`. Every clean form emits the two loads in the other order, or one of them after the
+  `lqc2`: with both loads written before the asms the scheduler puts the later one first, and which register each gets follows the declaration order, so source order cannot give both the right order and the
+  right registers.
+- `GetActadjPositionGoal` stays at 3. Retail keeps `target` in `$a3`, ours in `$a1`: two registers are occupied in retail that nothing in the source occupies. A real virtual call
+  (`target->v4()` with `virtual` methods, vptr at `+0x18`) compiles to the same code as the hand-written vtable, so the call is not the cause; extra, wider or float parameters did not change it.
+
+Both are best left until another function with the same pattern shows what the original source did.

@@ -589,7 +589,6 @@ address	name	size	file	score
 0X173D18	func_00173D18	352	new_1715f0/fun_00173d18.cpp	14
 0X173E78	func_00173E78	160	new_1715f0/fun_00173e78.cpp	16
 0X173F18	func_00173F18	1400	new_1715f0/fun_00173f18.cpp	225
-0X1749C0	GoalAnim_SetState	360	new_1715f0/GoalAnim_SetState.c	3
 0X174B68	GoalAnim_Update	104	new_1715f0/GoalAnim_Update.cpp	18
 0X174BD0	GoalAnim_FHandleMessage	720	new_1715f0/GoalAnim_FHandleMessage.c	150
 0X174EA0	func_00174EA0	104	new_1715f0/fun_00174ea0.cpp	10

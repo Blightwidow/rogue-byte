@@ -1765,7 +1765,7 @@
 <rect x="394.4" y="475.6" width="17.2" height="22.1" fill="#2f7af4"><title>func_001733F8 0X1733F8 400 bytes (c)</title></rect>
 <rect x="412.0" y="475.6" width="16.5" height="22.1" fill="#2f7af4"><title>GoalBrain_ChooseNextCommand 0X177BA0 384 bytes (c)</title></rect>
 <rect x="325.7" y="498.1" width="17.5" height="20.4" fill="#2f7af4"><title>func_00175488 0X175488 376 bytes (c)</title></rect>
-<rect x="325.7" y="519.0" width="17.5" height="19.5" fill="#4a45a8"><title>GoalAnim_SetState 0X1749C0 360 bytes (draft)</title></rect>
+<rect x="325.7" y="519.0" width="17.5" height="19.5" fill="#2f7af4"><title>GoalAnim_SetState 0X1749C0 360 bytes (c)</title></rect>
 <rect x="325.7" y="538.9" width="17.5" height="19.1" fill="#4a45a8"><title>func_00173D18 0X173D18 352 bytes (draft)</title></rect>
 <rect x="325.7" y="558.4" width="17.5" height="18.7" fill="#4a45a8"><title>FFindSurfaceAlongUp 0X173610 344 bytes (draft)</title></rect>
 <rect x="325.7" y="577.5" width="17.5" height="16.9" fill="#2f7af4"><title>StaticInitGuardPools_171e00 0X171E00 312 bytes (c)</title></rect>

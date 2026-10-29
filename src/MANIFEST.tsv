@@ -1962,6 +1962,7 @@ address	name	size	file
 0X174898	func_00174898	136	new_1715f0/fun_00174898.cpp
 0X174920	func_00174920	48	new_1715f0/fun_00174920.cpp
 0X174950	func_00174950	108	new_1715f0/fun_00174950.cpp
+0X1749C0	GoalAnim_SetState	356	new_1715f0/GoalAnim_SetState.cpp
 0X174B28	func_00174B28	60	new_1715f0/fun_00174b28.c
 0X174F08	func_00174F08	172	new_1715f0/fun_00174f08.cpp
 0X174FB8	FGoalAnimDone	16	new_1715f0/FGoalAnimDone.c
