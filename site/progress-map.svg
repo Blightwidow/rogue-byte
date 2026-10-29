@@ -2770,7 +2770,7 @@
 <rect x="614.3" y="639.4" width="14.0" height="14.4" fill="#2f7af4"><title>CheckDprizeCollect 0X1C5D18 216 bytes (c)</title></rect>
 <rect x="614.3" y="654.2" width="14.0" height="11.6" fill="#2f7af4"><title>func_001C5098 0X1C5098 176 bytes (c)</title></rect>
 <rect x="628.7" y="609.3" width="10.9" height="14.2" fill="#2f7af4"><title>InitDprize 0X1C4E50 168 bytes (c)</title></rect>
-<rect x="628.7" y="623.9" width="10.9" height="14.2" fill="#4a45a8"><title>func_001C67D8 0X1C67D8 168 bytes (draft)</title></rect>
+<rect x="628.7" y="623.9" width="10.9" height="14.2" fill="#2f7af4"><title>func_001C67D8 0X1C67D8 168 bytes (c)</title></rect>
 <rect x="628.7" y="638.4" width="10.9" height="14.2" fill="#2f7af4"><title>func_001C6B28 0X1C6B28 168 bytes (c)</title></rect>
 <rect x="628.7" y="653.0" width="10.9" height="12.8" fill="#2f7af4"><title>UpdateVjoyPressTimes 0X1C45A8 152 bytes (c)</title></rect>
 <rect x="640.0" y="609.3" width="12.1" height="11.6" fill="#4a45a8"><title>SetSwFocusOverride 0X1C4A60 152 bytes (draft)</title></rect>
@@ -3450,7 +3450,7 @@
 <rect x="1138.0" y="1.0" width="17.2" height="16.9" fill="#2f7af4"><title>StaticInitSpliceSlotheaps_126188 0X126188 312 bytes (c)</title></rect>
 <rect x="1155.6" y="1.0" width="17.2" height="16.9" fill="#2f7af4"><title>StaticInitSpliceSlotheaps_1262e0 0X1262E0 312 bytes (c)</title></rect>
 <rect x="1173.2" y="1.0" width="13.6" height="16.9" fill="#2f7af4"><title>RefOpFindObjectsInBoundingSphere 0X1248B0 248 bytes (c)</title></rect>
-<rect x="1187.2" y="1.0" width="11.8" height="16.9" fill="#4a45a8"><title>RefFromAplo 0X124078 216 bytes (draft)</title></rect>
+<rect x="1187.2" y="1.0" width="11.8" height="16.9" fill="#2f7af4"><title>RefFromAplo 0X124078 216 bytes (c)</title></rect>
 <rect x="1199.4" y="1.0" width="11.8" height="16.9" fill="#2f7af4"><title>RefOpFindObjectsInBoundingBox 0X1247D8 216 bytes (c)</title></rect>
 <rect x="1138.0" y="18.3" width="15.2" height="12.6" fill="#2f7af4"><title>RefOpFindObjects 0X1241E8 208 bytes (c)</title></rect>
 <rect x="1153.5" y="18.3" width="14.6" height="12.6" fill="#2f7af4"><title>RefOpFindNearestObjects 0X124578 200 bytes (c)</title></rect>

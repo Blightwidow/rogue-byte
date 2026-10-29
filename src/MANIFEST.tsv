@@ -892,6 +892,7 @@ address	name	size	file
 0X123FE8	RefOpEnsureO	44	splice-bif-splice-eval/RefOpEnsureO.cpp
 0X124018	RefOpSetO	44	splice-bif-splice-eval/RefOpSetO.cpp
 0X124048	RefOpGetO	44	splice-bif-splice-eval/RefOpGetO.cpp
+0X124078	RefFromAplo	216	splice-bif-splice-eval/RefFromAplo.cpp
 0X124150	RefOpFindObject	152	splice-bif-splice-eval/RefOpFindObject.cpp
 0X1241E8	RefOpFindObjects	204	splice-bif-splice-eval/RefOpFindObjects.cpp
 0X1244E8	RefOpFindNearestObject	140	splice-bif-splice-eval/RefOpFindNearestObject.cpp
@@ -2452,6 +2453,7 @@ address	name	size	file
 0X1C64F8	func_001C64F8	16	new_1c3df8/fun_001c64f8.cpp
 0X1C65F8	func_001C65F8	424	new_1c3df8/fun_001c65f8.cpp
 0X1C67A0	func_001C67A0	56	new_1c3df8/fun_001c67a0.c
+0X1C67D8	func_001C67D8	168	new_1c3df8/fun_001c67d8.cpp
 0X1C68F0	func_001C68F0	448	new_1c3df8/fun_001c68f0.cpp
 0X1C6AB0	func_001C6AB0	8	new_1c3df8/fun_001c6ab0.c
 0X1C6B28	func_001C6B28	164	new_1c3df8/fun_001c6b28.cpp
