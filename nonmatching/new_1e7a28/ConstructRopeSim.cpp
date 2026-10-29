@@ -7,7 +7,7 @@ struct ROPESIM {
     QW *apos; QW *avel; float *as; float drag; char pad60[0x6C - 0x64]; float k6c; float k70; char pad74[0x84 - 0x74]; int capacity; float dsNode;
 };
 extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
-extern "C" void RemeasureRopeSim(ROPESIM *);
+extern "C" int RemeasureRopeSim(ROPESIM *);
 extern "C" char D_002C44F0;
 
 ROPESIM *ConstructRopeSim(ROPESIM *prope, CRV *pcrv)
@@ -53,8 +53,8 @@ ROPESIM *ConstructRopeSim(ROPESIM *prope, CRV *pcrv)
         asm("vmulax.xyz ACC, vf3, vf5x\n\tvmadday.xyz ACC, vf4, vf5y\n\tvmaddaz.xyz ACC, vf2, vf5z\n\tvmaddw.xyz vf3, vf1, vf0w" : "=j" (v3) : "j" (v1), "j" (v2), "j" (v3), "j" (v4), "j" (v5));
         asm volatile("sqc2 vf3, %0" : "=m" (*pdest) : "j" (v3));
     }
-    prope->pxf0 = &D_002C44F0;
     prope->pxf1 = &D_002C44F0;
+    prope->pxf0 = &D_002C44F0;
     CRV *crv2 = prope->pcrv;
     if (crv2->ccv > 0) {
         QW *apos = prope->apos;

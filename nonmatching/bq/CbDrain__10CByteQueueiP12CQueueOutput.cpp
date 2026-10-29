@@ -13,19 +13,19 @@ int CByteQueue::CbDrain(int cbMax, CQueueOutput *poutput)
         int cbChunk = cbBuffer - ibDrain;
         if (cbWanted < cbChunk)
             cbChunk = cbWanted;
-        int cbWritten = poutput->CbWrite(cbChunk, pbBuffer + ibDrain);
+        int cbWritten = poutput->CbWrite(cbChunk, ibDrain + pbBuffer);
         if (cbWritten == 0)
             break;
         int ibDrainNew = ibDrain + cbWritten;
         ibDrain = ibDrainNew;
-        cbData -= cbWritten;
         ibDrain = ibDrainNew % cbBuffer;
+        cbData -= cbWritten;
         if (poutput->FHold() == 0)
             cbFree += cbWritten;
         else
             cbHeld += cbWritten;
-        cbDone += cbWritten;
         cbWanted -= cbWritten;
+        cbDone += cbWritten;
         if (cbMax < 1)
             break;
     }

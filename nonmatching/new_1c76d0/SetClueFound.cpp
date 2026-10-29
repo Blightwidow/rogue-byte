@@ -22,11 +22,11 @@ void SetClueFound(int idClue, int fFound)
     }
     refs[0].n = fFound != 0;
     refs[0].tagk = 0x17;
-    CRef_CopyConstruct(&refs[1], &refs[0]);
     RefSetGameSaveValue(&refs[2], ppath, &refs[1], B_003D4A60);
+    CRef_CopyConstruct(&refs[1], &refs[0]);
     CRef_Destruct(&refs[2]);
     CRef_Destruct(&refs[1]);
     CRef_Destruct(&refs[0]);
     B_003E1BF4 = CcluesFound();
-    CStackFrame_Destructor(frame, 2);
+    return CStackFrame_Destructor(frame, 2);
 }

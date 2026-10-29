@@ -11,8 +11,8 @@ extern "C" int FGetSpriteSlotTransform(Root *blot, int isprite, QW *mat, B4 *add
 {
     if (slots == 0) {
         Inst *root = blot->sprites->insts;
-        slots = root->slots;
         count = root->count;
+        slots = root->slots;
     }
     Slot *cur = slots;
     for (int i = 0; i < count; i++, cur++) {

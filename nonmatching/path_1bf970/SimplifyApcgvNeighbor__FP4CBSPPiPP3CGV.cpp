@@ -31,9 +31,9 @@ void SimplifyApcgvNeighbor(CBSP *pbsp, int *pcpcgv, CGV **apcgv)
     while (next < end) {
         if (FClipEdgeToCg(pbsp, (*last)->pos, (*next)->pos, 0)) {
             last = cur;
-            CGV *keep = *cur;
             cur = next;
             next++;
+            CGV *keep = *cur;
             kept[ckept] = keep;
             ckept++;
         } else {

@@ -10,8 +10,8 @@ void func_00206820(OBJ *object)
     struct L { int zero; int *self; } l;
     l.self = &l.zero;
     VT *v = object->vptr;
-    l.zero = 0;
     void (*fa)(void *, int) = v->fDC;
+    l.zero = 0;
     fa((char *)object + v->dD8, 0);
     v = object->vptr;
     int (*fb)(void *, int, int, int, void *, int) = v->f18;

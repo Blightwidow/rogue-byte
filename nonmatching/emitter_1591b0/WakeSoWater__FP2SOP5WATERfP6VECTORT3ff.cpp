@@ -111,8 +111,8 @@ void WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(SO *pso, Water *pwater, float dt, QW
         f.ev.q[1] = *(QW *)(*(char **)((char *)pso + 0xE8) + 0x80);
         f.ev.q[2] = g_2a2dc0;
         f.ev.f[14] = 1.0f;
-        f.ev.f[15] = 5.0f;
         f.ev.f[16] = 0.3926991f;
+        f.ev.f[15] = 5.0f;
         f.ev.f[17] = 1.0471976f;
         f.ev.f[24] = 1.0f;
         f.ev.f[26] = -1.0f;

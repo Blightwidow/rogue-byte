@@ -108,8 +108,8 @@ void GoalAnimLeap_SetState(char *goal, int state)
         register QW w4 asm("vf4") = l.s60;
         register QW w4o asm("vf4");
         asm("vmulax.xyzw ACC, vf3, vf4x\n\tvmaddx.xyzw vf4, vf1, vf2x" : "=j" (w4o) : "j" (v3), "j" (w4), "j" (w1), "j" (w2));
-        l.s50 = w2;
         guard2->vt->fn((char *)guard2 + guard2->vt->delta, w4o);
+        l.s50 = w2;
         char *pxfLinear = *(char **)(*(char **)(goal + 0x10) + 0x58);
         if (*(void **)(goal + 0x64) == 0) {
             float tEnd = g_2dded0 + g_2be700;

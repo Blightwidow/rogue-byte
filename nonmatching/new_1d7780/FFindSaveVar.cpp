@@ -9,9 +9,9 @@ int FFindSaveVar(SAVEVARS *psavevars, SAVEPATH *ppath, SAVEVARLOC *psavevarloc)
     SAVEVARREC *base = psavevars->arec;
     if (base->irecChild == 0)
         return 0;
-    psavevarloc->iElement = 0;
     int isym = 0;
     SAVEVARREC *prec = base + base->irecChild;
+    psavevarloc->iElement = 0;
     for (;;) {
         if (prec->symid == ppath->asymid[isym]) {
             isym++;

@@ -118,3 +118,21 @@ What moved the score:
   Non-volatile store asms scheduled after `ld $ra`. Not reachable without pins or barriers: a `sqc2` that retail places after the
   epilogue loads, and a VU instruction in a branch delay slot (the filler never moves an `asm` there).
 
+
+## Fixes that recur in m2c drafts
+
+From hand-shaping 31 near misses (25 matched, mostly drafts at 1 to 8 words):
+
+- **Count the callee's arguments from retail.** A `$a0`/`$a1` left untouched before a `jal` is a passed-through `this` or argument; `$t0`/`$t1`
+  set before it mean five or six arguments. A `(...)` or short prototype in a draft hides a missing leading argument (`FIsGuardInSgs(0x16)` is
+  `(arg0, 0x16)`); fix the declaration before reshaping the body (about a third of the fixes).
+- **64-bit tests and masks.** `if ((u64)x >> 0x3C & 1)` gets a `dsll32/dsra32` pair retail lacks: write `(int)(x >> 0x3C) & 1`, or put the
+  value in an `s64` local first. A mask retail builds with `lui` or `ori` + `dsll32` is a real 64-bit constant: `~(s64)bit`, `1UL << n`,
+  `0x8000L << n` (an int shift folds to another instruction sequence).
+- **Parameter widths.** A `dsll32/dsra32` or `sll/sra 24` retail lacks means the parameter is `s32`/`s8`, not `s64`/`u8`; the `Si` of a mangled
+  name says `s32`. A `+ 8` on a typed pointer is bytes times the element size: check retail's increment.
+- **Shapes.** For a diamond that ends in `return -1`, try `c ? -1 : x` and the early return with the rare case first; `x == 0 ? a : b` against
+  `x ? b : a` flips `movn`/`movz`. Two induction variables (counter plus stride offset) allocate other registers than a plain
+  `for (i...)` over `base + i * stride`, or over an array of the real element type.
+- **Still open** after 15 to 25 compiles each: `this`/flag in swapped saved registers (`s0`/`s1`) and the operand order of a commutative
+  `and`. Neither responded to source reordering.

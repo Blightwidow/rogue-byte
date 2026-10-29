@@ -8,8 +8,8 @@ struct Cue { char pad[0xC]; float tDue; };
 extern "C" float GAccuracyRhythmCue(Rhythm *rhythm, Cue *cue)
 {
     float tMusic = MarkClockTickRealOnly__FP5CLOCK(B_003DD040);
-    float tDue = cue->tDue;
     float dtOff;
+    float tDue = cue->tDue;
     float dtWindow;
     if (tMusic < tDue) {
         dtOff = tDue - tMusic;
@@ -22,5 +22,5 @@ extern "C" float GAccuracyRhythmCue(Rhythm *rhythm, Cue *cue)
     float ratio = dtOff / dtWindow;
     float gMiss = 1.0f - ratio;
     float gOn = 1.0f - gMiss;
-    return gOn * g_2bbb60[0] + gMiss * g_2bbb60[1];
+    return g_2bbb60[0] * gOn + gMiss * g_2bbb60[1];
 }

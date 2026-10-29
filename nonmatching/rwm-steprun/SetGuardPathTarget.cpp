@@ -16,8 +16,8 @@ void SetGuardPathTarget(Guard *guard, void *target, int n)
         guard->mode = 1;
         FindCrvClosestPointAll(guard->target, PosLoWorld(guard->ref), 0, 0, 0, 0, &guard->arc);
     } else if (FIsBasicDerivedFrom(guard->target, 0xD) != 0) {
-        guard->mode = 0;
         FindCrvClosestPointAll(guard->target, PosLoWorld(guard), 0, 0, 0, 0, &guard->arc);
+        guard->mode = 0;
     } else {
         if (FIsBasicDerivedFrom(guard->target, 0x13) != 0) {
             Obj *obj = (Obj *)guard->target;

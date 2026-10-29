@@ -19,11 +19,11 @@ extern "C" void ReleaseAloSmKinds(ALO *palo, unsigned grf)
         if (grf & m) {
             int count = *pcount;
             if (count != 0) {
-                count = count - 1;
                 *pcount = count;
+                count = count - 1;
                 if (count <= 0) {
-                    void *psw = B_003DD490;
                     int oid = func_001FD0C0(B_003DD040, kind);
+                    void *psw = B_003DD490;
                     SM *psm = (SM *)PloFindSwObject_thunk(psw, 4, oid, palo);
                     if (psm != 0) {
                         SMA *psma = PsmaFindSm__FP2SMP3ALO(psm, palo);

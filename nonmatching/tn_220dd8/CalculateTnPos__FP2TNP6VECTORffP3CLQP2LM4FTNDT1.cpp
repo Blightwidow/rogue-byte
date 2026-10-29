@@ -34,8 +34,8 @@ void CalculateTnPos__FP2TNP6VECTORffP3CLQP2LM4FTNDT1(TN *ptn, float *pdposCrv, f
     Frame f;
     for (int icam = 0; icam < 3; icam++) {
         float gIn = pdposCrv[icam];
-        float gOut = aclq[icam].g0 + gIn * (aclq[icam].g1 + gIn * aclq[icam].g2);
         float gMin = alm[icam].gMin;
+        float gOut = aclq[icam].g0 + gIn * (aclq[icam].g1 + gIn * aclq[icam].g2);
         float gMax = alm[icam].gMax;
         if (gOut < gMin)
             gOut = gMin;

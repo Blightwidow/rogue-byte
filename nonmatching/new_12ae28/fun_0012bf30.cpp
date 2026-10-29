@@ -30,7 +30,7 @@ void func_0012BF30(ACRAXIS *pacr, CBinaryInputStream *pbis)
         for (ikey = 0; ikey < pacr->ckey; ikey++)
             pacr->at[ikey] = (float)pbis->U16Read() * 0.016666668f;
     }
-    int maskAxes = pbis->U8Read();
+    unsigned int maskAxes = pbis->U8Read();
     for (int iaxis = 0; iaxis < 3; iaxis++) {
         if (maskAxes & (1 << iaxis)) {
             allocreq.cb = pacr->ckey * 12;

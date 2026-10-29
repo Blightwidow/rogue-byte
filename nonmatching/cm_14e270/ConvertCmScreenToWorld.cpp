@@ -14,8 +14,8 @@ QW ConvertCmScreenToWorld(CM *cm, QW pos)
     float yCam = -xIn;
     local[1] = yCam;
     if (0.0001f < sDepth) {
-        local[2] = zCam * sDepth;
         local[1] = yCam * sDepth;
+        local[2] = zCam * sDepth;
     }
     char *pmat = (char *)cm + 0x60;
     asm("lqc2 vf5, 0(%0)" : : "r" (pmat));

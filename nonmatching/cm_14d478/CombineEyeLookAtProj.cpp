@@ -11,8 +11,8 @@ extern "C" void CombineEyeLookAtProj(const FM4 *eye, const M4 *proj, M4 *out)
     M4 inverse;
     memset(&basis, 0, sizeof(basis));
     basis.r[0][0] = 1.0f;
-    basis.r[1][1] = 1.0f;
     basis.r[2][2] = 1.0f;
+    basis.r[1][1] = 1.0f;
     basis.r[3][3] = 1.0f;
     for (int i = 0; i < 3; i++) {
         basis.r[0][i] = -eye->r[1][i];

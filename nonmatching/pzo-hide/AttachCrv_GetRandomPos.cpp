@@ -31,8 +31,8 @@ extern "C" void AttachCrv_GetRandomPos(float sNear, void *pcrv, QW *ppos, QW *pn
         asm("nop\n\tnop\n\tvdiv Q, vf0w, vf1x\n\tvwaitq\n\tvmulq.xyzw vf2, vf3, Q");
         asm("sqc2 vf2, %0" : "=m" (l.side));
     }
-    l.saved = l.pos;
     float gRand = GRandInRange(0.0f, g_2be8bc);
+    l.saved = l.pos;
     int randBits;
     asm("mfc1 %0, %1" : "=r" (randBits) : "f" (gRand));
     asm("qmtc2.ni %0, vf1" : : "r" (randBits));

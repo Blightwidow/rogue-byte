@@ -18,8 +18,8 @@ extern "C" void func_001A3260()
     while (plight && plight->fDynamic != 0)
         plight = plight->pnext;
     if (plight) return;
-    plight = (LIGHT *)PloNew(4, 0, 0x188, -1);
     LIGHT *pnew = plight;
+    plight = (LIGHT *)PloNew(4, 0, 0x188, -1);
     struct L { M3 copy; QW dir; M3 mat; } l;
     QW dir = Vec3(-0.2f, 0.3f, -1.0f);
     l.dir = dir;

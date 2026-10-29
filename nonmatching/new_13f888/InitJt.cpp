@@ -36,8 +36,8 @@ void InitJt(char *jt)
     *(int *)(jt + 0x10F0) = 1;
     *(float *)(jt + 0x10D8) = 1.0f;
     *(int *)(jt + 0x10EC) = -1;
-    *(int *)(jt + 0x10E4) = -1;
     *(int *)(jt + 0x1318) = -1;
+    *(int *)(jt + 0x10E4) = -1;
     SetAloInteract(jt, 0x3FFFFFF, 0);
     SetAloInteract(jt, 0x10FF00, 8);
 }

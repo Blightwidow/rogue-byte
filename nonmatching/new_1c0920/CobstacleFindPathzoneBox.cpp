@@ -51,8 +51,8 @@ extern "C" int CobstacleFindPathzoneBox(Pathzone *pathzone, SapQuery *pquery, QW
     SweepPathzoneAxis(minY, maxY, pathzone->aepY, &pquery->iepMinY, &pquery->iepMaxY, pquery->agrfY);
     QW anded;
     asm("pand %0, %1, %2" : "=r" (anded) : "r" (*(QW *)pquery->agrfX), "r" (*(QW *)pquery->agrfY));
-    *(QW *)l.agrfBoth = anded;
     l.junk = anded;
+    *(QW *)l.agrfBoth = anded;
     unsigned *agrfBoth = l.agrfBoth;
     int islot = 0;
     int cobstacle = 0;

@@ -10,9 +10,9 @@ struct GOALPICK {
     char child[0x18 - 0x14];
     int pad1[9];
     int state;
+    GOALV *pick;
     float tState;
     int pad2[2];
-    GOALV *pick;
 };
 struct GOALR : GOALV { char pad[0x30 - 0x10]; GOALV *target; int unk34, unk38, unk3C; int flag; };
 extern "C" void Goal_Pop(void *);
@@ -35,8 +35,8 @@ void func_0017B8B0(GOALPICK *goal, int newState)
     }
     case 1: {
         GOALR *react = func_00205438(goal->pguard, 0xa5);
-        react->flag = 1;
         react->target = goal->pick;
+        react->flag = 1;
         react->Activate();
         break;
     }

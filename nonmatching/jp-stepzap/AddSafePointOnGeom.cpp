@@ -44,6 +44,6 @@ void AddSafePointOnGeom(SPL *list, GEOM *pgeom, QW pos)
         first->pgeom = pgeom;
         pgeom->grf |= 1UL << 51;
     }
-    list->items[0].pos = pos;
     first->tStamp = g_2dded0;
+    list->items[0].pos = pos;
 }

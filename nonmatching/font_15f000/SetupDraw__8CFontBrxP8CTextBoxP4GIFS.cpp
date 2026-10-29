@@ -4,7 +4,7 @@ struct CTextBox { float x, y, dx, dy; };
 struct CFontBrx { char pad[0x3C]; int fGstest; long gstest; char pad48[8]; long tex0; };
 extern "C" void AddPrimPack__4GIFSiiUl(GIFS *, int, int, unsigned long);
 extern "C" void PackAD__4GIFSll(GIFS *, long, long);
-extern "C" void AddPrimList__4GIFSiUl(GIFS *, int, unsigned long);
+extern "C" int AddPrimList__4GIFSiUl(GIFS *, int, unsigned long);
 extern "C" int FEnsureLoaded__8CFontBrxP4GIFS(CFontBrx *, GIFS *);
 
 extern "C" int SetupDraw__8CFontBrxP8CTextBoxP4GIFS(CFontBrx *pfont, CTextBox *ptbx, GIFS *pgifs)
@@ -15,7 +15,7 @@ extern "C" int SetupDraw__8CFontBrxP8CTextBoxP4GIFS(CFontBrx *pfont, CTextBox *p
         float dx = ptbx->dx;
         float dy = ptbx->dy;
         int xStart = (int)(x * 0.8f);
-        int xEnd = (int)((x + dx * 512.0f) * 0.0015625f);
+        int xEnd = (int)((dx + x * 512.0f) * 0.0015625f);
         int yStart = (int)(y * 0.45454547f);
         int yEnd = (int)((y + dy) * 0.45454547f);
         AddPrimPack__4GIFSiiUl(pgifs, 0, 1, 0xE);

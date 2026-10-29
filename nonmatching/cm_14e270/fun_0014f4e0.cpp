@@ -14,8 +14,8 @@ extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
     const float rDegToRad = 0.0174532942f;
     LOCALS l;
     float zr = z * rDegToRad;
-    float xr = x * rDegToRad;
     float yr = y * rDegToRad;
+    float xr = x * rDegToRad;
     l.matNew[0] = pcm->mat[0];
     l.matNew[1] = pcm->mat[1];
     l.matNew[2] = pcm->mat[2];
@@ -29,5 +29,5 @@ extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
     ((float *)&l.matNew[0])[3] = 0.0f;
     ((float *)&l.matNew[1])[3] = 0.0f;
     ((float *)&l.matNew[2])[3] = 0.0f;
-    SetCmPosMat(pcm, l.matNew);
+    return SetCmPosMat(pcm, l.matNew);
 }

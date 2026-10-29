@@ -13,8 +13,8 @@ float SvSquishCmEyeConstraint(Cm *pcm, QW posEyePrev, QW vEye, Sbi *psbi)
     struct { QW a; QW b; float svSmooth; QW normal; QW contact; QW vEye; } l;
     l.vEye = vEye;
     l.normal = psbi->normal;
-    l.contact = psbi->contact;
     func_002564B8(&l.a);
+    l.contact = psbi->contact;
     func_002564B8(&l.b);
     float dist;
     asm("lqc2 vf3, %0" : : "m" (l.normal));

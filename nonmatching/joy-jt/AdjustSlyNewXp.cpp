@@ -71,7 +71,7 @@ void AdjustSlyNewXp(char *arg0, char *arg1, int arg2)
         func_001374E0(arg0 + 0x1FF0, arg1, arg2);
         return;
     case 24:
-        *(int *)(arg1 + 0x98) = 0;
+        *(long *)(arg1 + 0x98) = 0;
         *(float *)(arg1 + 0x94) = 0.0f;
         return;
     case 5:

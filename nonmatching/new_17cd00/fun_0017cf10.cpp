@@ -27,8 +27,8 @@ extern "C" void func_0017CF10(GOAL *pgoal)
             } else {
                 GUARD *pguard = pgoal->pguard;
                 pguard->fForward = pguard->sPath < pgoal->sTarget;
-                pguard = pgoal->pguard;
                 float gSpeed = pguard->speed;
+                pguard = pgoal->pguard;
                 g_2dfb7c = pguard->fForward == 0 ? gSpeed : -gSpeed;
                 SMP smp;
                 asm volatile("" : : : "memory");
@@ -45,5 +45,5 @@ extern "C" void func_0017CF10(GOAL *pgoal)
         }
     } while (previous != pgoal->state);
     GUARD *pguardEnd = pgoal->pguard;
-    GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3((JT *)pguardEnd->pcrv, (PIPE *)pguardEnd->fForward, pguardEnd->sPath, (MATRIX3 *)((char *)pguardEnd + 0x1B0));
+    return GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3((JT *)pguardEnd->pcrv, (PIPE *)pguardEnd->fForward, pguardEnd->sPath, (MATRIX3 *)((char *)pguardEnd + 0x1B0));
 }

@@ -32,8 +32,8 @@ static inline unsigned *NextNodeA(unsigned *node)
 }
 void SweepProcs(void)
 {
-    unsigned *tailNode = B_002DD2B8;
     unsigned *node = B_002DD2B0;
+    unsigned *tailNode = B_002DD2B8;
     if (node != tailNode) {
         do {
             unsigned grf = node[1];
@@ -42,8 +42,8 @@ void SweepProcs(void)
         } while (node != tailNode);
     }
     if (node) {
-        unsigned *next;
         unsigned *cur = node;
+        unsigned *next;
         do {
             next = NextNode(cur);
             node = next;

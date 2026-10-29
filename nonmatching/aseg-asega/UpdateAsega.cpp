@@ -28,7 +28,7 @@ extern "C" void UpdateAsega(Asega *asega)
         return;
     hold = asega;
     asm("" : : "r"(&hold));
-    asega->vtable->addRef((char *)asega + asega->vtable->addDelta);
+    asega->vtable->addRef((int *)asega + asega->vtable->addDelta);
     unsigned grf = asega->aseg->grf;
     if ((grf ^ 1) & 1)
         grf = *(unsigned *)grf;

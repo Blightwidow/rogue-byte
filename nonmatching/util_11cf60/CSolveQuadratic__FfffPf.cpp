@@ -10,13 +10,13 @@ int CSolveQuadratic(float a, float b, float c, float *roots)
         roots[0] = center;
         return 1;
     }
+    float high = spread + center;
     float low = center - spread;
-    float high = center + spread;
     roots[1] = low;
     roots[0] = high;
     if (low < high) {
-        roots[1] = high;
         roots[0] = low;
+        roots[1] = high;
     }
     return 2;
 }

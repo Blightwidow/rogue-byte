@@ -13,9 +13,9 @@ extern "C" void UpdateXfMirror(void *pv, XFMIRROR *pmirror)
     M3 local;
     if (pmirror->fPosition != 0) {
         M4 inv;
+        XF *pxfTarget = pmirror->pxfTarget;
         InvertMatrix4Affine(&inv, (char *)pmirror->pxfTarget->pxfParent + 0x40);
         XF *pxfSource = pmirror->pxfSource;
-        XF *pxfTarget = pmirror->pxfTarget;
         QW vec;
         asm("lqc2 vf5, %1\n\tlqc2 vf4, %2\n\tlqc2 vf3, %3\n\tlqc2 vf2, %4\n\tlqc2 vf1, %5\n\tvmulax.xyz ACC, vf4, vf5x\n\tvmadday.xyz ACC, vf3, vf5y\n\tvmaddaz.xyz ACC, vf2, vf5z\n\tvmaddw.xyz vf6, vf1, vf0w\n\tqmfc2.ni %0, vf6"
             : "=r" (vec) : "m" (*(QW *)((char *)pxfSource + 0x70)), "m" (inv.row[0]), "m" (inv.row[1]), "m" (inv.row[2]), "m" (inv.row[3]));
@@ -41,8 +41,8 @@ extern "C" void UpdateXfMirror(void *pv, XFMIRROR *pmirror)
         ((QW *)pxfTarget)[1] = local.row[1];
         ((QW *)pxfTarget)[2] = local.row[2];
         ((int *)pxfTarget)[3] = 0;
-        ((int *)pxfTarget)[0xB] = 0;
         ((int *)pxfTarget)[7] = 0;
+        ((int *)pxfTarget)[0xB] = 0;
     }
     int *pgen = (int *)(B_003DD490 + 0x3D58);
     *pgen = *pgen + 1;

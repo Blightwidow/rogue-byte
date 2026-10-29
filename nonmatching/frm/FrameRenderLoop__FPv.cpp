@@ -9,7 +9,7 @@ extern int g_2deb18;
 extern int g_2deb1c;
 extern int g_2deb20;
 extern int g_2dedbc;
-extern "C" void WaitSema(int);
+extern "C" int WaitSema(int);
 extern "C" void SignalSema(int);
 extern "C" void FlushSaaUnpacks(void);
 extern "C" void RestoreGsBuffers__Fv(void);
@@ -23,8 +23,8 @@ extern "C" void FrameRenderLoop__FPv(void *pv)
     for (;;) {
         g_2deb20 = 1;
         WaitSema(g_2deb18);
-        g_2deb20 = 0;
         g_2deb14 = (FRM *)(B_002DEA50 + B_002DEB0C * 0x50);
+        g_2deb20 = 0;
         B_002DEB0C = B_002DEB0C + 1;
         if (B_002DEB0C > 1)
             B_002DEB0C = 0;

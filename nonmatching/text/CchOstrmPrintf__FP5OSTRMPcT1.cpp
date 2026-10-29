@@ -15,11 +15,12 @@ int CchOstrmPrintf(OSTRM *postrm, char *format, char *va)
             char *percent = strchr(format, '%');
             int literal = percent - format;
             if (percent == 0) {
-                literal = strlen(format);
                 percent = format + literal;
+                literal = strlen(format);
             }
             if (literal != 0) {
-                int written = postrm->CbWrite(format, literal);
+                int  written;
+                written = postrm->CbWrite(format, literal);
                 format = percent;
                 if (written < literal)
                     break;

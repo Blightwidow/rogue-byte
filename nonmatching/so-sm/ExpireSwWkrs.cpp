@@ -11,9 +11,9 @@ inline void PushDli(DLI *it, DL *list)
 {
     it->current = (char *)list;
     it->list = list;
-    it->offset = list->ibDle;
     DLI *old = g_2dd2fc;
     g_2dd2fc = it;
+    it->offset = list->ibDle;
     it->next = old;
 }
 inline char *PvFirst(DLI *it)

@@ -8,7 +8,7 @@ struct RH {
     char pad4[0x28C - 0x284]; SMP smp; float gA, gWrong, gTwice, gEarly;
 };
 extern RH *B_002DE570;
-extern "C" void InitLo(RH*);
+extern "C" int InitLo(RH*);
 extern "C" void func_001A6CA8(RH*, int);
 static inline void InitSmp(SMP* s, float lo, float hi)
 {
@@ -22,16 +22,16 @@ extern "C" void InitRhythm(RH* p)
     B_002DE570 = p;
     float lo = -1.5f, hi = 1.0f;
     asm("" : "+f"(lo), "+f"(hi));
-    p->lmLo = lo;
     p->lmHi = hi;
+    p->lmLo = lo;
     p->dtLate = 0.4f;
-    p->cWin = 8;
     p->dtEarly = 0.4f;
+    p->cWin = 8;
     InitSmp(&p->smp, lo, hi);
     p->gWrong = -0.8f;
     p->gTwice = -0.2f;
-    p->gEarly = lo;
     p->gA = lo;
+    p->gEarly = lo;
     func_001A6CA8(p, 1);
     unsigned g = (unsigned)p->grf;
     if (!(g & 1)) *p->grf |= 10; else p->grf = (unsigned*)(g | 10);

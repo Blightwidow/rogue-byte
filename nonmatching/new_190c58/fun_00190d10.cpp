@@ -26,8 +26,8 @@ extern "C" void func_00190D10(JT *self)
     QW diff;
     PinP *pinA = self->pin;
     asm("qmtc2.ni %1, vf2\n\tlqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r" (diff) : "r" (world), "m" (sum));
-    QW off = ConvertXfVec(0, pinA->pparent, diff);
     PinP *pin = self->pin;
+    QW off = ConvertXfVec(0, pinA->pparent, diff);
     QW newpos;
     asm("qmtc2.ni %0, vf2" : : "r" (off));
     asm("lqc2 vf1, %0" : : "m" (pin->pos));

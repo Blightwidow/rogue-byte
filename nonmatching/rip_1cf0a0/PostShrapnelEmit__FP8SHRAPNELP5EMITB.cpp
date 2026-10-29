@@ -14,11 +14,11 @@ void PostShrapnelEmit__FP8SHRAPNELP5EMITB(SHRAPNEL *pshrapnel, EMITB *pemitb)
     float scaled = pshrapnel->dtLifetime;
     asm("lqc2 vf1, %0" : : "m" (pshrapnel->v));
     asm("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q");
-    int bits;
+    unsigned int bits;
     asm("qmfc2.ni %0, vf1" : "=r" (bits));
     float speed;
     asm("mtc1 %1, %0" : "=f" (speed) : "r" (bits));
-    pshrapnel->dtLifetime = scaled * lifetime;
+    pshrapnel->dtLifetime = lifetime * scaled;
     pshrapnel->radius = pemitb->radius;
     pshrapnel->elasticity = pemitb->elasticity;
     pshrapnel->friction = pemitb->friction;

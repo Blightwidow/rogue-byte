@@ -2,9 +2,9 @@
 struct CRef { int tagk; int n; CRef &operator=(const CRef &); };
 struct BINDING { char pad[8]; int sym; CRef ref; BINDING *next; };
 struct CSidebag { char pad[8]; BINDING *head; };
-extern "C" void CRef_CopyConstruct(CRef *, CRef *);
+extern "C" int CRef_CopyConstruct(CRef *, CRef *);
 extern "C" void CRef_Destruct(CRef *);
-extern "C" void SetTag__4CRef4TAGK(CRef *, int);
+extern "C" int SetTag__4CRef4TAGK(CRef *, int);
 
 extern "C" CRef *CSidebag_RefSetBinding(CRef *pref, CSidebag *psidebag, int sym, CRef *pvalue)
 {
@@ -25,8 +25,8 @@ extern "C" CRef *CSidebag_RefSetBinding(CRef *pref, CSidebag *psidebag, int sym,
     CRef &refVoid = refVoid2;
     refVoid.tagk = -1;
     CRef_Destruct(&refVoid);
+    CRef_Destruct(&refVoid);
     SetTag__4CRef4TAGK(&refVoid, 0x24);
     CRef_CopyConstruct(pref, &refVoid);
-    CRef_Destruct(&refVoid);
     return pref;
 }

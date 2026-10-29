@@ -4,8 +4,8 @@ struct VEntry { short delta; short index; void (*fn)(void *); };
 struct XF {
     ROW16 local[4];
     ROW16 world[4];
-    char pad0x80[0xA0 - 0x80];
     XF *pparent;
+    char pad0x80[0xA0 - 0x80];
     int generation;
 };
 struct SO {
@@ -69,8 +69,8 @@ void RotateSoToMat(SO *pso, ROW16 *pmat)
     asm("sqc2 vf6, %0" : "=m"(locals.scratch[2]));
     asm("sqc2 vf4, %0" : "=m"(pso->pxfAngular->local[0]));
     pso->pxfAngular->local[1] = locals.local[1];
-    pso->pxfAngular->local[2] = locals.local[2];
     pso->pxfAngular->local[0].v[3] = 0.0f;
+    pso->pxfAngular->local[2] = locals.local[2];
     pso->pxfAngular->local[2].v[3] = 0.0f;
     pso->pxfAngular->local[1].v[3] = 0.0f;
     int *pxfGeneration = (int *)((char *)&B_003DD490 + 0x3D58);

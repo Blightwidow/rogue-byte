@@ -39,15 +39,15 @@ void UpdateCd__Fv(void)
         break;
     case 2:
         if (FCdCompleted__Fi(0)) {
-            unsigned crc = 0xFFFFFFFF;
-            unsigned *table = RO_002A2E68;
+            int crc = 0xFFFFFFFF;
             unsigned char *p = B_002DD680;
+            unsigned *table = RO_002A2E68;
             int n = 0x7FF;
             do {
                 unsigned char b = *p;
                 p++;
                 n--;
-                crc = *(unsigned *)((char *)table + (((crc ^ b) & 0xFF) << 2)) ^ (crc >> 8);
+                crc = *(unsigned long *)((char *)table + (((crc ^ b) & 0xFF) << 2)) ^ (crc >> 8);
             } while (n != -1);
             int next = 1;
             if (crc == (unsigned)g_2a2e60) {

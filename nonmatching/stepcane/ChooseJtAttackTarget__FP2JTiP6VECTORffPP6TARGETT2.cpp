@@ -24,9 +24,9 @@ extern float D_002BF4B8;
 struct LOC {
     M3 heading;       // 0x00
     QW posLead;       // 0x30
-    QW conv2;         // 0x40
-    QW posAim;        // 0x50
     QW aimMinus;      // 0x60
+    QW posAim;        // 0x50
+    QW conv2;         // 0x40
     QW posTarget;     // 0x70
     M4 pred;          // 0x80
     QW outVec;        // 0xC0

@@ -14,8 +14,8 @@ CRef *func_001D8A38(CRef *result, const char *first, ...)
 {
     CRef ref;
     char frame[16];
-    char path[16];
     CRef value;
+    char path[16];
     ref.tagk = -1;
     CStackFrame_Construct(frame);
     BuildSavePath(first, (char *)__builtin_next_arg(first) - 48, path);

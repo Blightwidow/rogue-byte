@@ -5,13 +5,14 @@ extern "C" Rows *BuildXfSpinRateMatrix(Rows *pmatResult, void *pxf, Rows *pmat, 
 {
     register QW zeroReg asm("$0");
     Rows junkA, junkB;
+    float  x;
+    x = Lane(vecW);
     memset(pmatResult, 0, 0x40);
-    float x = Lane(vecW);
     float z = Lane(__builtin_pextuw(zeroReg, vecW));
     float y = Lane(__builtin_prot3w(vecW));
     float *ag = (float *)pmatResult;
-    ag[1] = z;
     ag[8] = y;
+    ag[1] = z;
     ag[4] = -z;
     ag[6] = x;
     ag[9] = -x;

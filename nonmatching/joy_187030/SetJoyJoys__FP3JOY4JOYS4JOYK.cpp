@@ -49,11 +49,11 @@ resetRun:
         JOY_AT(float, 0x10A4) = zeroExtent;
         JOY_AT(float, 0x10B0) = zeroExtent;
         JOY_AT(int, 0x1024) = 0;
+        unsigned int iAxis = 0;
         float *pLeftMaxB = (float *)(pjoy + 0x1054);
         float *pLeftMaxA = (float *)(pjoy + 0x1088);
         float *pLeftMinB = (float *)(pjoy + 0x1050);
         float *pLeftMinA = (float *)(pjoy + 0x1084);
-        unsigned int iAxis = 0;
         do {
             *pLeftMinA = -0.75f;
             iAxis += 1;

@@ -23,7 +23,7 @@ done:
 }
 static inline unsigned *NextNodeA(unsigned *node)
 {
-    unsigned grf = node[1];
+    int grf = node[1];
     unsigned index = (grf >> 16) & 0x1FFF;
     unsigned chunk = (grf >> 29) & 3;
     unsigned *result = 0;
@@ -32,8 +32,8 @@ static inline unsigned *NextNodeA(unsigned *node)
 }
 void SweepVarbs(void)
 {
-    unsigned *tailNode = B_002DD298;
     unsigned *node = B_002DD290;
+    unsigned *tailNode = B_002DD298;
     if (node != tailNode) {
         do {
             unsigned grf = node[1];

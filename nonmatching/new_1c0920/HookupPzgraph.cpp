@@ -23,8 +23,8 @@ void HookupPzgraph(PZGRAPH *pgraph)
     ALLOCREQ *preq = &l.request;
     preq->cb = cplink << 2;
     preq->cbAlign = 0x10;
-    pgraph->cplink = cplink;
     pgraph->applink = (LO **)PvAllocSwCopyImpl((int)preq, l.applinkFound);
+    pgraph->cplink = cplink;
     int iplink;
     for (iplink = 0; iplink < pgraph->cplink; iplink++)
         pgraph->applink[iplink]->ipzlink = iplink;

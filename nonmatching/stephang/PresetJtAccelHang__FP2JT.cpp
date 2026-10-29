@@ -1,9 +1,9 @@
 #include "sly2.h"
 struct JT { char pad0[0x1A8]; float heading; char pad1[0x18C4 - 0x1AC]; void *pivot; char pad2[0x1910 - 0x18C8]; QW hangAccel; };
 struct SMP;
-extern "C" void AddSoAcceleration(JT *, QW);
+extern "C" int AddSoAcceleration(JT *, QW);
 extern "C" QW PosLoWorld(void *);
-extern "C" void BuildRotateVectorsMatrix(QW *, QW, QW);
+extern "C" int BuildRotateVectorsMatrix(QW *, QW, QW);
 extern "C" void LoadRotateMatrixRad(QW *, QW, float);
 extern "C" void AccelSoTowardMatSmooth__FP2SOfP7MATRIX3P3SMP(JT *, void *, SMP *);
 extern "C" QW g_2a2dc0;
@@ -30,8 +30,8 @@ extern "C" void PresetJtAccelHang__FP2JT(JT *pjt)
     v2 = self;
     asm("vsub.xyzw vf1, vf1, vf2" : "=j" (v1) : "j" (v1), "j" (v2));
     QW delta = v1;
-    l.delta = v1;
     BuildRotateVectorsMatrix(pyaw, g_2a2dc0, delta);
+    l.delta = v1;
     l.aim[0] = l.yaw[0];
     l.aim[1] = l.yaw[1];
     l.aim[2] = l.yaw[2];
@@ -51,11 +51,12 @@ extern "C" void PresetJtAccelHang__FP2JT(JT *pjt)
     l.yawCopy[0] = v8;
     l.yawCopy[1] = v7;
     l.yawCopy[2] = v6;
-    l.goalCopy[0] = v4;
     l.yaw[0] = v4;
+    l.goalCopy[0] = v4;
     l.goalCopy[1] = v3;
     l.yaw[1] = v3;
-    l.goalCopy[2] = v5;
     l.yaw[2] = v5;
     AccelSoTowardMatSmooth__FP2SOfP7MATRIX3P3SMP(pjt, l.goal, &D_002BF548);
+    l.goalCopy[2] = v5;
+    return;
 }

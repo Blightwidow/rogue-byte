@@ -11,7 +11,7 @@ extern "C" void StopSeqnode(SEQNODE *);
 struct REF {
     SEQNODE *p;
     REF(SEQNODE *q) { p = q; p->vt->fnAddRef((char *)p + p->vt->deltaAddRef); }
-    ~REF() { p->vt->fnRelease((char *)p + p->vt->deltaRelease); }
+    ~REF() { p->vt->fnRelease((unsigned int *)p + p->vt->deltaRelease); }
 };
 
 extern "C" void RunSeqnode(SEQNODE *pseqnode)
