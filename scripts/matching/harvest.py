@@ -38,6 +38,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 '''
+VU_CALL = re.compile(r'M2C_VU_([SO])([0-9a-f]+)\(')
 REJECT = re.compile(r'M2C_ERROR|M2C_LWL|M2C_FIRST3BYTES|M2C_UNALIGNED|Decompilation failure|unknown instruction')
 DECLARATION = re.compile(r'^(M2C_UNK|s32|void|f32|\w+)(\s+\**)(\w+)\((.*)\);\s*(/\*.*\*/)?\s*$')
 
@@ -108,7 +109,7 @@ def build_context(path):
 
 def run_m2c(arguments, row):
     """The draft text for a function, from the cache or a fresh m2c run; None when m2c fails."""
-    folder = 'm2c-context' if arguments.context else 'm2c-stack'
+    folder = 'm2c-context' if arguments.context else 'm2c-vu'
     os.makedirs(os.path.join(OUT, folder), exist_ok=True)
     cached = os.path.join(OUT, folder, f'{int(row["address"], 16):06X}.c')
     if os.path.exists(cached):
@@ -126,6 +127,57 @@ def run_m2c(arguments, row):
     return result.stdout
 
 
+def split_arguments_top(text):
+    """The top-level comma-separated pieces of an argument list (commas inside brackets stay)."""
+    pieces, depth, current = [], 0, ''
+    for character in text:
+        if character in '([{':
+            depth += 1
+        elif character in ')]}':
+            depth -= 1
+        if character == ',' and depth == 0:
+            pieces.append(current.strip())
+            current = ''
+        else:
+            current += character
+    if current.strip():
+        pieces.append(current.strip())
+    return pieces
+
+
+def lift_vu(body):
+    """Turns the opaque VU0 calls of the patched m2c (scripts/matching/m2c_vu.patch) into `asm volatile` statements: a call that
+    gives a value (qmfc2, cfc2) becomes a temporary written by the asm, and the temporary replaces the call in its statement."""
+    out, counter = [], 0
+    for line in body.split('\n'):
+        while True:
+            match = VU_CALL.search(line)
+            if not match:
+                break
+            depth, end = 1, match.end()
+            while end < len(line) and depth:
+                depth += {'(': 1, ')': -1}.get(line[end], 0)
+                end += 1
+            arguments = split_arguments_top(line[match.end():end - 1])
+            text = bytes.fromhex(match.group(2)).decode().replace('"', '\\"')
+            inputs = ', '.join(f'"r"({argument})' for argument in arguments)
+            indent = re.match(r'\s*', line).group(0)
+            if match.group(1) == 'O':
+                counter += 1
+                temporary = f'vu_{counter}'
+                out.append(f'{indent}s32 {temporary};')
+                out.append(f'{indent}asm volatile("{text}" : "=r"({temporary}){" : " + inputs if inputs else ""});')
+                line = line[:match.start()] + temporary + line[end:]
+            else:
+                out.append(f'{indent}asm volatile("{text}"{" : : " + inputs if inputs else ""});')
+                line = line[:match.start()] + line[end:]
+                if not line.strip(' ;'):
+                    line = ''
+        if line.strip():
+            out.append(line)
+    return '\n'.join(out)
+
+
 def build(draft, signatures=None):
     """C++ source for a draft: prelude, then everything in an extern "C" block. `signatures` (name -> 'void'|'int'|'float') retypes callees."""
     if REJECT.search(draft):
@@ -138,7 +190,8 @@ def build(draft, signatures=None):
         if signatures is not None and match and match.group(3) in signatures and line.rstrip().endswith(('*/', ');')) and not line.startswith(' '):
             line = f'{signatures[match.group(3)]}{match.group(2)}{match.group(3)}({match.group(4)});'
         lines.append(line)
-    body = re.sub(r'\bvoid\s*\*', 's8 *', '\n'.join(lines))  # C++ forbids arithmetic on void *
+    body = lift_vu('\n'.join(lines))
+    body = re.sub(r'\bvoid\s*\*', 's8 *', body)  # C++ forbids arithmetic on void *
     stack = re.search(r'struct _m2c_stack_(\w+) \{.*?\};\s*/\* size = (0x[0-9A-Fa-f]+) \*/', body, re.S)
     if stack and re.search(r'(?<![\w.>])sp(?!\w)', body):  # `sp` is the address of the function's stack area: a local buffer of that size
         body = re.sub(rf'(\b{re.escape(stack.group(1))}\([^)]*\)\s*\{{\n)', rf'\1    s8 sp[{stack.group(2)}] __attribute__((aligned(16)));\n', body, count=1)

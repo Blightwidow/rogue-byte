@@ -20,3 +20,13 @@ and `pyelftools`); [matching.md](matching.md) explains the score and [lessons.md
 
 `scripts/matching/classify_diffs.py` sorts the near misses by kind of difference (register, order, extra instructions, ...) and
 `scripts/matching/record_round.py` re-judges every source and updates the registry after any of these tools writes a source.
+
+## m2c and VU0 code
+
+m2c does not read VU0 macro instructions. `scripts/matching/m2c_vu.patch` teaches it to keep each one (`lqc2`, `sqc2`, `qmtc2`, `qmfc2`,
+`ctc2`, `cfc2`, `v*`) as an ordered opaque call, and `harvest.py` turns those calls into `asm volatile` statements (GPR operands become
+`"r"` inputs, `qmfc2`/`cfc2` results become temporaries). Apply it once in your m2c checkout:
+`cd work/matching/tools/m2c && git apply ../../../../scripts/matching/m2c_vu.patch`. Drafts cached before the patch live in `m2c-stack/`;
+patched ones go to `m2c-vu/`. Result on the 951 unsourced functions: unsupported 531 to 392, drafts that compile 120 to 168, 25 within
+20 words of retail (none before). Multimedia (MMI) and unaligned (`ldl`/`ldr`) instructions are still refused. The drafts are a starting
+point: see matching.md ("VU0 functions") for how to bring them to a match, and keep register pins and barriers out.
