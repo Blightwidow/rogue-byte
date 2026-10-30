@@ -152,18 +152,49 @@ with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
     list(pool.map(assemble_target, units))
     list(pool.map(build_base, units))
 
+# Data units: one per retail data section, sized from the retail image. The target holds the section as one object symbol; the base holds
+# nothing yet, so the section counts as unmatched data until C owns it. Only sizes and percentages reach the report, never the bytes.
+DATA_SECTIONS = [('rodata', '.rodata'), ('data', '.data'), ('vutext', '.vutext'), ('irx', '.irx')]
+data_units = []
+
+def build_data_units():
+    elf_path = os.path.join('work', 'elf', 'SCUS_973.16')
+    if not os.path.isfile(elf_path):
+        return
+    with open(elf_path, 'rb') as handle:
+        image = ELFFile(handle)
+        for name, section_name in DATA_SECTIONS:
+            section = image.get_section_by_name(section_name)
+            if section is None or not section['sh_size']:
+                continue
+            unit = 'data/' + name
+            expected, base = os.path.join(EXPECTED, unit + '.o'), os.path.join(BASE, unit + '.o')
+            os.makedirs(os.path.dirname(expected), exist_ok=True)
+            os.makedirs(os.path.dirname(base), exist_ok=True)
+            blob = os.path.join('build', 'objdiff', 'data', name + '.bin')
+            os.makedirs(os.path.dirname(blob), exist_ok=True)
+            open(blob, 'wb').write(section.data())
+            symbol = f"D_{section['sh_addr']:08X}"
+            source = expected[:-2] + '.s'
+            open(source, 'w').write(f'.section {section_name}, "a", @progbits\n.globl {symbol}\n.type {symbol}, @object\n{symbol}:\n.incbin "{blob}"\n.size {symbol}, {section["sh_size"]}\n')
+            run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-o', expected, source])
+            run(['sh', '-c', f'printf \'.section {section_name}, "a", @progbits\\n\' | {BINUTILS}-as -EL -march=r5900 -o {base} -'])
+            data_units.append({'name': unit, 'target_path': expected, 'base_path': base, 'metadata': {'progress_categories': ['data'], 'complete': False}})
+
+build_data_units()
+
 configuration = {
     '$schema': 'https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json',
     'custom_make': 'true', 'custom_args': [], 'build_target': False, 'build_base': False, 'watch_patterns': [],
     'units': [{'name': unit, 'target_path': os.path.join(EXPECTED, unit + '.o'), 'base_path': os.path.join(BASE, unit + '.o'),
-               'metadata': {'progress_categories': categories_of(unit), 'complete': all(function['address'] in manifest for function in units[unit])}} for unit in sorted(units)],
+               'metadata': {'progress_categories': categories_of(unit), 'complete': all(function['address'] in manifest for function in units[unit])}} for unit in sorted(units)] + data_units,
     'progress_categories': [{'id': category['id'], 'name': category['name']} for category in CATEGORY_CONFIG['categories']],
 }
 with open('objdiff.json', 'w') as handle:
     json.dump(configuration, handle, indent=2)
-print(f'objdiff.json: {len(units)} units')
+print(f'objdiff.json: {len(units)} units, {len(data_units)} data units')
 os.makedirs(os.path.join('site', 'data'), exist_ok=True)
 subprocess.run([OBJDIFF, 'report', 'generate', '-p', '.', '-o', os.path.join('site', 'data', 'objdiff-report.json')], check=True)
 report = json.load(open(os.path.join('site', 'data', 'objdiff-report.json')))
 measures = report['measures']
-print({key: measures[key] for key in ('fuzzy_match_percent', 'total_code', 'matched_code', 'matched_code_percent', 'total_functions', 'matched_functions') if key in measures})
+print({key: measures[key] for key in ('fuzzy_match_percent', 'total_code', 'matched_code', 'matched_code_percent', 'total_functions', 'matched_functions', 'total_data', 'matched_data', 'matched_data_percent') if key in measures})

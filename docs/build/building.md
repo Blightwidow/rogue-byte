@@ -77,5 +77,5 @@ Rodata and data are per-symbol assembly (306 of the 335 pieces; the rest stay ra
 rodata comes from the compiled objects.
 
 objdiff (`make objdiff`) pairs each function of a unit's retail assembly with the compiled one by name and counts
-matched code per unit; its numbers are in `site/data/objdiff-report.json` and on the progress page. Windows: use WSL.
+matched code per unit; four more units (`data/rodata`, `data/data`, `data/vutext`, `data/irx`, the "Data" category) hold the retail data sections from `work/elf/SCUS_973.16`, sized only (no bytes reach the report), with an empty compiled side: data counts as matched only where C owns it, and none is yet; its numbers are in `site/data/objdiff-report.json` and on the progress page. Windows: use WSL.
 The compiler is run on Linux with wibo (32-bit), on macOS with wibo-macos.

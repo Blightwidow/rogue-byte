@@ -60,6 +60,11 @@
    "id": "av",
    "name": "Audio, video and input",
    "description": "Sound, movies, controller, rumble"
+  },
+  {
+   "id": "data",
+   "name": "Data",
+   "description": "Read-only data, writable data, VU microcode and IOP modules. Counted as matched only where C owns it (a compiled function's own jump table or literals); the rest is the retail bytes reassembled from disassembly"
   }
  ],
  "files": {
