@@ -8,7 +8,7 @@ static inline int *AcSource(AMB *amb) { return (int *)((char *)amb + 0xA0); }
 void AddAmbSlotSource(AMB *amb, unsigned slot, int palo, const B8 *range, float vol)
 {
     if (slot < 6) {
-        int *pcount = &AcSource(amb)[slot];
+        int *pcount = (int *)((char *)(slot * 4) + (int)AcSource(amb));
         if (*pcount < 8) {
             SetAmbGrf(amb, 0x200, 0x200);
             int n = *pcount;

@@ -8,7 +8,7 @@ and `pyelftools`); [matching.md](matching.md) explains the score and [lessons.md
 | :--- | :--- | :--- |
 | `scripts/matching/scorer.py` | Judges a source in process: registry, target words and symbols are read once, the compare runs in the calling thread, and every judged source is kept in `work/matching/scorecache/` (keyed by the source and a fingerprint of the compiler setup). `--bench ADDRESS SOURCE` compares with `try.py`. | Library for the others. About 50 compiles a second on 12 threads, twice `try.py`; a source judged before costs nothing. |
 | `scripts/matching/neighborhood.py` | Every rewrite of `mutate.py` at every line it fits, plus every order of up to five consecutive declarations, then a beam search from the best few sources. Says when a depth found nothing better. `--batch` runs the pool of near misses. | Complete coverage of one-edit and two-edit changes. Use before concluding a function needs a larger rewrite. |
-| `scripts/matching/rules.py` | The source shapes the deep dives found (docs/contributing/matching.md, "One function per kind") as rewrites: indexed loop for m2c's pointer walk, `&a[i]` with the scaled index first, `const` on `RO_` externs, a `void` function returning its result, a dummy parameter where m2c's `argN` numbering skips a register, a callee's trailing argument appended, dropped or replaced (and a member re-read after a call), a float parameter moved to another position, `long long` as `long`, a by-value class return. `neighborhood.py` imports it, so every rule is judged with the other edits, chained with them and kept in the beam: a corrected argument that first scores worse can still lead to 0. | The near misses that the permuters and mutations did not move: the rules are the causes found by hand, so they fix what a reordering cannot. `python3 scripts/matching/rules.py SOURCE` prints the rewrites a source gets. `make rules` runs them (with the neighborhood search) over the near misses: `make rules MIN=1 MAX=20 BUDGET=800 JOBS=8`; a better source is written to `data/matching/src/fn`, register it afterwards with `try.py --record` (or `record_round.py`), then `make src`, `make elf`. |
+| `scripts/matching/rules.py` | The source shapes the deep dives found (docs/contributing/matching.md, "One function per kind") as rewrites: indexed loop for m2c's pointer walk, `&a[i]` with the scaled index first, `const` on `RO_` externs, a `void` function returning its result, a dummy parameter where m2c's `argN` numbering skips a register, a virtual call without its trailing object argument, a global declared as an array, a callee's trailing argument appended, dropped or replaced (and a member re-read after a call), a float parameter moved to another position, `long long` as `long`, a by-value class return. `neighborhood.py` imports it, so every rule is judged with the other edits, chained with them and kept in the beam: a corrected argument that first scores worse can still lead to 0. | The near misses that the permuters and mutations did not move: the rules are the causes found by hand, so they fix what a reordering cannot. `python3 scripts/matching/rules.py SOURCE` prints the rewrites a source gets. `make rules` runs them (with the neighborhood search) over the near misses: `make rules MIN=1 MAX=20 BUDGET=800 JOBS=8`; a better source is written to `data/matching/src/fn`, register it afterwards with `try.py --record` (or `record_round.py`), then `make src`, `make elf`. |
 | `scripts/matching/mutate.py` | Random climbing with the same rewrites (one more than before: `volatile_slot`, see lessons). | Deeper, cheaper walks when the neighbourhood is exhausted. |
 | `scripts/matching/callee_sigs.py` | Reads each function's return type from the code: a caller reads `$v0` or `$f0` after the call, or the callee writes it before `jr $ra`. `check` lists source declarations that disagree, `sweep` tries every single and paired return-type change on the near misses. | Callee declarations steer scheduling even when the result is dropped. |
 | `scripts/matching/idioms.py` | `mine` counts source shapes over the matched sources, `suggest ADDRESS` lists the shapes the nearest matched functions (by shared callees) use that this source does not. | A starting point when a source is far from retail. |
@@ -100,3 +100,20 @@ current scores of `nonmatching/MANIFEST.tsv`. On the near misses scoring 1 to 10
 A third `mutate.py` pass (scores 1 to 12, 690 functions, 100 compiles each, a new seed, about 70 minutes) matched 8 and improved 30, against 17 and 9 for the first two passes over the same
 rewrites: the rewrites are close to exhausted, and the next gains come from new kinds of rewrite or from hand shaping.
 
+
+
+## Running the searches with make
+
+Every search tool has a target; `MIN`, `MAX` (the near-miss score range, default 1 to 20), `BUDGET` (compiles per function, default 800), `JOBS` and `SEED` are variables:
+
+| Target | Runs |
+| :--- | :--- |
+| `make permute ADDRESS=0x11A060` | `permute.py` on one function (its `//P`-marked statements, then the runs of consecutive statements); a better source is written in place |
+| `make permute-stores MIN=1 MAX=9` | `permute_stores.py`: the store-order search over the near misses; improved sources go to `work/matching/permute-stores/` |
+| `make fix-stack` | `fix_stack.py`: the real size of the placeholder `sp[0x400]` buffers; improved sources go to `work/matching/fix-stack/` |
+| `make adopt` | `adopt.py`: takes the sources of those two folders that score strictly lower than the current ones into `data/matching/src/fn` (a `.c` file is judged as C) |
+| `make mutate` | `mutate.py --batch`: the random rewrites |
+| `make rules` | `neighborhood.py --batch` with the rewrites of `rules.py` |
+| `make search` | `fix-stack`, `permute-stores`, `adopt`, `rules` in that order |
+
+None of them registers anything: afterwards `try.py --record` (or `record_round.py`) records the matches, then `make src` and `make elf`.

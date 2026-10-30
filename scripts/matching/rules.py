@@ -16,6 +16,8 @@ Rules:
   return_result  a `void` function whose local from a call is the result: `T *f() { ...; return local; }`
   missing_parameter m2c names the parameters by register (`arg0, arg1, arg3`): a skipped register is an unused parameter of the real signature, a dummy
                  is inserted so that later parameters arrive in their own registers (a first parameter `arg1` gets `unused_arg0`)
+  vcall_object   a virtual call `fn(obj + delta, ..., obj)` as `fn(obj + delta, ...)`: the register that holds `obj` is often just the object's own
+  global_array   `extern T g;` as `extern T g[];` read as `g[0]`: the compiler then schedules and aliases the load differently
   call_arguments a callee's trailing argument appended (the caller's own parameter), dropped or replaced; a member re-read after a call
   float_position a float parameter moved to another position of a callee's prototype (the order the argument instructions are emitted in)
   long_long      `long long` (128-bit under SN) as `long`
@@ -42,12 +44,13 @@ def balanced_end(text, start, opener='{', closer='}'):
 
 
 def split_parameters(text):
-    parts, current, depth = [], '', 0
+    parts, current, depth, previous = [], '', 0, ''
     for character in text:
         if character in '(<[':
             depth += 1
-        elif character in ')>]':
+        elif character in ')>]' and not (character == '>' and previous == '-'):  # the `>` of `->` closes nothing
             depth -= 1
+        previous = character
         if character == ',' and depth == 0:
             parts.append(current.strip())
             current = ''
@@ -172,6 +175,56 @@ def missing_parameter(text):
         edited = [parameter for number, parameter in zip(range(max(present) + 1), filled) if number in present or number in chosen]
         yield (f'missing_parameter {",".join(str(g) for g in gaps[:count])}',
                text[:match.start(2)] + ', '.join(edited) + text[match.end(2):])
+
+
+# ---- vcall_object ----
+
+FUNCTION_POINTER = re.compile(r'\(\s*\*\s*(\w+)\s*\)\s*\(([^()]*)\)')
+
+
+def vcall_object(text):
+    """For a function pointer `(*fn)(types)` called as `x->fn(a0, ..., an)` where the last argument is the object that a0 is built from (`(char *)x + delta`),
+    drop that last argument and its type at every call."""
+    for declaration in FUNCTION_POINTER.finditer(text):
+        name, types = declaration.group(1), split_parameters(declaration.group(2))
+        if len(types) < 2:
+            continue
+        calls = []
+        for call in re.finditer(rf'(?<![\w])(?:[\w\->.\[\]]*(?:->|\.))?{re.escape(name)}\s*\(', text):
+            if call.start() < declaration.end():
+                continue
+            end = balanced_end(text, call.end(), '(', ')')
+            if end is None:
+                continue
+            args = split_parameters(text[call.end():end - 1])
+            if len(args) == len(types):
+                calls.append((call.end(), end - 1, args))
+        if not calls:
+            continue
+        if not all(re.sub(r'^\(\s*[\w\s\*]+\)\s*', '', args[-1]) in args[0] for _, _, args in calls):
+            continue
+        edits = [(declaration.start(2), declaration.end(2), ', '.join(types[:-1]))]
+        edits += [(start, end, ', '.join(args[:-1])) for start, end, args in calls]
+        pieces, last = [], 0
+        for start, end, replacement in sorted(edits):
+            pieces += [text[last:start], replacement]
+            last = end
+        yield f'vcall_object {name}', ''.join(pieces) + text[last:]
+
+
+# ---- global_array ----
+
+GLOBAL_DECLARATION = re.compile(r'^(\s*extern\s+(?:const\s+)?[\w ]+?\s*)\b((?:g|B|D)_[0-9A-Fa-f]{5,8})\s*;', re.M)
+
+
+def global_array(text):
+    for which, declaration in enumerate(list(GLOBAL_DECLARATION.finditer(text))[:4]):
+        name = declaration.group(2)
+        head = text[:declaration.start()] + declaration.group(1) + f'{name}[];' + text[declaration.end():]
+        body_start = declaration.start() + len(declaration.group(1)) + len(f'{name}[];')
+        changed = head[:body_start] + re.sub(rf'(?<![\w.>]){re.escape(name)}\b(?!\s*\[)', f'{name}[0]', head[body_start:])
+        if changed != head:
+            yield f'global_array {name}', changed
 
 
 # ---- call_arguments ----
@@ -340,7 +393,7 @@ def by_value(text):
         return
 
 
-RULES = (index_loop, index_first, constify, return_result, missing_parameter, call_arguments, float_position, long_long, by_value)
+RULES = (index_loop, index_first, constify, return_result, missing_parameter, vcall_object, global_array, call_arguments, float_position, long_long, by_value)
 
 
 def edits(text):

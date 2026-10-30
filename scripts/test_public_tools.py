@@ -264,6 +264,23 @@ class RulesTests(unittest.TestCase):
         self.assertEqual(list(rules.missing_parameter('void F(int arg0, int arg1) {\n}\n')), [])
         self.assertEqual(list(rules.missing_parameter('void F(float arg0, int arg2) {\n}\n')), [])
 
+    def test_vcall_object_drops_the_trailing_object_argument(self):
+        source = ('struct VT { char pad[4]; short delta; short unused; void (*fn)(void *, int, void *); };\n'
+                  'struct Obj { char pad[12]; VT *vt; };\n'
+                  'void F(Obj *obj) {\n    obj->vt->fn((char *)obj + obj->vt->delta, 5, obj);\n}\n')
+        edited = list(rules.vcall_object(source))
+        self.assertEqual(len(edited), 1)
+        self.assertIn('void (*fn)(void *, int);', edited[0][1])
+        self.assertIn('obj->vt->fn((char *)obj + obj->vt->delta, 5);', edited[0][1])
+
+    def test_vcall_object_leaves_a_call_whose_last_argument_is_not_the_object(self):
+        source = ('struct VT { void (*fn)(void *, int, void *); };\nvoid F(VT *vt, char *p, char *q) {\n    vt->fn(p, 5, q);\n}\n')
+        self.assertEqual(list(rules.vcall_object(source)), [])
+
+    def test_global_array_declares_the_global_as_an_array_and_reads_its_first_element(self):
+        edited = list(rules.global_array('extern float g_2dded0;\nfloat F(void) {\n    return g_2dded0 + 1.0f;\n}\n'))
+        self.assertEqual(edited[0][1], 'extern float g_2dded0[];\nfloat F(void) {\n    return g_2dded0[0] + 1.0f;\n}\n')
+
     def test_float_position_moves_a_float_parameter_in_declaration_and_calls(self):
         source = 'extern "C" void Callee(int a, float b, int c);\nvoid F(int x, int y) {\n    Callee(x, 1.0f, y);\n}\n'
         edited = rules.edits(source)

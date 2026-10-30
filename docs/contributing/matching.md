@@ -378,7 +378,7 @@ Branches (branch kind):
 
 Prototypes (selection kind): float arguments go in `$f12`... independently of `$a0`..., so a float parameter's position in a callee's prototype does not show in the registers, but it decides the order the argument instructions are emitted in (MIPS evaluates the last parameter first) and so the schedule. Try every interleaving of the float parameters (`float_position.py`: 5 of 41 sources reached 0, one parameter order disagrees with Sly 1's). Demangle the callee's name for parameter counts (`mangled_order.py`). A parameter typed `long long`/`s64` is 128-bit under SN: use `long`.
 
-The object-passed-as-last-argument virtual call (`obj->vt->fn(obj + delta, ..., obj)`, the `new()` constructors) is a scheduling effect: `151698` and `190BE0` match only with `-fno-schedule-insns`, because the first scheduling pass moves the `a1 = obj` copy above `a0 = obj + delta`, which leaves `obj` dead in `a0`. No source form was found that stops it.
+The object-passed-as-last-argument virtual call (`obj->vt->fn(obj + delta, ..., obj)`, the `new()` constructors) is **often not real**: in Sonnet round 7 four functions (`GetJtHangHeading`, `func_00179820`, `ShowCountdownBlot`, `func_001E5370`) matched by dropping the trailing `obj` argument (the register that holds `obj` is just the object's own: `fn((char *)obj + obj->vt->delta, ...)`); try that first (`rules.py` does it for typed vtables). A genuine case remains: `151698` once matched only with `-fno-schedule-insns` (the first scheduling pass moves the `a1 = obj` copy above `a0 = obj + delta`), and `151648`, `1A3078`, `1371C8` still miss on it.
 
 The sixth deep dive (order plus register, 83 sources; 20 of them are fragments of 32 bytes or less, not C) found no single cause either. 15 more functions reach 0. The cause is mostly a wrong argument list, width or return value in the m2c draft: it changes which registers are live around a call, so sched2 (calls do not end a scheduling block after reload, and the EE issues two instructions per cycle) and local allocation give other priorities: "same instructions, other order, other registers" with no extra instruction to point at. Check in this order:
 
@@ -417,3 +417,15 @@ Four workers, 25 matches (52%), the best rate of any Sonnet round: the brief now
 - **A byte `delta` is `(char *)p + delta`,** not `(unsigned int *)p + delta` (a spurious `sll 2`); a struct with the array member (`B.slot[idx].kind`) keeps `&B` unfolded.
 - **A callee that takes `ALLOCREQ *` is a local struct** (`req.size`, `req.align`), not two integers.
 - **A banned `asm("" : "+r")` in a draft may hide a better score:** dropping it moved one function from 6 to 3, and two from 6 to 18 and 30: the honest score is what is published.
+
+
+### Sonnet round 7: near misses at 4 to 25 words (72 functions, 2026-10-30)
+
+Six workers, 44 matches (61%), the best rate yet; the pool was the largest untouched set of 4 to 25 word misses, and the brief carried every earlier lesson. New:
+
+- **Declare a global as an array** (`extern float g_2dded0[];`, read `g[0]`; `extern int B_003E12EC[];`): the load is scheduled and aliased differently (fixed `1F58F0` and `1F8668`; it does nothing on others). A plain non-const `extern float` also fixed one function.
+- **Stores before a call that look like stack arguments** (`sw` at 0/8/0xC/0x10 of `$sp` with only `$a0 = sp`) are the fields of a local struct passed by pointer; retail's store order is the reverse of the m2c field order. A `sp[0x10]` buffer plus a 4-argument call is an `ALLOCREQ { cb; cbAlign }`.
+- **A 64-bit header built in two statements** (`header = prim << 47 | CONST; header = cloop | header; pdw[0] = header | creg << 60`) fixes the expression association; separate `if (s == 2) return 0; if (s == 3) return 0;` gives two `beq` where `||` merges into a range test; a two-case `if`/`else if` chain that compiles to `bne`/`bne` matched as a `switch`.
+- **A structure wrong in m2c's draft** (not a register problem) is fixed by rewriting it: `switch (mode) { case 0: case 3: ... case 1: case 2: ... }` for a `goto` chain; an element size read from a constant (`0x38E38E39`: 0x120 bytes, pad the struct).
+- **A type suffix on `CRef` changes the mangled name** and adds link mismatches: keep plain `CRef` where the callee symbol is mangled with it.
+- **An exhaustive search of the store orders** (24 orders of four stores) found two matches that guessing missed: retail's visible order is not the source order.

@@ -14,6 +14,11 @@ extern "C" float g_2dded0;
 extern "C" void *PvAllocSlotheapImpl(void *);
 extern "C" void AppendDlEntry(void *, void *);
 extern "C" void CFramePtr_Assign(void *, int);
+struct HOLD {
+    HITFX *fx;
+    HOLD(HITFX *target) { fx = target; fx->vt->entry[0].fn((char *)fx + fx->vt->entry[0].delta); }
+    ~HOLD() { fx->vt->entry[1].fn((char *)fx + fx->vt->entry[1].delta); }
+};
 extern "C" void PhitfxSpawn_156548(PARMS *parms, QW pos, int owner, HITFX **out)
 {
     HITFX *fx = (HITFX *)PvAllocSlotheapImpl(B_003DD490.heap);
@@ -31,13 +36,9 @@ extern "C" void PhitfxSpawn_156548(PARMS *parms, QW pos, int owner, HITFX **out)
     fx->time = g_2dded0;
     fx->f54 = parms->param64;
     AppendDlEntry(B_003DD490.dl, fx);
-    HITFX *volatile held;
     fx->vt->entry[0].fn((char *)fx + fx->vt->entry[0].delta);
-    held = fx;
-    fx->vt->entry[0].fn((char *)fx + fx->vt->entry[0].delta);
+    HOLD hold(fx);
     CFramePtr_Assign(fx, parms->frame);
     if (out) *out = fx;
     fx->vt->entry[2].fn((char *)fx + fx->vt->entry[2].delta, 2, 0, 0, 0, 0);
-    HITFX *last = held;
-    last->vt->entry[1].fn((char *)last + last->vt->entry[1].delta);
 }

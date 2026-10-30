@@ -1,4 +1,4 @@
-extern "C" void CopyAqw__FPvT0i(void *, void *);
+extern "C" void CopyAqw__FPvT0i(void *, void *, int);
 
 void CopyAb__FPvT0Ui(void *pvDst, void *pvSrc, unsigned int cb)
 {
@@ -14,12 +14,12 @@ void CopyAb__FPvT0Ui(void *pvDst, void *pvSrc, unsigned int cb)
         unsigned int cw = cb >> 2;
         cb = cw & 3;
         int cwBlocks = cw - cb;
-        unsigned int n = cb;
+        int n = cb;
         while (n != 0) {
             *pwDst++ = *pwSrc++;
             n--;
         }
-        for (int iw = 0; iw < cwBlocks; iw += 4) {
+        for (n = 0; n < cwBlocks; n += 4) {
             unsigned int w0 = pwSrc[0];
             unsigned int w1 = pwSrc[1];
             unsigned int w2 = pwSrc[2];
@@ -32,6 +32,6 @@ void CopyAb__FPvT0Ui(void *pvDst, void *pvSrc, unsigned int cb)
             pwSrc += 4;
         }
     } else {
-        CopyAqw__FPvT0i(pvDst, pvSrc);
+        CopyAqw__FPvT0i(pvDst, pvSrc, cb >> 4);
     }
 }
