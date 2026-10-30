@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links
+.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -22,6 +22,13 @@ objdiff: ## After `make elf`: objdiff.json, the objects it compares (matched fun
 	.venv/bin/python configure.py
 	.venv/bin/ninja -k 0 nonmatching
 	.venv/bin/python scripts/build/make_objdiff.py
+
+MIN ?= 1
+MAX ?= 20
+BUDGET ?= 800
+JOBS ?= 8
+rules: ## Try the deep-dive rewrites (scripts/matching/rules.py) and the neighborhood search on the near misses scoring MIN to MAX (default 1 to 20, BUDGET compiles each): a better source is written to data/matching/src/fn
+	.venv/bin/python scripts/matching/neighborhood.py --batch --min-score $(MIN) --max-score $(MAX) --budget $(BUDGET) --jobs $(JOBS) --write
 
 config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module for code, rodata and data
 	python3 -I scripts/build/gen_splat_config.py --reset

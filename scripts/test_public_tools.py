@@ -252,6 +252,18 @@ class RulesTests(unittest.TestCase):
         self.assertTrue(appended)
         self.assertTrue(dropped)
 
+    def test_missing_parameter_inserts_a_dummy_at_a_skipped_register(self):
+        edited = list(rules.missing_parameter('int F(int arg0, int arg1, int arg3) {\n    return arg3;\n}\n'))
+        self.assertEqual(edited[0][1], 'int F(int arg0, int arg1, int unused_arg2, int arg3) {\n    return arg3;\n}\n')
+
+    def test_missing_parameter_adds_a_leading_dummy_for_a_first_parameter_arg1(self):
+        edited = list(rules.missing_parameter('void F(int arg1) {\n}\n'))
+        self.assertEqual(edited[0][1], 'void F(int unused_arg0, int arg1) {\n}\n')
+
+    def test_missing_parameter_leaves_a_complete_or_float_signature(self):
+        self.assertEqual(list(rules.missing_parameter('void F(int arg0, int arg1) {\n}\n')), [])
+        self.assertEqual(list(rules.missing_parameter('void F(float arg0, int arg2) {\n}\n')), [])
+
     def test_float_position_moves_a_float_parameter_in_declaration_and_calls(self):
         source = 'extern "C" void Callee(int a, float b, int c);\nvoid F(int x, int y) {\n    Callee(x, 1.0f, y);\n}\n'
         edited = rules.edits(source)

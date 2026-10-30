@@ -14,6 +14,8 @@ Rules:
   index_first    one `&BASE[INDEX]` as `(T *)((INDEX) * sizeof(*BASE) + (unsigned)BASE)`: the scaled index first, as retail's addu has it
   constify       `extern ... RO_<address>` made `const`: a read-only load is free to move across the stores
   return_result  a `void` function whose local from a call is the result: `T *f() { ...; return local; }`
+  missing_parameter m2c names the parameters by register (`arg0, arg1, arg3`): a skipped register is an unused parameter of the real signature, a dummy
+                 is inserted so that later parameters arrive in their own registers (a first parameter `arg1` gets `unused_arg0`)
   call_arguments a callee's trailing argument appended (the caller's own parameter), dropped or replaced; a member re-read after a call
   float_position a float parameter moved to another position of a callee's prototype (the order the argument instructions are emitted in)
   long_long      `long long` (128-bit under SN) as `long`
@@ -138,6 +140,38 @@ def return_result(text):
             continue
         yield f'return_result {name}', (text[:definition.start()] + definition.group(1) + declaration.group(1).strip() + definition.group(2)
                                          + body.rstrip() + f'\n    return {name};\n}}' + text[end:])
+
+
+# ---- missing_parameter ----
+
+def missing_parameter(text):
+    """A function whose parameters are m2c's `argN` (N = the argument register) with N skipped: the real signature has an unused parameter there."""
+    matches = [match for match in re.finditer(r'\b(\w+)\s*\(([^;{}()]*)\)\s*\{', text) if match.group(1) not in KEYWORDS]
+    if not matches:
+        return
+    match = matches[-1]
+    parameters = split_parameters(match.group(2))
+    numbered = []
+    for parameter in parameters:
+        found = re.fullmatch(r'(.*?)\barg(\d+)', parameter)
+        if not found or FLOAT_TYPE.search(found.group(1)):
+            return
+        numbered.append((int(found.group(2)), parameter))
+    if not numbered or [number for number, _ in numbered] != sorted(set(number for number, _ in numbered)):
+        return
+    present = {number for number, _ in numbered}
+    gaps = [number for number in range(max(present) + 1) if number not in present]
+    if not gaps or max(present) > 7:
+        return
+    kind = re.fullmatch(r'(.*?)\barg\d+', numbered[0][1]).group(1).strip() or 's32'
+    filled = []
+    for number in range(max(present) + 1):
+        filled.append(next((parameter for index, parameter in numbered if index == number), f'{kind} unused_arg{number}'))
+    for count in range(1, len(gaps) + 1):  # every gap, then only the first ones
+        chosen = set(gaps[:count])
+        edited = [parameter for number, parameter in zip(range(max(present) + 1), filled) if number in present or number in chosen]
+        yield (f'missing_parameter {",".join(str(g) for g in gaps[:count])}',
+               text[:match.start(2)] + ', '.join(edited) + text[match.end(2):])
 
 
 # ---- call_arguments ----
@@ -306,7 +340,7 @@ def by_value(text):
         return
 
 
-RULES = (index_loop, index_first, constify, return_result, call_arguments, float_position, long_long, by_value)
+RULES = (index_loop, index_first, constify, return_result, missing_parameter, call_arguments, float_position, long_long, by_value)
 
 
 def edits(text):
