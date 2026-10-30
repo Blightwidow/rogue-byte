@@ -288,3 +288,18 @@ Eight Sonnet workers, 12 functions each, 37 reached 0 (36 landed; `func_0017B8B0
 - **VU0 asm:** a `"=r"(fence)` chain moves `daddu`/`addiu $sp` to retail's slots; a commutative op (`vadda`) may need its operands the other way round.
 - **A volatile flag** is allowed when another thread sets it and a wait loop polls it (`g_2deb20`, set by `FrameRenderLoop`); say who sets it in a comment.
 - **Walls:** VU asm in a branch delay slot, the `sq` order of callee-saved registers in a prologue, `mult` against `mult`/`mflo` forms, and anything that matched only with a register pin, empty `asm` or a local that only moves a `lui`.
+
+### Sonnet near-miss batch 2 (96 functions at distance 1 to 9, 2026-10-30)
+
+Eight Sonnet workers, 46 of 96 matched, all landed (batches ranged from 4 to 10 of 12). More fixes:
+
+- **A dropped leading argument is the commonest cause:** `$a0` untouched before a `jal` is `self` passed through (`PjsgeAllocJsg(self, type, flag)`); each float parameter goes in `$f12`/`$f13`, with a dummy int in the skipped integer slot.
+- **A `por`/`daddu` with `sq` where retail has `sd`:** the parameter is `long`, not `long long` (128-bit under SN) or `s64`. A `por $a2,$zero,$a3` is a 128-bit argument or return: type it `QW`.
+- **A callee's float parameter:** declare it `float` and pass `0.25f`; an `int 0x3E800000` makes the compiler convert it.
+- **Nest a QW-returning callee in the next call** (`Construct(&tmp, Decompose(...))`) for `por $a1,$zero,$v0` in the `jal` delay slot; `++*p;` before the call (not after) puts the `sw` there.
+- **A relocated `lui $x,0 / addiu $x,0xC0` is an extern symbol** (`VU1_ENTRY_C0[]`), not a literal; grep `src/` for `RO_`/`VU1_ENTRY_*` first.
+- **A link mismatch can be a name collision** (a callee resolving to another address): grep the retail address in `config/recovered/sly2_combined_symbol_addrs.txt` before reshaping code.
+- **Test-first loops:** `while (f()) { if (n == 0) break; n -= 1; }`; `do {} while (n-- != 0)` compiles to `!= -1`. A mask loaded as `lui/ori/dsll/ori` is `~(1L << 35)`.
+- **Real typed structs for the object, its vtable and its entries** replace `M2C_FIELD` offsets and gotos (`entries[count++]`, `ptr[n-1]` not `(n*4)+ptr` on an `f32 *`); check the stride in retail's `addiu`.
+- **Positive condition with an empty `if`** and the other path in the `else` gives `c.le`/`bc1f`; `if (cond) x = 1; else x = 0;` (true value first) gives `bnel`/`sw zero`.
+- **Hill-climbing over adjacent store swaps** found a 7-store order that random shuffles did not (`InitTask`).
