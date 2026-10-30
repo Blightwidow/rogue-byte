@@ -152,10 +152,44 @@ with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
     list(pool.map(assemble_target, units))
     list(pool.map(build_base, units))
 
-# Data units: one per retail data section, sized from the retail image. The target holds the section as one object symbol; the base holds
-# nothing yet, so the section counts as unmatched data until C owns it. Only sizes and percentages reach the report, never the bytes.
+# Data units: one per retail data section, sized from the retail image. The target holds the section as object symbols; the base holds
+# the rodata that compiled C objects own (their own jump tables and literals, linked where retail has them: the .ro_<address> sections of the
+# linked image), so those ranges count as matched data and the rest stays unmatched until C owns it. Only sizes and percentages
+# reach the report, never the bytes.
 DATA_SECTIONS = [('rodata', '.rodata'), ('data', '.data'), ('vutext', '.vutext'), ('irx', '.irx')]
 data_units = []
+
+def owned_rodata():
+    """[(address, bytes)] of the rodata that compiled C objects own: the `.ro_<address>` sections of the linked image (build/image/image.elf)
+    that link.ld fills from an object rather than from the assembly pieces. The bytes are the linked ones, with a jump table's relocations resolved."""
+    pattern = re.compile(r'(\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.rodata\) \}')
+    labels = {}
+    for line in open(os.path.join('build', 'image', 'link.ld')):
+        match = pattern.match(line.strip())
+        if match and '_asm.o' not in match.group(3) and 'NOLOAD' not in line:
+            labels[match.group(1)] = int(match.group(2), 16)
+    found = []
+    with open(os.path.join('build', 'image', 'image.elf'), 'rb') as handle:
+        linked = ELFFile(handle)
+        for label, address in labels.items():
+            section = linked.get_section_by_name(label)
+            if section is not None and section['sh_size']:
+                found.append((address, section.data()))
+    return sorted(found)
+
+def data_symbols(address, size, owned):
+    """[(start, size, is_owned)] pieces of a section: each owned range, and the gaps between them."""
+    pieces, cursor = [], address
+    for start, blob in owned:
+        if start < cursor or start + len(blob) > address + size:
+            continue
+        if start > cursor:
+            pieces.append((cursor, start - cursor, False))
+        pieces.append((start, len(blob), True))
+        cursor = start + len(blob)
+    if cursor < address + size:
+        pieces.append((cursor, address + size - cursor, False))
+    return pieces
 
 def build_data_units():
     elf_path = os.path.join('work', 'elf', 'SCUS_973.16')
@@ -167,19 +201,36 @@ def build_data_units():
             section = image.get_section_by_name(section_name)
             if section is None or not section['sh_size']:
                 continue
-            unit = 'data/' + name
-            expected, base = os.path.join(EXPECTED, unit + '.o'), os.path.join(BASE, unit + '.o')
-            os.makedirs(os.path.dirname(expected), exist_ok=True)
-            os.makedirs(os.path.dirname(base), exist_ok=True)
-            blob = os.path.join('build', 'objdiff', 'data', name + '.bin')
-            os.makedirs(os.path.dirname(blob), exist_ok=True)
-            open(blob, 'wb').write(section.data())
-            symbol = f"D_{section['sh_addr']:08X}"
-            source = expected[:-2] + '.s'
-            open(source, 'w').write(f'.section {section_name}, "a", @progbits\n.globl {symbol}\n.type {symbol}, @object\n{symbol}:\n.incbin "{blob}"\n.size {symbol}, {section["sh_size"]}\n')
-            run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-o', expected, source])
-            run(['sh', '-c', f'printf \'.section {section_name}, "a", @progbits\\n\' | {BINUTILS}-as -EL -march=r5900 -o {base} -'])
-            data_units.append({'name': unit, 'target_path': expected, 'base_path': base, 'metadata': {'progress_categories': ['data'], 'complete': False}})
+            blob_directory = os.path.join('build', 'objdiff', 'data', name)
+            os.makedirs(blob_directory, exist_ok=True)
+            retail, address = section.data(), section['sh_addr']
+            owned = owned_rodata() if name == 'rodata' else []
+            header_line = f'.section {section_name}, "a", @progbits\n'
+            # objdiff counts a data section as matched only when all of it matches, so the C-owned ranges are a unit of their own
+            groups = {'': ([header_line], [header_line]), '-c': ([header_line], [header_line])}
+            for start, size, is_owned in data_symbols(address, section['sh_size'], owned):
+                symbol = f'D_{start:08X}'
+                blob = os.path.join(blob_directory, symbol + '.bin')
+                open(blob, 'wb').write(retail[start - address:start - address + size])
+                target_lines, base_lines = groups['-c' if is_owned else '']
+                target_lines.append(f'.globl {symbol}\n.type {symbol}, @object\n{symbol}:\n.incbin "{blob}"\n.size {symbol}, {size}\n')
+                if is_owned:
+                    compiled_blob = os.path.join(blob_directory, symbol + '.compiled.bin')
+                    open(compiled_blob, 'wb').write(next(data for place, data in owned if place == start))
+                    base_lines.append(f'.globl {symbol}\n.type {symbol}, @object\n{symbol}:\n.incbin "{compiled_blob}"\n.size {symbol}, {size}\n')
+            for suffix, (target_lines, base_lines) in groups.items():
+                if len(target_lines) == 1:
+                    continue
+                unit = 'data/' + name + suffix
+                expected, base = os.path.join(EXPECTED, unit + '.o'), os.path.join(BASE, unit + '.o')
+                os.makedirs(os.path.dirname(expected), exist_ok=True)
+                os.makedirs(os.path.dirname(base), exist_ok=True)
+                source, base_source = expected[:-2] + '.s', base[:-2] + '.s'
+                open(source, 'w').write(''.join(target_lines))
+                open(base_source, 'w').write(''.join(base_lines))
+                run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-o', expected, source])
+                run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-o', base, base_source])
+                data_units.append({'name': unit, 'target_path': expected, 'base_path': base, 'metadata': {'progress_categories': ['data'], 'complete': suffix == '-c'}})
 
 build_data_units()
 
