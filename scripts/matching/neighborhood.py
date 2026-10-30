@@ -169,8 +169,9 @@ def main():
         improved = reached = 0
         progress = Progress(len(pool), 'neighborhood')
         for index, (best, address, path) in enumerate(pool, 1):
+            progress.begin(f'{address:06X}')
             score, text, used, _ = search(address, read(path), arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, lang=language_of(path))
-            progress.tick()
+            progress.tick(f'{address:06X}: {best} -> {score}', f'{address:06X}')
             print(f'[{index}/{len(pool)}] {address:#X}: {best} -> {score} ({used} compiles){progress.suffix()}', flush=True)
             if score is not None and score < best:
                 improved += 1

@@ -31,38 +31,37 @@ def read(path):
         return handle.read()
 
 
+def consider(folder, name, dry_run):
+    """(judged, adopted, reached) of one candidate file: 1 or 0 each."""
+    address = int(FILE.match(name).group(1), 16)
+    candidate = os.path.join(folder, name)
+    current = next((os.path.join(SOURCES, f'{address:06X}{extension}') for extension in ('.cpp', '.c')
+                    if os.path.exists(os.path.join(SOURCES, f'{address:06X}{extension}'))), None)
+    new_score = scorer.judge(address, read(candidate), language(candidate))
+    if new_score is None:
+        return 0, 0, 0
+    old_score = scorer.judge(address, read(current), language(current)) if current else None
+    if current is not None and old_score is not None and new_score >= old_score:
+        return 1, 0, 0
+    destination = os.path.join(SOURCES, f'{address:06X}{os.path.splitext(name)[1]}')
+    print(f'{address:#X}: {old_score} -> {new_score} ({os.path.relpath(candidate, LAB)})')
+    if not dry_run:
+        if current and current != destination:
+            os.remove(current)
+        shutil.copyfile(candidate, destination)
+    return 1, 1, int(new_score == 0)
+
+
 def adopt(folders, dry_run=False):
     """(candidates judged, sources adopted, sources that reached 0)."""
+    names = [(folder, name) for folder in folders if os.path.isdir(folder) for name in sorted(os.listdir(folder)) if FILE.match(name)]
+    progress = Progress(len(names), 'adopt')
     judged = adopted = reached = 0
-    total = sum(1 for folder in folders if os.path.isdir(folder) for name in os.listdir(folder) if FILE.match(name))
-    progress = Progress(total, 'adopt')
-    for folder in folders:
-        if not os.path.isdir(folder):
-            continue
-        for name in sorted(os.listdir(folder)):
-            found = FILE.match(name)
-            if not found:
-                continue
-            address = int(found.group(1), 16)
-            progress.tick(name)
-            candidate = os.path.join(folder, name)
-            current = next((os.path.join(SOURCES, f'{address:06X}{extension}') for extension in ('.cpp', '.c')
-                            if os.path.exists(os.path.join(SOURCES, f'{address:06X}{extension}'))), None)
-            new_score = scorer.judge(address, read(candidate), language(candidate))
-            if new_score is None:
-                continue
-            judged += 1
-            old_score = scorer.judge(address, read(current), language(current)) if current else None
-            if current is not None and old_score is not None and new_score >= old_score:
-                continue
-            destination = os.path.join(SOURCES, f'{address:06X}{os.path.splitext(name)[1]}')
-            print(f'{address:#X}: {old_score} -> {new_score} ({os.path.relpath(candidate, LAB)})')
-            if not dry_run:
-                if current and current != destination:
-                    os.remove(current)
-                shutil.copyfile(candidate, destination)
-            adopted += 1
-            reached += new_score == 0
+    for folder, name in names:
+        progress.begin(name)
+        counts = consider(folder, name, dry_run)
+        progress.tick(name, name)
+        judged, adopted, reached = judged + counts[0], adopted + counts[1], reached + counts[2]
     progress.done()
     return judged, adopted, reached
 

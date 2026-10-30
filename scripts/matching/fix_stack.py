@@ -34,7 +34,21 @@ def frame_size(name):
     return int(found.group(1), 0) if found else None
 
 
+TRACKER = []  # the Progress of main(), for the worker threads
+
+
 def search(row):
+    tracker = TRACKER[0] if TRACKER else None
+    name = row['address'][2:]
+    if tracker:
+        tracker.begin(name)
+    result = search_row(row)
+    if tracker:
+        tracker.tick(f'{name}: {result[3]} -> {result[4]}' if result else '', name)
+    return result
+
+
+def search_row(row):
     address = f"0x{int(row['address'], 16):06X}"
     source = os.path.join(ROOT, 'nonmatching', row['file'])
     lang = 'c' if source.endswith('.c') else 'c++'
@@ -73,9 +87,9 @@ def main():
     os.makedirs(arguments.out, exist_ok=True)
     improved = matched = 0
     progress = Progress(len(rows), 'fix-stack')
+    TRACKER.append(progress)
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for result in pool.map(search, rows):
-            progress.tick()
             if result:
                 address, name, lang, start, score, text = result
                 improved += 1

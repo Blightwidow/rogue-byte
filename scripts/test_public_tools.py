@@ -360,6 +360,45 @@ class ProgressTests(unittest.TestCase):
         self.assertTrue(lines[3].startswith('[test] 4/4 100%'))
         self.assertTrue(lines[-1].startswith('[test] done in'))
 
+    def test_the_heartbeat_names_what_is_running_while_nothing_finishes(self):
+        import io
+        import time
+        old = os.environ.get('PROGRESS')
+        os.environ['PROGRESS'] = '1'
+        try:
+            stream = io.StringIO()
+            tracker = progress.Progress(5, 'beat', interval=100, heartbeat=0.05, stream=stream)
+            tracker.begin('1FC270')
+            time.sleep(0.3)
+            tracker.done()
+            self.assertIn('running 1FC270', stream.getvalue())
+            self.assertIn('0/5', stream.getvalue())
+        finally:
+            if old is None:
+                os.environ.pop('PROGRESS', None)
+            else:
+                os.environ['PROGRESS'] = old
+
+    def test_items_finishing_out_of_order_leave_the_others_running(self):
+        import io
+        old = os.environ.get('PROGRESS')
+        os.environ['PROGRESS'] = '1'
+        try:
+            stream = io.StringIO()
+            tracker = progress.Progress(3, 'order', interval=0, heartbeat=0, stream=stream)
+            tracker.begin('A')
+            tracker.begin('B')
+            tracker.tick('6 -> 5', 'B')
+            self.assertIn('1/3', stream.getvalue())
+            self.assertIn('running A', stream.getvalue())
+            self.assertNotIn('running A, B', stream.getvalue())
+            self.assertIn('last 6 -> 5', stream.getvalue())
+        finally:
+            if old is None:
+                os.environ.pop('PROGRESS', None)
+            else:
+                os.environ['PROGRESS'] = old
+
     def test_clock_formats_seconds_minutes_and_hours(self):
         self.assertEqual(progress.clock(42), '42s')
         self.assertEqual(progress.clock(125), '2m05s')

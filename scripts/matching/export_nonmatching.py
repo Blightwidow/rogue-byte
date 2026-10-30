@@ -46,9 +46,18 @@ def score(address, path, language):
     return int(found.group(1)) if found else None
 
 
+TRACKER = []  # the Progress of main(), for the worker threads
+
+
 def evaluate(job):
     address, candidates = job
-    return address, choose([(score(address, path, language), path, language) for path, language in candidates])
+    tracker = TRACKER[0] if TRACKER else None
+    if tracker:
+        tracker.begin(f'{address:06X}')
+    best = choose([(score(address, path, language), path, language) for path, language in candidates])
+    if tracker:
+        tracker.tick(f'{address:06X}: {best[0] if best else None}', f'{address:06X}')
+    return address, best
 
 
 def main():
@@ -76,10 +85,10 @@ def main():
         if candidates:
             jobs.append((address, candidates))
     progress = Progress(len(jobs), 'nonmatching')
+    TRACKER.append(progress)
     results = []
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for address, best in pool.map(evaluate, jobs):
-            progress.tick(f'{address:06X}')
             if best:
                 results.append((address, best))
     progress.done()

@@ -51,11 +51,20 @@ def scan(text):
     return found
 
 
+TRACKER = []  # the Progress of main(), for the worker threads
+
+
 def judge(path):
     address = os.path.splitext(os.path.basename(path))[0]
+    tracker = TRACKER[0] if TRACKER else None
+    if tracker:
+        tracker.begin(address)
     result = subprocess.run([sys.executable, 'scripts/matching/try.py', address, path, '--quiet'], capture_output=True, text=True)
     first = (result.stdout.strip().splitlines() or [''])[-1]
-    return int(address, 16), (int(first.split()[1]) if first.startswith('score ') else None), path
+    score = int(first.split()[1]) if first.startswith('score ') else None
+    if tracker:
+        tracker.tick(f'{address}: {score}', address)
+    return int(address, 16), score, path
 
 
 def main():
@@ -68,11 +77,9 @@ def main():
     by_address = {int(row['address'], 16): row for row in rows}
     sources = sorted(glob.glob(f'{SOURCES}/*.cpp') + glob.glob(f'{SOURCES}/*.c'))
     progress = Progress(len(sources), 'record')
-    results = []
+    TRACKER.append(progress)
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
-        for result in pool.map(judge, sources):
-            results.append(result)
-            progress.tick(f'{result[0]:06X}: {result[1]}')
+        results = list(pool.map(judge, sources))
     progress.done()
     new_matches, tried = [], 0
     since = os.path.getmtime(STAMP) if os.path.exists(STAMP) else 0

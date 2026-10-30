@@ -670,9 +670,16 @@ def main():
     table = []
     sizes = {int(row['address'], 16): int(row['size']) for row in rows}
     progress = Progress(len(rows), 'harvest')
+
+    def draft(row):
+        name = row['address'][2:]
+        progress.begin(name)
+        found = harvest_one(arguments, signatures, row)
+        progress.tick(f'{name}: {found[1]} {found[2] if found[2] is not None else ""}'.strip(), name)
+        return found
+
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
-        for address, outcome, score, text in pool.map(lambda row: harvest_one(arguments, signatures, row), rows):
-            progress.tick(f'{address:06X}: {outcome} {score if score is not None else ""}')
+        for address, outcome, score, text in pool.map(draft, rows):
             outcomes[outcome] = outcomes.get(outcome, 0) + 1
             table.append((address, sizes[address], outcome, score))
             if score is None:

@@ -503,6 +503,7 @@ def batch(arguments):
     matched = improved = 0
     progress = Progress(len(pool), 'mutate')
     for position, (best, address, path) in enumerate(pool, 1):
+        progress.begin(address)
         original = open(path, encoding='utf-8').read()
         score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16) + arguments.seed)
         if score is not None and score < best:
@@ -510,7 +511,7 @@ def batch(arguments):
                 open(path, 'w', encoding='utf-8').write(text)
             improved += 1
             matched += score == 0
-        progress.tick()
+        progress.tick(f'{address}: {best} -> {score}', address)
         print(f'[{position}/{len(pool)}] {address}: {best} -> {score} ({used} compiles){"  MATCH" if score == 0 else ""}{progress.suffix()}', flush=True)
     print(f'{len(pool)} functions: {improved} improved, {matched} reach 0')
 

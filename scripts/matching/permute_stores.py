@@ -80,19 +80,21 @@ def main():
     rows = [row for row in rows if regions(open(os.path.join('nonmatching', row['file']), encoding='utf-8').read().split('\n'))]
     os.makedirs(arguments.out, exist_ok=True)
     improved = matched = 0
+    progress = Progress(len(rows), 'permute-stores')
 
     def run(row):
         address = f"0x{int(row['address'], 16):06X}"
+        progress.begin(address[2:])
         source = os.path.join('nonmatching', row['file'])
         previous = os.path.join(arguments.out, f'{int(row["address"], 16):06X}' + ('.c' if source.endswith('.c') else '.cpp'))
         if os.path.exists(previous):  # a better order found by an earlier run is the starting point
             source = os.path.abspath(previous)
-        return row, address, source, search(address, source, arguments.budget, arguments.seed)
+        found = search(address, source, arguments.budget, arguments.seed)
+        progress.tick(f'{address[2:]}: {found[0]} -> {found[1]}', address[2:])
+        return row, address, source, found
 
-    progress = Progress(len(rows), 'permute-stores')
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for row, address, source, (start, score, text) in pool.map(run, rows):
-            progress.tick(f'{address}: {start} -> {score}')
             if score is not None and start is not None and score < start:
                 improved += 1
                 matched += score == 0

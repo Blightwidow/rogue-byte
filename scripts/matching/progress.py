@@ -6,16 +6,21 @@
 a tool run directly, by an agent or a script, prints exactly what it printed before. The lines go to stderr, so the totals a tool prints
 on stdout stay as they were:
 
-    [rules] 310/867 36%  elapsed 41m02s  eta 1h12m  1FC270: 6 -> 5
+    [permute-stores] 12/70 17%  elapsed 41m02s  eta 3h20m  running 1FC270, 1B9CA0  last 1E64C8: 6 -> 5
+
+A line comes when an item finishes (at most one every few seconds) and, from a heartbeat thread, every 15 seconds while nothing finishes:
+one slow item does not leave the screen blank. Workers call `begin` and `tick` themselves, in whatever order they finish:
 
     progress = Progress(len(items), 'rules')
-    for item in items:
+    def work(item):
+        progress.begin(item.name)
         ...
-        progress.tick('1FC270: 6 -> 5')     # at most one line every few seconds, and always the last
-    progress.done()
+        progress.tick('6 -> 5', item.name)       # thread-safe
+    progress.done()                               # stops the heartbeat
 """
 import os
 import sys
+import threading
 import time
 
 
@@ -33,11 +38,16 @@ def clock(seconds):
 
 
 class Progress:
-    def __init__(self, total, label, interval=5.0, stream=None):
+    def __init__(self, total, label, interval=5.0, heartbeat=15.0, stream=None):
         self.total, self.label, self.interval = total, label, interval
         self.stream = stream or sys.stderr
         self.count, self.start, self.last = 0, time.monotonic(), 0.0
+        self.running, self.note = [], ''
         self.active = enabled()
+        self.lock = threading.Lock()
+        self.stopped = threading.Event()
+        if self.active and heartbeat:
+            threading.Thread(target=self.beat, args=(heartbeat,), daemon=True).start()
 
     def eta(self):
         """The time left, estimated from the average of what is done ('' before the first item)."""
@@ -46,23 +56,44 @@ class Progress:
         elapsed = time.monotonic() - self.start
         return clock(elapsed / self.count * (self.total - self.count))
 
-    def line(self, note=''):
-        elapsed = clock(time.monotonic() - self.start)
+    def line(self):
         percent = 100 * self.count // self.total if self.total else 100
-        text = f'[{self.label}] {self.count}/{self.total} {percent}%  elapsed {elapsed}'
+        text = f'[{self.label}] {self.count}/{self.total} {percent}%  elapsed {clock(time.monotonic() - self.start)}'
         if self.count < self.total and self.eta():
             text += f'  eta {self.eta()}'
-        return text + (f'  {note}' if note else '')
+        if self.running:
+            shown = ', '.join(self.running[:3]) + (f' +{len(self.running) - 3}' if len(self.running) > 3 else '')
+            text += f'  running {shown}'
+        if self.note:
+            text += f'  last {self.note}'
+        return text
 
-    def tick(self, note='', step=1):
-        """One more item done; a line when the interval has passed since the last, and for the last item."""
-        self.count += step
-        if not self.active:
-            return
-        now = time.monotonic()
-        if now - self.last >= self.interval or self.count >= self.total:
-            self.last = now
-            print(self.line(note), file=self.stream, flush=True)
+    def emit(self):
+        self.last = time.monotonic()
+        print(self.line(), file=self.stream, flush=True)
+
+    def begin(self, name):
+        """An item started (the heartbeat names what is running)."""
+        if self.active:
+            with self.lock:
+                self.running.append(str(name))
+
+    def tick(self, note='', name=None, step=1):
+        """An item is done: a line when the interval has passed since the last, and for the last item. Thread-safe."""
+        with self.lock:
+            self.count += step
+            if note:
+                self.note = note
+            if name is not None and str(name) in self.running:
+                self.running.remove(str(name))
+            if self.active and (time.monotonic() - self.last >= self.interval or self.count >= self.total):
+                self.emit()
+
+    def beat(self, seconds):
+        while not self.stopped.wait(seconds):
+            with self.lock:
+                if time.monotonic() - self.last >= seconds:
+                    self.emit()
 
     def suffix(self):
         """' elapsed .. eta ..' for a tool that prints its own line per item ('' when off)."""
@@ -71,5 +102,6 @@ class Progress:
         return f'  elapsed {clock(time.monotonic() - self.start)}  eta {self.eta()}'
 
     def done(self, summary=''):
+        self.stopped.set()
         if self.active:
             print(f'[{self.label}] done in {clock(time.monotonic() - self.start)}' + (f': {summary}' if summary else ''), file=self.stream, flush=True)
