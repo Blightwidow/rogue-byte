@@ -16,7 +16,7 @@ struct OBSTACLE {
 extern "C" {
 void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
-void *PvAllocStackImpl__Fi(ALLOCREQ *);
+void *PvAllocStackImpl__Fi(void);
 QW PosLoWorld(OBSTACLE *);
 void *PpathzoneFindPos(QW, int);
 void AddPathzoneObstacle(void *, OBSTACLE *);
@@ -33,7 +33,7 @@ void Obstacle_AddToPathzone(OBSTACLE *pobstacle)
     CStackFrame_Construct(locals.frame);
     locals.req.align = 0x10;
     locals.req.size = pobstacle->cposObstacle * 0x10 - 1;
-    VECTOR *aposWorld = (VECTOR *)PvAllocStackImpl__Fi(&locals.req);
+    VECTOR *aposWorld = (VECTOR *)PvAllocStackImpl__Fi();
     VEntry *entry = &pobstacle->vptr[31];
     MATRIX4 *pmatWorld = (MATRIX4 *)entry->fn((char *)pobstacle + entry->delta);
     asm("lqc2 vf2, 0x0(%0)" : : "r"(pmatWorld));

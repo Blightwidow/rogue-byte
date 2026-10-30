@@ -16,7 +16,7 @@ M2C_UNK CalculateEmitdvMatrix(s8 *, s8 *);      /* extern */
 s32 FIsZeroDv__FP6VECTOR(s128);                     /* extern */
 s32 FIsZeroV__FP6VECTOR(s128);                      /* extern */
 s32 FIsZeroW__FP6VECTOR(s128);                      /* extern */
-M2C_UNK LoadRotateMatrixRad(M2C_UNK *, M2C_UNK, f32); /* extern */
+M2C_UNK LoadRotateMatrixRad(M2C_UNK *, M2C_UNK); /* extern */
 extern M2C_UNK g_2dded0;
 extern s32 g_2dded4;
 void ProjectRipTransform__FP3RIPf(s8 *arg0) {
@@ -50,7 +50,7 @@ void ProjectRipTransform__FP3RIPf(s8 *arg0) {
             asm volatile("sqc2 vf2, (%0)" : : "r"(sp));
             s32 vu_2;
             asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_2));
-            LoadRotateMatrixRad(&sp50, vu_2, temp_v1 * M2C_FIELD(&g_2dded0, f32 *, 4));
+            LoadRotateMatrixRad(&sp50, vu_2);
             asm volatile("lqc2 vf4, 0x40(%0)" : : "r"(arg0));
             temp_v0 = arg0 + 0x40;
             asm volatile("lqc2 vf3, 0x50(%0)" : : "r"(sp));

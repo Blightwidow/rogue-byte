@@ -65,8 +65,8 @@ void func_001ACFE0(MENU *pmenu)
         void *ppath = B_003E0FE4;
         {
             CRef refValue;
-            refValue.tagk = 0x17;
             refValue.n = 1;
+            refValue.tagk = 0x17;
             CRef refTemp(refValue);
             RefSetGameSaveValue(ppath, refTemp, B_003D4A60);
         }

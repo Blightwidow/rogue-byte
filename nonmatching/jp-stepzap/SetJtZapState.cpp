@@ -28,7 +28,7 @@ M2C_UNK RetractSmaRef(s8 *);                      /* extern */
 M2C_UNK SetStepRadTarget(s8 *, f32);              /* extern */
 M2C_UNK SetStepRadTargetDir(s8 *, M2C_UNK);       /* extern */
 f32 atan2f(f32, f32, f32);                          /* extern */
-M2C_UNK func_001F1448(M2C_UNK, s8 *, M2C_UNK, M2C_UNK); /* extern */
+M2C_UNK func_001F1448(M2C_UNK, s8 *, M2C_UNK, M2C_UNK, s8 *); /* extern */
 M2C_UNK func_001F4BF8(s8 *);                      /* extern */
 extern M2C_UNK B_002DDF40;
 extern s128 D_002BFA00;
@@ -62,6 +62,7 @@ void SetJtZapState(s8 *arg0, s32 arg1) {
     s8 *temp_a1_6;
     s8 *temp_a1_7;
     s8 *temp_a1_8;
+    s8 *temp_a1_9;
     s8 *temp_a2;
     s8 *temp_a3;
     s8 *temp_v0;
@@ -249,10 +250,11 @@ block_35:
             RetractSmaRef(M2C_FIELD(arg0, s8 **, 0) + 0x1034);
             temp_a1_7 = M2C_FIELD(arg0, s8 **, 0);
             ApplyAsegToHandle(var_s1, temp_a1_7, var_s3, temp_a1_7 + 0x1030, 0, 0x3F800000);
-            func_001F1448(0, M2C_FIELD(arg0, s8 **, 0), -1, 0);
             temp_a1_8 = M2C_FIELD(arg0, s8 **, 0);
-            temp_v0_5 = M2C_FIELD(temp_a1_8, s8 **, 0xC);
-            M2C_FIELD(temp_v0_5, M2C_UNK (**)(s8 *, s8 *), 0x2D4)(temp_a1_8 + M2C_FIELD(temp_v0_5, s16 *, 0x2D0), temp_a1_8);
+            func_001F1448(0, temp_a1_8, -1, 0, temp_a1_8 + 0x1034);
+            temp_a1_9 = M2C_FIELD(arg0, s8 **, 0);
+            temp_v0_5 = M2C_FIELD(temp_a1_9, s8 **, 0xC);
+            M2C_FIELD(temp_v0_5, M2C_UNK (**)(s8 *, s8 *), 0x2D4)(temp_a1_9 + M2C_FIELD(temp_v0_5, s16 *, 0x2D0), temp_a1_9);
         }
     }
 }

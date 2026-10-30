@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct SMP { float a, b, c, d; };
 extern QW g_2a2dd0;
-extern "C" float GSmooth__FfffP3SMPPf(float g, float gGoal, float dt, SMP *psmp, float *psv);
+extern "C" float GSmooth__FfffP3SMPPf(float g, float gGoal);
 extern "C" QW PosSmooth(float dt, QW posCur, QW posGoal, SMP *psmp, QW *pvecVelocity)
 {
     struct Frame { QW junk; float gVelocity; float pad[3]; QW posCurSaved; QW vecDelta; QW spill; } frame;
@@ -16,7 +16,7 @@ extern "C" QW PosSmooth(float dt, QW posCur, QW posGoal, SMP *psmp, QW *pvecVelo
     asm("qmfc2.ni %0, vf1" : "=r" (sDelta));
     if (0.0001f < sDelta) {
         asm("sqc2 vf3, %0" : "=m" (frame.spill));
-        float sSmoothed = GSmooth__FfffP3SMPPf(0.0f, sDelta, dt, psmp, &frame.gVelocity);
+        float sSmoothed = GSmooth__FfffP3SMPPf(0.0f, sDelta);
         asm("lqc2 vf3, %0" : : "m" (frame.spill));
         if (pvecVelocity) {
             float gScale = frame.gVelocity / sDelta;

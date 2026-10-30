@@ -2,14 +2,14 @@
 extern "C" {
 
 s32 CFileLocation_Cb(void *);                       /* extern */
-M2C_UNK Clear__13CFileLocation(void *, s32);        /* extern */
+M2C_UNK Clear__13CFileLocation(void *);        /* extern */
 
 s32 FUN_0018c1e8(void *arg0) {
     char sp[0x120];
     s32 var_v0;
     s32 var_v0_2;
 
-    Clear__13CFileLocation(sp, 2);
+    Clear__13CFileLocation(sp);
     if (arg0 != NULL) {
         var_v0_2 = M2C_FIELD(arg0, s32 *, 4) != M2C_FIELD(arg0, s32 *, 0x3C);
     } else {

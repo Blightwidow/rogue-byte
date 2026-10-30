@@ -3,6 +3,7 @@ struct NODE { float nx, ny, gDist; unsigned short aichild[2]; };
 struct CG { char pad[0xC]; void *aface; int cnode; NODE *anode; };
 void *PcgtPointInCgQuick(CG *cg, QW pos, unsigned long grf)
 {
+    void * result;
     QW rotated, packed, vec;
     float x, y, z = -1.0f;
     int bitsX, bitsY, bitsZ;
@@ -31,11 +32,13 @@ void *PcgtPointInCgQuick(CG *cg, QW pos, unsigned long grf)
         unsigned child = node->aichild[0.0f < dist ? 1 : 0];
         if (child & 0x8000) {
             if (child & leaf)
-                return (char *)cg->aface + (child & 0x3FFF) * 12;
-            return 0;
+                { result = (char *)cg->aface + (child & 0x3FFF) * 12; goto done; }
+            { result = 0; goto done; }
         }
         node = anode + child;
         if (node == end)
             return 0;
     }
+done:
+    return result;
 }

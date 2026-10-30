@@ -11,7 +11,7 @@ struct _m2c_stack_FInvulnerableJt {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
 s32 FIsPoSwFocusBase(s32);                          /* extern */
-s32 ZapFInvulnerable(s8 *, s32);                  /* extern */
+s32 ZapFInvulnerable(s8 *);                  /* extern */
 extern s32 B_003D4A54;
 s32 FInvulnerableJt(s8 *arg0, s32 arg1) {
     s32 result;
@@ -21,7 +21,7 @@ s32 FInvulnerableJt(s8 *arg0, s32 arg1) {
             return 1;
         }
         if ((B_003D4A54 == 0) || (var_v0 = 1, (FIsPoSwFocusBase(B_003D4A54) == 0))) {
-            var_v0 = ZapFInvulnerable(arg0 + 0xDF0, arg1);
+            var_v0 = ZapFInvulnerable(arg0 + 0xDF0);
         }
         /* Duplicate return node #6. Try simplifying control flow for better match */
         { result = var_v0; goto done; }

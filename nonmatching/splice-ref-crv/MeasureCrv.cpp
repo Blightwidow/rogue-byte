@@ -84,9 +84,9 @@ void MeasureCrv(s8 *arg0) {
             do {
                 FillCrvcCache(arg0, (s32) var_a1);
                 temp_v1_2 = var_s1 * 4;
-                var_s1 += 1;
                 temp_v1_3 = (s8 *)(temp_v1_2 + M2C_FIELD(arg0, M2C_UNK32 **, 0xF0));
                 M2C_FIELD(temp_v1_3, f32 *, 4) = (f32) (M2C_FIELD(temp_v1_3, f32 *, 0) + M2C_FIELD(arg0, f32 *, 0x174));
+                var_s1 += 1;
                 var_a1 = (s8 *) var_s1;
             } while (var_s1 < (M2C_FIELD(arg0, s32 *, 0xE8) - 1));
         }

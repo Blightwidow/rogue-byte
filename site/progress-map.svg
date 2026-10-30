@@ -88,7 +88,7 @@
 <rect x="136.6" y="301.5" width="21.5" height="20.1" fill="#4b4f6e"><title>func_0024C4B0 0X24C4B0 448 bytes (asm)</title></rect>
 <rect x="158.6" y="301.5" width="21.2" height="20.1" fill="#4b4f6e"><title>snd_BankLoadByLoc 0X231FB0 440 bytes (asm)</title></rect>
 <rect x="180.1" y="301.5" width="21.2" height="20.1" fill="#4b4f6e"><title>memmove 0X2332B8 440 bytes (asm)</title></rect>
-<rect x="201.7" y="301.5" width="21.2" height="20.1" fill="#4b4f6e"><title>func_00249EE0 0X249EE0 440 bytes (asm)</title></rect>
+<rect x="201.7" y="301.5" width="21.2" height="20.1" fill="#2f7af4"><title>func_00249EE0 0X249EE0 440 bytes (c)</title></rect>
 <rect x="223.2" y="301.5" width="21.2" height="20.1" fill="#4b4f6e"><title>func_0024ACD8 0X24ACD8 440 bytes (asm)</title></rect>
 <rect x="244.8" y="301.5" width="20.0" height="20.1" fill="#4b4f6e"><title>sceSifInitRpc 0X236A60 416 bytes (asm)</title></rect>
 <rect x="1.0" y="322.0" width="19.9" height="20.2" fill="#4b4f6e"><title>func_002515F0 0X2515F0 416 bytes (asm)</title></rect>
@@ -104,7 +104,7 @@
 <rect x="1.0" y="523.0" width="19.9" height="19.0" fill="#4b4f6e"><title>__ieee754_log10 0X246178 392 bytes (asm)</title></rect>
 <rect x="1.0" y="542.3" width="19.9" height="19.0" fill="#4b4f6e"><title>func_0024FAD0 0X24FAD0 392 bytes (asm)</title></rect>
 <rect x="1.0" y="561.7" width="19.9" height="18.6" fill="#4b4f6e"><title>sceMcGetInfo 0X244570 384 bytes (asm)</title></rect>
-<rect x="21.3" y="322.0" width="19.2" height="19.3" fill="#4b4f6e"><title>func_00251FC8 0X251FC8 384 bytes (asm)</title></rect>
+<rect x="21.3" y="322.0" width="19.2" height="19.3" fill="#2f7af4"><title>func_00251FC8 0X251FC8 384 bytes (c)</title></rect>
 <rect x="40.9" y="322.0" width="19.2" height="19.3" fill="#4b4f6e"><title>func_00252608 0X252608 384 bytes (asm)</title></rect>
 <rect x="60.5" y="322.0" width="18.8" height="19.3" fill="#4b4f6e"><title>func_002355E0 0X2355E0 376 bytes (asm)</title></rect>
 <rect x="79.7" y="322.0" width="18.8" height="19.3" fill="#4b4f6e"><title>sceClose 0X238138 376 bytes (asm)</title></rect>
@@ -113,18 +113,18 @@
 <rect x="137.3" y="322.0" width="18.8" height="19.3" fill="#4b4f6e"><title>func_00251CE8 0X251CE8 376 bytes (asm)</title></rect>
 <rect x="156.5" y="322.0" width="18.4" height="19.3" fill="#4b4f6e"><title>func_0024B148 0X24B148 368 bytes (asm)</title></rect>
 <rect x="175.3" y="322.0" width="18.0" height="19.3" fill="#4b4f6e"><title>func_0023DAB0 0X23DAB0 360 bytes (asm)</title></rect>
-<rect x="193.7" y="322.0" width="18.0" height="19.3" fill="#4b4f6e"><title>func_00251E60 0X251E60 360 bytes (asm)</title></rect>
+<rect x="193.7" y="322.0" width="18.0" height="19.3" fill="#2f7af4"><title>func_00251E60 0X251E60 360 bytes (c)</title></rect>
 <rect x="212.1" y="322.0" width="17.6" height="19.3" fill="#4b4f6e"><title>func_0024A0E8 0X24A0E8 352 bytes (asm)</title></rect>
-<rect x="230.0" y="322.0" width="17.2" height="19.3" fill="#4b4f6e"><title>func_00239198 0X239198 344 bytes (asm)</title></rect>
-<rect x="247.6" y="322.0" width="17.2" height="19.3" fill="#4b4f6e"><title>func_00239AE0 0X239AE0 344 bytes (asm)</title></rect>
+<rect x="230.0" y="322.0" width="17.2" height="19.3" fill="#2f7af4"><title>func_00239198 0X239198 344 bytes (c)</title></rect>
+<rect x="247.6" y="322.0" width="17.2" height="19.3" fill="#2f7af4"><title>func_00239AE0 0X239AE0 344 bytes (c)</title></rect>
 <rect x="21.3" y="341.7" width="18.1" height="18.3" fill="#4b4f6e"><title>func_00241C98 0X241C98 344 bytes (asm)</title></rect>
 <rect x="21.3" y="360.4" width="18.1" height="18.3" fill="#4b4f6e"><title>func_00241F98 0X241F98 344 bytes (asm)</title></rect>
-<rect x="21.3" y="379.1" width="18.1" height="18.3" fill="#4b4f6e"><title>__kernel_cosf 0X248DE0 344 bytes (asm)</title></rect>
-<rect x="21.3" y="397.8" width="18.1" height="18.3" fill="#4b4f6e"><title>func_002544C8 0X2544C8 344 bytes (asm)</title></rect>
-<rect x="21.3" y="416.5" width="18.1" height="17.8" fill="#4b4f6e"><title>sceSifBindRpc 0X2370A8 336 bytes (asm)</title></rect>
+<rect x="21.3" y="379.1" width="18.1" height="18.3" fill="#2f7af4"><title>__kernel_cosf 0X248DE0 344 bytes (c)</title></rect>
+<rect x="21.3" y="397.8" width="18.1" height="18.3" fill="#2f7af4"><title>func_002544C8 0X2544C8 344 bytes (c)</title></rect>
+<rect x="21.3" y="416.5" width="18.1" height="17.8" fill="#2f7af4"><title>sceSifBindRpc 0X2370A8 336 bytes (c)</title></rect>
 <rect x="21.3" y="434.7" width="18.1" height="17.8" fill="#4b4f6e"><title>func_002401D8 0X2401D8 336 bytes (asm)</title></rect>
 <rect x="21.3" y="453.0" width="18.1" height="17.8" fill="#4b4f6e"><title>sceMcGetDir 0X2446F0 336 bytes (asm)</title></rect>
-<rect x="21.3" y="471.2" width="18.1" height="17.8" fill="#4b4f6e"><title>func_00254A70 0X254A70 336 bytes (asm)</title></rect>
+<rect x="21.3" y="471.2" width="18.1" height="17.8" fill="#2f7af4"><title>func_00254A70 0X254A70 336 bytes (c)</title></rect>
 <rect x="21.3" y="489.5" width="18.1" height="17.8" fill="#4b4f6e"><title>UnlinkPairNode 0X2550F8 336 bytes (asm)</title></rect>
 <rect x="21.3" y="507.7" width="18.1" height="17.8" fill="#4b4f6e"><title>UnlinkVarbNode 0X255438 336 bytes (asm)</title></rect>
 <rect x="21.3" y="526.0" width="18.1" height="17.8" fill="#4b4f6e"><title>UnlinkFrameNode 0X255770 336 bytes (asm)</title></rect>
@@ -136,9 +136,9 @@
 <rect x="97.1" y="341.7" width="18.5" height="17.0" fill="#4b4f6e"><title>find_exception_handler 0X23E860 328 bytes (asm)</title></rect>
 <rect x="116.0" y="341.7" width="18.5" height="17.0" fill="#4b4f6e"><title>logf 0X245178 328 bytes (asm)</title></rect>
 <rect x="135.0" y="341.7" width="18.5" height="17.0" fill="#4b4f6e"><title>func_0024CB48 0X24CB48 328 bytes (asm)</title></rect>
-<rect x="153.9" y="341.7" width="18.5" height="17.0" fill="#4b4f6e"><title>func_00253D20 0X253D20 328 bytes (asm)</title></rect>
+<rect x="153.9" y="341.7" width="18.5" height="17.0" fill="#2f7af4"><title>func_00253D20 0X253D20 328 bytes (c)</title></rect>
 <rect x="172.8" y="341.7" width="18.1" height="17.0" fill="#4b4f6e"><title>memcmp 0X233178 320 bytes (asm)</title></rect>
-<rect x="191.3" y="341.7" width="18.1" height="17.0" fill="#4b4f6e"><title>func_0023F710 0X23F710 320 bytes (asm)</title></rect>
+<rect x="191.3" y="341.7" width="18.1" height="17.0" fill="#2f7af4"><title>func_0023F710 0X23F710 320 bytes (c)</title></rect>
 <rect x="209.8" y="341.7" width="18.1" height="17.0" fill="#4b4f6e"><title>scePadInit 0X242D08 320 bytes (asm)</title></rect>
 <rect x="228.2" y="341.7" width="18.1" height="17.0" fill="#4b4f6e"><title>fmodf 0X245A18 320 bytes (asm)</title></rect>
 <rect x="246.7" y="341.7" width="18.1" height="17.0" fill="#4b4f6e"><title>func_00253E68 0X253E68 320 bytes (asm)</title></rect>
@@ -149,34 +149,34 @@
 <rect x="39.8" y="430.1" width="17.3" height="16.9" fill="#4b4f6e"><title>func_0023A6C8 0X23A6C8 304 bytes (asm)</title></rect>
 <rect x="39.8" y="447.4" width="17.3" height="16.9" fill="#4b4f6e"><title>func_0023D338 0X23D338 304 bytes (asm)</title></rect>
 <rect x="39.8" y="464.7" width="17.3" height="16.9" fill="#4b4f6e"><title>sceMpegAddStrCallback 0X24F790 304 bytes (asm)</title></rect>
-<rect x="39.8" y="482.0" width="17.3" height="16.4" fill="#4b4f6e"><title>sceMcOpen 0X243EF0 296 bytes (asm)</title></rect>
-<rect x="39.8" y="498.8" width="17.3" height="16.4" fill="#4b4f6e"><title>atan2f 0X2458F0 296 bytes (asm)</title></rect>
+<rect x="39.8" y="482.0" width="17.3" height="16.4" fill="#2f7af4"><title>sceMcOpen 0X243EF0 296 bytes (c)</title></rect>
+<rect x="39.8" y="498.8" width="17.3" height="16.4" fill="#2f7af4"><title>atan2f 0X2458F0 296 bytes (c)</title></rect>
 <rect x="39.8" y="515.7" width="17.3" height="16.0" fill="#4b4f6e"><title>scePadInfoAct 0X243558 288 bytes (asm)</title></rect>
-<rect x="39.8" y="532.0" width="17.3" height="16.0" fill="#4b4f6e"><title>sceMcDelete 0X244918 288 bytes (asm)</title></rect>
+<rect x="39.8" y="532.0" width="17.3" height="16.0" fill="#2f7af4"><title>sceMcDelete 0X244918 288 bytes (c)</title></rect>
 <rect x="39.8" y="548.4" width="17.3" height="16.0" fill="#4b4f6e"><title>func_00253240 0X253240 288 bytes (asm)</title></rect>
 <rect x="39.8" y="564.8" width="17.3" height="15.5" fill="#4b4f6e"><title>func_0023DC18 0X23DC18 280 bytes (asm)</title></rect>
 <rect x="57.5" y="359.1" width="16.2" height="16.5" fill="#4b4f6e"><title>func_00242F70 0X242F70 280 bytes (asm)</title></rect>
-<rect x="74.2" y="359.1" width="16.2" height="16.5" fill="#4b4f6e"><title>sceMcRead 0X2441C0 280 bytes (asm)</title></rect>
-<rect x="90.8" y="359.1" width="16.2" height="16.5" fill="#4b4f6e"><title>sqrtf 0X246060 280 bytes (asm)</title></rect>
+<rect x="74.2" y="359.1" width="16.2" height="16.5" fill="#2f7af4"><title>sceMcRead 0X2441C0 280 bytes (c)</title></rect>
+<rect x="90.8" y="359.1" width="16.2" height="16.5" fill="#2f7af4"><title>sqrtf 0X246060 280 bytes (c)</title></rect>
 <rect x="107.4" y="359.1" width="16.2" height="16.5" fill="#4b4f6e"><title>func_00253360 0X253360 280 bytes (asm)</title></rect>
 <rect x="124.0" y="359.1" width="15.8" height="16.5" fill="#4b4f6e"><title>sceSifRebootIop 0X239340 272 bytes (asm)</title></rect>
 <rect x="140.2" y="359.1" width="15.8" height="16.5" fill="#4b4f6e"><title>func_0023DFF8 0X23DFF8 272 bytes (asm)</title></rect>
-<rect x="156.4" y="359.1" width="15.8" height="16.5" fill="#4b4f6e"><title>sceMcGetEntSpace 0X244A58 272 bytes (asm)</title></rect>
+<rect x="156.4" y="359.1" width="15.8" height="16.5" fill="#2f7af4"><title>sceMcGetEntSpace 0X244A58 272 bytes (c)</title></rect>
 <rect x="172.5" y="359.1" width="15.3" height="16.5" fill="#4b4f6e"><title>func_0023F938 0X23F938 264 bytes (asm)</title></rect>
 <rect x="188.2" y="359.1" width="15.3" height="16.5" fill="#4b4f6e"><title>sceGsSetDefClear 0X241260 264 bytes (asm)</title></rect>
-<rect x="203.9" y="359.1" width="15.3" height="16.5" fill="#4b4f6e"><title>__kernel_sinf 0X249888 264 bytes (asm)</title></rect>
+<rect x="203.9" y="359.1" width="15.3" height="16.5" fill="#2f7af4"><title>__kernel_sinf 0X249888 264 bytes (c)</title></rect>
 <rect x="219.5" y="359.1" width="14.8" height="16.5" fill="#4b4f6e"><title>func_00238D70 0X238D70 256 bytes (asm)</title></rect>
-<rect x="234.7" y="359.1" width="14.8" height="16.5" fill="#4b4f6e"><title>func_002395B0 0X2395B0 256 bytes (asm)</title></rect>
+<rect x="234.7" y="359.1" width="14.8" height="16.5" fill="#2f7af4"><title>func_002395B0 0X2395B0 256 bytes (c)</title></rect>
 <rect x="250.0" y="359.1" width="14.8" height="16.5" fill="#4b4f6e"><title>func_0023F2D8 0X23F2D8 256 bytes (asm)</title></rect>
-<rect x="57.5" y="376.1" width="15.4" height="15.9" fill="#4b4f6e"><title>acosf 0X2456F0 256 bytes (asm)</title></rect>
-<rect x="57.5" y="392.4" width="15.4" height="15.9" fill="#4b4f6e"><title>asinf 0X2457F0 256 bytes (asm)</title></rect>
+<rect x="57.5" y="376.1" width="15.4" height="15.9" fill="#2f7af4"><title>acosf 0X2456F0 256 bytes (c)</title></rect>
+<rect x="57.5" y="392.4" width="15.4" height="15.9" fill="#2f7af4"><title>asinf 0X2457F0 256 bytes (c)</title></rect>
 <rect x="57.5" y="408.7" width="15.4" height="15.9" fill="#4b4f6e"><title>func_00252C80 0X252C80 256 bytes (asm)</title></rect>
 <rect x="57.5" y="425.1" width="15.4" height="15.4" fill="#4b4f6e"><title>func_0023A420 0X23A420 248 bytes (asm)</title></rect>
 <rect x="57.5" y="440.9" width="15.4" height="15.4" fill="#4b4f6e"><title>func_00252B88 0X252B88 248 bytes (asm)</title></rect>
 <rect x="57.5" y="456.7" width="15.4" height="15.4" fill="#4b4f6e"><title>func_002547A0 0X2547A0 248 bytes (asm)</title></rect>
 <rect x="57.5" y="472.5" width="15.4" height="15.4" fill="#2f7af4"><title>Vector_Load 0X2566D8 248 bytes (c)</title></rect>
 <rect x="57.5" y="488.3" width="15.4" height="15.4" fill="#2f7af4"><title>HashTable_Insert 0X2569F8 248 bytes (c)</title></rect>
-<rect x="57.5" y="504.2" width="15.4" height="14.9" fill="#4b4f6e"><title>func_00235388 0X235388 240 bytes (asm)</title></rect>
+<rect x="57.5" y="504.2" width="15.4" height="14.9" fill="#2f7af4"><title>func_00235388 0X235388 240 bytes (c)</title></rect>
 <rect x="57.5" y="519.5" width="15.4" height="14.9" fill="#4b4f6e"><title>func_002375E0 0X2375E0 240 bytes (asm)</title></rect>
 <rect x="57.5" y="534.8" width="15.4" height="14.9" fill="#4b4f6e"><title>func_0023A7F8 0X23A7F8 240 bytes (asm)</title></rect>
 <rect x="57.5" y="550.1" width="15.4" height="14.9" fill="#4b4f6e"><title>__fixunsdfdi 0X23BEE8 240 bytes (asm)</title></rect>
@@ -184,61 +184,61 @@
 <rect x="73.3" y="376.1" width="14.9" height="15.4" fill="#4b4f6e"><title>func_00252458 0X252458 240 bytes (asm)</title></rect>
 <rect x="88.6" y="376.1" width="14.9" height="15.4" fill="#2f7af4"><title>PpairNew 0X256B48 240 bytes (c)</title></rect>
 <rect x="103.8" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_0023F850 0X23F850 232 bytes (asm)</title></rect>
-<rect x="118.6" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>sceGsPutDrawEnv 0X2406C0 232 bytes (asm)</title></rect>
+<rect x="118.6" y="376.1" width="14.4" height="15.4" fill="#2f7af4"><title>sceGsPutDrawEnv 0X2406C0 232 bytes (c)</title></rect>
 <rect x="133.3" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_00241A30 0X241A30 232 bytes (asm)</title></rect>
 <rect x="148.1" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>cosf 0X244E10 232 bytes (asm)</title></rect>
-<rect x="162.9" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>floorf 0X244F18 232 bytes (asm)</title></rect>
+<rect x="162.9" y="376.1" width="14.4" height="15.4" fill="#2f7af4"><title>floorf 0X244F18 232 bytes (c)</title></rect>
 <rect x="177.6" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_00252148 0X252148 232 bytes (asm)</title></rect>
 <rect x="192.4" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_00252FB0 0X252FB0 232 bytes (asm)</title></rect>
-<rect x="207.1" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_00253FA8 0X253FA8 232 bytes (asm)</title></rect>
-<rect x="221.9" y="376.1" width="14.4" height="15.4" fill="#4b4f6e"><title>func_00254988 0X254988 232 bytes (asm)</title></rect>
-<rect x="236.7" y="376.1" width="13.9" height="15.4" fill="#4b4f6e"><title>__floatdisf 0X23C078 224 bytes (asm)</title></rect>
+<rect x="207.1" y="376.1" width="14.4" height="15.4" fill="#2f7af4"><title>func_00253FA8 0X253FA8 232 bytes (c)</title></rect>
+<rect x="221.9" y="376.1" width="14.4" height="15.4" fill="#2f7af4"><title>func_00254988 0X254988 232 bytes (c)</title></rect>
+<rect x="236.7" y="376.1" width="13.9" height="15.4" fill="#2f7af4"><title>__floatdisf 0X23C078 224 bytes (c)</title></rect>
 <rect x="250.9" y="376.1" width="13.9" height="15.4" fill="#4b4f6e"><title>sceDmaReset 0X241468 224 bytes (asm)</title></rect>
 <rect x="73.3" y="391.9" width="14.4" height="14.8" fill="#4b4f6e"><title>func_00242E90 0X242E90 224 bytes (asm)</title></rect>
 <rect x="73.3" y="407.1" width="14.4" height="14.8" fill="#4b4f6e"><title>func_00252ED0 0X252ED0 224 bytes (asm)</title></rect>
 <rect x="73.3" y="422.3" width="14.4" height="14.3" fill="#4b4f6e"><title>func_002352B0 0X2352B0 216 bytes (asm)</title></rect>
 <rect x="73.3" y="436.9" width="14.4" height="14.3" fill="#4b4f6e"><title>InitAlarm 0X239968 216 bytes (asm)</title></rect>
 <rect x="73.3" y="451.6" width="14.4" height="14.3" fill="#4b4f6e"><title>old_find_exception_handler 0X23E788 216 bytes (asm)</title></rect>
-<rect x="73.3" y="466.2" width="14.4" height="14.3" fill="#4b4f6e"><title>scePadSetActAlign 0X243930 216 bytes (asm)</title></rect>
+<rect x="73.3" y="466.2" width="14.4" height="14.3" fill="#2f7af4"><title>scePadSetActAlign 0X243930 216 bytes (c)</title></rect>
 <rect x="73.3" y="480.9" width="14.4" height="14.3" fill="#4b4f6e"><title>func_0024CC90 0X24CC90 216 bytes (asm)</title></rect>
 <rect x="73.3" y="495.5" width="14.4" height="14.3" fill="#4b4f6e"><title>func_00253098 0X253098 216 bytes (asm)</title></rect>
 <rect x="73.3" y="510.2" width="14.4" height="13.7" fill="#4b4f6e"><title>func_00236D60 0X236D60 208 bytes (asm)</title></rect>
 <rect x="73.3" y="524.3" width="14.4" height="13.7" fill="#4b4f6e"><title>func_00236E70 0X236E70 208 bytes (asm)</title></rect>
 <rect x="73.3" y="538.4" width="14.4" height="13.7" fill="#4b4f6e"><title>func_00236FD8 0X236FD8 208 bytes (asm)</title></rect>
 <rect x="73.3" y="552.5" width="14.4" height="13.7" fill="#4b4f6e"><title>sceCdMmode 0X242C30 208 bytes (asm)</title></rect>
-<rect x="73.3" y="566.6" width="14.4" height="13.7" fill="#4b4f6e"><title>sceMcFormat 0X244848 208 bytes (asm)</title></rect>
+<rect x="73.3" y="566.6" width="14.4" height="13.7" fill="#2f7af4"><title>sceMcFormat 0X244848 208 bytes (c)</title></rect>
 <rect x="88.1" y="391.9" width="14.7" height="13.5" fill="#4b4f6e"><title>func_0024A908 0X24A908 208 bytes (asm)</title></rect>
-<rect x="103.2" y="391.9" width="14.7" height="13.5" fill="#4b4f6e"><title>func_0024B828 0X24B828 208 bytes (asm)</title></rect>
+<rect x="103.2" y="391.9" width="14.7" height="13.5" fill="#2f7af4"><title>func_0024B828 0X24B828 208 bytes (c)</title></rect>
 <rect x="118.3" y="391.9" width="14.7" height="13.5" fill="#4b4f6e"><title>func_00252950 0X252950 208 bytes (asm)</title></rect>
 <rect x="133.4" y="391.9" width="14.7" height="13.5" fill="#4b4f6e"><title>func_00253170 0X253170 208 bytes (asm)</title></rect>
 <rect x="148.5" y="391.9" width="14.7" height="13.5" fill="#2f7af4"><title>HashTable_Clear 0X2567D0 208 bytes (c)</title></rect>
 <rect x="163.6" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>func_00235518 0X235518 200 bytes (asm)</title></rect>
-<rect x="178.1" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>func_0023B290 0X23B290 200 bytes (asm)</title></rect>
+<rect x="178.1" y="391.9" width="14.1" height="13.5" fill="#2f7af4"><title>func_0023B290 0X23B290 200 bytes (c)</title></rect>
 <rect x="192.6" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>sceGszbufaddr 0X240FB0 200 bytes (asm)</title></rect>
-<rect x="207.1" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>func_00243388 0X243388 200 bytes (asm)</title></rect>
+<rect x="207.1" y="391.9" width="14.1" height="13.5" fill="#2f7af4"><title>func_00243388 0X243388 200 bytes (c)</title></rect>
 <rect x="221.6" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>sceMcSync 0X244450 200 bytes (asm)</title></rect>
 <rect x="236.1" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>func_0024AC10 0X24AC10 200 bytes (asm)</title></rect>
 <rect x="250.6" y="391.9" width="14.1" height="13.5" fill="#4b4f6e"><title>func_0024F970 0X24F970 200 bytes (asm)</title></rect>
-<rect x="88.1" y="405.7" width="13.7" height="13.3" fill="#4b4f6e"><title>snd_StreamSafeCdSync 0X232DA8 192 bytes (asm)</title></rect>
-<rect x="88.1" y="419.4" width="13.7" height="13.3" fill="#4b4f6e"><title>sceGsPutDispEnv 0X240600 192 bytes (asm)</title></rect>
+<rect x="88.1" y="405.7" width="13.7" height="13.3" fill="#2f7af4"><title>snd_StreamSafeCdSync 0X232DA8 192 bytes (c)</title></rect>
+<rect x="88.1" y="419.4" width="13.7" height="13.3" fill="#2f7af4"><title>sceGsPutDispEnv 0X240600 192 bytes (c)</title></rect>
 <rect x="88.1" y="433.1" width="13.7" height="13.3" fill="#4b4f6e"><title>func_00241970 0X241970 192 bytes (asm)</title></rect>
-<rect x="88.1" y="446.8" width="13.7" height="13.3" fill="#4b4f6e"><title>scePadSetActDirect 0X243870 192 bytes (asm)</title></rect>
-<rect x="88.1" y="460.4" width="13.7" height="13.3" fill="#4b4f6e"><title>sceMcClose 0X244050 192 bytes (asm)</title></rect>
+<rect x="88.1" y="446.8" width="13.7" height="13.3" fill="#2f7af4"><title>scePadSetActDirect 0X243870 192 bytes (c)</title></rect>
+<rect x="88.1" y="460.4" width="13.7" height="13.3" fill="#2f7af4"><title>sceMcClose 0X244050 192 bytes (c)</title></rect>
 <rect x="88.1" y="474.1" width="13.7" height="13.3" fill="#4b4f6e"><title>func_0024C360 0X24C360 192 bytes (asm)</title></rect>
 <rect x="88.1" y="487.8" width="13.7" height="13.3" fill="#4b4f6e"><title>func_00252398 0X252398 192 bytes (asm)</title></rect>
 <rect x="88.1" y="501.5" width="13.7" height="13.3" fill="#4b4f6e"><title>func_00252548 0X252548 192 bytes (asm)</title></rect>
 <rect x="88.1" y="515.2" width="13.7" height="12.7" fill="#4b4f6e"><title>func_0023B170 0X23B170 184 bytes (asm)</title></rect>
 <rect x="88.1" y="528.3" width="13.7" height="12.7" fill="#2f7af4"><title>__floatsidf 0X23DD80 184 bytes (c)</title></rect>
 <rect x="88.1" y="541.4" width="13.7" height="12.7" fill="#4b4f6e"><title>sceCdBreak 0X242B78 184 bytes (asm)</title></rect>
-<rect x="88.1" y="554.5" width="13.7" height="12.7" fill="#4b4f6e"><title>scePadRead 0X2432D0 184 bytes (asm)</title></rect>
-<rect x="88.1" y="567.6" width="13.7" height="12.7" fill="#4b4f6e"><title>scePadSetMainMode 0X2437B8 184 bytes (asm)</title></rect>
-<rect x="102.2" y="405.7" width="13.7" height="12.7" fill="#4b4f6e"><title>func_00243A08 0X243A08 184 bytes (asm)</title></rect>
+<rect x="88.1" y="554.5" width="13.7" height="12.7" fill="#2f7af4"><title>scePadRead 0X2432D0 184 bytes (c)</title></rect>
+<rect x="88.1" y="567.6" width="13.7" height="12.7" fill="#2f7af4"><title>scePadSetMainMode 0X2437B8 184 bytes (c)</title></rect>
+<rect x="102.2" y="405.7" width="13.7" height="12.7" fill="#2f7af4"><title>func_00243A08 0X243A08 184 bytes (c)</title></rect>
 <rect x="116.3" y="405.7" width="13.7" height="12.7" fill="#4b4f6e"><title>func_00252898 0X252898 184 bytes (asm)</title></rect>
 <rect x="130.4" y="405.7" width="13.7" height="12.7" fill="#4b4f6e"><title>func_00252AD0 0X252AD0 184 bytes (asm)</title></rect>
 <rect x="144.5" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>func_002357B8 0X2357B8 176 bytes (asm)</title></rect>
 <rect x="158.0" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>InitExecPS2 0X2397E8 176 bytes (asm)</title></rect>
 <rect x="171.4" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>func_0023A2F0 0X23A2F0 176 bytes (asm)</title></rect>
-<rect x="184.9" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>func_00243AC0 0X243AC0 176 bytes (asm)</title></rect>
+<rect x="184.9" y="405.7" width="13.1" height="12.7" fill="#2f7af4"><title>func_00243AC0 0X243AC0 176 bytes (c)</title></rect>
 <rect x="198.4" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>func_00244110 0X244110 176 bytes (asm)</title></rect>
 <rect x="211.9" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>sceMpegInit 0X24B480 176 bytes (asm)</title></rect>
 <rect x="225.3" y="405.7" width="13.1" height="12.7" fill="#4b4f6e"><title>func_00252A20 0X252A20 176 bytes (asm)</title></rect>
@@ -249,20 +249,20 @@
 <rect x="102.2" y="444.4" width="12.8" height="12.4" fill="#4b4f6e"><title>func_00236C28 0X236C28 168 bytes (asm)</title></rect>
 <rect x="102.2" y="457.2" width="12.8" height="12.4" fill="#4b4f6e"><title>func_0023A920 0X23A920 168 bytes (asm)</title></rect>
 <rect x="102.2" y="470.0" width="12.8" height="12.4" fill="#4b4f6e"><title>func_002418C8 0X2418C8 168 bytes (asm)</title></rect>
-<rect x="102.2" y="482.7" width="12.8" height="12.4" fill="#4b4f6e"><title>func_00243458 0X243458 168 bytes (asm)</title></rect>
+<rect x="102.2" y="482.7" width="12.8" height="12.4" fill="#2f7af4"><title>func_00243458 0X243458 168 bytes (c)</title></rect>
 <rect x="102.2" y="495.5" width="12.8" height="11.8" fill="#4b4f6e"><title>func_0023D468 0X23D468 160 bytes (asm)</title></rect>
 <rect x="102.2" y="507.7" width="12.8" height="11.8" fill="#2f7af4"><title>func_0023DED0 0X23DED0 160 bytes (c)</title></rect>
 <rect x="102.2" y="519.9" width="12.8" height="11.8" fill="#4b4f6e"><title>sceGsResetPath 0X240338 160 bytes (asm)</title></rect>
-<rect x="102.2" y="532.0" width="12.8" height="11.8" fill="#4b4f6e"><title>checkModelVersion 0X240B88 160 bytes (asm)</title></rect>
+<rect x="102.2" y="532.0" width="12.8" height="11.8" fill="#2f7af4"><title>checkModelVersion 0X240B88 160 bytes (c)</title></rect>
 <rect x="102.2" y="544.2" width="12.8" height="11.8" fill="#4b4f6e"><title>func_00241B18 0X241B18 160 bytes (asm)</title></rect>
-<rect x="102.2" y="556.4" width="12.8" height="11.8" fill="#4b4f6e"><title>sceCdSync 0X241E88 160 bytes (asm)</title></rect>
-<rect x="102.2" y="568.5" width="12.8" height="11.8" fill="#4b4f6e"><title>func_0024F8D0 0X24F8D0 160 bytes (asm)</title></rect>
+<rect x="102.2" y="556.4" width="12.8" height="11.8" fill="#2f7af4"><title>sceCdSync 0X241E88 160 bytes (c)</title></rect>
+<rect x="102.2" y="568.5" width="12.8" height="11.8" fill="#2f7af4"><title>func_0024F8D0 0X24F8D0 160 bytes (c)</title></rect>
 <rect x="115.4" y="418.9" width="12.6" height="12.0" fill="#4b4f6e"><title>func_00252D80 0X252D80 160 bytes (asm)</title></rect>
-<rect x="128.4" y="418.9" width="12.6" height="12.0" fill="#4b4f6e"><title>func_00253478 0X253478 160 bytes (asm)</title></rect>
+<rect x="128.4" y="418.9" width="12.6" height="12.0" fill="#2f7af4"><title>func_00253478 0X253478 160 bytes (c)</title></rect>
 <rect x="141.4" y="418.9" width="12.6" height="12.0" fill="#4b4f6e"><title>func_00253C80 0X253C80 160 bytes (asm)</title></rect>
 <rect x="154.3" y="418.9" width="11.9" height="12.0" fill="#4b4f6e"><title>func_00233828 0X233828 152 bytes (asm)</title></rect>
 <rect x="166.6" y="418.9" width="11.9" height="12.0" fill="#4b4f6e"><title>func_00235478 0X235478 152 bytes (asm)</title></rect>
-<rect x="179.0" y="418.9" width="11.9" height="12.0" fill="#4b4f6e"><title>__floatdidf 0X23BFE0 152 bytes (asm)</title></rect>
+<rect x="179.0" y="418.9" width="11.9" height="12.0" fill="#2f7af4"><title>__floatdidf 0X23BFE0 152 bytes (c)</title></rect>
 <rect x="191.3" y="418.9" width="11.9" height="12.0" fill="#2f7af4"><title>__fixdfsi 0X23DE38 152 bytes (c)</title></rect>
 <rect x="203.6" y="418.9" width="11.9" height="12.0" fill="#2f7af4"><title>func_0023E1C8 0X23E1C8 152 bytes (c)</title></rect>
 <rect x="215.9" y="418.9" width="11.9" height="12.0" fill="#4b4f6e"><title>func_00241830 0X241830 152 bytes (asm)</title></rect>
@@ -279,16 +279,16 @@
 <rect x="115.4" y="519.3" width="11.4" height="11.9" fill="#4b4f6e"><title>func_00239C40 0X239C40 144 bytes (asm)</title></rect>
 <rect x="115.4" y="531.6" width="11.4" height="11.9" fill="#2f7af4"><title>func_0023E108 0X23E108 144 bytes (c)</title></rect>
 <rect x="115.4" y="543.9" width="11.4" height="11.9" fill="#4b4f6e"><title>next_stack_level 0X23EAB0 144 bytes (asm)</title></rect>
-<rect x="115.4" y="556.1" width="11.4" height="11.9" fill="#4b4f6e"><title>func_0024C420 0X24C420 144 bytes (asm)</title></rect>
-<rect x="115.4" y="568.4" width="11.4" height="11.9" fill="#4b4f6e"><title>func_00252230 0X252230 144 bytes (asm)</title></rect>
+<rect x="115.4" y="556.1" width="11.4" height="11.9" fill="#2f7af4"><title>func_0024C420 0X24C420 144 bytes (c)</title></rect>
+<rect x="115.4" y="568.4" width="11.4" height="11.9" fill="#2f7af4"><title>func_00252230 0X252230 144 bytes (c)</title></rect>
 <rect x="127.2" y="431.3" width="11.7" height="11.6" fill="#4b4f6e"><title>func_00254678 0X254678 144 bytes (asm)</title></rect>
 <rect x="139.3" y="431.3" width="11.7" height="11.6" fill="#2f7af4"><title>PairHandle_Assign 0X256C58 144 bytes (c)</title></rect>
 <rect x="151.4" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>func_00237558 0X237558 136 bytes (asm)</title></rect>
 <rect x="162.9" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>func_00238BD0 0X238BD0 136 bytes (asm)</title></rect>
-<rect x="174.3" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>func_00239E68 0X239E68 136 bytes (asm)</title></rect>
+<rect x="174.3" y="431.3" width="11.0" height="11.6" fill="#2f7af4"><title>func_00239E68 0X239E68 136 bytes (c)</title></rect>
 <rect x="185.8" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>get_reg_addr 0X23E9A8 136 bytes (asm)</title></rect>
 <rect x="197.2" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>func_0023F688 0X23F688 136 bytes (asm)</title></rect>
-<rect x="208.6" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>sceGsSyncPath 0X2403D8 136 bytes (asm)</title></rect>
+<rect x="208.6" y="431.3" width="11.0" height="11.6" fill="#2f7af4"><title>sceGsSyncPath 0X2403D8 136 bytes (c)</title></rect>
 <rect x="220.1" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>sceGsSetHalfOffset 0X240AE0 136 bytes (asm)</title></rect>
 <rect x="231.5" y="431.3" width="11.0" height="11.6" fill="#4b4f6e"><title>tanf 0X2450F0 136 bytes (asm)</title></rect>
 <rect x="243.0" y="431.3" width="11.0" height="11.6" fill="#2f7af4"><title>ConstructGuard 0X256360 136 bytes (c)</title></rect>
@@ -300,28 +300,28 @@
 <rect x="127.2" y="490.0" width="10.6" height="11.3" fill="#4b4f6e"><title>func_002369E0 0X2369E0 128 bytes (asm)</title></rect>
 <rect x="127.2" y="501.7" width="10.6" height="11.3" fill="#2f7af4"><title>func_0023A518 0X23A518 128 bytes (c)</title></rect>
 <rect x="127.2" y="513.4" width="10.6" height="11.3" fill="#4b4f6e"><title>copy_reg 0X23EA30 128 bytes (asm)</title></rect>
-<rect x="127.2" y="525.1" width="10.6" height="11.3" fill="#4b4f6e"><title>func_0024B590 0X24B590 128 bytes (asm)</title></rect>
-<rect x="127.2" y="536.8" width="10.6" height="10.6" fill="#4b4f6e"><title>func_00238CC8 0X238CC8 120 bytes (asm)</title></rect>
+<rect x="127.2" y="525.1" width="10.6" height="11.3" fill="#2f7af4"><title>func_0024B590 0X24B590 128 bytes (c)</title></rect>
+<rect x="127.2" y="536.8" width="10.6" height="10.6" fill="#2f7af4"><title>func_00238CC8 0X238CC8 120 bytes (c)</title></rect>
 <rect x="127.2" y="547.8" width="10.6" height="10.6" fill="#4b4f6e"><title>func_0023ADA8 0X23ADA8 120 bytes (asm)</title></rect>
-<rect x="127.2" y="558.8" width="10.6" height="10.6" fill="#4b4f6e"><title>func_0023FE00 0X23FE00 120 bytes (asm)</title></rect>
+<rect x="127.2" y="558.8" width="10.6" height="10.6" fill="#2f7af4"><title>func_0023FE00 0X23FE00 120 bytes (c)</title></rect>
 <rect x="127.2" y="569.7" width="10.6" height="10.6" fill="#2f7af4"><title>func_00241C10 0X241C10 120 bytes (c)</title></rect>
 <rect x="138.2" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_0024B670 0X24B670 120 bytes (asm)</title></rect>
 <rect x="149.1" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_0024B6E8 0X24B6E8 120 bytes (asm)</title></rect>
 <rect x="160.0" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_00252788 0X252788 120 bytes (asm)</title></rect>
-<rect x="170.9" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_00254898 0X254898 120 bytes (asm)</title></rect>
-<rect x="181.7" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_00254910 0X254910 120 bytes (asm)</title></rect>
-<rect x="192.6" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>func_00254C28 0X254C28 120 bytes (asm)</title></rect>
+<rect x="170.9" y="443.2" width="10.5" height="10.7" fill="#2f7af4"><title>func_00254898 0X254898 120 bytes (c)</title></rect>
+<rect x="181.7" y="443.2" width="10.5" height="10.7" fill="#2f7af4"><title>func_00254910 0X254910 120 bytes (c)</title></rect>
+<rect x="192.6" y="443.2" width="10.5" height="10.7" fill="#2f7af4"><title>func_00254C28 0X254C28 120 bytes (c)</title></rect>
 <rect x="203.5" y="443.2" width="10.5" height="10.7" fill="#4b4f6e"><title>Vector_Add 0X2565E0 120 bytes (asm)</title></rect>
-<rect x="214.4" y="443.2" width="9.8" height="10.7" fill="#4b4f6e"><title>func_002374E0 0X2374E0 112 bytes (asm)</title></rect>
+<rect x="214.4" y="443.2" width="9.8" height="10.7" fill="#2f7af4"><title>func_002374E0 0X2374E0 112 bytes (c)</title></rect>
 <rect x="224.5" y="443.2" width="9.8" height="10.7" fill="#4b4f6e"><title>func_002376D0 0X2376D0 112 bytes (asm)</title></rect>
-<rect x="234.7" y="443.2" width="9.8" height="10.7" fill="#4b4f6e"><title>func_00238C58 0X238C58 112 bytes (asm)</title></rect>
+<rect x="234.7" y="443.2" width="9.8" height="10.7" fill="#2f7af4"><title>func_00238C58 0X238C58 112 bytes (c)</title></rect>
 <rect x="244.8" y="443.2" width="9.8" height="10.7" fill="#4b4f6e"><title>func_0023A228 0X23A228 112 bytes (asm)</title></rect>
 <rect x="255.0" y="443.2" width="9.8" height="10.7" fill="#4b4f6e"><title>func_0023A598 0X23A598 112 bytes (asm)</title></rect>
 <rect x="138.2" y="454.3" width="9.8" height="10.7" fill="#4b4f6e"><title>func_00241368 0X241368 112 bytes (asm)</title></rect>
-<rect x="138.2" y="465.4" width="9.8" height="10.7" fill="#4b4f6e"><title>func_00241F28 0X241F28 112 bytes (asm)</title></rect>
+<rect x="138.2" y="465.4" width="9.8" height="10.7" fill="#2f7af4"><title>func_00241F28 0X241F28 112 bytes (c)</title></rect>
 <rect x="138.2" y="476.4" width="9.8" height="10.7" fill="#2f7af4"><title>func_0024A7B0 0X24A7B0 112 bytes (c)</title></rect>
 <rect x="138.2" y="487.5" width="9.8" height="10.7" fill="#2f7af4"><title>func_0024B930 0X24B930 112 bytes (c)</title></rect>
-<rect x="138.2" y="498.5" width="9.8" height="9.9" fill="#4b4f6e"><title>func_00231F38 0X231F38 104 bytes (asm)</title></rect>
+<rect x="138.2" y="498.5" width="9.8" height="9.9" fill="#2f7af4"><title>func_00231F38 0X231F38 104 bytes (c)</title></rect>
 <rect x="138.2" y="508.8" width="9.8" height="9.9" fill="#4b4f6e"><title>func_00235110 0X235110 104 bytes (asm)</title></rect>
 <rect x="138.2" y="519.1" width="9.8" height="9.9" fill="#4b4f6e"><title>EnableIntc 0X235178 104 bytes (asm)</title></rect>
 <rect x="138.2" y="529.4" width="9.8" height="9.9" fill="#4b4f6e"><title>func_002351E0 0X2351E0 104 bytes (asm)</title></rect>
@@ -332,24 +332,24 @@
 <rect x="148.4" y="454.3" width="9.8" height="9.9" fill="#2f7af4"><title>__subdf3 0X23D7A0 104 bytes (c)</title></rect>
 <rect x="158.6" y="454.3" width="9.8" height="9.9" fill="#2f7af4"><title>eh_context_static 0X23E410 104 bytes (c)</title></rect>
 <rect x="168.8" y="454.3" width="9.8" height="9.9" fill="#2f7af4"><title>func_00241728 0X241728 104 bytes (c)</title></rect>
-<rect x="179.0" y="454.3" width="9.8" height="9.9" fill="#4b4f6e"><title>func_00243C40 0X243C40 104 bytes (asm)</title></rect>
+<rect x="179.0" y="454.3" width="9.8" height="9.9" fill="#2f7af4"><title>func_00243C40 0X243C40 104 bytes (c)</title></rect>
 <rect x="189.1" y="454.3" width="9.8" height="9.9" fill="#4b4f6e"><title>func_00254BC0 0X254BC0 104 bytes (asm)</title></rect>
 <rect x="199.3" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>func_00238B70 0X238B70 96 bytes (asm)</title></rect>
 <rect x="208.7" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>func_002394B8 0X2394B8 96 bytes (asm)</title></rect>
 <rect x="218.1" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>func_0023A668 0X23A668 96 bytes (asm)</title></rect>
 <rect x="227.5" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>__muldi3 0X23C7C0 96 bytes (asm)</title></rect>
 <rect x="236.9" y="454.3" width="9.0" height="9.9" fill="#2f7af4"><title>sceGsSwapDBuff 0X240A40 96 bytes (c)</title></rect>
-<rect x="246.4" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>func_00243270 0X243270 96 bytes (asm)</title></rect>
-<rect x="255.8" y="454.3" width="9.0" height="9.9" fill="#4b4f6e"><title>scePadInfoPressMode 0X243B70 96 bytes (asm)</title></rect>
+<rect x="246.4" y="454.3" width="9.0" height="9.9" fill="#2f7af4"><title>func_00243270 0X243270 96 bytes (c)</title></rect>
+<rect x="255.8" y="454.3" width="9.0" height="9.9" fill="#2f7af4"><title>scePadInfoPressMode 0X243B70 96 bytes (c)</title></rect>
 <rect x="148.4" y="464.6" width="9.6" height="9.3" fill="#4b4f6e"><title>sceScfGetLanguage 0X24A860 96 bytes (asm)</title></rect>
 <rect x="148.4" y="474.3" width="9.6" height="8.5" fill="#4b4f6e"><title>func_00236820 0X236820 88 bytes (asm)</title></rect>
-<rect x="148.4" y="483.1" width="9.6" height="8.5" fill="#4b4f6e"><title>func_00237AF8 0X237AF8 88 bytes (asm)</title></rect>
+<rect x="148.4" y="483.1" width="9.6" height="8.5" fill="#2f7af4"><title>func_00237AF8 0X237AF8 88 bytes (c)</title></rect>
 <rect x="148.4" y="492.0" width="9.6" height="8.5" fill="#4b4f6e"><title>func_002396C0 0X2396C0 88 bytes (asm)</title></rect>
 <rect x="148.4" y="500.9" width="9.6" height="8.5" fill="#2f7af4"><title>__adddf3 0X23D748 88 bytes (c)</title></rect>
 <rect x="148.4" y="509.7" width="9.6" height="8.5" fill="#2f7af4"><title>func_0023DFA0 0X23DFA0 88 bytes (c)</title></rect>
-<rect x="148.4" y="518.6" width="9.6" height="8.5" fill="#4b4f6e"><title>new_eh_context 0X23E340 88 bytes (asm)</title></rect>
+<rect x="148.4" y="518.6" width="9.6" height="8.5" fill="#2f7af4"><title>new_eh_context 0X23E340 88 bytes (c)</title></rect>
 <rect x="148.4" y="527.5" width="9.6" height="8.5" fill="#4b4f6e"><title>func_00241BB8 0X241BB8 88 bytes (asm)</title></rect>
-<rect x="148.4" y="536.4" width="9.6" height="8.5" fill="#4b4f6e"><title>scePadEnterPressMode 0X243BD0 88 bytes (asm)</title></rect>
+<rect x="148.4" y="536.4" width="9.6" height="8.5" fill="#2f7af4"><title>scePadEnterPressMode 0X243BD0 88 bytes (c)</title></rect>
 <rect x="148.4" y="545.2" width="9.6" height="8.5" fill="#4b4f6e"><title>func_00244518 0X244518 88 bytes (asm)</title></rect>
 <rect x="148.4" y="554.1" width="9.6" height="8.5" fill="#2f7af4"><title>func_0024B7A8 0X24B7A8 88 bytes (c)</title></rect>
 <rect x="148.4" y="563.0" width="9.6" height="8.5" fill="#4b4f6e"><title>func_0024FA38 0X24FA38 88 bytes (asm)</title></rect>
@@ -366,17 +366,17 @@
 <rect x="246.5" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>func_00256AF0 0X256AF0 88 bytes (asm)</title></rect>
 <rect x="256.3" y="464.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_002330D0 0X2330D0 80 bytes (asm)</title></rect>
 <rect x="158.4" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_002368C8 0X2368C8 80 bytes (asm)</title></rect>
-<rect x="167.3" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_00236F48 0X236F48 80 bytes (asm)</title></rect>
+<rect x="167.3" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>func_00236F48 0X236F48 80 bytes (c)</title></rect>
 <rect x="176.2" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>sceSifSyncIop 0X2392F0 80 bytes (asm)</title></rect>
 <rect x="185.1" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_00239450 0X239450 80 bytes (asm)</title></rect>
 <rect x="194.0" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_0023A1D0 0X23A1D0 80 bytes (asm)</title></rect>
 <rect x="202.9" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>func_0023A3A0 0X23A3A0 80 bytes (c)</title></rect>
-<rect x="211.8" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_0023A618 0X23A618 80 bytes (asm)</title></rect>
+<rect x="211.8" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>func_0023A618 0X23A618 80 bytes (c)</title></rect>
 <rect x="220.7" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_0023AA68 0X23AA68 80 bytes (asm)</title></rect>
 <rect x="229.6" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>func_0023AE20 0X23AE20 80 bytes (asm)</title></rect>
 <rect x="238.5" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>dpcmp 0X23DD30 80 bytes (c)</title></rect>
 <rect x="247.4" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>func_0023F288 0X23F288 80 bytes (c)</title></rect>
-<rect x="256.3" y="473.6" width="8.5" height="8.6" fill="#4b4f6e"><title>scePadGetState 0X243500 80 bytes (asm)</title></rect>
+<rect x="256.3" y="473.6" width="8.5" height="8.6" fill="#2f7af4"><title>scePadGetState 0X243500 80 bytes (c)</title></rect>
 <rect x="158.4" y="482.6" width="8.6" height="8.5" fill="#4b4f6e"><title>func_00254628 0X254628 80 bytes (asm)</title></rect>
 <rect x="158.4" y="491.6" width="8.6" height="8.5" fill="#4b4f6e"><title>func_00256528 0X256528 80 bytes (asm)</title></rect>
 <rect x="158.4" y="500.5" width="8.6" height="7.6" fill="#4b4f6e"><title>func_00232520 0X232520 72 bytes (asm)</title></rect>
@@ -390,12 +390,12 @@
 <rect x="158.4" y="564.7" width="8.6" height="7.6" fill="#4b4f6e"><title>func_0023F640 0X23F640 72 bytes (asm)</title></rect>
 <rect x="158.4" y="572.7" width="8.6" height="7.6" fill="#2f7af4"><title>func_002417A0 0X2417A0 72 bytes (c)</title></rect>
 <rect x="167.4" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>func_00242E48 0X242E48 72 bytes (asm)</title></rect>
-<rect x="176.0" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>func_0024A738 0X24A738 72 bytes (asm)</title></rect>
+<rect x="176.0" y="482.6" width="8.2" height="8.0" fill="#2f7af4"><title>func_0024A738 0X24A738 72 bytes (c)</title></rect>
 <rect x="184.6" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>func_0024A8C0 0X24A8C0 72 bytes (asm)</title></rect>
 <rect x="193.3" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>sceMpegGetPicture 0X24B540 72 bytes (asm)</title></rect>
 <rect x="201.9" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>func_0024B760 0X24B760 72 bytes (asm)</title></rect>
 <rect x="210.5" y="482.6" width="8.2" height="8.0" fill="#4b4f6e"><title>Vector_Init 0X2564E0 72 bytes (asm)</title></rect>
-<rect x="219.2" y="482.6" width="7.3" height="8.0" fill="#4b4f6e"><title>snd_AutoVol 0X232568 64 bytes (asm)</title></rect>
+<rect x="219.2" y="482.6" width="7.3" height="8.0" fill="#2f7af4"><title>snd_AutoVol 0X232568 64 bytes (c)</title></rect>
 <rect x="226.8" y="482.6" width="7.3" height="8.0" fill="#4b4f6e"><title>snd_PostMessage__Fv 0X232BB8 64 bytes (asm)</title></rect>
 <rect x="234.5" y="482.6" width="7.3" height="8.0" fill="#4b4f6e"><title>func_00232D40 0X232D40 64 bytes (asm)</title></rect>
 <rect x="242.2" y="482.6" width="7.3" height="8.0" fill="#4b4f6e"><title>snd_PlaySoundVolPanPMPB 0X232EE8 64 bytes (asm)</title></rect>
@@ -412,8 +412,8 @@
 <rect x="167.4" y="556.3" width="7.5" height="7.8" fill="#2f7af4"><title>fptodp 0X23E290 64 bytes (c)</title></rect>
 <rect x="167.4" y="564.4" width="7.5" height="7.8" fill="#2f7af4"><title>sceGsPutIMR 0X240AA0 64 bytes (c)</title></rect>
 <rect x="167.4" y="572.6" width="7.5" height="7.8" fill="#2f7af4"><title>func_0024A820 0X24A820 64 bytes (c)</title></rect>
-<rect x="175.3" y="491.0" width="7.2" height="8.0" fill="#4b4f6e"><title>func_0024FA90 0X24FA90 64 bytes (asm)</title></rect>
-<rect x="175.3" y="499.5" width="7.2" height="7.0" fill="#4b4f6e"><title>snd_SetMasterVolume 0X2321E8 56 bytes (asm)</title></rect>
+<rect x="175.3" y="491.0" width="7.2" height="8.0" fill="#2f7af4"><title>func_0024FA90 0X24FA90 64 bytes (c)</title></rect>
+<rect x="175.3" y="499.5" width="7.2" height="7.0" fill="#2f7af4"><title>snd_SetMasterVolume 0X2321E8 56 bytes (c)</title></rect>
 <rect x="175.3" y="506.9" width="7.2" height="7.0" fill="#4b4f6e"><title>func_002324C8 0X2324C8 56 bytes (asm)</title></rect>
 <rect x="175.3" y="514.2" width="7.2" height="7.0" fill="#4b4f6e"><title>func_002325A8 0X2325A8 56 bytes (asm)</title></rect>
 <rect x="175.3" y="521.6" width="7.2" height="7.0" fill="#4b4f6e"><title>snd_InitMovieSound 0X232F88 56 bytes (asm)</title></rect>
@@ -423,33 +423,33 @@
 <rect x="175.3" y="551.2" width="7.2" height="7.0" fill="#2f7af4"><title>sceFsReset 0X237E70 56 bytes (c)</title></rect>
 <rect x="175.3" y="558.6" width="7.2" height="7.0" fill="#2f7af4"><title>sceSifLoadFileReset 0X238F00 56 bytes (c)</title></rect>
 <rect x="175.3" y="565.9" width="7.2" height="7.0" fill="#4b4f6e"><title>func_00239160 0X239160 56 bytes (asm)</title></rect>
-<rect x="175.3" y="573.3" width="7.2" height="7.0" fill="#4b4f6e"><title>func_00239738 0X239738 56 bytes (asm)</title></rect>
-<rect x="182.9" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>func_00239920 0X239920 56 bytes (asm)</title></rect>
+<rect x="175.3" y="573.3" width="7.2" height="7.0" fill="#2f7af4"><title>func_00239738 0X239738 56 bytes (c)</title></rect>
+<rect x="182.9" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_00239920 0X239920 56 bytes (c)</title></rect>
 <rect x="190.4" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_00239EF0 0X239EF0 56 bytes (c)</title></rect>
 <rect x="197.9" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_0023AD70 0X23AD70 56 bytes (c)</title></rect>
-<rect x="205.3" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>func_0023B238 0X23B238 56 bytes (asm)</title></rect>
+<rect x="205.3" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_0023B238 0X23B238 56 bytes (c)</title></rect>
 <rect x="212.8" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>memclr 0X241408 56 bytes (c)</title></rect>
 <rect x="220.3" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_002417F0 0X2417F0 56 bytes (c)</title></rect>
 <rect x="227.8" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>sceMcMkdir 0X244018 56 bytes (asm)</title></rect>
-<rect x="235.2" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>fabs 0X249C28 56 bytes (asm)</title></rect>
-<rect x="242.7" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>func_00249C80 0X249C80 56 bytes (asm)</title></rect>
+<rect x="235.2" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>fabs 0X249C28 56 bytes (c)</title></rect>
+<rect x="242.7" y="491.0" width="7.1" height="7.1" fill="#2f7af4"><title>func_00249C80 0X249C80 56 bytes (c)</title></rect>
 <rect x="250.2" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>sceMpegAddCallback 0X24B628 56 bytes (asm)</title></rect>
 <rect x="257.7" y="491.0" width="7.1" height="7.1" fill="#4b4f6e"><title>func_00252358 0X252358 56 bytes (asm)</title></rect>
 <rect x="182.9" y="498.6" width="6.7" height="7.5" fill="#4b4f6e"><title>func_00254488 0X254488 56 bytes (asm)</title></rect>
-<rect x="182.9" y="506.4" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_ResolveBankXREFS 0X232188 48 bytes (asm)</title></rect>
-<rect x="182.9" y="513.2" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_UnloadBank 0X2321B8 48 bytes (asm)</title></rect>
-<rect x="182.9" y="519.9" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_SetPlaybackMode 0X232250 48 bytes (asm)</title></rect>
-<rect x="182.9" y="526.7" width="6.7" height="6.4" fill="#4b4f6e"><title>func_002322A0 0X2322A0 48 bytes (asm)</title></rect>
-<rect x="182.9" y="533.5" width="6.7" height="6.4" fill="#4b4f6e"><title>func_002322F0 0X2322F0 48 bytes (asm)</title></rect>
-<rect x="182.9" y="540.2" width="6.7" height="6.4" fill="#4b4f6e"><title>func_00232320 0X232320 48 bytes (asm)</title></rect>
-<rect x="182.9" y="547.0" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_StopSound 0X232350 48 bytes (asm)</title></rect>
-<rect x="182.9" y="553.7" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_PauseSound 0X2323A8 48 bytes (asm)</title></rect>
-<rect x="182.9" y="560.5" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_ContinueSound 0X2323D8 48 bytes (asm)</title></rect>
-<rect x="182.9" y="567.2" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_StopAllStreams 0X232408 48 bytes (asm)</title></rect>
-<rect x="182.9" y="574.0" width="6.7" height="6.4" fill="#4b4f6e"><title>snd_PauseAllSoundsInGroup 0X232438 48 bytes (asm)</title></rect>
-<rect x="190.1" y="498.6" width="6.4" height="6.7" fill="#4b4f6e"><title>snd_ContinueAllSoundsInGroup 0X232468 48 bytes (asm)</title></rect>
+<rect x="182.9" y="506.4" width="6.7" height="6.4" fill="#2f7af4"><title>snd_ResolveBankXREFS 0X232188 48 bytes (c)</title></rect>
+<rect x="182.9" y="513.2" width="6.7" height="6.4" fill="#2f7af4"><title>snd_UnloadBank 0X2321B8 48 bytes (c)</title></rect>
+<rect x="182.9" y="519.9" width="6.7" height="6.4" fill="#2f7af4"><title>snd_SetPlaybackMode 0X232250 48 bytes (c)</title></rect>
+<rect x="182.9" y="526.7" width="6.7" height="6.4" fill="#2f7af4"><title>func_002322A0 0X2322A0 48 bytes (c)</title></rect>
+<rect x="182.9" y="533.5" width="6.7" height="6.4" fill="#2f7af4"><title>func_002322F0 0X2322F0 48 bytes (c)</title></rect>
+<rect x="182.9" y="540.2" width="6.7" height="6.4" fill="#2f7af4"><title>func_00232320 0X232320 48 bytes (c)</title></rect>
+<rect x="182.9" y="547.0" width="6.7" height="6.4" fill="#2f7af4"><title>snd_StopSound 0X232350 48 bytes (c)</title></rect>
+<rect x="182.9" y="553.7" width="6.7" height="6.4" fill="#2f7af4"><title>snd_PauseSound 0X2323A8 48 bytes (c)</title></rect>
+<rect x="182.9" y="560.5" width="6.7" height="6.4" fill="#2f7af4"><title>snd_ContinueSound 0X2323D8 48 bytes (c)</title></rect>
+<rect x="182.9" y="567.2" width="6.7" height="6.4" fill="#2f7af4"><title>snd_StopAllStreams 0X232408 48 bytes (c)</title></rect>
+<rect x="182.9" y="574.0" width="6.7" height="6.4" fill="#2f7af4"><title>snd_PauseAllSoundsInGroup 0X232438 48 bytes (c)</title></rect>
+<rect x="190.1" y="498.6" width="6.4" height="6.7" fill="#2f7af4"><title>snd_ContinueAllSoundsInGroup 0X232468 48 bytes (c)</title></rect>
 <rect x="196.9" y="498.6" width="6.4" height="6.7" fill="#4b4f6e"><title>snd_SoundIsStillPlaying_CB 0X232498 48 bytes (asm)</title></rect>
-<rect x="203.7" y="498.6" width="6.4" height="6.7" fill="#4b4f6e"><title>func_00232FE8 0X232FE8 48 bytes (asm)</title></rect>
+<rect x="203.7" y="498.6" width="6.4" height="6.7" fill="#2f7af4"><title>func_00232FE8 0X232FE8 48 bytes (c)</title></rect>
 <rect x="210.5" y="498.6" width="6.4" height="6.7" fill="#2f7af4"><title>rand 0X2342A0 48 bytes (c)</title></rect>
 <rect x="217.4" y="498.6" width="6.4" height="6.7" fill="#4b4f6e"><title>func_00236CF0 0X236CF0 48 bytes (asm)</title></rect>
 <rect x="224.2" y="498.6" width="6.4" height="6.7" fill="#2f7af4"><title>func_00237B50 0X237B50 48 bytes (c)</title></rect>
@@ -460,10 +460,10 @@
 <rect x="258.3" y="498.6" width="6.4" height="6.7" fill="#2f7af4"><title>func_0023E260 0X23E260 48 bytes (c)</title></rect>
 <rect x="190.1" y="505.6" width="6.3" height="6.7" fill="#4b4f6e"><title>__throw_type_match 0X23E308 48 bytes (asm)</title></rect>
 <rect x="190.1" y="512.8" width="6.3" height="6.7" fill="#4b4f6e"><title>sceCdGetReadPos 0X242810 48 bytes (asm)</title></rect>
-<rect x="190.1" y="519.9" width="6.3" height="6.7" fill="#4b4f6e"><title>func_0024A780 0X24A780 48 bytes (asm)</title></rect>
-<rect x="190.1" y="527.1" width="6.3" height="5.6" fill="#4b4f6e"><title>snd_GetMasterVolume 0X232220 40 bytes (asm)</title></rect>
+<rect x="190.1" y="519.9" width="6.3" height="6.7" fill="#2f7af4"><title>func_0024A780 0X24A780 48 bytes (c)</title></rect>
+<rect x="190.1" y="527.1" width="6.3" height="5.6" fill="#2f7af4"><title>snd_GetMasterVolume 0X232220 40 bytes (c)</title></rect>
 <rect x="190.1" y="533.0" width="6.3" height="5.6" fill="#4b4f6e"><title>func_00232380 0X232380 40 bytes (asm)</title></rect>
-<rect x="190.1" y="539.0" width="6.3" height="5.6" fill="#4b4f6e"><title>snd_StreamSafeCheckCDIdle 0X232D80 40 bytes (asm)</title></rect>
+<rect x="190.1" y="539.0" width="6.3" height="5.6" fill="#2f7af4"><title>snd_StreamSafeCheckCDIdle 0X232D80 40 bytes (c)</title></rect>
 <rect x="190.1" y="545.0" width="6.3" height="5.6" fill="#2f7af4"><title>snd_ResetMovieSound 0X232F28 40 bytes (c)</title></rect>
 <rect x="190.1" y="550.9" width="6.3" height="5.6" fill="#2f7af4"><title>snd_CloseMovieSound 0X232F60 40 bytes (c)</title></rect>
 <rect x="190.1" y="556.9" width="6.3" height="5.6" fill="#2f7af4"><title>func_00232FC0 0X232FC0 40 bytes (c)</title></rect>
@@ -503,7 +503,7 @@
 <rect x="196.8" y="565.2" width="5.8" height="4.8" fill="#2f7af4"><title>func_00236CD0 0X236CD0 32 bytes (c)</title></rect>
 <rect x="196.8" y="570.4" width="5.8" height="4.8" fill="#2f7af4"><title>func_00238D40 0X238D40 32 bytes (c)</title></rect>
 <rect x="196.8" y="575.5" width="5.8" height="4.8" fill="#4b4f6e"><title>sceSifLoadModule 0X239140 32 bytes (asm)</title></rect>
-<rect x="203.0" y="518.6" width="4.9" height="5.7" fill="#4b4f6e"><title>__main__Fv 0X23B7D8 32 bytes (asm)</title></rect>
+<rect x="203.0" y="518.6" width="4.9" height="5.7" fill="#2f7af4"><title>__main__Fv 0X23B7D8 32 bytes (c)</title></rect>
 <rect x="203.0" y="524.6" width="4.9" height="5.7" fill="#2f7af4"><title>sceGsGetIMR 0X240B68 32 bytes (c)</title></rect>
 <rect x="203.0" y="530.7" width="4.9" height="5.7" fill="#4b4f6e"><title>func_00244A38 0X244A38 32 bytes (asm)</title></rect>
 <rect x="203.0" y="536.8" width="4.9" height="5.7" fill="#4b4f6e"><title>fabsf 0X244EF8 32 bytes (asm)</title></rect>
@@ -1628,7 +1628,7 @@
 <rect x="404.1" y="237.1" width="24.5" height="28.4" fill="#4a45a8"><title>UpdateMurray 0X1B50B0 720 bytes (draft)</title></rect>
 <rect x="267.2" y="265.9" width="26.6" height="26.1" fill="#4a45a8"><title>RunStgSwitchStage 0X1BB648 720 bytes (draft)</title></rect>
 <rect x="267.2" y="292.5" width="26.6" height="23.5" fill="#4a45a8"><title>SetMurrayAttackState 0X1B86B0 648 bytes (draft)</title></rect>
-<rect x="267.2" y="316.4" width="26.6" height="22.6" fill="#2a2d6e"><title>CalcMurrayThrow 0X1B7700 624 bytes (asm)</title></rect>
+<rect x="267.2" y="316.4" width="26.6" height="22.6" fill="#4a45a8"><title>CalcMurrayThrow 0X1B7700 624 bytes (draft)</title></rect>
 <rect x="267.2" y="339.4" width="26.6" height="21.7" fill="#4a45a8"><title>func_001B6DA8 0X1B6DA8 600 bytes (draft)</title></rect>
 <rect x="267.2" y="361.5" width="26.6" height="21.1" fill="#4a45a8"><title>RunStgSwitch 0X1BB400 584 bytes (draft)</title></rect>
 <rect x="267.2" y="383.1" width="26.6" height="19.7" fill="#4a45a8"><title>UpdateZoneScriptBeh 0X1BA608 544 bytes (draft)</title></rect>
@@ -1856,7 +1856,7 @@
 <rect x="267.2" y="596.8" width="63.4" height="104.4" fill="#2a2d6e"><title>StartNextSeqnodeRecord 0X1E1E30 6752 bytes (asm)</title></rect>
 <rect x="267.2" y="701.6" width="63.4" height="49.8" fill="#4a45a8"><title>FSeqnodeRecordDone 0X1E3890 3232 bytes (draft)</title></rect>
 <rect x="331.0" y="596.8" width="49.1" height="33.6" fill="#4a45a8"><title>UpdateSeqnodeVjoy 0X1E46A0 1696 bytes (draft)</title></rect>
-<rect x="380.5" y="596.8" width="26.0" height="33.6" fill="#2a2d6e"><title>FindCrvlClosestPointFromU 0X1E6A30 904 bytes (asm)</title></rect>
+<rect x="380.5" y="596.8" width="26.0" height="33.6" fill="#4a45a8"><title>FindCrvlClosestPointFromU 0X1E6A30 904 bytes (draft)</title></rect>
 <rect x="406.8" y="596.8" width="21.8" height="33.6" fill="#4a45a8"><title>StartSeqnodeCameraMove 0X1E57A0 760 bytes (draft)</title></rect>
 <rect x="331.0" y="630.8" width="21.3" height="21.9" fill="#4a45a8"><title>EvaluateCrvFromU 0X1E67B8 488 bytes (draft)</title></rect>
 <rect x="352.7" y="630.8" width="20.3" height="21.9" fill="#4a45a8"><title>LoadCrvFromBrx 0X1E5DF8 464 bytes (draft)</title></rect>
@@ -2305,7 +2305,7 @@
 <rect x="515.6" y="411.4" width="11.8" height="11.9" fill="#2f7af4"><title>StartJtCarry 0X142278 152 bytes (c)</title></rect>
 <rect x="527.9" y="411.4" width="9.9" height="11.9" fill="#2f7af4"><title>func_001421F8 0X1421F8 128 bytes (c)</title></rect>
 <rect x="538.2" y="411.4" width="9.9" height="11.9" fill="#2f7af4"><title>func_00143C78 0X143C78 128 bytes (c)</title></rect>
-<rect x="548.5" y="411.4" width="9.9" height="11.9" fill="#4a45a8"><title>DrainJtPower 0X1441E8 128 bytes (draft)</title></rect>
+<rect x="548.5" y="411.4" width="9.9" height="11.9" fill="#2f7af4"><title>DrainJtPower 0X1441E8 128 bytes (c)</title></rect>
 <rect x="558.8" y="411.4" width="9.3" height="11.9" fill="#2f7af4"><title>func_00140C88 0X140C88 120 bytes (c)</title></rect>
 <rect x="503.4" y="423.7" width="9.9" height="11.1" fill="#4a45a8"><title>FInvulnerableJt 0X140ED8 120 bytes (draft)</title></rect>
 <rect x="503.4" y="435.3" width="9.9" height="10.4" fill="#4a45a8"><title>func_0013FAD0 0X13FAD0 112 bytes (draft)</title></rect>
@@ -3580,7 +3580,7 @@
 <g><title>emitter-font: 9512 bytes</title>
 <rect x="1313.0" y="1.0" width="38.3" height="42.2" fill="#4a45a8"><title>UpdateEpsel 0X15CF30 1688 bytes (draft)</title></rect>
 <rect x="1313.0" y="43.6" width="38.3" height="29.1" fill="#4a45a8"><title>DrawFade 0X15DD48 1168 bytes (draft)</title></rect>
-<rect x="1313.0" y="73.1" width="38.3" height="23.4" fill="#2a2d6e"><title>CploFindSwObjectsByClass 0X15E9C8 944 bytes (asm)</title></rect>
+<rect x="1313.0" y="73.1" width="38.3" height="23.4" fill="#4a45a8"><title>CploFindSwObjectsByClass 0X15E9C8 944 bytes (draft)</title></rect>
 <rect x="1351.7" y="1.0" width="30.4" height="21.9" fill="#4a45a8"><title>CploFindSwObjects 0X15E678 704 bytes (draft)</title></rect>
 <rect x="1382.5" y="1.0" width="26.9" height="21.9" fill="#4a45a8"><title>expl__static_initialization_and_destruction_0 0X15CAD8 624 bytes (draft)</title></rect>
 <rect x="1351.7" y="23.3" width="26.2" height="22.2" fill="#2a2d6e"><title>MatchSwObject 0X15E3E8 616 bytes (asm)</title></rect>
@@ -3863,7 +3863,7 @@
 <rect x="852.8" y="503.8" width="9.8" height="11.8" fill="#2f7af4"><title>ApplyTaskStateRequests 0X161F48 128 bytes (c)</title></rect>
 <rect x="863.1" y="503.8" width="9.8" height="11.8" fill="#2f7af4"><title>NotifyJobTaskState 0X162CD0 128 bytes (c)</title></rect>
 <rect x="873.3" y="503.8" width="9.8" height="11.8" fill="#2f7af4"><title>ActivateJobOfTask 0X162D50 128 bytes (c)</title></rect>
-<rect x="883.5" y="503.8" width="9.2" height="11.8" fill="#4a45a8"><title>ApplyTaskAnims 0X1623D0 120 bytes (draft)</title></rect>
+<rect x="883.5" y="503.8" width="9.2" height="11.8" fill="#2f7af4"><title>ApplyTaskAnims 0X1623D0 120 bytes (c)</title></rect>
 <rect x="842.0" y="516.0" width="10.3" height="9.8" fill="#2f7af4"><title>EndJob 0X162EA0 112 bytes (c)</title></rect>
 <rect x="842.0" y="526.1" width="10.3" height="9.8" fill="#2f7af4"><title>PublishJobEnd 0X162F60 112 bytes (c)</title></rect>
 <rect x="842.0" y="536.3" width="10.3" height="9.0" fill="#4a45a8"><title>AddJobToggle 0X1626C0 104 bytes (draft)</title></rect>
@@ -4124,7 +4124,7 @@
 <rect x="1177.6" y="159.1" width="33.5" height="20.2" fill="#4a45a8"><title>bevy_camera_looks_update 0X151340 720 bytes (draft)</title></rect>
 <rect x="1211.5" y="98.9" width="28.2" height="18.3" fill="#4a45a8"><title>ActivateCplook 0X14FF38 552 bytes (draft)</title></rect>
 <rect x="1240.1" y="98.9" width="23.3" height="18.3" fill="#4a45a8"><title>bevy_camera_policy_update 0X151700 456 bytes (draft)</title></rect>
-<rect x="1211.5" y="117.6" width="19.5" height="15.2" fill="#2a2d6e"><title>bevy_classes_k30_cam_1507f8 0X1507F8 320 bytes (asm)</title></rect>
+<rect x="1211.5" y="117.6" width="19.5" height="15.2" fill="#4a45a8"><title>bevy_classes_k30_cam_1507f8 0X1507F8 320 bytes (draft)</title></rect>
 <rect x="1231.4" y="117.6" width="17.0" height="15.2" fill="#2f7af4"><title>DeactivateCplook 0X150610 280 bytes (c)</title></rect>
 <rect x="1248.9" y="117.6" width="14.5" height="15.2" fill="#4a45a8"><title>bevy_classes_k30_cam_activate_2 0X150938 240 bytes (draft)</title></rect>
 <rect x="1211.5" y="133.1" width="12.1" height="16.4" fill="#2f7af4"><title>bevy_classes_k30_cam_deactivate_2 0X151130 216 bytes (c)</title></rect>
@@ -4407,7 +4407,7 @@
 <rect x="1056.3" y="180.7" width="79.5" height="79.5" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>text: 6208 bytes</title>
-<rect x="1136.8" y="181.7" width="28.2" height="31.5" fill="#2a2d6e"><title>WriteTft__FP3TFTP5OSTRMPPcPci 0X21E718 944 bytes (asm)</title></rect>
+<rect x="1136.8" y="181.7" width="28.2" height="31.5" fill="#4a45a8"><title>WriteTft__FP3TFTP5OSTRMPPcPci 0X21E718 944 bytes (draft)</title></rect>
 <rect x="1165.4" y="181.7" width="24.8" height="31.5" fill="#4a45a8"><title>CchParsePchzTft__FPcP3TFTPPc 0X21D6B0 832 bytes (draft)</title></rect>
 <rect x="1190.6" y="181.7" width="23.1" height="31.5" fill="#4a45a8"><title>WriteTftUl__FP3TFTP5OSTRMUl 0X21DD40 776 bytes (draft)</title></rect>
 <rect x="1136.8" y="213.6" width="28.9" height="25.2" fill="#4a45a8"><title>CchAchFromDouble__FPciP3TFTd 0X21E1B0 776 bytes (draft)</title></rect>
@@ -4626,7 +4626,7 @@
 <g><title>mark: 5912 bytes</title>
 <rect x="895.0" y="261.2" width="39.6" height="45.1" fill="#4a45a8"><title>CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI 0X1A93C8 1888 bytes (draft)</title></rect>
 <rect x="935.1" y="261.2" width="30.6" height="45.1" fill="#2a2d6e"><title>MarkSoContactsBspBsp 0X1A8B50 1464 bytes (asm)</title></rect>
-<rect x="895.0" y="306.7" width="23.6" height="34.3" fill="#2a2d6e"><title>MarkSoEmbeddedContacts 0X1A87F0 864 bytes (asm)</title></rect>
+<rect x="895.0" y="306.7" width="23.6" height="34.3" fill="#4a45a8"><title>MarkSoEmbeddedContacts 0X1A87F0 864 bytes (draft)</title></rect>
 <rect x="919.0" y="306.7" width="19.1" height="34.3" fill="#4a45a8"><title>bevy_physics_sphere_1a9108 0X1A9108 704 bytes (draft)</title></rect>
 <rect x="938.6" y="306.7" width="27.1" height="23.4" fill="#2a2d6e"><title>CategorizeAlsg__FiP3LSGPiT2PP3LSGT4 0X1A8410 680 bytes (asm)</title></rect>
 <rect x="938.6" y="330.5" width="27.1" height="10.5" fill="#4a45a8"><title>CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG 0X1A86B8 312 bytes (draft)</title></rect>
@@ -4932,7 +4932,7 @@
 <rect x="1314.9" y="289.1" width="12.7" height="20.1" fill="#2f7af4"><title>LoadSndBank 0X1FD5E8 280 bytes (c)</title></rect>
 <rect x="1300.7" y="309.6" width="13.1" height="16.1" fill="#2f7af4"><title>DequeueStream 0X1FE310 232 bytes (c)</title></rect>
 <rect x="1300.7" y="326.1" width="13.1" height="7.0" fill="#4a45a8"><title>RunStreamCue 0X1FE0E8 104 bytes (draft)</title></rect>
-<rect x="1314.2" y="309.6" width="7.5" height="11.3" fill="#4a45a8"><title>func_001FDBA8 0X1FDBA8 96 bytes (draft)</title></rect>
+<rect x="1314.2" y="309.6" width="7.5" height="11.3" fill="#2f7af4"><title>func_001FDBA8 0X1FDBA8 96 bytes (c)</title></rect>
 <rect x="1322.1" y="309.6" width="5.5" height="11.3" fill="#2f7af4"><title>func_001FD028 0X1FD028 72 bytes (c)</title></rect>
 <rect x="1314.2" y="321.3" width="8.4" height="6.6" fill="#2f7af4"><title>func_001FD080 0X1FD080 64 bytes (c)</title></rect>
 <rect x="1314.2" y="328.3" width="8.4" height="4.8" fill="#2f7af4"><title>func_001FCFF8 0X1FCFF8 48 bytes (c)</title></rect>
@@ -5038,7 +5038,7 @@
 <g><title>stephang: 4864 bytes</title>
 <rect x="968.1" y="410.4" width="33.1" height="53.4" fill="#4a45a8"><title>CalculateJtHangAccel__FP2JT 0X18FC60 1880 bytes (draft)</title></rect>
 <rect x="1001.6" y="410.4" width="30.4" height="53.4" fill="#4a45a8"><title>UpdateJtActiveHang__FP2JTP3JOY 0X190520 1728 bytes (draft)</title></rect>
-<rect x="968.1" y="464.2" width="39.3" height="18.3" fill="#2a2d6e"><title>AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX 0X18F958 776 bytes (asm)</title></rect>
+<rect x="968.1" y="464.2" width="39.3" height="18.3" fill="#4a45a8"><title>AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX 0X18F958 776 bytes (draft)</title></rect>
 <rect x="1007.9" y="464.2" width="14.8" height="18.3" fill="#4a45a8"><title>PresetJtAccelHang__FP2JT 0X1903B8 296 bytes (draft)</title></rect>
 <rect x="1023.0" y="464.2" width="9.0" height="11.8" fill="#4a45a8"><title>GetJtHangHeading__FP2JTPf 0X190BE0 120 bytes (draft)</title></rect>
 <rect x="1023.0" y="476.4" width="9.0" height="6.1" fill="#2f7af4"><title>AddJtHangBodyReaction 0X1904E0 64 bytes (c)</title></rect>
@@ -5157,7 +5157,7 @@
 <rect x="998.8" y="805.3" width="13.0" height="14.5" fill="#2f7af4"><title>BlastAqwGifsBothFrames__FP2QW 0X170278 208 bytes (c)</title></rect>
 <rect x="998.8" y="820.2" width="13.0" height="11.6" fill="#2f7af4"><title>SendDmaSyncGsFinish__FP10sceDmaChanP2QW 0X16F8B8 168 bytes (c)</title></rect>
 <rect x="1012.2" y="805.3" width="10.0" height="12.1" fill="#2f7af4"><title>BuildAllDrawEnvGifs 0X170048 136 bytes (c)</title></rect>
-<rect x="1022.6" y="805.3" width="9.4" height="12.1" fill="#4a45a8"><title>BuildFbaGif 0X16FAF8 128 bytes (draft)</title></rect>
+<rect x="1022.6" y="805.3" width="9.4" height="12.1" fill="#2f7af4"><title>BuildFbaGif 0X16FAF8 128 bytes (c)</title></rect>
 <rect x="1012.2" y="817.8" width="7.1" height="14.0" fill="#2f7af4"><title>ClearFrameBuffers__Fv 0X170348 112 bytes (c)</title></rect>
 <rect x="1019.7" y="817.8" width="7.1" height="9.8" fill="#4a45a8"><title>ResetGs__Fv 0X16F868 80 bytes (draft)</title></rect>
 <rect x="1027.2" y="817.8" width="4.9" height="9.8" fill="#2f7af4"><title>NLog2__FUi 0X1703C0 56 bytes (c)</title></rect>
@@ -5329,12 +5329,12 @@
 <rect x="1078.3" y="717.0" width="19.8" height="14.0" fill="#2f7af4"><title>UpdateAmbPositional 0X1FB528 304 bytes (c)</title></rect>
 <rect x="1057.5" y="731.3" width="20.4" height="11.3" fill="#2f7af4"><title>SetAmbPos 0X1FB3F0 256 bytes (c)</title></rect>
 <rect x="1078.3" y="731.3" width="19.7" height="11.3" fill="#2f7af4"><title>SetEmitterUnpositioned 0X1FB2F8 248 bytes (c)</title></rect>
-<rect x="1057.5" y="743.1" width="8.6" height="11.4" fill="#4a45a8"><title>SetAmbVolume 0X1FB1F8 112 bytes (draft)</title></rect>
+<rect x="1057.5" y="743.1" width="8.6" height="11.4" fill="#2f7af4"><title>SetAmbVolume 0X1FB1F8 112 bytes (c)</title></rect>
 <rect x="1057.5" y="754.9" width="8.6" height="10.6" fill="#2f7af4"><title>ActivateAmb 0X1FB6A8 104 bytes (c)</title></rect>
 <rect x="1057.5" y="765.9" width="8.6" height="10.6" fill="#2f7af4"><title>DeactivateAmb 0X1FB710 104 bytes (c)</title></rect>
 <rect x="1066.6" y="743.1" width="10.2" height="8.2" fill="#4a45a8"><title>NewSfx__FPP3SFX 0X1FAF70 96 bytes (draft)</title></rect>
 <rect x="1077.2" y="743.1" width="10.2" height="8.2" fill="#2f7af4"><title>OnAmbVoicePolled 0X1FBB30 96 bytes (c)</title></rect>
-<rect x="1087.8" y="743.1" width="10.2" height="8.2" fill="#4a45a8"><title>StopSound__FP3AMBi 0X1FBE80 96 bytes (draft)</title></rect>
+<rect x="1087.8" y="743.1" width="10.2" height="8.2" fill="#2f7af4"><title>StopSound__FP3AMBi 0X1FBE80 96 bytes (c)</title></rect>
 <rect x="1066.6" y="751.7" width="9.3" height="8.2" fill="#2f7af4"><title>SetAmbPan 0X1FB268 88 bytes (c)</title></rect>
 <rect x="1066.6" y="760.3" width="9.3" height="8.2" fill="#2f7af4"><title>InitAmb 0X1FBBC8 88 bytes (c)</title></rect>
 <rect x="1066.6" y="769.0" width="9.3" height="7.5" fill="#2f7af4"><title>SetAmbGrf 0X1FB658 80 bytes (c)</title></rect>
@@ -5357,7 +5357,7 @@
 <rect x="1034.4" y="821.7" width="25.6" height="16.3" fill="#4a45a8"><title>SteerSlotSoAlongCrv 0X1B1160 456 bytes (draft)</title></rect>
 <rect x="1060.4" y="778.8" width="18.6" height="15.2" fill="#4a45a8"><title>SenseSlotSoTargetState 0X1B1900 312 bytes (draft)</title></rect>
 <rect x="1079.5" y="778.8" width="18.6" height="15.2" fill="#2f7af4"><title>StaticInitSlotheaps_1b1c60 0X1B1C60 312 bytes (c)</title></rect>
-<rect x="1060.4" y="794.5" width="14.0" height="14.4" fill="#4a45a8"><title>func_001B1F40 0X1B1F40 224 bytes (draft)</title></rect>
+<rect x="1060.4" y="794.5" width="14.0" height="14.4" fill="#2f7af4"><title>func_001B1F40 0X1B1F40 224 bytes (c)</title></rect>
 <rect x="1074.8" y="794.5" width="13.5" height="14.4" fill="#2f7af4"><title>GSpeedSlotSoAseg 0X1B1A38 216 bytes (c)</title></rect>
 <rect x="1088.7" y="794.5" width="9.4" height="14.4" fill="#2f7af4"><title>FSlotSoFacingHeading 0X1B1868 152 bytes (c)</title></rect>
 <rect x="1060.4" y="809.3" width="11.9" height="10.1" fill="#4a45a8"><title>FireMissile 0X1B1E88 136 bytes (draft)</title></rect>
@@ -5454,7 +5454,7 @@
 <g><title>dmas-dzg: 3792 bytes</title>
 <rect x="1229.8" y="335.5" width="31.0" height="37.4" fill="#4a45a8"><title>FlushRenderRecords 0X157FA0 1248 bytes (draft)</title></rect>
 <rect x="1229.8" y="373.4" width="31.0" height="20.5" fill="#4a45a8"><title>DrawPassSetupCamera 0X157CF0 688 bytes (draft)</title></rect>
-<rect x="1261.2" y="335.5" width="29.7" height="16.3" fill="#2a2d6e"><title>SortRenderRecords 0X157AE0 528 bytes (asm)</title></rect>
+<rect x="1261.2" y="335.5" width="29.7" height="16.3" fill="#4a45a8"><title>SortRenderRecords 0X157AE0 528 bytes (draft)</title></rect>
 <rect x="1261.2" y="352.2" width="14.7" height="19.3" fill="#2f7af4"><title>StaticInitSlotheaps_1577a0 0X1577A0 312 bytes (c)</title></rect>
 <rect x="1276.2" y="352.2" width="14.7" height="19.3" fill="#2f7af4"><title>StaticInitSlotheaps_1578f8 0X1578F8 312 bytes (c)</title></rect>
 <rect x="1261.2" y="372.0" width="12.9" height="21.9" fill="#2f7af4"><title>StaticInitSlotheaps_158480 0X158480 312 bytes (c)</title></rect>
@@ -5580,9 +5580,9 @@
 </g>
 <g><title>sw-button: 3480 bytes</title>
 <rect x="1160.4" y="396.2" width="34.3" height="18.6" fill="#4a45a8"><title>LoadLevelTableFromBrx 0X20F318 696 bytes (draft)</title></rect>
-<rect x="1195.1" y="396.2" width="21.9" height="18.6" fill="#2a2d6e"><title>bevy_camera_follow_push_out 0X20FAA0 448 bytes (asm)</title></rect>
+<rect x="1195.1" y="396.2" width="21.9" height="18.6" fill="#4a45a8"><title>bevy_camera_follow_push_out 0X20FAA0 448 bytes (draft)</title></rect>
 <rect x="1160.4" y="415.3" width="17.2" height="19.0" fill="#4a45a8"><title>UpdateSwHudBlots 0X20F7E0 360 bytes (draft)</title></rect>
-<rect x="1160.4" y="434.7" width="17.2" height="19.0" fill="#2a2d6e"><title>IntersectSwBoundingSphere 0X20FC60 360 bytes (asm)</title></rect>
+<rect x="1160.4" y="434.7" width="17.2" height="19.0" fill="#4a45a8"><title>IntersectSwBoundingSphere 0X20FC60 360 bytes (draft)</title></rect>
 <rect x="1178.0" y="415.3" width="16.6" height="13.5" fill="#2f7af4"><title>ExtractUniqueSosFromGeoms 0X20FDC8 248 bytes (c)</title></rect>
 <rect x="1178.0" y="429.1" width="16.6" height="13.0" fill="#4a45a8"><title>UpdateSwFog 0X20F1C8 240 bytes (draft)</title></rect>
 <rect x="1178.0" y="442.5" width="16.6" height="11.2" fill="#2f7af4"><title>func_0020F640 0X20F640 208 bytes (c)</title></rect>
@@ -5733,7 +5733,7 @@
 <rect x="1387.8" y="395.2" width="54.0" height="59.9" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>new_184f98: 3168 bytes</title>
-<rect x="1442.8" y="396.2" width="25.8" height="34.3" fill="#2a2d6e"><title>func_001856C0 0X1856C0 960 bytes (asm)</title></rect>
+<rect x="1442.8" y="396.2" width="25.8" height="34.3" fill="#4a45a8"><title>func_001856C0 0X1856C0 960 bytes (draft)</title></rect>
 <rect x="1469.0" y="396.2" width="25.1" height="34.3" fill="#4a45a8"><title>Spire_FindClosestPoint 0X185310 936 bytes (draft)</title></rect>
 <rect x="1442.8" y="430.9" width="17.8" height="22.9" fill="#2f7af4"><title>LoadSpireFromBrx 0X185150 448 bytes (c)</title></rect>
 <rect x="1461.0" y="430.9" width="14.9" height="22.9" fill="#4a45a8"><title>func_00185A80 0X185A80 376 bytes (draft)</title></rect>
@@ -5779,7 +5779,7 @@
 <rect x="1130.5" y="475.3" width="10.2" height="13.1" fill="#2f7af4"><title>ShowHideLoGlob 0X210408 152 bytes (c)</title></rect>
 <rect x="1141.2" y="475.3" width="10.2" height="13.1" fill="#2f7af4"><title>EnableDisableLoPart 0X2104A0 152 bytes (c)</title></rect>
 <rect x="1117.7" y="488.8" width="10.4" height="12.2" fill="#2f7af4"><title>func_002102A0 0X2102A0 144 bytes (c)</title></rect>
-<rect x="1117.7" y="501.4" width="10.4" height="10.8" fill="#4a45a8"><title>TriggerRsmg 0X20FF70 128 bytes (draft)</title></rect>
+<rect x="1117.7" y="501.4" width="10.4" height="10.8" fill="#2f7af4"><title>TriggerRsmg 0X20FF70 128 bytes (c)</title></rect>
 <rect x="1128.4" y="488.8" width="8.5" height="9.0" fill="#2f7af4"><title>StopSwAmbSfx 0X2108E8 88 bytes (c)</title></rect>
 <rect x="1137.3" y="488.8" width="6.9" height="9.0" fill="#2f7af4"><title>func_00210A98 0X210A98 72 bytes (c)</title></rect>
 <rect x="1144.6" y="488.8" width="6.9" height="9.0" fill="#2f7af4"><title>IEpisodeCurrent 0X210AE0 72 bytes (c)</title></rect>
@@ -6071,7 +6071,7 @@
 <rect x="1233.7" y="456.2" width="20.7" height="21.6" fill="#4a45a8"><title>StaticInitDestroySndbank 0X1FF188 496 bytes (draft)</title></rect>
 <rect x="1233.7" y="478.2" width="11.3" height="12.4" fill="#2f7af4"><title>ResetSndbankVolumeFactors 0X1FEDF0 160 bytes (c)</title></rect>
 <rect x="1245.4" y="478.2" width="9.0" height="12.4" fill="#2f7af4"><title>func_001FF108 0X1FF108 128 bytes (c)</title></rect>
-<rect x="1233.7" y="491.0" width="9.1" height="9.9" fill="#4a45a8"><title>SetSndbankMasterVolume 0X1FE9F8 104 bytes (draft)</title></rect>
+<rect x="1233.7" y="491.0" width="9.1" height="9.9" fill="#2f7af4"><title>SetSndbankMasterVolume 0X1FE9F8 104 bytes (c)</title></rect>
 <rect x="1243.1" y="491.0" width="5.4" height="4.8" fill="#2f7af4"><title>StaticInitDestroySndbank_thunk 0X1FF378 32 bytes (c)</title></rect>
 <rect x="1243.1" y="496.1" width="5.4" height="4.8" fill="#2f7af4"><title>StaticInitDestroySndbank_thunk2 0X1FF398 32 bytes (c)</title></rect>
 <rect x="1248.9" y="491.0" width="2.5" height="4.8" fill="#2f7af4"><title>func_001FEE90 0X1FEE90 16 bytes (c)</title></rect>
@@ -6167,7 +6167,7 @@
 <rect x="1455.3" y="455.2" width="49.0" height="47.1" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>vec: 2240 bytes</title>
-<rect x="1505.3" y="456.2" width="16.3" height="22.4" fill="#2a2d6e"><title>FindClosestPointBetweenLines__FP6VECTORN30PfT4T0 0X11E630 408 bytes (asm)</title></rect>
+<rect x="1505.3" y="456.2" width="16.3" height="22.4" fill="#4a45a8"><title>FindClosestPointBetweenLines__FP6VECTORN30PfT4T0 0X11E630 408 bytes (draft)</title></rect>
 <rect x="1505.3" y="479.0" width="16.3" height="22.0" fill="#4a45a8"><title>FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0 0X11E7C8 400 bytes (draft)</title></rect>
 <rect x="1522.0" y="456.2" width="16.5" height="20.8" fill="#4a45a8"><title>RadBetweenVectors__FP6VECTORN20 0X11E4B0 384 bytes (draft)</title></rect>
 <rect x="1538.9" y="456.2" width="12.3" height="20.8" fill="#4a45a8"><title>GetPerpendicularVector 0X11E390 288 bytes (draft)</title></rect>
@@ -6459,7 +6459,7 @@
 </g>
 <g><title>clip: 1752 bytes</title>
 <rect x="1246.7" y="671.5" width="30.2" height="20.3" fill="#4a45a8"><title>ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG 0X14C748 688 bytes (draft)</title></rect>
-<rect x="1246.7" y="692.2" width="30.2" height="17.7" fill="#2a2d6e"><title>ClsgMergeAlsg 0X14C9F8 600 bytes (asm)</title></rect>
+<rect x="1246.7" y="692.2" width="30.2" height="17.7" fill="#4a45a8"><title>ClsgMergeAlsg 0X14C9F8 600 bytes (draft)</title></rect>
 <rect x="1277.3" y="671.5" width="10.6" height="28.4" fill="#4a45a8"><title>PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG 0X14CC58 344 bytes (draft)</title></rect>
 <rect x="1277.3" y="700.3" width="9.9" height="9.6" fill="#4a45a8"><title>ClsgClipEdgeToObjectPruned 0X14C6D8 112 bytes (draft)</title></rect>
 <rect x="1287.6" y="700.3" width="0.3" height="9.6" fill="#2a2d6e"><title>func_0014CC50 0X14CC50 8 bytes (asm)</title></rect>
@@ -6620,7 +6620,7 @@
 <rect x="1486.9" y="546.3" width="38.2" height="39.3" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>sw-mark: 1456 bytes</title>
-<rect x="1526.2" y="547.3" width="21.1" height="22.4" fill="#2a2d6e"><title>ClsgClipSoBspEdges 0X1A81F8 536 bytes (asm)</title></rect>
+<rect x="1526.2" y="547.3" width="21.1" height="22.4" fill="#4a45a8"><title>ClsgClipSoBspEdges 0X1A81F8 536 bytes (draft)</title></rect>
 <rect x="1547.7" y="547.3" width="13.7" height="22.4" fill="#4a45a8"><title>RecalcSwXpPos 0X1A7E60 352 bytes (draft)</title></rect>
 <rect x="1526.2" y="570.1" width="17.7" height="14.2" fill="#2f7af4"><title>ClsgClipSoAllEdges 0X1A80D8 288 bytes (c)</title></rect>
 <rect x="1544.2" y="570.1" width="17.2" height="14.2" fill="#2f7af4"><title>RecalcSwXpMovement 0X1A7FC0 280 bytes (c)</title></rect>
@@ -7208,7 +7208,7 @@
 </g>
 <g><title>hide_183900: 640 bytes</title>
 <rect x="1388.3" y="848.3" width="12.6" height="11.3" fill="#2f7af4"><title>FIgnoreHbskIntersection 0X183A50 176 bytes (c)</title></rect>
-<rect x="1401.3" y="848.3" width="9.0" height="11.3" fill="#4a45a8"><title>PresetHbskAccel__FP4HBSKf 0X183B00 128 bytes (draft)</title></rect>
+<rect x="1401.3" y="848.3" width="9.0" height="11.3" fill="#2f7af4"><title>PresetHbskAccel__FP4HBSKf 0X183B00 128 bytes (c)</title></rect>
 <rect x="1388.3" y="860.0" width="7.1" height="12.6" fill="#2f7af4"><title>InitHbsk__FP4HBSK 0X183900 112 bytes (c)</title></rect>
 <rect x="1395.8" y="860.0" width="8.1" height="6.9" fill="#2f7af4"><title>CloneHbsk__FP4HBSKT0 0X183A08 72 bytes (c)</title></rect>
 <rect x="1395.8" y="867.3" width="8.1" height="5.3" fill="#2f7af4"><title>OnHbskAdd 0X183998 56 bytes (c)</title></rect>
@@ -7298,7 +7298,7 @@
 <rect x="1411.7" y="784.8" width="20.7" height="23.9" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>geom_1665f0: 472 bytes</title>
-<rect x="1412.7" y="809.7" width="18.3" height="20.7" fill="#2a2d6e"><title>CedgeFindAtPos 0X1665F0 472 bytes (asm)</title></rect>
+<rect x="1412.7" y="809.7" width="18.3" height="20.7" fill="#4a45a8"><title>CedgeFindAtPos 0X1665F0 472 bytes (draft)</title></rect>
 <rect x="1411.7" y="808.7" width="20.7" height="23.1" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>gs_170650: 472 bytes</title>

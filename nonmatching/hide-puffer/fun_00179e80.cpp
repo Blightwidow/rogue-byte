@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-f32 GRandInRange(f32, f32);                         /* extern */
+f32 GRandInRange(f32);                         /* extern */
 extern f32 g_2dded0;
 
 void func_00179E80(s8 *arg0) {
@@ -20,7 +20,7 @@ void func_00179E80(s8 *arg0) {
         temp_f12 = M2C_FIELD(temp_v0, f32 *, 0x2CC);
         if (temp_f12 != 3.4028235e38f) {
             temp_f20 = g_2dded0;
-            M2C_FIELD(arg0, f32 *, 0x30) = (f32) (temp_f20 + GRandInRange(temp_f12, M2C_FIELD(temp_v0, f32 *, 0x2D0)));
+            M2C_FIELD(arg0, f32 *, 0x30) = (f32) (temp_f20 + GRandInRange(temp_f12));
         } else {
             M2C_FIELD(arg0, f32 *, 0x30) = 3.4028235e38f;
         }

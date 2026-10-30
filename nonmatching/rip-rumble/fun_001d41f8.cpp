@@ -14,7 +14,7 @@ extern "C" QW bevy_camera_follow_track_heading_weight(void *, void *, QW);
 extern "C" QW ConvertXfPos(void *, void *, QW);
 extern "C" void *func_001D2DD0(VEHICLE *, WHEEL *);
 extern "C" float GSmooth__FfffP3SMPPf(float, float, float, SMP *, float *);
-extern "C" float RadNormalize__Ff(float);
+extern "C" float RadNormalize__Ff(void);
 extern "C" void LoadRotateMatrixRad(void *, float, QW);
 extern "C" void UpdateAloXfWorld(VEHICLE *);
 extern "C" void func_001F3C70(VEHICLE *);
@@ -76,7 +76,7 @@ void RenderVehicleSelf(VEHICLE *pv)
             SMP *psmp = (__builtin_fabsf(pwheel->dradSpin) < __builtin_fabsf(dradGoal)) ? &D_002C21B0 : &D_002C21C0;
             pwheel->dradSpin = GSmooth__FfffP3SMPPf(pwheel->dradSpin, dradGoal, g_2dded0.dt, psmp, 0);
         }
-        pwheel->radSpin = RadNormalize__Ff(pwheel->radSpin + pwheel->dradSpin * g_2dded0.dt);
+        pwheel->radSpin = RadNormalize__Ff();
         LoadRotateMatrixRad(STEER, pwheel->radSteer, g_2a2dc0);
         LoadRotateMatrixRad(SPIN, pwheel->radSpin, g_2a2db0);
         asm("lqc2 vf3, %0" : : "m"(*(QW *)(STEER)));

@@ -4,9 +4,10 @@ static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); 
 extern "C" QW GetPerpendicularVector(QW vec)
 {
     register QW zeroReg asm("$0");
-    float x = Lane(vec);
+    float  x;
     float y = Lane(__builtin_prot3w(vec));
     float absX = __builtin_fabsf(x);
+    x = Lane(vec);
     float z = Lane(__builtin_pextuw(zeroReg, vec));
     float absY = __builtin_fabsf(y);
     float zeroF = 0.0f;

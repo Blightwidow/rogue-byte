@@ -28,10 +28,10 @@ struct _m2c_stack_BounceRipgRips__FP4RIPG {
 };                                                  /* size = 0x270 */
 M2C_UNK CStackFrame_Construct(M2C_UNK *);           /* extern */
 M2C_UNK CStackFrame_Destructor(M2C_UNK *, M2C_UNK); /* extern */
-s32 ClsgClipEdgeToObjectPruned(s8 *, s32, s128, s128); /* extern */
+s32 ClsgClipEdgeToObjectPruned(s8 *, s32, s128, s128, M2C_UNK, M2C_UNK *); /* extern */
 s32 FIsBasicDerivedFrom(s32, M2C_UNK);              /* extern */
 s32 FIsDlEmpty__FP2DL(s8 **);                     /* extern */
-s32 PruneBsp__FP3BSPP6VECTORfPP3BSP(s32, M2C_UNK, s128, s32 *, f32); /* extern */
+s32 PruneBsp__FP3BSPP6VECTORfPP3BSP(s32, M2C_UNK, s128, s32 *, s32 *, f32); /* extern */
 s32 PvAllocStackImpl__Fi(s32 *, s32, s32);          /* extern */
 extern s32 *g_2dd2fc;
 extern f32 g_2dded0;
@@ -102,7 +102,7 @@ void BounceRipgRips__FP4RIPG(s8 *arg0) {
                                     M2C_FIELD(&sp20, s32 *, 4) = 0x10;
                                     sp1B4 = PvAllocStackImpl__Fi(&sp20, temp_a1, temp_a2);
                                     temp_v0_4 = M2C_FIELD(arg0, s8 **, 0xEC);
-                                    if (PruneBsp__FP3BSPP6VECTORfPP3BSP(M2C_FIELD(var_s4, s32 *, 0x74), 0x7FFFFFFF, M2C_FIELD(temp_v0_4, s128 *, 0x20), &sp1B0, M2C_FIELD(temp_v0_4, f32 *, 0x30)) != 2) {
+                                    if (PruneBsp__FP3BSPP6VECTORfPP3BSP(M2C_FIELD(var_s4, s32 *, 0x74), 0x7FFFFFFF, M2C_FIELD(temp_v0_4, s128 *, 0x20), &sp1B0, &sp1B4, M2C_FIELD(temp_v0_4, f32 *, 0x30)) != 2) {
                                         CStackFrame_Destructor(&sp10, 2);
                                     } else {
                                         sp1B4 -= 0xC;
@@ -123,7 +123,7 @@ loop_20:
                                     if (var_v0 != NULL) {
                                         if (!(g_2dded0 <= M2C_FIELD(var_v0, f32 *, 0x14))) {
                                             var_s2 = 0;
-                                            temp_v0_5 = ClsgClipEdgeToObjectPruned(var_s4, sp1B4, M2C_FIELD(var_v0, s128 *, 0x80), M2C_FIELD(var_v0, s128 *, 0x70));
+                                            temp_v0_5 = ClsgClipEdgeToObjectPruned(var_s4, sp1B4, M2C_FIELD(var_v0, s128 *, 0x80), M2C_FIELD(var_v0, s128 *, 0x70), 4, &sp30);
                                             if (temp_v0_5 > 0) {
                                                 var_s1 = &sp30;
 loop_15:

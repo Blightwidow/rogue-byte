@@ -21,10 +21,10 @@ struct _m2c_stack_LaunchMatch__FP5MATCH {
 #define sp90 (*(s128 *)(sp + 0x90))
 #define spA0 (*(s128 *)(sp + 0xA0))
 M2C_UNK DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(s128 *, s8 *, s8 *, s128); /* extern */
-M2C_UNK MatMulMatTransMat(s128 *, s8 *, s8 *);  /* extern */
+M2C_UNK MatMulMatTransMat(s128 *);  /* extern */
 s8 *PmatLoWorld(s8 *);                          /* extern */
 s128 PosLoWorld(s8 *);                            /* extern */
-M2C_UNK PredictXfTransform(s32, M2C_UNK, s8 *, M2C_UNK, f32); /* extern */
+M2C_UNK PredictXfTransform(s32, M2C_UNK, s8 *, M2C_UNK); /* extern */
 void LaunchMatch__FP5MATCH(s8 *arg0) {
     s8 sp[0x90] __attribute__((aligned(16)));
     s128 sp40;
@@ -42,7 +42,7 @@ void LaunchMatch__FP5MATCH(s8 *arg0) {
     M2C_FIELD(arg0, s128 *, 0x40) = (s128) M2C_FIELD(temp_v0, s128 *, 0);
     M2C_FIELD(arg0, s128 *, 0x50) = (s128) M2C_FIELD(temp_v0, s128 *, 0x10);
     M2C_FIELD(arg0, s128 *, 0x60) = (s128) M2C_FIELD(temp_v0, s128 *, 0x20);
-    PredictXfTransform(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x1C), s32 *, 0x60), 0, sp, 0, M2C_FIELD(arg0, f32 *, 0x18));
+    PredictXfTransform(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x1C), s32 *, 0x60), 0, sp, 0);
     temp_f1 = M2C_FIELD(arg0, f32 *, 0x18);
     asm volatile("lqc2 vf1, 0x70(%0)" : : "r"(arg0));
     asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(sp));
@@ -55,7 +55,7 @@ void LaunchMatch__FP5MATCH(s8 *arg0) {
     asm volatile("vmaddx.xyzw vf2, vf1, vf4x");
     asm volatile("sqc2 vf2, 0x90(%0)" : : "r"(arg0));
     asm volatile("sqc2 vf4, 0x70(%0)" : : "r"(sp));
-    MatMulMatTransMat(&sp80, sp, arg0 + 0x40);
+    MatMulMatTransMat(&sp80);
     sp40 = sp80;
     sp50 = sp90;
     sp60 = spA0;

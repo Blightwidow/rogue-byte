@@ -66,8 +66,8 @@ extern "C" void bevy_anim_keys_axis_segment(KEYS_12C140 *keys, STATE_12C140 *sta
         }
         step++;
         outD++;
-        outC++;
         outB++;
+        outC++;
         outA++;
         defaultPtr++;
         axisPtr++;

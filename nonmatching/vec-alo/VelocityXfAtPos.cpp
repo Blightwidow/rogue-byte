@@ -23,7 +23,7 @@ struct _m2c_stack_VelocityXfAtPos {
 #define sp70 (*(s128 *)(sp + 0x070))
 #define sp80 (*(s128 *)(sp + 0x080))
 #define sp90 (*(s128 *)(sp + 0x090))
-M2C_UNK EvaluateBezierPos__FfffP6VECTORN63(s128, s128, s128, s128, f32, f32, f32); /* extern */
+M2C_UNK EvaluateBezierPos__FfffP6VECTORN63(s128, s128, s128, s128, M2C_UNK, s128 *, M2C_UNK, f32, f32, f32); /* extern */
 M2C_UNK GetXfLocalRateMatrix(s128 *, s8 *);       /* extern */
 M2C_UNK InvertMatrix4Affine(s128 *, s8 *);        /* extern */
 M2C_UNK RefreshXfActSegment(s32, s8 *);           /* extern */
@@ -114,7 +114,7 @@ block_15:
                             break;
                         case 1:                     /* switch 4 */
                             temp_f0 = M2C_FIELD(var_s0, f32 *, 0x80);
-                            EvaluateBezierPos__FfffP6VECTORN63(M2C_FIELD(var_s0, s128 *, 0xC0), M2C_FIELD(var_s0, s128 *, 0xD0), M2C_FIELD(var_s0, s128 *, 0xE0), M2C_FIELD(var_s0, s128 *, 0xF0), M2C_FIELD(var_s0, f32 *, 0x84) - temp_f0, *M2C_FIELD(var_s0, f32 **, 0x88) - temp_f0, *M2C_FIELD(var_s0, f32 **, 0x8C));
+                            EvaluateBezierPos__FfffP6VECTORN63(M2C_FIELD(var_s0, s128 *, 0xC0), M2C_FIELD(var_s0, s128 *, 0xD0), M2C_FIELD(var_s0, s128 *, 0xE0), M2C_FIELD(var_s0, s128 *, 0xF0), 0, &sp40, 0, M2C_FIELD(var_s0, f32 *, 0x84) - temp_f0, *M2C_FIELD(var_s0, f32 **, 0x88) - temp_f0, *M2C_FIELD(var_s0, f32 **, 0x8C));
                             var_v0 = sp40;
                             break;
                         default:                    /* switch 4 */

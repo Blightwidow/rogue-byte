@@ -1,5 +1,7 @@
---- a/m2c/arch_mips.py	2026-10-29 13:40:04
-+++ b/m2c/arch_mips.py	2026-10-29 15:06:19
+diff --git a/m2c/arch_mips.py b/m2c/arch_mips.py
+index 8d4ff53..55f9276 100644
+--- a/m2c/arch_mips.py
++++ b/m2c/arch_mips.py
 @@ -1,5 +1,6 @@
  from __future__ import annotations
  from dataclasses import replace
@@ -7,7 +9,16 @@
  from typing import (
      Callable,
      Dict,
-@@ -1313,6 +1314,44 @@
+@@ -137,6 +138,8 @@ LENGTH_THREE: Set[str] = {
+     "sub.s",
+     "div.s",
+     "mul.s",
++    "max.s",
++    "min.s",
+     "add.d",
+     "sub.d",
+     "div.d",
+@@ -1313,6 +1316,44 @@ class MipsArch(Arch):
              output_reg = hi_reg if base_mult_mnemonic == "mthi" else lo_reg
              outputs = [output_reg]
              eval_fn = lambda s, a: s.set_reg(output_reg, a.reg(0))
@@ -52,3 +63,13 @@
          elif mnemonic in cls.instrs_ignore:
              pass
          else:
+@@ -1605,6 +1646,9 @@ class MipsArch(Arch):
+         "sqrt.s": lambda a: fn_op("sqrtf", [as_f32(a.reg(1))], Type.f32()),
+         "div.s": lambda a: BinaryOp.f32(a.reg(1), "/", a.reg(2)),
+         "mul.s": lambda a: BinaryOp.f32(a.reg(1), "*", a.reg(2)),
++        # R5900 floating point minimum and maximum
++        "max.s": lambda a: fn_op("fmaxf", [as_f32(a.reg(1)), as_f32(a.reg(2))], Type.f32()),
++        "min.s": lambda a: fn_op("fminf", [as_f32(a.reg(1)), as_f32(a.reg(2))], Type.f32()),
+         # Double-precision arithmetic
+         "add.d": lambda a: handle_add_double(a),
+         "sub.d": lambda a: BinaryOp.f64(a.dreg(1), "-", a.dreg(2)),

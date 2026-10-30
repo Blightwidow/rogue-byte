@@ -17,7 +17,7 @@ struct _m2c_stack_PostJtLoad {
     /* 0x80 */ char pad80[0x70];
 };                                                  /* size = 0xF0 */
 void CarryThrow_EnsureBlends(s8 *);
-s32 CploFindSwObjects_thunk(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
+s32 CploFindSwObjects_thunk(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, s32 *);
 void LoadAttach(s8 *);
 void LoadJtGadgetSlots(s8 *);
 s32 PalertEnsure(s8 *);
@@ -70,7 +70,7 @@ void PostJtLoad(s8 *arg0) {
     PostBinocLoad(arg0 + 0xF00);
     CarryThrow_EnsureBlends(arg0 + 0x11B0);
     PostJtLoadPipe(arg0 + 0xF50);
-    temp_v0 = CploFindSwObjects_thunk(&B_003DD490, 0x401, 0x2AB, arg0);
+    temp_v0 = CploFindSwObjects_thunk(&B_003DD490, 0x401, 0x2AB, arg0, 0x10, (s32 *)(sp));
     if (temp_v0 != 0) {
         sp40 = temp_v0 * 8;
         M2C_FIELD(arg0, s32 *, 0x1094) = temp_v0;

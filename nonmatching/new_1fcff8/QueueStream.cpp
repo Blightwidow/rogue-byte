@@ -12,7 +12,7 @@ void StopAmb(AMB *, float);
 void func_00259B48(void *, void *);
 int func_001FCFF8(SND *, int);
 AMB *NewStreamAmb(int, int);
-void AddAmbSlotSource(AMB *, unsigned, int, float *, float);
+void AddAmbSlotSource(AMB *, unsigned, int, float, float *);
 
 AMB *QueueStream(SND *snd, int id)
 {
@@ -38,9 +38,9 @@ AMB *QueueStream(SND *snd, int id)
         float *prange = l.range;
         prange[0] = 2000.0f;
         prange[1] = 5000.0f;
-        AddAmbSlotSource(l.taken, 3, g_2dd5bc, prange, 1.0f);
-        AddAmbSlotSource(l.taken, 3, g_2f7900, prange, 1.0f);
-        AddAmbSlotSource(l.taken, 4, g_2e1e40, prange, 1.0f);
+        AddAmbSlotSource(l.taken, 3, g_2dd5bc, 1.0f, prange);
+        AddAmbSlotSource(l.taken, 3, g_2f7900, 1.0f, prange);
+        AddAmbSlotSource(l.taken, 4, g_2e1e40, 1.0f, prange);
     }
     int n = snd->count;
     AMB **slot = (AMB **)(n * 4 + (char *)snd + 0x208);

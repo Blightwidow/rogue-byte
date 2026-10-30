@@ -18,7 +18,7 @@ s32 CStackFrame_Construct(s8 *);
 void CStackFrame_Destructor(s8 *, M2C_UNK);
 s32 PvAllocStackClearImpl__Fi(s32 *);
 s32 PvAllocStackImpl__Fi(s32 *);
-s32 PvAllocSwCopyImpl__FiPv(s32 *, s32);
+s32 PvAllocSwCopyImpl__FiPv(s8 *, s32 *, s32);
 void LoadStgSwitchFromBrx(s8 *arg0, s32 arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 sp10;
@@ -39,27 +39,27 @@ void LoadStgSwitchFromBrx(s8 *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x15C) = 0;
     sp10 = M2C_FIELD(arg0, s32 *, 0x150) * 8;
     M2C_FIELD(&sp10, s32 *, 4) = 0x10;
+    M2C_FIELD(arg0, s32 *, 0x154) = PvAllocSwCopyImpl__FiPv(arg0, &sp10, M2C_FIELD(arg0, s32 *, 0x154));
     temp_v1 = M2C_FIELD(arg0, s32 *, 0x160);
-    M2C_FIELD(arg0, s32 *, 0x154) = PvAllocSwCopyImpl__FiPv(&sp10, M2C_FIELD(arg0, s32 *, 0x154));
     if (temp_v1 != 0) {
         sp14 = 0x10;
         sp10 = (temp_v1 * 0x10) + 0x10;
         var_s0 = -1;
-        M2C_FIELD(arg0, s32 *, 0x164) = (s32) (PvAllocSwCopyImpl__FiPv(&sp10, M2C_FIELD(arg0, s32 *, 0x164) - 0x10) + 0x10);
+        M2C_FIELD(arg0, s32 *, 0x164) = (s32) (PvAllocSwCopyImpl__FiPv(arg0, &sp10, M2C_FIELD(arg0, s32 *, 0x164) - 0x10) + 0x10);
         if (M2C_FIELD(arg0, s32 *, 0x160) > -1) {
 loop_3:
             temp_s1 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x164) + (var_s0 * 0x10));
             var_s2 = 0;
             sp14 = 0x10;
             sp10 = M2C_FIELD(temp_s1, s32 *, 8) * 8;
-            M2C_FIELD(temp_s1, s32 *, 0xC) = PvAllocSwCopyImpl__FiPv(&sp10, M2C_FIELD(temp_s1, s32 *, 0xC));
+            M2C_FIELD(temp_s1, s32 *, 0xC) = PvAllocSwCopyImpl__FiPv(arg0, &sp10, M2C_FIELD(temp_s1, s32 *, 0xC));
             if (M2C_FIELD(temp_s1, s32 *, 8) > 0) {
                 do {
                     temp_s0 = (s8 *)(M2C_FIELD(temp_s1, s32 *, 0xC) + (var_s2 * 8));
                     if (M2C_FIELD(temp_s0, s32 *, 0) == 0xC) {
                         sp10 = 8;
                         M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-                        M2C_FIELD(temp_s0, s32 *, 4) = PvAllocSwCopyImpl__FiPv(&sp10, M2C_FIELD(temp_s0, s32 *, 4));
+                        M2C_FIELD(temp_s0, s32 *, 4) = PvAllocSwCopyImpl__FiPv(arg0, &sp10, M2C_FIELD(temp_s0, s32 *, 4));
                     }
                     var_s2 += 1;
                 } while (var_s2 < M2C_FIELD(temp_s1, s32 *, 8));

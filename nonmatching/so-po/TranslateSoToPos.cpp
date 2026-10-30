@@ -55,8 +55,8 @@ extern "C" void TranslateSoToPos(SO *pso, QW pos)
     __as__6VECTORG9VU_VECTOR(&pxf->local.row[3], l.b.row[3]);
     ((float *)&pxf->local)[15] = 1.0f;
     (*(int *)(B_003DD490 + 0x3D58))++;
-    pso->plinear->generation = *(int *)(B_003DD490 + 0x3D58);
     pso->vt->fn((char *)pso + pso->vt->delta);
+    pso->plinear->generation = *(int *)(B_003DD490 + 0x3D58);
     DiscardSoXps(pso);
     WakeXf(pso, pso->plinear);
     func_001F3900(pso);

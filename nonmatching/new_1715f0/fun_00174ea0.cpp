@@ -33,7 +33,7 @@ s32 func_00174EA0(s8 *arg0) {
         /* Duplicate return node #8. Try simplifying control flow for better match */
         return var_v0;
     }
-    var_v0 = func_001EEFA0(temp_a1);
+    var_v0 = func_001EEFA0(arg0);
     { result = var_v0; goto done; }
 done:
     return result;

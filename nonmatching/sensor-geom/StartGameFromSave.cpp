@@ -31,9 +31,9 @@ extern "C" void StartGameFromSave(void *pvSave)
         }
     } else if (dtSave == 0.0f) {
         g_2deb4c = (int)pvSave;
-        B_002DEB30.v18 = 0x62F;
-        B_002DEB30.v14 = -1;
         B_002DEB30.v10 = -1;
+        B_002DEB30.v14 = -1;
+        B_002DEB30.v18 = 0x62F;
         RequestTransition(psw, PdescFromEpisode(0), 0x189, -1, 0x48, -1);
         return;
     }

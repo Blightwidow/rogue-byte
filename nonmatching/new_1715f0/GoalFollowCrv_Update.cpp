@@ -78,7 +78,7 @@ void GoalFollowCrv_Update(GOAL *self) {
                 int farther = 0;
                 if (limit < dist) farther = 1;
                 int next = farther != 0 ? 0 : 2;
-                self->vt->setState((char *)self + self->vt->delta, next);
+                self->vt->setState((unsigned short *)self + self->vt->delta, next);
             }
             break;
         }
@@ -113,7 +113,7 @@ void GoalFollowCrv_Update(GOAL *self) {
                         self->vt->setState((char *)self + self->vt->delta, 4);
                 }
             } else {
-                self->vt->setState((char *)self + self->vt->delta, 0);
+                self->vt->setState((long *)self + self->vt->delta, 0);
             }
             break;
         }

@@ -6,7 +6,7 @@ struct Aim {
 extern "C" {
 void PostLoLoad(Aim *);
 int FIsBasicDerivedFrom(void *, int);
-void BindAnimref(void *, void *);
+void BindAnimref(void *);
 void *func_001F4C58(void *, int, int);
 float *PeaFindAsegLabel(void *, int);
 void PredictAsegEffect(void *, void *, void *, void *, float, float, void *, int);
@@ -20,7 +20,7 @@ void PostGuardAimLoad(Aim *paim)
     paim->pguard = pguard;
     char *panim;
     panim = paim->animref;
-    BindAnimref(panim, pguard);
+    BindAnimref(panim);
     if (paim->oid != 0x2CC)
         paim->pused = panim;
     if (paim->oidA != -1) {

@@ -21,7 +21,7 @@ void UpdateStreamCues(s8 *);
 void func_001FDA48(s8 *);
 void func_001FDBA8(s8 *);
 void func_001FDEC0(s8 *);
-s32 func_001FE5E0(s8 *, s32, s32);
+s32 func_001FE5E0(s8 *, s32, f32);
 s32 snd_FlushSoundCommands(s8 *);
 extern M2C_UNK RO_002A8288;
 extern s32 g_2bd4c0;
@@ -101,8 +101,8 @@ void UpdateSnd(s8 *arg0) {
     temp_f0 = GSmooth__FfffP3SMPPf(sp, 0, M2C_FIELD(arg0, f32 *, 0x15C), var_f21, M2C_FIELD(&g_2dded0, f32 *, 0x40));
     SetSndbankVolumeFactor(arg0, 0, 2, temp_f0);
     SetSndbankVolumeFactor(arg0, 1, 2, temp_f0);
-    SetSndbankVolumeFactor(arg0, 2, 2, var_f21);
     var_s0 = M2C_FIELD(arg0, s8 **, 0x4C);
+    SetSndbankVolumeFactor(arg0, 2, 2, var_f21);
     var_a0 = var_s0;
     if (var_s0 != NULL) {
         do {

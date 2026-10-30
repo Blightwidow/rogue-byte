@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_GetCrvBounds {
     /* 0x00 */ char pad0[0x50];
 };                                                  /* size = 0x50 */
-M2C_UNK UpdateXfmMatWorld();                        /* extern */
+M2C_UNK UpdateXfmMatWorld(s8 *);                        /* extern */
 void GetCrvBounds(s8 *arg0, s32 arg1, s32 arg2) {
     s8 sp[0x10] __attribute__((aligned(16)));
     f32 temp_f0;
@@ -27,7 +27,7 @@ void GetCrvBounds(s8 *arg0, s32 arg1, s32 arg2) {
     s32 var_v1;
     s8 *temp_v0;
     s8 *var_v1_2;
-    UpdateXfmMatWorld();
+    UpdateXfmMatWorld(arg0);
     temp_a1 = M2C_FIELD(arg0, s32 *, 0xF4);
     temp_v0 = arg0 + 0xA0;
     asm volatile("lqc2 vf11, 0x30(%0)" : : "r"(temp_v0));

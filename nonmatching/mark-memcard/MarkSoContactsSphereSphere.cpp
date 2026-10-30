@@ -2,7 +2,7 @@
 struct XF { char pad[0x70]; QW pos; };
 struct GEOM { XF *pxf; int pad4; float radius; };
 extern QW g_2a2dc0;
-extern "C" void PxpAdd(float, void *, void *, void *, QW, QW, int, void *, void *, void *);
+extern "C" void PxpAdd(float, void *, void *, void *, QW, QW);
 extern "C" void MarkSoContactsSphereSphere(void *psw, GEOM *pg0, GEOM *pg1, void *ppxpFirst)
 {
     XF *pxf1 = pg1->pxf;
@@ -35,5 +35,5 @@ extern "C" void MarkSoContactsSphereSphere(void *psw, GEOM *pg0, GEOM *pg1, void
     asm("qmtc2.ni %0, vf1" : : "r" (nr));
     asm("vadda.xyzw ACC, vf0, vf4\n\tvmaddx.xyzw vf3, vf2, vf1x\n\tsqc2 vf1, %0" : "=m" (tmp));
     asm("qmfc2.ni %0, vf3" : "=r" (pos));
-    PxpAdd(dist - radiusSum, psw, pg0, pg1, pos, normal, 7, 0, 0, ppxpFirst);
+    PxpAdd(dist - radiusSum, psw, pg0, pg1, pos, normal);
 }

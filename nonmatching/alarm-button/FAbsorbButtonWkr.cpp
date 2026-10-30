@@ -3,7 +3,7 @@ struct Wkr { int pobj; char p0[0x44 - 4]; unsigned grfic; };
 struct Button { char p0[0x1E0]; int buttons; float tButtons; float dtRepush; char p1[0x2A8 - 0x1EC]; int btnt; };
 extern "C" {
 int FAbsorbSoWkr(Button *, Wkr *);
-int FCheckButtonObject(Button *, int);
+int FCheckButtonObject(Button *);
 void SetButtonButtons(Button *, int);
 extern float g_2dded0;
 }
@@ -11,7 +11,7 @@ int FAbsorbButtonWkr(Button *pbutton, Wkr *pwkr)
 {
     int fAbsorbed = FAbsorbSoWkr(pbutton, pwkr);
     if (fAbsorbed != 0 && (pwkr->grfic & 4) == 0) {
-        if (FCheckButtonObject(pbutton, pwkr->pobj) != 0) {
+        if (FCheckButtonObject(pbutton) != 0) {
             int buttons;
             switch (pbutton->btnt) {
             case 1:

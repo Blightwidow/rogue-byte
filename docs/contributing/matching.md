@@ -390,3 +390,19 @@ The sixth deep dive (order plus register, 83 sources; 20 of them are fragments o
 6. **Then rerun the store-order search:** a correct type fix often leaves the order wrong. **A wrong argument can be a local minimum that looks one word away:** fixing it first scores worse (1 to 2 to 8), so a search that accepts only improvements never leaves it. Some fixes need two edits together (a pass-through argument alone scores 7, the member re-read alone 2, both 0): `trailing_args.py --pairs` tries pairs.
 
 Unexplained: a 68-byte `new()` constructor copies the allocated object `$v0` to `$v1` and neither returning it, an inline wrapper nor store order reproduces it (0x110CD0 and ten more).
+
+### The SDK range by hand, and what the pipeline learned (2026-10-30)
+
+Eight Sonnet workers took the 186 library near misses (10 to 120 words): 80 more SDK functions match (72 as C++, 11 as C, some counted in both), and the lessons below also fixed 25 other functions.
+
+- **The SDK sources are C.** `try.py` now judges a `.c` file as C (the default follows the suffix; `--lang` overrides); `record_round.py` and `neighborhood.py` read `.c` sources in `data/matching/src/fn/`, and `export_src.py` publishes them as `src/<module>/<name>.c`. Sony's gcc emits a sibling call (`j callee`, no frame) only from C, and only when the final call's result is unused (`void` callee, no `return g(x)`).
+- **The compiler is per address:** the 150 addresses that match only under Sony's gcc 2.9 (retail saves with `sd`/`ld`, not `sq`/`lq`) are in `config/us/sony_gcc29.txt`; one that needs the loop-padding assembler is in `ps2eeas_loop5.txt`. Try `TRY_ASSEMBLER=sony29` first when a library function's prologue saves with the wrong instruction.
+- **Soft-float libcalls:** Sony's gcc emits `dpadd`, `dpsub`, `dpmul`, `dpdiv`, `dptofp` (and `copysign`) for the double operations; `config/matching/symbol_addrs.txt` has these as aliases of `__adddf3` and the rest, or the link check counts a word per call (five libm functions were identical to retail otherwise).
+- **Hardware registers** (`0x1000xxxx` DMA, IPU, timer) are `*(volatile unsigned *)ADDR` at the use site: pointer locals fold into `lui` + offset. Volatile on ordinary data is still banned (two functions stay at 9).
+- **fdlibm code matches only in the fdlibm shape:** `ieee_*_shape_type` unions and the `GET_FLOAT_WORD`/`SET_FLOAT_WORD`/`GET_HIGH_WORD`/`EXTRACT_WORDS` macros, modifying the argument in place.
+- **A `func(arg)` stub with an `sp[0x20]` buffer is a small IOP command packet:** `int buf[4]` filled with the arguments and passed as `(char *)buf`; `sceSifCallRpc` takes nine arguments; typed global tables (`Port{Slot slot[4]}`, strides 0x70 and 0x1C) reproduce `mult`/`mult1`.
+- **Fragments are not functions.** The `addiu $sp ; nop` chunks of the SDK range are the `jr` delay slots of the preceding function (a 100-word function scoring 1 may just be missing its last word to the split: only seven functions end exactly at their `jr`).
+
+m2c and the harvest: the split assembly names registers 8 to 15 as o32 does (`$t0`-`$t7`), m2c's `mipsee` target as n32/eabi64 does (`$a4`-`$a7`, `$t0`-`$t3`), so a function's fifth to eighth argument looked like a read of an unset temporary: 88 functions had no draft for that alone. `harvest.py` renames the registers before m2c reads them; the unsupported count fell from 132 to 46, 61 more drafts compile, 13 more functions match, and `harvest.py --tried --refresh --write` redrafts the functions that already have a source (a saved source is replaced only by a strictly lower score; 257 improved). m2c also needed `max.s` and `min.s` (R5900 float min and max, `fmaxf`/`fminf`), in `scripts/matching/m2c_vu.patch`.
+
+The rule-based passes of `scripts/matching/rules.py` (the deep-dive shapes as rewrites, run through `neighborhood.py`) found their first matches on the nearest misses (distance 1 to 20).

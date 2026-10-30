@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_UpdateJoyNavY {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-s32 FJoyButtonPressed(M2C_UNK);                     /* extern */
+s32 FJoyButtonPressed(s8 *, M2C_UNK);                     /* extern */
 extern M2C_UNK g_2dded0;
 extern f32 g_2ddf0c;
 s32 UpdateJoyNavY(s8 *arg0) {
@@ -28,7 +28,7 @@ s32 UpdateJoyNavY(s8 *arg0) {
     s32 var_v1;
     temp_v0 = M2C_FIELD(arg0, s32 *, 0x1028);
     if (temp_v0 == 0) {
-        temp_v0_2 = FJoyButtonPressed(0x5000);
+        temp_v0_2 = FJoyButtonPressed(arg0, 0x5000);
         var_v0_2 = -1;
         if (!(temp_v0_2 & 0x1000)) {
             if (!(temp_v0_2 & 0x4000)) {

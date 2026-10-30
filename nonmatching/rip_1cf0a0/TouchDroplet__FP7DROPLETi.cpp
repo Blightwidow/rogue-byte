@@ -8,7 +8,7 @@ struct LSGHIT { QW pos; char pad[0x50]; };
 struct SWX { char pad[1]; };
 extern SWX B_003DD490;
 extern "C" int ClsgClipEdgeToObject(SOG *, QW, QW, int, LSGHIT *);
-extern "C" RIPPLE *PripNewRipg(SWX *, int, int);
+extern "C" RIPPLE *PripNewRipg(DROPLET *, int, int);
 extern "C" void TouchRip__FP3RIPi(DROPLET *, int);
 
 void TouchDroplet(DROPLET *droplet, int touching)
@@ -28,7 +28,7 @@ void TouchDroplet(DROPLET *droplet, int touching)
                 offset += 0xB0;
             } while (index < soTouch->cgeom);
         }
-        RIPPLE *ripple = PripNewRipg(&B_003DD490, 7, 0);
+        RIPPLE *ripple = PripNewRipg(droplet, 7, 0);
         if (ripple != 0) {
             float scale = 40.0f;
             ripple->vt->fn((char *)ripple + ripple->vt->delta, hit.pos, scale, 0);

@@ -6,7 +6,7 @@ struct Frame { Rows copy; QW junk; Rows mat; };
 extern "C" {
 extern char B_002DDF40[];
 extern char g_2a2dc0[];
-void BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(Rows *, QW, QW);
+void BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(Rows *, CM *, QW);
 int FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(FLYING *, QW, Rows *);
 }
 
@@ -23,7 +23,7 @@ int RenderFlying(FLYING *pflying, CM *pcm)
     }
     QW velocity = pflying->v;
     asm volatile("qmfc2.ni %0, vf1" : "=r" (hint));
-    BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(&frame.mat, velocity, hint);
+    BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(&frame.mat, pcm, hint);
     frame.copy = frame.mat;
     return FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(pflying, pflying->pos, &frame.copy);
 }

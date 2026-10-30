@@ -19,7 +19,7 @@ f32 ActivateCplcy();
 void DecomposeSphere(M2C_UNK, s8 *, s8 *, s8 *);
 s32 FIsBasicDerivedFrom(s32, s32);
 s32 FIsCidDerivedFrom(s32, s32);
-void FindCrvClosestPointAll(s32, s128, M2C_UNK, M2C_UNK *);
+void FindCrvClosestPointAll(s32, s128, M2C_UNK, M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
 void GetCmCpdefi__FP2CMP2SOfP6CPDEFI(M2C_UNK *, s32, s8 *);
 void GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN(s32 *, s8 *, s128 *, s8 *);
 s32 SetResetFlag__FP2CM(s8 *);
@@ -43,8 +43,8 @@ void ActivateCptn__FP4CPTNPv(s8 *arg0, s32 arg1, s8 *arg2) {
     s32 temp_a0;
     s32 var_s3;
     s32 var_s4;
+    s8 *temp_a6;
     s8 *temp_s0_2;
-    s8 *temp_t2;
     s8 *temp_v0;
     s8 *temp_v1;
     s8 *var_fp;
@@ -79,12 +79,12 @@ void ActivateCptn__FP4CPTNPv(s8 *arg0, s32 arg1, s8 *arg2) {
     UpdateStepXfWorld__FP4STEP(M2C_FIELD(arg0, s32 **, 0x14));
     GetCmCpdefi__FP2CMP2SOfP6CPDEFI(&B_002DDF40, arg1, sp);
     GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN(M2C_FIELD(arg0, s32 **, 0x14), sp, &sp50, NULL);
-    temp_t2 = M2C_FIELD(arg0, s8 **, 0x10);
-    if (temp_t2 != NULL) {
-        temp_a0 = M2C_FIELD(temp_t2, s32 *, 0x10C);
+    temp_a6 = M2C_FIELD(arg0, s8 **, 0x10);
+    if (temp_a6 != NULL) {
+        temp_a0 = M2C_FIELD(temp_a6, s32 *, 0x10C);
         if (temp_a0 != 0) {
-            FindCrvClosestPointAll(temp_a0, sp50, 0, &sp60);
-        } else if (M2C_FIELD(temp_t2, s32 *, 0x12C) != 0) {
+            FindCrvClosestPointAll(temp_a0, sp50, 0, &sp60, 0, 0, temp_a6 + 0x140);
+        } else if (M2C_FIELD(temp_a6, s32 *, 0x12C) != 0) {
             UpdateCptnClosestPoint(arg0, sp);
         }
         GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN(M2C_FIELD(arg0, s32 **, 0x14), sp, &sp50, M2C_FIELD(arg0, s8 **, 0x10));

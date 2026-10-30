@@ -44,9 +44,9 @@ extern "C" void UpdateCmLast(CM *pcm)
                         pso->vtable->fn((char *)pso + pso->vtable->delta, pcpdefi);
                         if (pcplcyPrev != 0 || pso != pcm->psoCpdefi)
                             ResetCmAdjust__FP2CMP2SOP6CPDEFI(pcm, pcpdefi);
-                        psoDone = pso;
                         AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI(pcm, pso, pcpdefi);
                         pcm->psoCpdefi = pso;
+                        psoDone = pso;
                     }
                 } else {
                     pcm->psoCpdefi = 0;

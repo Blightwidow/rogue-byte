@@ -11,10 +11,10 @@ struct _m2c_stack_ActivateSpawn {
     /* 0x00 */ char pad0[0xF0];
 };                                                  /* size = 0xF0 */
 M2C_UNK ApplyTaskStateRequests(M2C_UNK *, s32, s8 *, s8 *); /* extern */
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
+s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 *); /* extern */
 s8 *PloFindSwObject_thunk(M2C_UNK *, M2C_UNK, s32, s8 *); /* extern */
 M2C_UNK SetResetFlag__FP2CM(M2C_UNK *);             /* extern */
-M2C_UNK TriggerRsmg(M2C_UNK *, s32, s8 *, s8 *); /* extern */
+M2C_UNK TriggerRsmg(M2C_UNK *, s32, s8 *, s8 *, M2C_UNK); /* extern */
 M2C_UNK Warp_SetState(s8 *, M2C_UNK);             /* extern */
 extern M2C_UNK B_002DDF40;
 extern M2C_UNK B_002DEB30;
@@ -46,9 +46,9 @@ void ActivateSpawn(s8 *arg0) {
             var_s1 += 8;
         } while (var_s3 < M2C_FIELD(arg0, s32 *, 0x148));
     }
-    TriggerRsmg(&B_003DD490, M2C_FIELD(arg0, s32 *, 0xE0), arg0 + 0xE4, arg0);
+    TriggerRsmg(&B_003DD490, M2C_FIELD(arg0, s32 *, 0xE0), arg0 + 0xE4, arg0, 1);
     ApplyTaskStateRequests(&B_002DEB30, M2C_FIELD(arg0, s32 *, 0x124), arg0 + 0x128, arg0);
-    var_s0 = CploFindSwObjectsByClass(&B_003DD490, 5, 0x1A, 0) - 1;
+    var_s0 = CploFindSwObjectsByClass(&B_003DD490, 5, 0x1A, 0, 0x20, sp) - 1;
     if (var_s0 >= 0) {
         var_s1_2 = (s8 **)((var_s0 * 4) + sp);
         do {
@@ -62,6 +62,6 @@ void ActivateSpawn(s8 *arg0) {
     }
     SetResetFlag__FP2CM(&B_002DDF40);
     temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x18), 5, 0, 0);
+    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x18), 5, 0, 0, 0, 0);
 }
 }

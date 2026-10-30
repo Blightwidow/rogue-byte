@@ -57,8 +57,9 @@ def main():
     parser.add_argument('--symbol')
     parser.add_argument('--record', action='store_true')
     parser.add_argument('--quiet', action='store_true')
-    parser.add_argument('--lang', default='c++', choices=['c', 'c++'], help='source language (m2c drafts are C)')
+    parser.add_argument('--lang', default=None, choices=['c', 'c++'], help='source language (default: C for a .c file, C++ otherwise; Sony\'s sibling calls (`j callee`) and the SDK range need C)')
     arguments = parser.parse_args()
+    arguments.lang = arguments.lang or ('c' if arguments.source.endswith('.c') else 'c++')
     rows = registry()
     row = next((row for row in rows if int(row['address'], 16) == arguments.address), None)
     if not row:

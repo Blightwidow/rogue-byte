@@ -18,7 +18,7 @@ struct _m2c_stack_func_0017B9C0 {
 };                                                  /* size = 0x110 */
 #define sp0 (*(f32 *)(sp + 0x000))
 #define sp20 (*(s128 *)(sp + 0x020))
-M2C_UNK ClosestPointOnLine(M2C_UNK, s128, s128, M2C_UNK); /* extern */
+M2C_UNK ClosestPointOnLine(M2C_UNK, s128, s128, M2C_UNK, f32 *, f32 *); /* extern */
 f32 GRandInRange(f32, f32);                         /* extern */
 s128 PosLoWorld(...);                       /* extern */
 extern M2C_UNK D_FLT_002BE710;
@@ -89,7 +89,7 @@ void func_0017B9C0(s8 *arg0) {
                             asm volatile("qmfc2.ni %0, vf3" : "=r"(vu_2));
                             s64 vu_3;
                             asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(PosLoWorld(M2C_FIELD((M2C_FIELD(arg0, s8 **, 0x10) + var_v0), s8 **, 0xFAC))));
-                            ClosestPointOnLine(vu_3, sp10, vu_2, 0);
+                            ClosestPointOnLine(vu_3, sp10, vu_2, 0, (f32 *)(sp), &sp4);
                             asm volatile("lqc2 vf3, 0x30(%0)" : : "r"(sp));
                             if (!(sp0 < 0.0f) && !(sp0 > 1.0f)) {
                                 var_f3 = M2C_FIELD(&D_FLT_002BE730, f32 *, 0) + (sp4 * (M2C_FIELD(&D_FLT_002BE730, f32 *, 4) + (sp4 * M2C_FIELD(&D_FLT_002BE730, f32 *, 8))));
@@ -137,7 +137,7 @@ void func_0017B9C0(s8 *arg0) {
                 temp_v0 = vu_4;
                 s32 vu_5;
                 asm volatile("qmfc2.ni %0, vf3" : "=r"(vu_5));
-                if (!(var_f21 < temp_v0) && ((var_fp == NULL) || ((ClosestPointOnLine(vu_5, sp10, sp20, 0), !(sp8 < 0.0f)) && !(sp8 > 1.0f) && !(spC > 500.0f)))) {
+                if (!(var_f21 < temp_v0) && ((var_fp == NULL) || ((ClosestPointOnLine(vu_5, sp10, sp20, 0, &sp8, &spC), !(sp8 < 0.0f)) && !(sp8 > 1.0f) && !(spC > 500.0f)))) {
                     var_s3 = temp_s0;
                     var_f21 = temp_v0;
                 }

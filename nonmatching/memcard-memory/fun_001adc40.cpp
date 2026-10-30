@@ -20,8 +20,8 @@ const char *PchzStringFromId(void *, int);
 
 extern "C" void func_001ADC40(char *pchz, int islot)
 {
-    SW *psw = &B_003DD490;
     char *pslot = (char *)&B_002E65E0.slot[islot];
+    SW *psw = &B_003DD490;
     CRef ref;
     RefGetGameSaveValue(&ref, psw->ppathDt, pslot);
     float dt = ref.g;

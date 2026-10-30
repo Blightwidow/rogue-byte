@@ -14,7 +14,7 @@ struct _m2c_stack_SolveDzg__FP3DZGiiPP2XPPiPPP2SO {
     /* 0x0C */ s8 *spC;                           /* inferred */
     /* 0x10 */ char pad10[0x70];
 };                                                  /* size = 0x80 */
-M2C_UNK AppendDlEntry(s8 *, s8 *);              /* extern */
+void AppendDlEntry(s8 *, s8 *);              /* extern */
 M2C_UNK EnforceDzgDz__FP3DZGP2DZ(s8 *, s8 *);   /* extern */
 M2C_UNK FillDzgDz(s8 *, s32, s8 *, s32);        /* extern */
 M2C_UNK RemoveDlEntry(s8 *, s8 *);              /* extern */
@@ -56,8 +56,8 @@ void SolveDzg__FP3DZGiiPP2XPPiPPP2SO(s8 *arg0, s32 arg1) {
                 M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (M2C_FIELD(arg0, s32 *, 0x3C) + 1);
             }
             temp_a0 = *sp4;
-            var_s0 = temp_a0;
             sp4 = (s8 **)(temp_a0 + sp8);
+            var_s0 = temp_a0;
         } while (var_s0 != NULL);
     }
     EnforceDzgDz__FP3DZGP2DZ(arg0, NULL);

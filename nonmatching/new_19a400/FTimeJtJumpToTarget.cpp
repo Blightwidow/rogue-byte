@@ -1,18 +1,18 @@
 #include "sly2.h"
-extern int CSolveQuadratic(float, float, float, float *);
+extern int CSolveQuadratic(float, float);
 static inline float LaneZ(QW q) { QW t; float f; asm volatile("pextuw %0, $0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0" : "=f" (f) : "r" (t)); return f; }
 struct Jmp { char *pjt; };
 
 int FTimeJtJumpToTarget(Jmp *pjmp, QW pos, QW vJump, QW posTarget, QW vTarget, float *pdtPredict)
 {
     float roots[4];
-    float jumpZ = LaneZ(vJump);
     char *pjt = pjmp->pjt;
+    float jumpZ = LaneZ(vJump);
     float targetVelocityZ = LaneZ(vTarget);
     float gravityZ = *(float *)(*(char **)(pjt + 0xE8) + 0x88);
     float posZ = LaneZ(pos);
     float targetZ = LaneZ(posTarget);
-    int count = CSolveQuadratic(gravityZ * 0.5f, jumpZ - targetVelocityZ, posZ - targetZ, roots);
+    int count = CSolveQuadratic(gravityZ * 0.5f, jumpZ - targetVelocityZ);
     if (count < 1)
         return 0;
     float latest = roots[count - 1];

@@ -34,7 +34,7 @@ extern "C" STK *CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK(SRC *src, void *p
             f.posLocal = ConvertXfPos(0, pxf, pos);
             float u = (g_2dded0 - src->tCreated) / src->dt;
             CLQ *clq = &src->clq;
-            float scale = clq->a + u * (clq->b + u * clq->c);
+            float scale = clq->a + u * (u + clq->b * clq->c);
             scale = scale * GRandInRange(0.8f, 1.4f);
             stuck->vptr->fn((char *)stuck + stuck->vptr->delta, f.posLocal, 0, scale);
             stuck->palo = palo;
@@ -43,8 +43,8 @@ extern "C" STK *CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK(SRC *src, void *p
             stuck->pxf = pxf;
             QW *pda = &g_2a2da0;
             QW *pdb = &g_2a2db0;
-            f.surf[2] = normal;
             GetNormalVectors__FP6VECTORN30(normal, *pda, *pdb, f.surf);
+            f.surf[2] = normal;
             f.euler.y = zero;
             f.euler.x = zero;
             f.euler.z = GRandInRange(zero, 6.2831855f);

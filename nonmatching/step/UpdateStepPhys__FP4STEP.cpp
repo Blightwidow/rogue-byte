@@ -83,7 +83,7 @@ loop_5:
                     temp_f1 = *var_s1;
                     var_s1 += 4;
                     *var_s2_2 = (temp_f0 - temp_f1) / M2C_FIELD(&g_2dded0, f32 *, 4);
-                    var_s2_2 += 4;
+                    var_s2_2 += 1;
                     if (var_s3_2 >= 0) {
                         goto loop_5;
                     }

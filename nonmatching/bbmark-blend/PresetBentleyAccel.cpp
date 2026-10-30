@@ -6,7 +6,7 @@ struct Bentley {
 };
 extern "C" {
 void AddSoGravityAcceleration(void *);
-void PresetStepAccel(void *, float);
+void PresetStepAccel(void *);
 void bevy_player_p18_gadget_glide_force(void *);
 void PresetJtAccelHide__FP2JT(void *);
 void PresetJtAccelZap(void *);
@@ -19,7 +19,7 @@ extern "C" void PresetBentleyAccel(Bentley *self, float dt)
     if (0xD == self->state)
         AddSoGravityAcceleration(self);
     else
-        PresetStepAccel(self, dt);
+        PresetStepAccel(self);
     char *base = (char *)self;
     switch (self->state) {
     case 2:

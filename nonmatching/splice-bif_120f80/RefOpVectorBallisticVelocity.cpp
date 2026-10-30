@@ -27,8 +27,8 @@ extern "C" CRef *RefOpVectorBallisticVelocity(CRef *pret, int carg, CRef *aref, 
         }
     }
     CRef refVelocity;
+    SetTag__4CRef4TAGK(pret, 0x1A);
     QW *pvelocity = refVelocity.pv;
-    SetTag__4CRef4TAGK(&refVelocity, 0x1A);
     CRef refTemp;
     QW accelValue = *(QW *)&accel;
     QW posFrom = *aref[0].pv;

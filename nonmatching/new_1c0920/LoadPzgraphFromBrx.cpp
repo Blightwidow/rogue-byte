@@ -13,9 +13,9 @@ struct _m2c_stack_LoadPzgraphFromBrx {
 void CBinaryInputStream_ReadVector4(s32, s32);
 s32 PvAllocSwClearImpl__Fi(s8 *, s32, s32);
 s32 PvAllocSwImpl__Fi(s8 *, s32, s32);
-s32 S32Read__18CBinaryInputStream(s32);
+s32 S32Read__18CBinaryInputStream(s8 *, s32);
 s32 U16Read__18CBinaryInputStream(s32);
-s32 U32Read__18CBinaryInputStream(s32);
+s32 U32Read__18CBinaryInputStream(s8 *, s32);
 void LoadPzgraphFromBrx(s8 *arg0, s32 arg1, s32 arg2) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 temp_a1;
@@ -27,8 +27,8 @@ void LoadPzgraphFromBrx(s8 *arg0, s32 arg1, s32 arg2) {
     s8 *temp_s0;
     M2C_FIELD(arg0, s32 *, 0) = arg1;
     var_s2 = 0;
-    M2C_FIELD(arg0, s32 *, 8) = U32Read__18CBinaryInputStream(arg2);
-    M2C_FIELD(arg0, s32 *, 0x10) = U32Read__18CBinaryInputStream(arg2);
+    M2C_FIELD(arg0, s32 *, 8) = U32Read__18CBinaryInputStream(arg0, arg2);
+    M2C_FIELD(arg0, s32 *, 0x10) = U32Read__18CBinaryInputStream(arg0, arg2);
     M2C_FIELD(arg0, s32 *, 4) = PvAllocSwImpl__Fi(sp, M2C_FIELD(arg0, s32 *, 0) * 8, 0x10);
     M2C_FIELD(arg0, s32 *, 0xC) = PvAllocSwImpl__Fi(sp, M2C_FIELD(arg0, s32 *, 8) * 0x10, 0x10);
     M2C_FIELD(arg0, s32 *, 0x18) = PvAllocSwClearImpl__Fi(sp, M2C_FIELD(arg0, s32 *, 0x10) * 4, 0x10);
@@ -58,7 +58,7 @@ loop_4:
         do {
             temp_v1 = var_s0_2 * 4;
             var_s0_2 += 1;
-            *(s32 *)(temp_v1 + M2C_FIELD(arg0, s32 *, 0x14)) = S32Read__18CBinaryInputStream(arg2);
+            *(s32 *)(temp_v1 + M2C_FIELD(arg0, s32 *, 0x14)) = S32Read__18CBinaryInputStream(arg0, arg2);
         } while (var_s0_2 < M2C_FIELD(arg0, s32 *, 0x10));
     }
 }

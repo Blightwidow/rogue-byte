@@ -15,11 +15,11 @@ struct _m2c_stack_GetSeqnodeObjectPosRad {
 };                                                  /* size = 0x80 */
 #define sp14 (*(f32 *)(sp + 0x14))
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);
-void FindCrvClosestPointAll(s8 *, M2C_UNK, M2C_UNK, s8 *);
+void FindCrvClosestPointAll(s8 *, M2C_UNK, M2C_UNK, s8 *, f32 *, M2C_UNK, M2C_UNK);
 s32 PosLoWorld(s8 *);
 f32 atan2f(f32, f32);
 void GetSeqnodeObjectPosRad(s8 *arg0, s8 *arg1, s128 *arg2, f32 *arg3) {
-    s8 sp[0x20] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     s128 sp0;
     f32 sp10;
     f32 *temp_s0;
@@ -38,7 +38,7 @@ void GetSeqnodeObjectPosRad(s8 *arg0, s8 *arg1, s128 *arg2, f32 *arg3) {
         if (FIsBasicDerivedFrom(arg1, 0xA) != 0) {
             s64 vu_1;
             asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(var_s1)));
-            FindCrvClosestPointAll(arg1, vu_1, 0, sp);
+            FindCrvClosestPointAll(arg1, vu_1, 0, sp, &sp10, 0, 0);
             var_f0 = atan2f(sp14, sp10);
         } else {
             sp0 = PosLoWorld(arg1);

@@ -21,7 +21,7 @@ M2C_UNK ClearHudLabel(M2C_UNK *, s32);              /* extern */
 M2C_UNK EmitTargetSparkles(M2C_UNK *, s32, s32, s8 *); /* extern */
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
 s32 FIsPoSwFocusBase(s32);                          /* extern */
-M2C_UNK InsertTargetCandidate(s32, s32, s128, s8 *); /* extern */
+M2C_UNK InsertTargetCandidate(s32, s32, s128, s8 *, s8 *, M2C_UNK, s8 *); /* extern */
 s128 PosLoWorld(s32, M2C_UNK);                      /* extern */
 s8 *PpoolFromLoClone(s32);                        /* extern */
 M2C_UNK ShowHudLabel(M2C_UNK *, s32, M2C_UNK);      /* extern */
@@ -43,7 +43,7 @@ extern f32 D_FLT_002BF660;
 extern f32 D_FLT_002BF664;
 extern f32 D_FLT_002BF70C;
 void BuildJtTargetList(s32 arg0, s32 arg1, s32 arg2) {
-    s8 sp[0x80] __attribute__((aligned(16)));
+    s8 sp[0xc0] __attribute__((aligned(16)));
     s32 sp90;
     s128 spC0;
     s32 spD0;
@@ -54,6 +54,14 @@ void BuildJtTargetList(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_s0_10;
     s32 var_s0_11;
     s32 var_v0;
+    s8 *var_a4;
+    s8 *var_a4_2;
+    s8 *var_a4_3;
+    s8 *var_a4_4;
+    s8 *var_a4_5;
+    s8 *var_a4_6;
+    s8 *var_a4_7;
+    s8 *var_a4_8;
     s8 *var_s0;
     s8 *var_s0_2;
     s8 *var_s0_3;
@@ -82,64 +90,78 @@ loop_2:
         spC0 = PosLoWorld(arg1, -1);
         if (arg2 & 8) {
             var_s0 = B_003E13F0;
+            var_a4 = var_s0 + 0x190;
             if (var_s0 != NULL) {
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0, (var_s0 == NULL) ? NULL : var_a4, 4, sp);
                     var_s0 = M2C_FIELD(var_s0, s8 **, 0x1B4);
+                    var_a4 = var_s0 + 0x190;
                 } while (var_s0 != NULL);
             }
         }
         if (arg2 & 0x10) {
             var_s0_2 = B_003E13FC;
+            var_a4_2 = var_s0_2 + 0xE0;
             if (var_s0_2 != NULL) {
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_2);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_2, (var_s0_2 == NULL) ? NULL : var_a4_2, 4, sp);
                     var_s0_2 = M2C_FIELD(var_s0_2, s8 **, 0x104);
+                    var_a4_2 = var_s0_2 + 0xE0;
                 } while (var_s0_2 != NULL);
             }
         }
         if (arg2 & 0x80) {
             var_s0_3 = B_003E1414;
+            var_a4_3 = var_s0_3 + 0xE0;
             if (var_s0_3 != NULL) {
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_3);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_3, (var_s0_3 == NULL) ? NULL : var_a4_3, 4, sp);
                     var_s0_3 = M2C_FIELD(var_s0_3, s8 **, 0x104);
+                    var_a4_3 = var_s0_3 + 0xE0;
                 } while (var_s0_3 != NULL);
             }
         }
         if (arg2 & 4) {
             var_s0_4 = B_003E1438;
+            var_a4_4 = var_s0_4 + 0x130;
             if (var_s0_4 != NULL) {
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_4);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_4, (var_s0_4 == NULL) ? NULL : var_a4_4, 4, sp);
                     var_s0_4 = M2C_FIELD(var_s0_4, s8 **, 0x154);
+                    var_a4_4 = var_s0_4 + 0x130;
                 } while (var_s0_4 != NULL);
             }
         }
         if (arg2 & 0x400) {
             var_s0_5 = B_003E13D8;
+            var_a4_5 = var_s0_5 + 0xE0;
             if (var_s0_5 != NULL) {
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_5);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_5, (var_s0_5 == NULL) ? NULL : var_a4_5, 4, sp);
                     var_s0_5 = M2C_FIELD(var_s0_5, s8 **, 0x104);
+                    var_a4_5 = var_s0_5 + 0xE0;
                 } while (var_s0_5 != NULL);
             }
         }
         if (arg2 & 0x200) {
             var_s0_6 = B_003E13CC;
             if (var_s0_6 != NULL) {
+                var_a4_6 = var_s0_6 + 0x190;
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_6);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_6, (var_s0_6 == NULL) ? NULL : var_a4_6, 4, sp);
                     var_s0_6 = M2C_FIELD(var_s0_6, s8 **, 0x1B4);
+                    var_a4_6 = var_s0_6 + 0x190;
                 } while (var_s0_6 != NULL);
             }
         }
         if (spD4 != 0) {
             var_s0_7 = B_003E13C0;
             if (var_s0_7 != NULL) {
+                var_a4_7 = var_s0_7 + 0x190;
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_7);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_7, (var_s0_7 == NULL) ? NULL : var_a4_7, 4, sp);
                     var_s0_7 = M2C_FIELD(var_s0_7, s8 **, 0x1B4);
+                    var_a4_7 = var_s0_7 + 0x190;
                 } while (var_s0_7 != NULL);
             }
         }
@@ -148,7 +170,7 @@ loop_2:
             if (var_s0_8 != NULL) {
                 do {
                     if ((M2C_FIELD(var_s0_8, s32 *, 0xE8) & 1) && (FIsBasicDerivedFrom(var_s0_8, 0x13) != 0)) {
-                        InsertTargetCandidate(arg0, arg1, spC0, var_s0_8);
+                        InsertTargetCandidate(arg0, arg1, spC0, var_s0_8, (var_s0_8 == NULL) ? NULL : (var_s0_8 + 0x100), 4, sp);
                     }
                     var_s0_8 = M2C_FIELD(var_s0_8, s8 **, 0xE0);
                 } while (var_s0_8 != NULL);
@@ -157,9 +179,11 @@ loop_2:
         if (spD8 != 0) {
             var_s0_9 = B_003E1408;
             if (var_s0_9 != NULL) {
+                var_a4_8 = var_s0_9 + 0xE0;
                 do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_9);
+                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_9, (var_s0_9 == NULL) ? NULL : var_a4_8, 4, sp);
                     var_s0_9 = M2C_FIELD(var_s0_9, s8 **, 0x104);
+                    var_a4_8 = var_s0_9 + 0xE0;
                 } while (var_s0_9 != NULL);
             }
         }

@@ -48,11 +48,11 @@ CRef *RefSetArgListFromPvs(CRef *prefResult, int cpv, const int *aotyp, void **a
     locals.eopid.grfeopid = 2;
     CPAIR **pppairTail = &locals.ppairHead;
     for (int ipv = 0; ipv < cpv; ipv++) {
-        locals.eopid.otyp = aotyp[ipv];
         void *pv = apv[ipv];
+        locals.eopid.otyp = aotyp[ipv];
         CPAIR *ppairNew = PpairNew();
-        PairHandle_Init(&locals.ppairHandle, ppairNew);
         RefGetPeopid(&locals.refElement, pv, &locals.eopid);
+        PairHandle_Init(&locals.ppairHandle, ppairNew);
         ((CRef *)locals.ppairHandle->ref)->operator=(locals.refElement);
         CRef_Destruct(&locals.refElement);
         PairHandle_Assign(pppairTail, locals.ppairHandle);

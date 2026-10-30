@@ -3,7 +3,7 @@ struct SOVT { char pad[0x2A0]; short delta; short idx; void (*fn)(void *, int, i
 struct SO { char pad0[0xC]; SOVT *vt; };
 struct SEQNODE { char pad0[0xA4]; int cattach; SO *aso[4]; };
 extern "C" int FIsBasicDerivedFrom(void *, int);
-extern "C" void *memmove(void *, const void *, unsigned);
+extern "C" void *memmove(SEQNODE *, const void *, unsigned);
 
 extern "C" void DetachSeqnodeObject(SEQNODE *pseqnode, SO *pso, int n1, int n2)
 {
@@ -15,7 +15,7 @@ extern "C" void DetachSeqnodeObject(SEQNODE *pseqnode, SO *pso, int n1, int n2)
         iattach++;
     if (iattach < cattach) {
         char *pbase = (char *)pseqnode + iattach * 4;
-        memmove(pbase + 0xA8, pbase + 0xAC, (cattach - iattach) * 4 - 4);
+        memmove(pseqnode, pbase + 0xAC, (cattach - iattach) * 4 - 4);
         pseqnode->cattach--;
         pso->vt->fn((char *)pso + pso->vt->delta, n1, n2);
     }

@@ -3,7 +3,7 @@ extern float g_2c1ec4, g_2c1ec8, g_2c1ecc;
 extern QW g_2a2dc0, g_2a2da0;
 extern "C" {
 float SRandNearCrv(void *, float, float);
-void GetPathPosFromS(void *, float, QW *, QW *);
+void GetPathPosFromS(float, void *, QW *, QW *);
 float GRandInRange(float, float);
 QW SetVectorCylind__FP6VECTORfff(float, float, float);
 }
@@ -13,7 +13,7 @@ extern "C" void func_001CBBA8(void *pcrv, QW *pposOut, QW *pvecOut, float s)
 {
     Frame f;
     float sProbe = SRandNearCrv(pcrv, s, g_2c1ec4);
-    GetPathPosFromS(pcrv, sProbe, &f.pos, &f.tangent);
+    GetPathPosFromS(sProbe, pcrv, &f.pos, &f.tangent);
     float epsilon = 0.0001f;
     register QW v1 asm("vf1");
     register QW v2 asm("vf2");

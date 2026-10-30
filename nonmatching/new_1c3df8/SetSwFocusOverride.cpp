@@ -4,9 +4,10 @@ struct SW { char pad[0x3EFC]; PO *base; PO *over; };
 extern "C" PO *PpoSwFocus(SW *);
 static inline void Notify(PO *po, int f) { po->vt->fn((char *)po + po->vt->delta, f); }
 
-void SetSwFocusOverride(SW *psw, PO *ppo)
+PO * SetSwFocusOverride(SW *psw, PO *ppo)
 {
-    PO *ppoOld = PpoSwFocus(psw);
+    PO * ppoOld;
+    ppoOld = PpoSwFocus(psw);
     PO *ppoNew = ppo;
     if (ppoNew == 0)
         ppoNew = psw->base;
@@ -19,5 +20,6 @@ void SetSwFocusOverride(SW *psw, PO *ppo)
         if (ppoNew != 0)
             Notify(ppoNew, 1);
     } else
-        psw->over = ppo;
+        psw->over = psw->over;
+    return ppoOld;
 }

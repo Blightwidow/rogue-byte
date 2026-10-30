@@ -16,7 +16,7 @@ struct _m2c_stack_SetSoAngularVelocityVec {
     /* 0x0E0 */ char padE0[0x40];
 };                                                  /* size = 0x120 */
 s32 ConvertXfVec(M2C_UNK, s32, M2C_UNK);
-s32 FXfKindHasVelocity(s16);
+s32 FXfKindHasVelocity(void);
 void InvertMatrix3(M2C_UNK *, s8 *);
 void NormalizeRotateMatrix3__FP7MATRIX3(s8 *, s128, s128, s128);
 void SetXfKind(s8 *, s8 *, M2C_UNK);
@@ -38,7 +38,7 @@ void SetSoAngularVelocityVec(s8 *arg0, s128 arg1) {
     if (temp_s1 != NULL) {
         if (M2C_FIELD(temp_s1, s32 *, 0x94) == 6) {
             var_v0 = temp_s1 + 0xB0;
-            if (FXfKindHasVelocity(M2C_FIELD(temp_s1, s16 *, 0x98)) == 0) {
+            if (FXfKindHasVelocity() == 0) {
                 SetXfKind(arg0, temp_s1, 1);
                 var_v0 = temp_s1 + 0xB0;
             }

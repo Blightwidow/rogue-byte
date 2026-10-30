@@ -10,13 +10,13 @@ extern "C" {
 struct _m2c_stack_func_001F9240 {
     /* 0x000 */ char pad0[0x150];
 };                                                  /* size = 0x150 */
-M2C_UNK SolveSwGroup(s32, s32, s32, s32);           /* extern */
-s32 func_001F90D0();                                /* extern */
+M2C_UNK SolveSwGroup(s32, s32, s32, s32, s32, s8 **); /* extern */
+s32 func_001F90D0(M2C_UNK, s8 **);                /* extern */
 void func_001F9240(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    s8 sp[0x100] __attribute__((aligned(16)));
+    s8 sp[0xf0] __attribute__((aligned(16)));
     f32 temp_f0;
     s32 temp_a1;
-    s32 temp_t0;
+    s32 temp_a4;
     s32 var_a2;
     s32 var_a2_2;
     s32 var_condition_bit;
@@ -28,16 +28,16 @@ void func_001F9240(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s8 *temp_v1;
     s8 *temp_v1_2;
     var_s0 = arg1;
-    temp_t0 = func_001F90D0();
+    temp_a4 = func_001F90D0(0x40, (s8 **)(sp));
     if (var_s0 & 1) {
-        var_s0 = (temp_t0 == 0) ? 0 : var_s0;
+        var_s0 = (temp_a4 == 0) ? 0 : var_s0;
     } else {
         var_v0 = var_s0 & 2;
         if (var_s0 & 4) {
             var_a2 = 0;
             var_a0 = (s8 **)(sp);
 loop_5:
-            temp_a1 = var_a2 < temp_t0;
+            temp_a1 = var_a2 < temp_a4;
             if (temp_a1 != 0) {
                 temp_v1 = *var_a0;
                 temp_f0 = M2C_FIELD(temp_v1, f32 *, 0x90);
@@ -67,7 +67,7 @@ block_14:
         }
         if (var_v0 != 0) {
             var_a2_2 = 0;
-            if (temp_t0 > 0) {
+            if (temp_a4 > 0) {
                 var_a0_2 = (s8 **)(sp);
 loop_18:
                 temp_v1_2 = *var_a0_2;
@@ -91,12 +91,12 @@ loop_18:
                     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_2));
                     var_condition_bit = vu_2 < -5.0f;
                 }
-                var_v0_2 = var_a2_2 < temp_t0;
+                var_v0_2 = var_a2_2 < temp_a4;
                 if (!var_condition_bit) {
                     var_a2_2 += 1;
                     var_a0_2 += 4;
-                    if (var_a2_2 >= temp_t0) {
-                        var_v0_2 = var_a2_2 < temp_t0;
+                    if (var_a2_2 >= temp_a4) {
+                        var_v0_2 = var_a2_2 < temp_a4;
                     } else {
                         goto loop_18;
                     }
@@ -111,7 +111,7 @@ block_25:
         }
     }
     if (var_s0 != 0) {
-        SolveSwGroup(arg0, var_s0, arg2, arg3);
+        SolveSwGroup(arg0, var_s0, arg2, arg3, temp_a4, (s8 **)(sp));
     }
 }
 }

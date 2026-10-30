@@ -31,8 +31,8 @@ void Carry_SetState(CARRY *carry, int state)
         func_0012E460(&carry->pactGoalPos);
         func_0012E460(&carry->pactGoalRot);
     }
-    carry->nState = state;
     carry->tState = g_2dded0;
+    carry->nState = state;
     switch (state) {
     case -1:
         func_0012E460(&carry->pactLook);

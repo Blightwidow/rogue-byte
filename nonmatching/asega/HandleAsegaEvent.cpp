@@ -20,7 +20,7 @@ struct _m2c_stack_HandleAsegaEvent {
 };                                                  /* size = 0xA0 */
 M2C_UNK ApplyAseg(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 s32 CidGetBasic(s32, s8 *);                       /* extern */
-M2C_UNK EnableDisableLoPart(M2C_UNK *, s32, s8 *, M2C_UNK32); /* extern */
+M2C_UNK EnableDisableLoPart(M2C_UNK *, s32, s8 *, M2C_UNK32, s32, s32, s8 *); /* extern */
 s32 FIsBasicDerivedFrom(s32, M2C_UNK, s32);         /* extern */
 M2C_UNK HideCountdownBlot(M2C_UNK *, u32, s32);     /* extern */
 M2C_UNK JoltCm(M2C_UNK *, s8 *, s32);             /* extern */
@@ -30,17 +30,17 @@ M2C_UNK RetractAsega(s8 *, u32, s32);             /* extern */
 M2C_UNK SeekAsega(s8 *, M2C_UNK, s32, s8 *, M2C_UNK32); /* extern */
 M2C_UNK SetAloSelectedOid(s32, s8 *, s32);        /* extern */
 M2C_UNK SetAsegaHandsOff(s8 *, s32, s32);         /* extern */
-M2C_UNK SetEyesClosedByOid(M2C_UNK *, s32, s32, s32, f32); /* extern */
+M2C_UNK SetEyesClosedByOid(M2C_UNK *, s32, s32, s32, s8 *, f32); /* extern */
 M2C_UNK SetJtLookLimits(s32, s8 *, s8 *, s8 *); /* extern */
 M2C_UNK ShowCountdownBlot(M2C_UNK *, u32, s32, f32); /* extern */
-M2C_UNK ShowHideLo(M2C_UNK *, s32, s8 *, s32, M2C_UNK32); /* extern */
-M2C_UNK ShowHideLoGlob(M2C_UNK *, s32, s8 *, M2C_UNK32); /* extern */
+M2C_UNK ShowHideLo(M2C_UNK *, s32, s8 *, s32, s8 *, M2C_UNK32); /* extern */
+M2C_UNK ShowHideLoGlob(M2C_UNK *, s32, s8 *, M2C_UNK32, s32, s32, s8 *); /* extern */
 M2C_UNK SnapAsega(s8 *, s8 *, s32);             /* extern */
 M2C_UNK StartJsg(s32, M2C_UNK);                     /* extern */
-M2C_UNK StartSwAmbSfx(M2C_UNK *, s32, s32, s32, f32, f32, f32, s8 *); /* extern */
+M2C_UNK StartSwAmbSfx(M2C_UNK *, s32, s32, s32, s32, s32, s32, s8 *, f32, f32, f32, s8 *); /* extern */
 M2C_UNK StopSwAmbSfx(M2C_UNK *, s8 *, s8 *, s8 *); /* extern */
 M2C_UNK TriggerJoyRumbleRumk__FP3JOY4RUMKf(M2C_UNK *, s8 *, s32, M2C_UNK32); /* extern */
-M2C_UNK func_00210538(M2C_UNK *, s32, s32, s32, f32); /* extern */
+M2C_UNK func_00210538(M2C_UNK *, s32, s32, s32, s32, s8 *, f32); /* extern */
 extern M2C_UNK B_002DDF40;
 extern M2C_UNK B_002DFC00;
 extern M2C_UNK B_003DD490;
@@ -60,7 +60,7 @@ void HandleAsegaEvent(s8 *arg0, s8 *arg1) {
     s8 *temp_s1;
     s8 *temp_s1_2;
     s8 *temp_s4;
-    s8 *temp_t4;
+    s8 *temp_t0;
     s8 *temp_v0;
     s8 *temp_v0_5;
     s8 *temp_v0_6;
@@ -80,9 +80,8 @@ void HandleAsegaEvent(s8 *arg0, s8 *arg1) {
     temp_v0_2 = M2C_FIELD(arg1, u32 *, 4);
     switch (temp_v0_2) {                            /* switch 1 */
     case 0:                                         /* switch 1 */
-        PloRootOrAseg(arg0, temp_v0_2, var_a2);
-        temp_t4 = M2C_FIELD(arg1, s8 **, 8);
-        StartSwAmbSfx(&B_003DD490, M2C_FIELD(temp_t4, s32 *, 0), M2C_FIELD(temp_t4, s32 *, 4), M2C_FIELD(temp_t4, s32 *, 8), M2C_FIELD(temp_t4, f32 *, 0x10), M2C_FIELD(temp_t4, f32 *, 0x14), M2C_FIELD(temp_t4, f32 *, 0x18), arg0 + 0x5C);
+        temp_t0 = M2C_FIELD(arg1, s8 **, 8);
+        StartSwAmbSfx(&B_003DD490, M2C_FIELD(temp_t0, s32 *, 0), M2C_FIELD(temp_t0, s32 *, 4), M2C_FIELD(temp_t0, s32 *, 8), M2C_FIELD(temp_t0, s32 *, 0xC), M2C_FIELD(arg0, s32 *, 0x18), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4, M2C_FIELD(temp_t0, f32 *, 0x10), M2C_FIELD(temp_t0, f32 *, 0x14), M2C_FIELD(temp_t0, f32 *, 0x18), arg0 + 0x5C);
     default:                                        /* switch 1 */
         break;
     case 1:                                         /* switch 1 */
@@ -120,7 +119,7 @@ void HandleAsegaEvent(s8 *arg0, s8 *arg1) {
         break;
     case 7:                                         /* switch 1 */
     case 8:                                         /* switch 1 */
-        ShowHideLo(&B_003DD490, (temp_v0_2 == 7) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), PloRootOrAseg(arg0, temp_v0_2, var_a2), M2C_FIELD(arg1, M2C_UNK32 *, 0xC));
+        ShowHideLo(&B_003DD490, (temp_v0_2 == 7) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4, M2C_FIELD(arg1, M2C_UNK32 *, 0xC));
         break;
     case 11:                                        /* switch 1 */
         sp24 = M2C_FIELD(arg1, f32 *, 0);
@@ -132,22 +131,19 @@ void HandleAsegaEvent(s8 *arg0, s8 *arg1) {
     case 12:                                        /* switch 1 */
         temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
         sp30 = arg1 + 8;
-        M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 4, 0, 1);
+        M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, s8 **, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 4, 0, 1, &sp30, 0);
         break;
     case 17:                                        /* switch 1 */
         temp_s1 = M2C_FIELD(arg1, s8 **, 8);
-        PloRootOrAseg(arg0, temp_v0_2, var_a2);
-        func_00210538(&B_003DD490, M2C_FIELD(temp_s1, s32 *, 0), M2C_FIELD(temp_s1, s32 *, 4), M2C_FIELD(temp_s1, s32 *, 8), M2C_FIELD(temp_s1, f32 *, 0xC));
+        func_00210538(&B_003DD490, M2C_FIELD(temp_s1, s32 *, 0), M2C_FIELD(temp_s1, s32 *, 4), M2C_FIELD(temp_s1, s32 *, 8), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4, M2C_FIELD(temp_s1, f32 *, 0xC));
         break;
     case 13:                                        /* switch 1 */
     case 14:                                        /* switch 1 */
-        PloRootOrAseg(arg0, temp_v0_2, var_a2);
-        ShowHideLoGlob(&B_003DD490, (temp_v0_2 == 0xD) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), M2C_FIELD(arg1, M2C_UNK32 *, 0xC));
+        ShowHideLoGlob(&B_003DD490, (temp_v0_2 == 0xD) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), M2C_FIELD(arg1, M2C_UNK32 *, 0xC), M2C_FIELD(arg0, s32 *, 0x18), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4);
         break;
     case 15:                                        /* switch 1 */
     case 16:                                        /* switch 1 */
-        PloRootOrAseg(arg0, temp_v0_2, var_a2);
-        EnableDisableLoPart(&B_003DD490, (temp_v0_2 == 0xF) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), M2C_FIELD(arg1, M2C_UNK32 *, 0xC));
+        EnableDisableLoPart(&B_003DD490, (temp_v0_2 == 0xF) ^ var_a2, M2C_FIELD(arg1, s8 **, 8), M2C_FIELD(arg1, M2C_UNK32 *, 0xC), M2C_FIELD(arg0, s32 *, 0x18), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4);
         break;
     case 18:                                        /* switch 1 */
         ShowCountdownBlot(&B_003DD490, temp_v0_2, var_a2, M2C_FIELD(arg0, f32 *, 0x1C));
@@ -157,7 +153,7 @@ void HandleAsegaEvent(s8 *arg0, s8 *arg1) {
         break;
     case 20:                                        /* switch 1 */
         temp_s1_2 = M2C_FIELD(arg1, s8 **, 8);
-        SetEyesClosedByOid(&B_003DD490, M2C_FIELD(temp_s1_2, s32 *, 0), M2C_FIELD(temp_s1_2, s32 *, 4), PloRootOrAseg(arg0, temp_v0_2, var_a2), M2C_FIELD(temp_s1_2, f32 *, 8));
+        SetEyesClosedByOid(&B_003DD490, M2C_FIELD(temp_s1_2, s32 *, 0), M2C_FIELD(temp_s1_2, s32 *, 4), PloRootOrAseg(arg0, temp_v0_2, var_a2), temp_s4, M2C_FIELD(temp_s1_2, f32 *, 8));
         break;
     case 21:                                        /* switch 1 */
         SnapAsega(arg0, M2C_FIELD(arg1, s8 **, 8), var_a2);

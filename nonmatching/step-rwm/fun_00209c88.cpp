@@ -25,8 +25,8 @@ void func_00209C88(GUARD *guard)
         slot->fn((char *)guard + slot->delta, 0x22, guard->target, bufA, bufB, *guard->pdir);
         break;
     case 1:
-        GetPathPosFromS(guard->target, &bufA, &bufB, guard->s);
         slot = &guard->vt->slot;
+        GetPathPosFromS(guard->target, &bufA, &bufB, guard->s);
         self = (char *)guard + slot->delta;
         posA = bufA;
         posB = bufB;

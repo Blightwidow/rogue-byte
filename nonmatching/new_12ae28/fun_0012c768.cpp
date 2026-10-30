@@ -66,8 +66,8 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
         }
         step++;
         outD++;
-        outC++;
         outB++;
+        outC++;
         outA++;
         defaultPtr++;
         axisPtr++;

@@ -29,7 +29,7 @@ void SetXfKind(s8 *, s32, M2C_UNK);
 void func_00136530(s8 *, M2C_UNK);
 s32 func_00142868(s8 *, M2C_UNK);
 s32 func_001430C8(s8 *);
-void func_001F14F8(s32, s8 *, M2C_UNK, M2C_UNK);
+void func_001F14F8(s32, s8 *, M2C_UNK, M2C_UNK, s32, s8 *);
 extern s128 g_2a2dd0;
 extern f32 g_2dded0;
 void SetBentleyState(s8 *arg0, s32 arg1) {
@@ -40,10 +40,12 @@ void SetBentleyState(s8 *arg0, s32 arg1) {
     f32 var_f20;
     s32 temp_v1_2;
     s32 var_s6;
+    s32 var_s7;
     u32 temp_s0;
     u32 temp_v1;
     s8 *temp_a2;
     s8 *temp_s0_2;
+    s8 *temp_s1;
     s8 *temp_v0;
     s8 *temp_v0_2;
     s8 *temp_v0_3;
@@ -139,6 +141,7 @@ block_14:
         var_s6 = 0;
         var_s5 = 1;
         var_s4 = -1;
+        var_s7 = 4;
         var_f20 = 0.0f;
         var_f21 = 0x3F800000;
         M2C_FIELD(arg0, f32 *, 0x13D4) = (f32) g_2dded0;
@@ -159,15 +162,16 @@ block_14:
                 var_s4 = (IsmsFindSmOptional__FP2SM3OID(var_s6, var_s4_2) <= -1) ? -1 : var_s4_2;
             }
             M2C_FIELD(arg0, s128 *, 0x190) = (s128) g_2a2dd0;
-            func_001430C8(arg0);
+            var_s7 = func_001430C8(arg0);
             func_00142868(arg0, 1);
         default:                                    /* switch 2 */
 block_49:
             temp_s0_2 = arg0 + 0x1030;
+            temp_s1 = arg0 + 0x1034;
             RetractAsegaHandle(temp_s0_2);
-            RetractSmaRef(arg0 + 0x1034);
+            RetractSmaRef(temp_s1);
             ApplyAsegToHandle(var_s3, arg0, var_s5, temp_s0_2, var_f20, var_f21);
-            func_001F14F8(var_s6, arg0, var_s4, var_s5);
+            func_001F14F8(var_s6, arg0, var_s4, var_s5, var_s7, temp_s1);
             temp_v0_6 = M2C_FIELD(arg0, s8 **, 0xC);
             M2C_FIELD(temp_v0_6, M2C_UNK (**)(s8 *), 0x2D4)(arg0 + M2C_FIELD(temp_v0_6, s16 *, 0x2D0));
             break;

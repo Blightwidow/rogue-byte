@@ -3,7 +3,7 @@ static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)
 static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
 struct CM { char pad[0x60]; QW mat[4]; };
 struct LOCALS { QW matNew[4]; QW vecEuler; MATRIX3 matRotate; };
-extern "C" void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(MATRIX3 *, QW);
+extern "C" void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(CM *);
 extern "C" void SetCmPosMat(CM *, QW *);
 extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
 {
@@ -22,7 +22,7 @@ extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
     l.matNew[3] = pcm->mat[3];
     QW low = __builtin_pextlw(Word(yr), Word(xr));
     l.vecEuler = __builtin_pcpyld(Word(zr), low);
-    LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(&l.matRotate, l.vecEuler);
+    LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(pcm);
     l.matNew[0] = ((QW *)&l.matRotate)[0];
     l.matNew[1] = ((QW *)&l.matRotate)[1];
     l.matNew[2] = ((QW *)&l.matRotate)[2];

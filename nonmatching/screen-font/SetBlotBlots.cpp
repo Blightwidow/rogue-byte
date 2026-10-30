@@ -13,7 +13,7 @@ struct _m2c_stack_SetBlotBlots {
 M2C_UNK PlayBlotLabel(s8 *, s32);                 /* extern */
 M2C_UNK PrepareBlotMovie(s8 *);                   /* extern */
 M2C_UNK ReleaseBlotMovie(s8 *, s32);              /* extern */
-M2C_UNK SetClockRate(M2C_UNK *, M2C_UNK, M2C_UNK);  /* extern */
+M2C_UNK SetClockRate(M2C_UNK *, M2C_UNK, f32);  /* extern */
 M2C_UNK StopBlotLabel(s8 *, s32);                 /* extern */
 extern M2C_UNK B_003DD490;
 extern s32 g_2be538;

@@ -21,8 +21,8 @@ void LoadJumpAnim(char *arg0, int arg1) {
                     *(float *)(arg0 + 0xC) = value_b;
                     float value_c = *label_c;
                     *(float *)(arg0 + 0x10) = value_c;
-                    *(float *)(arg0 + 0x14) = value_c - value_a;
                     *(float *)(arg0 + 0x18) = value_c - value_b;
+                    *(float *)(arg0 + 0x14) = value_c - value_a;
                     char *aseg = PchnFindAseg(*(int *)(arg0 + 4), arg1, 1, 1);
                     if (aseg != 0) {
                         OBJ_20BD88 *obj = *(OBJ_20BD88 **)(aseg + 4);
@@ -40,8 +40,8 @@ void LoadJumpAnim(char *arg0, int arg1) {
                         asm volatile("vaddq.x vf1, vf0, Q");
                         s32 vu_1;
                         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-                        *(s32 *)(arg0 + 0x1C) = vu_1;
                         OBJ_20BD88 *obj3 = *(OBJ_20BD88 **)(aseg + 4);
+                        *(s32 *)(arg0 + 0x1C) = vu_1;
                         float half = (*(float *)(arg0 + 0x10) - start) * 0.5f;
                         obj3->vt->fn((char *)obj3 + obj3->vt->delta, sp + 0x20, 0, (char *)obj3, start + half, 1.0f);
                         char *tail = arg0 + 0x20;

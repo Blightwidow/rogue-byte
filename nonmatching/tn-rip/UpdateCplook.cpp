@@ -1,21 +1,36 @@
-#include "m2c_macros.h"
+typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
+typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
+typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
+#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
+#define M2C_BITWISE(type, expr) ((type)(expr))
+#define M2C_ERROR(desc) (0)
+#define NULL 0
 extern "C" {
-
-M2C_UNK CRef_Destruct(void *);                      /* extern */
-M2C_UNK ContinueAmb(void *);                        /* extern */
-f32 GLimitAbs__Fff(f32, f32);                       /* extern */
-f32 GLimitLm__FP2LMf(M2C_UNK *, f32);               /* extern */
-M2C_UNK GSmooth__FfffP3SMPPf(M2C_UNK *, f32 *, f32, f32, f32); /* extern */
-M2C_UNK PauseAmb(void *, f32);                      /* extern */
-M2C_UNK PosCplookAnchor(void *);                    /* extern */
-M2C_UNK PosCplookEye(void *);                       /* extern */
-f32 RadNormalize__Ff(M2C_UNK *, f32);               /* extern */
-M2C_UNK RefGetGameSaveValue(void *, s32, M2C_UNK *); /* extern */
-M2C_UNK SetAmbPitch(void *, f32);                   /* extern */
-M2C_UNK SetAmbVolume(void *, f32);                  /* extern */
-M2C_UNK SetCmFov(M2C_UNK *, f32);                   /* extern */
-M2C_UNK SetCmLookAt(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK UpdateCplcy();                              /* extern */
+struct _m2c_stack_UpdateCplook {
+    /* 0x00 */ char pad0[4];
+    /* 0x04 */ s32 sp4;                             /* inferred */
+    /* 0x08 */ char pad8[8];                        /* maybe part of sp4[3]? */
+    /* 0x10 */ f32 sp10;                            /* inferred */
+    /* 0x14 */ f32 sp14;                            /* inferred */
+    /* 0x18 */ char pad18[0xC8];
+};                                                  /* size = 0xE0 */
+#define sp4 (*(s32 *)(sp + 0x04))
+void CRef_Destruct(s8 *);
+void ContinueAmb(s8 *);
+f32 GLimitAbs__Fff(f32, f32);
+f32 GLimitLm__FP2LMf(M2C_UNK *, f32);
+f32 GSmooth__FfffP3SMPPf(M2C_UNK *, f32 *, f32, f32, f32);
+void PauseAmb(s8 *, f32);
+s32 PosCplookAnchor(s8 *);
+s32 PosCplookEye(s8 *);
+f32 RadNormalize__Ff(M2C_UNK *, f32);
+s32 RefGetGameSaveValue(s8 *, s32, M2C_UNK *);
+void SetAmbPitch(s8 *, f32);
+void SetAmbVolume(s8 *, f32);
+void SetCmFov(M2C_UNK *, f32);
+void SetCmLookAt(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+void UpdateCplcy();
 extern M2C_UNK B_002DDF40;
 extern M2C_UNK B_003D4A60;
 extern M2C_UNK B_003DD490;
@@ -29,12 +44,11 @@ extern f32 D_FLT_002BD99C;
 extern M2C_UNK D_FLT_002BD9B0;
 extern M2C_UNK g_2bbb60;
 extern M2C_UNK g_2dded0;
-
-void UpdateCplook(void *arg0, s32 arg1, void *arg2) {
-    char sp[0x40];
-    M2C_UNK sp4;
+void UpdateCplook(s8 *arg0, s8 *arg2) {
+    s8 sp[0x40] __attribute__((aligned(16)));
     f32 sp10;
     f32 sp14;
+    M2C_UNK temp_s0_3;
     f32 temp_f0;
     f32 temp_f0_2;
     f32 temp_f12;
@@ -52,11 +66,10 @@ void UpdateCplook(void *arg0, s32 arg1, void *arg2) {
     f32 var_f12;
     f32 var_f20;
     f32 var_f5;
-    void *temp_a0;
-    void *temp_a0_2;
-    void *temp_s0;
-    void *temp_s0_2;
-
+    s8 *temp_a0;
+    s8 *temp_a0_2;
+    s8 *temp_s0;
+    s8 *temp_s0_2;
     UpdateCplcy();
     temp_f5 = M2C_FIELD(arg0, f32 *, 0x20);
     temp_f3 = M2C_FIELD(arg2, f32 *, 0x1074);
@@ -71,16 +84,16 @@ void UpdateCplook(void *arg0, s32 arg1, void *arg2) {
     temp_f12 = M2C_FIELD(arg0, f32 *, 0x24);
     M2C_FIELD(arg0, f32 *, 0x20) = var_f5;
     if ((temp_f12 != 0.0f) && (var_f5 > 0.0f) && (var_f5 < 1.0f)) {
-        temp_s0 = M2C_FIELD(arg0, void **, 0x34);
+        temp_s0 = M2C_FIELD(arg0, s8 **, 0x34);
         SetAmbPitch(temp_s0, GLimitLm__FP2LMf(&D_002BBB68, fabsf(temp_f12)));
-        temp_s0_2 = M2C_FIELD(arg0, void **, 0x34);
+        temp_s0_2 = M2C_FIELD(arg0, s8 **, 0x34);
         SetAmbVolume(temp_s0_2, GLimitLm__FP2LMf(&g_2bbb60, (fabsf(M2C_FIELD(arg0, f32 *, 0x24)) * 0.5f) + 0.5f));
-        temp_a0 = M2C_FIELD(arg0, void **, 0x34);
+        temp_a0 = M2C_FIELD(arg0, s8 **, 0x34);
         if (M2C_FIELD(temp_a0, s16 *, 0x4E) > 0) {
             ContinueAmb(temp_a0);
         }
     } else {
-        temp_a0_2 = M2C_FIELD(arg0, void **, 0x34);
+        temp_a0_2 = M2C_FIELD(arg0, s8 **, 0x34);
         if (M2C_FIELD(temp_a0_2, s16 *, 0x4E) <= 0) {
             PauseAmb(temp_a0_2, temp_f12);
         }
@@ -127,10 +140,14 @@ void UpdateCplook(void *arg0, s32 arg1, void *arg2) {
     if ((M2C_FIELD(arg0, f32 *, 0x40) - M2C_FIELD(arg0, f32 *, 0x3C)) >= 6.2831855f) {
         M2C_FIELD(arg0, f32 *, 0x10) = RadNormalize__Ff(&g_2dded0, temp_f12_2);
     }
-    PosCplookEye(arg0);
-    M2C_ERROR(/* unknown instruction: por $s0, $zero, $v0 */);
-    PosCplookAnchor(arg0);
-    SetCmLookAt(&B_002DDF40, M2C_ERROR(/* unknown instruction: por $a1, $zero, $s0 */), M2C_ERROR(/* unknown instruction: por $a2, $zero, $v0 */), 0, 0);
+    s64 vu_1;
+    asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosCplookEye(arg0)));
+    temp_s0_3 = vu_1;
+    s64 vu_2;
+    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(PosCplookAnchor(arg0)));
+    s64 vu_3;
+    asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(temp_s0_3));
+    SetCmLookAt(&B_002DDF40, vu_3, vu_2, 0, 0);
     M2C_FIELD(&B_003DD490, f32 *, 0x4750) = (f32) M2C_FIELD(&g_2dded0, f32 *, 0);
 }
 }

@@ -13,7 +13,7 @@ struct _m2c_stack_SteerSlotSoAlongCrv {
     /* 0x10 */ char pad10[0x80];
 };                                                  /* size = 0x90 */
 M2C_UNK EvaluateCrvFromU(s32, M2C_UNK *, M2C_UNK, f32); /* extern */
-M2C_UNK FindCrvClosestPointFromU(s32, M2C_UNK, M2C_UNK, M2C_UNK, f32, s128); /* extern */
+M2C_UNK FindCrvClosestPointFromU(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, f32, s128); /* extern */
 s128 PosLoWorld(s8 *);                            /* extern */
 M2C_UNK SetSlotSoState(s8 *, M2C_UNK);            /* extern */
 f32 UMaxCrv(s32);                                   /* extern */
@@ -47,7 +47,7 @@ void SteerSlotSoAlongCrv(s8 *arg0) {
         temp_v0 = PosLoWorld(arg0);
         s64 vu_1;
         asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(temp_v0));
-        FindCrvClosestPointFromU(var_s0, vu_1, 0, 0, M2C_FIELD(arg0, f32 *, 0x174), temp_v0);
+        FindCrvClosestPointFromU(var_s0, vu_1, 0, 0, 0, arg0 + 0x174, 0, M2C_FIELD(arg0, f32 *, 0x174), temp_v0);
         temp_f20 = UWrapCrv(var_s0, M2C_FIELD(arg0, f32 *, 0x174) + M2C_FIELD(arg0, f32 *, 0x178));
         if (!(temp_f20 < UMinCrv(var_s0))) {
             if (!(UMaxCrv(var_s0) < temp_f20)) {

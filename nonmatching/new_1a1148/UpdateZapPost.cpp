@@ -15,7 +15,7 @@ float atan2f(float, float);
 void func_001F4BF8(JTO *);
 void SetStepRadTarget(JTO *, float);
 int FJtStuck(float, JTO *, int);
-void ZapContinue(ZAP *);
+void ZapContinue(void);
 }
 float RadSmooth(float, float, float, SMP *, float *);
 void UpdateZapPost(ZAP *zap)
@@ -70,10 +70,10 @@ after:
     SetStepRadTarget(zap->jt, turn);
     if (0.25f < g_2dded0 - zap->tstate) {
         if (zap->jt->landed != 0) {
-            ZapContinue(zap);
+            ZapContinue();
             return;
         }
     }
     if (FJtStuck(zap->tstate, zap->jt, 0) != 0)
-        ZapContinue(zap);
+        ZapContinue();
 }

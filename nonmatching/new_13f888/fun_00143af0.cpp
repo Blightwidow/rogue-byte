@@ -6,7 +6,7 @@ extern "C" char B_003D4A60[];
 extern "C" const char RO_002A4DB0[];
 extern "C" {
 void *PpathFindBootyOid(int);
-void RefSetGameSaveValue(CRef *, void *, CRef *, void *);
+void RefSetGameSaveValue(CRef *, void *, CRef *);
 void CRef_CopyConstruct(CRef *, CRef *);
 void CRef_Destruct(CRef *);
 void func_001D8B20(CRef *, CRef *, void *, const char *, int);
@@ -20,7 +20,7 @@ void *func_00143AF0(Jt *pjt, int idLoot)
         refs[0].tagk = 0x15;
         refs[0].n = idLoot;
         CRef_CopyConstruct(&refs[1], &refs[0]);
-        RefSetGameSaveValue(&refs[2], ppath, &refs[1], B_003D4A60);
+        RefSetGameSaveValue(&refs[2], ppath, &refs[1]);
         CRef_Destruct(&refs[2]);
         CRef_Destruct(&refs[1]);
         CRef_Destruct(&refs[0]);

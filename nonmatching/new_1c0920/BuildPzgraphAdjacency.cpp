@@ -66,8 +66,8 @@ loop_10:
         temp_v0_3 = *var_s3;
         M2C_FIELD(&sp10, s32 *, 4) = 0x10;
         var_s3 += 4;
-        sp10 = temp_v0_3 * 4;
         M2C_FIELD(temp_s0_2, s32 *, 4) = PvAllocSwImpl__Fi(&sp10);
+        sp10 = temp_v0_3 * 4;
         if (var_s1 < M2C_FIELD(arg0, s32 *, 0x10)) {
             goto loop_10;
         }

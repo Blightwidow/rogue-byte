@@ -17,13 +17,13 @@ struct _m2c_stack_FindClosestScriptCmd {
     /* 0x30 */ s128 sp30;                           /* inferred */
     /* 0x40 */ char pad40[0x70];
 };                                                  /* size = 0xB0 */
-M2C_UNK FindCrvClosestPointAll(s8 *, s128, M2C_UNK, s128 *); /* extern */
-M2C_UNK FindCrvClosestPointFromS(s8 *, s128, M2C_UNK, s128 *, M2C_UNK32); /* extern */
-M2C_UNK GetScriptPose(s8 *, s128, s8 *, s128 *); /* extern */
+M2C_UNK FindCrvClosestPointAll(s8 *, s128, M2C_UNK, s128 *, M2C_UNK, M2C_UNK, M2C_UNK32 *); /* extern */
+M2C_UNK FindCrvClosestPointFromS(s8 *, s128, M2C_UNK, s128 *, M2C_UNK, M2C_UNK, M2C_UNK32 *, M2C_UNK32); /* extern */
+M2C_UNK GetScriptPose(s8 *, s128, s8 *, s128 *, M2C_UNK); /* extern */
 s8 *PloFindSwObject_thunk(M2C_UNK *, M2C_UNK, s32, s8 *); /* extern */
 extern M2C_UNK B_003DD490;
 void FindClosestScriptCmd(s8 *arg0, s128 arg1, s8 *arg2) {
-    s8 sp[0x30] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK32 sp8;
     s128 sp10;
     M2C_UNK32 sp20;
@@ -59,7 +59,7 @@ void FindClosestScriptCmd(s8 *arg0, s128 arg1, s8 *arg2) {
                 if (var_s3 == 0) {
                     temp_a2 = M2C_FIELD(var_s0, s32 *, 4);
                     if (temp_a2 != -1) {
-                        GetScriptPose(arg0, sp30, PloFindSwObject_thunk(&B_003DD490, 4, temp_a2, var_s1), &sp10);
+                        GetScriptPose(arg0, sp30, PloFindSwObject_thunk(&B_003DD490, 4, temp_a2, var_s1), &sp10, 0);
                         goto block_10;
                     }
                     temp_v0 = M2C_FIELD(var_s0, s128 **, 8);
@@ -91,13 +91,13 @@ block_10:
                     temp_a0 = PloFindSwObject_thunk(&B_003DD490, 4, M2C_FIELD(var_s0, s32 *, 4), var_s1);
                     if (arg2 != NULL) {
                         if (M2C_FIELD(arg2, s32 *, 0) == (s32)var_s0) {
-                            FindCrvClosestPointFromS(temp_a0, sp30, 0, &sp10, M2C_FIELD(arg2, M2C_UNK32 *, 8));
+                            FindCrvClosestPointFromS(temp_a0, sp30, 0, &sp10, 0, 0, &sp20, M2C_FIELD(arg2, M2C_UNK32 *, 8));
                         } else {
                             goto block_18;
                         }
                     } else {
 block_18:
-                        FindCrvClosestPointAll(temp_a0, sp30, 0, &sp10);
+                        FindCrvClosestPointAll(temp_a0, sp30, 0, &sp10, 0, 0, &sp20);
                     }
                     asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(sp));
                     asm volatile("lqc2 vf1, 0x10(%0)" : : "r"(sp));

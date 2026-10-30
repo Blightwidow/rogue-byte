@@ -26,13 +26,13 @@ struct _m2c_stack_Swarm_AddSoCustomXps {
 };                                                  /* size = 0x220 */
 #define sp20 (*(s128 *)(sp + 0x020))
 #define sp140 (*(s128 *)(sp + 0x140))
-s32 ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(s128, s128, s128, M2C_UNK, f32);
-void PxpAdd(M2C_UNK *, s32, s8 *, s128, f32);
+s32 ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(s128, s128, s128, M2C_UNK, M2C_UNK *, f32);
+void PxpAdd(M2C_UNK *, s32, s8 *, s128, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, f32);
 void func_001F5990();
 s32 func_002564B8(M2C_UNK *);
 extern M2C_UNK B_003DD490;
 extern s128 g_2a2da0;
-void Swarm_AddSoCustomXps(s8 *arg0, s8 *arg1) {
+void Swarm_AddSoCustomXps(s8 *arg0, s8 *arg1, s32 arg5) {
     s32 unksp38;
     s8 sp[0x160] __attribute__((aligned(16)));
     s128 sp10;
@@ -43,6 +43,7 @@ void Swarm_AddSoCustomXps(s8 *arg0, s8 *arg1) {
     M2C_UNK sp110;
     M2C_UNK sp120;
     s128 sp130;
+    M2C_UNK var_a4;
     f32 temp_f0;
     f32 temp_f20;
     f32 temp_v0_2;
@@ -98,7 +99,7 @@ void Swarm_AddSoCustomXps(s8 *arg0, s8 *arg1) {
                             asm volatile("lqc2 vf3, 0x130(%0)" : : "r"(sp));
                             s32 vu_3;
                             asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_3));
-                            vu_3;
+                            var_a4 = vu_3;
                             asm volatile("qmtc2.ni %0, vf1" : : "r"(-M2C_FIELD(arg1, f32 *, 8)));
                             asm volatile("vadda.xyzw ACC, vf0, vf3");
                             asm volatile("vmaddx.xyzw vf3, vf2, vf1x");
@@ -129,7 +130,7 @@ loop_14:
                             sp28 = temp_f0;
                             unksp38 = temp_f0;
                             var_s0 += 1;
-                            if (ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(M2C_FIELD(var_s3, s128 *, 0), sp20, sp30, 2, temp_f20) <= 0) {
+                            if (ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(M2C_FIELD(var_s3, s128 *, 0), sp20, sp30, 2, &sp40, temp_f20) <= 0) {
                                 if (var_s0 < M2C_FIELD(arg1, s32 *, 0x90)) {
                                     goto loop_14;
                                 }
@@ -155,7 +156,7 @@ loop_14:
                                 var_a3 = sp140;
                                 s32 vu_5;
                                 asm volatile("qmfc2.ni %0, vf3" : "=r"(vu_5));
-                                vu_5;
+                                var_a4 = vu_5;
                                 s32 vu_6;
                                 asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_6));
                                 var_f12 = vu_6 - M2C_FIELD(arg1, f32 *, 8);
@@ -163,7 +164,7 @@ loop_14:
                                 asm volatile("sqc2 vf2, 0x110(%0)" : : "r"(sp));
                                 var_a1 = M2C_FIELD(arg0, s32 *, 0xE4) + ((M2C_FIELD(arg0, s32 *, 0xE0) * 0xB0) - 0xB0);
 block_11:
-                                PxpAdd(&B_003DD490, var_a1, arg1, var_a3, var_f12);
+                                PxpAdd(&B_003DD490, var_a1, arg1, var_a3, var_a4, 0xA, var_s3, 0, var_f12);
                             }
                         }
                         var_s3 = M2C_FIELD(var_s3, s8 **, 0x60);

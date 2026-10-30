@@ -12,7 +12,7 @@ struct _m2c_stack_PosClosestOnCgt {
     /* 0x10 */ char pad10[0x20];
 };                                                  /* size = 0x30 */
 #define sp0 (*(s128 *)(sp + 0x00))
-M2C_UNK ClosestPointOnSegment(M2C_UNK, M2C_UNK, M2C_UNK, s8 *); /* extern */
+M2C_UNK ClosestPointOnSegment(M2C_UNK, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, M2C_UNK); /* extern */
 extern M2C_UNK g_2a2dc0;
 s128 PosClosestOnCgt(s8 *arg0, s32 arg1) {
     s8 sp[0x20] __attribute__((aligned(16)));
@@ -84,7 +84,7 @@ s128 PosClosestOnCgt(s8 *arg0, s32 arg1) {
         asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_15));
         var_a2 = vu_15;
 block_6:
-        ClosestPointOnSegment(var_a0, var_a1, var_a2, sp);
+        ClosestPointOnSegment(var_a0, var_a1, var_a2, sp, 0, 0);
     } else {
         asm volatile("vsub.xyzw vf1, vf7, vf8");
         asm volatile("vsub.xyzw vf2, vf8, vf4");

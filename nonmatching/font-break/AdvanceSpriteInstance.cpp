@@ -59,7 +59,7 @@ extern "C" void AdvanceSpriteInstance(float dt, LABEL *label, int iinst, AFF *px
     float tLast = tNow;
     do {
         if (ikey < label->ckey) {
-            KEY *key = &label->akey[ikey];
+            KEY *key = (__typeof__(&(label->akey)[0]))((ikey) * sizeof((label->akey)[0]) + (unsigned)(label->akey));
             float tKey = key->t;
             if (tKey <= tNow) {
                 tLast = tKey;

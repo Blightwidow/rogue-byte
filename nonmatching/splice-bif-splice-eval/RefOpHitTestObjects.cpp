@@ -1,5 +1,5 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long long u64;
+typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
+typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
 typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
 typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
 #define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
@@ -12,22 +12,18 @@ struct _m2c_stack_RefOpHitTestObjects {
     /* 0x10 */ M2C_UNK sp10;                        /* inferred */
     /* 0x10 */ char pad10[0x40];
 };                                                  /* size = 0x50 */
-
 M2C_UNK CRef_CopyConstruct(s32, M2C_UNK *);         /* extern */
 M2C_UNK CRef_Destruct(M2C_UNK *);                   /* extern */
-M2C_UNK RefOpHitTestObjectsImpl(M2C_UNK *, M2C_UNK, s32, s32, s32); /* extern */
+M2C_UNK RefOpHitTestObjectsImpl(M2C_UNK *, M2C_UNK, s32, s32, s32, s32); /* extern */
 M2C_UNK __as__4CRefRC4CRef(M2C_UNK *, M2C_UNK *);   /* extern */
-
 s32 RefOpHitTestObjects(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    s8 sp[0x50] __attribute__((aligned(16)));
+    s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK sp10;
-
-    RefOpHitTestObjectsImpl(&sp10, 0x7B, arg1, arg2, -1);
+    RefOpHitTestObjectsImpl(&sp10, 0x7B, arg1, arg2, arg3, -1);
     __as__4CRefRC4CRef((M2C_UNK *)(sp), &sp10);
     CRef_Destruct(&sp10);
     CRef_CopyConstruct(arg0, (M2C_UNK *)(sp));
     CRef_Destruct((M2C_UNK *)(sp));
     return arg0;
 }
-
 }

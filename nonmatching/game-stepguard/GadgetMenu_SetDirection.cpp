@@ -18,8 +18,8 @@ struct _m2c_stack_GadgetMenu_SetDirection {
     /* 0x078 */ char pad78[0xD8];
 };                                                  /* size = 0x150 */
 #define sp50 (*(f32 *)(sp + 0x050))
-M2C_UNK ClosestPointOnSegment(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-s32 ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, f32, s128); /* extern */
+M2C_UNK ClosestPointOnSegment(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, f32 *, f32 *); /* extern */
+s32 ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK *, f32, s128); /* extern */
 s8 *GadgetMenu_PgmeFind(s32);                     /* extern */
 M2C_UNK GadgetMenu_SelectGadget(s8 *, s32);       /* extern */
 M2C_UNK Menu_ClearDialog(s8 *);                   /* extern */
@@ -31,7 +31,7 @@ extern f32 g_2c327c;
 extern f32 g_2c3280;
 extern f32 g_2ddf0c;
 void GadgetMenu_SetDirection(s8 *arg0, s32 arg1) {
-    s8 sp[0xb0] __attribute__((aligned(16)));
+    s8 sp[0xa0] __attribute__((aligned(16)));
     M2C_UNK sp10;
     f32 sp70;
     f32 sp74;
@@ -101,7 +101,7 @@ loop_8:
                     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_8));
                     s64 vu_9;
                     asm volatile("por %0, %1, %2" : "=r"(vu_9) : "r"(0), "r"(temp_s0));
-                    if (ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(vu_9, vu_8, vu_7, 1, g_2c3278, temp_s0) > 0) {
+                    if (ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(vu_9, vu_8, vu_7, 1, &sp10, g_2c3278, temp_s0) > 0) {
                         var_f0 = sp50 * g_2c3274;
                         goto block_15;
                     }
@@ -114,7 +114,7 @@ loop_8:
                     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_11));
                     s64 vu_12;
                     asm volatile("por %0, %1, %2" : "=r"(vu_12) : "r"(0), "r"(temp_s0));
-                    ClosestPointOnSegment(vu_12, vu_11, vu_10, 0);
+                    ClosestPointOnSegment(vu_12, vu_11, vu_10, 0, &sp70, &sp74);
                     asm volatile("lqc2 vf1, 0x90(%0)" : : "r"(sp));
                     if ((sp74 < g_2c327c) && (sp70 > 0.0f)) {
                         var_f0 = g_2c3274 + sp74;

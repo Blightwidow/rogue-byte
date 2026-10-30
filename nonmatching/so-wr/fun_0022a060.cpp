@@ -66,10 +66,10 @@ void func_0022A060(s8 *arg0) {
         M2C_FIELD(arg0, s32 *, 0x164) = var_s2;
         if (var_s2 != 0) {
             temp_v0_2 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0x18), 5, 0, 0);
+            M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0x18), 5, 0, 0, 0, 0);
         } else {
             temp_v0_3 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0_3, s16 *, 0x18), 6, 0, 0);
+            M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0_3, s16 *, 0x18), 6, 0, 0, 0, 0);
         }
     }
 }

@@ -15,11 +15,11 @@ s32 DecrementSwBinocCount(M2C_UNK *);
 void DecrementSwHandsOff__FP2SW(M2C_UNK *);
 s32 IncrementSwBinocCount(M2C_UNK *);
 void IncrementSwHandsOff__FP2SW(M2C_UNK *);
-void RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
+void RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *, s8 *, M2C_UNK);
 f32 SetAsegaSpeed(s8 *, M2C_UNK);
 s32 SetBinocHudBlot(s8 *, s32);
 void SetBinocHudState(s8 *, M2C_UNK);
-void SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, s8 *, s8 *);
+void SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(M2C_UNK *, M2C_UNK, s8 *, s8 *, M2C_UNK);
 s32 SetResetFlag__FP2CM(M2C_UNK *);
 void SetSndbankVolumeFactor(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
 void SetSoCnstrForce(s8 *, M2C_UNK);
@@ -76,14 +76,14 @@ void SetBinocState(s8 *arg0, s32 arg1) {
                 if (temp_v1 != temp_a0) {
                     switch (temp_v1) {              /* switch 1; irregular */
                     case 0:                         /* switch 1 */
-                        RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 7, (s8 *)(&B_002DDF40 + 0x450));
+                        RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0), 0);
                         break;
                     case 2:                         /* switch 1 */
-                        RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 7, (s8 *)(&B_002DDF40 + 0x450));
+                        RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0x40), 0);
                         break;
                     }
                 } else {
-                    RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 8, (s8 *)(&B_002DDF40 + 0x520));
+                    RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv(&B_002DDF40, 0xF, 8, (s8 *)(&B_002DDF40 + 0x520), M2C_FIELD(arg0, s8 **, 0), 0);
                     temp_s0 = M2C_FIELD(arg0, s8 **, 0x40);
                     if (temp_s0 != NULL) {
                         temp_v0 = M2C_FIELD(temp_s0, s8 **, 0xC);
@@ -169,17 +169,17 @@ block_57:
             if (temp_v1_4 != arg1) {
                 switch (temp_v1_4) {                /* switch 3; irregular */
                 case 0:                             /* switch 3 */
-                    SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0));
+                    SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0), 0);
                     SetStepRadTarget(M2C_FIELD(arg0, s8 **, 0), M2C_FIELD(&B_002DDF40, f32 *, 0x460));
                     SetBinocHudState(arg0 + 0x24, 0);
                     break;
                 case 2:                             /* switch 3 */
-                    SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0x40));
+                    SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 7, (s8 *)(&B_002DDF40 + 0x450), M2C_FIELD(arg0, s8 **, 0x40), 0);
                     SetBinocHudState(arg0 + 0x24, 0);
                     break;
                 }
             } else {
-                SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 8, (s8 *)(&B_002DDF40 + 0x520), M2C_FIELD(arg0, s8 **, 0));
+                SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv(&B_002DDF40, 8, (s8 *)(&B_002DDF40 + 0x520), M2C_FIELD(arg0, s8 **, 0), 0);
                 SetStepRadTarget(M2C_FIELD(arg0, s8 **, 0), M2C_FIELD(&B_002DDF40, f32 *, 0x5C4));
                 temp_s1 = M2C_FIELD(arg0, s8 **, 0x40);
                 if (temp_s1 != NULL) {

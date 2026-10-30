@@ -1,13 +1,13 @@
 struct CHUNK { int start; int end; CHUNK *next; };
 struct ZPR { char pad[4]; int cur; char pad2[4]; CHUNK *free[8]; };
-extern "C" int ICeilLog2(int);
+extern "C" int ICeilLog2(ZPR *);
 extern "C" void FlushZprPage(ZPR *);
 extern "C" int AllocZpr(ZPR *zpr, int count)
 {
     int alloc;
     int mask = -0x80;
     unsigned iclass;
-    for (iclass = ICeilLog2(count - 1) + 1; iclass < 8; iclass++) {
+    for (iclass = ICeilLog2(zpr) + 1; iclass < 8; iclass++) {
         CHUNK **head = &zpr->free[iclass];
         CHUNK *chunk = *head;
         if (chunk != 0) {
@@ -16,7 +16,7 @@ extern "C" int AllocZpr(ZPR *zpr, int count)
             if (chunk->start == chunk->end) {
                 *head = chunk->next;
             } else {
-                int rest = ICeilLog2(chunk->end - chunk->start);
+                int rest = ICeilLog2(zpr);
                 if (rest != iclass) {
                     *head = chunk->next;
                     chunk->next = zpr->free[rest];

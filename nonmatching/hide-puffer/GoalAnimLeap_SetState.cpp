@@ -7,7 +7,7 @@ struct OBJ2 { char pad[0xC]; VT2 *vt; };
 extern "C" {
 void func_0012E460(void *);
 void SetXfKind(void *, void *, int);
-void RecalcSwOxfFilterForObject(void *, void *);
+void RecalcSwOxfFilterForObject(void *, int);
 void DiscardSoXps(void *);
 void GoalAnim_SetState(void *, int);
 void func_0017AA78(void *, void *, QW *, QW *);
@@ -16,7 +16,7 @@ void *PpoSwFocusBase(void *);
 void TriggerJoyRumbleRumk__FP3JOY4RUMKf(void *, int, float);
 float *PeaFindAsegLabel(void *, int);
 void SeekAsega(void *, int, float, float);
-QW PosLoWorld(void *);
+QW PosLoWorld(char *);
 QW ConvertXfPos(void *, void *, QW);
 QW ConvertXfVec(void *, void *, QW);
 }
@@ -73,7 +73,7 @@ void GoalAnimLeap_SetState(char *goal, int state)
         drivenAfter = 1;
     *(int *)(goal + 0x50) = state;
     if (drivenBefore != drivenAfter) {
-        RecalcSwOxfFilterForObject(B_003DD490, *(void **)(goal + 0x10));
+        RecalcSwOxfFilterForObject(B_003DD490, state);
         DiscardSoXps(*(void **)(goal + 0x10));
         *(int *)(goal + 0x50) = state;
     }
@@ -96,7 +96,7 @@ void GoalAnimLeap_SetState(char *goal, int state)
         asm("mfc1 %0, %1" : "=r" (invBits) : "f" (inv));
         l.s50 = invBits;
         l.s60 = invBits;
-        QW pos = PosLoWorld(*(void **)(goal + 0x10));
+        QW pos = PosLoWorld(goal);
         OBJ2 *guard2 = *(OBJ2 **)(goal + 0x10);
         register QW v2 asm("vf2") = pos;
         register QW v1 asm("vf1") = l.s70;

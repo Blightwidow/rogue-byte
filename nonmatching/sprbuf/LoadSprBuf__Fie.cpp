@@ -34,11 +34,11 @@ void LoadSprBuf__Fie(int cb, ...)
                 unsigned long tag = ((unsigned long)pvSource << 32) | (unsigned)(cbRounded >> 4);
                 if (pvSourceNext != 0)
                     tag |= 0x30000000;
-                *(unsigned long *)(psprbuf->pdmatag + centry * 0x10) = tag;
+                *(unsigned long *)(centry + psprbuf->pdmatag * 0x10) = tag;
             }
             centry = centry + 1;
-            cb = cbNext;
             pvSource = pvSourceNext;
+            cb = cbNext;
         } while (cb != 0);
     }
     psprbuf->centry = centry;

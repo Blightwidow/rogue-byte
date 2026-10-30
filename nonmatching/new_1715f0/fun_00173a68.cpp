@@ -28,8 +28,8 @@ M2C_UNK func_00154038(s32, s32, M2C_UNK);           /* extern */
 M2C_UNK func_00173928(s8 *, s8 *, M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK func_00173D18(s8 *, M2C_UNK);             /* extern */
 s8 *func_00173E78(s8 *, s32);                   /* extern */
-s8 *func_00173F18(s8 *, s128, s8 *, M2C_UNK *); /* extern */
-s8 *func_00174490(s8 *, s8 *, s8 *, M2C_UNK *); /* extern */
+s8 *func_00173F18(s8 *, s128, s8 *, M2C_UNK *, s32 *); /* extern */
+s8 *func_00174490(s8 *, s8 *, s8 *, M2C_UNK *, s32); /* extern */
 extern M2C_UNK B_003DD490;
 extern f32 D_FLT_002BE5CC;
 extern f32 D_FLT_002BE5D0;
@@ -111,13 +111,13 @@ block_17:
                 }
                 temp_v0_3 = func_00173E78(arg0, var_a1);
                 if (temp_v0_3 != NULL) {
-                    temp_v0_4 = func_00173F18(arg0, sp50, sp, &sp10);
+                    temp_v0_4 = func_00173F18(arg0, sp50, sp, &sp10, &sp40);
                     if (temp_v0_4 != NULL) {
                         M2C_FIELD(arg0, s128 *, 0x70) = sp50;
                         if (M2C_FIELD(temp_v0_3, s8 **, 0) != NULL) {
                             func_00173928(arg0, temp_v0_3, 0, 1);
                         }
-                        temp_v0_5 = func_00174490(arg0, temp_v0_4, sp, &sp10);
+                        temp_v0_5 = func_00174490(arg0, temp_v0_4, sp, &sp10, sp40);
                         sp44 = temp_v0_5;
                         if (temp_v0_5 != NULL) {
                             SetAloAlpha(temp_v0_5, 0x3C23D70A);
@@ -133,7 +133,7 @@ block_17:
                             sp48 = &sp44;
                             temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
                             M2C_FIELD(arg0, f32 *, 0xA8) = (f32) (g_2dded0 + D_FLT_002BE5D8);
-                            M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 0x19, 0, 1);
+                            M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, s8 ***, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 0x19, 0, 1, &sp48, 0, 1);
                         }
                     }
                 }

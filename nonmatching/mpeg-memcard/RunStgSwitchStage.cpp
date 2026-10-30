@@ -15,7 +15,7 @@ struct _m2c_stack_RunStgSwitchStage {
 M2C_UNK ApplyTaskStateRequests(M2C_UNK *, M2C_UNK, s32, s8 *); /* extern */
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
 M2C_UNK JoltCm(M2C_UNK *, s32);                     /* extern */
-M2C_UNK OnDifficultyBreak(M2C_UNK *, M2C_UNK, s32, M2C_UNK); /* extern */
+M2C_UNK OnDifficultyBreak(M2C_UNK *, M2C_UNK, s32, M2C_UNK, s8 *); /* extern */
 s8 *PloFindSwObject_thunk(M2C_UNK *, M2C_UNK, s32, s8 *); /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 M2C_UNK TriggerJoyRumbleRumk__FP3JOY4RUMKf(M2C_UNK *, s32, M2C_UNK); /* extern */
@@ -29,7 +29,7 @@ extern M2C_UNK B_002DEB30;
 extern M2C_UNK B_002DFC00;
 extern M2C_UNK B_003DD490;
 void RunStgSwitchStage(s8 *arg0, s8 *arg1) {
-    s8 sp[0x50] __attribute__((aligned(16)));
+    s8 sp[0x40] __attribute__((aligned(16)));
     s8 *sp40;
     M2C_UNK (*var_v1)(s8 *);
     s16 var_a0;
@@ -103,13 +103,13 @@ block_12:
                     }
                     s64 vu_1;
                     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(var_v0));
-                    OnDifficultyBreak(&B_002DE578, vu_1, M2C_FIELD(temp_s0, s32 *, 4), -0x64);
+                    OnDifficultyBreak(&B_002DE578, vu_1, M2C_FIELD(temp_s0, s32 *, 4), -0x64, arg0);
                 }
                 break;
             case 11:
                 temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
                 sp40 = temp_s0 + 4;
-                M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 4, 0, 1);
+                M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, s8 **, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x18), 4, 0, 1, &sp40, 0);
                 break;
             case 12:
                 ApplyTaskStateRequests(&B_002DEB30, 1, M2C_FIELD(temp_s0, s32 *, 4), arg0);

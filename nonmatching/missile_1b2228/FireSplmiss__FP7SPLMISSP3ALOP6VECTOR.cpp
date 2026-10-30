@@ -12,7 +12,7 @@ extern QW g_2a2dd0;
 void FireMissile(SPLMISS *, void *, QW *);
 void PosPredictMissileTarget(V4 *, SPLMISS *, float);
 QW LimitVectorLength__FP6VECTORfT0(QW, float);
-QW PosLoWorld(SPLMISS *);
+QW PosLoWorld(void);
 int ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(QW, float, QW, QW, int, void *);
 }
 static inline QW Word(float f) { QW r; asm volatile("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
@@ -59,7 +59,7 @@ void FireSplmiss__FP7SPLMISSP3ALOP6VECTOR(SPLMISS *p, void *alo, QW *pos)
         f.qC0 = f.q10;
         asm volatile("sqc2 vf1, %0" : "=m" (f.qD0) : "j" (v1));
         f.q40 = f.qB0;
-        QW world = PosLoWorld(p);
+        QW world = PosLoWorld();
         asm volatile("lqc2 vf3, %1\n\tqmtc2.ni %2, vf4\n\tvsub.xyzw vf2, vf3, vf4\n\tlqc2 vf1, %3\n\tlqc2 vf3, %4\n\tvadda.xyzw ACC, vf0, vf1\n\tvmaddx.xyzw vf1, vf2, vf3x" : "=j" (v1) : "m" (f.qC0), "r" (world), "m" (f.qD0), "m" (f.qB0) : "memory");
         QW line1;
         asm volatile("qmfc2.ni %0, vf1" : "=r" (line1));

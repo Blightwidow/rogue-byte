@@ -50,8 +50,8 @@ f32 GSmooth__FfffP3SMPPf(void *arg0, f32 *arg1, f32 fparg0, f32 fparg1, f32 fpar
     } else {
 block_13:
         temp_f0_2 = M2C_FIELD(arg0, f32 *, 4);
-        var_f12_2 = 0.0f;
         temp_f14 = *(sp + ((CSolveQuadratic__FfffPf(sp, (M2C_FIELD(arg0, f32 *, 0) - temp_f0_2) / (2.0f * temp_f1), temp_f0_2, -var_f14) - 1) * 4)) - var_f20;
+        var_f12_2 = 0.0f;
         if (!(temp_f14 > 0.0f)) {
             var_f2 = -M2C_FIELD(arg0, f32 *, 4);
         } else {

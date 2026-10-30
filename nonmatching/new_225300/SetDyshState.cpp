@@ -17,7 +17,7 @@ struct _m2c_stack_SetDyshState {
 };                                                  /* size = 0x120 */
 #define sp80 (*(s128 *)(sp + 0x080))
 void AddSoXa__FP2SOP2XA(s8 *, s8 *);
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 **);
 s32 FCanSetGuardMode(s8 *, M2C_UNK);
 s32 PosLoWorld(s8 *);
 void PostGuardStunCommand(s8 *, M2C_UNK);
@@ -75,7 +75,7 @@ void SetDyshState(s8 *arg0, s32 arg1) {
                 var_v0 = PosLoWorld(arg0);
             }
             spA0 = var_v0;
-            temp_v0_2 = CploFindSwObjectsByClass(&B_003DD490, 0x105, 0x38, 0);
+            temp_v0_2 = CploFindSwObjectsByClass(&B_003DD490, 0x105, 0x38, 0, 0x20, (s8 **)(sp));
             var_f20 = 400.0f;
             var_s2 = NULL;
             if (temp_v0_2 > 0) {

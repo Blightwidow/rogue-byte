@@ -14,7 +14,7 @@ M2C_UNK CreateSlotheapSwAlign(s8 *, s32, M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK InitDl__FP2DLi(s8 *, M2C_UNK);            /* extern */
 M2C_UNK InitSl(s8 *, M2C_UNK);                    /* extern */
 s32 func_001CF5C8();                                /* extern */
-M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK, M2C_UNK);  /* extern */
+M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 extern M2C_UNK D_002DC018;
 extern f32 D_FLT_002C3E60;
 extern f32 D_FLT_002C3E64;
@@ -146,7 +146,7 @@ s8 *Sw_Construct(s8 *arg0) {
     M2C_FIELD(arg0, f32 *, 0x4754) = -60.0f;
     M2C_FIELD(arg0, s32 *, 0x4554) = 1;
     M2C_FIELD(arg0, f32 *, 0x4750) = -60.0f;
-    memset(arg0 + 0x4590, -1, 0x20, 0x189);
+    memset(arg0 + 0x4590, -1, 0x20, 0x189, 1);
     return arg0;
 }
 }

@@ -16,7 +16,7 @@ struct _m2c_stack_func_0014A4D0 {
     /* 0x080 */ char pad80[0xB0];
 };                                                  /* size = 0x130 */
 #define sp40 (*(s128 *)(sp + 0x040))
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
+s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, s8 **);
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);
 s32 FStgSwitchDone(s8 *);
 s32 FSwHandsOff(M2C_UNK *);
@@ -149,7 +149,7 @@ loop_17:
                 var_f22 = M2C_FIELD(temp_a0, f32 *, 0x30);
                 sp60 = M2C_FIELD(temp_a0, s128 *, 0x20);
             }
-            temp_v0_3 = CploFindSwObjectsByClass(&B_003DD490, 1, 0x12, var_s1);
+            temp_v0_3 = CploFindSwObjectsByClass(&B_003DD490, 1, 0x12, var_s1, 8, (s8 **)(sp));
             var_a1 = 0;
             if (temp_v0_3 > 0) {
                 var_a3 = temp_v0_3;
@@ -167,7 +167,7 @@ loop_17:
                 } while (var_a3 != 0);
             }
             if (var_a1 != 0) {
-                temp_s0_2 = (s8 *)(*(sp + (NRandInRange(0, var_a1 - 1) * 4)));
+                temp_s0_2 = (s8 *)(sp[NRandInRange(0, var_a1 - 1)]);
                 var_f22 = M2C_FIELD(temp_s0_2, f32 *, 0xEC);
                 sp60 = PosLoWorld(temp_s0_2);
             }

@@ -6,7 +6,7 @@ struct ALO { char pad[0xE0]; int cpart; };
 extern QW g_2a2dd0;
 extern "C" {
 QW PosLoWorld(void *);
-void CStackFrame_Construct(void *);
+void CStackFrame_Construct(void);
 void CStackFrame_Destructor(void *, int);
 void *PvAllocStackImpl__Fi(ALLOCREQ *);
 int CpartCollectAlo(ALO *, int (*)(void *, void *), void *, void *);
@@ -31,7 +31,7 @@ int FFindWaterSurface(JT *pjt, ALO *pwater, QW *pposSurface)
     gFrom += zBottom;
     l.posTo[2] = gTo;
     l.posFrom[2] = gFrom;
-    CStackFrame_Construct(pframe);
+    CStackFrame_Construct();
     ALLOCREQ *preq = &l.req;
     preq->cb = pwater->cpart << 2;
     preq->align = 0x10;

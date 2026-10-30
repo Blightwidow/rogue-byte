@@ -11,7 +11,7 @@ struct _m2c_stack_func_0014B290 {
     /* 0x00 */ char pad0[0xC0];
 };                                                  /* size = 0xC0 */
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
-s32 FIsGuardInSgs(M2C_UNK);                         /* extern */
+s32 FIsGuardInSgs(s8 *, M2C_UNK);                         /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 s8 *func_002082D0(s8 *);                        /* extern */
 extern M2C_UNK g_2bd4b0;
@@ -27,7 +27,7 @@ s8 *func_0014B290(s8 *arg0) {
     s8 *temp_s0;
     s8 *temp_v1;
     s8 *var_fp;
-    if (FIsGuardInSgs(0x24) == 0) {
+    if (FIsGuardInSgs(arg0, 0x24) == 0) {
         temp_v1 = M2C_FIELD(arg0, s8 **, 0x390);
         var_fp = NULL;
         if (temp_v1 != NULL) {
@@ -41,10 +41,8 @@ block_8:
             var_f20 = 3.4028235e38f;
             var_s5 = 0x3E7;
             PosLoWorld(arg0);
-            var_s3 = 0;
-            if (M2C_FIELD(M2C_FIELD(arg0, s8 **, 0xF64), s32 *, 0xFC) > 0) {
-                var_s4 = 0x100;
-                do {
+            for (var_s3 = 0; var_s3 < M2C_FIELD(M2C_FIELD(arg0, s8 **, 0xF64), s32 *, 0xFC); var_s3++) {
+                var_s4 = 0x100 + var_s3 * 0x10;
                     temp_s0 = M2C_FIELD(arg0, s8 **, 0xF64) + var_s4;
                     if (M2C_FIELD(temp_s0, s32 *, 4) != 0) {
                         var_s1 = 0;
@@ -74,9 +72,6 @@ block_8:
                             var_fp = temp_a0;
                         }
                     }
-                    var_s3 += 1;
-                    var_s4 += 0x10;
-                } while (var_s3 < M2C_FIELD(M2C_FIELD(arg0, s8 **, 0xF64), s32 *, 0xFC));
             }
         }
         return var_fp;

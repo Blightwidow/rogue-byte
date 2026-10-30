@@ -1,9 +1,9 @@
 #include "sly2.h"
 extern "C" {
 QW ConvertAloPos(void *, void *, QW);
-void __as__6VECTORG9VU_VECTOR(VECTOR *, QW);
+void __as__6VECTORG9VU_VECTOR(void);
 void func_00230CD0(void *, int, void *, void *);
-QW DecomposeRotateMatrix(void *);
+QW DecomposeRotateMatrix(char *);
 }
 struct Rows3 { QW row[3]; };
 extern "C" const Rows3 RO_002A2D00;
@@ -18,8 +18,8 @@ void LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4(char *palo, QW posWorl
     Locals l;
     QW pos = ConvertAloPos(0, palo, posWorld);
     *(QW *)&l.posLocal = pos;
+    __as__6VECTORG9VU_VECTOR();
     l.posLocal.z = 0.0f;
-    __as__6VECTORG9VU_VECTOR(&l.translation, *(QW *)&l.posLocal);
     l.rows = RO_002A2D00;
     float *flat = (float *)&l.rows;
     flat[15] = 1.0f;
@@ -34,5 +34,5 @@ void LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4(char *palo, QW posWorl
     if (pvecVelocity)
         *pvecVelocity = *(QW *)l.matRate.mat[3];
     if (pvecAngular)
-        *pvecAngular = DecomposeRotateMatrix(&l.matRate);
+        *pvecAngular = DecomposeRotateMatrix(palo);
 }

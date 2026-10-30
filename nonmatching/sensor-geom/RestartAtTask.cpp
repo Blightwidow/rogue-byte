@@ -28,7 +28,7 @@ M2C_UNK CRef_Destruct(s8 **);                     /* extern */
 M2C_UNK EndJob(s8 *, M2C_UNK, M2C_UNK *);         /* extern */
 s32 IdCurrentLevel(s32);                            /* extern */
 s32 PdescFromLevelRow(s32);                         /* extern */
-M2C_UNK RequestTransition(M2C_UNK *, s32, s32, M2C_UNK); /* extern */
+M2C_UNK RequestTransition(M2C_UNK *, s32, s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK SetCurrentJob(s8 *);                      /* extern */
 M2C_UNK SetTaskState(s8 *, M2C_UNK);              /* extern */
 M2C_UNK SwitchCurrentTask(s8 *);                  /* extern */
@@ -50,6 +50,7 @@ void RestartAtTask(s8 *arg0) {
     s32 sp2C;
     s8 *sp30;
     s32 sp34;
+    M2C_UNK var_s3;
     s32 temp_s1;
     s32 temp_v0;
     s32 temp_v1_2;
@@ -108,10 +109,12 @@ void RestartAtTask(s8 *arg0) {
         CRef_Destruct(&sp30);
     }
     temp_v1_3 = M2C_FIELD(arg0, s32 *, 0xB8);
+    var_s3 = 4;
     temp_s1 = (~temp_v1_3 != 0) ? temp_v1_3 : 0x189;
     if ((M2C_FIELD(&B_003DD490, s32 *, 0x3E38) != 0) && ((M2C_FIELD(arg0, s32 *, 0xBC) == -1) || (M2C_FIELD(arg0, s32 *, 0xBC) == IdCurrentLevel(M2C_FIELD(&B_003DD490, s32 *, 0x3E38))))) {
+        var_s3 = 0x24;
     }
-    RequestTransition(&B_003DD490, PdescFromLevelRow(M2C_FIELD(arg0, s32 *, 0xBC)), temp_s1, -1);
+    RequestTransition(&B_003DD490, PdescFromLevelRow(M2C_FIELD(arg0, s32 *, 0xBC)), temp_s1, -1, var_s3, 0x30A);
     if (sp10 != NULL) {
         M2C_FIELD(sp10, s32 *, 0xF0) = sp18;
         M2C_FIELD(sp10, s32 *, 0xF4) = sp1C;

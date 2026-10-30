@@ -46,15 +46,16 @@ s32 PmatLoWorld(s8 *, s128);
 s32 PosLoWorld();
 s32 PosSmooth(s128, s128, M2C_UNK *, s128 *, f32);
 void SetJtState(s8 *, M2C_UNK, M2C_UNK);
-void SmoothMatrix(s32, s8 *, M2C_UNK *, M2C_UNK, f32);
+void SmoothMatrix(s32, s8 *, M2C_UNK *, M2C_UNK, s128 *, f32);
 void SolvePlainBlendWeights(s8 *, s8 *, s8 *);
-void Spire_FindClosestPoint(s32, M2C_UNK, s8 *, s8 *);
+void Spire_FindClosestPoint(s32, M2C_UNK, s8 *, s8 *, M2C_UNK *, M2C_UNK *);
 f32 __as__6VECTORG9VU_VECTOR(M2C_UNK *, s128);
 void func_001856B8(s32, s32 *);
-void func_001856C0(s32, s32 *, M2C_UNK, M2C_UNK *, M2C_UNK);
+void func_001856C0(s32, s32 *, M2C_UNK, M2C_UNK *, M2C_UNK *, M2C_UNK);
 s32 func_00185A80(s32, s32 *, M2C_UNK);
 extern M2C_UNK D_002BE920;
 extern M2C_UNK D_002BE930;
+extern M2C_UNK D_002BE940;
 extern s128 g_2a2dc0;
 extern M2C_UNK g_2dded0;
 extern M2C_UNK g_2ddfa0;
@@ -62,7 +63,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     s32 unksp2C;
     s32 unkspB4;
     s32 unkspB8;
-    s8 sp[0xa0] __attribute__((aligned(16)));
+    s8 sp[0x1f0] __attribute__((aligned(16)));
     M2C_UNK sp10;
     s128 sp20;
     s32 sp3C;
@@ -79,6 +80,8 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     s128 sp220;
     s128 sp240;
     M2C_UNK *sp250;
+    M2C_UNK *temp_a4;
+    M2C_UNK *var_s3;
     M2C_UNK *var_v0;
     M2C_UNK temp_a2_2;
     s128 temp_v0;
@@ -99,7 +102,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     temp_a2 = arg0 + 0x1F1C;
     s64 vu_1;
     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(temp_v0));
-    Spire_FindClosestPoint(M2C_FIELD(arg0, s32 *, 0x1F18), vu_1, temp_a2, temp_a2);
+    Spire_FindClosestPoint(M2C_FIELD(arg0, s32 *, 0x1F18), vu_1, temp_a2, temp_a2, (M2C_UNK *)(sp), &sp10);
     asm volatile("lqc2 vf1, (%0)" : : "r"(sp));
     asm volatile("lqc2 vf2, 0x220(%0)" : : "r"(sp));
     asm volatile("vsub.xyzw vf3, vf1, vf2");
@@ -137,6 +140,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(&spA0, vu_3, g_2a2dc0);
     __as__6VECTORG9VU_VECTOR(&sp50, sp230);
     sp250 = &sp160;
+    var_s3 = &sp60;
     sp20 = spA0;
     M2C_FIELD(&sp20, s128 *, 0x10) = spB0;
     M2C_FIELD(&sp20, s128 *, 0x20) = spC0;
@@ -146,10 +150,12 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     M2C_FIELD(&sp20, f32 *, 0x3C) = 1.0f;
     do {
         asm volatile("lqc2 vf5, (%0)" : : "r"(var_s2));
+        temp_a4 = var_s3;
         asm volatile("lqc2 vf4, 0x20(%0)" : : "r"(sp));
         asm volatile("lqc2 vf3, 0x30(%0)" : : "r"(sp));
         asm volatile("lqc2 vf2, 0x40(%0)" : : "r"(sp));
         asm volatile("lqc2 vf1, 0x50(%0)" : : "r"(sp));
+        var_s3 += 0x10;
         asm volatile("vmulax.xyz ACC, vf4, vf5x");
         asm volatile("vmadday.xyz ACC, vf3, vf5y");
         asm volatile("vmaddaz.xyz ACC, vf2, vf5z");
@@ -158,7 +164,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
         var_s4 -= 1;
         s32 vu_4;
         asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_4));
-        Spire_FindClosestPoint(M2C_FIELD(arg0, s32 *, 0x1F18), vu_4, arg0 + 0x1F1C, NULL);
+        Spire_FindClosestPoint(M2C_FIELD(arg0, s32 *, 0x1F18), vu_4, arg0 + 0x1F1C, NULL, temp_a4, NULL);
     } while (var_s4 >= 0);
     asm volatile("lqc2 vf3, 0x60(%0)" : : "r"(sp));
     asm volatile("lqc2 vf1, 0x80(%0)" : : "r"(sp));
@@ -184,7 +190,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
     M2C_FIELD(arg0, s128 *, 0x1D0) = spB0;
     M2C_FIELD(arg0, s128 *, 0x1B0) = sp90;
     M2C_FIELD(arg0, s128 *, 0x1C0) = spA0;
-    SmoothMatrix(PmatLoWorld(arg0, sp90), temp_s5, &D_002BE920, 0, M2C_FIELD(&g_2dded0, f32 *, 4) * 0.5f);
+    SmoothMatrix(PmatLoWorld(arg0, sp90), temp_s5, &D_002BE920, 0, &sp90, M2C_FIELD(&g_2dded0, f32 *, 4) * 0.5f);
     temp_v0_2 = M2C_FIELD(arg0, s8 **, 0xC);
     M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, s128), 0x124)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0x120), sp90);
     PosSmooth(sp220, sp230, &D_002BE930, &spA0, M2C_FIELD(&g_2dded0, f32 *, 4) * 0.5f);
@@ -206,7 +212,7 @@ void UpdateJtSurfaceWalk(s8 *arg0) {
         var_v0 += 0x10;
     } while (var_s4_2 >= 0);
     func_001856B8(M2C_FIELD(arg0, s32 *, 0x1F18), &spD0);
-    func_001856C0(M2C_FIELD(arg0, s32 *, 0x1F18), &spD0, 3, sp250, 0x41200000);
+    func_001856C0(M2C_FIELD(arg0, s32 *, 0x1F18), &spD0, 3, sp250, &D_002BE940, 0x41200000);
     temp_v0_3 = M2C_FIELD(arg0, s8 **, 0x150);
     if (M2C_FIELD(temp_v0_3, f32 *, 0x1C) > 0.0f) {
         spB0 = 0.0f;

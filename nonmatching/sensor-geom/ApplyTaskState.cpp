@@ -13,7 +13,7 @@ struct TASK {
     char pad4[0xF4 - 0xB8]; unsigned kind;
 };
 extern "C" {
-void AppendDlEntry(void *, void *);
+void AppendDlEntry(void);
 void ApplyTaskAnims(TASK *, int, int, void *, int);
 void ApplyTaskToggles(TASK *, int, int, void *);
 int FTaskRunning(TASK *);
@@ -53,7 +53,7 @@ void ApplyTaskState(TASK *task, int newState) {
             if (task->kind == 0) task->count68 = task->count68 + 1;
             break;
         case 1:
-            AppendDlEntry(B_003E0F90, task);
+            AppendDlEntry();
             break;
         }
         task->state = newState;

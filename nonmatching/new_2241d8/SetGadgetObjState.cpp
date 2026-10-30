@@ -21,20 +21,20 @@ struct _m2c_stack_SetGadgetObjState {
 };                                                  /* size = 0x170 */
 #define sp40 (*(s128 *)(sp + 0x040))
 #define sp50 (*(s128 *)(sp + 0x050))
-M2C_UNK BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(s128 *, M2C_UNK, M2C_UNK); /* extern */
-s32 ConvertXfVec(M2C_UNK, s32, s128);               /* extern */
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-s32 DecomposeRotateMatrixEuler(...); /* extern */
-s32 FGadgetObjIsKindB(s8 *, s8 *);              /* extern */
-M2C_UNK FadeAloOut(s8 *, M2C_UNK);                /* extern */
-s32 PosLoWorld(s8 *);                             /* extern */
-M2C_UNK RecalcSwOxfFilterForObject(M2C_UNK *, s8 *); /* extern */
-M2C_UNK SetSmaGoalIfReachable(s32, s32);            /* extern */
-M2C_UNK SetSoCnstrForce(s8 *, M2C_UNK);           /* extern */
-M2C_UNK SetSoCnstrTorque(s8 *, M2C_UNK);          /* extern */
-s32 func_0012DC18(s8 *, s8 *, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK func_0012E460(s8 *);                      /* extern */
-M2C_UNK func_001A58D0(s8 *, M2C_UNK, M2C_UNK);    /* extern */
+void BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(s128 *, M2C_UNK, M2C_UNK);
+s32 ConvertXfVec(M2C_UNK, s32, s128);
+s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 **);
+s32 DecomposeRotateMatrixEuler(...);
+s32 FGadgetObjIsKindB(s8 *, s8 *);
+void FadeAloOut(s8 *, M2C_UNK);
+s32 PosLoWorld(s8 *);
+void RecalcSwOxfFilterForObject(M2C_UNK *, s8 *);
+void SetSmaGoalIfReachable(s32, s32);
+void SetSoCnstrForce(s8 *, M2C_UNK);
+void SetSoCnstrTorque(s8 *, M2C_UNK);
+s32 func_0012DC18(s8 *, s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+void func_0012E460(s8 *);
+void func_001A58D0(s8 *, M2C_UNK, M2C_UNK);
 extern M2C_UNK B_003DD490;
 extern M2C_UNK D_002C4398;
 extern s128 g_2a2dc0;
@@ -47,6 +47,7 @@ void SetGadgetObjState(s8 *arg0, s32 arg1) {
     s128 sp20;
     s128 sp30;
     s8 *sp60;
+    M2C_UNK temp_a5;
     M2C_UNK temp_s1;
     f32 temp_v0_7;
     f32 var_f20;
@@ -99,13 +100,12 @@ void SetGadgetObjState(s8 *arg0, s32 arg1) {
             asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(DecomposeRotateMatrixEuler(M2C_FIELD(arg0, s8 **, 0x5C))));
             temp_s1 = vu_1;
             s64 vu_2;
-            asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(temp_s0_2));
-            vu_2;
+            asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(temp_s1));
+            temp_a5 = vu_2;
             s64 vu_3;
-            asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(temp_s1));
-            vu_3;
-            M2C_FIELD(arg0, s32 *, 0x180) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x58), 0, 7);
-            M2C_FIELD(arg0, s32 *, 0x17C) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x5C), 0, 7);
+            asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(temp_s0_2));
+            M2C_FIELD(arg0, s32 *, 0x180) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x58), 0, 7, 2, vu_3);
+            M2C_FIELD(arg0, s32 *, 0x17C) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x5C), 0, 7, 2, temp_a5);
             RecalcSwOxfFilterForObject(&B_003DD490, arg0);
             break;
         case 2:
@@ -157,8 +157,7 @@ void SetGadgetObjState(s8 *arg0, s32 arg1) {
                     sp20 = sp50;
                     s64 vu_6;
                     asm volatile("por %0, %1, %2" : "=r"(vu_6) : "r"(0), "r"(DecomposeRotateMatrixEuler(sp, sp30, sp30)));
-                    vu_6;
-                    M2C_FIELD(arg0, s32 *, 0x17C) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x5C), 0, 7);
+                    M2C_FIELD(arg0, s32 *, 0x17C) = func_0012DC18(arg0, M2C_FIELD(arg0, s8 **, 0x5C), 0, 7, 2, vu_6);
                 }
             }
             break;
@@ -169,7 +168,7 @@ void SetGadgetObjState(s8 *arg0, s32 arg1) {
                 SetSoCnstrTorque(arg0, 0);
             } else {
                 SetSoCnstrTorque(arg0, 1);
-                temp_v0_6 = CploFindSwObjectsByClass(&B_003DD490, 0x105, 0x38, 0);
+                temp_v0_6 = CploFindSwObjectsByClass(&B_003DD490, 0x105, 0x38, 0, 0x20, &sp60);
                 var_f20 = 3.4028235e38f;
                 var_s3 = g_2e1e40;
                 if (temp_v0_6 > 0) {

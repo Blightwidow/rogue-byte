@@ -17,6 +17,7 @@ int func_0019EEF0(void *, int);
 extern char B_002DE2E0;
 extern int g_2dfbc0;
 int FBentleyCanUseGadget(char *self, int gadget) {
+    int result;
     int allowed;
     unsigned state;
     SLOT_136870 *slot;
@@ -54,10 +55,10 @@ int FBentleyCanUseGadget(char *self, int gadget) {
                 if (((TARGET_136870 *)*(char **)(self + 0x11C0))->gadget != gadget) {
                     return 0;
                 }
-                return 1;
+                { result = 1; goto done; }
             }
         }
-        return 0;
+        { result = 0; goto done; }
     case 0:
     case 1:
     case 5:
@@ -76,7 +77,7 @@ int FBentleyCanUseGadget(char *self, int gadget) {
         slot = PslotBentleyGadget(self, gadget);
         if (slot->active == 0) {
             if (slot->object == 0) {
-                return 0;
+                { result = 0; goto done; }
             }
             if (PleaseFindBest(slot->object, 2) == 0) {
                 return 0;
@@ -91,11 +92,11 @@ int FBentleyCanUseGadget(char *self, int gadget) {
         allowed = 0;
         if (*(int *)(self + 0x12F0) != 0) {
             if (!(g_2dfbc0 & 2)) {
-                return 0;
+                { result = 0; goto done; }
             }
             allowed = FActiveCplcy(&B_002DE2E0) == 0;
         }
-        return allowed;
+        { result = allowed; goto done; }
     case 0:
     case 1:
     case 7:
@@ -104,6 +105,8 @@ int FBentleyCanUseGadget(char *self, int gadget) {
     case 13:
         return 1;
     }
-    return 0;
+    { result = 0; goto done; }
+done:
+    return result;
 }
 }

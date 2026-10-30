@@ -8,7 +8,7 @@ struct VT_1C60B8 {
 struct OBJ_1C60B8 { char pad[0xC]; VT_1C60B8 *vt; };
 extern "C" {
 int PpoolFromLoClone(void *);
-void *PsmaApplySm(int, void *, int, int);
+void *PsmaApplySm(int, unsigned, int, int);
 void RetractSma(void *);
 void SetSmaGoal__FP3SMA3OID(void *, int);
 void SkipSma(void *, float);
@@ -69,14 +69,14 @@ extern "C" void SetDprizeDprizes(void *self, unsigned state)
     } else {
         OBJ_1C60B8 *child = F(OBJ_1C60B8 *, self, 0x16C);
         if (child != 0)
-            child->vt->f48((char *)child + child->vt->d48, child);
+            child->vt->f48((int *)child + child->vt->d48, child);
     }
     F(unsigned, self, 0x150) = state;
     F(float, self, 0x154) = g_2dded0.time;
     if (sma != -1) {
         void *current = F(void *, self, 0x168);
         if (current == 0) {
-            OBJ_1C60B8 *created = (OBJ_1C60B8 *)PsmaApplySm(F(int, self, 0x164), self, sma, 0);
+            OBJ_1C60B8 *created = (OBJ_1C60B8 *)PsmaApplySm(F(int, self, 0x164), state, sma, 0);
             F(void *, self, 0x168) = created;
             created->vt->f8((char *)created + created->vt->d8, created);
             float skip = F(float, self, 0x160);

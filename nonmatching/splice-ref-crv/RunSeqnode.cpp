@@ -2,7 +2,7 @@
 struct SEQVT { char pad[8]; short deltaAddRef; short idxAddRef; void (*fnAddRef)(void *); short deltaRelease; short idxRelease; void (*fnRelease)(void *); };
 struct REC { int kind; int busy; };
 struct SEQNODE { char pad0[0xC]; SEQVT *vt; char pad1[0x18]; REC *precFirst; REC *precLast; REC *precCur; };
-extern "C" void StartNextSeqnodeRecord(SEQNODE *);
+extern "C" void StartNextSeqnodeRecord(void);
 extern "C" int FSeqnodeStopped(SEQNODE *);
 extern "C" void UpdateSeqnodeDrive(SEQNODE *);
 extern "C" int FSeqnodeRecordDone(SEQNODE *, REC *);
@@ -21,7 +21,7 @@ extern "C" void RunSeqnode(SEQNODE *pseqnode)
         goto check;
     pseqnode->precCur = pseqnode->precFirst;
 start:
-    StartNextSeqnodeRecord(pseqnode);
+    StartNextSeqnodeRecord();
     if (FSeqnodeStopped(pseqnode))
         return;
     goto check;

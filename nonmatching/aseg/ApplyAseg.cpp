@@ -18,7 +18,7 @@ struct _m2c_stack_ApplyAseg {
     /* 0x1C */ char pad1C[0xB4];
 };                                                  /* size = 0xD0 */
 s32 AppendDlEntry(M2C_UNK *, s8 *);
-void BindAsegChn(s8 *, s32, s8 *, s32 *);
+void BindAsegChn(s8 *, s32, s8 *, s32 *, s32 *);
 void CFramePtr_Assign(s8 *, s32);
 f32 GetSuck(M2C_UNK *);
 void HandleAsegaEvent(s8 *, s32);
@@ -31,7 +31,7 @@ f32 SetAsegaSpeed(s8 *, f32);
 void SnapAsega(s8 *, s32);
 s32 UpdateAsegaIeaCur__FP5ASEGA(s8 *);
 s32 *func_0012CE50(M2C_UNK);
-void func_00130010(s8 *, s32, s8 *, s8 **);
+void func_00130010(s8 *, s32, s8 *, s8 **, s32 *);
 void func_001F8668(s32, M2C_UNK);
 s32 memset(s8 *, M2C_UNK, M2C_UNK);
 extern M2C_UNK B_002DE578;
@@ -109,7 +109,7 @@ void ApplyAseg(s8 *arg0, s32 arg1, s32 arg2, s8 **arg3, f32 fparg0, f32 fparg1) 
         do {
             temp_s0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x60) + (var_s3 * 8));
             if (!(M2C_FIELD(temp_s0, s32 *, 0) & 0x40000000)) {
-                BindAsegChn(arg0, arg1, temp_s0, &sp4);
+                BindAsegChn(arg0, arg1, temp_s0, &sp4, &sp8);
                 if (sp8 != 0) {
                     func_001F8668(sp4, 0);
                     temp_v0_5 = (s8 *)(PvAllocAct(0x2C));
@@ -139,7 +139,7 @@ void ApplyAseg(s8 *arg0, s32 arg1, s32 arg2, s8 **arg3, f32 fparg0, f32 fparg1) 
         var_s4 = 0;
         do {
             temp_s0_2 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x68) + var_s4);
-            func_00130010(arg0, arg1, temp_s0_2, &spC);
+            func_00130010(arg0, arg1, temp_s0_2, &spC, &sp10);
             if (sp10 != 0) {
                 temp_v0_7 = (s8 *)(func_0012CE50(0x14));
                 M2C_FIELD(temp_v0_7, s32 *, 0) = (s32) M2C_FIELD(temp_s0_2, s32 *, 8);
@@ -178,7 +178,7 @@ loop_22:
         UpdateAsegaIeaCur__FP5ASEGA(temp_v0);
     }
     temp_v1 = M2C_FIELD(temp_v0, M2C_UNK **, 0xC);
-    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(temp_v0 + M2C_FIELD(temp_v1, s16 *, 0x18), 2, 0, 0);
+    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(temp_v0 + M2C_FIELD(temp_v1, s16 *, 0x18), 2, 0, 0, 0, 0);
     temp_v0_9 = M2C_FIELD(sp0, s8 **, 0xC);
     M2C_FIELD(temp_v0_9, M2C_UNK (**)(s8 *, s8 *), 0x14)(sp0 + M2C_FIELD(temp_v0_9, s16 *, 0x10), sp0);
 }

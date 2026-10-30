@@ -7,14 +7,17 @@ CRef *CRef_CopyConstruct(CRef *, CRef *);
 }
 static inline int FRefLess(CRef *a, CRef *b)
 {
+    int result;
     if (a->tagk == 0x15) {
         if (b->tagk == 0x15)
-            return a->n < b->n;
-        return (float)a->n < b->g;
+            { result = b->n > a->n; goto done; }
+        { result = (float)a->n < b->g; goto done; }
     }
     if (b->tagk == 0x15)
-        return a->g < (float)b->n;
-    return a->g < b->g;
+        { result = a->g < (float)b->n; goto done; }
+    { result = a->g < b->g; goto done; }
+done:
+    return result;
 }
 extern "C" CRef *RefOpMaximum(CRef *pret, int carg, CRef *aref, CFrame *pframe)
 {

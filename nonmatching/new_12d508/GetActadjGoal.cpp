@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_GetActadjGoal {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-M2C_UNK func_0012CF28(s8 *, s8 *);              /* extern */
+M2C_UNK func_0012CF28(s8 *);              /* extern */
 void GetActadjGoal(s8 *arg0) {
     s32 temp_v0_2;
     s32 temp_v1;
@@ -32,6 +32,6 @@ void GetActadjGoal(s8 *arg0) {
         asm volatile("sqc2 vf1, 0xe0(%0)" : : "r"(temp_v1));
         return;
     }
-    func_0012CF28(arg0, temp_a1);
+    func_0012CF28(arg0);
 }
 }

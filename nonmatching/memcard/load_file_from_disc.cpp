@@ -62,8 +62,8 @@ extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned 
             error = 0x27;
         }
     done:
-        CBinaryFileStream_Close(&stream);
         int closeError = McClose(psave, fd);
+        CBinaryFileStream_Close(&stream);
         if (error == 0)
             error = closeError;
         CBinaryFileStream_Destructor(&stream, 2);

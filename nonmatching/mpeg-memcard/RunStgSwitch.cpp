@@ -62,7 +62,7 @@ block_15:
             M2C_FIELD(arg0, s32 *, 0x168) = var_v0;
         }
         temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x18), 0x10, 0, 0);
+        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x18), 0x10, 0, 0, 0, 0);
         if (!(M2C_FIELD(arg0, s32 *, 0x168) & 1)) {
             temp_a1 = M2C_FIELD(arg0, s32 *, 0x164);
             temp_s2 = (s8 *)(temp_a1 + (M2C_FIELD(arg0, s32 *, 0x15C) * 0x10));
@@ -95,7 +95,7 @@ block_21:
                         temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
                         M2C_FIELD(temp_v1_2, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x24)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x20), 0x10, arg0);
                         temp_v1_3 = M2C_FIELD(arg0, s8 **, 0xC);
-                        M2C_FIELD(temp_v1_3, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_3, s16 *, 0x18), 5, 0, 0);
+                        M2C_FIELD(temp_v1_3, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_v1_3, s16 *, 0x18), 5, 0, 0, 0, 0);
                         bevy_camera_follow_activity(&B_002DEB30, 0x11, arg0);
                     }
                 }

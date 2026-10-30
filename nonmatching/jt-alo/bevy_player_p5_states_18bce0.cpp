@@ -20,10 +20,10 @@ struct _m2c_stack_bevy_player_p5_states_18bce0 {
 void EnsureAloSfx__FP3ALO(s8 *);
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);
 s32 FMatchJtXmg(s8 *, s8 *, s32);
-void FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0(s128, s128, s128, s128);
-void FindCrvClosestPointFromS(s8 *, s128, M2C_UNK, s128 *, f32);
+void FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0(s128, s128, s128, s128, s8 *, f32 *, M2C_UNK *);
+void FindCrvClosestPointFromS(s8 *, s128, M2C_UNK, s128 *, M2C_UNK, M2C_UNK, M2C_UNK, f32);
 s32 PosLoWorld(s8 *);
-void RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(s8 *, s32, s32, s32, f32);
+void RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(s8 *, s32, s32, s32, s8 *, f32);
 void SetJtState(s8 *, M2C_UNK, M2C_UNK);
 void SetRunBlendU(s8 *, M2C_UNK);
 void SetStepRadTarget(s8 *, f32);
@@ -40,7 +40,7 @@ extern s32 D_002BF3D4;
 extern s32 D_002BF3D8;
 extern f32 D_FLT_002BF3DC;
 void bevy_player_p5_states_18bce0(s8 *arg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x30] __attribute__((aligned(16)));
     s128 sp10;
     s128 sp20;
     s128 sp30;
@@ -55,6 +55,8 @@ void bevy_player_p5_states_18bce0(s8 *arg0) {
     s32 var_s2_2;
     u32 temp_v1;
     s8 *temp_s0;
+    s8 *temp_s1;
+    s8 *temp_s2;
     s8 *temp_s4;
     s8 *temp_v1_2;
     s8 *var_s0_2;
@@ -108,10 +110,12 @@ void bevy_player_p5_states_18bce0(s8 *arg0) {
         case 24:
             temp_a3 = M2C_FIELD(arg0, s32 *, 0x19F0);
             if (temp_a3 != 0) {
-                RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(arg0, M2C_FIELD(arg0, s32 *, 0x19D8), M2C_FIELD(arg0, s32 *, 0x19E0), temp_a3, D_FLT_002BF3DC);
-                RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(arg0, M2C_FIELD(arg0, s32 *, 0x19D4), M2C_FIELD(arg0, s32 *, 0x19DC), M2C_FIELD(arg0, s32 *, 0x19F4), D_FLT_002BF3DC);
-                FMatchJtXmg(arg0, arg0 + 0x1520, M2C_FIELD(arg0, s32 *, 0x19F0));
-                FMatchJtXmg(arg0, arg0 + 0x1620, M2C_FIELD(arg0, s32 *, 0x19F4));
+                temp_s2 = arg0 + 0x1520;
+                temp_s1 = arg0 + 0x1620;
+                RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(arg0, M2C_FIELD(arg0, s32 *, 0x19D8), M2C_FIELD(arg0, s32 *, 0x19E0), temp_a3, temp_s2, D_FLT_002BF3DC);
+                RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG(arg0, M2C_FIELD(arg0, s32 *, 0x19D4), M2C_FIELD(arg0, s32 *, 0x19DC), M2C_FIELD(arg0, s32 *, 0x19F4), temp_s1, D_FLT_002BF3DC);
+                FMatchJtXmg(arg0, temp_s2, M2C_FIELD(arg0, s32 *, 0x19F0));
+                FMatchJtXmg(arg0, temp_s1, M2C_FIELD(arg0, s32 *, 0x19F4));
             }
             break;
         }
@@ -123,7 +127,7 @@ void bevy_player_p5_states_18bce0(s8 *arg0) {
                 var_s0 = (s128 *)(arg0 + 0x1890);
                 var_s2 = 2;
                 do {
-                    FindCrvClosestPointFromS(temp_s4, *var_s0, 0, var_s1, M2C_FIELD(arg0, f32 *, 0x1858));
+                    FindCrvClosestPointFromS(temp_s4, *var_s0, 0, var_s1, 0, 0, 0, M2C_FIELD(arg0, f32 *, 0x1858));
                     var_s1 += 0x10;
                     var_s2 -= 1;
                     var_s0 += 0x10;
@@ -141,7 +145,7 @@ block_24:
                     var_s1_2 = &sp10;
                     var_s0_2 = arg0 + 0x18A0;
 loop_26:
-                    FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0(M2C_FIELD(var_s0_2, s128 *, -0x10), M2C_FIELD(var_s0_2, s128 *, 0), M2C_FIELD(var_s1_2, s128 *, 0), M2C_FIELD(var_s1_2, s128 *, 0x10));
+                    FindClosestPointBetweenLineSegments__FP6VECTORN40PfT0(M2C_FIELD(var_s0_2, s128 *, -0x10), M2C_FIELD(var_s0_2, s128 *, 0), M2C_FIELD(var_s1_2, s128 *, 0), M2C_FIELD(var_s1_2, s128 *, 0x10), sp, &sp50, &sp40);
                     if (!(sp50 < M2C_FIELD(arg0, f32 *, 0x19AC))) {
                         var_s2_2 += 1;
                         var_s1_2 += 0x10;

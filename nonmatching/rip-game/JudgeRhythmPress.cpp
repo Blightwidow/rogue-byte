@@ -12,7 +12,7 @@ struct RhythmFull_1533B0 {
 extern "C" {
 void AddRhythmScore(void *, float);
 int FFloatsNear__Ffff(float, float, float);
-int FVjoyButtonPressed(int, int);
+int FVjoyButtonPressed(int, Dancer_1533B0 *);
 float GAccuracyRhythmCue(void *, void *);
 int GrfbtnVjoyPressedWithin(int, int, float);
 float MarkClockTickRealOnly__FP5CLOCK(void *);
@@ -46,7 +46,7 @@ void JudgeRhythmPress(RhythmFull_1533B0 *self, Dancer_1533B0 *dancer) {
                             return;
                         }
                         entry->f1C = 1;
-                        if (FVjoyButtonPressed(pad, entry->f4) != 0) {
+                        if (FVjoyButtonPressed(pad, dancer) != 0) {
                             int cellIndex = 0;
                             PlayDancerMove(dancer, entry->f4, entry->f8, 0);
                             Cell_1533B0 *cell = (Cell_1533B0 *)(self->cells);

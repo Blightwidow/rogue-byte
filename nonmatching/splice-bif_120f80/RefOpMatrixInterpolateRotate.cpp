@@ -4,14 +4,14 @@ struct CFrame;
 struct Rows { QW row[3]; };
 struct MATRIX3;
 extern "C" {
-void CRef_Destruct(CRef *);
-CRef *CRef_CopyConstruct(CRef *, CRef *);
+void CRef_Destruct(void);
+CRef *CRef_CopyConstruct(void);
 void SetTag__4CRef4TAGK(CRef *, int);
 void MatMulMatTransMat(Rows *, Rows *, Rows *);
 void DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(Rows *, float *, QW *);
 void LoadRotateMatrixRad(Rows *, float, QW);
 }
-void *memset(void *, int, unsigned int);
+void *memset(void *, int, unsigned int, CFrame *);
 extern "C" CRef *RefOpMatrixInterpolateRotate(CRef *pret, int carg, CRef *aref, CFrame *pframe)
 {
     struct Frame { Rows matBetween; QW axis; CRef refResult; int pad[2]; Rows junkA; Rows matRotate; Rows junkB; float radBetween; } f;
@@ -19,7 +19,7 @@ extern "C" CRef *RefOpMatrixInterpolateRotate(CRef *pret, int carg, CRef *aref, 
     DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(&f.matBetween, &f.radBetween, &f.axis);
     SetTag__4CRef4TAGK(&f.refResult, 0x1B);
     float *result = (float *)f.refResult.pv;
-    memset(result, 0, 0x40);
+    memset(result, 0, 0x40, pframe);
     result[0] = 1.0f;
     result[15] = 1.0f;
     result[10] = 1.0f;
@@ -48,7 +48,7 @@ extern "C" CRef *RefOpMatrixInterpolateRotate(CRef *pret, int carg, CRef *aref, 
     resultRows->row[2] = f.junkA.row[2];
     CRef *refLate = &f.refResult;
     asm("" : "+r" (refLate));
-    CRef_CopyConstruct(pret, refLate);
-    CRef_Destruct(refLate);
+    CRef_CopyConstruct();
+    CRef_Destruct();
     return pret;
 }

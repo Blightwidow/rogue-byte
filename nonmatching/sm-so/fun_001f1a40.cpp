@@ -45,8 +45,8 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
         }
         {
             if (row->chance < GRandInRange(0.0f, 1.0f)) {
-                saved.type = -1;
                 saved.a8 = -1;
+                saved.type = -1;
             } else {
                 int total = 0;
                 unsigned count = 0;
@@ -83,8 +83,8 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
             int remaining = pieces;
             do {
                 int count = self->itemCount;
-                int share = budget / remaining;
                 self->itemCount = count + 1;
+                int share = budget / remaining;
                 Item_1F1A40 *item = &self->items[count];
                 item->type = 0x2B3;
                 item->a4 = 0;

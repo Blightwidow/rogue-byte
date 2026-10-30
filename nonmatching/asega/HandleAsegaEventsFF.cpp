@@ -74,8 +74,8 @@ block_13:
                 M2C_FIELD(arg0, f32 *, 0x1C) = temp_f2;
             }
         }
-        temp_v0_3 = M2C_FIELD(sp0, s8 **, 0xC);
         M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, s8 *), 0x14)(sp0 + M2C_FIELD(temp_v0_3, s16 *, 0x10), sp0);
+        temp_v0_3 = M2C_FIELD(sp0, s8 **, 0xC);
     }
 }
 }

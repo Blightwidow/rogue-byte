@@ -38,13 +38,13 @@ struct _m2c_stack_func_001C6DE8 {
 #define spB0 (*(s128 *)(sp + 0x0B0))
 M2C_UNK CStackFrame_Construct(M2C_UNK *);           /* extern */
 M2C_UNK CStackFrame_Destructor(M2C_UNK *, M2C_UNK); /* extern */
-s32 PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(M2C_UNK, s128, s128, s32); /* extern */
-M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, s128, s128, M2C_UNK *); /* extern */
+s32 PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(M2C_UNK, s128, s128, s32, s32, s8 *); /* extern */
+M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, s128, s128, M2C_UNK *, M2C_UNK, s32 *, s32 *); /* extern */
 extern M2C_UNK B_003DD490;
 extern M2C_UNK FFilterDprizeObjects;
 extern M2C_UNK g_2a2dc0;
 s32 func_001C6DE8(s128 arg0, s32 arg1, s32 arg2, s128 *arg3, f32 fparg0, f32 fparg1, f32 fparg2) {
-    s8 sp[0x80] __attribute__((aligned(16)));
+    s8 sp[0xa0] __attribute__((aligned(16)));
     M2C_UNK sp60;
     s32 sp80;
     s32 sp84;
@@ -68,10 +68,10 @@ s32 func_001C6DE8(s128 arg0, s32 arg1, s32 arg2, s128 *arg3, f32 fparg0, f32 fpa
     asm volatile("sqc2 vf4, 0xa0(%0)" : : "r"(sp));
     asm volatile("sqc2 vf3, 0x70(%0)" : : "r"(sp));
     if (sp84 == 0) {
-        bevy_camera_follow_push_out(&B_003DD490, sp90, spA0, &FFilterDprizeObjects);
+        bevy_camera_follow_push_out(&B_003DD490, sp90, spA0, &FFilterDprizeObjects, 0, &sp80, &sp84);
     }
     if (fparg1 > 0.0f) {
-        if ((PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, sp90, spA0, sp80) != 0) && (sp40 == 0.0f)) {
+        if ((PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, sp90, spA0, sp80, sp84, sp) != 0) && (sp40 == 0.0f)) {
             if (sp44 != 1.0f) {
                 var_v0 = sp10;
                 if (!(sp38 < fparg2)) {
@@ -84,7 +84,7 @@ s32 func_001C6DE8(s128 arg0, s32 arg1, s32 arg2, s128 *arg3, f32 fparg0, f32 fpa
     }
 block_9:
     if (fparg0 < 0.0f) {
-        if (PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, sp90, spB0, sp80) != 0) {
+        if (PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, sp90, spB0, sp80, sp84, sp) != 0) {
             if (sp40 != 0.0f) {
                 var_v0 = sp0;
                 if (!(sp28 < fparg2)) {

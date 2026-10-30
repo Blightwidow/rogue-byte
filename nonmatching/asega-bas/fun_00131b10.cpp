@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK ResortXfActList(s32, s8 *, M2C_UNK);      /* extern */
+M2C_UNK ResortXfActList(s32, s8 *);      /* extern */
 
 void func_00131B10(s32 arg0, s32 arg1, s8 *arg2) {
     s8 *var_v1;
@@ -24,7 +24,7 @@ loop_1:
             goto loop_1;
         }
         M2C_FIELD(var_v1, s32 *, 0xC) = -1;
-        ResortXfActList(arg1, arg2, -1);
+        ResortXfActList(arg1, arg2);
     }
 }
 

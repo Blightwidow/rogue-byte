@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_func_001C5B20 {
     /* 0x00 */ char pad0[0xD0];
 };                                                  /* size = 0xD0 */
-s32 CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI(M2C_UNK, s8 *, M2C_UNK, M2C_UNK, f32); /* extern */
+s32 CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI(M2C_UNK, s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 *, f32); /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 extern f32 D_FLT_002C0D7C;
 s32 func_001C5B20(s8 *arg0, s8 *arg1) {
@@ -65,7 +65,7 @@ loop_6:
                             }
                             s64 vu_3;
                             asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(PosLoWorld(arg0)));
-                            if (CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI(vu_3, temp_s0, 0x7FFFFFFF, 0, M2C_FIELD(arg0, f32 *, 0x1DC)) == 0) {
+                            if (CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI(vu_3, temp_s0, 0x7FFFFFFF, 0, 0, 1, sp, M2C_FIELD(arg0, f32 *, 0x1DC)) == 0) {
                                 goto block_11;
                             }
                             goto block_9;

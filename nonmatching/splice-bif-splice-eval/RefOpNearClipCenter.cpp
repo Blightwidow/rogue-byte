@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_RefOpNearClipCenter {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
-M2C_UNK CRef_ConstructVectorValue(s32, M2C_UNK, s128, s128); /* extern */
+M2C_UNK CRef_ConstructVectorValue(s32, M2C_UNK, s128); /* extern */
 extern M2C_UNK B_002DDF40;
 s32 RefOpNearClipCenter(s32 arg0) {
     s128 temp_a2;
@@ -32,7 +32,7 @@ s32 RefOpNearClipCenter(s32 arg0) {
     asm volatile("vmaddw.xyz vf5, vf3, vf0w");
     s32 vu_3;
     asm volatile("qmfc2.ni %0, vf5" : "=r"(vu_3));
-    CRef_ConstructVectorValue(arg0, vu_3, temp_a2, temp_a2);
+    CRef_ConstructVectorValue(arg0, vu_3, temp_a2);
     return arg0;
 }
 }

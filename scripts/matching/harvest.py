@@ -45,7 +45,7 @@ DECLARATION = re.compile(r'^(M2C_UNK|s32|void|f32|\w+)(\s+\**)(\w+)\((.*)\);\s*(
 
 def candidates(arguments):
     with open(scorer.REGISTRY, encoding='utf-8') as handle:
-        rows = [row for row in csv.DictReader(handle, delimiter='\t') if row['status'] == 'todo' and arguments.min_size <= int(row['size']) <= arguments.max_size]
+        rows = [row for row in csv.DictReader(handle, delimiter='\t') if row['status'] in (('todo', 'tried') if arguments.tried else ('todo',)) and arguments.min_size <= int(row['size']) <= arguments.max_size]
     rows.sort(key=lambda row: int(row['size']))
     return rows[:arguments.limit] if arguments.limit else rows
 
@@ -165,9 +165,18 @@ def decode_words(text):
     return '\n'.join(UNDECODED_WORD.sub(lambda found: f'{found.group(1)}{found.group(2)} {found.group(3)}'.rstrip(), line) for line in text.split('\n'))
 
 
+# The split assembly names registers 8 to 15 as o32 does ($t0-$t7), the `mipsee` target of m2c as n32/eabi64 does ($a4-$a7, $t0-$t3): without the
+# renaming a function's fifth to eighth argument reads an "unset register $t0".
+EABI_NAMES = {'$t0': '$a4', '$t1': '$a5', '$t2': '$a6', '$t3': '$a7', '$t4': '$t0', '$t5': '$t1', '$t6': '$t2', '$t7': '$t3'}
+
+
+def eabi_names(text):
+    return re.sub(r'\$t[0-7]\b', lambda match: EABI_NAMES[match.group(0)], text)
+
+
 def run_m2c(arguments, row):
     """The draft text for a function, from the cache or a fresh m2c run; None when m2c fails."""
-    folder = 'm2c-context' if arguments.context else 'm2c-vu'
+    folder = 'm2c-context' if arguments.context else 'm2c-eabi'
     os.makedirs(os.path.join(OUT, folder), exist_ok=True)
     cached = os.path.join(OUT, folder, f'{int(row["address"], 16):06X}.c')
     if os.path.exists(cached):
@@ -178,7 +187,7 @@ def run_m2c(arguments, row):
         return None
     with open(path, encoding='utf-8') as handle:
         original = handle.read()
-    decoded = decode_words(original)
+    decoded = eabi_names(decode_words(original))
     if decoded != original:
         os.makedirs(os.path.join(OUT, 'decoded'), exist_ok=True)
         path = os.path.join(OUT, 'decoded', row['name'] + '.s')
@@ -641,6 +650,7 @@ def main():
     parser.add_argument('--keep', type=int, default=-1, metavar='SCORE', help='also save drafts scoring at most SCORE as sources (for mutate.py, neighborhood.py)')
     parser.add_argument('--shape', action='store_true', help='try the recurring shape fixes (bit-test cast, sign-extended masks, long shifts, pass-through arguments) on every draft that compiles')
     parser.add_argument('--refresh', action='store_true', help='with --write: replace a saved source when the new draft scores strictly lower')
+    parser.add_argument('--tried', action='store_true', help='also redraft the functions that have a source (with --refresh --write, a saved source is replaced only by a strictly lower score)')
     parser.add_argument('--near', type=int, default=0, metavar='N', help='list the N closest drafts')
     arguments = parser.parse_args()
     if not scorer.compare:

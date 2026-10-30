@@ -9,7 +9,7 @@ extern char D_002C43D0[], D_002C43E0[];
 extern "C" {
 void AddSoAcceleration(SO *, QW);
 QW PosLoWorld(void *);
-void AccelSoTowardPosSpring(SO *, QW, void *, QW, void *);
+void AccelSoTowardPosSpring(QW, SO *, void *, QW, void *);
 }
 static inline void *Anchor(DYSH *d) { return d->anchor; }
 void func_002255C8(DYSH *dysh, XA *xa)
@@ -29,5 +29,5 @@ void func_002255C8(DYSH *dysh, XA *xa)
     AddSoAcceleration(so, accel);
     void *anchor = Anchor(dysh) != 0 ? Anchor(dysh) : (void *)dysh;
     QW pos = PosLoWorld(anchor);
-    AccelSoTowardPosSpring(so, pos, D_002C43D0, g_2a2dd0, D_002C43E0);
+    AccelSoTowardPosSpring(pos, so, D_002C43D0, g_2a2dd0, D_002C43E0);
 }

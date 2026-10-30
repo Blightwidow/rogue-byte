@@ -1,4 +1,4 @@
-extern "C" void CopyAqw__FPvT0i(void *, void *, int);
+extern "C" void CopyAqw__FPvT0i(void *, void *);
 
 void CopyAb__FPvT0Ui(void *pvDst, void *pvSrc, unsigned int cb)
 {
@@ -32,6 +32,6 @@ void CopyAb__FPvT0Ui(void *pvDst, void *pvSrc, unsigned int cb)
             pwSrc += 4;
         }
     } else {
-        CopyAqw__FPvT0i(pvDst, pvSrc, cb >> 4);
+        CopyAqw__FPvT0i(pvDst, pvSrc);
     }
 }

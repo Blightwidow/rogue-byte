@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_PumpCd__18CBinaryInputStream {
     /* 0x00 */ char pad0[0x60];
 };                                                  /* size = 0x60 */
-M2C_UNK ReadCdDirect__FUiUiPv(s32, s32, s32, M2C_UNK); /* extern */
+M2C_UNK ReadCdDirect__FUiUiPv(...); /* extern */
 s32 sceCdGetError();                                /* extern */
 s32 sceCdGetReadPos();                              /* extern */
 s32 sceCdSync(M2C_UNK, s32);                        /* extern */
@@ -25,6 +25,8 @@ void PumpCd__18CBinaryInputStream(s8 *arg0) {
     s32 temp_a2;
     s32 temp_a2_2;
     s32 temp_a3;
+    s32 temp_a4;
+    s32 temp_a5;
     s32 temp_hi;
     s32 temp_hi_2;
     s32 temp_lo;
@@ -66,8 +68,10 @@ loop_9:
         } else if (sceCdSync(1, temp_a1_3) == 0) {
             if (sceCdGetError() != 0) {
                 temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
+                temp_a5 = M2C_FIELD(arg0, s32 *, 0x60) * temp_s1;
+                temp_a4 = M2C_FIELD(arg0, s32 *, 0x50);
                 M2C_FIELD(arg0, s32 *, 0x4C) = temp_v1;
-                ReadCdDirect__FUiUiPv(M2C_FIELD(arg0, s32 *, 0x50) + ((s32) ((temp_v1 > -1) ? temp_v1 : (temp_v1 + 0x7FF)) >> 0xB), (s32) (((M2C_FIELD(arg0, s32 *, 0x44) - temp_v1) + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + (M2C_FIELD(arg0, s32 *, 0x60) * temp_s1) + temp_v1, 0);
+                ReadCdDirect__FUiUiPv(temp_a4 + ((s32) ((temp_v1 > -1) ? temp_v1 : (temp_v1 + 0x7FF)) >> 0xB), (s32) (((M2C_FIELD(arg0, s32 *, 0x44) - temp_v1) + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + temp_a5 + temp_v1, 0, temp_a4, temp_a5);
             } else {
                 temp_a0_2 = M2C_FIELD(arg0, s32 *, 0x44);
                 M2C_FIELD(arg0, s32 *, 0x40) = temp_a0_2;
@@ -89,7 +93,7 @@ loop_9:
             M2C_FIELD(arg0, s32 *, 0x44) = temp_a1_4;
             M2C_FIELD(arg0, s32 *, 0x58) = (s32) (temp_a3 + 1);
             M2C_FIELD(arg0, s32 *, 0x60) = temp_hi_2;
-            ReadCdDirect__FUiUiPv(M2C_FIELD(arg0, s32 *, 0x50), (s32) ((temp_a1_4 + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + (temp_hi_2 * temp_s1), 0);
+            ReadCdDirect__FUiUiPv(M2C_FIELD(arg0, s32 *, 0x50), (s32) ((temp_a1_4 + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + (temp_hi_2 * temp_s1), 0, temp_hi_2);
         }
     }
     temp_v0_3 = M2C_FIELD(arg0, s32 *, 0x58);

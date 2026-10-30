@@ -20,7 +20,7 @@ struct _m2c_stack_SetSoParent {
 #define sp50 (*(s128 *)(sp + 0x050))
 #define sp60 (*(s128 *)(sp + 0x060))
 #define sp70 (*(s128 *)(sp + 0x070))
-void SetLoParent(s8 *, s8 *, s32, s32);
+void SetLoParent(s8 *, s8 *, s32, s32, s32);
 void UpdateAloXfWorld(s8 *);
 s32 __ml__FRC7MATRIX4T0(s128 *, s8 *, s8 *);
 void func_001F2468(s8 *);
@@ -41,8 +41,8 @@ void SetSoParent(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) {
     s32 var_a1_2;
     s32 var_a2;
     s32 var_a3;
+    s32 var_a4;
     s32 var_s7;
-    s32 var_t0;
     s8 *temp_a0;
     s8 *temp_v0;
     s8 *temp_v0_3;
@@ -89,10 +89,10 @@ void SetSoParent(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) {
     temp_v0 = M2C_FIELD(arg0, s8 **, 0x10);
     var_a3 = 1;
     if (temp_v0 != NULL) {
-        var_t0 = M2C_FIELD(temp_v0, s32 *, 0x54);
+        var_a4 = M2C_FIELD(temp_v0, s32 *, 0x54);
         var_a3 = M2C_FIELD(temp_v0, s32 *, 0x50);
     } else {
-        var_t0 = 0;
+        var_a4 = 0;
     }
     var_a2 = arg2;
     if ((arg2 == 0) && (arg1 != NULL)) {
@@ -102,7 +102,7 @@ void SetSoParent(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) {
     if (M2C_FIELD(arg0, s32 *, 0x50) > 0) {
 loop_18:
         temp_a0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x54) + (var_a1_2 << 8));
-        temp_v0_2 = (s32) (M2C_FIELD(temp_a0, s32 *, 0xA0) - var_t0) >> 8;
+        temp_v0_2 = (s32) (M2C_FIELD(temp_a0, s32 *, 0xA0) - var_a4) >> 8;
         if ((temp_v0_2 >= 0) && (temp_v0_2 < var_a3)) {
             M2C_FIELD(temp_a0, s32 *, 0xA0) = var_a2;
         }
@@ -111,7 +111,7 @@ loop_18:
             goto loop_18;
         }
     }
-    SetLoParent(arg0, arg1, arg2, arg3);
+    SetLoParent(arg0, arg1, arg2, arg3, var_a4);
     UpdateAloXfWorld(arg0);
     if (arg3 & 1) {
         temp_v0_3 = M2C_FIELD(arg0, s8 **, 0xC);

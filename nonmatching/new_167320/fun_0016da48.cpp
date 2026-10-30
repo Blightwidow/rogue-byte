@@ -1,42 +1,58 @@
-#include "m2c_macros.h"
+typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
+typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
+typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
+#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
+#define M2C_BITWISE(type, expr) ((type)(expr))
+#define M2C_ERROR(desc) (0)
+#define NULL 0
 extern "C" {
-
-M2C_UNK AddDmaCall__4DMASP2QW(s32, M2C_UNK *);      /* extern */
-M2C_UNK AddDmaCnt__4DMAS(s32);                      /* extern */
-M2C_UNK AddPrimList__4GIFSiUl(void *, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK AddPrimPack__4GIFSiiUl(void *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK AddVifBaseOffset__4VIFSii(s32, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK AddVifFlush__4VIFS(s32);                    /* extern */
-M2C_UNK AddVifFlusha__4VIFS(s32);                   /* extern */
-M2C_UNK AddVifMscal__4VIFSPv(s32, M2C_UNK);         /* extern */
-M2C_UNK AddVifUnpack__4VIFS3UPKiPvi(s32, M2C_UNK, u32, s32); /* extern */
-M2C_UNK AllocStatic__4DMASiP2QW(void *, M2C_UNK, M2C_UNK *); /* extern */
-M2C_UNK EndDmaCnt__4DMAS(s32);                      /* extern */
-M2C_UNK EndPrim__4GIFSi(void *, M2C_UNK);           /* extern */
-M2C_UNK EnsureVu1Code__FP4VIFSPvT1(M2C_UNK *, M2C_UNK *); /* extern */
-M2C_UNK GIFS_ListXYZ(void *, s32, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK PackAD__4GIFSll(void *, M2C_UNK, s64);      /* extern */
-M2C_UNK UnpackHelper__4VIFS3UPKiiPiPPUi(s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK __4GIFS(void *);                            /* extern */
-M2C_UNK func_0016D698(M2C_UNK, void *, s32 *);      /* extern */
-M2C_UNK func_0016D6C8(void *, M2C_UNK, s32 *);      /* extern */
+struct _m2c_stack_func_0016DA48 {
+    /* 0x0000 */ char pad0[4];
+    /* 0x0004 */ s32 sp4;                           /* inferred */
+    /* 0x0008 */ char pad8[4];
+    /* 0x000C */ s32 spC;                           /* inferred */
+    /* 0x0010 */ char pad10[0x20];                  /* maybe part of spC[9]? */
+    /* 0x0030 */ M2C_UNK sp30;                      /* inferred */
+    /* 0x0030 */ char pad30[0x1000];
+    /* 0x1030 */ s32 sp1030;                        /* inferred */
+    /* 0x1034 */ s32 sp1034;                        /* inferred */
+    /* 0x1038 */ char pad1038[0x98];
+};                                                  /* size = 0x10D0 */
+#define sp4 (*(s32 *)(sp + 0x0004))
+#define spC (*(s32 *)(sp + 0x000C))
+void AddDmaCall__4DMASP2QW(s32, M2C_UNK *);
+s32 AddDmaCnt__4DMAS(s32);
+void AddPrimList__4GIFSiUl(s8 *, M2C_UNK, M2C_UNK);
+void AddPrimPack__4GIFSiiUl(s8 *, M2C_UNK, M2C_UNK, M2C_UNK);
+s32 AddVifBaseOffset__4VIFSii(s32, M2C_UNK, M2C_UNK);
+s32 AddVifFlush__4VIFS(s32);
+s32 AddVifFlusha__4VIFS(s32);
+s32 AddVifMscal__4VIFSPv(s32, M2C_UNK);
+void AddVifUnpack__4VIFS3UPKiPvi(s32, M2C_UNK, u32, s32, M2C_UNK);
+void AllocStatic__4DMASiP2QW(s8 *, M2C_UNK, M2C_UNK *);
+void EndDmaCnt__4DMAS(s32);
+s32 EndPrim__4GIFSi(s8 *, M2C_UNK);
+void EnsureVu1Code__FP4VIFSPvT1(M2C_UNK *, M2C_UNK *);
+void GIFS_ListXYZ(s8 *, s32, M2C_UNK, M2C_UNK);
+void PackAD__4GIFSll(s8 *, M2C_UNK, s64);
+void UnpackHelper__4VIFS3UPKiiPiPPUi(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s32 *);
+void __4GIFS(s8 *);
+s32 func_0016D698(M2C_UNK, s8 *, s32 *);
+void func_0016D6C8(s8 *, M2C_UNK, s32 *);
 extern M2C_UNK B_002DF800;
 extern s32 B_003E12C8;
 extern M2C_UNK RO_0025C1C0;
 extern M2C_UNK RO_0025E040;
 extern M2C_UNK g_2deb70;
-
 void func_0016DA48(s32 arg0, s32 arg1, s32 arg2) {
-    char sp[0x30];
-    M2C_UNK sp4;
-    M2C_UNK spC;
+    s8 sp[0x10D0] __attribute__((aligned(16)));
     M2C_UNK sp30;
     s32 sp1030;
     s32 sp1034;
     s32 var_s0;
     s32 var_s1;
     s32 var_s2;
-
     EnsureVu1Code__FP4VIFSPvT1(&RO_0025C1C0, &RO_0025E040);
     AddDmaCnt__4DMAS(arg0);
     if ((arg2 != 7) && (B_003E12C8 != 0)) {
@@ -44,7 +60,7 @@ void func_0016DA48(s32 arg0, s32 arg1, s32 arg2) {
         AddDmaCall__4DMASP2QW(arg0, &B_002DF800);
         AddVifBaseOffset__4VIFSii(arg0, 0x32, 0x1E7);
     }
-    UnpackHelper__4VIFS3UPKiiPiPPUi(arg0, 5, 5, 0x1B);
+    UnpackHelper__4VIFS3UPKiiPiPPUi(arg0, 5, 5, 0x1B, 0, &sp1030);
     sp1034 = sp1030;
     __4GIFS(sp);
     AllocStatic__4DMASiP2QW(sp, 0x100, &sp30);
@@ -84,7 +100,7 @@ void func_0016DA48(s32 arg0, s32 arg1, s32 arg2) {
     }
     EndPrim__4GIFSi(sp, 1);
     func_0016D698(-1, sp, &sp1034);
-    AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, (u32) (spC - sp4) >> 4, sp4);
+    AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, (u32) (spC - sp4) >> 4, sp4, 0x23);
     AddVifFlusha__4VIFS(arg0);
     AddVifMscal__4VIFSPv(arg0, 0x1AA0);
     AddVifFlusha__4VIFS(arg0);

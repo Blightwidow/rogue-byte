@@ -21,12 +21,12 @@ struct _m2c_stack_UpdateCrvExcludedRanges {
     /* 0xC24 */ char padC24[0xCC];
 };                                                  /* size = 0xCF0 */
 #define sp0 (*(s128 *)(sp + 0x000))
-s32 ClsgMergeAlsg(s32, M2C_UNK *, s32, M2C_UNK *);  /* extern */
+s32 ClsgMergeAlsg(s32, M2C_UNK *, s32, M2C_UNK *, M2C_UNK, M2C_UNK *, M2C_UNK); /* extern */
 M2C_UNK GetPathPosFromS(s8 *, s8 *, M2C_UNK, f32); /* extern */
 s32 PobstacleFindAtPos(s128);                       /* extern */
 f32 SMaxCrv(s8 *);                                /* extern */
-f32 SMinCrv(s8 *, s32, s32, s32);                 /* extern */
-s32 func_001BD560(s32, s8 *, M2C_UNK, M2C_UNK, f32); /* extern */
+f32 SMinCrv(s8 *, s32, s32, s32, s32);            /* extern */
+s32 func_001BD560(s32, s8 *, M2C_UNK, M2C_UNK, f32 *, f32); /* extern */
 M2C_UNK memset(M2C_UNK *, M2C_UNK, M2C_UNK);        /* extern */
 extern M2C_UNK B_003DD490;
 extern f32 g_2c367c;
@@ -106,7 +106,7 @@ block_6:
             if (var_v0 != 0) {
                 spC1C = temp_s4;
                 var_s5 = 0;
-                temp_f0 = SMinCrv(M2C_FIELD(arg0, s8 **, 0), var_a1, (s32) var_a2, var_a3);
+                temp_f0 = SMinCrv(M2C_FIELD(arg0, s8 **, 0), var_a1, (s32) var_a2, var_a3, temp_v0);
                 var_f20 = temp_f0;
                 temp_f21 = SMaxCrv(M2C_FIELD(arg0, s8 **, 0));
                 temp_cond = temp_f0 < temp_f21;
@@ -121,10 +121,10 @@ loop_9:
                         temp_v0_3 = M2C_FIELD(arg0, s8 **, 0);
                         temp_s2 = M2C_FIELD(temp_v0_3, s32 *, 0xE4);
                         M2C_FIELD(temp_v0_3, s32 *, 0xE4) = 0;
-                        if (func_001BD560(temp_v0_2, M2C_FIELD(arg0, s8 **, 0), 0, 0, var_f20) == 3) {
+                        if (func_001BD560(temp_v0_2, M2C_FIELD(arg0, s8 **, 0), 0, 0, &spC10, var_f20) == 3) {
                             spC10 = temp_f0;
                         }
-                        if (func_001BD560(temp_v0_2, M2C_FIELD(arg0, s8 **, 0), 1, 0, var_f20) == 3) {
+                        if (func_001BD560(temp_v0_2, M2C_FIELD(arg0, s8 **, 0), 1, 0, &spC14, var_f20) == 3) {
                             spC14 = temp_f21;
                         }
                         var_a0_2 = temp_s4 + (var_s5 * 8);
@@ -190,7 +190,7 @@ block_19:
                         var_s0_2 += 0x60;
                     } while (var_s2_2 != 0);
                 }
-                temp_v0_5 = ClsgMergeAlsg(var_s5, &sp610, temp_fp, spC20);
+                temp_v0_5 = ClsgMergeAlsg(var_s5, &sp610, temp_fp, spC20, 0x10, &sp610, 0);
                 var_v0_3 = temp_s4;
                 if (temp_v0_5 > 0) {
                     var_a1_3 = &sp610;

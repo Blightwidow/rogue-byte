@@ -11,7 +11,7 @@ struct _m2c_stack_AttachCyl_GetParam {
     /* 0x00 */ char pad0[0x40];
 };                                                  /* size = 0x40 */
 s32 PosLoWorld(s128);                               /* extern */
-f32 atan2f(M2C_UNK, M2C_UNK);                       /* extern */
+f32 atan2f(void);                       /* extern */
 void AttachCyl_GetParam(s8 *arg0, s8 *arg1, f32 *arg2) {
     s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK temp_v0;
@@ -23,6 +23,6 @@ void AttachCyl_GetParam(s8 *arg0, s8 *arg1, f32 *arg2) {
     temp_v0 = vu_1;
     s64 vu_2;
     asm volatile("prot3w %0, %1" : "=r"(vu_2) : "r"(temp_v0));
-    *arg2 = atan2f(vu_2, temp_v0) * M2C_FIELD(arg0, f32 *, 0x10C);
+    *arg2 = atan2f() * M2C_FIELD(arg0, f32 *, 0x10C);
 }
 }

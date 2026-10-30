@@ -29,7 +29,7 @@ extern "C" M4 *CalculateEmitdvMatrix(M4 *result, EMITDV *emitdv)
         rotate.row[2] = curl.row[2];
     }
     M4 scaled;
-    scaled = __ml__FRC7MATRIX4G8VU_FLOAT(__ml__FRC7MATRIX4T0(rotate, damp), MakeVUF(*(int *)&g_2dded0[1]));
+    scaled = __ml__FRC7MATRIX4G8VU_FLOAT(__ml__FRC7MATRIX4T0(rotate, damp), MakeVUF(*(unsigned char *)&g_2dded0[1]));
     for (int i = 0; i < 4; i++) {
         asm("lqc2 vf1, %1\n\tlqc2 vf2, %2\n\tvadd.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m" (result->row[i]) : "m" (rotate.row[i]), "m" (scaled.row[i]));
     }

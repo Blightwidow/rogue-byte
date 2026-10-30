@@ -33,8 +33,8 @@ void BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii(void *arg0) {
     AllocStatic__4DMASiP2QW(sp, 0x22D6, M2C_FIELD(arg0, s32 *, 0x110) + 0x3F8E80);
     AddDmaCnt__4DMAS(sp);
     AddPrimPack__4GIFSiiUl(sp, 0, 1, 0xE);
-    PackAD__4GIFSll(sp, 0x50, 0xC180 << 0x24);
-    PackAD__4GIFSll(sp, 0x52, (0x8000 << 0x15) | 0x10);
+    PackAD__4GIFSll(sp, 0x50, 0xC180L << 0x24);
+    PackAD__4GIFSll(sp, 0x52, (0x8000L << 0x15) | 0x10);
     var_a2 = 0;
     if (temp_s6 > 0) {
         var_s0 = 0;

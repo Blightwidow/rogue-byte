@@ -65,7 +65,7 @@ void PickReconTarget(BINOCRECON *precon)
         }
     }
     if (ptargetBest != precon->ptargetCur) {
-        precon->ptargetCur = ptargetBest;
         bevy_ui_binoc_recon_202768(precon, 2);
+        precon->ptargetCur = ptargetBest;
     }
 }

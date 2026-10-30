@@ -30,7 +30,7 @@ s32 CRef_CopyConstruct(s8 **, s8 **);
 void CRef_Destruct(s8 **);
 s32 CStackFrame_Construct(s8 *);
 void CStackFrame_Destructor(s8 *, M2C_UNK);
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 **);
 s32 IdCurrentLevel();
 s32 LootId(s8 *);
 s32 PpathCrfodbLoot(s8 *);
@@ -38,8 +38,8 @@ s32 PpathFindBootyOid(s32);
 s32 RefSetGameSaveValue(s8 **, s32, s8 **, M2C_UNK *);
 void __as__4CRefRC4CRef(s8 **, s8 **);
 s32 *func_00143AF0(s8 *, s32);
-void func_001D8A38(s8 **, M2C_UNK *, M2C_UNK *, s8 **);
-void func_001D8B20(s8 **, s8 **, M2C_UNK *, M2C_UNK *);
+void func_001D8A38(s8 **, M2C_UNK *, M2C_UNK *, s8 **, M2C_UNK);
+void func_001D8B20(...);
 s32 *func_002109B8(s32);
 s32 memcmp(s8 *, s32, M2C_UNK);
 void sprintf(s8 **, M2C_UNK *, s32);
@@ -90,7 +90,7 @@ void UpdateJtLootSave(s8 *arg0, s32 arg1, s8 *arg2) {
         sp24 = var_v0;
         sp20 = (s8 *)0x15;
         temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
-        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x338)), &RO_002A4DB0);
+        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x338)), &RO_002A4DB0, NULL);
         CRef_Destruct(&sp20);
         if (M2C_FIELD(arg0, s8 **, 0x11A8) == NULL) {
             temp_v0 = PpathCrfodbLoot(arg2);
@@ -138,19 +138,19 @@ void UpdateJtLootSave(s8 *arg0, s32 arg1, s8 *arg2) {
         sp20 = (s8 *)0x15;
         M2C_FIELD(&sp20, s32 *, 4) = -1;
         temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
-        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1_2, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x338)), &RO_002A4DB0);
+        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1_2, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x338)), &RO_002A4DB0, NULL);
         CRef_Destruct(&sp20);
         temp_a2 = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x11A8), s8 **, 0x158), s32 *, 4);
         if (temp_a2 != -1) {
             sprintf(&sp20, &RO_002A4D50, temp_a2);
             temp_s0_2 = (M2C_UNK *)("loot");
             temp_s2 = (M2C_UNK *)("mplootkc");
-            func_001D8A38(&sp40, temp_s0_2, temp_s2, &sp20);
+            func_001D8A38(&sp40, temp_s0_2, temp_s2, &sp20, 0);
             __as__4CRefRC4CRef(&sp10, &sp40);
             CRef_Destruct(&sp40);
             sp60 = (s8 *)0x15;
             sp64 = sp14 + 1;
-            func_001D8B20(&sp40, &sp60, temp_s0_2, temp_s2);
+            func_001D8B20(&sp40, &sp60, temp_s0_2, temp_s2, &sp20, 0);
             __as__4CRefRC4CRef(&sp10, &sp40);
             CRef_Destruct(&sp40);
             CRef_Destruct(&sp60);
@@ -167,7 +167,7 @@ void UpdateJtLootSave(s8 *arg0, s32 arg1, s8 *arg2) {
                 var_a0 = (memcmp(M2C_FIELD(temp_s1, s8 **, 4), M2C_FIELD(temp_v0_5, s32 *, 4), 8) == 0) ? 1 : 0;
             }
             if (var_a0 != 0) {
-                temp_v0_6 = CploFindSwObjectsByClass(&B_003DD490, 5, 0x25, 0);
+                temp_v0_6 = CploFindSwObjectsByClass(&B_003DD490, 5, 0x25, 0, 0xF, &sp10);
                 var_a2 = 0;
                 if (temp_v0_6 > 0) {
                     temp_v0_7 = M2C_FIELD(temp_s1, s8 **, 4);

@@ -41,9 +41,9 @@ void UpdateWarp(char *self) {
         void *focus = PpoSwFocusBase(B_003DD490);
         if (focus != 0) {
             QW world = PosLoWorld(focus);
-            pos.q = ConvertAloPos(0, self, world);
             int inside = PcgtPointInCbspQuick__FP4CBSPP6VECTOR(*(void **)(self + 0xEC), 0x7FFFFFFF, pos.q) != 0;
-            switch (*(unsigned *)(self + 0x13C)) {
+            pos.q = ConvertAloPos(0, self, world);
+            switch (*(char *)(self + 0x13C)) {
             case 3:
                 if (inside != 0) Warp_Start(self);
                 break;

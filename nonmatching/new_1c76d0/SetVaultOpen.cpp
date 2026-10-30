@@ -27,7 +27,7 @@ void SetVaultOpen(int open)
     int path = PpathVaultFlag();
     if (path == 0) {
         CStackFrame_Destructor(frame, 2);
-        return;
+        { goto done; }
     }
     if (open != 0) {
         if (RefGetGameSaveValue(path, &B_003D4A60).n == 0)
@@ -35,9 +35,11 @@ void SetVaultOpen(int open)
     }
     {
         value.tagk = 0x17;
-        value.n = open != 0;
         CRef copy(value);
+        value.n = open != 0;
         RefSetGameSaveValue(path, copy, &B_003D4A60);
     }
-    CStackFrame_Destructor(frame, 2);
+    { goto done; }
+done:
+    return;
 }

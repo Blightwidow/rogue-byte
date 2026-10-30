@@ -15,11 +15,11 @@ struct _m2c_stack_SetBlipgEmitb__FP5BLIPGP5EMITB {
 };                                                  /* size = 0xC0 */
 s32 FFloatsNear__Ffff(s128, s128, M2C_UNK);         /* extern */
 M2C_UNK PrescaleClq__FP3CLQffT0(s8 *, s8 *, f32, M2C_UNK); /* extern */
-M2C_UNK PropagateBlipgShader__FP5BLIPG(s8 *, s32, s32, s8 *); /* extern */
+M2C_UNK PropagateBlipgShader__FP5BLIPG(s8 *, s32, s32, s8 *, s8 *); /* extern */
 M2C_UNK SetEmitdvEmitb__FP6EMITDVP5EMITB(s8 *, s8 *); /* extern */
 M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK);           /* extern */
 extern s128 g_2a2dd0;
-void SetBlipgEmitb__FP5BLIPGP5EMITB(s8 *arg0, s8 *arg1, s32 arg2, s8 *arg3) {
+void SetBlipgEmitb__FP5BLIPGP5EMITB(s8 *arg0, s8 *arg1, s32 arg2, s8 *arg3, s8 *arg4) {
     f32 sp0;
     f32 sp4;
     f32 sp8;
@@ -51,8 +51,10 @@ void SetBlipgEmitb__FP5BLIPGP5EMITB(s8 *arg0, s8 *arg1, s32 arg2, s8 *arg3) {
     s8 *temp_s0;
     s8 *temp_s7;
     s8 *var_a3;
+    s8 *var_a4;
     var_a2 = arg2;
     var_a3 = arg3;
+    var_a4 = arg4;
     var_f0 = 1.0f;
     temp_v0 = M2C_FIELD(arg1, s32 *, 0xC0);
     M2C_FIELD(arg0, s32 *, 0x43C) = temp_v0;
@@ -69,10 +71,11 @@ void SetBlipgEmitb__FP5BLIPGP5EMITB(s8 *arg0, s8 *arg1, s32 arg2, s8 *arg3) {
         var_a0 = 0;
         M2C_FIELD(arg0, s32 *, 0x3B0) = temp_v0_2;
         if (temp_v0_2 > 0) {
+            var_a4 = (s8 *)(temp_v1 + 4);
             var_a3 = arg0 + 0x3B4;
 loop_5:
             var_a2 = var_a0 + 1;
-            var_a1 = (u8 *)((var_a0 * 4) + (temp_v1 + 4));
+            var_a1 = (u8 *)((var_a0 * 4) + var_a4);
             var_a0_2 = 3;
             var_v1 = (((M2C_FIELD(arg0, s32 *, 0x3B0) - var_a0) - 1) * 4) + var_a3;
             do {
@@ -89,7 +92,7 @@ loop_5:
         }
         M2C_FIELD(arg0, s32 *, 0x434) = (s32) M2C_FIELD(arg1, s32 *, 0xCC);
     }
-    PropagateBlipgShader__FP5BLIPG(arg0, M2C_FIELD(arg1, s32 *, 0xD0), var_a2, var_a3);
+    PropagateBlipgShader__FP5BLIPG(arg0, M2C_FIELD(arg1, s32 *, 0xD0), var_a2, var_a3, var_a4);
     memset(arg0 + 0x140, 0, 0x10);
     temp_v1_2 = M2C_FIELD(arg0, s32 *, 0x1A0);
     if (temp_v1_2 >= 2) {

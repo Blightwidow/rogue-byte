@@ -75,9 +75,9 @@ def declaration_orders(text, limit=5):
     return edits
 
 
-def search(address, text, depth, beam, budget, jobs, choices, log=None):
+def search(address, text, depth, beam, budget, jobs, choices, log=None, lang='c++'):
     """(best score, best source, compiles used, whether the last depth improved on its input)."""
-    base_score = scorer.judge(address, text)
+    base_score = scorer.judge(address, text, lang)
     if base_score in (None, 0):
         return base_score, text, 1, False
     best_score, best_text, used = base_score, text, 1
@@ -98,7 +98,7 @@ def search(address, text, depth, beam, budget, jobs, choices, log=None):
             candidates_list = list(candidates)[:max(0, budget - used)]
             if not candidates_list:
                 break
-            scores = list(pool.map(lambda source: scorer.judge(address, source), candidates_list))
+            scores = list(pool.map(lambda source: scorer.judge(address, source, lang), candidates_list))
             used += len(candidates_list)
             ranked = sorted((score, index) for index, score in enumerate(scores) if score is not None)
             if not ranked:
@@ -117,6 +117,11 @@ def search(address, text, depth, beam, budget, jobs, choices, log=None):
             if used >= budget:
                 break
     return best_score, best_text, used, improved
+
+
+def language_of(path):
+    """A .c source is judged as C (Sony's sibling calls and the SDK range), anything else as C++."""
+    return 'c' if path.endswith('.c') else 'c++'
 
 
 def read(path):
@@ -162,7 +167,7 @@ def main():
         print(f'{len(pool)} functions, score {arguments.min_score}-{arguments.max_score}, budget {arguments.budget}, depth {arguments.depth}')
         improved = reached = 0
         for index, (best, address, path) in enumerate(pool, 1):
-            score, text, used, _ = search(address, read(path), arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices)
+            score, text, used, _ = search(address, read(path), arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, lang=language_of(path))
             print(f'[{index}/{len(pool)}] {address:#X}: {best} -> {score} ({used} compiles)', flush=True)
             if score is not None and score < best:
                 improved += 1
@@ -176,9 +181,9 @@ def main():
     address = int(arguments.address, 16)
     path = arguments.source or os.path.join(SOURCES, f'{address:06X}.cpp')
     original = read(path)
-    score, text, used, _ = search(address, original, arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, log=print)
+    score, text, used, _ = search(address, original, arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, log=print, lang=language_of(path))
     print(f'best {score} ({used} compiles)')
-    if arguments.write and score is not None and text != original and score < (scorer.judge(address, original) or 10 ** 9):
+    if arguments.write and score is not None and text != original and score < (scorer.judge(address, original, language_of(path)) or 10 ** 9):
         write(path, text)
         print('written')
     return 0

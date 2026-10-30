@@ -19,33 +19,34 @@ struct _m2c_stack_func_0020A818 {
 M2C_UNK DecomposeCylind(M2C_UNK, f32 *, M2C_UNK, M2C_UNK); /* extern */
 s32 FInsideCmFrustrum(M2C_UNK *, M2C_UNK, M2C_UNK, s32); /* extern */
 f32 GetAlertPan(s8 *);                            /* extern */
-s128 PosLoWorld(...);              /* extern */
+s128 PosLoWorld(...);         /* extern */
 f32 RadNormalize__Ff(f32);                          /* extern */
 extern M2C_UNK B_002DDF40;
-s32 func_0020A818(s8 *arg0, s8 *arg1, s8 **arg2, s32 arg3) {
+s32 func_0020A818(s8 *arg0, s8 *arg1, s8 **arg2, s32 arg3, s32 arg4) {
     s8 sp[0x10] __attribute__((aligned(16)));
     f32 sp10;
     f32 sp14;
     s128 sp20;
     s128 sp30;
-    s32 temp_t0;
     s32 temp_v1;
     s32 var_a3;
+    s32 var_a4;
     s32 var_v0;
     s8 **var_a2;
     var_a2 = arg2;
     var_a3 = arg3;
+    var_a4 = arg4;
     if (M2C_FIELD(arg0, s32 *, 0x1C) == 0) {
         if (M2C_FIELD(arg1, s32 *, 0xF30) == 0) {
-            temp_t0 = M2C_FIELD(arg0, s32 *, 0x28);
+            var_a4 = M2C_FIELD(arg0, s32 *, 0x28);
             var_a3 = 0;
-            if (temp_t0 > 0) {
+            if (var_a4 > 0) {
                 var_a2 = (s8 **)(arg0 + 0x2C);
 loop_4:
                 var_a3 += 1;
                 if (M2C_FIELD(*var_a2, s32 *, 0xF3C) == 0) {
                     var_a2 += 4;
-                    if (var_a3 >= temp_t0) {
+                    if (var_a3 >= var_a4) {
                         goto block_6;
                     }
                     goto loop_4;
@@ -58,7 +59,7 @@ block_6:
         if (temp_v1 == 0) {
             var_v0 = 1;
             if (M2C_FIELD(arg1, s32 *, 0xF34) == 0) {
-                sp20 = PosLoWorld(arg0, arg1, var_a2, var_a3);
+                sp20 = PosLoWorld(arg0, arg1, var_a2, var_a3, var_a4);
                 asm volatile("lqc2 vf1, 0x90(%0)" : : "r"(&B_002DDF40));
                 asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(sp));
                 asm volatile("vsub.xyzw vf2, vf2, vf1");
@@ -87,7 +88,7 @@ block_6:
             if (temp_v1 != 1) {
                 return 1;
             }
-            sp30 = PosLoWorld(arg0, arg1, var_a2, var_a3);
+            sp30 = PosLoWorld(arg0, arg1, var_a2, var_a3, var_a4);
             asm volatile("qmtc2.ni %0, vf2" : : "r"(PosLoWorld(arg0, M2C_FIELD(arg0, s8 **, 0xC))));
             asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(sp));
             asm volatile("vsub.xyzw vf1, vf1, vf2");

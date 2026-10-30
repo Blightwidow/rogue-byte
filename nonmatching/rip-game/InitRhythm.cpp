@@ -9,7 +9,7 @@ struct RH {
 };
 extern RH *B_002DE570;
 extern "C" int InitLo(RH*);
-extern "C" void func_001A6CA8(RH*, int);
+extern "C" void func_001A6CA8(void);
 static inline void InitSmp(SMP* s, float lo, float hi)
 {
     s->a = __builtin_fabsf(hi - lo) * 0.33333334f;
@@ -32,7 +32,7 @@ extern "C" void InitRhythm(RH* p)
     p->gTwice = -0.2f;
     p->gA = lo;
     p->gEarly = lo;
-    func_001A6CA8(p, 1);
+    func_001A6CA8();
     unsigned g = (unsigned)p->grf;
     if (!(g & 1)) *p->grf |= 10; else p->grf = (unsigned*)(g | 10);
 }

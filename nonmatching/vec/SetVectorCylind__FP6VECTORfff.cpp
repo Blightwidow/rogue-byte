@@ -13,11 +13,11 @@ struct _m2c_stack_SetVectorCylind__FP6VECTORfff {
     /* 0x14 */ f32 sp14;                            /* inferred */
     /* 0x18 */ char pad18[0x28];
 };                                                  /* size = 0x40 */
-M2C_UNK CalculateSinCos__FfPfT1(f32 *, f32 *);      /* extern */
+M2C_UNK CalculateSinCos__FfPfT1(f32 *);      /* extern */
 s32 SetVectorCylind__FP6VECTORfff(f32 fparg1, f32 fparg2) {
     f32 sp10;
     f32 sp14;
-    CalculateSinCos__FfPfT1(&sp10, &sp14);
+    CalculateSinCos__FfPfT1(&sp10);
     s64 vu_1;
     asm volatile("pextlw %0, %1, %0" : "=r"(vu_1) : "r"(sp10 * fparg1), "r"(sp14 * fparg1));
     s64 vu_2;

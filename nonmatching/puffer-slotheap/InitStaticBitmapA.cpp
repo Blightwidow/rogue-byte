@@ -11,7 +11,7 @@ struct _m2c_stack_InitStaticBitmapA {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
 M2C_UNK CopyBmpHeader(M2C_UNK *, M2C_UNK *);        /* extern */
-M2C_UNK CopyPaletteHeader(M2C_UNK *, M2C_UNK *, M2C_UNK, M2C_UNK); /* extern */
+M2C_UNK CopyPaletteHeader(M2C_UNK *, M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK CreateSlotheapSwAlign(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 extern s32 B_002DD2E0;
 extern s32 B_002DD2E4;
@@ -132,7 +132,7 @@ void InitStaticBitmapA(s32 arg0, s32 arg1) {
         M2C_FIELD(temp_v0_14, s8 *, 4) = 0x67;
         M2C_FIELD(temp_v0_15, s8 *, 1) = 0x67;
         M2C_FIELD(temp_v0_15, s8 *, 3) = 0;
-        CopyPaletteHeader(&B_002DD500, &RO_0027A778, 0x3F, 0x2A);
+        CopyPaletteHeader(&B_002DD500, &RO_0027A778, 0x3F, 0x2A, 0x76, 0x6E, 0x1F, 0x4D);
         CopyBmpHeader(&B_002DD520, &RO_0029A790);
         temp_v0_16 = B_002DD2E0 + 1;
         B_002DD2E0 = temp_v0_16;

@@ -14,7 +14,7 @@ extern "C" CRef *RefOpMinimum(CRef *pret, int carg, CRef *aref, CFrame *pframe)
         CRef *other = &pair->ref;
         if (best.tagk == 0x15) {
             if (other->tagk == 0x15) {
-                if (other->n < best.n)
+                if (best.n > other->n)
                     best = *other;
             } else {
                 if (other->g < (float)best.n)
@@ -22,10 +22,10 @@ extern "C" CRef *RefOpMinimum(CRef *pret, int carg, CRef *aref, CFrame *pframe)
             }
         } else {
             if (other->tagk == 0x15) {
-                if ((float)other->n < best.g)
+                if ((float)best.g > other->n)
                     best = *other;
             } else {
-                if (other->g < best.g)
+                if (best.g > other->g)
                     best = *other;
             }
         }

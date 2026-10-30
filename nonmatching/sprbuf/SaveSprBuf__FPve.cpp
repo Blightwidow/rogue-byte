@@ -27,8 +27,8 @@ void SaveSprBuf__FPve(void *pvDest, ...)
             ientry++;
         } while (pv != 0);
     }
-    char *ppv = (char *)psprbuf + 0xC;
     char *pcb = (char *)psprbuf + 8;
+    char *ppv = (char *)psprbuf + 0xC;
     ientry = psprbuf->centry - ientry;
     int ipvDest = 0;
     while (ientry < psprbuf->centry - 1) {
@@ -40,8 +40,8 @@ void SaveSprBuf__FPve(void *pvDest, ...)
     }
     int cbLast = *(int *)((char *)pcb + ientry * 8);
     unsigned pvSprLast = *(unsigned *)((char *)ppv + ientry * 8);
-    *(unsigned long *)(pvSprLast - 0x10) = (unsigned long)(cbLast >> 4) | 0x70000000UL | ((unsigned long)apvDest[ipvDest] << 32);
     int *channel = g_2de59c;
+    *(unsigned long *)(pvSprLast - 0x10) = (unsigned long)(cbLast >> 4) | 0x70000000UL | ((unsigned long)apvDest[ipvDest] << 32);
     *channel = *channel & ~0x40;
     *(unsigned *)((char *)channel + 0x80) = (psprbuf->pdmatag & 0x0FFFFFFF) | 0x80000000;
     func_002417A0(g_2de59c);

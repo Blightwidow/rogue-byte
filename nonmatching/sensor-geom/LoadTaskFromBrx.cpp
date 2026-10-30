@@ -19,7 +19,7 @@ s32 PvAllocStackImpl__Fi(s32 *);
 s32 PvAllocSwClearImpl__Fi(s32 *);
 s32 PvAllocSwCopyImpl__FiPv(...);
 s32 PvAllocSwImpl__Fi(s32 *);
-s32 S32Read__18CBinaryInputStream(s8 *, s32);
+s32 S32Read__18CBinaryInputStream(void);
 s32 U8Read__18CBinaryInputStream(s32);
 void Unknown1__18CBinaryInputStream(s32);
 void LoadTaskFromBrx(s8 *arg0, s32 arg1) {
@@ -58,7 +58,7 @@ void LoadTaskFromBrx(s8 *arg0, s32 arg1) {
         do {
             temp_v1 = var_s3 * 4;
             var_s3 += 1;
-            *(s32 *)(temp_v1 + M2C_FIELD(arg0, s32 *, 0x90)) = S32Read__18CBinaryInputStream(arg0, arg1);
+            *(s32 *)(temp_v1 + M2C_FIELD(arg0, s32 *, 0x90)) = S32Read__18CBinaryInputStream();
         } while (var_s3 < M2C_FIELD(arg0, s32 *, 0x94));
     }
     temp_v0_2 = U8Read__18CBinaryInputStream(arg1);
@@ -74,7 +74,7 @@ void LoadTaskFromBrx(s8 *arg0, s32 arg1) {
         do {
             temp_v1_2 = var_s1 * 4;
             var_s1 += 1;
-            *(s32 *)(temp_v1_2 + M2C_FIELD(arg0, s32 *, 0x9C)) = S32Read__18CBinaryInputStream(arg0, arg1);
+            *(s32 *)(temp_v1_2 + M2C_FIELD(arg0, s32 *, 0x9C)) = S32Read__18CBinaryInputStream();
         } while (var_s1 < M2C_FIELD(arg0, s32 *, 0xA0));
     }
     Unknown1__18CBinaryInputStream(arg1);

@@ -28,7 +28,7 @@ s32 FAsegaGone(s32);                                /* extern */
 s32 FIsGuardInSgs(s8 *, M2C_UNK);                 /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 M2C_UNK UpdateGuard();                              /* extern */
-M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, s128, M2C_UNK, M2C_UNK *); /* extern */
+M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, s128, M2C_UNK, M2C_UNK *, M2C_UNK, s32 *, s32 *); /* extern */
 M2C_UNK func_001BA408(s8 *, M2C_UNK);             /* extern */
 s32 func_00227C90(s32, M2C_UNK);                    /* extern */
 extern M2C_UNK B_003DD490;
@@ -38,7 +38,7 @@ extern M2C_UNK D_002C0A90;
 extern M2C_UNK D_002C0AA0;
 extern M2C_UNK func_001BA100;
 void func_001BA128(s8 *arg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
+    s8 sp[0x60] __attribute__((aligned(16)));
     M2C_UNK sp10;
     s32 sp40;
     s32 sp44;
@@ -105,7 +105,7 @@ block_8:
                         asm volatile("lqc2 vf2, 0x70(%0)" : : "r"(sp));
                         s32 vu_3;
                         asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_3));
-                        bevy_camera_follow_push_out(&B_003DD490, sp50, vu_3, &func_001BA100);
+                        bevy_camera_follow_push_out(&B_003DD490, sp50, vu_3, &func_001BA100, 0, &sp40, &sp44);
 loop_19:
                         if (var_s1 < sp40) {
                             temp_s0 = (s8 *)(*(s32 *)((var_s1 * 4) + sp44));

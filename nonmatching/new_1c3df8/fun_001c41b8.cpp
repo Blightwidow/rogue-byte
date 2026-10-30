@@ -17,11 +17,11 @@ s32 func_001C41B8(s8 *arg0) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 sp0;
     s32 sp4;
-    s8 *temp_t2;
+    s8 *temp_a6;
     sp4 = 1;
     sp0 = 0x17;
-    temp_t2 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(temp_t2, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(arg0 + M2C_FIELD(temp_t2, s16 *, 0x18), 0xD, 0, 0);
+    temp_a6 = M2C_FIELD(arg0, s8 **, 0xC);
+    M2C_FIELD(temp_a6, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 *, s8 *), 0x1C)(arg0 + M2C_FIELD(temp_a6, s16 *, 0x18), 0xD, 0, 0, 0, sp, temp_a6);
     CRef_Destruct(sp);
     return ((0x17 ^ 0x17) == 0) ? sp4 : 1;
 }

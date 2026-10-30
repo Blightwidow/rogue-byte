@@ -6,13 +6,13 @@ extern "C" {
 extern float g_2dded0[];
 extern char D_002C3C98[];
 extern char D_002C3CA8[];
-void func_001F4FC0(STEP *);
+void func_001F4FC0(STEP *, XP *, int);
 void GSmooth__FfffP3SMPPf(float, float, float, void *, float *);
 void AdjustStepXpVelocity(STEP *pstep, XP *pxp, int iside)
 {
     struct { QW junk; float asv[2]; } l;
     int bits;
-    func_001F4FC0(pstep);
+    func_001F4FC0(pstep, pxp, iside);
     if (pxp->kind != 0xE) return;
     asm("lqc2 vf2, %0" : : "m" (pxp->vel1));
     asm("lqc2 vf3, %0" : : "m" (pxp->vel0));

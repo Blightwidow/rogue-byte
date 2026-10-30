@@ -29,8 +29,8 @@ void StoreAudioModeInSave(void)
     }
     case 3: {
         CRef mode;
-        mode.tagk = 0x17;
         mode.n = 1;
+        mode.tagk = 0x17;
         int path = B_003E0FD8;
         CRef copy(mode);
         RefSetGameSaveValue(path, copy, &B_003D4A60);

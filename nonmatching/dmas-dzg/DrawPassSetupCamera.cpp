@@ -5,7 +5,7 @@ struct Cam_157CF0 { char pad0[0x4C]; float nearPlane; float farPlane; char pad1[
 extern "C" {
 void AddDmaCall__4DMASP2QW(void *, void *);
 int AddDmaCnt__4DMAS(void *);
-int AddVifBaseOffset__4VIFSii(void *, int, int);
+void AddVifBaseOffset__4VIFSii(void *, int, int);
 void AddVifDirect__4VIFSiP2QWi(void *, int, void *, int);
 int AddVifFlush__4VIFS(void *);
 void AddVifUnpack__4VIFS3UPKiPvi(void *, int, int, void *, int);
@@ -35,7 +35,7 @@ void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
     } else {
         AddDmaCall__4DMASP2QW(arg0, B_002DF800);
     }
-    *(int *)(arg0 + 0x20) = 1;
+    *(short *)(arg0 + 0x20) = 1;
     AddDmaCnt__4DMAS(arg0);
     AddVifFlush__4VIFS(arg0);
     AddVifDirect__4VIFSiP2QWi(arg0, 0x25, B_002DF010, 0);

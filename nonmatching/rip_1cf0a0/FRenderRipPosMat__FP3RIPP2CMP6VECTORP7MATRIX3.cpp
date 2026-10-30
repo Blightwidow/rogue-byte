@@ -4,7 +4,7 @@ struct ROWS3 { VECTOR row[3]; };
 struct PALO { char pad[0x38]; float radius; };
 struct CLQ { float a, b, c; };
 struct RIP { char pad[0x14]; float tCreated; float dt; PALO *palo; CLQ clqScale; float pad2c; CLQ clqAlpha; };
-extern "C" int FInsideCmFrustrum(void *, QW, QW);
+extern "C" int FInsideCmFrustrum(void *);
 extern "C" int FInsideCmMrd(void *, QW, float *, float);
 extern "C" void func_001A5EE8(PALO *, MATRIX44, float, float);
 extern "C" void func_0011C288(MATRIX44 *, QW, ROWS3 *, float);
@@ -42,7 +42,7 @@ extern "C" int FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(RIP *rip, QW pos, R
     asm("mfc1 %0, %1" : "=r"(bits) : "f"(r100));
     QW &radius = f.radius;
     radius = (long)bits;
-    if (FInsideCmFrustrum(cm, dpos, radius) == 0) return 1;
+    if (FInsideCmFrustrum(cm) == 0) return 1;
     if (FInsideCmMrd(cm, dpos, f.out, rip->palo->radius) == 0) return 0;
     if (alpha < 0.0001f) {
         if (scale < 0.0001f) return 1;

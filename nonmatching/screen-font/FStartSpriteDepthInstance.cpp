@@ -28,7 +28,7 @@ int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth,
                 ClearSle(slot->sle);
                 slot->iinst = IinstFindFreeSprite(&pblot->psprite[isprite]);
                 unsigned addv = 0x7F7F7F7F;
-                unsigned mulv = 0xFFFFFFFF;
+                int mulv = 0xFFFFFFFF;
                 unsigned add[4];
                 unsigned mul[4];
                 add[0] = addv;

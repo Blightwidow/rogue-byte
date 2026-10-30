@@ -4,7 +4,7 @@ struct SMP;
 extern "C" QW PosLoWorld(void *);
 extern "C" void SetStepRadTargetDir(void *, QW);
 extern "C" void InvertMatrix3(void *, void *);
-extern "C" int GSmooth__FfffP3SMPPf(float, float, float, SMP *, float *);
+extern "C" int GSmooth__FfffP3SMPPf(float, float, float, SMP *);
 extern "C" SMP D_002BF418;
 extern "C" QW g_2a2da0;
 extern "C" float g_2bf414;
@@ -30,7 +30,7 @@ extern "C" void func_0018E1E0(void *self)
     float dist2;
     asm("mtc1 %1, %0" : "=f" (dist2) : "r" (distBits2));
     SetStepRadTargetDir(self, l.vecDir);
-    GSmooth__FfffP3SMPPf(dist2, g_2bf414, g_2dded4 * 0.5f, &D_002BF418, &l.gScale);
+    GSmooth__FfffP3SMPPf(dist2, g_2bf414, g_2dded4 * 0.5f, &D_002BF418);
     InvertMatrix3(l.matInverse, (unsigned *)self + 0x1B0);
     register int scaleBits asm("$3") = *(int *)&l.gScale;
     asm volatile("qmtc2.ni %0, vf2" : : "r" (scaleBits));

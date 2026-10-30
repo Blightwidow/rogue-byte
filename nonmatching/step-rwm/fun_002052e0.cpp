@@ -11,7 +11,7 @@ struct _m2c_stack_func_002052E0 {
     /* 0x00 */ char pad0[0x80];
 };                                                  /* size = 0x80 */
 s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
-M2C_UNK MatchSoOtherObject(s8 *, s8 *);         /* extern */
+M2C_UNK MatchSoOtherObject(s8 *);         /* extern */
 extern M2C_UNK g_2a2dc0;
 extern s128 g_2a2dd0;
 void func_002052E0(s8 *arg0, s8 *arg1) {
@@ -24,7 +24,7 @@ void func_002052E0(s8 *arg0, s8 *arg1) {
     s8 *temp_v1;
     if (arg1 != NULL) {
         if (FIsBasicDerivedFrom(arg1, 3) == 0) {
-            MatchSoOtherObject(arg0, arg1);
+            MatchSoOtherObject(arg0);
         } else {
             temp_v1 = M2C_FIELD(arg1, s8 **, 0xC);
             temp_v0 = M2C_FIELD(temp_v1, s32 (**)(s8 *), 0xFC)(arg1 + M2C_FIELD(temp_v1, s16 *, 0xF8));
@@ -47,8 +47,8 @@ void func_002052E0(s8 *arg0, s8 *arg1) {
             asm volatile("sqc2 vf6, 0x40(%0)" : : "r"(sp));
             s32 vu_1;
             asm volatile("qmfc2.ni %0, vf7" : "=r"(vu_1));
-            M2C_FIELD(temp_a2, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0xEC)(arg0 + M2C_FIELD(temp_a2, s16 *, 0xE8), vu_1, temp_a2);
             temp_v0_2 = M2C_FIELD(arg0, s8 **, 0xC);
+            M2C_FIELD(temp_a2, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0xEC)(arg0 + M2C_FIELD(temp_a2, s16 *, 0xE8), vu_1, temp_a2);
             M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, s8 *), 0xF4)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0xF0), sp);
             if (FIsBasicDerivedFrom(arg0, 0x34) != 0) {
                 asm volatile("qmtc2.ni %0, vf3" : : "r"(M2C_FIELD(arg0, s32 *, 0x1048)));

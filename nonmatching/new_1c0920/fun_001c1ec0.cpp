@@ -2,7 +2,7 @@
 extern "C" {
 
 M2C_UNK FindCrvClosestPointAll(s32, M2C_UNK *, void *); /* extern */
-s128 PosLoWorld(s32, M2C_UNK *);                    /* extern */
+s128 PosLoWorld(s32);                    /* extern */
 extern M2C_UNK B_003DD020;
 
 s128 func_001C1EC0(void *arg0) {
@@ -20,7 +20,7 @@ s128 func_001C1EC0(void *arg0) {
         if (temp_v0_2 == 0) {
             var_v0 = M2C_FIELD(arg0, s128 *, 0x10);
         } else {
-            var_v0 = PosLoWorld(temp_v0_2, &B_003DD020);
+            var_v0 = PosLoWorld(temp_v0_2);
         }
         sp0 = var_v0;
     }

@@ -11,7 +11,7 @@ struct _m2c_stack_PactNew {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
 s8 *PvAllocAct(M2C_UNK);                          /* extern */
-M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK);           /* extern */
+M2C_UNK memset(s8 *, f32, M2C_UNK);           /* extern */
 extern M2C_UNK D_002CA6A0;
 extern M2C_UNK D_002CA6E0;
 extern M2C_UNK D_002CA720;
@@ -42,9 +42,9 @@ s8 *PactNew(u32 arg0) {
     case 1:
         temp_v0_2 = PvAllocAct(0x30);
         M2C_FIELD(temp_v0_2, M2C_UNK **, 0x18) = &D_002CA820;
-        var_a2 = temp_v0_2;
         M2C_FIELD(temp_v0_2, s32 *, 0) = 1;
         M2C_FIELD(temp_v0_2, s32 *, 0x1C) = 2;
+        var_a2 = temp_v0_2;
         break;
     case 2:
         var_v0 = PvAllocAct(0x80);

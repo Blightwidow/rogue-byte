@@ -35,7 +35,7 @@ void *StartStream(void *stream, int id, int noSubtitle)
                     if (slot == 3)
                         F(void *, stream, 0x238) = plo;
                     else
-                        *pslot = (Obj *)PsmaFindAlo(plo, func_001FD0C0(stream, slot));
+                        *pslot = (Obj *)PsmaFindAlo(stream, func_001FD0C0(stream, slot));
                     Obj *obj = *pslot;
                     if (obj) {
                         VT *vt = obj->vt;
