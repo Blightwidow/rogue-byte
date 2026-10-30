@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules permute permute-stores fix-stack mutate adopt search land pal
+.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -90,10 +90,13 @@ progress: ## After `make elf`: the report, the Naming Desk data, the map and the
 	.venv/bin/python scripts/generate_treemap.py
 	.venv/bin/python scripts/build_site.py
 
-check: compile-scripts lint lint-shell links test ## The public CI checks, locally
+check: compile-scripts lint lint-shell links test pal-check ## The public CI checks, locally
 
 lint: ## ruff: syntax errors and undefined names in the scripts
 	.venv/bin/ruff check .
+
+pal-check: ## The committed PAL data is current: every matched function has a PAL status row, the PAL report matches (no executable needed)
+	python3 -I scripts/pal_report.py --check
 
 test: ## Regression tests of the scripts
 	.venv/bin/python -I scripts/test_public_tools.py

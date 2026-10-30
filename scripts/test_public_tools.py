@@ -478,6 +478,55 @@ class PalReportTests(unittest.TestCase):
         self.assertTrue(complete['one'])
         self.assertFalse(complete['two'])
 
+    def test_check_finds_a_matched_function_without_a_pal_row_and_a_stale_row(self):
+        import argparse
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            os.makedirs(os.path.join(folder, 'src'))
+            with open(os.path.join(folder, 'src', 'MANIFEST.tsv'), 'w') as handle:
+                handle.write('address\tname\tsize\tfile\n0X100000\tA\t100\tx/A.cpp\n0X100100\tB\t100\tx/B.cpp\n')
+            status = os.path.join(folder, 'c_status.tsv')
+            with open(status, 'w') as handle:
+                handle.write('us_address\tname\tother_address\tpair\tscore\taddresses\n0X100000\tA\t0X100000\tsame\t0\tok\n0X100200\tC\t0X100200\tsame\t0\tok\n')
+            us_report = os.path.join(folder, 'us.json')
+            json.dump(self.report(), open(us_report, 'w'))
+            old = pal_report.LAB
+            pal_report.LAB = folder
+            try:
+                missing = pal_report.check(argparse.Namespace(status=status, us_report=us_report, out=os.path.join(folder, 'eu.json')))
+            finally:
+                pal_report.LAB = old
+        text = '\n'.join(missing)
+        self.assertIn('B (0X100100) is matched but has no row', text.replace('0x', '0X'))
+        self.assertIn('0X100200', text.replace('0x', '0X'))
+        self.assertIn('eu.json is missing', text)
+
+    def test_check_accepts_a_report_that_is_what_the_us_report_and_the_status_give(self):
+        import argparse
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            os.makedirs(os.path.join(folder, 'src'))
+            with open(os.path.join(folder, 'src', 'MANIFEST.tsv'), 'w') as handle:
+                handle.write('address\tname\tsize\tfile\n0X100000\tA\t100\tx/A.cpp\n')
+            status = os.path.join(folder, 'c_status.tsv')
+            with open(status, 'w') as handle:
+                handle.write('us_address\tname\tother_address\tpair\tscore\taddresses\n0X100000\tA\t0X100000\tsame\t0\tok\n')
+            us_report, out = os.path.join(folder, 'us.json'), os.path.join(folder, 'eu.json')
+            json.dump(self.report(), open(us_report, 'w'))
+            json.dump(pal_report.build(self.report(), {'A': True}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0}), open(out, 'w'))
+            old = pal_report.LAB
+            pal_report.LAB = folder
+            try:
+                self.assertEqual(pal_report.check(argparse.Namespace(status=status, us_report=us_report, out=out)), [])
+                json.dump(pal_report.build(self.report(), {'A': False}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0}), open(out, 'w'))
+                stale = pal_report.check(argparse.Namespace(status=status, us_report=us_report, out=out))
+            finally:
+                pal_report.LAB = old
+        self.assertEqual(len(stale), 1)
+        self.assertIn('run `make pal`', stale[0])
+
     def test_the_data_unit_has_the_other_versions_size_and_the_owned_rodata_unit_is_left_out(self):
         built = pal_report.build(self.report(), {}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0})
         names = [unit['name'] for unit in built['units']]
