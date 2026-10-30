@@ -307,3 +307,15 @@ Eight Sonnet workers, 46 of 96 matched, all landed (batches ranged from 4 to 10 
 ### Permuted round on distance 6 to 19 (2026-10-30)
 
 `fix_stack.py` (151 of 173 sources improved, the rest of the placeholder buffers already right), `permute_stores.py --min 6 --max 19 --budget 200` (169 searched, 5 improved) and `neighborhood.py --batch --min-score 6 --max-score 19 --budget 2000` (526 functions, 55 improved, 7 reached 0: `RemoveAloFromRenderTree` and six SDK-tail node initialisers). The tail (0x2550A0 on) are slot-heap node constructors that the one-edit rewrites reach; the near misses of game code at 6 to 19 mostly need a different wording, not a rewrite.
+
+### Sonnet batch on first m2c drafts (94 functions at distance 21 to 50, 2026-10-30)
+
+The first draft of a function that has never had a source (`harvest.py --repair --shape --write --keep 400` saves the 352 that compile). Eight Sonnet workers matched 45 of 94 (46 scored 0; one needed a local that only hoists a constant and stayed out). Six matched only with `ps2eeas-loop5` (their addresses moved from `gnu_as.txt` to `ps2eeas_loop5.txt`): try it before rewording any small-loop miss of one or two words, because the workers did not know to.
+
+- **The prototype is the first suspect.** A missing `this`, a float argument, a fifth argument of 0, a callee returning `void`: `DxDrawCh` went from 39 words to 0 on prototypes. Read the mangled name for parameter order (`FffffP4SMPAPf` is four floats then two pointers); an m2c callee name can be the wrong function, so grep the address in `config/matching/symbol_addrs.txt`.
+- **m2c scales pointers wrongly.** `f32 *+= 4` is 4 bytes (`+= 1`); `+= 0x18` on an `s32 *` is a 0x18-byte struct stride; a `0xA0` multiply on `&D_xxx` is an array of 0x28-byte structs. Use typed element structs and `arr[index]`; `(ELEM *)(index * 0xB0 + (unsigned)base)` gives the `addu` operand order `&arr[index]` cannot.
+- **Loop and branch shapes.** A hand-unrolled m2c search loop is a `for` over a typed struct array; a count retail reads each iteration needs a typed struct with `self->count`; a plain `switch` beats the branch chain; `if (c) return 0; switch (...)` against nested ifs decides where the return-0 block sits; the true arm first fixes `bnel` against `beqz`.
+- **Virtual calls.** `fn((char *)obj + vt->delta)` with a one-argument `fn` puts the object in `$a1`; count how many argument registers retail sets. A scoped guard struct whose constructor and destructor call vtable slots reproduces a `sw $s0,0($sp)` and reload (46 to 14).
+- **Larger-than-16-byte struct arguments** are a hidden pointer to a caller-side copy (`Rows3 copy; copy = mat; f(&copy);`); a dead frame area is `char frame[0x10] __attribute__((aligned(16)))` with a comment.
+- **Float constants** are written as the exact value (`57.2957763671875f`); `qmfc2.ni` results are read as `*(float *)&bits`, not through an `mtc1` asm.
+- **Link check:** `D_STR_<addr>` is unknown to it, `D_<addr>` links.
