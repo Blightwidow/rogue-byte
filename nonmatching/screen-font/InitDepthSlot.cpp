@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_InitDepthSlot {
     /* 0x00 */ char pad0[0x10];
 };                                                  /* size = 0x10 */
-M2C_UNK ClearSle(s8 *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
+void ClearSle(s8 *, M2C_UNK, f32, M2C_UNK); /* extern */
 extern M2C_UNK RO_002A3A10;
 void InitDepthSlot(s8 *arg0) {
     M2C_FIELD(arg0, M2C_UNK **, 0x44) = &RO_002A3A10;
@@ -19,8 +19,8 @@ void InitDepthSlot(s8 *arg0) {
     M2C_FIELD(arg0, s32 *, 0x64) = -1;
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
     M2C_FIELD(arg0, s32 *, 0x54) = 0;
-    M2C_FIELD(arg0, s32 *, 0) = 0x7F7F7F7F;
     M2C_FIELD(arg0, s32 *, 4) = 0xFFFFFFFF;
+    M2C_FIELD(arg0, s32 *, 0) = 0x7F7F7F7F;
     M2C_FIELD(arg0, s32 *, 0x3C) = 0x7F7F7F7F;
     M2C_FIELD(arg0, s32 *, 0x40) = 0xFFFFFFFF;
     M2C_FIELD(arg0, s32 *, 0x58) = 0;

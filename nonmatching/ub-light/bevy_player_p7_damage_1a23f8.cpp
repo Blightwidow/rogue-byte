@@ -26,8 +26,8 @@ s32 bevy_player_p7_damage_1a23f8(s8 *arg0, s32 *arg1) {
         var_a2 = temp_v0;
         if (var_v1 == 0) {
 loop_3:
-            temp_a2_2 = *(var_a2 + &D_002BFB28);
             temp_v0_2 = temp_a2_2 * 4;
+            temp_a2_2 = *(var_a2 + &D_002BFB28);
             if (temp_a2_2 != -1) {
                 var_v1 = *(temp_a0 + temp_v0_2);
                 var_a2 = temp_v0_2;

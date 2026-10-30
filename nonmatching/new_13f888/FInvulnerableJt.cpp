@@ -14,8 +14,8 @@ s32 FIsPoSwFocusBase(s32);                          /* extern */
 s32 ZapFInvulnerable(s8 *, s32);                  /* extern */
 extern s32 B_003D4A54;
 s32 FInvulnerableJt(s8 *arg0, s32 arg1) {
-    s32 var_v0;
-    var_v0 = 1;
+    s32 result;
+    s32  var_v0 = 1;
     if (M2C_FIELD(arg0, s32 *, 0xF20) != 1) {
         if (M2C_FIELD(arg0, s32 *, 0x2DC) == 0x15) {
             return 1;
@@ -24,8 +24,10 @@ s32 FInvulnerableJt(s8 *arg0, s32 arg1) {
             var_v0 = ZapFInvulnerable(arg0 + 0xDF0, arg1);
         }
         /* Duplicate return node #6. Try simplifying control flow for better match */
-        return var_v0;
+        { result = var_v0; goto done; }
     }
-    return var_v0;
+    { result = var_v0; goto done; }
+done:
+    return result;
 }
 }

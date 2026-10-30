@@ -348,3 +348,9 @@ VU asm:
 - `"m"(local.field)` operands print `0x10($sp)` directly and hold no extra base register (46 to 16); a `"memory"` clobber on the `lqc2` asm reproduces a reload after stores; a `qmfc2` result compared with a float constant is typed `s32` and read as `*(f32 *)&x`.
 
 A virtual call `obj->vt->fn(obj + delta, ..., obj)` that also passes `obj` as a last argument leaves it in the first-argument register where retail keeps it in the last one (seven functions): the same family as the unmatched `new()` constructors, still open.
+
+### The SDK range through the m2c pipeline (622 library functions, 2026-10-30)
+
+`harvest.py`'s drafts, tried under both compilers (SN 2.95.3 and Sony's 2.9-ee-991111 with its own as.exe) and kept under the lower score, with no hand work: 50 of 622 library functions match, 135 are within 5 words, 239 within 20, 395 compile (the rest: 172 unsupported instructions, 55 do not compile). 142 prefer the Sony compiler, 253 SN's; the Sony addresses were added to `config/us/sony_gcc29.txt` (the compiler is chosen per address, not per library). The score cache does not know which compiler produced a score: judge each candidate under one compiler per process, or mark the source text.
+
+`record_round.py` only reads sources of `todo` and `tried` functions: register a library function's source with `try.py --record` (it moves the function to `tried` or `matched`).

@@ -18,8 +18,8 @@ void GetActadjGoal(s8 *arg0) {
     s8 *temp_v0;
     temp_a1 = M2C_FIELD(arg0, s8 **, 0x1C);
     if (temp_a1 != NULL) {
-        temp_v0 = M2C_FIELD(temp_a1, s8 **, 0x18);
         M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s8 *), 0x24)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x20), temp_a1);
+        temp_v0 = M2C_FIELD(temp_a1, s8 **, 0x18);
         temp_v0_2 = M2C_FIELD(arg0, s32 *, 8);
         asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(arg0));
         asm volatile("lqc2 vf1, 0xc0(%0)" : : "r"(temp_v0_2));

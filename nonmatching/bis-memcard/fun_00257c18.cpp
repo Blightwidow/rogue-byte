@@ -32,8 +32,8 @@ static inline unsigned *NextNodeA(unsigned *node)
 }
 void func_00257C18(void)
 {
-    unsigned *tailNode = B_002DD2D8;
     unsigned *node = B_002DD2D0;
+    unsigned *tailNode = B_002DD2D8;
     if (node != tailNode) {
         do {
             unsigned grf = node[1];

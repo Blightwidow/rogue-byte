@@ -47,7 +47,7 @@ void RemoveSoLoHierarchy(SO *pso)
         for (;;) {
             pchild->vt->fn((char *)pchild + pchild->vt->d);
             pchild = *dli.ppv;
-            dli.ppv = (CHILD **)((char *)pchild + dli.ibDle);
+            dli.ppv = (CHILD **)((short *)pchild + dli.ibDle);
             if (!pchild || (pchild->grf & (0x8000UL << 41)))
                 break;
         }

@@ -57,8 +57,8 @@ void ApplyTaskState(TASK *task, int newState) {
             break;
         }
         task->state = newState;
-        task->timer = g_2dded0;
         SaveTaskVariables(task);
+        task->timer = g_2dded0;
         if (FTaskRunning(task) != 0) {
             bevy_camera_follow_activity(B_002DEB30, 0x25, task);
             VT *vt1 = task->vt;

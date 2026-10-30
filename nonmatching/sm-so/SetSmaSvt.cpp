@@ -20,8 +20,8 @@ void SetSmaSvt(s8 *arg0, f32 fparg0) {
     s8 *temp_v0_2;
     if (FSmaRetracted() == 0) {
         sp0 = arg0;
-        temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
         M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *), 0xC)(arg0 + M2C_FIELD(temp_v0, s16 *, 8));
+        temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
         temp_a0 = M2C_FIELD(arg0, s32 *, 0x30);
         M2C_FIELD(arg0, f32 *, 0x44) = fparg0;
         if (temp_a0 != 0) {

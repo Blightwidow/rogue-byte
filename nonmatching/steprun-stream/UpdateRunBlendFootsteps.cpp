@@ -56,7 +56,7 @@ void UpdateRunBlendFootsteps(s8 *arg0) {
             *var_s2 = var_s3;
         }
         var_s6 += 1;
-        var_s2 += 4;
+        var_s2 += 1;
         var_s5 += 0xC;
     } while (var_s6 < 2);
 }

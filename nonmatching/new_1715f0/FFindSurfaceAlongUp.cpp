@@ -9,9 +9,9 @@ extern "C" void *PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(int, QW, QW, int
 extern "C" int FFindSurfaceAlongUp(float sStart, float sEnd, QW *ppos, long fSteepOk, void *pfnFilter)
 {
     char frame[0x10];
-    char spill[16];
-    char lsg[0x60];
     int csoAso[2];
+    char lsg[0x60];
+    char spill[16];
     QW posEnd;
     QW posStart;
     int chain;

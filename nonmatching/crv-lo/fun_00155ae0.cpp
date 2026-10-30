@@ -65,8 +65,8 @@ void func_00155AE0(Goal_155AE0 *self, int newState) {
             MeasureCrv(crv);
             GoalFollowCrv_SetCrv(ent, crv, 0);
             ent->fC0 = 8;
-            ent->f40 = 1;
             ent->fC8 = self->f4C;
+            ent->f40 = 1;
             ent->vt->f44((char *)ent + ent->vt->d40);
             break; }
         case 3: {

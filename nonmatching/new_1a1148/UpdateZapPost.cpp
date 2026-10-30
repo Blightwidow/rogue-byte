@@ -63,7 +63,7 @@ after:
         return;
     if (state != 7)
         return;
-    QW vel = zap->jt->vt->fn((char *)zap->jt + zap->jt->vt->delta);
+    QW vel = zap->jt->vt->fn((unsigned long *)zap->jt + zap->jt->vt->delta);
     float *v = (float *)&vel;
     float heading = atan2f(v[1], v[0]);
     float turn = RadSmooth(zap->jt->rad, heading + 3.1415927f, g_2dded0, (SMP *)D_002BFAC0, 0);

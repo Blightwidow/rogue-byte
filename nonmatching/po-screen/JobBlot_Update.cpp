@@ -12,7 +12,7 @@ struct _m2c_stack_JobBlot_Update {
 };                                                  /* size = 0x80 */
 s32 FBlotLabelPlaying(s8 *, M2C_UNK);             /* extern */
 s32 FTaskComplete(s8 *);                          /* extern */
-M2C_UNK UpdateBlotMovie();                          /* extern */
+M2C_UNK UpdateBlotMovie(s8 *);                          /* extern */
 M2C_UNK sprintf(M2C_UNK *, M2C_UNK *, s32);         /* extern */
 extern M2C_UNK D_STR_002C3EC0;
 extern M2C_UNK RO_002A8AA0;
@@ -32,7 +32,7 @@ void JobBlot_Update(s8 *arg0) {
     var_s4 = 0;
     var_s5 = 0;
     var_s3 = 0;
-    UpdateBlotMovie();
+    UpdateBlotMovie(arg0);
     if (M2C_FIELD(arg0, s32 *, 0x194) > 0) {
         var_s0 = (s8 **)(arg0 + 0x19C);
         do {

@@ -11,9 +11,9 @@ extern "C" MATRIX3 *LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(MATRIX3 *pmatResul
     float z = Lane(__builtin_pextuw(zeroReg, eul));
     CalculateSinCos__FfPfT1(z, &gSinZ, &gCosZ);
     float *ag = (float *)pmatResult;
+    ag[2] = -gSinY;
     ag[0] = gCosY * gCosZ;
     ag[1] = gCosY * gSinZ;
-    ag[2] = -gSinY;
     ag[4] = gSinX * gSinY * gCosZ - gCosX * gSinZ;
     ag[5] = gSinX * gSinY * gSinZ + gCosX * gCosZ;
     ag[6] = gSinX * gCosY;

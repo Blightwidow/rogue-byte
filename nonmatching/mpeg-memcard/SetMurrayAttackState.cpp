@@ -74,7 +74,7 @@ extern "C" void SetMurrayAttackState(void *m, int attack)
             OBJ_1B86B0 *obj = F(OBJ_1B86B0 *, pchn, 4);
             obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, obj, 0.0f, 0.0f);
             OBJ_1B86B0 *obj2 = F(OBJ_1B86B0 *, pchn, 4);
-            obj2->vt->fn((char *)obj2 + obj2->vt->delta, sp + 0x10, 0, obj2, F(float, F(void *, F(void *, m, 0x1030), 0x14), 0x74), 0.0f);
+            obj2->vt->fn((short *)obj2 + obj2->vt->delta, sp + 0x10, 0, obj2, F(float, F(void *, F(void *, m, 0x1030), 0x14), 0x74), 0.0f);
             QW worldPos = PosLoWorld(m);
             char *frame = (char *)m + 0x1B0;
             asm volatile("lqc2 vf1, (%0)" : : "r"(sp));

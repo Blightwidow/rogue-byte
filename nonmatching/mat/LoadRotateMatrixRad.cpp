@@ -2,7 +2,7 @@
 extern "C" {
 
 M2C_UNK CalculateSinCos__FfPfT1(s32 *, s32 *);      /* extern */
-M2C_UNK LoadRotateMatrixSinCos(void *, s32, M2C_UNK, M2C_UNK, s128); /* extern */
+void LoadRotateMatrixSinCos(void *, s32, f32, f32, s128); /* extern */
 M2C_UNK memcpy(s32, void *, M2C_UNK);               /* extern */
 
 s32 LoadRotateMatrixRad(s32 arg0) {

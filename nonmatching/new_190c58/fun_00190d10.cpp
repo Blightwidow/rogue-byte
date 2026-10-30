@@ -22,9 +22,9 @@ extern "C" void func_00190D10(JT *self)
     asm("qmtc2.ni %0, vf2" : : "r" (grip));
     asm("vadd.xyzw vf2, vf2, vf1");
     asm("sqc2 vf2, %0" : "=m" (sum));
-    QW world = PosLoWorld(self->part);
     QW diff;
     PinP *pinA = self->pin;
+    QW world = PosLoWorld(self->part);
     asm("qmtc2.ni %1, vf2\n\tlqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r" (diff) : "r" (world), "m" (sum));
     PinP *pin = self->pin;
     QW off = ConvertXfVec(0, pinA->pparent, diff);

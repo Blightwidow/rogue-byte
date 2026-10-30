@@ -15,8 +15,8 @@ void func_00199298(char *arg0)
     int temp_s6;
     int var_v0;
     int constOne = 1;
-    int kindBlock = 0xB;
     int kindMain = 0x11;
+    int kindBlock = 0xB;
 
     int kindCurrent = *(int *)(arg0 + 0x1C);
     if (kindCurrent != kindMain)

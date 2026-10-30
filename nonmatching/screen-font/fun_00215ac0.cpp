@@ -20,11 +20,11 @@ MT *func_00215AC0(MT *t, int a, float scale)
     t->z74 = 0;
     t->z78 = 0;
     t->i90 = 1;
-    int pf = *(int *)(*(char **)(B_003DD490 + 0x3BE8) + 0x54);
+    int pf = *(unsigned long *)(*(char **)(B_003DD490 + 0x3BE8) + 0x54);
     t->base = pf;
     t->cur = pf;
-    t->rgba = 0x80808080;
     t->other = *(int *)(*(char **)(B_003DD490 + 0x3BE8) + 0x54) + 0x40;
+    t->rgba = 0x80808080;
     t->r0 = g_2a2e10;
     t->r1 = g_2a2e20;
     CMovieText_Reset(t, 0);

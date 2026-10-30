@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Aim {
-    char p0[0x10]; struct Aim *pparent; int unk14; int oid; char p1[0x7C - 0x1C]; int oidA; int oidB; int oidLabel;
+    unsigned char p0[0x10]; struct Aim *pparent; int unk14; int oid; char p1[0x7C - 0x1C]; int oidA; int oidB; int oidLabel;
     char p2[0x90 - 0x88]; QW vecRest; void *pxfA; void *pxfB; char p3[0xAC - 0xA8]; void *pguard; char animref[0x10]; void *pused;
 };
 extern "C" {
@@ -27,8 +27,9 @@ void PostGuardAimLoad(Aim *paim)
         QW out[4];
         paim->pxfA = func_001F4C58(paim->pguard, paim->oidA, 6);
         paim->pxfB = func_001F4C58(paim->pguard, paim->oidB, 6);
-        void *paseg = *(void **)(panim + 4);
+        void * paseg;
         PredictAsegEffect(paseg, paim->pguard, paim->pxfB, *(void **)((char *)paim->pxfA + 0xA0), *PeaFindAsegLabel(paseg, paim->oidLabel), 1.0f, out, 0);
+        paseg = *(void **)(panim + 4);
         paim->vecRest = out[3];
     }
 }

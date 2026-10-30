@@ -27,7 +27,7 @@ void SetLoParent(LO *plo, LO *parent, int arg2, int arg3) {
     void *newList;
     LO **newFirst;
     LO **children;
-    if (parent == 0 || ((parent->grf >> 60) & 1)) {
+    if (parent == 0 || (int)(parent->grf >> 60) & 1) {
         newActive = 1;
         if (grf & (1UL << 56)) {
             newActive = 0;
@@ -57,8 +57,8 @@ void SetLoParent(LO *plo, LO *parent, int arg2, int arg3) {
         }
     }
     LO *oldParent = plo->parent;
-    V68 *vtable68 = (V68 *)plo->vt;
     plo->parent = parent;
+    V68 *vtable68 = (V68 *)plo->vt;
     int index = 0;
     vtable68->f((char *)plo + vtable68->d, plo, oldParent);
     VE0 *vtableE0 = (VE0 *)plo->vt;

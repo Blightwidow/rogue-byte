@@ -24,8 +24,9 @@ void func_001ADA20(char *pchz)
     if (func_001B0108(pss) == 0) return;
     CRef refDt;
     SW *psw = &B_003DD490;
-    int slot = B_003D9EDC[pss->icur].slot;
+    int  slot;
     RefGetGameSaveValue(&refDt, psw->ppathDt, B_002E6604 + slot * 0x5464);
+    slot = B_003D9EDC[pss->icur].slot;
     float dt = refDt.g;
     CRef_Destruct(&refDt);
     int mode = func_001B0078(pss);

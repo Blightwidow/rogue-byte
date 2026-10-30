@@ -33,8 +33,8 @@ void func_0012BF30(ACRAXIS *pacr, CBinaryInputStream *pbis)
     unsigned int maskAxes = pbis->U8Read();
     for (int iaxis = 0; iaxis < 3; iaxis++) {
         if (maskAxes & (1 << iaxis)) {
-            allocreq.cb = pacr->ckey * 12;
             allocreq.cbAlign = 0x10;
+            allocreq.cb = pacr->ckey * 12;
             float *apg = (float *)PvAllocSwImpl__Fi(&allocreq);
             pacr->apg[iaxis] = apg;
             if (pacr->ckey > 0) {

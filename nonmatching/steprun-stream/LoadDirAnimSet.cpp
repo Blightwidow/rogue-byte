@@ -15,8 +15,8 @@ void LoadDirAnimSet(char *arg0, int arg1) {
             if (found != 0) {
                 char *aseg = PchnFindAseg(found, arg1, 1, 1);
                 OBJ_20C7E0 *obj = *(OBJ_20C7E0 **)(aseg + 4);
-                obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, (char *)obj, 0.0f, 1.0f);
                 OBJ_20C7E0 *obj2 = *(OBJ_20C7E0 **)(aseg + 4);
+                obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, (char *)obj, 0.0f, 1.0f);
                 obj2->vt->fn((char *)obj2 + obj2->vt->delta, sp + 0x10, 0, (char *)obj2, *(float *)(found + 0x74), 1.0f);
                 asm volatile("qmtc2.ni %0, vf1" : : "r"(*(int *)(found + 0x74)));
                 asm volatile("lqc2 vf2, (%0)" : : "r"(sp));

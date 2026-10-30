@@ -9,6 +9,7 @@ M2C_UNK RefGetGameSaveValue(); /* extern */
 extern M2C_UNK B_003D4A60;
 
 s32 FVaultOpen(void) {
+    s32 result;
     char sp[0x10];
     M2C_UNK sp14;
     M2C_UNK sp10;
@@ -20,9 +21,11 @@ s32 FVaultOpen(void) {
         RefGetGameSaveValue(&sp10, temp_v0, &B_003D4A60);
         CRef_Destruct(&sp10);
         CStackFrame_Destructor(sp, 2);
-        return sp14;
+        { result = sp14; goto done; }
     }
     CStackFrame_Destructor(sp, 2, &B_003D4A60);
-    return 0;
+    { result = 0; goto done; }
+done:
+    return result;
 }
 }

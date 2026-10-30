@@ -12,9 +12,10 @@ extern "C" void RefreshAloIkLimbLengths(ALO *palo)
             for (ACT *pact = pxf->pactFirst; pact; pact = pact->pnext) {
                 if (pact->kind != 7)
                     continue;
-                LIMB *plimb = pact->plimb;
+                LIMB * plimb;
                 XFP *pend = plimb->pxfEnd;
                 XFP *plower = plimb->pxfLower;
+                plimb = pact->plimb;
                 QW *prow = &pend->r0;
                 asm("lqc2 vf2, %0" : : "m" (pend->r0));
                 asm("lqc2 vf4, %0" : : "m" (prow[2]));
