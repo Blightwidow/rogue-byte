@@ -29,6 +29,7 @@ import rules  # noqa: E402
 import record  # noqa: E402
 import progress  # noqa: E402
 import pair_versions  # noqa: E402
+import version_check  # noqa: E402
 import disc_extract  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
@@ -443,6 +444,17 @@ class DiscExtractTests(unittest.TestCase):
         handle = io.BytesIO(bytes(2048 * 20) + sector)
         entries = disc_extract.directory(handle, 20, 2048)
         self.assertEqual(entries, [('SYSTEM.CNF', 30, 50, False), ('SUB', 40, 2048, True)])
+
+
+class VersionCheckTests(unittest.TestCase):
+    def test_a_lui_with_an_addiu_sign_extends_the_low_half(self):
+        self.assertEqual(version_check.address_of(0x3C020029, 0x24428000), 0x288000)
+
+    def test_a_lui_with_an_ori_zero_extends_the_low_half(self):
+        self.assertEqual(version_check.address_of(0x3C020029, 0x3442F000), 0x29F000)
+
+    def test_a_small_positive_low_half(self):
+        self.assertEqual(version_check.address_of(0x3C02002B, 0x8C430010), 0x2B0010)
 
 
 class MutateM2cTests(unittest.TestCase):
