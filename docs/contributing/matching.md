@@ -275,3 +275,16 @@ The match rate fell to about 50% (rounds 2 and 3: about 60%) as the easy cases r
 ### Permuted round on the nearest misses (distance 1 to 5, 2026-10-30)
 
 `permute_stores.py --min 1 --max 5 --budget 200` searched 75 functions with straight-line store regions: 2 improved, 1 matched (`PackSTQ__4GIFSfff`). `neighborhood.py --batch --max-score 5 --budget 3000` covered 177: 14 improved (best 5 to 1), none reached 0; a deeper pass (`--depth 4 --beam 12 --budget 12000`, scores 1 to 3) improved 3 more. The nearest misses are now the walls the search cannot cross by statement order or one-line rewrites: register choice and instruction selection that need a different wording. Run `record_round.py` after a batch search, then `make progress` and `export_nonmatching.py`, or the improved sources do not reach `nonmatching/`.
+
+### Sonnet near-miss batch (96 functions at distance 2 to 4, 2026-10-30)
+
+Eight Sonnet workers, 12 functions each, 37 reached 0 (36 landed; `func_0017B8B0` stayed out because its match needed a local that only moves a `lui`). What fixed them:
+
+- **Virtual calls with a `$v0`/`$v1` swap:** declare real structs, `struct VT { char pad[N]; short delta; short unused; void (*fn)(void *, ...); }` and `obj->vt->fn((char *)obj + obj->vt->delta, ...)`, instead of `M2C_FIELD` chains (about eight functions).
+- **Wrong prototype:** a `$t0`/`$t1` set before a `jal` means six arguments; an untouched `$a0` is a hidden first parameter; a callee drawn as returning a value that retail ignores is `void`.
+- **Wrong element type:** an `s128*` step or an `M2C_UNK` base with byte offsets is scaled wrongly (`SLOT B[]` array type, `char` base, `RO_<addr>` for floats, not `D_FLT_`).
+- **Signed against unsigned** decides `bltz`/`slti` against `sltiu`; `if (x > 0.0f) {...}` gives `c.lt`/`bc1f`, `if (x <= 0) return;` gives `c.le`/`bc1t`.
+- **Switch with the allocation in each case** beat the m2c `goto` chain; `for (; i < 10U; i++)` beat a pointer do/while.
+- **VU0 asm:** a `"=r"(fence)` chain moves `daddu`/`addiu $sp` to retail's slots; a commutative op (`vadda`) may need its operands the other way round.
+- **A volatile flag** is allowed when another thread sets it and a wait loop polls it (`g_2deb20`, set by `FrameRenderLoop`); say who sets it in a comment.
+- **Walls:** VU asm in a branch delay slot, the `sq` order of callee-saved registers in a prologue, `mult` against `mult`/`mflo` forms, and anything that matched only with a register pin, empty `asm` or a local that only moves a `lui`.
