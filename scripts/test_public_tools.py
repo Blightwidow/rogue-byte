@@ -24,6 +24,7 @@ import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
 import permute  # noqa: E402
+import rules  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -223,6 +224,57 @@ class PermuteMarkedTests(unittest.TestCase):
         self.assertFalse(permute.MARK.search('    x->a = 1; // P in the middle //P later'))
         self.assertFalse(permute.MARK.search('    x->a = 1;'))
 
+
+
+class RulesTests(unittest.TestCase):
+    def labels(self, source):
+        return [label for label, _ in rules.edits(source).values()]
+
+    def test_index_first_rewrites_an_address_of_an_element(self):
+        edited = rules.edits('void f(int i) { g(&table[i]); }')
+        self.assertTrue(any('(unsigned)(table)' in text and '(i) * sizeof' in text for text in edited))
+
+    def test_constify_marks_a_read_only_symbol(self):
+        edited = list(rules.constify('extern float RO_002A1000;\nextern int D_00001234;\n'))
+        self.assertEqual(edited[0][1], 'extern const float RO_002A1000;\nextern int D_00001234;\n')
+
+    def test_constify_leaves_a_const_symbol(self):
+        self.assertEqual(list(rules.constify('extern const float RO_002A1000;\n')), [])
+
+    def test_long_long_becomes_long(self):
+        self.assertEqual(list(rules.long_long('long long x;'))[0][1], 'long x;')
+
+    def test_call_arguments_drops_appends_and_keeps_declaration_and_calls_in_step(self):
+        source = 'extern "C" void Callee(int a);\nvoid F(int one, int two) {\n    Callee(one);\n}\n'
+        edited = rules.edits(source)
+        appended = [text for text in edited if 'void Callee(int a, int)' in text and 'Callee(one, two)' in text]
+        dropped = [text for text in edited if 'void Callee(void)' in text and 'Callee()' in text]
+        self.assertTrue(appended)
+        self.assertTrue(dropped)
+
+    def test_float_position_moves_a_float_parameter_in_declaration_and_calls(self):
+        source = 'extern "C" void Callee(int a, float b, int c);\nvoid F(int x, int y) {\n    Callee(x, 1.0f, y);\n}\n'
+        edited = rules.edits(source)
+        self.assertTrue(any('Callee(float b, int a, int c)' in text and 'Callee(1.0f, x, y)' in text for text in edited))
+
+    def test_index_loop_rebuilds_the_indexed_loop(self):
+        source = ('void F(int *arr, int n) {\n    int i;\n    int *p;\n    i = 0;\n    if (n > 0) {\n        p = arr;\n        do {\n'
+                  '            *p = i;\n            i += 1;\n            p += 4;\n        } while (i < n);\n    }\n}\n')
+        edited = list(rules.index_loop(source))
+        self.assertEqual(len(edited), 1)
+        self.assertIn('for (i = 0; i < n; i++)', edited[0][1])
+        self.assertIn('p = arr + i * 4;', edited[0][1])
+        self.assertNotIn('do {', edited[0][1])
+
+    def test_by_value_returns_the_class_instead_of_the_pointer(self):
+        source = 'struct CRef { int a; };\nCRef *Op(CRef *pret, int x) {\n    pret->a = x;\n    return pret;\n}\n'
+        edited = list(rules.by_value(source))[0][1]
+        self.assertIn('CRef Op(int x) return __ret', edited)
+        self.assertIn('__ret.a = x;', edited)
+        self.assertIn('~CRef();', edited)
+
+    def test_a_source_without_a_shape_gives_no_edit_and_no_error(self):
+        self.assertEqual(rules.edits('int main() { return 0; }'), {})
 
 
 class MutateM2cTests(unittest.TestCase):

@@ -7,7 +7,7 @@
 
 mutate.py climbs by random single rewrites, so it can miss an edit that needs two steps and cannot say it has looked everywhere. This
 applies every rewrite of mutate.py at every line it fits (each rewrite with several choices of which operator or declaration it touches),
-and every order of a block of declarations (up to five, 120 orders), judges them all in process (scorer.py: about 50 compiles a second and
+every order of a block of declarations (up to five, 120 orders) and the shapes of rules.py (indexed loop, index-first address, const RO_, call arguments, float position, by-value return...), judges them all in process (scorer.py: about 50 compiles a second and
 every judged source remembered on disk), then repeats from the best few sources, which include equal scores (a plateau is crossed by
 an edit that changes nothing visible). It stops at score 0 or when the budget of compiles is spent, and says when a depth found no source
 better than before: the neighbourhood is then exhausted for these rewrites."""
@@ -22,6 +22,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mutate  # noqa: E402
+import rules  # noqa: E402
 import scorer  # noqa: E402
 
 LAB = scorer.LAB
@@ -87,7 +88,7 @@ def search(address, text, depth, beam, budget, jobs, choices, log=None):
         for level in range(1, depth + 1):
             candidates = {}
             for _, source in frontier:
-                for edits in (single_edits(source, choices), declaration_orders(source) if level == 1 else {}):
+                for edits in (single_edits(source, choices), declaration_orders(source) if level == 1 else {}, rules.edits(source)):
                     for changed, how in edits.items():
                         if changed not in seen:
                             seen.add(changed)
