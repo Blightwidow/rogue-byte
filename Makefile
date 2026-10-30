@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules permute permute-stores fix-stack mutate adopt search land
+.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules permute permute-stores fix-stack mutate adopt search land pal
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -57,7 +57,7 @@ search: ## Everything in order: fix-stack, permute-stores, adopt, rules (MIN, MA
 	$(MAKE) adopt
 	$(MAKE) rules
 
-land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports and nonmatching/
+land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports (PAL too when its executable is there) and nonmatching/
 	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan)
 	$(MAKE) src
 	$(MAKE) elf
@@ -65,6 +65,12 @@ land: ## After a search or a matching round: register the matches (stops on a ba
 	$(MAKE) nonmatching
 	$(MAKE) objdiff
 	$(MAKE) progress
+	@if [ -f work/elf/SCES_525.29 ]; then $(MAKE) pal; else echo "no work/elf/SCES_525.29: PAL skipped"; fi
+
+pal: ## PAL (needs work/elf/SCES_525.29, see docs/build/building.md): pair the functions, check the matched ones, write site/data/objdiff-report-eu.json
+	.venv/bin/python scripts/pair_versions.py
+	.venv/bin/python scripts/version_check.py --jobs $(JOBS)
+	.venv/bin/python scripts/pal_report.py
 
 config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module for code, rodata and data
 	python3 -I scripts/build/gen_splat_config.py --reset

@@ -1,4 +1,4 @@
-# On a push to main it also uploads the committed objdiff report as the artifact `SCUS_973.16_report` (report.json), which
+# On a push to main it also uploads the committed objdiff reports as the artifacts `SCUS_973.16_report` and `SCES_525.29_report` (report.json), which
 # bytematch.dev reads. Validates the progress data a change commits (site/data/summary.json, written locally by `make progress`: measuring progress needs
 # your own copy of the game, so nothing here builds it) and, on pull requests, prepares the comparison with main for progress-comment.yml.
 # Nothing in this workflow has a write token and it never runs the pull request's own scripts on secrets.
@@ -35,6 +35,15 @@ jobs:
         with:
           name: SCUS_973.16_report
           path: build/SCUS_973.16/report.json
+      - name: Prepare the PAL objdiff report for bytematch.dev
+        if: github.event_name == 'push'
+        run: python3 scripts/prepare_report.py build/SCES_525.29 site/data/objdiff-report-eu.json
+      - name: Publish the PAL objdiff report
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: SCES_525.29_report
+          path: build/SCES_525.29/report.json
       - name: Compare with the base branch
         if: github.event_name == 'pull_request'
         env:

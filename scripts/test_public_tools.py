@@ -30,6 +30,7 @@ import record  # noqa: E402
 import progress  # noqa: E402
 import pair_versions  # noqa: E402
 import version_check  # noqa: E402
+import pal_report  # noqa: E402
 import disc_extract  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
@@ -455,6 +456,35 @@ class VersionCheckTests(unittest.TestCase):
 
     def test_a_small_positive_low_half(self):
         self.assertEqual(version_check.address_of(0x3C02002B, 0x8C430010), 0x2B0010)
+
+
+class PalReportTests(unittest.TestCase):
+    def report(self):
+        return {'version': 2, 'categories': [{'id': 'game', 'name': 'Game code'}], 'units': [
+            {'name': 'one', 'functions': [{'name': 'A', 'size': '100', 'fuzzy_match_percent': 100.0}, {'name': 'B', 'size': '300', 'fuzzy_match_percent': 40.0}],
+             'metadata': {'progress_categories': ['game']}},
+            {'name': 'two', 'functions': [{'name': 'C', 'size': '200', 'fuzzy_match_percent': 100.0}], 'metadata': {'progress_categories': ['game']}},
+            {'name': 'data/rodata', 'functions': [], 'metadata': {'progress_categories': ['data']}},
+            {'name': 'data/rodata-c', 'functions': [], 'metadata': {'progress_categories': ['data']}}]}
+
+    def test_only_a_function_checked_for_the_other_version_counts_as_matched(self):
+        built = pal_report.build(self.report(), {'A': True, 'B': False, 'C': False}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0})
+        shown = built['measures']
+        self.assertEqual((shown['total_code'], shown['matched_code'], shown['matched_functions'], shown['total_functions']), ('600', '100', 1, 3))
+
+    def test_a_unit_is_complete_when_all_its_functions_are_matched(self):
+        built = pal_report.build(self.report(), {'A': True, 'B': True, 'C': False}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0})
+        complete = {unit['name']: unit['metadata']['complete'] for unit in built['units']}
+        self.assertTrue(complete['one'])
+        self.assertFalse(complete['two'])
+
+    def test_the_data_unit_has_the_other_versions_size_and_the_owned_rodata_unit_is_left_out(self):
+        built = pal_report.build(self.report(), {}, {'.rodata': 5000, '.data': 0, '.vutext': 0, '.irx': 0})
+        names = [unit['name'] for unit in built['units']]
+        self.assertIn('data/rodata', names)
+        self.assertNotIn('data/rodata-c', names)
+        self.assertEqual(built['measures']['total_data'], '5000')
+        self.assertNotIn('matched_data', built['measures'])
 
 
 class MutateM2cTests(unittest.TestCase):
