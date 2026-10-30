@@ -84,7 +84,8 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
 1. The lead picks the functions (`python3 scripts/list_functions.py --status asm --sort size`) and splits them: no two workers
    share a function, contiguous functions go to one worker (they often belong to one class).
 2. Each worker keeps its sources in its own scratch folder, runs `try.py` until `score 0` or about ten compiles without progress,
-   and reports one line per function: `EXACT`, `NEAR` (what still differs) or `SKIP` (why).
+   and reports one line per function: `EXACT`, `NEAR` (what still differs) or `SKIP` (why). A worker that runs a make target passes
+   `PROGRESS=0` (every worker brief says so).
 3. A worker's `EXACT` is not a match. The lead puts each source in place, runs `make elf` and `make unit UNIT=<module>`, and sends a
    function that breaks the build back to `nonmatching/`.
 4. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),

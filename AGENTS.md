@@ -60,6 +60,7 @@ Details: docs/contributing/matching.md ("Teams of workers").
 - **Never delete what you did not create**, and leave other people's uncommitted work alone.
 - Stage files by name (never `git add .` or `-A`); never skip hooks (`--no-verify`) without the maintainer's say-so.
 - Format, lint and compile before committing: `make check`. Don't commit what fails.
+- **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
 - After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `site/data/objdiff-report.json`;
   CI only uploads it, cannot rebuild it) and `make progress`; commit the regenerated `site/` files with the work.
 
