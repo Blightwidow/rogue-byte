@@ -830,6 +830,7 @@ address	name	size	file
 0X1193C0	SetPlane	12	bsp-crout/SetPlane.c
 0X119488	bsp__static_initialization_and_destruction_0	308	bsp-crout/bsp__static_initialization_and_destruction_0.c
 0X1195C0	func_001195C0	32	bsp-crout/fun_001195c0.c
+0X1198F8	CroutSolve__FiPfN21	364	crout/CroutSolve__FiPfN21.cpp
 0X119A68	StaticInitSlotheaps_119a68	308	crout-dl/StaticInitSlotheaps_119a68.c
 0X119BA0	func_00119BA0	32	crout-dl/fun_00119ba0.c
 0X119BD0	func_00119BD0	56	crout-dl/fun_00119bd0.cpp
@@ -1462,6 +1463,7 @@ address	name	size	file
 0X1424D0	func_001424D0	16	new_13f888/fun_001424d0.c
 0X1424E0	func_001424E0	76	new_13f888/fun_001424e0.c
 0X142530	func_00142530	16	new_13f888/fun_00142530.c
+0X142540	func_00142540	112	new_13f888/fun_00142540.cpp
 0X1425B0	RenderJt	312	new_13f888/RenderJt.cpp
 0X1426E8	InitJtLookRig	224	new_13f888/InitJtLookRig.cpp
 0X1427C8	SetJtLookTarget	104	new_13f888/SetJtLookTarget.cpp
@@ -1475,6 +1477,7 @@ address	name	size	file
 0X143380	DropJtLoot	68	new_13f888/DropJtLoot.cpp
 0X1433C8	DeliverJtLoot	68	new_13f888/DeliverJtLoot.cpp
 0X143BD8	func_00143BD8	156	new_13f888/fun_00143bd8.cpp
+0X143C78	func_00143C78	128	new_13f888/fun_00143c78.cpp
 0X143CF8	JT_TranslateToPos	40	new_13f888/JT_TranslateToPos.c
 0X143DE8	func_00143DE8	244	new_13f888/fun_00143de8.cpp
 0X143EE0	JT_StartPose	280	new_13f888/JT_StartPose.cpp
@@ -1845,6 +1848,7 @@ address	name	size	file
 0X15C650	PsfxEnsureExpls	60	bomb/PsfxEnsureExpls.c
 0X15CD48	func_0015CD48	32	emitter-font/fun_0015cd48.c
 0X15CD68	InitEpsel	64	emitter-font/InitEpsel.cpp
+0X15D5C8	LabelFromEpselMode	128	emitter-font/LabelFromEpselMode.cpp
 0X15D880	SetEpselHint	116	emitter-font/SetEpselHint.cpp
 0X15D8F8	FormatEpselPercent	196	emitter-font/FormatEpselPercent.cpp
 0X15D9C0	FormatEpselTime	200	emitter-font/FormatEpselTime.cpp
@@ -2393,6 +2397,7 @@ address	name	size	file
 0X18DE08	PchzSlySaveRoot	12	jt-alo/PchzSlySaveRoot.cpp
 0X18DE18	func_0018DE18	104	jt-alo/fun_0018de18.cpp
 0X18DE80	PredictSlyLead	96	jt-alo/PredictSlyLead.cpp
+0X18DEE0	NSlyActionCategory	108	jt-alo/NSlyActionCategory.cpp
 0X18DF50	bevy_player_p13_18df50	8	jt-alo/bevy_player_p13_18df50.c
 0X18DF58	SetJtRideOffset	8	jt-alo/SetJtRideOffset.c
 0X18E330	UpdateAllGuardLightStates	108	jt-alo/UpdateAllGuardLightStates.cpp
@@ -2867,6 +2872,7 @@ address	name	size	file
 0X1BEAA8	func_001BEAA8	40	unsorted/fun_001beaa8.cpp
 0X1BECF8	RtAlo_Show_thunk	28	rog-path/RtAlo_Show_thunk.c
 0X1BED18	func_001BED18	248	rog-path/fun_001bed18.cpp
+0X1BEE10	func_001BEE10	80	rog-path/fun_001bee10.cpp
 0X1BEE60	func_001BEE60	116	rog-path/fun_001bee60.cpp
 0X1BEED8	func_001BEED8	220	rog-path/fun_001beed8.cpp
 0X1BEFB8	CreateSharedSlotheaps_1befb8	308	rog-path/CreateSharedSlotheaps_1befb8.c
@@ -3000,6 +3006,7 @@ address	name	size	file
 0X1CA978	NGradeLease	228	new_1c90d0/NGradeLease.cpp
 0X1CADE0	PleaseFindBest	228	new_1c90d0/PleaseFindBest.cpp
 0X1CB2C0	FCanLease	32	new_1c90d0/FCanLease.cpp
+0X1CB2E0	PloLeased	72	new_1c90d0/PloLeased.cpp
 0X1CB328	EnsureLeasedObject	56	new_1c90d0/EnsureLeasedObject.c
 0X1CB360	func_001CB360	172	new_1c90d0/fun_001cb360.cpp
 0X1CB488	LockLeaseOfPlo	44	new_1c90d0/LockLeaseOfPlo.cpp
@@ -3192,6 +3199,7 @@ address	name	size	file
 0X1DB010	GadgetMenu_RefreshFlags	180	game-stepguard/GadgetMenu_RefreshFlags.c
 0X1DB390	GadgetMenu_SelectGadget	252	game-stepguard/GadgetMenu_SelectGadget.cpp
 0X1DB490	GadgetMenu_Open	144	game-stepguard/GadgetMenu_Open.c
+0X1DB520	GadgetMenu_SetPage	648	game-stepguard/GadgetMenu_SetPage.cpp
 0X1DB7A8	ShopMenu_Construct	68	game-stepguard/ShopMenu_Construct.cpp
 0X1DB7F0	ShopMenu_Reset	44	game-stepguard/ShopMenu_Reset.c
 0X1DB820	ShopMenu_InitPage	80	game-stepguard/ShopMenu_InitPage.cpp
@@ -3482,6 +3490,7 @@ address	name	size	file
 0X1F0730	SetSmaGoalIfReachable	148	sm-so/SetSmaGoalIfReachable.cpp
 0X1F07C8	GetSmaGoal	32	sm-so/GetSmaGoal.c
 0X1F07E8	GetSmaCur	32	sm-so/GetSmaCur.c
+0X1F0808	func_001F0808	72	unsorted/fun_001f0808.cpp
 0X1F08D0	SnapSmaTransition	120	sm-so/SnapSmaTransition.cpp
 0X1F0948	SnapSmaToGoal	140	sm-so/SnapSmaToGoal.cpp
 0X1F09D8	SeekSma	244	sm-so/SeekSma.cpp
@@ -3841,6 +3850,7 @@ address	name	size	file
 0X208728	RemoveGuardPriorityClass	160	step-rwm/RemoveGuardPriorityClass.cpp
 0X2087C8	func_002087C8	32	step-rwm/fun_002087c8.cpp
 0X2087E8	FIsGuardPriorityClass	120	step-rwm/FIsGuardPriorityClass.cpp
+0X208860	RemoveGuardSensedObject	128	step-rwm/RemoveGuardSensedObject.cpp
 0X2088E0	ClearGuardSensing	60	step-rwm/ClearGuardSensing.c
 0X208920	AddGuardIgnoredClass	40	step-rwm/AddGuardIgnoredClass.cpp
 0X208948	RemoveGuardIgnoredClass	160	step-rwm/RemoveGuardIgnoredClass.cpp

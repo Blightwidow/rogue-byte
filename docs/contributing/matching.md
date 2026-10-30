@@ -319,3 +319,32 @@ The first draft of a function that has never had a source (`harvest.py --repair 
 - **Larger-than-16-byte struct arguments** are a hidden pointer to a caller-side copy (`Rows3 copy; copy = mat; f(&copy);`); a dead frame area is `char frame[0x10] __attribute__((aligned(16)))` with a comment.
 - **Float constants** are written as the exact value (`57.2957763671875f`); `qmfc2.ni` results are read as `*(float *)&bits`, not through an `mtc1` asm.
 - **Link check:** `D_STR_<addr>` is unknown to it, `D_<addr>` links.
+
+### Sonnet batch on drafts that did not compile (136 functions, 800 bytes on average, 2026-10-30)
+
+Eight Sonnet workers, 17 functions each. 130 now compile (10 at score 0, the rest between 5 and 550 words); 5 do not score (see below) and `func_0022A220` was skipped (m2c lost VU instructions inside a comma expression). All 130 compiling sources are saved as sources, so the permuter and neighborhood passes can work on them.
+
+Why a draft does not compile, and the fix:
+
+- **An empty compile error message is cc1plus crashing on m2c output:** a `default:` or `case 0:` label left outside any `switch`, or lifted-expression comma garbage `(, , , , (x > 1.0f))`. Delete them (and add an empty `case 0: break;` when retail's jump table starts at index 0). 15 of the 136 had these; `harvest.py` could drop them automatically.
+- **`s8 *` against `s8 **`, `invalid type argument of unary *`, assignment lacking a cast:** the field of a typed struct (`p->field`) replaces `M2C_FIELD(...)` casts; `PvAlloc*Impl__Fi` takes one `ALLOCREQ *`.
+- **gcc 2.95 ICEs (expr.c:639)** on `*(float *)&qwLocal` and on `long` outputs of `pextuw`/`prot3w`: use a `"=r"(float)` asm as `src/suv-end/Vec4_GetZ.cpp` does.
+- **`try.py` fails with "address 0x463a9700 not in a loadable segment"** (or `0x4b1c`): a float literal landed in the object's `.rodata` and the compare reads its bits as a retail address. Declare the constant `extern float RO_<addr>` at the address retail loads it from.
+
+Frame and locals (the commonest cause of a score in the hundreds):
+
+- **m2c's `sp[N]` is the whole frame, saved registers included.** Size one `char sp[N]` to retail's frame minus the saves (they start at the `sd $ra` offset) and alias m2c's `spXX` locals into it with `#define spXX (*(T *)(sp + 0xXX))`. Separate locals plus a buffer double-count.
+- A struct local whose address is taken needs 16-byte alignment to reproduce retail's slot spacing; `{ptr; pad[3]}` gives the 0x20 to 0x30 spacing where an attribute on a pointer did nothing; slots 0x10 apart are 16-byte objects (CRef, find-result wrappers).
+- An `sq` at `sp+0x10` before a call with no `$a2` set is a field of a local struct, not a stack argument; `$t0`/`$t1` set before a virtual call means six arguments with `&local` in `$t0`.
+- A struct assignment hides behind a call (`scratch = inverse` before a `memset`); declare `memcpy` in C++ linkage or constant-size copies are inlined (181 to 30).
+
+Switches and shapes:
+
+- A switch with several `case` labels sharing a body compiles to a compare chain (gcc merges them into a range): retail's jump table appeared only when each case got its own duplicated body; declare the unlisted cases (`case 0:`, the high ones) so the full table of retail's range is emitted. Each jump table adds link points to the score that no source change removes.
+- `if (cond) { early } else { normal }` when retail falls through into the early-out; a `while ((previous = x), f() == 0)` comma form reproduces an entry jump.
+
+VU asm:
+
+- `"m"(local.field)` operands print `0x10($sp)` directly and hold no extra base register (46 to 16); a `"memory"` clobber on the `lqc2` asm reproduces a reload after stores; a `qmfc2` result compared with a float constant is typed `s32` and read as `*(f32 *)&x`.
+
+A virtual call `obj->vt->fn(obj + delta, ..., obj)` that also passes `obj` as a last argument leaves it in the first-argument register where retail keeps it in the last one (seven functions): the same family as the unmatched `new()` constructors, still open.
