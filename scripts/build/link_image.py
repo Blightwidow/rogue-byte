@@ -100,6 +100,34 @@ def trim_object(object_path, start, size, keep):
     open(trimmed, 'wb').write(blob)
     return trimmed
 
+def trim_rodata(object_path):
+    """A copy of the object whose .rodata ends where its content ends: the compiler pads the section to its alignment (a 14-entry jump table
+    becomes 64 bytes in a 16-aligned section), and the padding would overwrite the retail bytes that follow the table. The content ends at the
+    last non-zero byte or the last relocated word (a jump table's entries are relocations, zero in the object); at most the alignment minus one
+    byte is cut. Returns (path, new size); the path is unchanged when nothing is cut."""
+    with open(object_path, 'rb') as handle:
+        elf = ELFFile(handle)
+        rodata = elf.get_section_by_name('.rodata')
+        if rodata is None or not rodata['sh_size']:
+            return object_path, 0
+        data = rodata.data()
+        end = len(data.rstrip(b'\0'))
+        relocations = elf.get_section_by_name('.rel.rodata')
+        for relocation in (relocations.iter_relocations() if relocations else []):
+            end = max(end, relocation['r_offset'] + 4)
+        end = (end + 3) & ~3
+        size = max(end, len(data) - (rodata['sh_addralign'] - 1)) if rodata['sh_addralign'] > 1 else len(data)
+        index = elf.get_section_index('.rodata')
+    if size >= len(data):
+        return object_path, len(data)
+    blob = bytearray(open(object_path, 'rb').read())
+    section_table, entry_size = (int.from_bytes(blob[at:at + width], 'little') for at, width in ((0x20, 4), (0x2E, 2)))
+    blob[section_table + index * entry_size + 20:section_table + index * entry_size + 24] = size.to_bytes(4, 'little')
+    trimmed = os.path.join(BUILD, 'trimmed', 'ro_' + os.path.relpath(object_path, UNITS).replace(os.sep, '_').replace(BUILD + os.sep, ''))
+    os.makedirs(os.path.dirname(trimmed), exist_ok=True)
+    open(trimmed, 'wb').write(blob)
+    return trimmed, size
+
 def inspect(object_path):
     """(text size, undefined symbol names) of an object, or None when it cannot stand in for assembly: a relocation
     into a section other than .text means the function uses its own data (jump table, literal), which the image
@@ -237,6 +265,8 @@ for line in list(open(os.path.join('src', 'MANIFEST.tsv')))[1:]:
         continue
     rodata_base = None
     if found[2]:
+        object_path, rodata_size = trim_rodata(object_path)
+        found = (found[0], found[1], rodata_size)
         rodata_base = derive_rodata_base(address, object_path)
         if rodata_base is None:
             object_path = retarget_rodata(address, object_path)

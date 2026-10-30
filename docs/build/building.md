@@ -67,7 +67,7 @@ the judge. Of those, 8 still come from assembly (`build/image/fallbacks.tsv`, an
 
 - names the symbol table lacks (C++ constructors, library calls) are read from the retail instruction at each
   relocation site, so those functions link without a table entry;
-- a function's own jump table or literals (`.rodata` of its object) are linked where the retail image has them: the
+- a function's own jump table or literals (`.rodata` of its object, cut at its content: the section is padded to its alignment, a 14-entry table becoming 64 bytes, and the padding would overwrite the retail bytes after it) are linked where the retail image has them: the
   retail rodata is split around that range and the object's section takes its place.
 
 The ELF container is carried as raw pieces cut from your executable: the header and program headers, the padding, the

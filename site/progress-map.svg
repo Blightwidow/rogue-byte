@@ -2303,7 +2303,7 @@
 <rect x="503.4" y="411.4" width="11.8" height="11.9" fill="#2f7af4"><title>func_00141D38 0X141D38 152 bytes (c)</title></rect>
 <rect x="515.6" y="411.4" width="11.8" height="11.9" fill="#2f7af4"><title>StartJtCarry 0X142278 152 bytes (c)</title></rect>
 <rect x="527.9" y="411.4" width="9.9" height="11.9" fill="#2f7af4"><title>func_001421F8 0X1421F8 128 bytes (c)</title></rect>
-<rect x="538.2" y="411.4" width="9.9" height="11.9" fill="#f3c25a"><title>func_00143C78 0X143C78 128 bytes (matched)</title></rect>
+<rect x="538.2" y="411.4" width="9.9" height="11.9" fill="#2f7af4"><title>func_00143C78 0X143C78 128 bytes (c)</title></rect>
 <rect x="548.5" y="411.4" width="9.9" height="11.9" fill="#4a45a8"><title>DrainJtPower 0X1441E8 128 bytes (draft)</title></rect>
 <rect x="558.8" y="411.4" width="9.3" height="11.9" fill="#2f7af4"><title>func_00140C88 0X140C88 120 bytes (c)</title></rect>
 <rect x="503.4" y="423.7" width="9.9" height="11.1" fill="#4a45a8"><title>FInvulnerableJt 0X140ED8 120 bytes (draft)</title></rect>
@@ -2425,7 +2425,7 @@
 <rect x="534.7" y="724.7" width="12.0" height="11.1" fill="#2f7af4"><title>ReleaseSlyGadget 0X18DD78 144 bytes (c)</title></rect>
 <rect x="547.1" y="724.7" width="11.3" height="11.1" fill="#2f7af4"><title>UpdateJtBinocInput 0X18B2C0 136 bytes (c)</title></rect>
 <rect x="558.8" y="724.7" width="9.2" height="11.1" fill="#4a45a8"><title>UpdateJtBounds 0X18A2E0 112 bytes (draft)</title></rect>
-<rect x="534.7" y="736.2" width="11.1" height="9.2" fill="#f3c25a"><title>NSlyActionCategory 0X18DEE0 112 bytes (matched)</title></rect>
+<rect x="534.7" y="736.2" width="11.1" height="9.2" fill="#2f7af4"><title>NSlyActionCategory 0X18DEE0 112 bytes (c)</title></rect>
 <rect x="546.2" y="736.2" width="11.1" height="9.2" fill="#2f7af4"><title>UpdateAllGuardLightStates 0X18E330 112 bytes (c)</title></rect>
 <rect x="557.7" y="736.2" width="10.3" height="9.2" fill="#2f7af4"><title>ProjectJtTransform 0X18A278 104 bytes (c)</title></rect>
 <rect x="534.7" y="745.8" width="8.1" height="11.7" fill="#2f7af4"><title>func_0018D6F8 0X18D6F8 104 bytes (c)</title></rect>
