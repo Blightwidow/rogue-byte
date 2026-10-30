@@ -7,8 +7,7 @@ extern "C" int IcvFindCrvS(CRV *pcrv, float s, float *pds, float *pdsSeg)
     s = SWrapCrv(pcrv, s);
     int icv = pcrv->icvHint;
     if (pcrv->mpicvs[icv] < s) {
-        int icvLast = pcrv->ccv - 1;
-        for (; icv < icvLast; icv++) {
+        for (; icv < pcrv->ccv - 1; icv++) {
             if (s < pcrv->mpicvs[icv])
                 break;
         }

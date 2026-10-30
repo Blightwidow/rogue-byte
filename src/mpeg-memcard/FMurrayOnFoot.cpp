@@ -1,5 +1,5 @@
 extern "C" int FMurrayOnFoot(char *self)
 {
  int s = *(int *)(self + 0x13D0);
- if (s >= 0) { if (s < 2 || (s < 0xB && s > 8)) return 1; } return 0;
+ switch (s) { case 0: case 1: case 9: case 10: return 1; } return 0;
 }

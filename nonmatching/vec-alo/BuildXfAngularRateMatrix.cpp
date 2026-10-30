@@ -1,15 +1,14 @@
-#include "m2c_macros.h"
+typedef int QW __attribute__((mode(TI)));
 extern "C" {
+void BuildXfSpinRateMatrix(void *, int, int, QW);
+QW ConvertDeulToW__FP6VECTORN20(QW, QW);
+void *memcpy(void *, const void *, unsigned);
 
-M2C_UNK BuildXfSpinRateMatrix(void *, s32, M2C_UNK, s32); /* extern */
-M2C_UNK ConvertDeulToW__FP6VECTORN20(M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK memcpy(s32, void *, M2C_UNK);               /* extern */
-
-s32 BuildXfAngularRateMatrix(s32 arg0, s32 arg1, s32 arg2) {
+void *BuildXfAngularRateMatrix(void *out, int arg1, int arg2, QW euler, QW rate) {
     char sp[0x40];
-    ConvertDeulToW__FP6VECTORN20(M2C_ERROR(/* unknown instruction: por $a0, $zero, $a3 */), M2C_ERROR(/* unknown instruction: por $a1, $zero, $t0 */));
-    BuildXfSpinRateMatrix(sp, arg1, M2C_ERROR(/* unknown instruction: por $a3, $zero, $v0 */), arg2);
-    memcpy(arg0, sp, 0x40);
-    return arg0;
+    QW w = ConvertDeulToW__FP6VECTORN20(euler, rate);
+    BuildXfSpinRateMatrix(sp, arg1, arg2, w);
+    memcpy(out, sp, 0x40);
+    return out;
 }
 }

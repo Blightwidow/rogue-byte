@@ -11,7 +11,7 @@ struct _m2c_stack_FGadgetOnSale {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 
-s32 NEpisodeBest(s32, M2C_UNK);                     /* extern */
+s32 NEpisodeBest(void);                     /* extern */
 extern M2C_UNK D_002BCD00;
 
 s32 FGadgetOnSale(s32 arg0) {
@@ -23,7 +23,7 @@ s32 FGadgetOnSale(s32 arg0) {
     if (M2C_FIELD(temp_s0, s32 *, 0x10) == -1) {
         return 0;
     }
-    return NEpisodeBest(temp_a0, -1) >= M2C_FIELD(temp_s0, s32 *, 0x10);
+    return NEpisodeBest() >= M2C_FIELD(temp_s0, s32 *, 0x10);
 }
 
 }

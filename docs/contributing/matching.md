@@ -406,3 +406,14 @@ Eight Sonnet workers took the 186 library near misses (10 to 120 words): 80 more
 m2c and the harvest: the split assembly names registers 8 to 15 as o32 does (`$t0`-`$t7`), m2c's `mipsee` target as n32/eabi64 does (`$a4`-`$a7`, `$t0`-`$t3`), so a function's fifth to eighth argument looked like a read of an unset temporary: 88 functions had no draft for that alone. `harvest.py` renames the registers before m2c reads them; the unsupported count fell from 132 to 46, 61 more drafts compile, 13 more functions match, and `harvest.py --tried --refresh --write` redrafts the functions that already have a source (a saved source is replaced only by a strictly lower score; 257 improved). m2c also needed `max.s` and `min.s` (R5900 float min and max, `fmaxf`/`fminf`), in `scripts/matching/m2c_vu.patch`.
 
 The rule-based passes of `scripts/matching/rules.py` (the deep-dive shapes as rewrites, run through `neighborhood.py`) found their first matches on the nearest misses (distance 1 to 20).
+
+### Sonnet round 6: near misses at 5 to 20 words, with the deep-dive rules in the brief (48 functions, 2026-10-30)
+
+Four workers, 25 matches (52%), the best rate of any Sonnet round: the brief now carried the rules of the deep dives, and the misses that remain are the known walls. Lessons added:
+
+- **A dropped unused leading parameter:** a draft with `arg0, arg1, arg3` has a real `arg2`; adding it (or a dummy first parameter when the real argument is in `$a1`) fixes the argument shift. `PjsgeAllocJsg(self, ...)`: retail's `$a0` untouched, arguments in `$a1..$a3,$t0,$t1`.
+- **A virtual call with only `obj + delta` and no second `obj` argument** matched (`node->vt->fn((char *)node + node->vt->delta)`): not the `-fno-schedule-insns` wall.
+- **An inline `Clamp(v, lo, hi)`** called as `Clamp(raw, 1, 99)` keeps the constant in its own register where a literal ternary does not; `switch (s) { case 0: case 1: case 9: case 10: return 1; } return 0;` gives the un-merged `slti` ladder.
+- **A byte `delta` is `(char *)p + delta`,** not `(unsigned int *)p + delta` (a spurious `sll 2`); a struct with the array member (`B.slot[idx].kind`) keeps `&B` unfolded.
+- **A callee that takes `ALLOCREQ *` is a local struct** (`req.size`, `req.align`), not two integers.
+- **A banned `asm("" : "+r")` in a draft may hide a better score:** dropping it moved one function from 6 to 3, and two from 6 to 18 and 30: the honest score is what is published.

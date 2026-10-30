@@ -7,6 +7,7 @@ extern "C" void *PvAllocStackClearImpl__Fi(ALLOCREQ *);
 extern "C" int CploFindSwObjectsByClass(void *, int, int, int, int, void *);
 struct SW { char pad[0x3AFC]; int count; };
 extern "C" SW B_003DD490;
+static inline int Clamp(int v, int lo, int hi) { if (v < lo) return lo; if (v > hi) return hi; return v; }
 int NPercentComplete(void)
 {
     char frame[16];
@@ -37,12 +38,7 @@ int NPercentComplete(void)
         return 100;
     }
     int raw = closed * 100 / total;
-    int result = 1;
-    if (raw > 0) {
-        result = 99;
-        if (raw < 100)
-            result = raw;
-    }
+    int result = Clamp(raw, 1, 99);
     CStackFrame_Destructor(frame, 2);
     return result;
 }

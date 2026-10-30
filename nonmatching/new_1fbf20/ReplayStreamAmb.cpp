@@ -1,26 +1,11 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+struct Obj_1FC270 { char pad0[0x40]; int f40; char pad1[0x50 - 0x44]; unsigned short f50; unsigned short f52; char pad2[0x68 - 0x54]; long f68; char pad3[0x3BC - 0x70]; int f3bc; };
 extern "C" {
-struct _m2c_stack_ReplayStreamAmb {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-void func_001FB0C0(s8 *);
-void ReplayStreamAmb(s8 *arg0) {
-    s32 var_v1;
-    var_v1 = 0;
-    if ((M2C_FIELD(arg0, s32 *, 0x40) == 0) && ((M2C_FIELD(arg0, u16 *, 0x52) != 0) || (var_v1 = 0 ^ 1, ((M2C_FIELD(arg0, u16 *, 0x50) & 1) != 0)))) {
-        var_v1 = 1 ^ 1;
-    }
-    if (var_v1 != 0) {
-        func_001FB0C0(arg0);
-        M2C_FIELD(arg0, s64 *, 0x68) = 0;
-        M2C_FIELD(arg0, s32 *, 0x3BC) = 0xF;
+void func_001FB0C0(void *);
+void ReplayStreamAmb(Obj_1FC270 *self) {
+    int active = 0; if (self->f40 == 0) { active = self->f52 != 0 || (self->f50 & 1) != 0; } if (active) {
+        func_001FB0C0(self);
+        self->f68 = 0;
+        self->f3bc = 0xF;
     }
 }
 }

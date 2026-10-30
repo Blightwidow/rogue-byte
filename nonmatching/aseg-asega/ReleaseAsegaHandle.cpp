@@ -1,22 +1,12 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-extern "C" {
-void ReleaseAsegaHandle(s8 **arg0) {
-    s8 *temp_a1;
-    s8 *temp_v0;
-
-    temp_a1 = *arg0;
-    if (temp_a1 != NULL) {
-        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s8 *), 0x14)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x10), temp_a1);
-        temp_v0 = M2C_FIELD(temp_a1, s8 **, 0xC);
-        *arg0 = NULL;
+typedef short s16;
+struct Obj_1306A8;
+struct VT_1306A8 { char pad[0x10]; s16 delta; s16 p; void (*fn)(char *, Obj_1306A8 *); };
+struct Obj_1306A8 { int pad[3]; VT_1306A8 *vt; };
+extern "C" void ReleaseAsegaHandle(Obj_1306A8 **handle)
+{
+    Obj_1306A8 *obj = *handle;
+    if (obj != 0) {
+        obj->vt->fn((char *)obj + obj->vt->delta, obj);
+        *handle = 0;
     }
-}
-
 }

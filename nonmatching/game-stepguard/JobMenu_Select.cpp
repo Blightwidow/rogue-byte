@@ -7,15 +7,15 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK Menu_ClearDialog();                         /* extern */
+M2C_UNK Menu_ClearDialog(s8 *, s32);                         /* extern */
 
 void JobMenu_Select(s8 *arg0, s32 arg1) {
     s32 temp_v0;
     s32 temp_v1;
     s32 var_v0;
 
-    temp_v0 = M2C_FIELD(arg0, s32 *, 0x48);
     temp_v1 = temp_v0 - 1;
+    temp_v0 = M2C_FIELD(arg0, s32 *, 0x48);
     if (temp_v0 == 0) {
         var_v0 = -1;
     } else {
@@ -25,7 +25,7 @@ void JobMenu_Select(s8 *arg0, s32 arg1) {
         }
     }
     M2C_FIELD(arg0, s32 *, 0x118) = var_v0;
-    Menu_ClearDialog();
+    Menu_ClearDialog(arg0, arg1);
 }
 
 }

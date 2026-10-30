@@ -15,7 +15,6 @@ void Flush__5OSTRM(OSTRM *self)
         char line[0x90];
         int done = 0;
         int limit = 0x7f;
-        asm("" : "+r"(limit));
         while (done < total) {
             int remaining = total - done;
             int chunk = (remaining > limit) ? 0x80 : remaining;

@@ -11,11 +11,11 @@ struct _m2c_stack_StartFade {
     /* 0x00 */ char pad0[0x10];
 };                                                  /* size = 0x10 */
 extern f32 g_2dded0;
-struct FadeVtable { char pad[0x40]; s16 adjust; s16 pad2; void (*fn)(s8 *, s8 *); };
+struct FadeVtable { char pad[0x40]; s16 adjust; s16 pad2; void (*fn)(s8 *); };
 struct FadeObj { char pad[0xC]; FadeVtable *vtable; char pad2[0x18]; u64 flags; char pad3[0x38]; f32 value; };
 void StartFade(FadeObj *obj) {
     if ((int)(obj->flags >> 0x3C) & 1) return;
     obj->value = g_2dded0;
-    obj->vtable->fn((s8 *)obj + obj->vtable->adjust, (s8 *)obj);
+    obj->vtable->fn((s8 *)obj + obj->vtable->adjust);
 }
 }

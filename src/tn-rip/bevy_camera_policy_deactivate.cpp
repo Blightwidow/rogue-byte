@@ -7,19 +7,22 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK PlayRootSpriteLabel(s32);                   /* extern */
-M2C_UNK SetBlotModal(s8 *, M2C_UNK);              /* extern */
+void DeactivateCplcy();
+s32 SetResetFlag__FP2CM(M2C_UNK *);
+extern M2C_UNK B_002DDF40;
 
-void PlayBlotLabel(s8 *arg0, s32 arg1) {
-    s8 *temp_v0;
+void bevy_camera_policy_deactivate(s8 *arg0, s8 *arg1, s8 *arg2) {
+    s8 *temp_a1;
+    s8 *temp_v1;
 
-    PlayRootSpriteLabel(M2C_FIELD(arg0, s32 *, 0x84));
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK), 0xAC)(arg0 + M2C_FIELD(temp_v0, s16 *, 0xA8), 1);
-    if (M2C_FIELD(arg0, s32 *, 0xAC) != 0) {
-        SetBlotModal(arg0, 0);
+    DeactivateCplcy();
+    if (M2C_FIELD(arg2, s32 *, 0xC) != 0) {
+        SetResetFlag__FP2CM(&B_002DDF40);
     }
-    M2C_FIELD(arg0, s32 *, 0x7C) = arg1;
+    temp_a1 = M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x10), s8 **, 0x14);
+    temp_v1 = M2C_FIELD(temp_a1, s8 **, 0xC);
+    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *), 0x14)(temp_a1 + M2C_FIELD(temp_v1, s16 *, 0x10));
+    M2C_FIELD(arg0, s8 **, 0x10) = NULL;
 }
 
 }

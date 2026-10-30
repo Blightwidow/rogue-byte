@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FClueFound(s32);                                /* extern */
+s32 FClueFound(void);                                /* extern */
 M2C_UNK PostLoLoad();                               /* extern */
 extern M2C_UNK B_003DD490;
 
@@ -17,7 +17,7 @@ void PostClueLoad(s8 *arg0) {
     PostLoLoad();
     M2C_FIELD(&B_003DD490, s32 *, 0x4760) = (s32) (M2C_FIELD(&B_003DD490, s32 *, 0x4760) + 1);
     M2C_FIELD(arg0, s32 *, 0x100) = (s32) M2C_FIELD(&B_003DD490, s32 *, 0x4760);
-    if (FClueFound(M2C_FIELD(arg0, s32 *, 0x100)) != 0) {
+    if (FClueFound() != 0) {
         temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
         M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *), 0x4C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x48));
     }

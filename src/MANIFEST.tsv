@@ -11,7 +11,9 @@ address	name	size	file
 0X100860	RefCallSendLoSpliceEvent6	116	new_100008/RefCallSendLoSpliceEvent6.cpp
 0X100958	RefCallAttachLo	168	new_100008/RefCallAttachLo.cpp
 0X100A00	func_00100A00	144	new_100008/fun_00100a00.cpp
+0X100A90	func_00100A90	128	new_100008/fun_00100a90.cpp
 0X100B10	RefCallDeferLoRemove	116	new_100008/RefCallDeferLoRemove.cpp
+0X100B88	func_00100B88	128	new_100008/fun_00100b88.cpp
 0X100C08	RefCallClearAloSelectedOid	116	new_100008/RefCallClearAloSelectedOid.cpp
 0X100C80	func_00100C80	148	new_100008/fun_00100c80.cpp
 0X100D18	RefCallShowAloGlob	132	new_100008/RefCallShowAloGlob.cpp
@@ -331,6 +333,7 @@ address	name	size	file
 0X10D9E0	RefCallDetonateGadgetObj	132	new_100008/RefCallDetonateGadgetObj.cpp
 0X10DA68	RefCallSetGuardScriptCommand	132	new_100008/RefCallSetGuardScriptCommand.cpp
 0X10DAF0	func_0010DAF0	132	new_100008/fun_0010daf0.cpp
+0X10DB78	func_0010DB78	128	new_100008/fun_0010db78.cpp
 0X10DBF8	RefCallStartBlotLabel	132	new_100008/RefCallStartBlotLabel.cpp
 0X10DC80	RefCallRewindBlotLabel	132	new_100008/RefCallRewindBlotLabel.cpp
 0X10DD08	RefCallSeekBlotLabel	168	new_100008/RefCallSeekBlotLabel.cpp
@@ -384,6 +387,7 @@ address	name	size	file
 0X10FAC0	RefSendGuardNoticeMessage	132	new_100008/RefSendGuardNoticeMessage.cpp
 0X10FB48	RefAddWaypointNode	168	new_100008/RefAddWaypointNode.cpp
 0X10FBF0	RefCallSlot290	144	new_100008/RefCallSlot290.cpp
+0X10FC80	RefCallSlot298	128	new_100008/RefCallSlot298.cpp
 0X10FD00	RefUseStepguardDeathAnimation	168	new_100008/RefUseStepguardDeathAnimation.cpp
 0X10FDA8	RefCall1800D8	184	new_100008/RefCall1800D8.cpp
 0X10FE60	RefChaser_SetStateAnim	184	new_100008/RefChaser_SetStateAnim.cpp
@@ -1266,6 +1270,7 @@ address	name	size	file
 0X131A20	SetAsegaMasterSpeed	28	asega/SetAsegaMasterSpeed.c
 0X131A40	SetAsegaPriority__FP5ASEGAi	76	asega/SetAsegaPriority__FP5ASEGAi.c
 0X131A90	func_00131A90	128	asega-bas/fun_00131a90.cpp
+0X131B10	func_00131B10	80	asega-bas/fun_00131b10.cpp
 0X131B60	func_00131B60	220	asega-bas/fun_00131b60.cpp
 0X131C40	ActivateActseg	80	asega-bas/ActivateActseg.c
 0X131C90	DeactivateActseg	68	asega-bas/DeactivateActseg.c
@@ -1385,6 +1390,7 @@ address	name	size	file
 0X13A858	func_0013A858	52	blip-light/fun_0013a858.c
 0X13A890	blip__static_initialization_and_destruction_0	308	blip-light/blip__static_initialization_and_destruction_0.c
 0X13A9C8	func_0013A9C8	32	blip-light/fun_0013a9c8.c
+0X13A9E8	InitBomb	136	blip-light/InitBomb.cpp
 0X13AA70	LoadBombFromBrx	48	light/LoadBombFromBrx.c
 0X13AAA0	CBomb_PostLoad	72	light-bomb/CBomb_PostLoad.cpp
 0X13AAE8	HandleBombMessage__FP4BOMB5MSGIDPv	108	bomb/HandleBombMessage__FP4BOMB5MSGIDPv.cpp
@@ -1465,6 +1471,7 @@ address	name	size	file
 0X141C00	func_00141C00	8	new_13f888/fun_00141c00.c
 0X141CD0	SpendJtGadgetPower	104	new_13f888/SpendJtGadgetPower.cpp
 0X141D38	func_00141D38	148	new_13f888/fun_00141d38.c
+0X141DD0	DrainJtGadget	84	new_13f888/DrainJtGadget.cpp
 0X141E28	func_00141E28	8	new_13f888/fun_00141e28.c
 0X141E30	func_00141E30	60	new_13f888/fun_00141e30.cpp
 0X141E70	func_00141E70	8	new_13f888/fun_00141e70.c
@@ -1733,6 +1740,7 @@ address	name	size	file
 0X151240	bevy_camera_looks_activate	156	tn-rip/bevy_camera_looks_activate.cpp
 0X1512E0	bevy_camera_looks_deactivate	92	tn-rip/bevy_camera_looks_deactivate.c
 0X151610	func_00151610	52	tn-rip/fun_00151610.c
+0X151698	bevy_camera_policy_deactivate	104	tn-rip/bevy_camera_policy_deactivate.cpp
 0X1518C8	func_001518C8	52	tn-rip/fun_001518c8.c
 0X151900	ActivateCpattach	76	tn-rip/ActivateCpattach.cpp
 0X151BF0	ActivateCplookat	68	rip-game/ActivateCplookat.c
@@ -1879,6 +1887,7 @@ address	name	size	file
 0X15DB28	epsel__static_initialization_and_destruction_0	308	emitter-font/epsel__static_initialization_and_destruction_0.c
 0X15DC60	func_0015DC60	32	emitter-font/fun_0015dc60.c
 0X15DC80	InitFade	88	emitter-font/InitFade.cpp
+0X15E1D8	StartFade	76	emitter-font/StartFade.cpp
 0X15E228	fade__static_initialization_and_destruction_0	308	emitter-font/fade__static_initialization_and_destruction_0.c
 0X15E360	func_0015E360	32	emitter-font/fun_0015e360.c
 0X15E380	PdlFromSwOid	36	emitter-font/PdlFromSwOid.cpp
@@ -1925,6 +1934,7 @@ address	name	size	file
 0X1613A8	func_001613A8	76	frm-splice-frame/fun_001613a8.c
 0X1613F8	JobMgr_Construct	96	splice-frame/JobMgr_Construct.cpp
 0X161458	ClearDifficultySuckPaths_thunk	32	new_161458/ClearDifficultySuckPaths_thunk.c
+0X161660	NPercentComplete	312	new_161458/NPercentComplete.cpp
 0X161798	GetGameCoins	68	new_161458/GetGameCoins.cpp
 0X161868	ShowCoinBlot	68	new_161458/ShowCoinBlot.cpp
 0X1618B0	ShowClueBlot	68	new_161458/ShowClueBlot.cpp
@@ -2084,12 +2094,14 @@ address	name	size	file
 0X171228	InitGuardScriptBeh	48	jsg-jt/InitGuardScriptBeh.c
 0X171258	SetGuardScript	320	jsg-jt/SetGuardScript.cpp
 0X171398	ExitGuardScriptBeh	76	jsg-jt/ExitGuardScriptBeh.c
+0X1713E8	UpdateGuardScriptBeh	112	jsg-jt/UpdateGuardScriptBeh.cpp
 0X171458	FGuardScriptDone	12	jsg-jt/FGuardScriptDone.c
 0X1715B8	PloFindScriptObject	52	jt/PloFindScriptObject.cpp
 0X171AF8	func_00171AF8	100	new_1715f0/fun_00171af8.cpp
 0X171B60	TeleportGuardScript	180	new_1715f0/TeleportGuardScript.cpp
 0X171C98	JumpGuardScript	92	new_1715f0/JumpGuardScript.c
 0X171CF8	func_00171CF8	96	new_1715f0/fun_00171cf8.cpp
+0X171D58	func_00171D58	80	new_1715f0/fun_00171d58.cpp
 0X171DA8	func_00171DA8	84	new_1715f0/fun_00171da8.cpp
 0X171E00	StaticInitGuardPools_171e00	308	new_1715f0/StaticInitGuardPools_171e00.c
 0X171F38	GlobalCtorGuardPools_171f38	32	new_1715f0/GlobalCtorGuardPools_171f38.c
@@ -2171,6 +2183,8 @@ address	name	size	file
 0X179A58	GoalIdle_Init	72	hide-puffer/GoalIdle_Init.c
 0X179B60	GoalIdle_Deactivate	60	hide-puffer/GoalIdle_Deactivate.cpp
 0X179D30	GoalIdle_SetState	332	hide-puffer/GoalIdle_SetState.cpp
+0X179E80	func_00179E80	120	hide-puffer/fun_00179e80.cpp
+0X179EF8	func_00179EF8	120	hide-puffer/fun_00179ef8.cpp
 0X179F70	func_00179F70	44	hide-puffer/fun_00179f70.cpp
 0X17A3D0	func_0017A3D0	44	hide-puffer/fun_0017a3d0.c
 0X17A400	func_0017A400	100	hide-puffer/fun_0017a400.cpp
@@ -2842,6 +2856,7 @@ address	name	size	file
 0X1B8008	SetMurrayAnimBase	228	mpeg-memcard/SetMurrayAnimBase.cpp
 0X1B80F0	NopMurray	8	mpeg-memcard/NopMurray.c
 0X1B80F8	FReturnFalseMurray	8	mpeg-memcard/FReturnFalseMurray.c
+0X1B8180	FMurrayOnFoot	52	mpeg-memcard/FMurrayOnFoot.cpp
 0X1B81B8	func_001B81B8	232	mpeg-memcard/fun_001b81b8.cpp
 0X1B82A0	UpdateMurrayStandOn	196	mpeg-memcard/UpdateMurrayStandOn.cpp
 0X1B8368	NMurrayActionCategory	76	mpeg-memcard/NMurrayActionCategory.cpp
@@ -2937,6 +2952,7 @@ address	name	size	file
 0X1C0980	FClipEdgeToPathzone	28	new_1c0920/FClipEdgeToPathzone.c
 0X1C09A0	FPosFreeInPathzone	160	new_1c0920/FPosFreeInPathzone.cpp
 0X1C0A40	ClsgClipEdgeToPathzoneObstacles	268	new_1c0920/ClsgClipEdgeToPathzoneObstacles.cpp
+0X1C0EC0	LoadSwPzgraphFromBrx	112	new_1c0920/LoadSwPzgraphFromBrx.cpp
 0X1C1440	ResetPathzoneQuery	100	new_1c0920/ResetPathzoneQuery.cpp
 0X1C15F8	SweepPathzoneAxis	260	new_1c0920/SweepPathzoneAxis.cpp
 0X1C18B8	RemovePathzoneEndpoints	176	new_1c0920/RemovePathzoneEndpoints.cpp
@@ -3262,6 +3278,7 @@ address	name	size	file
 0X1DC598	GetGadgetMenuText	500	game-stepguard/GetGadgetMenuText.cpp
 0X1DC790	GetShopRowName	140	game-stepguard/GetShopRowName.cpp
 0X1DC890	GetLootRowName	304	game-stepguard/GetLootRowName.cpp
+0X1DC9C0	GetLootRowPrice	112	game-stepguard/GetLootRowPrice.cpp
 0X1DCAB0	func_001DCAB0	420	game-stepguard/fun_001dcab0.cpp
 0X1DCC58	JobMenu_Construct	68	game-stepguard/JobMenu_Construct.cpp
 0X1DCCA0	JobMenu_PostLoad	52	game-stepguard/JobMenu_PostLoad.cpp
@@ -3328,6 +3345,7 @@ address	name	size	file
 0X1E04E0	AddSeqRecordCallAnimation	80	jsg-splice-ref/AddSeqRecordCallAnimation.cpp
 0X1E0530	AddSeqRecordCallSequence	64	jsg-splice-ref/AddSeqRecordCallSequence.cpp
 0X1E0570	AddSeqRecordSetContext	48	jsg-splice-ref/AddSeqRecordSetContext.cpp
+0X1E05A0	AddSeqRecordSetSmGoal	112	jsg-splice-ref/AddSeqRecordSetSmGoal.cpp
 0X1E0610	AddSeqRecordShowSwf	64	jsg-splice-ref/AddSeqRecordShowSwf.cpp
 0X1E0650	AddSeqRecordHideSwf	48	jsg-splice-ref/AddSeqRecordHideSwf.cpp
 0X1E0680	AddSeqRecordSetClockSpeed	48	jsg-splice-ref/AddSeqRecordSetClockSpeed.cpp
@@ -3399,6 +3417,7 @@ address	name	size	file
 0X1E1B58	Seqnode_AddRef	16	splice-ref-crv/Seqnode_AddRef.c
 0X1E1B68	Seqnode_Release	92	splice-ref-crv/Seqnode_Release.cpp
 0X1E1BC8	HandleSeqnodeMessage	116	splice-ref-crv/HandleSeqnodeMessage.cpp
+0X1E1C40	RunSeqnode	260	splice-ref-crv/RunSeqnode.cpp
 0X1E1DB8	PloFindSeqnodeObject	116	splice-ref-crv/PloFindSeqnodeObject.cpp
 0X1E4EB8	SetSeqnodeDrive	104	splice-ref-crv/SetSeqnodeDrive.c
 0X1E4F20	func_001E4F20	224	splice-ref-crv/fun_001e4f20.cpp
@@ -3407,6 +3426,7 @@ address	name	size	file
 0X1E51A0	AttachSeqnodeObject	224	splice-ref-crv/AttachSeqnodeObject.cpp
 0X1E53D8	func_001E53D8	56	splice-ref-crv/fun_001e53d8.c
 0X1E5410	ReleaseSeqnodeSma	84	splice-ref-crv/ReleaseSeqnodeSma.cpp
+0X1E5468	func_001E5468	68	splice-ref-crv/fun_001e5468.cpp
 0X1E54B0	ReleaseSeqnodeBinoc	56	splice-ref-crv/ReleaseSeqnodeBinoc.c
 0X1E54E8	DetachAllSeqnodeObjects	132	splice-ref-crv/DetachAllSeqnodeObjects.cpp
 0X1E5570	func_001E5570	180	splice-ref-crv/fun_001e5570.cpp
@@ -3624,6 +3644,7 @@ address	name	size	file
 0X1F4FB8	func_001F4FB8	8	so-po/fun_001f4fb8.c
 0X1F4FC0	func_001F4FC0	8	so-po/fun_001f4fc0.c
 0X1F5040	FIsSoLocked	52	po/FIsSoLocked.cpp
+0X1F5078	func_001F5078	104	po-so/fun_001f5078.cpp
 0X1F5480	ExtendSoBounds	140	po-so/ExtendSoBounds.cpp
 0X1F55C8	RecalcSoLocked	304	po-so/RecalcSoLocked.cpp
 0X1F56F8	PoxaAllocSo	36	po-so/PoxaAllocSo.c
@@ -4132,6 +4153,7 @@ address	name	size	file
 0X212C50	UpdateBlotMovie	492	screen-font/UpdateBlotMovie.cpp
 0X2132D0	FDrawBlotMovie	48	screen-font/FDrawBlotMovie.cpp
 0X2137F0	FBlotObscured	60	screen-font/FBlotObscured.cpp
+0X213830	PlayBlotLabel	100	screen-font/PlayBlotLabel.cpp
 0X213898	StopBlotLabel	140	screen-font/StopBlotLabel.cpp
 0X213928	func_00213928	220	screen-font/fun_00213928.cpp
 0X213A08	func_00213A08	248	screen-font/fun_00213a08.cpp
@@ -4285,6 +4307,7 @@ address	name	size	file
 0X2271F8	StaticInitSlotheaps_2271f8	308	new_2271f8/StaticInitSlotheaps_2271f8.c
 0X227330	func_00227330	32	new_2271f8/fun_00227330.c
 0X227350	func_00227350	44	new_2271f8/fun_00227350.cpp
+0X227380	func_00227380	112	new_2271f8/fun_00227380.cpp
 0X2273F0	func_002273F0	80	new_2271f8/fun_002273f0.cpp
 0X227440	func_00227440	32	new_2271f8/fun_00227440.c
 0X227460	StaticInitSlotheaps_227460	308	new_2271f8/StaticInitSlotheaps_227460.c
@@ -4301,6 +4324,7 @@ address	name	size	file
 0X227E58	func_00227E58	52	new_2271f8/fun_00227e58.c
 0X227E90	StaticInitSlotheaps_227e90	308	new_2271f8/StaticInitSlotheaps_227e90.c
 0X227FC8	func_00227FC8	32	new_2271f8/fun_00227fc8.c
+0X2280D0	func_002280D0	108	new_2271f8/fun_002280d0.cpp
 0X228140	func_00228140	44	new_2271f8/fun_00228140.cpp
 0X2281E8	InitWarp	104	new_2271f8/InitWarp.cpp
 0X228250	func_00228250	96	new_2271f8/fun_00228250.cpp
@@ -4574,6 +4598,8 @@ address	name	size	file
 0X256440	ConstructMurray	88	sdk/ConstructMurray.c
 0X2564B8	func_002564B8	8	sdk/fun_002564b8.c
 0X2564C0	func_002564C0	8	sdk/fun_002564c0.c
+0X256588	Vector_NotifyAdd	84	sdk/Vector_NotifyAdd.cpp
+0X256658	Vector_Clear	84	sdk/Vector_Clear.cpp
 0X2566B0	func_002566B0	36	sdk/fun_002566b0.cpp
 0X2566D8	Vector_Load	244	sdk/Vector_Load.cpp
 0X2567D0	HashTable_Clear	204	sdk/HashTable_Clear.cpp
