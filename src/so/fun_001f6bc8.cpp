@@ -9,10 +9,12 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 extern "C" {
 struct _m2c_stack_func_001F6BC8 {};                 /* size 0x0 */
 
-void func_001F6BC8(s8 *arg0, s32 arg1, s32 arg2) {
+struct E1F6BC8 { u8 pad[0xC]; s32 id; u8 pad2[8]; s32 value; u8 pad3[0xB0 - 0x1C]; };
+struct O1F6BC8 { u8 pad[0xE0]; s32 count; E1F6BC8 *entries; };
+void func_001F6BC8(O1F6BC8 *arg0, s32 arg1, s32 arg2) {
     struct E { u8 pad[0xC]; s32 id; u8 pad2[8]; s32 value; u8 pad3[0xB0 - 0x1C]; };
-    for (s32 i = 0; i < M2C_FIELD(arg0, s32 *, 0xE0); i++) {
-        E *pe = &M2C_FIELD(arg0, E **, 0xE4)[i];
+    for (s32 i = 0; i < arg0->count; i++) {
+        E1F6BC8 *pe = &arg0->entries[i];
         if (pe->id == arg1) {
             pe->value = arg2;
         }

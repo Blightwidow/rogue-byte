@@ -7,21 +7,14 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK StartSpooling__18CBinaryAsyncStream(s32);   /* extern */
+void func_0022C818(s32, s8 *);        /* extern */
 
-s32 FOpenSector__18CBinaryAsyncStreamUiUi(s8 *arg0, s32 arg1, s32 arg2) {
-    s32 temp_a3;
-
-    M2C_FIELD(arg0, s32 *, 0x24) = 0;
-    temp_a3 = M2C_FIELD(arg0, s32 *, 0x18);
-    M2C_FIELD(arg0, s32 *, 0x20) = temp_a3;
-    M2C_FIELD(arg0, s32 *, 0x2C) = arg2;
-    M2C_FIELD(arg0, s32 *, 8) = arg1;
-    M2C_FIELD(arg0, s32 *, 0x28) = arg2;
-    M2C_FIELD(arg0, s32 *, 0) = 1;
-    M2C_FIELD(arg0, s32 *, 0x1C) = 0;
-    StartSpooling__18CBinaryAsyncStream(temp_a3);
-    return 1;
+void func_0012E010(s8 *arg0) {
+    M2C_FIELD(M2C_FIELD(arg0, s8 **, 8), f32 *, 0xA8) = (f32) M2C_FIELD(arg0, f32 *, 0x1C);
+    M2C_FIELD(M2C_FIELD(arg0, s8 **, 8), s128 *, 0xC0) = (s128) M2C_FIELD(arg0, s128 *, 0x20);
+    M2C_FIELD(M2C_FIELD(arg0, s8 **, 8), s128 *, 0xD0) = (s128) M2C_FIELD(arg0, s128 *, 0x30);
+    M2C_FIELD(M2C_FIELD(arg0, s8 **, 8), s16 *, 0x9A) = 2;
+    func_0022C818(M2C_FIELD(arg0, s32 *, 4), M2C_FIELD(arg0, s8 **, 8));
 }
 
 }

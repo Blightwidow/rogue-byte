@@ -183,7 +183,6 @@ address	name	size	file	score
 0X12DA30	SetActadjOffset	288	new_12d508/SetActadjOffset.cpp	47
 0X12DB50	PactNewForXf	96	new_12d508/PactNewForXf.c	22
 0X12DEF0	func_0012DEF0	240	new_12d508/fun_0012def0.cpp	41
-0X12E010	func_0012E010	80	new_12d508/fun_0012e010.cpp	2
 0X12E120	func_0012E120	208	alo-missile/fun_0012e120.cpp	12
 0X12E238	PactNew	440	alo-missile/PactNew.cpp	55
 0X12E858	CplcyCamobj_Update	408	missile-proxy/CplcyCamobj_Update.cpp	68
@@ -201,13 +200,11 @@ address	name	size	file	score
 0X131290	HandleAsegaEvent	1192	asega/HandleAsegaEvent.cpp	304
 0X1317D8	FWrapAsegaTime	400	asega/FWrapAsegaTime.cpp	8
 0X131B10	func_00131B10	80	asega-bas/fun_00131b10.cpp	9
-0X132640	FOpenSector__18CBinaryAsyncStreamUiUi	72	bas/FOpenSector__18CBinaryAsyncStreamUiUi.cpp	1
 0X133040	AddSwTimedCall	240	new_132b08/AddSwTimedCall.cpp	11
 0X1333C0	SubscribeLoObject	136	sensor-bbmark/SubscribeLoObject.cpp	6
 0X133448	UnsubscribeLoObject	96	sensor-bbmark/UnsubscribeLoObject.cpp	12
 0X1337D0	FreeSwPoxa	616	sensor-bbmark/FreeSwPoxa.cpp	84
 0X133A38	UpdateSwPox	560	sensor-bbmark/UpdateSwPox.cpp	102
-0X133C68	AllocSwOx	80	sensor-bbmark/AllocSwOx.cpp	6
 0X133E80	UpdateSwAaox__FP2SW	448	bbmark/UpdateSwAaox__FP2SW.cpp	70
 0X134040	RecalcSwXpAll	720	bbmark-blend/RecalcSwXpAll.cpp	105
 0X134648	InitBentley	296	bbmark-blend/InitBentley.cpp	9
@@ -348,7 +345,6 @@ address	name	size	file	score
 0X150A28	bevy_classes_k30_cam_update	960	tn-rip/bevy_classes_k30_cam_update.cpp	183
 0X150F58	func_00150F58	192	tn-rip/fun_00150f58.cpp	8
 0X151018	func_00151018	192	tn-rip/fun_00151018.cpp	7
-0X151240	bevy_camera_looks_activate	160	tn-rip/bevy_camera_looks_activate.cpp	1
 0X151340	bevy_camera_looks_update	720	tn-rip/bevy_camera_looks_update.c	179
 0X151648	bevy_camera_policy_activate	80	tn-rip/bevy_camera_policy_activate.c	7
 0X151698	bevy_camera_policy_deactivate	104	tn-rip/bevy_camera_policy_deactivate.cpp	6
@@ -457,7 +453,6 @@ address	name	size	file	score
 0X1664A0	TransformGeom	336	sensor-geom/TransformGeom.cpp	22
 0X166B10	AddPrimBulk__4GIFSiiiUlPP2QW	200	gifs/AddPrimBulk__4GIFSiiiUlPP2QW.cpp	9
 0X166E08	PackXYZF__4GIFSiiii	128	gifs/PackXYZF__4GIFSiiii.c	24
-0X166E90	PackAD__4GIFSll	88	gifs/PackAD__4GIFSll.cpp	4
 0X167320	LoadGlobsetFromBrx	1360	new_167320/LoadGlobsetFromBrx.cpp	271
 0X167B68	BindGlobset	568	new_167320/BindGlobset.cpp	90
 0X167DA0	func_00167DA0	184	new_167320/fun_00167da0.cpp	15
@@ -550,7 +545,6 @@ address	name	size	file	score
 0X17E9B0	func_0017E9B0	312	new_17dd70/fun_0017e9b0.cpp	3
 0X17EEB8	func_0017EEB8	128	new_17dd70/fun_0017eeb8.cpp	7
 0X17F1D0	func_0017F1D0	528	new_17dd70/fun_0017f1d0.cpp	86
-0X17F5B0	func_0017F5B0	72	new_17dd70/fun_0017f5b0.cpp	2
 0X17F930	Mount_Update	544	new_17dd70/Mount_Update.cpp	45
 0X17FD08	Mount_SetState	920	new_17dd70/Mount_SetState.c	127
 0X1801B8	func_001801B8	496	new_1800d8/fun_001801b8.cpp	67
@@ -704,7 +698,7 @@ address	name	size	file	score
 0X1A4258	func_001A4258	544	light-stepguard/fun_001a4258.c	132
 0X1A4478	func_001A4478	1632	light-stepguard/fun_001a4478.cpp	326
 0X1A4AD8	func_001A4AD8	472	light-stepguard/fun_001a4ad8.cpp	89
-0X1A5078	AddBootQueueLevel	112	light-stepguard/AddBootQueueLevel.cpp	6
+0X1A5078	AddBootQueueLevel	112	light-stepguard/AddBootQueueLevel.cpp	4
 0X1A50E8	func_001A50E8	16	light-stepguard/fun_001a50e8.cpp	2
 0X1A5270	InitLo	304	light-stepguard/InitLo.cpp	21
 0X1A5478	AddLo	440	light-stepguard/AddLo.cpp	61
@@ -819,7 +813,6 @@ address	name	size	file	score
 0X1BB400	RunStgSwitch	584	mpeg-memcard/RunStgSwitch.cpp	48
 0X1BB648	RunStgSwitchStage	720	mpeg-memcard/RunStgSwitchStage.cpp	95
 0X1BB950	AddStgSwitchStage	104	mpeg-memcard/AddStgSwitchStage.cpp	11
-0X1BC0D0	Obstacle_Clone	144	memcard-aseg/Obstacle_Clone.cpp	3
 0X1BC208	CmpPosXy	112	new_1bc198/CmpPosXy.c	20
 0X1BC278	OrientXy	128	new_1bc198/OrientXy.c	28
 0X1BC2F8	func_001BC2F8	568	new_1bc198/fun_001bc2f8.cpp	87
@@ -1067,7 +1060,6 @@ address	name	size	file	score
 0X1ED448	ShutdownIdHashTables_1ed448	40	new_1ed1a8/ShutdownIdHashTables_1ed448.cpp	3
 0X1ED470	AddToIdTableA_1ed470	112	new_1ed1a8/AddToIdTableA_1ed470.cpp	17
 0X1ED560	AddToIdTableB_1ed560	112	new_1ed1a8/AddToIdTableB_1ed560.cpp	17
-0X1ED8E0	InitSaa	128	new_1ed1a8/InitSaa.cpp	3
 0X1EDA68	SetSaiIframe	112	shdanim/SetSaiIframe.cpp	17
 0X1EDF28	UCompletePingpong__FP8PINGPONG	120	shdanim/UCompletePingpong__FP8PINGPONG.cpp	7
 0X1EE090	InitEyes__FP4EYESP4SAAF	112	eyes/InitEyes__FP4EYESP4SAAF.cpp	2
@@ -1147,7 +1139,6 @@ address	name	size	file	score
 0X1FAC98	AddSoAngularAcceleration	104	new_1f88d8/AddSoAngularAcceleration.c	20
 0X1FAD00	AdjustSoXpVelocity	208	new_1f88d8/AdjustSoXpVelocity.cpp	19
 0X1FAF70	NewSfx__FPP3SFX	96	sound/NewSfx__FPP3SFX.cpp	14
-0X1FAFD0	InitAmbBase	72	sound/InitAmbBase.cpp	2
 0X1FB0C0	func_001FB0C0	312	sound/fun_001fb0c0.cpp	16
 0X1FB1F8	SetAmbVolume	112	sound/SetAmbVolume.cpp	17
 0X1FB778	CalculateVolPan	360	sound/CalculateVolPan.c	77
@@ -1217,8 +1208,6 @@ address	name	size	file	score
 0X209590	CloneAnimref	136	step-rwm/CloneAnimref.cpp	8
 0X209618	func_00209618	336	step-rwm/fun_00209618.cpp	13
 0X209970	RemoveGuardSgs	128	step-rwm/RemoveGuardSgs.cpp	15
-0X2099F0	FIsSgsInGrfsgs	56	step-rwm/FIsSgsInGrfsgs.cpp	2
-0X209A88	func_00209A88	72	step-rwm/fun_00209a88.cpp	7
 0X209C88	func_00209C88	416	step-rwm/fun_00209c88.cpp	58
 0X209E28	PostGuardStunCommand	96	step-rwm/PostGuardStunCommand.cpp	11
 0X20A818	func_0020A818	400	rwm-steprun/fun_0020a818.cpp	82
@@ -1254,7 +1243,6 @@ address	name	size	file	score
 0X210740	StartSwAmbSfx	424	button-po/StartSwAmbSfx.cpp	20
 0X210ED0	func_00210ED0	128	po-screen/fun_00210ed0.cpp	19
 0X210FE0	BindTextBinocReadout	360	po-screen/BindTextBinocReadout.cpp	10
-0X211348	func_00211348	72	po-screen/fun_00211348.cpp	2
 0X211528	func_00211528	1368	po-screen/fun_00211528.cpp	145
 0X211CA8	PromptBlot_Show	96	po-screen/PromptBlot_Show.cpp	3
 0X211F90	JobBlot_Update	456	po-screen/JobBlot_Update.cpp	20

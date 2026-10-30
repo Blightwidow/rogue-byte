@@ -7,9 +7,9 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s8 *PentryAddBootQueue(M2C_UNK);                  /* extern */
+s8 *PentryAddBootQueue(s8 *, M2C_UNK);                  /* extern */
 
-void AddBootQueueLevel(s8 *arg1, s32 arg2, s32 arg3) {
+void AddBootQueueLevel(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) {
     s32 var_v0;
     s8 *temp_v0;
 
@@ -18,7 +18,7 @@ void AddBootQueueLevel(s8 *arg1, s32 arg2, s32 arg3) {
         var_v0 = M2C_FIELD(arg1, s32 *, 4) != M2C_FIELD(arg1, s32 *, 0x3C);
     }
     if (var_v0 != 0) {
-        temp_v0 = PentryAddBootQueue(2);
+        temp_v0 = PentryAddBootQueue(arg0, 2);
         M2C_FIELD(temp_v0, s8 **, 8) = arg1;
         M2C_FIELD(temp_v0, s32 *, 0xC) = arg2;
         M2C_FIELD(temp_v0, s32 *, 0x10) = arg3;

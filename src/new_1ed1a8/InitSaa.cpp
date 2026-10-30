@@ -7,19 +7,26 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_func_00211348 {
+struct _m2c_stack_InitSaa {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
 
-s32 PchzStringFromId(M2C_UNK *, s32, s8 *);       /* extern */
-M2C_UNK strcpy(s32, s32);                           /* extern */
-extern M2C_UNK B_003DD490;
+void AppendSlEntry(M2C_UNK *, s8 *);
+void InitSl(s32, s32);
+s32 PrependSlEntry(M2C_UNK *, s8 *);
+extern M2C_UNK B_003E159C;
 
-void func_00211348(s32 arg0, s32 arg1, s32 arg2) {
-    s8 *temp_a2;
-
-    strcpy(arg0, PchzStringFromId(&B_003DD490, M2C_FIELD(temp_a2, s32 *, 0xCC), temp_a2));
-    temp_a2 = (s8 *)(arg2 + (arg1 * 4));
+void InitSaa(s8 *arg0, s8 *arg1) {
+    M2C_FIELD(arg0, s32 *, 0x14) = (s32) M2C_FIELD(arg1, s32 *, 0);
+    M2C_FIELD(arg0, s32 *, 0x18) = (s32) M2C_FIELD(arg1, s32 *, 4);
+    M2C_FIELD(arg0, s32 *, 0x20) = (s32) M2C_FIELD(arg1, u16 *, 8);
+    M2C_FIELD(arg0, s32 *, 0x1C) = (s32) M2C_FIELD(arg1, u16 *, 0xA);
+    InitSl((int)(arg0 + 0x34), 0x10);
+    if (M2C_FIELD(arg0, s32 *, 0x30) == 0) {
+        PrependSlEntry(&B_003E159C, arg0);
+        return;
+    }
+    AppendSlEntry(&B_003E159C, arg0);
 }
 
 }

@@ -1206,6 +1206,7 @@ address	name	size	file
 0X12DDB0	func_0012DDB0	164	new_12d508/fun_0012ddb0.cpp
 0X12DE58	func_0012DE58	148	new_12d508/fun_0012de58.cpp
 0X12DFE0	func_0012DFE0	48	new_12d508/fun_0012dfe0.cpp
+0X12E010	func_0012E010	80	new_12d508/fun_0012e010.cpp
 0X12E060	GetActvalPositionGoal	140	alo/GetActvalPositionGoal.cpp
 0X12E0F0	SetActvalGoal	44	alo-missile/SetActvalGoal.c
 0X12E1F0	PvAllocAct	32	alo-missile/PvAllocAct.c
@@ -1286,6 +1287,7 @@ address	name	size	file
 0X132570	__18CBinaryAsyncStreamPv	68	bas/__18CBinaryAsyncStreamPv.c
 0X1325B8	func_001325B8	68	bas/fun_001325b8.cpp
 0X132600	CBinaryAsyncStream_FOpenLocation	56	bas/CBinaryAsyncStream_FOpenLocation.cpp
+0X132640	FOpenSector__18CBinaryAsyncStreamUiUi	68	bas/FOpenSector__18CBinaryAsyncStreamUiUi.cpp
 0X132688	Close__18CBinaryAsyncStream	136	bas/Close__18CBinaryAsyncStream.c
 0X132710	StartSpooling__18CBinaryAsyncStream	188	bas/StartSpooling__18CBinaryAsyncStream.cpp
 0X1327D0	FSpooling__18CBinaryAsyncStream	12	bas/FSpooling__18CBinaryAsyncStream.c
@@ -1321,6 +1323,7 @@ address	name	size	file
 0X133598	StaticInitBasic	308	sensor-bbmark/StaticInitBasic.c
 0X1336D0	GlobalCtorBasic	32	sensor-bbmark/GlobalCtorBasic.c
 0X1336F0	PoxaAllocSw	224	sensor-bbmark/PoxaAllocSw.cpp
+0X133C68	AllocSwOx	76	sensor-bbmark/AllocSwOx.cpp
 0X133CB8	PoxExtractFromPoxa	80	sensor-bbmark/PoxExtractFromPoxa.cpp
 0X133D08	FPoxaPairInteracts	292	sensor-bbmark/FPoxaPairInteracts.cpp
 0X133E30	func_00133E30	80	sensor-bbmark/fun_00133e30.cpp
@@ -1726,6 +1729,7 @@ address	name	size	file
 0X1510D8	func_001510D8	88	tn-rip/fun_001510d8.cpp
 0X151130	bevy_classes_k30_cam_deactivate_2	212	tn-rip/bevy_classes_k30_cam_deactivate_2.cpp
 0X151208	func_00151208	52	tn-rip/fun_00151208.c
+0X151240	bevy_camera_looks_activate	156	tn-rip/bevy_camera_looks_activate.cpp
 0X1512E0	bevy_camera_looks_deactivate	92	tn-rip/bevy_camera_looks_deactivate.c
 0X151610	func_00151610	52	tn-rip/fun_00151610.c
 0X1518C8	func_001518C8	52	tn-rip/fun_001518c8.c
@@ -2003,6 +2007,7 @@ address	name	size	file
 0X166CE0	PackUV__4GIFSii	88	gifs/PackUV__4GIFSii.cpp
 0X166D38	PackSTQ__4GIFSfff	104	gifs/PackSTQ__4GIFSfff.cpp
 0X166DA0	PackXYZ__4GIFSiii	104	gifs/PackXYZ__4GIFSiii.cpp
+0X166E90	PackAD__4GIFSll	88	gifs/PackAD__4GIFSll.cpp
 0X166EF0	AddPrimList__4GIFSiUl	128	gifs/AddPrimList__4GIFSiUl.cpp
 0X166F70	ListRGBAQ__4GIFSUif	108	gifs/ListRGBAQ__4GIFSUif.cpp
 0X166FE8	ListUV__4GIFSii	92	gifs/ListUV__4GIFSii.cpp
@@ -2260,6 +2265,7 @@ address	name	size	file
 0X17F408	func_0017F408	180	new_17dd70/fun_0017f408.c
 0X17F4C0	func_0017F4C0	144	new_17dd70/fun_0017f4c0.cpp
 0X17F550	func_0017F550	96	new_17dd70/fun_0017f550.cpp
+0X17F5B0	func_0017F5B0	72	new_17dd70/fun_0017f5b0.cpp
 0X17F5F8	SoHit_Kill	184	new_17dd70/SoHit_Kill.cpp
 0X17F6B0	func_0017F6B0	72	new_17dd70/fun_0017f6b0.cpp
 0X17F6F8	Mount_Init	72	new_17dd70/Mount_Init.c
@@ -2889,6 +2895,7 @@ address	name	size	file
 0X1BC030	func_001BC030	32	mpeg-memcard/fun_001bc030.c
 0X1BC050	Obstacle_Init	56	mpeg-memcard/Obstacle_Init.cpp
 0X1BC088	Obstacle_LoadFromBrx	72	memcard/Obstacle_LoadFromBrx.cpp
+0X1BC0D0	Obstacle_Clone	144	memcard-aseg/Obstacle_Clone.cpp
 0X1BC160	Obstacle_AddLoHierarchy	52	aseg/Obstacle_AddLoHierarchy.c
 0X1BC198	Obstacle_RemoveLoHierarchy	108	new_1bc198/Obstacle_RemoveLoHierarchy.cpp
 0X1BC530	Obstacle_IposWrap	60	new_1bc198/Obstacle_IposWrap.cpp
@@ -3465,6 +3472,7 @@ address	name	size	file
 0X1ED788	GlobalCtorSlotheaps_1ed788	32	new_1ed1a8/GlobalCtorSlotheaps_1ed788.c
 0X1ED7A8	func_001ED7A8	164	new_1ed1a8/fun_001ed7a8.cpp
 0X1ED850	func_001ED850	140	new_1ed1a8/fun_001ed850.c
+0X1ED8E0	InitSaa	124	new_1ed1a8/InitSaa.cpp
 0X1ED960	func_001ED960	188	new_1ed1a8/fun_001ed960.cpp
 0X1EDA20	FUpdatableSaa__FP3SAA	44	shdanim/FUpdatableSaa__FP3SAA.c
 0X1EDA50	func_001EDA50	8	shdanim/fun_001eda50.c
@@ -3702,6 +3710,7 @@ address	name	size	file
 0X1FADD0	func_001FADD0	68	new_1f88d8/fun_001fadd0.cpp
 0X1FAE18	StaticInitSlotheaps_1fae18	308	new_1f88d8/StaticInitSlotheaps_1fae18.c
 0X1FAF50	func_001FAF50	32	new_1f88d8/fun_001faf50.c
+0X1FAFD0	InitAmbBase	72	sound/InitAmbBase.cpp
 0X1FB018	PauseAmb	68	sound/PauseAmb.cpp
 0X1FB060	ContinueAmb	52	sound/ContinueAmb.cpp
 0X1FB098	StopAmb	36	sound/StopAmb.cpp
@@ -3934,8 +3943,10 @@ address	name	size	file
 0X209840	func_00209840	48	step-rwm/fun_00209840.c
 0X209870	SetGuardGrfsgs	28	step-rwm/SetGuardGrfsgs.c
 0X209890	AddGuardSgs	224	step-rwm/AddGuardSgs.cpp
+0X2099F0	FIsSgsInGrfsgs	52	step-rwm/FIsSgsInGrfsgs.cpp
 0X209A28	CsgsMatchGrfsgs	64	step-rwm/CsgsMatchGrfsgs.cpp
 0X209A68	FIsGuardInSgs	28	step-rwm/FIsGuardInSgs.c
+0X209A88	func_00209A88	68	step-rwm/fun_00209a88.cpp
 0X209AD0	PguardanimBestMatch	240	step-rwm/PguardanimBestMatch.cpp
 0X209BC0	PguardanimCurrent	28	step-rwm/PguardanimCurrent.cpp
 0X209BE0	PguardanimFind	56	step-rwm/PguardanimFind.cpp
@@ -4082,6 +4093,7 @@ address	name	size	file
 0X211148	func_00211148	168	po-screen/fun_00211148.cpp
 0X2111F0	func_002111F0	164	po-screen/fun_002111f0.cpp
 0X211298	BindTextMenuRow	172	po-screen/BindTextMenuRow.cpp
+0X211348	func_00211348	68	po-screen/fun_00211348.cpp
 0X211390	func_00211390	36	unsorted/fun_00211390.c
 0X2113B8	func_002113B8	36	unsorted/fun_002113b8.c
 0X2113E0	BindTextMarquee	64	po-screen/BindTextMarquee.c

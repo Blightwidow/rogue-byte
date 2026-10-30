@@ -2102,7 +2102,7 @@
 <rect x="518.2" y="154.5" width="8.0" height="9.0" fill="#2f7af4"><title>ResetAnimrefArray 0X208178 80 bytes (c)</title></rect>
 <rect x="526.6" y="114.2" width="8.1" height="7.9" fill="#2f7af4"><title>func_00205E70 0X205E70 72 bytes (c)</title></rect>
 <rect x="535.2" y="114.2" width="8.1" height="7.9" fill="#2f7af4"><title>CloneAnimrefArray 0X208208 72 bytes (c)</title></rect>
-<rect x="543.7" y="114.2" width="8.1" height="7.9" fill="#4a45a8"><title>func_00209A88 0X209A88 72 bytes (draft)</title></rect>
+<rect x="543.7" y="114.2" width="8.1" height="7.9" fill="#2f7af4"><title>func_00209A88 0X209A88 72 bytes (c)</title></rect>
 <rect x="552.3" y="114.2" width="8.1" height="7.9" fill="#2f7af4"><title>CHitClingingGuard 0X20A010 72 bytes (c)</title></rect>
 <rect x="560.8" y="114.2" width="7.2" height="7.9" fill="#2f7af4"><title>func_002064D8 0X2064D8 64 bytes (c)</title></rect>
 <rect x="526.6" y="122.5" width="7.3" height="7.9" fill="#2f7af4"><title>RemoveStepguardHierarchy 0X2079A0 64 bytes (c)</title></rect>
@@ -2114,7 +2114,7 @@
 <rect x="541.1" y="122.5" width="6.4" height="7.7" fill="#2f7af4"><title>func_00209098 0X209098 56 bytes (c)</title></rect>
 <rect x="547.9" y="122.5" width="6.4" height="7.7" fill="#2f7af4"><title>func_00209790 0X209790 56 bytes (c)</title></rect>
 <rect x="554.8" y="122.5" width="6.4" height="7.7" fill="#2f7af4"><title>func_002097E0 0X2097E0 56 bytes (c)</title></rect>
-<rect x="561.6" y="122.5" width="6.4" height="7.7" fill="#4a45a8"><title>FIsSgsInGrfsgs 0X2099F0 56 bytes (draft)</title></rect>
+<rect x="561.6" y="122.5" width="6.4" height="7.7" fill="#2f7af4"><title>FIsSgsInGrfsgs 0X2099F0 56 bytes (c)</title></rect>
 <rect x="534.3" y="130.7" width="7.2" height="6.9" fill="#2f7af4"><title>PguardanimFind 0X209BE0 56 bytes (c)</title></rect>
 <rect x="534.3" y="137.9" width="7.2" height="6.9" fill="#2f7af4"><title>IndexOfAlertGuard 0X20A658 56 bytes (c)</title></rect>
 <rect x="534.3" y="145.2" width="7.2" height="5.8" fill="#2f7af4"><title>func_00206458 0X206458 48 bytes (c)</title></rect>
@@ -3719,7 +3719,7 @@
 <rect x="852.0" y="156.4" width="8.5" height="9.3" fill="#2f7af4"><title>func_0017DDE8 0X17DDE8 88 bytes (c)</title></rect>
 <rect x="852.0" y="166.1" width="8.5" height="9.3" fill="#2f7af4"><title>Mount_ResetState 0X17FCB0 88 bytes (c)</title></rect>
 <rect x="852.0" y="175.7" width="8.5" height="7.5" fill="#2f7af4"><title>func_0017E410 0X17E410 72 bytes (c)</title></rect>
-<rect x="852.0" y="183.6" width="8.5" height="7.5" fill="#4a45a8"><title>func_0017F5B0 0X17F5B0 72 bytes (draft)</title></rect>
+<rect x="852.0" y="183.6" width="8.5" height="7.5" fill="#2f7af4"><title>func_0017F5B0 0X17F5B0 72 bytes (c)</title></rect>
 <rect x="860.9" y="156.4" width="8.1" height="7.8" fill="#2f7af4"><title>func_0017F6B0 0X17F6B0 72 bytes (c)</title></rect>
 <rect x="869.4" y="156.4" width="8.1" height="7.8" fill="#2f7af4"><title>Mount_Init 0X17F6F8 72 bytes (c)</title></rect>
 <rect x="877.9" y="156.4" width="7.2" height="7.8" fill="#2f7af4"><title>func_0017DDA8 0X17DDA8 64 bytes (c)</title></rect>
@@ -4047,7 +4047,7 @@
 <rect x="961.5" y="143.7" width="9.6" height="7.4" fill="#2f7af4"><title>func_00211C58 0X211C58 80 bytes (c)</title></rect>
 <rect x="971.5" y="143.7" width="8.6" height="7.4" fill="#2f7af4"><title>PdescFromEpisode 0X210B98 72 bytes (c)</title></rect>
 <rect x="980.5" y="143.7" width="8.6" height="7.4" fill="#2f7af4"><title>PchzFromStringTable 0X210CA8 72 bytes (c)</title></rect>
-<rect x="961.5" y="151.5" width="9.0" height="7.1" fill="#4a45a8"><title>func_00211348 0X211348 72 bytes (draft)</title></rect>
+<rect x="961.5" y="151.5" width="9.0" height="7.1" fill="#2f7af4"><title>func_00211348 0X211348 72 bytes (c)</title></rect>
 <rect x="970.8" y="151.5" width="9.0" height="7.1" fill="#2f7af4"><title>func_00211C10 0X211C10 72 bytes (c)</title></rect>
 <rect x="980.2" y="151.5" width="9.0" height="7.1" fill="#2f7af4"><title>ReleaseBlotMovie 0X212780 72 bytes (c)</title></rect>
 <rect x="961.5" y="158.9" width="8.2" height="7.7" fill="#2f7af4"><title>Blot_Hide 0X2129E8 72 bytes (c)</title></rect>
@@ -4130,7 +4130,7 @@
 <rect x="1211.5" y="133.1" width="12.1" height="16.4" fill="#2f7af4"><title>bevy_classes_k30_cam_deactivate_2 0X151130 216 bytes (c)</title></rect>
 <rect x="1211.5" y="149.9" width="12.1" height="14.5" fill="#4a45a8"><title>func_00150F58 0X150F58 192 bytes (draft)</title></rect>
 <rect x="1211.5" y="164.8" width="12.1" height="14.5" fill="#4a45a8"><title>func_00151018 0X151018 192 bytes (draft)</title></rect>
-<rect x="1224.0" y="133.1" width="12.2" height="11.9" fill="#4a45a8"><title>bevy_camera_looks_activate 0X151240 160 bytes (draft)</title></rect>
+<rect x="1224.0" y="133.1" width="12.2" height="11.9" fill="#2f7af4"><title>bevy_camera_looks_activate 0X151240 160 bytes (c)</title></rect>
 <rect x="1236.6" y="133.1" width="9.1" height="11.9" fill="#2f7af4"><title>bevy_classes_k30_cam_150780 0X150780 120 bytes (c)</title></rect>
 <rect x="1246.1" y="133.1" width="8.4" height="11.9" fill="#4a45a8"><title>PosCplookAnchor 0X14FE58 112 bytes (draft)</title></rect>
 <rect x="1254.9" y="133.1" width="8.4" height="11.9" fill="#4a45a8"><title>PosCplookEye 0X14FEC8 112 bytes (draft)</title></rect>
@@ -5338,7 +5338,7 @@
 <rect x="1066.6" y="751.7" width="9.3" height="8.2" fill="#2f7af4"><title>SetAmbPan 0X1FB268 88 bytes (c)</title></rect>
 <rect x="1066.6" y="760.3" width="9.3" height="8.2" fill="#2f7af4"><title>InitAmb 0X1FBBC8 88 bytes (c)</title></rect>
 <rect x="1066.6" y="769.0" width="9.3" height="7.5" fill="#2f7af4"><title>SetAmbGrf 0X1FB658 80 bytes (c)</title></rect>
-<rect x="1076.3" y="751.7" width="7.6" height="8.2" fill="#4a45a8"><title>InitAmbBase 0X1FAFD0 72 bytes (draft)</title></rect>
+<rect x="1076.3" y="751.7" width="7.6" height="8.2" fill="#2f7af4"><title>InitAmbBase 0X1FAFD0 72 bytes (c)</title></rect>
 <rect x="1084.3" y="751.7" width="7.6" height="8.2" fill="#2f7af4"><title>PauseAmb 0X1FB018 72 bytes (c)</title></rect>
 <rect x="1092.3" y="751.7" width="5.8" height="8.2" fill="#2f7af4"><title>ContinueAmb 0X1FB060 56 bytes (c)</title></rect>
 <rect x="1076.3" y="760.3" width="6.1" height="7.9" fill="#2f7af4"><title>SetAmbPitch 0X1FB2C0 56 bytes (c)</title></rect>
@@ -5837,7 +5837,7 @@
 <rect x="1124.6" y="672.3" width="8.7" height="10.4" fill="#2f7af4"><title>CreateXfActadj 0X12DBB0 104 bytes (c)</title></rect>
 <rect x="1133.7" y="659.8" width="8.7" height="9.6" fill="#2f7af4"><title>GetActadjPositionGoal 0X12D9D0 96 bytes (c)</title></rect>
 <rect x="1142.8" y="659.8" width="8.7" height="9.6" fill="#4a45a8"><title>PactNewForXf 0X12DB50 96 bytes (draft)</title></rect>
-<rect x="1133.7" y="669.8" width="10.4" height="6.6" fill="#4a45a8"><title>func_0012E010 0X12E010 80 bytes (draft)</title></rect>
+<rect x="1133.7" y="669.8" width="10.4" height="6.6" fill="#2f7af4"><title>func_0012E010 0X12E010 80 bytes (c)</title></rect>
 <rect x="1133.7" y="676.8" width="10.4" height="5.9" fill="#2f7af4"><title>DeactivateActadj 0X12D890 72 bytes (c)</title></rect>
 <rect x="1144.5" y="669.8" width="7.0" height="6.8" fill="#2f7af4"><title>ActivateActadj 0X12D858 56 bytes (c)</title></rect>
 <rect x="1144.5" y="677.0" width="7.0" height="5.7" fill="#2f7af4"><title>func_0012DFE0 0X12DFE0 48 bytes (c)</title></rect>
@@ -5882,7 +5882,7 @@
 <rect x="1130.8" y="815.3" width="11.9" height="10.0" fill="#2f7af4"><title>PostLoMessage 0X133508 136 bytes (c)</title></rect>
 <rect x="1143.1" y="815.3" width="8.3" height="10.0" fill="#4a45a8"><title>UnsubscribeLoObject 0X133448 96 bytes (draft)</title></rect>
 <rect x="1130.8" y="825.7" width="8.0" height="10.3" fill="#2f7af4"><title>Basic_FreeSubscribers 0X1334A8 96 bytes (c)</title></rect>
-<rect x="1130.8" y="836.4" width="8.0" height="8.5" fill="#4a45a8"><title>AllocSwOx 0X133C68 80 bytes (draft)</title></rect>
+<rect x="1130.8" y="836.4" width="8.0" height="8.5" fill="#2f7af4"><title>AllocSwOx 0X133C68 80 bytes (c)</title></rect>
 <rect x="1139.2" y="825.7" width="5.9" height="11.5" fill="#2f7af4"><title>PoxExtractFromPoxa 0X133CB8 80 bytes (c)</title></rect>
 <rect x="1145.5" y="825.7" width="5.9" height="11.5" fill="#2f7af4"><title>func_00133E30 0X133E30 80 bytes (c)</title></rect>
 <rect x="1139.2" y="837.6" width="7.4" height="7.4" fill="#2f7af4"><title>func_00133380 0X133380 64 bytes (c)</title></rect>
@@ -6196,7 +6196,7 @@
 <rect x="1587.4" y="477.2" width="11.2" height="8.0" fill="#2f7af4"><title>AddImage__4GIFSi 0X167150 104 bytes (c)</title></rect>
 <rect x="1575.8" y="485.6" width="10.5" height="7.8" fill="#2f7af4"><title>ListUV__4GIFSii 0X166FE8 96 bytes (c)</title></rect>
 <rect x="1575.8" y="493.8" width="10.5" height="7.1" fill="#2f7af4"><title>PackUV__4GIFSii 0X166CE0 88 bytes (c)</title></rect>
-<rect x="1586.7" y="485.6" width="11.9" height="6.3" fill="#4a45a8"><title>PackAD__4GIFSll 0X166E90 88 bytes (draft)</title></rect>
+<rect x="1586.7" y="485.6" width="11.9" height="6.3" fill="#2f7af4"><title>PackAD__4GIFSll 0X166E90 88 bytes (c)</title></rect>
 <rect x="1586.7" y="492.2" width="7.0" height="8.7" fill="#2f7af4"><title>__4GIFS 0X166920 72 bytes (c)</title></rect>
 <rect x="1594.1" y="492.2" width="4.5" height="2.6" fill="#2f7af4"><title>CheckReg__4GIFSii 0X166A50 16 bytes (c)</title></rect>
 <rect x="1594.1" y="495.2" width="2.1" height="2.6" fill="#2a2d6e"><title>func_00166E88 0X166E88 8 bytes (asm)</title></rect>
@@ -6225,7 +6225,7 @@
 <rect x="1218.0" y="570.2" width="13.7" height="9.1" fill="#2f7af4"><title>func_001ED850 0X1ED850 144 bytes (c)</title></rect>
 <rect x="1232.2" y="570.2" width="12.2" height="9.1" fill="#2f7af4"><title>PidFindInIdTableA_1ed4e0 0X1ED4E0 128 bytes (c)</title></rect>
 <rect x="1218.0" y="579.7" width="10.1" height="10.9" fill="#2f7af4"><title>PidFindInIdTableB_1ed5d0 0X1ED5D0 128 bytes (c)</title></rect>
-<rect x="1218.0" y="591.0" width="10.1" height="10.9" fill="#4a45a8"><title>InitSaa 0X1ED8E0 128 bytes (draft)</title></rect>
+<rect x="1218.0" y="591.0" width="10.1" height="10.9" fill="#2f7af4"><title>InitSaa 0X1ED8E0 128 bytes (c)</title></rect>
 <rect x="1228.6" y="579.7" width="7.7" height="12.5" fill="#4a45a8"><title>AddToIdTableA_1ed470 0X1ED470 112 bytes (draft)</title></rect>
 <rect x="1236.6" y="579.7" width="7.7" height="12.5" fill="#4a45a8"><title>AddToIdTableB_1ed560 0X1ED560 112 bytes (draft)</title></rect>
 <rect x="1228.6" y="592.7" width="8.8" height="9.3" fill="#4a45a8"><title>FilterColorRgba8_1ed278 0X1ED278 96 bytes (draft)</title></rect>
@@ -6890,7 +6890,7 @@
 <rect x="1580.3" y="634.2" width="10.7" height="8.0" fill="#2f7af4"><title>Spool__18CBinaryAsyncStream 0X132930 104 bytes (c)</title></rect>
 <rect x="1591.3" y="634.2" width="7.3" height="8.0" fill="#2f7af4"><title>__18CBinaryAsyncStreamPv 0X132570 72 bytes (c)</title></rect>
 <rect x="1580.3" y="642.6" width="10.8" height="5.3" fill="#2f7af4"><title>_$_18CBinaryAsyncStream 0X1325B8 72 bytes (c)</title></rect>
-<rect x="1580.3" y="648.4" width="10.8" height="5.3" fill="#4a45a8"><title>FOpenSector__18CBinaryAsyncStreamUiUi 0X132640 72 bytes (draft)</title></rect>
+<rect x="1580.3" y="648.4" width="10.8" height="5.3" fill="#2f7af4"><title>FOpenSector__18CBinaryAsyncStreamUiUi 0X132640 72 bytes (c)</title></rect>
 <rect x="1591.5" y="642.6" width="7.1" height="6.3" fill="#2f7af4"><title>CBinaryAsyncStream_FOpenLocation 0X132600 56 bytes (c)</title></rect>
 <rect x="1591.5" y="649.3" width="2.6" height="4.4" fill="#2f7af4"><title>FSpooling__18CBinaryAsyncStream 0X1327D0 16 bytes (c)</title></rect>
 <rect x="1594.5" y="649.3" width="4.1" height="2.8" fill="#2f7af4"><title>Skip__18CBinaryAsyncStreami 0X132998 16 bytes (c)</title></rect>
@@ -7665,7 +7665,7 @@
 <rect x="1541.9" y="804.7" width="12.2" height="12.0" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>memcard-aseg: 144 bytes</title>
-<rect x="1555.1" y="805.7" width="9.8" height="9.6" fill="#4a45a8"><title>Obstacle_Clone 0X1BC0D0 144 bytes (draft)</title></rect>
+<rect x="1555.1" y="805.7" width="9.8" height="9.6" fill="#2f7af4"><title>Obstacle_Clone 0X1BC0D0 144 bytes (c)</title></rect>
 <rect x="1554.1" y="804.7" width="12.2" height="12.0" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>coin: 136 bytes</title>

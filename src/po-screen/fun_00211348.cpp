@@ -7,16 +7,17 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-void CheckReg__4GIFSii(s8 *, M2C_UNK, M2C_UNK);        /* extern */
+struct _m2c_stack_func_00211348 {
+    /* 0x00 */ char pad0[0x20];
+};                                                  /* size = 0x20 */
 
-void PackAD__4GIFSll(s8 *arg0, s64 arg1, s64 arg2) {
-    s8 *temp_v0;
+s8 *PchzStringFromId(M2C_UNK *, s32);       /* extern */
+s8 *strcpy(s8 *, s8 *);                           /* extern */
+extern M2C_UNK B_003DD490;
 
-    CheckReg__4GIFSii(arg0, 1, 0xE);
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
-    M2C_FIELD(temp_v0, s64 *, 8) = arg1;
-    M2C_FIELD(temp_v0, s64 *, 0) = arg2;
+struct T211348 { char pad[0xCC]; s32 ids[4]; };
+void func_00211348(s8 *arg0, s32 arg1, T211348 *arg2) {
+    strcpy(arg0, PchzStringFromId(&B_003DD490, arg2->ids[arg1]));
 }
 
 }
