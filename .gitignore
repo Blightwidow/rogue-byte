@@ -28,3 +28,6 @@ config/us/swapped.tsv
 tools/*
 !tools/README.md
 objdiff.json
+
+# Your own disc images (game data, never committed)
+/discs/
