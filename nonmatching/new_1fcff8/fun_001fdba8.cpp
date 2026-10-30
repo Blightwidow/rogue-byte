@@ -10,11 +10,11 @@ extern "C" {
 struct _m2c_stack_func_001FDBA8 {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-M2C_UNK func_002330D0(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s64); /* extern */
+M2C_UNK func_002330D0(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s64); /* extern */
 void func_001FDBA8(s8 *arg0) {
     if (M2C_FIELD(arg0, s32 *, 0xA0) == 0) {
         M2C_FIELD(arg0, s32 *, 0xA0) = 1;
-        func_002330D0(0x524B5553, 0xC, 0, 0, (s64) arg0);
+        func_002330D0(arg0, 0x524B5553, 0xC, 0, 0, (s64) arg0);
     }
 }
 }

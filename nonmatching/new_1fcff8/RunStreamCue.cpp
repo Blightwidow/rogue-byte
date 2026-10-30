@@ -7,8 +7,8 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK SetAloEyesClosed(s32, s8 *, M2C_UNK, s32); /* extern */
-M2C_UNK SetSmaGoal__FP3SMA3OID(s32, s32, s8 *, M2C_UNK); /* extern */
+M2C_UNK SetAloEyesClosed(s8 *, s32, s8 *, M2C_UNK, s32); /* extern */
+M2C_UNK SetSmaGoal__FP3SMA3OID(s32, s32, s8 *, f32); /* extern */
 
 void RunStreamCue(s8 *arg0, s8 *arg1) {
     s16 temp_v1;
@@ -23,7 +23,7 @@ void RunStreamCue(s8 *arg0, s8 *arg1) {
                 SetSmaGoal__FP3SMA3OID(temp_a0, temp_a1, arg0, -1);
             }
         } else {
-            SetAloEyesClosed(M2C_FIELD(arg0, s32 *, 0x238), arg0, -1, M2C_FIELD(arg1, s32 *, 4));
+            SetAloEyesClosed(arg0, M2C_FIELD(arg0, s32 *, 0x238), arg0, -1, M2C_FIELD(arg1, s32 *, 4));
         }
     }
 }

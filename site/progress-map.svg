@@ -353,12 +353,12 @@
 <rect x="148.5" y="545.2" width="9.6" height="8.5" fill="#4b4f6e"><title>func_00244518 0X244518 88 bytes (asm)</title></rect>
 <rect x="148.5" y="554.1" width="9.6" height="8.5" fill="#4b4f6e"><title>func_0024B7A8 0X24B7A8 88 bytes (asm)</title></rect>
 <rect x="148.5" y="563.0" width="9.6" height="8.5" fill="#4b4f6e"><title>func_0024FA38 0X24FA38 88 bytes (asm)</title></rect>
-<rect x="148.5" y="571.8" width="9.6" height="8.5" fill="#4b4f6e"><title>func_002550A0 0X2550A0 88 bytes (asm)</title></rect>
-<rect x="158.4" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>InitVarbNode 0X2553E0 88 bytes (asm)</title></rect>
-<rect x="168.2" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>InitFrameNode 0X255718 88 bytes (asm)</title></rect>
-<rect x="178.0" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>InitProcNode 0X255A58 88 bytes (asm)</title></rect>
-<rect x="187.8" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>InitSidebagNode 0X255D90 88 bytes (asm)</title></rect>
-<rect x="197.6" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>func_002560C8 0X2560C8 88 bytes (asm)</title></rect>
+<rect x="148.5" y="571.8" width="9.6" height="8.5" fill="#2f7af4"><title>func_002550A0 0X2550A0 88 bytes (c)</title></rect>
+<rect x="158.4" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>InitVarbNode 0X2553E0 88 bytes (c)</title></rect>
+<rect x="168.2" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>InitFrameNode 0X255718 88 bytes (c)</title></rect>
+<rect x="178.0" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>InitProcNode 0X255A58 88 bytes (c)</title></rect>
+<rect x="187.8" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>InitSidebagNode 0X255D90 88 bytes (c)</title></rect>
+<rect x="197.6" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>func_002560C8 0X2560C8 88 bytes (c)</title></rect>
 <rect x="207.3" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>ConstructSly 0X2563E8 88 bytes (c)</title></rect>
 <rect x="217.1" y="464.6" width="9.4" height="8.6" fill="#2f7af4"><title>ConstructMurray 0X256440 88 bytes (c)</title></rect>
 <rect x="226.9" y="464.6" width="9.4" height="8.6" fill="#4b4f6e"><title>Vector_NotifyAdd 0X256588 88 bytes (asm)</title></rect>
@@ -4949,7 +4949,7 @@
 <rect x="1371.9" y="302.0" width="15.0" height="15.5" fill="#4a45a8"><title>StoreAudioModeInSave 0X1D54B8 256 bytes (draft)</title></rect>
 <rect x="1387.3" y="302.0" width="8.8" height="15.5" fill="#2f7af4"><title>func_001D55B8 0X1D55B8 152 bytes (c)</title></rect>
 <rect x="1371.9" y="317.9" width="8.0" height="15.2" fill="#4a45a8"><title>AllocRenderTreeNode 0X1D6480 136 bytes (draft)</title></rect>
-<rect x="1380.3" y="317.9" width="8.5" height="10.9" fill="#4a45a8"><title>RemoveAloFromRenderTree 0X1D6310 104 bytes (draft)</title></rect>
+<rect x="1380.3" y="317.9" width="8.5" height="10.9" fill="#2f7af4"><title>RemoveAloFromRenderTree 0X1D6310 104 bytes (c)</title></rect>
 <rect x="1380.3" y="329.2" width="8.5" height="3.9" fill="#2f7af4"><title>PushRenderNode 0X1D57B8 40 bytes (c)</title></rect>
 <rect x="1389.1" y="317.9" width="7.0" height="4.8" fill="#2f7af4"><title>PopRenderNode 0X1D57E0 40 bytes (c)</title></rect>
 <rect x="1389.1" y="323.1" width="7.0" height="3.8" fill="#2f7af4"><title>func_001D5788 0X1D5788 32 bytes (c)</title></rect>

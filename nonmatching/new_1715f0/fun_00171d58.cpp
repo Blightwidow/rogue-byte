@@ -11,7 +11,7 @@ struct _m2c_stack_func_00171D58 {
     /* 0x00 */ char pad0[0x90];
 };                                                  /* size = 0x90 */
 
-M2C_UNK GoalBrain_SetCommand(s32, s8 *, s32);     /* extern */
+M2C_UNK GoalBrain_SetCommand(s32, s8 *, f32);     /* extern */
 s32 func_00205458(M2C_UNK);                         /* extern */
 M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK);           /* extern */
 

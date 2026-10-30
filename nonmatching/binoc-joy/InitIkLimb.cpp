@@ -11,8 +11,9 @@ extern "C" void InitIkLimb(LIMB *plimb)
     XFM *pupper = plimb->pxfUpper;
     XFM *plower = plimb->pxfLower;
     plimb->upperRest[0] = pupper->local[0];
-    XFM *pend = plimb->pxfEnd;
+    XFM * pend;
     QW *prow = &pend->world[0];
+    pend = plimb->pxfEnd;
     asm("lqc2 vf6, %0" : : "m" (plimb->effector));
     plimb->upperRest[1] = pupper->local[1];
     plimb->upperRest[2] = pupper->local[2];

@@ -10,8 +10,8 @@ extern "C" {
 struct _m2c_stack_func_001C4848 {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
-s8 *PemitbEnsureEmitter(s32, M2C_UNK, s8 *);    /* extern */
-s32 PvAllocSwClearImpl__Fi(s8 *, s32, s32);       /* extern */
+s8 * PemitbEnsureEmitter(s32, f32, s8 *);    /* extern */
+s32 PvAllocSwClearImpl__Fi(s8 *, s32, f32);       /* extern */
 void func_001C4848(s8 *arg0, s32 arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     u32 temp_v1;

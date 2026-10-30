@@ -9,6 +9,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 extern "C" {
 struct _m2c_stack_IglyphFromFontCh {};              /* size 0x0 */
 s32 IglyphFromFontCh(s8 *arg0, s32 arg1) {
+    s32 result;
     s32 temp_a2;
     s32 temp_v0;
     s32 var_a3;
@@ -32,10 +33,12 @@ loop_2:
         var_v1 = var_a3 + var_t0;
         if (var_a3 < var_t0) {
             /* Duplicate return node #9. Try simplifying control flow for better match */
-            return 0;
+            { result = 0; goto done; }
         }
         goto loop_2;
     }
-    return 0;
+    { result = 0; goto done; }
+done:
+    return result;
 }
 }

@@ -3,7 +3,7 @@ extern "C" {
 
 M2C_UNK GoalBrain_SetCommand(s32, void *, s32, s32); /* extern */
 s32 func_00205458(M2C_UNK);                         /* extern */
-M2C_UNK memset(void *, M2C_UNK, M2C_UNK);           /* extern */
+M2C_UNK memset(void *, M2C_UNK, f32);           /* extern */
 
 void PostGuardStunCommand(s32 arg1) {
     char sp[0x70];

@@ -7,10 +7,11 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-M2C_UNK BuildImageGifs__FiiiiiiP4GIFS(s32, M2C_UNK, M2C_UNK, s32); /* extern */
+M2C_UNK BuildImageGifs__FiiiiiiP4GIFS(s8 *, s32, f32, M2C_UNK, s32); /* extern */
 
 void BuildClutGifs__FP4CLUTiP4GIFS(s8 *arg0, s32 arg1, s32 arg2) {
-    BuildImageGifs__FiiiiiiP4GIFS(arg1, 1, 0, ((u16) M2C_FIELD(arg0, u16 *, 8) >= 0x11U) ? 0x10 : 8);
+    BuildImageGifs__FiiiiiiP4GIFS(arg0, arg1, 1, 0, ((u16) M2C_FIELD(arg0, u16 *, 8) >= 0x11U) ? 0x10 : 8);
+    return;
 }
 
 }

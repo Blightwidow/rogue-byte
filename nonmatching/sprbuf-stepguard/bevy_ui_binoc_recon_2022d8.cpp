@@ -9,6 +9,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 extern "C" {
 struct _m2c_stack_bevy_ui_binoc_recon_2022d8 {};    /* size 0x0 */
 s32 bevy_ui_binoc_recon_2022d8(s8 *arg0) {
+    s32 result;
     s32 temp_v0;
     s32 var_a1;
     s8 **var_a0;
@@ -28,22 +29,24 @@ loop_6:
                         goto block_11;
                     }
                     /* Duplicate return node #3. Try simplifying control flow for better match */
-                    return 1;
+                    { result = 1; goto done; }
                 }
                 /* Duplicate return node #3. Try simplifying control flow for better match */
                 return 1;
             }
 block_11:
             var_a1 += 1;
-            var_a0 += 4;
+            var_a0 += 1;
             if (var_a1 >= temp_v0) {
                 /* Duplicate return node #12. Try simplifying control flow for better match */
                 return 0;
             }
             goto loop_6;
         }
-        return 0;
+        { result = 0; goto done; }
     }
     return 1;
+done:
+    return result;
 }
 }

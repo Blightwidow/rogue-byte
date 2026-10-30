@@ -14,8 +14,8 @@ void Align__4VIFSi(s8 *arg0, s32 arg1) {
     s32 var_a2;
     u32 var_v0;
     temp_v0 = M2C_FIELD(arg0, s32 *, 0xC);
-    var_a2 = temp_v0;
     var_v0 = (u32) (temp_v0 & 0xC) >> 2;
+    var_a2 = temp_v0;
     if (var_v0 != arg1) {
         do {
             temp_a0 = var_v0 + 1;

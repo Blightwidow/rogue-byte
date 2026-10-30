@@ -11,7 +11,7 @@ struct _m2c_stack_InitAndWriteSaveSlot {
     /* 0x00 */ char pad0[0x80];
 };                                                  /* size = 0x80 */
 
-M2C_UNK BuildSlotFilePath(s32, s32, s8 *);        /* extern */
+M2C_UNK BuildSlotFilePath(s32, f32, s8 *);        /* extern */
 M2C_UNK ResetSaveKeepingOptions(s32, M2C_UNK);      /* extern */
 M2C_UNK WriteMemcardFile(s32, s8 *, s32, M2C_UNK); /* extern */
 

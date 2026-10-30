@@ -3,7 +3,7 @@ extern "C" {
 
 M2C_UNK CRef_CopyConstruct();            /* extern */
 M2C_UNK CRef_Destruct();                      /* extern */
-M2C_UNK SetTag__4CRef4TAGK();        /* extern */
+void SetTag__4CRef4TAGK();        /* extern */
 s128 bevy_camera_follow_track_heading_weight(); /* extern */
 
 s32 RefOpConvertObjectVector(s32 arg0, s32 arg1, void *arg2) {

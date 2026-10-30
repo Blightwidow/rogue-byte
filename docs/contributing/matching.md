@@ -303,3 +303,7 @@ Eight Sonnet workers, 46 of 96 matched, all landed (batches ranged from 4 to 10 
 - **Real typed structs for the object, its vtable and its entries** replace `M2C_FIELD` offsets and gotos (`entries[count++]`, `ptr[n-1]` not `(n*4)+ptr` on an `f32 *`); check the stride in retail's `addiu`.
 - **Positive condition with an empty `if`** and the other path in the `else` gives `c.le`/`bc1f`; `if (cond) x = 1; else x = 0;` (true value first) gives `bnel`/`sw zero`.
 - **Hill-climbing over adjacent store swaps** found a 7-store order that random shuffles did not (`InitTask`).
+
+### Permuted round on distance 6 to 19 (2026-10-30)
+
+`fix_stack.py` (151 of 173 sources improved, the rest of the placeholder buffers already right), `permute_stores.py --min 6 --max 19 --budget 200` (169 searched, 5 improved) and `neighborhood.py --batch --min-score 6 --max-score 19 --budget 2000` (526 functions, 55 improved, 7 reached 0: `RemoveAloFromRenderTree` and six SDK-tail node initialisers). The tail (0x2550A0 on) are slot-heap node constructors that the one-edit rewrites reach; the near misses of game code at 6 to 19 mostly need a different wording, not a rewrite.

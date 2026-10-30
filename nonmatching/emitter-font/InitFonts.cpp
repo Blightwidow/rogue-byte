@@ -32,7 +32,7 @@ void InitFonts(void) {
         var_s1 += 0x140;
         func_0015F710(temp_a0, *var_s0, sp);
         var_s2 -= 1;
-        var_s0 += 4;
+        var_s0 += 1;
     } while (var_s2 >= 0);
 }
 

@@ -27,7 +27,7 @@ void HideReconLinks(s8 *arg0) {
                 M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s8 *), 0x4C)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x48), temp_a1);
             }
             var_s1 += 1;
-            var_s0 += 4;
+            var_s0 += 1;
         } while (var_s1 < M2C_FIELD(arg0, s32 *, 0x30));
     }
 }

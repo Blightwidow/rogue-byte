@@ -12,7 +12,7 @@ struct _m2c_stack_S8Read__18CBinaryInputStream {
     /* 0x01 */ char pad1[0x1F];
 };                                                  /* size = 0x20 */
 #define sp0 (*(s8 *)(sp + 0x00))
-M2C_UNK CBinaryInputStream_Read_thunk(s8 *, M2C_UNK, s8 *); /* extern */
+M2C_UNK CBinaryInputStream_Read_thunk(s8 *, f32, s8 *); /* extern */
 s8 S8Read__18CBinaryInputStream(s8 *arg0) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 temp_a0;

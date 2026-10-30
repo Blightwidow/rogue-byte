@@ -4,6 +4,7 @@ extern "C" SjisRange D_002C36A0[];
 
 unsigned int SjisFromAsciiChar(unsigned int ch, int irange)
 {
+    unsigned int result;
     register int isymbolBase asm("$3");
     isymbolBase = 0;
     int range = irange;
@@ -23,11 +24,14 @@ unsigned int SjisFromAsciiChar(unsigned int ch, int irange)
     } else if (c - 0x7B < 4) {
         isymbolBase = 0x3F;
     } else {
-        return 0;
+        { result = 0; goto done; }
     }
     if (isymbolBase == 0)
-        return (D_002C3728[range].w0 + c - D_002C3728[range].w1) & 0xFFFF;
-    int off = isymbolBase + 0x1F;
+        { result = (D_002C3728[range].w0 + c - D_002C3728[range].w1) & 0xFFFF; goto done; }
+    int  off;
+    off = isymbolBase + 0x1F;
     asm("" : "+r" (off));
     return D_002C36A0[c - off].w0;
+done:
+    return result;
 }

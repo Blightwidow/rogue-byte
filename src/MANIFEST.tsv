@@ -3098,6 +3098,7 @@ address	name	size	file
 0X1D57A8	InitRenderNodeStack	12	new_1d54b8/InitRenderNodeStack.c
 0X1D57B8	PushRenderNode	40	new_1d54b8/PushRenderNode.cpp
 0X1D57E0	PopRenderNode	40	new_1d54b8/PopRenderNode.cpp
+0X1D6310	RemoveAloFromRenderTree	100	new_1d54b8/RemoveAloFromRenderTree.cpp
 0X1D66F0	StaticInitSlotheaps_1d66f0	308	new_1d54b8/StaticInitSlotheaps_1d66f0.c
 0X1D6828	func_001D6828	32	new_1d54b8/fun_001d6828.c
 0X1D6A90	InitLaunch	112	vec-coin/InitLaunch.cpp
@@ -4267,6 +4268,12 @@ address	name	size	file
 0X23E1C8	func_0023E1C8	152	sdk/fun_0023e1c8.cpp
 0X23E260	func_0023E260	44	sdk/fun_0023e260.cpp
 0X23E290	fptodp	64	sdk/fptodp.cpp
+0X2550A0	func_002550A0	88	sdk/fun_002550a0.cpp
+0X2553E0	InitVarbNode	88	sdk/InitVarbNode.cpp
+0X255718	InitFrameNode	88	sdk/InitFrameNode.cpp
+0X255A58	InitProcNode	88	sdk/InitProcNode.cpp
+0X255D90	InitSidebagNode	88	sdk/InitSidebagNode.cpp
+0X2560C8	func_002560C8	88	sdk/fun_002560c8.cpp
 0X256298	func_00256298	8	unsorted/fun_00256298.c
 0X2562A0	func_002562A0	8	unsorted/fun_002562a0.c
 0X2562A8	func_002562A8	12	sdk/fun_002562a8.cpp

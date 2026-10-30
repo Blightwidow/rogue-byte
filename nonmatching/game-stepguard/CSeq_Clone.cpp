@@ -12,7 +12,7 @@ struct _m2c_stack_CSeq_Clone {
 };                                                  /* size = 0x30 */
 
 void CLo_Clone();
-s32 PvAllocSwCopyImpl__FiPv(s8 *, s32, s32, s32);
+s32 PvAllocSwCopyImpl__FiPv(s8 *, s32, s32, f32);
 
 void CSeq_Clone(s8 *arg0) {
     s8 sp[0x30] __attribute__((aligned(16)));

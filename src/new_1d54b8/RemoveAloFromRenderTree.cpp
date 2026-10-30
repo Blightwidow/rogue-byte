@@ -13,7 +13,7 @@ void RemoveAloFromRenderTree(s8 *arg0) {
     s8 *temp_a1;
     temp_a1 = M2C_FIELD(arg0, s8 **, 0x144);
     if (temp_a1 != NULL) {
-        M2C_FIELD(temp_a1, s64 *, 0x10) = (s64) (M2C_FIELD(temp_a1, s64 *, 0x10) | (0xF000 << 0x14));
+        M2C_FIELD(temp_a1, s64 *, 0x10) = (s64) (M2C_FIELD(temp_a1, s64 *, 0x10) | (0xF000L << 0x14));
         M2C_FIELD(arg0, s32 *, 0x140) = -1;
         temp_a0 = M2C_FIELD(arg0, s32 *, 0x40);
         M2C_FIELD(arg0, s8 **, 0x144) = NULL;

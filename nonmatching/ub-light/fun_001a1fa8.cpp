@@ -8,7 +8,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 M2C_UNK SetJmpState(s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK SetJtZapState(M2C_UNK);                     /* extern */
+M2C_UNK SetJtZapState(s8 *, M2C_UNK);                     /* extern */
 M2C_UNK WarpZapToSafePoint();                       /* extern */
 
 void func_001A1FA8(s8 *arg0) {
@@ -27,7 +27,7 @@ block_8:
         WarpZapToSafePoint();
         return;
     }
-    SetJtZapState(8);
+    SetJtZapState(arg0, 8);
 }
 
 }

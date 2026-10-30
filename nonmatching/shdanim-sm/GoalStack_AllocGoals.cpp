@@ -24,7 +24,7 @@ void GoalStack_AllocGoals(s32 arg0) {
     do {
         var_s1 += 1;
         *var_s0 = PvAllocSwImpl__Fi(sp, CbGoalMax(), 0x10);
-        var_s0 += 4;
+        var_s0 += 1;
     } while (var_s1 < 8U);
 }
 

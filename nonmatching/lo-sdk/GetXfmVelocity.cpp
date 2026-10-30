@@ -10,13 +10,14 @@ extern "C" {
 struct _m2c_stack_GetXfmVelocity {
     /* 0x00 */ char pad0[0x10];
 };                                                  /* size = 0x10 */
-s128 VelocityXfAtPos(s32, M2C_UNK, M2C_UNK);        /* extern */
+s128 VelocityXfAtPos(s8 *, s32, M2C_UNK, M2C_UNK);        /* extern */
 extern s128 g_2a2dd0;
 s128 GetXfmVelocity(s8 *arg0) {
+    s128 result;
     s32 temp_v0;
     s32 temp_v1;
-    temp_v0 = temp_v1 + 0x40;
     temp_v1 = M2C_FIELD(arg0, s32 *, 0x50);
+    temp_v0 = temp_v1 + 0x40;
     if (temp_v1 != 0) {
         asm volatile("lqc2 vf5, 0x90(%0)" : : "r"(arg0));
         asm volatile("lqc2 vf4, 0x30(%0)" : : "r"(temp_v0));
@@ -29,8 +30,10 @@ s128 GetXfmVelocity(s8 *arg0) {
         asm volatile("vmaddw.xyz vf6, vf4, vf0w");
         s32 vu_1;
         asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_1));
-        return VelocityXfAtPos(temp_v1, 0, vu_1);
+        { result = VelocityXfAtPos(arg0, temp_v1, 0, vu_1); goto done; }
     }
-    return g_2a2dd0;
+    { result = g_2a2dd0; goto done; }
+done:
+    return result;
 }
 }

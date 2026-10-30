@@ -31,7 +31,7 @@ loop_2:
         var_v0 = temp_v1;
         if (!(M2C_FIELD(temp_v1, s32 *, 0xE0) & M2C_FIELD(arg0, s32 *, 0x1000))) {
             var_a2 += 1;
-            var_a1 += 4;
+            var_a1 += 1;
             if (var_a2 >= temp_v0) {
                 goto block_4;
             }

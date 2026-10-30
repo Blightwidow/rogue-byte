@@ -20,8 +20,8 @@ s8 *RefOpClqEvaluate(s8 *arg0, s8 *arg2) {
     s8 *temp_s0;
     temp_s0 = M2C_FIELD(arg2, s8 **, 4);
     CRef_RefCoerceF32(sp, (int)(arg2 + 8));
-    M2C_FIELD(arg0, s32 *, 0) = 0x16;
     M2C_FIELD(arg0, f32 *, 4) = (f32) (M2C_FIELD(temp_s0, f32 *, 0) + (sp4 * (M2C_FIELD(temp_s0, f32 *, 4) + (sp4 * M2C_FIELD(temp_s0, f32 *, 8)))));
+    M2C_FIELD(arg0, s32 *, 0) = 0x16;
     CRef_Destruct(sp);
     return arg0;
 }

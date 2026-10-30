@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 func_00143C78();                                /* extern */
+s32 func_00143C78(s8 *);                                /* extern */
 
 s32 NBentleyActionCategory(s8 *arg0) {
     s32 temp_v1;
@@ -25,7 +25,7 @@ s32 NBentleyActionCategory(s8 *arg0) {
                 var_v0 = 0xF;
                 if (temp_v1 != 0xE) {
 block_9:
-                    var_v0 = func_00143C78();
+                    var_v0 = func_00143C78(arg0);
                 }
             }
             return var_v0;

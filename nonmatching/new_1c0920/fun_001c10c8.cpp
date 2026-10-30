@@ -13,7 +13,7 @@ struct _m2c_stack_func_001C10C8 {
 
 M2C_UNK HookupPzgraph(s32);                         /* extern */
 s32 PloNew(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);     /* extern */
-s32 PvAllocSwClearImpl__Fi(s8 *, s32, s32);       /* extern */
+s32 PvAllocSwClearImpl__Fi(s8 *, s32, f32);       /* extern */
 M2C_UNK SetupDefaultPathzone(s32);                  /* extern */
 
 void func_001C10C8(s8 *arg0) {

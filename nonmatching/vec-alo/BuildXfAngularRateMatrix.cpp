@@ -1,7 +1,7 @@
 #include "m2c_macros.h"
 extern "C" {
 
-M2C_UNK BuildXfSpinRateMatrix(void *, s32, s32, M2C_UNK); /* extern */
+M2C_UNK BuildXfSpinRateMatrix(void *, s32, f32, M2C_UNK); /* extern */
 M2C_UNK ConvertDeulToW__FP6VECTORN20(M2C_UNK, M2C_UNK); /* extern */
 M2C_UNK memcpy(s32, void *, M2C_UNK);               /* extern */
 

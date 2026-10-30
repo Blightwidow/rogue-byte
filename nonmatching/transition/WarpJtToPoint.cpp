@@ -2,7 +2,7 @@
 extern "C" {
 
 M2C_UNK WarpJtToSafePoint(s32, void *, s128);       /* extern */
-M2C_UNK memset(void *, M2C_UNK, M2C_UNK);           /* extern */
+M2C_UNK memset(void *, f32, M2C_UNK);           /* extern */
 
 void WarpJtToPoint(s32 arg0) {
     char sp[0x30];

@@ -27,7 +27,7 @@ s32 VIFS_AddUnpackCommand(s8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
         var_t0_2 |= 0x10000000;
     }
     temp_a1 = M2C_FIELD(arg0, s32 **, 0xC);
-    M2C_FIELD(arg0, s32 **, 0xC) = (s32 *) (temp_a1 + 4);
+    M2C_FIELD(arg0, s32 **, 0xC) = (s32 *) ((s8 *)temp_a1 + 4);
     *temp_a1 = var_t0_2;
     return *((var_t1 * 4) + &D_002C4430) * arg2;
 }
