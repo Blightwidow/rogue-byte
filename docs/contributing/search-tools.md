@@ -77,7 +77,7 @@ them as instructions before running m2c (`decode_words`), and a check of the lif
 (15 of 452 functions miss one `lqc2`/`sqc2`). Re-running over those functions refreshed two sources and gave two more drafts that match with no editing.
 
 `permute.py` also searches the statements you mark with a trailing `//P` comment, wherever they are in the function: all orders of up to five, else a seeded sample of
-`--random` orders (default 60). Use it for a store-order miss: the compiler emits the last-written store first, so the order retail shows is found by
+`--random` orders (default 60), then a hill climb from the best order over every swap of two marked statements and every move of one (a strict improvement is taken, a tie is walked at most five times in a row, within `--budget`). Random sampling reaches a good order of five or six statements but not reliably of seven: the climb finds it one step at a time (a Sonnet worker found `InitTask`'s 7-store order this way by hand). Use it for a store-order miss: the compiler emits the last-written store first, so the order retail shows is found by
 trying orders, not by reading. Without markers it still reorders runs of consecutive statements (all orders up to five, rotations and swaps beyond); a run is
 only consecutive simple statements, which is why scattered stores need the marks. On a matched function with its four stores reversed, the search found the
 order again in 24 compiles.

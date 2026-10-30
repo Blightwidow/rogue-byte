@@ -197,6 +197,27 @@ class PermuteMarkedTests(unittest.TestCase):
         self.assertEqual(len(set(first)), 10)
         self.assertEqual(first, permute.sampled_orders(7, 10))
 
+    def test_neighbours_are_distinct_and_exclude_the_order(self):
+        around = permute.neighbours((0, 1, 2, 3))
+        self.assertEqual(len(around), len(set(around)))
+        self.assertNotIn((0, 1, 2, 3), around)
+        self.assertIn((1, 0, 2, 3), around)
+        self.assertIn((1, 2, 3, 0), around)
+
+    def test_climb_finds_a_reversed_order_one_step_at_a_time(self):
+        target = (3, 1, 4, 0, 2, 5, 6)
+        statements = [str(index) for index in range(7)]
+        lines = ['x'] * 7
+        slots = list(range(7))
+        original = permute.judge
+        permute.judge = lambda address, text, lang: sum(1 for position, value in enumerate(text.split('\n')) if int(value) != target[position]) if text != 'x' else 99
+        try:
+            score, order, used = permute.climb('0x0', lines, slots, statements, tuple(range(7)), 7, 2000, 2, 'c++')
+        finally:
+            permute.judge = original
+        self.assertEqual((score, order), (0, target))
+        self.assertGreater(used, 0)
+
     def test_marker_needs_the_trailing_comment(self):
         self.assertTrue(permute.MARK.search('    x->a = 1; //P'))
         self.assertFalse(permute.MARK.search('    x->a = 1; // P in the middle //P later'))

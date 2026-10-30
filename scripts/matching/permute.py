@@ -4,8 +4,9 @@
 other orders of independent statements and keeps the best.
 
 Statements marked with a trailing `//P` comment are permuted wherever they are in the function (all orders of up to five,
-else a seeded sample of --random orders): mark the stores retail emits in some order, which the source order only decides
-through the scheduler (the compiler emits the last-written store first), and let the search find it.
+else a seeded sample of --random orders, then a hill climb over swaps and single-statement moves from the best one):
+mark the stores retail emits in some order, which the source order only decides through the scheduler (the compiler emits
+the last-written store first), and let the search find it.
 
   python3 scripts/matching/permute.py 0x11A060 data/matching/src/fn/11A060.cpp --write      (from the lab root)
 
@@ -80,8 +81,66 @@ def sampled_orders(count, sample, seed=1):
 MARK = re.compile(r'//P\s*$')
 
 
+def apply_order(lines, slots, statements, order):
+    new = list(lines)
+    for slot, source in zip(slots, order):
+        new[slot] = statements[source]
+    return '\n'.join(new)
+
+
+def neighbours(order):
+    """Every order one swap of two statements or one single-statement move away (distinct, not the order itself)."""
+    found = []
+    for position in range(len(order)):
+        for other in range(position + 1, len(order)):
+            swapped = list(order)
+            swapped[position], swapped[other] = swapped[other], swapped[position]
+            found.append(tuple(swapped))
+    for source in range(len(order)):
+        for target in range(len(order)):
+            if abs(source - target) > 1:
+                moved = list(order)
+                moved.insert(target, moved.pop(source))
+                found.append(tuple(moved))
+    return list(dict.fromkeys(found))
+
+
+def climb(address, lines, slots, statements, order, score, budget, jobs, lang, plateau=5, log=None):
+    """(score, order, compiles): hill climbing over the orders of the marked statements from `order`.
+
+    Each step judges every neighbour (swaps of two statements and moves of one statement), takes the best one that scores lower, and when only ties
+    are left walks to an unvisited tie, at most `plateau` times in a row. Random sampling reaches a good order of five or six statements but
+    not of seven: the climb finds it one swap at a time.
+    """
+    visited, used, flat = {order}, 0, 0
+    while score and used < budget:
+        candidates = [candidate for candidate in neighbours(order) if candidate not in visited][:max(0, budget - used)]
+        if not candidates:
+            break
+        with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
+            scores = list(pool.map(lambda candidate: judge(address, apply_order(lines, slots, statements, candidate), lang), candidates))
+        used += len(candidates)
+        visited.update(candidates)
+        ranked = sorted((value, candidate) for value, candidate in zip(scores, candidates) if value is not None)
+        if not ranked:
+            break
+        best_value, best_order = ranked[0]
+        if best_value < score:
+            score, order, flat = best_value, best_order, 0
+            if log:
+                log(f'climbed to score {score}')
+        elif best_value == score and flat < plateau:
+            order, flat = best_order, flat + 1
+        else:
+            break
+    return score, order, used
+
+
 def marked_search(address, text, budget, jobs, lang, sample, log=None, seed=1):
-    """(score, text, compiles): the best order of the lines marked `//P`, which may be anywhere in the function."""
+    """(score, text, compiles): the best order of the lines marked `//P`, which may be anywhere in the function.
+
+    A sample of orders first (all of them up to five statements), then a climb from the best one when the budget allows.
+    """
     lines = text.split('\n')
     slots = [index for index, line in enumerate(lines) if MARK.search(line)]
     best_score = judge(address, text, lang)
@@ -89,21 +148,21 @@ def marked_search(address, text, budget, jobs, lang, sample, log=None, seed=1):
     if len(slots) < 2 or best_score in (None, 0):
         return best_score, best_text, used
     statements = [lines[index] for index in slots]
-    candidates = []
-    for order in sampled_orders(len(slots), min(sample, budget), seed):
-        new = list(lines)
-        for slot, source in zip(slots, order):
-            new[slot] = statements[source]
-        candidates.append('\n'.join(new))
-    candidates = candidates[:max(0, budget - 1)]
+    best_order = tuple(range(len(slots)))
+    orders_to_try = sampled_orders(len(slots), min(sample, budget), seed)[:max(0, budget - 1)]
+    candidates = [apply_order(lines, slots, statements, order) for order in orders_to_try]
     with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
         scores = list(pool.map(lambda candidate: judge(address, candidate, lang), candidates))
     used += len(candidates)
-    for score, candidate in zip(scores, candidates):
+    for score, candidate, order in zip(scores, candidates, orders_to_try):
         if score is not None and score < best_score:
-            best_score, best_text = score, candidate
+            best_score, best_text, best_order = score, candidate, order
             if log:
                 log(f'marked statements reordered: score {score}')
+    if best_score and used < budget and len(slots) > 2:
+        best_score, best_order, climbed = climb(address, lines, slots, statements, best_order, best_score, budget - used, jobs, lang, log=log)
+        used += climbed
+        best_text = apply_order(lines, slots, statements, best_order)
     return best_score, best_text, used
 
 
