@@ -354,3 +354,28 @@ A virtual call `obj->vt->fn(obj + delta, ..., obj)` that also passes `obj` as a 
 `harvest.py`'s drafts, tried under both compilers (SN 2.95.3 and Sony's 2.9-ee-991111 with its own as.exe) and kept under the lower score, with no hand work: 50 of 622 library functions match, 135 are within 5 words, 239 within 20, 395 compile (the rest: 172 unsupported instructions, 55 do not compile). 142 prefer the Sony compiler, 253 SN's; the Sony addresses were added to `config/us/sony_gcc29.txt` (the compiler is chosen per address, not per library). The score cache does not know which compiler produced a score: judge each candidate under one compiler per process, or mark the source text.
 
 `record_round.py` only reads sources of `todo` and `tried` functions: register a library function's source with `try.py --record` (it moves the function to `tried` or `matched`).
+
+### One function per kind, then the rule (five Opus deep dives, 2026-10-30)
+
+The 348 near misses (distance 1 to 9) were clustered by the kind of their diff (branch layout, order plus register, instruction selection, register only, order only, nop) and an Opus worker per kind solved one representative without a compile bound, found the cause, and applied the rule to the rest of its list: 64 more functions at 0 (the lists overlap). **No kind has a single cause**; each is a handful of recurring source shapes, and most are m2c's rendering of code that the original wrote differently. The shapes, with the mechanism where it was measured:
+
+Loops and counters (nop, order, register kinds):
+- **Indexed loop, not m2c's pointer walk.** `p = base; do { ...; i++; p += S; } while (i < n)` back to `for (i...) { p = base + i*S; ... }` or `&a[i]`: gcc's loop pass derives the pointer and emits its setup after the hoisted `lui`. `-fno-strength-reduce` on the indexed form loses retail's order, which shows the indexed form is the original. (153FF8, 1F6AC8, 1F6B48, 1F6BC8, 18A2E0.)
+- **Index first in an address:** `(ELEM *)(index * sizeof(ELEM) + (unsigned)base)`: the `(unsigned)` cast is required; `&a[i]` and `(char *)` put the base first.
+- **A loop-head `nop` is `.p2align 3` filled by ps2eeas:** an extra or missing nop there means one instruction before the loop (a register copy) is missing or extra. The copies come from reading the bound in the condition (`i < p->count`, not cached), a product held in LO through an inline helper's parameter (`mult $zero,a,b ; mflo`), or a `goto` loop where the original had a natural `for`/`while`.
+- **A zero-initialised accumulator** (`float u = 0.0f; u += X; ... return u;`) keeps the result out of `$f0` (`add.s $f4,$f4,$f0 ; mov.s $f0,$f4`): cross-jumping merges the adds. An early `mtc1 $zero,$fN` and an epilogue `mov.s $f0,$fN` is the sign.
+- **Post-increment index** `p = &a[c++]` moves the counter store; one struct copy (`struct V3 {f32 x,y,z;}`) issues all loads before the stores where m2c's `Bytes8` + `s32` did not.
+
+Registers (register-only, selection kinds):
+- **Return inside the `if` arm.** The arm's result is then a block-local temporary tied to `$v0`, which forces the other block-local values into `$a0`, `$a1` (local register allocation); a function-wide variable returned at the end is allocated later and gets another register.
+- **`max.s` operand order:** call an inline `GMax(a, b)`; the helper's first parameter decides the register `max.s` writes (`1.0f >? x` written directly does not match).
+- **A switch whose `case 0:` falls into `default:`** shares one store with two predecessors, so the compiler cannot turn it into `sw $zero` from the branch test.
+- **`save->e = save->f = 0.0f;`** shares one SF pseudo: `mtc1 $zero,$f0` and two `swc1`, where two literals give two `sw $zero`.
+
+Branches (branch kind):
+- **The delay-slot filler (`reorg`) annuls (`bnel`/`beql`) when the function returns a scalar or pointer and uses a plain `bne`/`beq` for `void` or a class returned in memory.** Retail's RefOp functions return `CRef` by value (hidden result pointer in `$a0`, handed back in `$v0`): `return CRef(0x17, flag);` with a class that has a constructor and a declared `~CRef()` (an 8-byte POD is returned in registers and is far worse). A `bnel`/`bnez` flip whose slot writes `$v0` is the sign. (`work/matching/kinds/scratch-branch/byvalue.py` automates it, but as a blanket transform it matched 2 of 60, improved 2 and worsened 31: use it only when the diff is that flip.)
+- **A `bc1fl`/`bc1f` flip on a slot copied from a join's store** means the join's store order is wrong: the compiler emits the last-written store first.
+
+Prototypes (selection kind): float arguments go in `$f12`... independently of `$a0`..., so a float parameter's position in a callee's prototype does not show in the registers, but it decides the order the argument instructions are emitted in (MIPS evaluates the last parameter first) and so the schedule. Try every interleaving of the float parameters (`float_position.py`: 5 of 41 sources reached 0, one parameter order disagrees with Sly 1's). Demangle the callee's name for parameter counts (`mangled_order.py`). A parameter typed `long long`/`s64` is 128-bit under SN: use `long`.
+
+The object-passed-as-last-argument virtual call (`obj->vt->fn(obj + delta, ..., obj)`, the `new()` constructors) is a scheduling effect: `151698` and `190BE0` match only with `-fno-schedule-insns`, because the first scheduling pass moves the `a1 = obj` copy above `a0 = obj + delta`, which leaves `obj` dead in `a0`. No source form was found that stops it.
