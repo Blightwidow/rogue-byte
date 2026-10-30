@@ -115,5 +115,14 @@ Every search tool has a target; `MIN`, `MAX` (the near-miss score range, default
 | `make mutate` | `mutate.py --batch`: the random rewrites |
 | `make rules` | `neighborhood.py --batch` with the rewrites of `rules.py` |
 | `make search` | `fix-stack`, `permute-stores`, `adopt`, `rules` in that order |
+| `make land` | after any of them: register the matches, publish, byte gate, reports (below) |
 
-None of them registers anything: afterwards `try.py --record` (or `record_round.py`) records the matches, then `make src` and `make elf`.
+None of them registers anything. `make land` does, and everything after it:
+
+```
+make land            # record.py, make src, make elf (the byte gate), make progress, make nonmatching, make objdiff, make progress
+make land FORCE=1    # the same, without the scan of the new matches for banned constructs
+```
+
+`scripts/matching/record.py` judges every source in `data/matching/src/fn` (a `.c` file as C, the assembler by address), registers the matches (SDK functions too) and scans each new match for what AGENTS.md bans: `volatile` on ordinary data (a pointer to a hardware register, an address from 0x10000000 up, is allowed), `register` pins, an empty `asm` with clobbers, `mfc1` asm. It prints every hit as `review: file:line` and `make land` stops there before it builds anything; read the hits, fix the source or accept it, and run again (`FORCE=1` skips the scan). `python3 scripts/matching/record.py --dry-run` judges without changing the registry. The recipe stops at the first failing step, so a `PASS` from the byte gate is what the later reports are built on. Commit afterwards by file name: `git add src site nonmatching config docs`.
+

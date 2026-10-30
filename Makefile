@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules permute permute-stores fix-stack mutate adopt search
+.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links rules permute permute-stores fix-stack mutate adopt search land
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -53,6 +53,15 @@ search: ## Everything in order: fix-stack, permute-stores, adopt, rules (MIN, MA
 	$(MAKE) permute-stores
 	$(MAKE) adopt
 	$(MAKE) rules
+
+land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports and nonmatching/
+	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan)
+	$(MAKE) src
+	$(MAKE) elf
+	$(MAKE) progress
+	$(MAKE) nonmatching
+	$(MAKE) objdiff
+	$(MAKE) progress
 
 config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module for code, rodata and data
 	python3 -I scripts/build/gen_splat_config.py --reset

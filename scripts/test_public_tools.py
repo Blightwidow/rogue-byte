@@ -25,6 +25,7 @@ import mutate  # noqa: E402
 import neighborhood  # noqa: E402
 import permute  # noqa: E402
 import rules  # noqa: E402
+import record  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -304,6 +305,25 @@ class RulesTests(unittest.TestCase):
 
     def test_a_source_without_a_shape_gives_no_edit_and_no_error(self):
         self.assertEqual(rules.edits('int main() { return 0; }'), {})
+
+
+class RecordScanTests(unittest.TestCase):
+    def test_a_volatile_on_ordinary_data_is_flagged(self):
+        found = record.scan('extern volatile int g_2deb20;\nint f(void) { return g_2deb20; }\n')
+        self.assertEqual([what for _, what, _ in found], ['volatile'])
+
+    def test_a_volatile_pointer_to_a_hardware_register_is_allowed(self):
+        self.assertEqual(record.scan('void f(void) { *(volatile unsigned *)0x1000E010 = 1; }\n'), [])
+
+    def test_a_register_pin_and_an_empty_asm_are_flagged(self):
+        pin = record.scan('void f(void) { register int x asm("$6"); }\n')
+        empty = record.scan('void f(void) { asm volatile("" : "+r"(x)); }\n')
+        self.assertEqual([what for _, what, _ in pin], ['register pin'])
+        self.assertEqual([what for _, what, _ in empty], ['empty asm'])
+
+    def test_vu_asm_and_comments_are_not_flagged(self):
+        self.assertEqual(record.scan('void f(void) { asm volatile("lqc2 vf1, 0(%0)" : : "r"(p)); }\n'), [])
+        self.assertEqual(record.scan('// a volatile flag would be wrong here\nint x;\n'), [])
 
 
 class MutateM2cTests(unittest.TestCase):
