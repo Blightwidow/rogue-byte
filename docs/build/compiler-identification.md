@@ -246,3 +246,9 @@ instead of `addiu`+`beq`, `sltiu` for `< 2`), reached through one-line `static i
 tested in that order; a `while` loop normalises in `__floatsidf` (a `do`/`while` gives other registers); `in.frac = a` for a
 signed `int` keeps the sign-extending `sd`. Still open in the range: 0x23D338 (`pack_d`), 0x23D468 (`unpack_d`), 0x23D508,
 0x23D808 (`__muldf3`), 0x23DAB0, 0x23DC18, 0x23DFF8, and the libc/libm units around them.
+
+## Flag sweep over the near misses (2026-10-30)
+
+348 near misses (score 1 to 9) judged under 12 flag sets (`COMPILE_FLAGS`, sources unchanged): `-O2` base; `-O1` and `-O3`; and `-O2` with `-fno-delayed-branch`, `-fno-schedule-insns`, `-fno-schedule-insns2`, `-fno-gcse`, `-fno-strength-reduce`, `-fno-peephole`, `-fno-cse-follow-jumps`, `-fno-rerun-loop-opt`, `-fno-expensive-optimizations`. None helps systematically: `-O1` improved 18 and worsened 270, `-fno-delayed-branch` 4 and 307, `-fno-schedule-insns2` 19 and 240, the rest are neutral or worse. `-fno-schedule-insns` improved 29 (three reached 0) and worsened 193, but 34 of the 53 already matched functions in the same modules break under it, so those three are coincidences, not a per-file flag. The default (`-O2 -G0 -ffast-math -fno-exceptions`) stays.
+
+The diffs of the same 348 near misses by kind (`work/matching/cluster/` is local): 85 differ in branch layout (shared exits, delay-slot content), 83 in order plus register choice, 54 around a `nop`, 41 in instruction selection or extra instructions, 31 involve VU asm, 29 in scheduling order only, 28 in register choice only. Only three differ in the callee-saved save order alone. The commonest moved instructions are the argument setup around calls (`addiu`, `daddu`) and `sw`/`lw`: there is no single dominant wall.
