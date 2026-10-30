@@ -21,6 +21,9 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from progress import Progress  # noqa: E402
+
 REGISTRY = 'data/matching/functions.tsv'
 STAMP = 'work/matching/last_record'  # sources older than the last record were counted already
 SOURCES = 'data/matching/src/fn'
@@ -64,8 +67,13 @@ def main():
     rows = list(csv.DictReader(open(REGISTRY, encoding='utf-8'), delimiter='\t'))
     by_address = {int(row['address'], 16): row for row in rows}
     sources = sorted(glob.glob(f'{SOURCES}/*.cpp') + glob.glob(f'{SOURCES}/*.c'))
+    progress = Progress(len(sources), 'record')
+    results = []
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
-        results = list(pool.map(judge, sources))
+        for result in pool.map(judge, sources):
+            results.append(result)
+            progress.tick(f'{result[0]:06X}: {result[1]}')
+    progress.done()
     new_matches, tried = [], 0
     since = os.path.getmtime(STAMP) if os.path.exists(STAMP) else 0
     for address, score, path in results:

@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mutate  # noqa: E402
 import rules  # noqa: E402
 import scorer  # noqa: E402
+from progress import Progress  # noqa: E402
 
 LAB = scorer.LAB
 SOURCES = os.path.join(LAB, 'data', 'matching', 'src', 'fn')
@@ -166,9 +167,11 @@ def main():
         pool = pool_of(arguments)
         print(f'{len(pool)} functions, score {arguments.min_score}-{arguments.max_score}, budget {arguments.budget}, depth {arguments.depth}')
         improved = reached = 0
+        progress = Progress(len(pool), 'neighborhood')
         for index, (best, address, path) in enumerate(pool, 1):
             score, text, used, _ = search(address, read(path), arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, lang=language_of(path))
-            print(f'[{index}/{len(pool)}] {address:#X}: {best} -> {score} ({used} compiles)', flush=True)
+            progress.tick()
+            print(f'[{index}/{len(pool)}] {address:#X}: {best} -> {score} ({used} compiles){progress.suffix()}', flush=True)
             if score is not None and score < best:
                 improved += 1
                 reached += score == 0

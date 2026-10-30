@@ -22,6 +22,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scorer  # noqa: E402
+from progress import Progress  # noqa: E402
 
 LAB = scorer.LAB
 SPLIT = os.path.join(LAB, 'work', 'matching', 'split', 'asm', 'functions', 'SCUS_973')
@@ -668,8 +669,10 @@ def main():
     scores = []
     table = []
     sizes = {int(row['address'], 16): int(row['size']) for row in rows}
+    progress = Progress(len(rows), 'harvest')
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for address, outcome, score, text in pool.map(lambda row: harvest_one(arguments, signatures, row), rows):
+            progress.tick(f'{address:06X}: {outcome} {score if score is not None else ""}')
             outcomes[outcome] = outcomes.get(outcome, 0) + 1
             table.append((address, sizes[address], outcome, score))
             if score is None:

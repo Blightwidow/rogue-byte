@@ -18,6 +18,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from progress import Progress  # noqa: E402
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 OUTPUT = 'nonmatching'
 
@@ -72,8 +75,14 @@ def main():
             candidates.append(swept[address])
         if candidates:
             jobs.append((address, candidates))
+    progress = Progress(len(jobs), 'nonmatching')
+    results = []
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
-        results = [(address, best) for address, best in pool.map(evaluate, jobs) if best]
+        for address, best in pool.map(evaluate, jobs):
+            progress.tick(f'{address:06X}')
+            if best:
+                results.append((address, best))
+    progress.done()
     readme = open(os.path.join(OUTPUT, 'README.md')).read() if os.path.exists(os.path.join(OUTPUT, 'README.md')) else None  # documentation, not generated
     shutil.rmtree(OUTPUT, ignore_errors=True)
     manifest = []

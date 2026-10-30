@@ -9,6 +9,9 @@ help: ## List the targets
 
 .DEFAULT_GOAL := help
 
+# The long searches print a progress line (scripts/matching/progress.py) when started through make; PROGRESS=0 silences them
+export PROGRESS ?= 1
+
 elf: ## Split the executable, rebuild it from asm and check it byte for byte (the gate)
 	.venv/bin/python configure.py --split
 	mkdir -p build/image

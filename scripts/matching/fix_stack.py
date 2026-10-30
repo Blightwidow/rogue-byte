@@ -19,6 +19,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import permute  # noqa: E402
+from progress import Progress  # noqa: E402
 
 BUFFER = re.compile(r'\b((?:char|s8|u8)\s+sp\[)(0x[0-9A-Fa-f]+)(\])')
 FRAME = re.compile(r'addiu\s+\$sp,\s*\$sp,\s*-(0x[0-9A-Fa-f]+|\d+)')
@@ -71,8 +72,10 @@ def main():
             rows.append(row)
     os.makedirs(arguments.out, exist_ok=True)
     improved = matched = 0
+    progress = Progress(len(rows), 'fix-stack')
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for result in pool.map(search, rows):
+            progress.tick()
             if result:
                 address, name, lang, start, score, text = result
                 improved += 1
@@ -81,6 +84,7 @@ def main():
                 with open(os.path.join(arguments.out, f'{int(address, 16):06X}{extension}'), 'w', encoding='utf-8') as handle:
                     handle.write(text)
                 print(f'{address} {name}: {start} -> {score}', flush=True)
+    progress.done()
     print(f'{len(rows)} sources with a large buffer, {improved} improved, {matched} match')
 
 

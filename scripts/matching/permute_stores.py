@@ -20,6 +20,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import permute  # noqa: E402
+from progress import Progress  # noqa: E402
 
 STORE = re.compile(r'^\s+(?:\*\s*\(|\*\w|M2C_FIELD\(|[\w.]+\s*->\s*\w+|[\w.]+\s*\[[^\]]*\]|\(\*)[^=;]*=(?!=)[^;]*;\s*(//.*)?$')
 
@@ -88,8 +89,10 @@ def main():
             source = os.path.abspath(previous)
         return row, address, source, search(address, source, arguments.budget, arguments.seed)
 
+    progress = Progress(len(rows), 'permute-stores')
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         for row, address, source, (start, score, text) in pool.map(run, rows):
+            progress.tick(f'{address}: {start} -> {score}')
             if score is not None and start is not None and score < start:
                 improved += 1
                 matched += score == 0
@@ -97,6 +100,7 @@ def main():
                 with open(os.path.join(arguments.out, f'{int(row["address"], 16):06X}{extension}'), 'w', encoding='utf-8') as handle:
                     handle.write(text)
                 print(f'{address} {row["name"]}: {start} -> {score}', flush=True)
+    progress.done()
     print(f'{len(rows)} functions searched, {improved} improved, {matched} match')
 
 

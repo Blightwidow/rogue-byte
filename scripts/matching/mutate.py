@@ -25,6 +25,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import permute  # noqa: E402
+from progress import Progress  # noqa: E402
 
 LAB = permute.LAB
 SKIP = re.compile(r'^\s*(#|struct\b|typedef\b|extern\b|union\b|class\b|enum\b|template\b)|\basm\b|__asm__')
@@ -500,6 +501,7 @@ def batch(arguments):
         pool = [entry for entry in pool if classes.get(int(entry[1], 16)) in wanted or len(re.findall(r'\breturn\b', open(entry[2], encoding='utf-8').read())) >= 2]
     pool.sort()
     matched = improved = 0
+    progress = Progress(len(pool), 'mutate')
     for position, (best, address, path) in enumerate(pool, 1):
         original = open(path, encoding='utf-8').read()
         score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16) + arguments.seed)
@@ -508,7 +510,8 @@ def batch(arguments):
                 open(path, 'w', encoding='utf-8').write(text)
             improved += 1
             matched += score == 0
-        print(f'[{position}/{len(pool)}] {address}: {best} -> {score} ({used} compiles){"  MATCH" if score == 0 else ""}', flush=True)
+        progress.tick()
+        print(f'[{position}/{len(pool)}] {address}: {best} -> {score} ({used} compiles){"  MATCH" if score == 0 else ""}{progress.suffix()}', flush=True)
     print(f'{len(pool)} functions: {improved} improved, {matched} reach 0')
 
 

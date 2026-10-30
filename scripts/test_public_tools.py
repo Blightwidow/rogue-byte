@@ -26,6 +26,7 @@ import neighborhood  # noqa: E402
 import permute  # noqa: E402
 import rules  # noqa: E402
 import record  # noqa: E402
+import progress  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -324,6 +325,45 @@ class RecordScanTests(unittest.TestCase):
     def test_vu_asm_and_comments_are_not_flagged(self):
         self.assertEqual(record.scan('void f(void) { asm volatile("lqc2 vf1, 0(%0)" : : "r"(p)); }\n'), [])
         self.assertEqual(record.scan('// a volatile flag would be wrong here\nint x;\n'), [])
+
+
+class ProgressTests(unittest.TestCase):
+    def capture(self, enabled, ticks):
+        import io
+        old = os.environ.get('PROGRESS')
+        if enabled:
+            os.environ['PROGRESS'] = '1'
+        else:
+            os.environ.pop('PROGRESS', None)
+        try:
+            stream = io.StringIO()
+            tracker = progress.Progress(ticks, 'test', interval=0, stream=stream)
+            for index in range(ticks):
+                tracker.tick(f'item {index}')
+            tracker.done('ok')
+            return stream.getvalue(), tracker
+        finally:
+            if old is None:
+                os.environ.pop('PROGRESS', None)
+            else:
+                os.environ['PROGRESS'] = old
+
+    def test_nothing_is_printed_unless_progress_is_set(self):
+        text, tracker = self.capture(False, 3)
+        self.assertEqual(text, '')
+        self.assertEqual(tracker.suffix(), '')
+
+    def test_a_line_per_item_with_the_count_and_the_percentage(self):
+        text, _ = self.capture(True, 4)
+        lines = text.strip().split('\n')
+        self.assertTrue(lines[0].startswith('[test] 1/4 25%'))
+        self.assertTrue(lines[3].startswith('[test] 4/4 100%'))
+        self.assertTrue(lines[-1].startswith('[test] done in'))
+
+    def test_clock_formats_seconds_minutes_and_hours(self):
+        self.assertEqual(progress.clock(42), '42s')
+        self.assertEqual(progress.clock(125), '2m05s')
+        self.assertEqual(progress.clock(3725), '1h02m')
 
 
 class MutateM2cTests(unittest.TestCase):

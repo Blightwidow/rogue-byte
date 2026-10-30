@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scorer  # noqa: E402
+from progress import Progress  # noqa: E402
 
 LAB = scorer.LAB
 SOURCES = os.path.join(LAB, 'data', 'matching', 'src', 'fn')
@@ -33,6 +34,8 @@ def read(path):
 def adopt(folders, dry_run=False):
     """(candidates judged, sources adopted, sources that reached 0)."""
     judged = adopted = reached = 0
+    total = sum(1 for folder in folders if os.path.isdir(folder) for name in os.listdir(folder) if FILE.match(name))
+    progress = Progress(total, 'adopt')
     for folder in folders:
         if not os.path.isdir(folder):
             continue
@@ -41,6 +44,7 @@ def adopt(folders, dry_run=False):
             if not found:
                 continue
             address = int(found.group(1), 16)
+            progress.tick(name)
             candidate = os.path.join(folder, name)
             current = next((os.path.join(SOURCES, f'{address:06X}{extension}') for extension in ('.cpp', '.c')
                             if os.path.exists(os.path.join(SOURCES, f'{address:06X}{extension}'))), None)
@@ -59,6 +63,7 @@ def adopt(folders, dry_run=False):
                 shutil.copyfile(candidate, destination)
             adopted += 1
             reached += new_score == 0
+    progress.done()
     return judged, adopted, reached
 
 
