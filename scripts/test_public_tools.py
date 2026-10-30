@@ -3,6 +3,7 @@
 """test_public_tools.py: regression tests for the scripts that need neither the game nor the compiler: `python3 scripts/test_public_tools.py -v`."""
 import os
 import sys
+import struct
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -27,6 +28,8 @@ import permute  # noqa: E402
 import rules  # noqa: E402
 import record  # noqa: E402
 import progress  # noqa: E402
+import pair_versions  # noqa: E402
+import disc_extract  # noqa: E402
 import prologue_profile  # noqa: E402
 import prepare_report  # noqa: E402
 import progress_comment  # noqa: E402
@@ -403,6 +406,43 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(progress.clock(42), '42s')
         self.assertEqual(progress.clock(125), '2m05s')
         self.assertEqual(progress.clock(3725), '1h02m')
+
+
+class PairVersionsTests(unittest.TestCase):
+    def test_a_jal_target_is_dropped(self):
+        self.assertEqual(pair_versions.normalise(0x0C000100), pair_versions.normalise(0x0C0FFFFF))
+
+    def test_an_address_immediate_is_dropped_but_the_registers_are_kept(self):
+        lui_a = 0x3C040020  # lui $a0, 0x20
+        lui_b = 0x3C040021
+        lui_other_register = 0x3C050020
+        self.assertEqual(pair_versions.normalise(lui_a), pair_versions.normalise(lui_b))
+        self.assertNotEqual(pair_versions.normalise(lui_a), pair_versions.normalise(lui_other_register))
+
+    def test_an_instruction_without_an_address_part_is_kept(self):
+        self.assertNotEqual(pair_versions.normalise(0x00851021), pair_versions.normalise(0x00851022))  # addu: the function field matters
+
+
+class DiscExtractTests(unittest.TestCase):
+    def record(self, name, lba, size, is_directory=False):
+        identifier = name.encode()
+        length = 33 + len(identifier) + (1 - len(identifier) % 2)
+        data = bytearray(length)
+        data[0] = length
+        struct.pack_into('<I', data, 2, lba)
+        struct.pack_into('<I', data, 10, size)
+        data[25] = 2 if is_directory else 0
+        data[32] = len(identifier)
+        data[33:33 + len(identifier)] = identifier
+        return bytes(data)
+
+    def test_directory_reads_names_extents_and_sizes(self):
+        import io
+        content = self.record('\x00', 20, 2048, True) + self.record('\x01', 20, 2048, True) + self.record('SYSTEM.CNF;1', 30, 50) + self.record('SUB', 40, 2048, True)
+        sector = content + bytes(2048 - len(content))
+        handle = io.BytesIO(bytes(2048 * 20) + sector)
+        entries = disc_extract.directory(handle, 20, 2048)
+        self.assertEqual(entries, [('SYSTEM.CNF', 30, 50, False), ('SUB', 40, 2048, True)])
 
 
 class MutateM2cTests(unittest.TestCase):
