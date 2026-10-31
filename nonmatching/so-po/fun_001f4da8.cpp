@@ -12,7 +12,7 @@ struct _m2c_stack_func_001F4DA8 {
 };                                                  /* size = 0x20 */
 
 M2C_UNK FreeSwMqList__FP2SWP2MQ(M2C_UNK *, s8 *); /* extern */
-M2C_UNK func_001F5078(s8 **, s8 *);             /* extern */
+M2C_UNK func_001F5078(void);             /* extern */
 extern M2C_UNK B_003DD490;
 
 void func_001F4DA8(s32 arg0, s32 arg1, s8 **arg2) {
@@ -35,7 +35,7 @@ loop_1:
         goto loop_1;
     }
     if (var_s0 != NULL) {
-        func_001F5078(var_a2, temp_a3);
+        func_001F5078();
         FreeSwMqList__FP2SWP2MQ(&B_003DD490, var_s0);
     }
 }

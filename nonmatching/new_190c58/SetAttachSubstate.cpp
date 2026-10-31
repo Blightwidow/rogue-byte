@@ -379,13 +379,13 @@ block_34:
                 }
             }
             M2C_FIELD(M2C_FIELD(arg0, s8 **, 0), s32 *, 0x1038) = -1;
-            M2C_FIELD(arg0, f32 *, 0x1C) = 0.0f;
-            M2C_FIELD(arg0, s32 *, 0x4FC) = -1;
             M2C_FIELD(arg0, u32 *, 8) = -1U;
-            M2C_FIELD(arg0, s32 *, 0xC) = -1;
             M2C_FIELD(arg0, s8 **, 0x14) = NULL;
-            M2C_FIELD(arg0, s32 **, 0x18) = NULL;
             M2C_FIELD(arg0, f32 *, 0x20) = 0.0f;
+            M2C_FIELD(arg0, f32 *, 0x1C) = 0.0f;
+            M2C_FIELD(arg0, s32 **, 0x18) = NULL;
+            M2C_FIELD(arg0, s32 *, 0x4FC) = -1;
+            M2C_FIELD(arg0, s32 *, 0xC) = -1;
             M2C_FIELD(arg0, s32 *, 0x34) = 0;
             break;
         case 1:                                     /* switch 3 */

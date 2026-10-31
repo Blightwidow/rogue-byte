@@ -18,7 +18,7 @@ void EvaluateAcgb(ACGB *pacgb, float *pg, float *pdg, float t, float svt)
         } while (1);
     }
 done:
-    KGB *pkgb = &pacgb->akgb[ikgb];
+    KGB *pkgb = (__typeof__(&(pacgb->akgb)[0]))((ikgb) * sizeof((pacgb->akgb)[0]) + (unsigned)(pacgb->akgb));
     KGB *pkgbPrev = pkgb - 1;
     EvaluateBezierFloat(pkgb->t - pkgbPrev->t, t - pkgbPrev->t, svt, pkgbPrev->g, pkgbPrev->gSlopeOut, pkgb->g, pkgb->gSlopeIn, pg, pdg);
 }

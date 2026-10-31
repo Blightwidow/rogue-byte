@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 PchzStringFromId(M2C_UNK *, M2C_UNK);           /* extern */
+s32 PchzStringFromId(M2C_UNK *);           /* extern */
 M2C_UNK strcpy(s8 *, s32);                          /* extern */
 extern s32 B_003DA180;
 extern M2C_UNK B_003DD490;
@@ -33,7 +33,7 @@ void func_001DCA30(s8 *arg0) {
     }
     var_a1 = 0xDF;
 block_8:
-    strcpy(arg0, PchzStringFromId(&B_003DD490, var_a1));
+    strcpy(arg0, PchzStringFromId(&B_003DD490));
 }
 
 }

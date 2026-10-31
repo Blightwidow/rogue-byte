@@ -13,7 +13,7 @@ struct _m2c_stack_func_0016E1A8 {
 };                                                  /* size = 0x30 */
 #define sp0 (*(s32 *)(sp + 0x00))
 M2C_UNK AddDmaCnt__4DMAS(s32);                      /* extern */
-M2C_UNK AddVifMscal__4VIFSPv(s32, f32);         /* extern */
+M2C_UNK AddVifMscal__4VIFSPv(void);         /* extern */
 M2C_UNK EndDmaCnt__4DMAS(s32);                      /* extern */
 M2C_UNK EnsureVu1Code__FP4VIFSPvT1(M2C_UNK *, M2C_UNK *); /* extern */
 M2C_UNK UnpackHelper__4VIFS3UPKiiPiPPUi(s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
@@ -26,7 +26,7 @@ void func_0016E1A8(s32 arg0) {
     AddDmaCnt__4DMAS(arg0);
     UnpackHelper__4VIFS3UPKiiPiPPUi(arg0, 0xD, 0xB, 0xA);
     memset(sp0, 0, 0x58);
-    AddVifMscal__4VIFSPv(arg0, 0);
+    AddVifMscal__4VIFSPv();
     EndDmaCnt__4DMAS(arg0);
 }
 }

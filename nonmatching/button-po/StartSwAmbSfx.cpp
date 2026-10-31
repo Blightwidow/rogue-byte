@@ -17,7 +17,7 @@ void SetEmitterUnpositioned(AMB *, LO *);
 void SetAmbRange(AMB *, float, float);
 void SetAmbVolume(AMB *, float);
 void SetAmbPitch(AMB *, float);
-void func_001FB520(float);
+void func_001FB520(float, int);
 void VirtualRefPtr_Assign(unsigned *, void *);
 void StartSwAmbSfx(SW *psw, int sfxid, int oid, int sStart, int sFull, LO *plo, LO *ploContext, int iUnused,
                    unsigned *ppambRef, float gPitch, float gPan, float uVolume)
@@ -46,7 +46,7 @@ void StartSwAmbSfx(SW *psw, int sfxid, int oid, int sStart, int sFull, LO *plo, 
     SetAmbRange(pamb, (float)sStart, (float)sFull);
     SetAmbVolume(pamb, uVolume);
     SetAmbPitch(pamb, gPitch);
-    func_001FB520(gPan);
+    func_001FB520(gPan, sfxid);
     AMBOBJ *pobj = (AMBOBJ *)pamb;
     VTX *vt = pobj->vt;
     if (vt->fn((char *)pamb + vt->delta) == 2)

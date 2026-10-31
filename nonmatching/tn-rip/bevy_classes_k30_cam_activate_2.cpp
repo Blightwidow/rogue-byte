@@ -24,7 +24,7 @@ void bevy_classes_k30_cam_activate_2(CP* p)
     VirtualRefPtr_Assign(&p->e_c4, e);
     PauseAmb(p->e_c0);
     CM* c = &B_002DDF40;
-    DecomposeRotateMatrixPanTilt((MATRIX3*)c->mat, &p->f_a4, &p->f_a8);
+    DecomposeRotateMatrixPanTilt((MATRIX3*)c->mat, &p->f_a8, &p->f_a4);
     p->f_a8 = 0;
     p->f_ac = 0;
     p->f_b0 = 0;

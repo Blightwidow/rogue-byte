@@ -8,7 +8,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define NULL 0
 extern "C" {
 M2C_UNK InitLo();                                   /* extern */
-M2C_UNK InvalidateXfmMatWorld(s8 *);              /* extern */
+M2C_UNK InvalidateXfmMatWorld(void);              /* extern */
 M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK);           /* extern */
 
 void InitXfm(s8 *arg0) {
@@ -26,7 +26,7 @@ void InitXfm(s8 *arg0) {
     M2C_FIELD(temp_s0, f32 *, 0x3C) = 1.0f;
     M2C_FIELD(temp_s0, f32 *, 0x28) = 1.0f;
     M2C_FIELD(arg0, f32 *, 0x60) = 1.0f;
-    InvalidateXfmMatWorld(arg0);
+    InvalidateXfmMatWorld();
 }
 
 }

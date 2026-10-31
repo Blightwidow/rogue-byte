@@ -28,14 +28,12 @@ void JobBlot_Update(s8 *arg0) {
     s8 *temp_a0_2;
     s8 *temp_v0;
     s8 *temp_v0_2;
-    var_s1 = 0;
     var_s4 = 0;
     var_s5 = 0;
     var_s3 = 0;
     UpdateBlotMovie(arg0);
-    if (M2C_FIELD(arg0, s32 *, 0x194) > 0) {
-        var_s0 = (s8 **)(arg0 + 0x19C);
-        do {
+    for (var_s1 = 0; var_s1 < M2C_FIELD(arg0, s32 *, 0x194); var_s1++) {
+        var_s0 = (s8 **)(arg0 + 0x19C) + var_s1 * 8;
             temp_a0 = *var_s0;
             if (temp_a0 != NULL) {
                 if (M2C_FIELD(temp_a0, s32 *, 0x54) == 1) {
@@ -45,9 +43,6 @@ void JobBlot_Update(s8 *arg0) {
                     var_s5 += 1;
                 }
             }
-            var_s1 += 1;
-            var_s0 += 8;
-        } while (var_s1 < M2C_FIELD(arg0, s32 *, 0x194));
     }
     var_s1_2 = 0;
     if (M2C_FIELD(arg0, s32 *, 0x110) > 0) {

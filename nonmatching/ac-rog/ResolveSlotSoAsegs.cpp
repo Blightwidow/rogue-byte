@@ -11,7 +11,7 @@ struct _m2c_stack_ResolveSlotSoAsegs {
     /* 0x00 */ char pad0[0x50];
 };                                                  /* size = 0x50 */
 
-s32 func_001B1B98(s32, s32);                        /* extern */
+s32 func_001B1B98(s32);                        /* extern */
 
 void ResolveSlotSoAsegs(s32 arg0) {
     s32 temp_a1;
@@ -23,7 +23,7 @@ void ResolveSlotSoAsegs(s32 arg0) {
     do {
         temp_a1 = M2C_FIELD(var_s0, s32 *, 0);
         if (temp_a1 != -1) {
-            M2C_FIELD(var_s0, s32 *, 4) = func_001B1B98(arg0, temp_a1);
+            M2C_FIELD(var_s0, s32 *, 4) = func_001B1B98(arg0);
             M2C_FIELD(var_s0, s32 *, 0) = -1;
         }
         var_s1 -= 1;

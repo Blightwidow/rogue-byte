@@ -55,8 +55,8 @@ void func_0021C340(char *self) {
                 asm("pextuw %0, %1, %2" : "=r"(zBits) : "r"(0), "r"(bits));
                 *(int *)positions = bits;
                 asm("prot3w %0, %1" : "=r"(yBits) : "r"(bits));
-                *(int *)(positions + 8) = zBits;
                 *(int *)(positions + 4) = yBits;
+                *(int *)(positions + 8) = zBits;
                 positions += 0x10;
                 if (alphas != 0) {
                     float life = 1.0f - ((g_2dded0 - *(float *)newer) / *(float *)(self + 0x150));

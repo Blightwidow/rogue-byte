@@ -1,5 +1,5 @@
 extern "C" void *memmove(void *, const void *, unsigned int);
-extern "C" void *PentryFindSensorLo(void *, void *);
+extern "C" void *PentryFindSensorLo(void *, void *, int);
 extern "C" float g_2dded0;
 
 struct Entry { void *plo; int seen; float t; int pad; };
@@ -9,7 +9,7 @@ int AddGuardSensedObject(char *guard, void *plo, int append)
     if (plo != 0) {
         if (plo != guard) {
             unsigned x = 0;
-            if (append == 0) x = (unsigned)PentryFindSensorLo(*(void **)(guard + 0xF64), plo);
+            if (append == 0) x = (unsigned)PentryFindSensorLo(*(void **)(guard + 0xF64), plo, append);
             if (x == 0) {
                 register char *list asm("$4") = *(char **)(guard + 0xF64);
                 x = *(unsigned *)(list + 0xFC);

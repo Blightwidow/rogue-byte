@@ -60,10 +60,10 @@ done:
     if (count != 0) {
         int bytes = count * 4;
         CStackFrame_Construct(locals.frame);
-        locals.request[0] = count * count * 4;
-        locals.request[1] = 0x10;
-        int *matrix = PvAllocStackImpl__Fi(locals.request);
         locals.request[0] = bytes;
+        locals.request[0] = count * count * 4;
+        int *matrix = PvAllocStackImpl__Fi(locals.request);
+        locals.request[1] = 0x10;
         locals.request[1] = 0x10;
         int *offsets = PvAllocStackImpl__Fi(locals.request);
         locals.request[0] = bytes;

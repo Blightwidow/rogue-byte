@@ -102,17 +102,17 @@ void CMovieText_DrawGlyphs(Text_216750 *text, Ctx_216750 *ctx, Dest_216750 *dest
     int cursor = *(int *)(g_2dea28 + 0xC);
     if (cursor & 0xF) {
         do {
-            *(int *)cursor = 0;
-            cursor = *(int *)(g_2dea28 + 0xC) + 4;
             *(int *)(g_2dea28 + 0xC) = cursor;
+            cursor = *(int *)(g_2dea28 + 0xC) + 4;
+            *(int *)cursor = 0;
         } while (cursor & 0xF);
     }
     **(int **)(g_2dea28 + 0xC) = 0x60000000;
     *(int *)(g_2dea28 + 0xC) = *(int *)(g_2dea28 + 0xC) + 0x10;
     Slot_216750 *slot = OnGameLoad__FP4GAME();
     slot->tag = 0x15;
-    slot->address = cursorAtStart & 0x0FFFFFFF;
-    slot->zero = 0;
     slot->value = dest->depth + (float)(text->endPadding << 18);
+    slot->zero = 0;
+    slot->address = cursorAtStart & 0x0FFFFFFF;
 }
 }

@@ -1,5 +1,5 @@
 extern "C" void func_00217FB8(void *);
-extern "C" void SeekSpriteInstanceFraction(void *, int, int, float);
+extern "C" void SeekSpriteInstanceFraction(void *, float, int, int);
 
 struct Inst { char pad[8]; short state; char pad2[14]; };
 struct Label { char pad[0x14]; int id; };
@@ -23,7 +23,7 @@ extern "C" void SeekBlotLabel(float u, Blot *blot, int label)
                 for (int k = 0; k < sprite->instCount; k++) {
                     if (sprite->insts[k].state != -1) last = k;
                 }
-                if (last >= 0) SeekSpriteInstanceFraction(sprite, last, 0, u);
+                if (last >= 0) SeekSpriteInstanceFraction(sprite, u, last, 0);
             }
         }
     }

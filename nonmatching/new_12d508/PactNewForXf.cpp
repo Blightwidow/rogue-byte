@@ -11,12 +11,13 @@ struct _m2c_stack_PactNewForXf {
     /* 0x00 */ char pad0[0x50];
 };                                                  /* size = 0x50 */
 s8 *PactNew();                                    /* extern */
-void PactNewForXf(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+s8 * PactNewForXf(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s8 *temp_v0;
     temp_v0 = PactNew();
     M2C_FIELD(temp_v0, s32 *, 4) = arg1;
-    M2C_FIELD(temp_v0, s32 *, 8) = arg2;
     M2C_FIELD(temp_v0, s32 *, 0xC) = arg3;
     M2C_FIELD(temp_v0, s32 *, 0x14) = arg4;
+    M2C_FIELD(temp_v0, s32 *, 8) = arg2;
+    return temp_v0;
 }
 }

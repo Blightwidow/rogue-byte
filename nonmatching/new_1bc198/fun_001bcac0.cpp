@@ -6,7 +6,7 @@ struct Obstacle { char pad0[0xC]; VT *vtable; char pad1[0xF4 - 0x10]; QW *apos; 
 extern "C" {
 int IcvFindCrvS(Obstacle *, float, int, int);
 int Obstacle_IposWrap(Obstacle *, int);
-void GetPathPosFromS(Obstacle *, QW *, int, float);
+void GetPathPosFromS(Obstacle *, float, QW *, int);
 int FClipEdgeToPathzone(void *, QW, QW, int);
 }
 struct Locals {
@@ -41,7 +41,7 @@ int func_001BCAC0(float sFrom, float sTo, Obstacle *obstacle, void *pathzone, in
         }
         VT *vt = obstacle->vtable;
         l.mat = *vt->fn((char *)obstacle + vt->delta);
-        GetPathPosFromS(obstacle, l.pposPrev, 0, sFrom);
+        GetPathPosFromS(obstacle, sFrom, l.pposPrev, 0);
         QW cur = l.posPrev;
         int icvCur = icvStart;
         while (icvCur != icvEnd) {
@@ -64,7 +64,7 @@ int func_001BCAC0(float sFrom, float sTo, Obstacle *obstacle, void *pathzone, in
                 icvCur = Obstacle_IposWrap(obstacle, icvCur - 1);
             cur = l.pos;
         }
-        GetPathPosFromS(obstacle, &l.posEnd, 0, sTo);
+        GetPathPosFromS(obstacle, sTo, &l.posEnd, 0);
         if (!FClipEdgeToPathzone(pathzone, cur, l.posEnd, grf))
             return l.result;
     next:

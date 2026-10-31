@@ -15,7 +15,7 @@ struct _m2c_stack_ConvertXfMatrix4 {
     /* 0x080 */ char pad80[0xA0];
 };                                                  /* size = 0x120 */
 M2C_UNK InvertMatrix4Affine(M2C_UNK *, s32);        /* extern */
-M2C_UNK __ml__FRC7MATRIX4T0(M2C_UNK *, M2C_UNK *, M2C_UNK *); /* extern */
+M2C_UNK __ml__FRC7MATRIX4T0(M2C_UNK *, M2C_UNK *, M2C_UNK *, M2C_UNK *); /* extern */
 M2C_UNK memcpy(s32, M2C_UNK *, M2C_UNK);            /* extern */
 s32 ConvertXfMatrix4(s32 arg0, s32 arg1, s32 arg2, M2C_UNK *arg3) {
     s8 sp[0xb0] __attribute__((aligned(16)));
@@ -25,7 +25,7 @@ s32 ConvertXfMatrix4(s32 arg0, s32 arg1, s32 arg2, M2C_UNK *arg3) {
     if (arg1 != 0) {
         if (arg2 != 0) {
             InvertMatrix4Affine(&sp80, arg2 + 0x40);
-            __ml__FRC7MATRIX4T0(&sp40, &sp80, (M2C_UNK *)(arg1 + 0x40));
+            __ml__FRC7MATRIX4T0(&sp40, &sp80, (M2C_UNK *)(arg1 + 0x40), arg3);
             var_a1 = &sp40;
         } else {
             var_a1 = (M2C_UNK *)(arg1 + 0x40);
@@ -36,7 +36,7 @@ s32 ConvertXfMatrix4(s32 arg0, s32 arg1, s32 arg2, M2C_UNK *arg3) {
         InvertMatrix4Affine(&sp40, arg2 + 0x40);
         var_a1 = &sp40;
 block_6:
-        __ml__FRC7MATRIX4T0((M2C_UNK *)(sp), var_a1, arg3);
+        __ml__FRC7MATRIX4T0((M2C_UNK *)(sp), var_a1, arg3, arg3);
         memcpy(arg0, (M2C_UNK *)(sp), 0x40);
     } else {
         memcpy(arg0, arg3, 0x40);

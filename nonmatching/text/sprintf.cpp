@@ -20,7 +20,7 @@ struct _m2c_stack_sprintf {
     /* 0x70 */ s64 sp70;                            /* inferred */
     /* 0x78 */ s64 sp78;                            /* inferred */
 };                                                  /* size = 0x80 */
-M2C_UNK vsprintf(s64 *);                            /* extern */
+M2C_UNK vsprintf(void);                            /* extern */
 void sprintf(s64 arg2, s64 arg3, s64 arg4, s64 arg5, s64 arg6, s64 arg7, f32 fparg0, f32 fparg2, f32 fparg4, f32 fparg6) {
     f32 sp40;
     f32 sp44;
@@ -42,6 +42,6 @@ void sprintf(s64 arg2, s64 arg3, s64 arg4, s64 arg5, s64 arg6, s64 arg7, f32 fpa
     sp44 = fparg2;
     sp48 = fparg4;
     sp4C = fparg6;
-    vsprintf(&sp50);
+    vsprintf();
 }
 }

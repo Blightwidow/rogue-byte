@@ -142,8 +142,8 @@ block_30:
             case 15:                                /* switch 3 */
                 temp_v1_3 = arg0 + 0x190;
                 M2C_FIELD(arg0, s32 *, 0x1D2C) = 1;
-                M2C_FIELD(temp_v1_3, s32 *, 4) = 0;
                 M2C_FIELD(temp_v1_3, s32 *, 8) = 0;
+                M2C_FIELD(temp_v1_3, s32 *, 4) = 0;
                 M2C_FIELD(arg0, s32 *, 0x190) = 0;
                 temp_v0_6 = M2C_FIELD(arg0, s8 **, 0xC);
                 M2C_FIELD(temp_v0_6, M2C_UNK (**)(s8 *, s128, s8 *), 0x11C)(arg0 + M2C_FIELD(temp_v0_6, s16 *, 0x118), (s128) M2C_FIELD(arg0, s32 *, 0x190), temp_a2);

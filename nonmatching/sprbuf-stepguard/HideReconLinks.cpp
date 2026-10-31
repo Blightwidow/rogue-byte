@@ -17,18 +17,13 @@ void HideReconLinks(s8 *arg0) {
     s8 *temp_a1;
     s8 *temp_v0;
 
-    var_s1 = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x30) > 0) {
-        var_s0 = (s8 **)(arg0 + 0x34);
-        do {
+    for (var_s1 = 0; var_s1 < M2C_FIELD(arg0, s32 *, 0x30); var_s1++) {
+        var_s0 = (s8 **)(arg0 + 0x34) + var_s1 * 1;
             temp_a1 = M2C_FIELD(*var_s0, s8 **, 0x100);
             if (temp_a1 != NULL) {
                 temp_v0 = M2C_FIELD(temp_a1, s8 **, 0xC);
                 M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s8 *), 0x4C)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x48), temp_a1);
             }
-            var_s1 += 1;
-            var_s0 += 1;
-        } while (var_s1 < M2C_FIELD(arg0, s32 *, 0x30));
     }
 }
 

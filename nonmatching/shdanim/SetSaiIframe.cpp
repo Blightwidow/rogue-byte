@@ -11,14 +11,14 @@ struct _m2c_stack_SetSaiIframe {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
 
-s32 FIsSlEmpty(s32);                                /* extern */
+s32 FIsSlEmpty(s32, s32);                                /* extern */
 
 void SetSaiIframe(s8 *arg0, s32 arg1) {
     s32 temp_a1;
     s32 var_a1;
     u16 temp_a1_2;
 
-    if (FIsSlEmpty((int)(arg0 + 0x34)) == 0) {
+    if (FIsSlEmpty((int)(arg0 + 0x34), arg1) == 0) {
         temp_a1 = M2C_FIELD(arg0, s32 *, 0x1C) - 1;
         if (arg1 < 0) {
             var_a1 = 0;

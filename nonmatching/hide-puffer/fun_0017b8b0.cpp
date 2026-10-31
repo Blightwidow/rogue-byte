@@ -18,14 +18,14 @@ struct GOALR : GOALV { char pad[0x30 - 0x10]; GOALV *target; int unk34, unk38, u
 extern "C" void Goal_Pop(void *);
 extern "C" GOALR *func_00205438(void *, int);
 extern "C" void func_00208540(void *, int);
-extern float g_2dded0;
+extern float g_2dded0[];
 void func_0017B8B0(GOALPICK *goal, int newState)
 {
     if (newState == goal->state)
         return;
     Goal_Pop((char *)goal + 0x18);
     goal->state = newState;
-    goal->tState = g_2dded0;
+    goal->tState = g_2dded0[0];
     switch (newState) {
     case 0: {
         GOALR *watch = func_00205438(goal->pguard, 0x9e);

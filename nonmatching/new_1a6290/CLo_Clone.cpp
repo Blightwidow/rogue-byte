@@ -73,10 +73,10 @@ void CLo_Clone(char *self, char *source) {
     *(float *)(self + 0x38) = *(float *)(source + 0x38);
     LOBITS *destinationBits = (LOBITS *)(self + 0x28);
     LOBITS *sourceBits = (LOBITS *)(source + 0x28);
-    destinationBits->f52 = sourceBits->f52;
-    destinationBits->f57 = sourceBits->f57;
     destinationBits->f48 = sourceBits->f48;
+    destinationBits->f57 = sourceBits->f57;
     destinationBits->f58 = sourceBits->f58;
+    destinationBits->f52 = sourceBits->f52;
     int sourceLink = *(int *)(source + 0x40);
     if ((sourceLink ^ 1) & 1) {
         sourceLink = *(int *)sourceLink;

@@ -51,8 +51,8 @@ int FInvertMatrix__FiPfT1(int stride, int count, float *source, float *inverse) 
         if (pivot != step) {
             for (row = 0; row < count; row++) {
                 held = work[row * stride + step];
-                work[row * stride + step] = work[row * stride + pivot];
                 work[row * stride + pivot] = held;
+                work[row * stride + step] = work[row * stride + pivot];
                 held = inverse[row * stride + step];
                 inverse[row * stride + step] = inverse[row * stride + pivot];
                 inverse[row * stride + pivot] = held;

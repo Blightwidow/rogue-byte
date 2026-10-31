@@ -12,7 +12,7 @@ struct _m2c_stack_func_0017A4E8 {
 };                                                  /* size = 0x30 */
 void GoalFlinch_SetState(s8 *, M2C_UNK);
 s32 PosLoWorld(s8 *);
-void ReplaceSwHitFx(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
+void ReplaceSwHitFx(s8 *, M2C_UNK *, M2C_UNK, M2C_UNK);
 s32 ResetSensorStates(s32);
 s32 func_00174950(s8 *);
 extern M2C_UNK B_003DD490;
@@ -22,6 +22,6 @@ void func_0017A4E8(s8 *arg0) {
     ResetSensorStates(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x10), s32 *, 0xF64));
     s128 vu_1;
     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(M2C_FIELD(arg0, s8 **, 0x10))));
-    return ReplaceSwHitFx(&B_003DD490, 1, vu_1, M2C_FIELD(arg0, s8 **, 0x10));
+    return ReplaceSwHitFx(arg0, &B_003DD490, 1, vu_1);
 }
 }

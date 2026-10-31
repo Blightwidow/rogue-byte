@@ -28,7 +28,7 @@ void RemoveSoGeomFromOxa(SO *pso, GEOM *pgeom)
         FreeSwPoxa(&B_003DD490, poxa);
     } else if (pso->poxa->powner != pso) {
         for (int igeom = pso->cgeom - 1; igeom >= 0; igeom--) {
-            if (FFindDlEntry(pso->poxa->dl, &pso->ageom[igeom]) != 0)
+            if (FFindDlEntry(pso->poxa->dl, (__typeof__(&(pso->ageom)[0]))((igeom) * sizeof((pso->ageom)[0]) + (unsigned)(pso->ageom))) != 0)
                 goto vcall;
         }
         pso->poxa = 0;

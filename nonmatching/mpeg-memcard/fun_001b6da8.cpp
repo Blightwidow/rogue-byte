@@ -55,8 +55,8 @@ void func_001B6DA8(s8 *arg0, s32 arg1) {
     if (temp_v0 != arg1) {
         if (temp_v0 == -1) {
             temp_v0_2 = arg0 + 0x190;
-            M2C_FIELD(temp_v0_2, s32 *, 4) = 0;
             M2C_FIELD(temp_v0_2, s32 *, 8) = 0;
+            M2C_FIELD(temp_v0_2, s32 *, 4) = 0;
             M2C_FIELD(arg0, s32 *, 0x190) = 0;
         }
         M2C_FIELD(arg0, s32 *, 0x13D8) = arg1;
@@ -90,8 +90,8 @@ void func_001B6DA8(s8 *arg0, s32 arg1) {
             break;
         case 2:
             temp_v0_3 = arg0 + 0x190;
-            M2C_FIELD(temp_v0_3, s32 *, 4) = 0;
             M2C_FIELD(temp_v0_3, s32 *, 8) = 0;
+            M2C_FIELD(temp_v0_3, s32 *, 4) = 0;
             M2C_FIELD(arg0, s32 *, 0x190) = 0;
             var_s1 = M2C_FIELD(arg0, s8 **, 0x13E4);
             if (var_s1 != NULL) {

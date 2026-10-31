@@ -7,11 +7,11 @@ int FTimeJtJumpToTarget(Jmp *pjmp, QW pos, QW vJump, QW posTarget, QW vTarget, f
 {
     float roots[4];
     char *pjt = pjmp->pjt;
-    float jumpZ = LaneZ(vJump);
-    float targetVelocityZ = LaneZ(vTarget);
     float gravityZ = *(float *)(*(char **)(pjt + 0xE8) + 0x88);
+    float jumpZ = LaneZ(vJump);
     float posZ = LaneZ(pos);
     float targetZ = LaneZ(posTarget);
+    float targetVelocityZ = LaneZ(vTarget);
     int count = CSolveQuadratic(gravityZ * 0.5f, jumpZ - targetVelocityZ);
     if (count < 1)
         return 0;

@@ -6,7 +6,7 @@ struct XFMIRROR { XF *pxfSource; XF *pxfTarget; int fPosition; int fRotation; };
 extern char B_003DD490[];
 extern "C" void InvertMatrix4Affine(M4 *, void *);
 extern "C" void InvertMatrix3(M3 *, void *);
-extern "C" void NormalizeRotateMatrix3__FP7MATRIX3(M3 *);
+extern "C" void NormalizeRotateMatrix3__FP7MATRIX3(void);
 extern "C" void __as__6VECTORG9VU_VECTOR(void *, QW);
 extern "C" void UpdateXfMirror(void *pv, XFMIRROR *pmirror)
 {
@@ -35,7 +35,7 @@ extern "C" void UpdateXfMirror(void *pv, XFMIRROR *pmirror)
         asm volatile("lqc2 vf1, %5\n\tvmulax.xyz ACC, vf3, vf1x\n\tvmadday.xyz ACC, vf6, vf1y\n\tvmaddz.xyz vf3, vf5, vf1z\n\tsqc2 vf4, %0\n\tsqc2 vf2, %1\n\tsqc2 vf3, %2\n\tsqc2 vf3, %3"
             : "=m" (local.row[0]), "=m" (local.row[1]), "=m" (local.row[2]), "=m" (b.row[2]) : "m" (src[2]), "m" (src[2]));
         asm volatile("sqc2 vf3, %0" : "=m" (a.row[2]));
-        NormalizeRotateMatrix3__FP7MATRIX3(&local);
+        NormalizeRotateMatrix3__FP7MATRIX3();
         XF *pxfTarget = pmirror->pxfTarget;
         ((QW *)pxfTarget)[0] = local.row[0];
         ((QW *)pxfTarget)[1] = local.row[1];

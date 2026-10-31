@@ -10,7 +10,7 @@ extern "C" {
 s32 CMovieText_ClineWrap();                         /* extern */
 f32 CMovieText_DxMaxLine(s8 *);                   /* extern */
 
-void CMovieText_GetExtents(s8 *arg0, f32 *arg1, f32 *arg2) {
+s32 CMovieText_GetExtents(s8 *arg0, f32 *arg1, f32 *arg2) {
     f32 temp_f2;
     s32 temp_s1;
 
@@ -22,6 +22,7 @@ void CMovieText_GetExtents(s8 *arg0, f32 *arg1, f32 *arg2) {
     if (arg2 != NULL) {
         *arg2 = (f32) temp_s1 * M2C_FIELD(arg0, f32 *, 0x84);
     }
+    return temp_s1;
 }
 
 }

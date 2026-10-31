@@ -80,11 +80,11 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
         int offset = 0;
         do {
             Edge_1EFAC0 *edge = (Edge_1EFAC0 *)((char *)self->edges + offset);
-            edge->from = IsmsFindSmRequired__FP2SM3OID(self, S32Read__18CBinaryInputStream(stream));
-            edge->to = IsmsFindSmRequired__FP2SM3OID(self, S32Read__18CBinaryInputStream(stream));
-            edge->flags = S32Read__18CBinaryInputStream(stream);
             edge->x10 = S32Read__18CBinaryInputStream(stream);
             edge->x14 = F32Read__18CBinaryInputStream(stream);
+            edge->to = IsmsFindSmRequired__FP2SM3OID(self, S32Read__18CBinaryInputStream(stream));
+            edge->from = IsmsFindSmRequired__FP2SM3OID(self, S32Read__18CBinaryInputStream(stream));
+            edge->flags = S32Read__18CBinaryInputStream(stream);
             int objectId = S32Read__18CBinaryInputStream(stream);
             if (objectId != -1) {
                 if (ploarray.count > 0) {

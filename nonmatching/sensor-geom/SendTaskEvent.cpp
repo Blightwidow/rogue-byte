@@ -13,7 +13,7 @@ struct _m2c_stack_SendTaskEvent {
     /* 0x14 */ s32 sp14;                            /* inferred */
     /* 0x18 */ char pad18[0x28];
 };                                                  /* size = 0x40 */
-s32 FTaskRunning();                                 /* extern */
+s32 FTaskRunning(s8 *);                                 /* extern */
 void SendTaskEvent(s8 *arg0, s32 arg1, s32 arg2) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 sp10;
@@ -21,7 +21,7 @@ void SendTaskEvent(s8 *arg0, s32 arg1, s32 arg2) {
     s8 *temp_v1;
     sp10 = arg1;
     sp14 = arg2;
-    if (FTaskRunning() != 0) {
+    if (FTaskRunning(arg0) != 0) {
         temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
         M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, s8 *, M2C_UNK, s32 *, s32 *), 0x1C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x18), 0x11, 0, 2, sp, 0, &sp10, &sp14);
     }

@@ -14,7 +14,7 @@ void AddSoGravityAcceleration(void *);
 QW PosLoWorld(void *);
 void *PmatLoWorld(void *);
 void TiltMatUpright__FP7MATRIX3N20(void *, void *, void *);
-MAT48 BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(QW, QW);
+MAT48 BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(QW);
 void AccelSoTowardMatSpring__FP2SOP7MATRIX3P3CLQP6VECTORT2f(void *, void *, void *, QW, void *, float);
 }
 
@@ -63,7 +63,7 @@ extern "C" void PresetGadgetObjAccel(void *pgadget)
             asm("vmulq.xyzw vf1, vf3, Q");
             asm("qmfc2.ni %0, vf1" : "=r"(vecDir));
         }
-        MAT48 matTemp = BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(vecDir, *pvecUp);
+        MAT48 matTemp = BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(vecDir);
         matGoal = matTemp;
     } else {
         TiltMatUpright__FP7MATRIX3N20(PmatLoWorld(pgadget), 0, &matGoal);

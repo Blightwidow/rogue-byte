@@ -1,14 +1,14 @@
 #include "sly2.h"
 extern "C" QW PosLoWorld(void *);
-extern "C" QW ConvertAloPos(void *, void *, QW);
+extern "C" QW ConvertAloPos(void *, void *);
 static inline float LaneY(QW q) { QW t; float f; asm("prot3w %0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0\n\tnop" : "=f" (f) : "r" (t)); return f; }
 
 int FCheckJtCaneSide(char *pjt)
 {
     struct { QW junk; QW localA; } frame;
     QW posPart = PosLoWorld(*(void **)(pjt + 0x19A4));
-    frame.localA = ConvertAloPos(0, pjt, posPart);
-    QW localB = ConvertAloPos(0, pjt, *(QW *)(*(char **)(pjt + 0x19C0) + 0x70));
+    frame.localA = ConvertAloPos(0, pjt);
+    QW localB = ConvertAloPos(0, pjt);
     QW half;
     QW result;
     float zero = 0.0f;

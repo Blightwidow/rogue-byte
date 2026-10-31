@@ -2,7 +2,7 @@
 struct SM; struct ALO; struct SMA;
 extern "C" {
 void *PloFindSwObject_thunk(void *, int, int, void *);
-SMA *PsmaFindSm__FP2SMP3ALO(SM *, ALO *);
+SMA *PsmaFindSm__FP2SMP3ALO(void);
 void RetractSma(SMA *);
 int func_001FD0C0(void *, unsigned);
 extern char B_003DD040[];
@@ -19,14 +19,14 @@ extern "C" void ReleaseAloSmKinds(ALO *palo, unsigned grf)
         if (grf & m) {
             int count = *pcount;
             if (count != 0) {
-                *pcount = count;
                 count = count - 1;
+                *pcount = count;
                 if (count <= 0) {
                     int oid = func_001FD0C0(B_003DD040, kind);
                     void *psw = B_003DD490;
                     SM *psm = (SM *)PloFindSwObject_thunk(psw, 4, oid, palo);
                     if (psm != 0) {
-                        SMA *psma = PsmaFindSm__FP2SMP3ALO(psm, palo);
+                        SMA *psma = PsmaFindSm__FP2SMP3ALO();
                         if (psma != 0)
                             RetractSma(psma);
                     }

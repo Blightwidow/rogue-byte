@@ -13,7 +13,7 @@ struct _m2c_stack_UpdateRunBlendFootsteps {
 f32 GModPositive__Fff(f32, f32);                    /* extern */
 s32 NewEmitter(s32);                                /* extern */
 s32 PosLoWorld(s32);                                /* extern */
-M2C_UNK SetAmbPos(s32, M2C_UNK);                    /* extern */
+M2C_UNK SetAmbPos(s32);                    /* extern */
 M2C_UNK SetAmbRange(s32);         /* extern */
 M2C_UNK SetAmbVolume(s32, f32);                     /* extern */
 M2C_UNK SetEmitterUnpositioned(s32, M2C_UNK);       /* extern */
@@ -49,7 +49,7 @@ void UpdateRunBlendFootsteps(s8 *arg0) {
                 SetEmitterUnpositioned(temp_v0, 0);
                 s64 vu_1;
                 asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(M2C_FIELD(temp_s4, s32 *, 0x18))));
-                SetAmbPos(temp_v0, vu_1);
+                SetAmbPos(temp_v0);
                 SetAmbRange(temp_v0);
                 SetAmbVolume(temp_v0, temp_f20_2);
             }

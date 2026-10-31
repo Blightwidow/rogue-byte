@@ -16,6 +16,6 @@ void BuildClutGifs__FP4CLUTiP4GIFS(s8 *arg0, s32 arg1, s32 arg2) {
     u16 temp_v0;
     temp_v0 = M2C_FIELD(arg0, u16 *, 8);
     temp_a3 = (temp_v0 >= 0x11U) ? 0x10 : 8;
-    BuildImageGifs__FiiiiiiP4GIFS(arg1, 1, 0, temp_a3, (s32) ((temp_v0 - 1 + temp_a3) & -temp_a3) / temp_a3, M2C_FIELD(arg0, s32 *, 0x10), arg2);
+    BuildImageGifs__FiiiiiiP4GIFS(arg1, 1, 0, temp_a3, (s32) ((temp_v0 - temp_a3 + 1) & -temp_a3) / temp_a3, M2C_FIELD(arg0, s32 *, 0x10), arg2);
 }
 }

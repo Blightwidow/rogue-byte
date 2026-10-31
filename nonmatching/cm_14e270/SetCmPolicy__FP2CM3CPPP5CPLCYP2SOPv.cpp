@@ -7,7 +7,7 @@ struct SO { int x; };
 struct CPR { int cpp; CPLCY *pcplcy; SO *pso; void *pv; };
 struct CM { char pad[0x30C]; int ccpr; CPR acpr[8]; char pad2[0x390 - 0x390 + 0]; };
 struct CMX { char pad[0x390]; float t; };
-extern "C" void *memmove(void *, const void *, unsigned int);
+extern "C" void *memmove(void *, const void *);
 extern "C" float g_2dded0;
 enum CPP { CPP_dummy };
 void SetCmPolicy(CM *pcm, CPP cpp, CPLCY *pcplcy, SO *psoFocus, void *pv)
@@ -19,7 +19,7 @@ void SetCmPolicy(CM *pcm, CPP cpp, CPLCY *pcplcy, SO *psoFocus, void *pv)
     for (icpr = 0; icpr < ccpr; icpr++)
         if (pcm->acpr[icpr].cpp < cpp)
             break;
-    memmove(&pcm->acpr[icpr + 1], &pcm->acpr[icpr], (ccpr - icpr) << 4);
+    memmove(&pcm->acpr[icpr + 1], &pcm->acpr[icpr]);
     pcm->acpr[icpr].cpp = cpp;
     pcm->acpr[icpr].pcplcy = pcplcy;
     pcm->acpr[icpr].pso = psoFocus;

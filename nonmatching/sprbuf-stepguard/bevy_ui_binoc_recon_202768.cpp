@@ -112,9 +112,9 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
         int label;
         switch (arg1) {
         case 0:
+            *(int *)(arg0 + 0xBC) = -1;
             *(char **)(arg0 + 0x8C) = 0;
             *(int *)(arg0 + 0xC0) = -1;
-            *(int *)(arg0 + 0xBC) = -1;
             ClearReconVisibility(arg0, previous);
             VCALL_INT_SELF(*(char **)(arg0 + 0xAC), 0x18C, -1);
             HideReconLinks(arg0);
@@ -171,9 +171,9 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
             SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x359, 0);
             return;
         case 10:
+            *(int *)(arg0 + 0xBC) = -1;
             *(char **)(arg0 + 0x8C) = 0;
             *(int *)(arg0 + 0xC0) = -1;
-            *(int *)(arg0 + 0xBC) = -1;
             VCALL_SELF(*(char **)(arg0 + 0xB0), 0x194);
             VCALL_SELF(*(char **)(arg0 + 0xAC), 0x194);
             ShowReconLinks(arg0);

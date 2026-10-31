@@ -30,7 +30,7 @@ void func_001699E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
         var_s1 = arg1 + 0x14;
         do {
             var_s0 += 0x18;
-            func_00169AC8(sp20, arg1, arg2, arg3, var_s1, var_s2, (arg3 != 0) ? var_s0 : 0, sp24, arg6, arg7, arg_sp0);
+            func_00169AC8(sp20, arg1, arg2, var_s0, var_s1, var_s2, (arg3 != 0) ? var_s0 : 0, sp24, arg6, arg7, arg_sp0);
             var_s2 += 0x28;
             var_s3 -= 1;
             var_s1 += 0x14;

@@ -50,10 +50,10 @@ void SetSaveState(SAVE *psave, int nState)
     psave->state = nState;
     goto stamp;
 lt4:
-    if (nState < 2) {
-        if (nState >= 0) {
+    if (psave->state < 2) {
+        if (psave->state >= 0) {
             CreateMemcardThread__FP7MEMCARDii((MEMCARD *)psave->mc, g_2a6ba0.v);
-            psave->state = nState;
+            psave->state = psave->state;
             goto stamp;
         }
     }

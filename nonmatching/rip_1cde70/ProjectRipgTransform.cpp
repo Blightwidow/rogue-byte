@@ -17,10 +17,10 @@ extern "C" void ProjectRipgTransform(char *self) {
     float *low = (float *)(sp + 0x10);
     float *high = (float *)(sp + 0x20);
     low[1] = RO_002A77D0;
-    low[2] = RO_002A77D0;
-    low[0] = RO_002A77D0;
-    high[1] = RO_002A77D4;
     high[2] = RO_002A77D4;
+    low[0] = RO_002A77D0;
+    low[2] = RO_002A77D0;
+    high[1] = RO_002A77D4;
     high[0] = RO_002A77D4;
     g_2dd2fc = sp;
     char *node = *(char **)iter.cursor;

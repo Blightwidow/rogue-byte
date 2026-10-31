@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_PlayRootSpriteLabel {
     /* 0x00 */ char pad0[0x10];
 };                                                  /* size = 0x10 */
-M2C_UNK PlayRootSpriteLabelIndex(s8 *, s32, s32, u16);    /* extern */
+M2C_UNK PlayRootSpriteLabelIndex(s8 *, s32, s32);    /* extern */
 void PlayRootSpriteLabel(s8 *arg0, s32 arg1, u16 arg3) {
     s32 *var_v1;
     s32 var_a1;
@@ -40,7 +40,7 @@ loop_5:
             }
             var_a1 = (var_a1 >= (s32) temp_v0) ? 0 : var_a1;
         }
-        PlayRootSpriteLabelIndex(arg0, var_a1, arg1, var_a3);
+        PlayRootSpriteLabelIndex(arg0, var_a1, arg1);
     }
 }
 }

@@ -5,13 +5,13 @@ extern "C" int g_2be754;
 extern "C" QW g_2a2dc0;
 extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
-extern "C" void func_001B44D8(int *, int *);
+extern "C" void func_001B44D8(int *);
 extern "C" void *PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(int, QW, QW, int, int, void *);
 extern "C" int func_0017D608(QW *ppos)
 {
     Locals l;
     CStackFrame_Construct(l.frame);
-    func_001B44D8(&l.count, &l.list);
+    func_001B44D8(&l.count);
     QW posFrom, posTo;
     asm volatile("qmtc2.ni %0, vf4\n\tlqc2 vf2, 0(%1)" : : "r" (g_2be750), "r" (&g_2a2dc0));
     asm volatile("lqc2 vf1, 0(%0)" : : "r" (ppos));

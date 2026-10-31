@@ -18,7 +18,7 @@ QW ConvertXfPos(void *, void *, QW);
 QW PosLoWorld(void *);
 void SetXfKind(KP *, XF *, int);
 void ApplyAsegToHandle(void *, void *, int, void *, float, float);
-extern float g_2dded0;
+extern float g_2dded0[];
 extern QW D_002C1080;
 extern QW D_002C1090;
 }
@@ -28,7 +28,7 @@ void func_001C8918(KP *kp, int state)
     if (state == kp->state) return;
     ReleaseAsegaHandle(&kp->handle);
     kp->state = state;
-    kp->tState = g_2dded0;
+    kp->tState = g_2dded0[0];
     switch (state) {
     case -1:
         kp->icell = state;
@@ -39,7 +39,7 @@ void func_001C8918(KP *kp, int state)
         break;
     case 1: {
         SetJtAttach5(kp->jt, kp->camera);
-        kp->xf->tArrive = g_2dded0 + 0.25f;
+        kp->xf->tArrive = g_2dded0[0] + 0.25f;
         XF *xf = kp->xf;
         QW heading = bevy_camera_follow_track_heading_weight(kp->jt, 0, D_002C1080);
         xf->vel = ConvertXfVec(0, xf->parent, heading);

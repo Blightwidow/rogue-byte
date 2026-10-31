@@ -17,8 +17,8 @@ void UntriggerBtn(s8 **arg0) {
     s8 *temp_v0;
     s8 *temp_v0_2;
     temp_a6 = *arg0;
-    temp_v0 = M2C_FIELD(temp_a6, s8 **, 0xC);
     M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 *), 0x1C)(temp_a6 + M2C_FIELD(temp_v0, s16 *, 0x18), 6, 0, 0, 0, 0, temp_a6);
+    temp_v0 = M2C_FIELD(temp_a6, s8 **, 0xC);
     RunBtnAsegs(arg0, 1);
     temp_a3 = *arg0;
     temp_v0_2 = M2C_FIELD(temp_a3, s8 **, 0xC);

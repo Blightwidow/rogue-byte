@@ -39,7 +39,7 @@ extern f32 RO_002C0D4C;
 extern s128 g_2a2dc0;
 extern M2C_UNK g_2dded0;
 void ProjectDprizeTransform(s8 *arg0) {
-    s8 sp[0x110] __attribute__((aligned(16)));
+    s8 sp[0x120] __attribute__((aligned(16)));
 #define sp8 (*(s32 *)(sp + 0x08))
 #define sp10 (*(M2C_UNK *)(sp + 0x10))
 #define sp20 (*(M2C_UNK *)(sp + 0x20))

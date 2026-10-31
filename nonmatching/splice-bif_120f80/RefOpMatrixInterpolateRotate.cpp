@@ -20,13 +20,13 @@ extern "C" CRef *RefOpMatrixInterpolateRotate(CRef *pret, int carg, CRef *aref, 
     SetTag__4CRef4TAGK(&f.refResult, 0x1B);
     float *result = (float *)f.refResult.pv;
     memset(result, 0, 0x40, pframe);
-    result[0] = 1.0f;
     result[15] = 1.0f;
     result[10] = 1.0f;
     result[5] = 1.0f;
+    result[0] = 1.0f;
     LoadRotateMatrixRad(&f.matRotate, f.radBetween * aref[2].g, f.axis);
-    result = (float *)f.refResult.pv;
     Rows *resultRows = (Rows *)result;
+    result = (float *)f.refResult.pv;
     Rows *source = (Rows *)aref[0].pv;
     asm("lqc2 vf4, %0" : : "m" (f.matRotate.row[0]));
     asm("lqc2 vf5, %0" : : "m" (source->row[0]));

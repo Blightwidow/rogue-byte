@@ -1,5 +1,5 @@
 extern "C" void func_00218038(void *);
-extern "C" void SeekSpriteInstanceTime(void *, int, int, float);
+extern "C" void SeekSpriteInstanceTime(void *, float, int, int);
 
 struct Inst { char pad[8]; short state; char pad2[14]; };
 struct Label { char pad[0x14]; int id; };
@@ -23,7 +23,7 @@ extern "C" void func_00212F80(float u, Blot *blot, int label)
                 for (int k = 0; k < sprite->instCount; k++) {
                     if (sprite->insts[k].state != -1) last = k;
                 }
-                if (last >= 0) SeekSpriteInstanceTime(sprite, last, 0, u);
+                if (last >= 0) SeekSpriteInstanceTime(sprite, u, last, 0);
             }
         }
     }

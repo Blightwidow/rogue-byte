@@ -322,9 +322,9 @@ block_71:
         case 21:                                    /* switch 3 */
             var_s3 = M2C_FIELD(arg0, s32 *, 0x1AEC);
             temp_v0_9 = arg0 + 0x190;
-            M2C_FIELD(temp_v0_9, s32 *, 4) = 0;
-            var_s6 = 9;
             M2C_FIELD(temp_v0_9, s32 *, 8) = 0;
+            var_s6 = 9;
+            M2C_FIELD(temp_v0_9, s32 *, 4) = 0;
             M2C_FIELD(arg0, s128 *, 0x190) = 0;
             goto block_74;
         }

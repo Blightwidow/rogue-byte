@@ -84,19 +84,19 @@ void EvaluateAcsb__FP4ACSBP3ALOfiP7MATRIX3(s8 *arg0, s8 *arg1) {
             temp_v1 = M2C_FIELD(arg0, s128 *, 0x10);
             M2C_FIELD(arg1, s16 *, 0x9A) = 2;
             temp_a0_2 = arg1 + 0xD0;
-            M2C_FIELD(arg1, s128 *, 0xC0) = temp_v1;
-            temp_v0_2 = arg1 + 0xF0;
-            M2C_FIELD(arg1, s128 *, 0xE0) = temp_v1;
-            M2C_FIELD(temp_a0_2, s32 *, 4) = 0;
-            M2C_FIELD(temp_a0_2, s32 *, 8) = 0;
             M2C_FIELD(arg1, s32 *, 0xD0) = 0;
-            M2C_FIELD(temp_v0_2, s32 *, 4) = 0;
+            temp_v0_2 = arg1 + 0xF0;
+            M2C_FIELD(arg1, s128 *, 0xC0) = temp_v1;
+            M2C_FIELD(arg1, s32 *, 0x80) = 0;
+            M2C_FIELD(temp_a0_2, s32 *, 4) = 0;
             M2C_FIELD(temp_v0_2, s32 *, 8) = 0;
+            M2C_FIELD(temp_a0_2, s32 *, 8) = 0;
             M2C_FIELD(arg1, s8 **, 0x8C) = (s8 *) (arg1 + 0x84);
-            M2C_FIELD(arg1, f32 *, 0x84) = 1.0f;
+            M2C_FIELD(temp_v0_2, s32 *, 4) = 0;
             M2C_FIELD(arg1, f32 **, 0x88) = (f32 *) (arg1 + 0x80);
             M2C_FIELD(arg1, s32 *, 0xF0) = 0;
-            M2C_FIELD(arg1, s32 *, 0x80) = 0;
+            M2C_FIELD(arg1, f32 *, 0x84) = 1.0f;
+            M2C_FIELD(arg1, s128 *, 0xE0) = temp_v1;
             return;
         }
         temp_v0_3 = *temp_a2;

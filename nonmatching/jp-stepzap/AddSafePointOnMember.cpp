@@ -5,7 +5,7 @@ struct SP { LOB *plo; void *pmember; int pad8; float tStamp; float x; int pad14[
 struct SPL { void *pjt; int count; int pad[2]; SP items[1]; };
 struct MVT { char pad[0x30]; short delta; short index; LOB *(*fn)(void *); };
 struct MEM { char pad[0x20]; MVT *vt; };
-extern float g_2dded0;
+extern float g_2dded0[];
 void *memmove(void *, const void *, unsigned int);
 
 static inline SP *Slot(SPL *list, int found)
@@ -41,6 +41,6 @@ void AddSafePointOnMember(float parameter, SPL *list, MEM *pmember)
     asm volatile("");
     first->pmember = pmember;
     first->x = parameter;
-    first->tStamp = g_2dded0;
+    first->tStamp = g_2dded0[0];
     list->items[0].plo->grfo |= 1UL << 59;
 }

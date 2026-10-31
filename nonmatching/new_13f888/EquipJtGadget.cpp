@@ -8,7 +8,7 @@ void SetJtGadgetSlotState(void *, Slot *, int);
 void CRef_Destruct(CRef *);
 void func_001D8B20(CRef *, CRef *, void *, const char *, char *, int);
 int sprintf(char *, const char *, ...);
-extern float g_2dded0;
+extern float g_2dded0[];
 extern const char RO_002A4D50[];
 extern const char RO_002A4D58[];
 }
@@ -18,8 +18,8 @@ void EquipJtGadget(char *jt, unsigned slot, int gadget)
         Slot *equip = (Slot *)(jt + 0x1180 + slot * 0xC);
         SetJtGadgetSlotState(jt, equip, -1);
         equip->state = 0;
+        equip->t = g_2dded0[0];
         equip->gadget = gadget;
-        equip->t = g_2dded0;
         Slot *scan = (Slot *)(jt + 0x1180);
         Slot *other = (Slot *)(jt + 0x1180);
         for (int index = 0; index < 3; index++, other++) {

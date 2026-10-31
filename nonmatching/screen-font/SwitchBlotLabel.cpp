@@ -16,7 +16,7 @@ void SwitchBlotLabel(s32 arg0, s32 arg1, s32 *arg2) {
     temp_v0 = *arg2;
     if (arg1 != temp_v0) {
         if (temp_v0 != -1) {
-            func_00213928(temp_v0);
+            func_00213928(arg0);
         }
         *arg2 = arg1;
         if (arg1 != -1) {

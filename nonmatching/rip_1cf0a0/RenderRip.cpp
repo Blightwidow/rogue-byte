@@ -10,13 +10,13 @@ extern "C" {
 struct _m2c_stack_RenderRip {
     /* 0x00 */ char pad0[0x50];
 };                                                  /* size = 0x50 */
-s32 FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(s128, s8 *, s128, s128, s128, s128); /* extern */
+s32 FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(s8 *, s128, s8 *, s128, s128, s128); /* extern */
 M2C_UNK RemoveRip(s8 *);                          /* extern */
 void RenderRip(s8 *arg0) {
     s8 sp[0x30] __attribute__((aligned(16)));
     s128 temp_a3;
     temp_a3 = M2C_FIELD(arg0, s128 *, 0x50);
-    if (FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(M2C_FIELD(arg0, s128 *, 0x70), sp, temp_a3, M2C_FIELD(arg0, s128 *, 0x40), temp_a3, M2C_FIELD(arg0, s128 *, 0x60)) == 0) {
+    if (FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(arg0, M2C_FIELD(arg0, s128 *, 0x70), sp, temp_a3, M2C_FIELD(arg0, s128 *, 0x40), temp_a3) == 0) {
         RemoveRip(arg0);
     }
 }

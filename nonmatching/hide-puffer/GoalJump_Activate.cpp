@@ -96,11 +96,11 @@ noSurface:
         } else {
             taken = 0 | GrfsgsFromSgs(0x1B);
             if (self->reverse == 0) angle = RadNormalize__Ff(angle + 3.1415927f);
-            self->active = 1;
+            self->m2 = *(QW *)(sp + 0x30);
             LoadRotateMatrixRad(sp + 0x10, g_2a2dc0, angle);
             self->m0 = *(QW *)(sp + 0x10);
             self->m1 = *(QW *)(sp + 0x20);
-            self->m2 = *(QW *)(sp + 0x30);
+            self->active = 1;
         }
     }
     player = self->player;

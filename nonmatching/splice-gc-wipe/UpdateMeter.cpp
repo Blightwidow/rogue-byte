@@ -30,10 +30,10 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
     }
     if (self->player == 0) {
         float zero = 0.0f;
-        self->f28 = zero;
         self->f24 = zero;
         self->f20 = zero;
         self->f2C = zero;
+        self->f28 = zero;
         if (previous != 0) {
             SetMeterState(self, 0);
         }
@@ -69,11 +69,11 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
         }
         Player_1D9DF8 *player = self->player;
         float health = (float)*player->health / (float)player->maxHealth;
-        self->f20 = health;
         self->f24 = health;
+        self->f20 = health;
         float power = (float)GetJtPower(player) / (float)self->player->powerMax;
-        self->f28 = power;
         self->f2C = power;
+        self->f28 = power;
     }
     switch (self->state) {
     case 1:

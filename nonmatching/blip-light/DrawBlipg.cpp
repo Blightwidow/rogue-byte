@@ -161,10 +161,10 @@ block_12:
                     sp54 += 1;
                     M2C_FIELD(var_s1, s128 *, 0) = sp20;
                     M2C_FIELD(var_s1, s128 *, 0x10) = sp30;
-                    M2C_FIELD(var_s1, f32 *, 0x3C) = 1.0f;
                     M2C_FIELD(var_s1, s128 *, 0x20) = sp40;
-                    M2C_FIELD(var_s1, s32 *, 0x2C) = 0;
+                    M2C_FIELD(var_s1, f32 *, 0x3C) = 1.0f;
                     M2C_FIELD(var_s1, s32 *, 0x1C) = 0;
+                    M2C_FIELD(var_s1, s32 *, 0x2C) = 0;
                     M2C_FIELD(var_s1, s32 *, 0xC) = 0;
                     var_s1 += 0x40;
                 }

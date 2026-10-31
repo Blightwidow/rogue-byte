@@ -5,19 +5,19 @@ struct SMP { float a; float b; float c; };
 struct GUARD { char pad0[0x198]; float speed; char pad1[0xF84 - 0x19C]; PIPE *pcrv; float sPath; int fForward; };
 struct GOAL { char pad0[0x10]; GUARD *pguard; char pad1[0x30 - 0x14]; int state; char pad2[0x38 - 0x34]; float sTarget; float speed; };
 extern "C" {
-void func_001EEF98();
+void func_001EEF98(GOAL *);
 int func_0017D188(GOAL *);
 void func_0017D058(GOAL *, int);
 float SWrapCrv(PIPE *, float);
 }
 float GSmooth__FfffP3SMPPf(float, float, float, SMP *, float *);
-void GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(JT *, PIPE *, float, MATRIX3 *);
+void GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(JT *, float, PIPE *, MATRIX3 *);
 extern float g_2dded0[2];
 extern float g_2dfb7c;
 extern float D_002DFB7C;
 extern "C" void func_0017CF10(GOAL *pgoal)
 {
-    func_001EEF98();
+    func_001EEF98(pgoal);
     int previous;
     do {
         previous = pgoal->state;
@@ -45,5 +45,5 @@ extern "C" void func_0017CF10(GOAL *pgoal)
         }
     } while (previous != pgoal->state);
     GUARD *pguardEnd = pgoal->pguard;
-    return GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3((JT *)pguardEnd->pcrv, (PIPE *)pguardEnd->fForward, pguardEnd->sPath, (MATRIX3 *)((char *)pguardEnd + 0x1B0));
+    return GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3((JT *)pguardEnd->pcrv, pguardEnd->sPath, (PIPE *)pguardEnd->fForward, (MATRIX3 *)((char *)pguardEnd + 0x1B0));
 }

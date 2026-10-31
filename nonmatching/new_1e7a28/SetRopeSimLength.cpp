@@ -34,9 +34,9 @@ extern "C" void SetRopeSimLength(Rope_1E95B0 *rope, float length) {
                 }
                 next += 1;
                 float one = 1.0f;
+                rope->times[next - 1] = length;
                 rope->positions[next - 1] = rope->positions[next - 2];
                 rope->previous[next - 1] = rope->previous[next - 2];
-                rope->times[next - 1] = length;
                 rope->sim->vectors[next - 1] = rope->sim->vectors[next - 2];
                 rope->sim->lengths[next - 1] = rope->sim->lengths[next - 2];
                 rope->times[next - 2] = rope->times[next - 3] + rope->spacing;

@@ -18,13 +18,13 @@ void AddJobToggle(s8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     if (M2C_FIELD(arg0, s32 *, 0x50) == 0) {
         temp_v1 = M2C_FIELD(arg0, s32 *, 0x8C);
         if (temp_v1 < 0x20) {
-            M2C_FIELD(arg0, s32 *, 0x8C) = (s32) (temp_v1 + 1);
-            temp_s0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x90) + (temp_v1 * 0x10));
             M2C_FIELD(temp_s0, s32 *, 0) = arg1;
+            temp_s0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x90) + (temp_v1 * 0x10));
+            M2C_FIELD(arg0, s32 *, 0x8C) = (s32) (temp_v1 + 1);
             M2C_FIELD(temp_s0, s32 *, 4) = arg3;
             temp_v0 = GrfOfState(arg2);
-            M2C_FIELD(temp_s0, s32 *, 0xC) = arg4;
             M2C_FIELD(temp_s0, s32 *, 8) = temp_v0;
+            M2C_FIELD(temp_s0, s32 *, 0xC) = arg4;
         }
     }
 }

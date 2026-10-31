@@ -9,7 +9,7 @@ int FIsBasicDerivedFrom(void *, int);
 void BindAnimref(void *);
 void *func_001F4C58(void *, int, int);
 float *PeaFindAsegLabel(void *, int);
-void PredictAsegEffect(void *, void *, void *, void *, float, float, void *, int);
+void PredictAsegEffect(float, void *, void *, void *, void *, float);
 }
 void PostGuardAimLoad(Aim *paim)
 {
@@ -28,7 +28,7 @@ void PostGuardAimLoad(Aim *paim)
         paim->pxfA = func_001F4C58(paim->pguard, paim->oidA, 6);
         paim->pxfB = func_001F4C58(paim->pguard, paim->oidB, 6);
         void * paseg;
-        PredictAsegEffect(paseg, paim->pguard, paim->pxfB, *(void **)((char *)paim->pxfA + 0xA0), *PeaFindAsegLabel(paseg, paim->oidLabel), 1.0f, out, 0);
+        PredictAsegEffect(*PeaFindAsegLabel(paseg, paim->oidLabel), paseg, paim->pguard, paim->pxfB, *(void **)((char *)paim->pxfA + 0xA0), 1.0f);
         paseg = *(void **)(panim + 4);
         paim->vecRest = out[3];
     }

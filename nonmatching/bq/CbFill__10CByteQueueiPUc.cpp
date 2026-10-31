@@ -10,14 +10,14 @@ extern "C" {
 struct _m2c_stack_CbFill__10CByteQueueiPUc {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
-s32 CbFill__10CByteQueueiP11CQueueInput(s32, s8 *, M2C_UNK *, s32, s32, s32, s32); /* extern */
+s32 CbFill__10CByteQueueiP11CQueueInput(s32); /* extern */
 extern M2C_UNK D_002CBE20;
-s32 CbFill__10CByteQueueiPUc(s32 arg1, s32 arg2) {
+s32 CbFill__10CByteQueueiPUc(s32 unused_arg0, s32 arg1, s32 arg2) {
     s8 sp[0x20] __attribute__((aligned(16)));
     s32 var_v0;
     var_v0 = 0;
     if (arg1 != 0) {
-        var_v0 = CbFill__10CByteQueueiP11CQueueInput(arg1, sp, &D_002CBE20, arg2, arg1, 0, arg1);
+        var_v0 = CbFill__10CByteQueueiP11CQueueInput(arg1);
     }
     return var_v0;
 }

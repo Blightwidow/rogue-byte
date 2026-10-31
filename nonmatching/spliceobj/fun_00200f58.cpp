@@ -6,7 +6,7 @@ struct EOPID { int otyp; int grf; int ibGet; char pad[0x24]; };
 extern "C" {
 CPair *PpairNew(void);
 HP *PairHandle_Init(HP *, int);
-void PairHandle_Assign(CPair **, CPair *);
+void PairHandle_Assign(CPair **);
 void CRef_Destruct(RefT *);
 void SetTag__4CRef4TAGK(RefT *, int);
 void CPairPtr_Destructor(CPair **, int);
@@ -30,7 +30,7 @@ extern "C" RefT *func_00200F58(RefT *pret, int count, int otyp, void *pbasic)
     HP *tail;
     head.p = 0;
     memset(&eopid, 0, 0x28);
-    PairHandle_Assign(&head.p, 0);
+    PairHandle_Assign(&head.p);
     eopid.grf = 2;
     eopid.otyp = otyp;
     int index;
@@ -43,7 +43,7 @@ extern "C" RefT *func_00200F58(RefT *pret, int count, int otyp, void *pbasic)
         RefGetPeopid(&element, pbasic, &eopid);
         __as__4CRefRC4CRef(dst, &element);
         CRef_Destruct(&element);
-        PairHandle_Assign(&tail->p, handle.p);
+        PairHandle_Assign(&tail->p);
         CPair *held = handle.p;
         tail = (HP *)&held->next;
         if (held) {

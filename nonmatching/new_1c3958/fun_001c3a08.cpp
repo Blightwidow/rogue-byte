@@ -12,13 +12,13 @@ struct _m2c_stack_func_001C3A08 {
     /* 0x30 */ M2C_UNK sp30;                        /* inferred */
     /* 0x30 */ char pad30[0x60];
 };                                                  /* size = 0x90 */
-M2C_UNK GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(M2C_UNK, s8 *); /* extern */
+M2C_UNK GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(M2C_UNK); /* extern */
 M2C_UNK GetPathPosFromS(s32, M2C_UNK *, M2C_UNK, f32); /* extern */
 extern s32 g_2c0d04;
 void func_001C3A08(s32 arg0, s32 arg2, f32 fparg0) {
     s8 sp[0x40] __attribute__((aligned(16)));
     M2C_UNK sp30;
-    GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(1, sp);
+    GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(1);
     GetPathPosFromS(arg0, &sp30, 0, fparg0);
     if (arg2 != 0) {
         asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(sp));

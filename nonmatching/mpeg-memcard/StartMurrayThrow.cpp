@@ -12,7 +12,7 @@ struct _m2c_stack_StartMurrayThrow {
 };                                                  /* size = 0x40 */
 s128 PosLoWorld(...);                      /* extern */
 M2C_UNK SetMurrayState(s8 *, M2C_UNK);                    /* extern */
-M2C_UNK SetStepRadTargetDir(s8 *, M2C_UNK);       /* extern */
+M2C_UNK SetStepRadTargetDir(void);       /* extern */
 void StartMurrayThrow(s8 *arg0, s8 *arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s128 temp_v0;
@@ -25,7 +25,7 @@ void StartMurrayThrow(s8 *arg0, s8 *arg1) {
         asm volatile("vsub.xyzw vf1, vf1, vf2");
         s32 vu_1;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        SetStepRadTargetDir(arg0, vu_1);
+        SetStepRadTargetDir();
     }
 }
 }

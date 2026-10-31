@@ -6,7 +6,7 @@ float SWrapCrv(void *, float);
 void GetPathPosFromS(void *, float, QW *, void *);
 void *PobstacleFindEdgeBlocker(void *, void *, QW, QW);
 void FindCrvClosestPointAll(void *, QW, void *, int, int, int, float *);
-int func_001BD560(void *, void *, int, QW *, float, int);
+int func_001BD560(void *, void *, float, int, QW *, int);
 int func_001BCCE0(void *, void *, float *, int, float);
 }
 struct Locals { QW posTarget; QW posExit; float sPos; float sFar; };
@@ -26,7 +26,7 @@ extern "C" int func_001BD718(float sNow, QW pos, void *ppathzone, void *pquery, 
         *ppobstacle = pobstacle;
     if (pobstacle == 0)
         return 0;
-    int nWalk = func_001BD560(pobstacle, pcrv, fForward, &l.posExit, sWrapped, 0);
+    int nWalk = func_001BD560(pobstacle, pcrv, sWrapped, fForward, &l.posExit, 0);
     if (nWalk != -1)
         return nWalk;
     FindCrvClosestPointAll(pobstacle, pos, B_003DD020, 0, 0, 0, &l.sPos);

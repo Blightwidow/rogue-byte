@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_func_001C4848 {
     /* 0x00 */ char pad0[0x30];
 };                                                  /* size = 0x30 */
-s8 * PemitbEnsureEmitter(s32, f32, s8 *);    /* extern */
+s8 * PemitbEnsureEmitter(s32);    /* extern */
 s32 PvAllocSwClearImpl__Fi(s8 *, s32, f32);       /* extern */
 void func_001C4848(s8 *arg0, s32 arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
@@ -20,7 +20,7 @@ void func_001C4848(s8 *arg0, s32 arg1) {
     if (temp_v1 < 4U) {
         M2C_FIELD((arg0 + (temp_v1 * 4)), s32 *, 0x477C) = arg1;
         M2C_FIELD(arg0, u32 *, 0x4778) = (u32) (temp_v1 + 1);
-        temp_v0 = PemitbEnsureEmitter(arg1, 1, arg0);
+        temp_v0 = PemitbEnsureEmitter(arg1);
         if (M2C_FIELD(temp_v0, s32 *, 8) == 0) {
             M2C_FIELD(temp_v0, s32 *, 8) = PvAllocSwClearImpl__Fi(sp, 0x14, 0x10);
         }

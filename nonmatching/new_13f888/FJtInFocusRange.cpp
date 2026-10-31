@@ -1,6 +1,6 @@
 #include "sly2.h"
 extern "C" int FIsBasicDerivedFrom(void *, int);
-extern "C" QW PosLoWorld(void *);
+extern "C" QW PosLoWorld(char *);
 extern const float D_002BCC7C;
 extern const float D_002BCC80;
 extern const float D_002BCC84;
@@ -9,6 +9,7 @@ extern const float D_002BCC8C;
 extern const float D_002BCC90;
 int FJtInFocusRange(char *jt, int fWide)
 {
+    int result;
     if (*(int *)(jt + 0x10EC) != 4 || *(int *)(jt + 0x10E4) == 3)
         return 0;
     float range;
@@ -29,7 +30,7 @@ int FJtInFocusRange(char *jt, int fWide)
     asm("" : "=m"(save));
     int chain;
     float horizontal;
-    QW posObj = PosLoWorld(*(void **)(jt + 0x10E8));
+    QW posObj = PosLoWorld(jt);
     asm("qmtc2.ni %0, vf1" : : "r" (posObj));
     asm("sqc2 vf1, %0" : "=m" (save));
     QW posJt = PosLoWorld(jt);
@@ -42,6 +43,8 @@ int FJtInFocusRange(char *jt, int fWide)
     asm("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q" : "+r" (chain));
     asm("qmfc2.ni %0, vf2" : "=r" (horizontal) : "r" (chain));
     if (horizontal < range && dzLow < ((float *)&delta)[2] && ((float *)&delta)[2] < dzHigh)
-        return 1;
-    return 0;
+        { result = 1; goto done; }
+    { result = 0; goto done; }
+done:
+    return result;
 }

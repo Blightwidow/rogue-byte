@@ -18,19 +18,19 @@ void func_00154038(void *, void *, int);
 char *func_00205438(PLAYER *, int);
 void func_00208540(void *, int);
 void func_002562A8(void *);
-extern float g_2dded0;
+extern float g_2dded0[];
 void GoalNotice_SetState(NOTICE *self, unsigned state) {
     struct { int first; int second; int pad[2]; QW vec; } target;
     if (state != self->state) {
         Goal_Pop(self->popSlot);
         if (self->state == 1) {
             RANGE *range = self->range;
-            float now = g_2dded0;
+            float now = g_2dded0[0];
             self->player->cooldown = now + GRandInRange(range->lo, range->hi);
             self->range = 0;
         }
         self->state = state;
-        self->since = g_2dded0;
+        self->since = g_2dded0[0];
         switch (state) {
         case 0: {
             OBJ *obj = (OBJ *)func_00205438(self->player, 0xB3);

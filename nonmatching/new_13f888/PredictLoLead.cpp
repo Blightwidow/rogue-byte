@@ -4,7 +4,7 @@ struct LO { char pad0[0xC]; VT *vt; };
 struct LEAD { int kind; float radiusA; float radiusB; int pad; QW velocity_unused; };
 extern QW g_2a2dc0;
 extern "C" QW PosLoWorld(LO *);
-void PredictLoLead(LO *plo, char *plead, float dt)
+QW PredictLoLead(LO *plo, char *plead, float dt)
 {
     VT *vt = plo->vt;
     QW velocity = vt->fn((char *)plo + vt->delta);
@@ -13,7 +13,8 @@ void PredictLoLead(LO *plo, char *plead, float dt)
     asm("lqc2 vf1, 0(%0)\n\tvmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z\n\t"
         "vmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2" : : "r" (&g_2a2dc0), "r" (velocity));
     asm("sqc2 vf3, %0" : "=m" (l.horizontal));
-    QW pos = PosLoWorld(plo);
+    QW  pos;
+    pos = PosLoWorld(plo);
     asm("lqc2 vf3, %0" : : "m" (l.horizontal));
     asm("qmtc2.ni %0, vf4" : : "r" (pos));
     asm("qmtc2.ni %0, vf2" : : "r" (dt));
@@ -25,4 +26,5 @@ void PredictLoLead(LO *plo, char *plead, float dt)
     asm("sqc2 vf1, 0x10(%0)" : : "r" (plead) : "memory");
     asm("sqc2 vf2, %0" : "=m" (l.dtSlot));
     *(int *)plead = 0;
+    return pos;
 }

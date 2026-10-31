@@ -65,8 +65,8 @@ void func_00144640(Act_144640 *self) {
             }
             {
                 QW pos = PosLoWorld(self->jt);
-                float scale = D_002BD2D4;
                 float rate = D_002BD2D0;
+                float scale = D_002BD2D4;
                 float prev = self->distance;
                 int token1, token2, token3;
                 asm("qmtc2.ni %1, vf2" : "=r" (token1) : "r" (pos));

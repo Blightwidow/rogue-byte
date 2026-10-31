@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_PemitbEnsureEmitter {
     /* 0x00 */ char pad0[0x40];
 };                                                  /* size = 0x40 */
-s32 *PvAllocSwCopyImpl__FiPv(s8 *, s32 *, M2C_UNK, s32, s32); /* extern */
+s32 * PvAllocSwCopyImpl__FiPv(s8 *, s32, f32, s32, s32); /* extern */
 s32 *PemitbEnsureEmitter(s8 *arg0, s32 arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     s32 *temp_a0;
@@ -22,7 +22,7 @@ s32 *PemitbEnsureEmitter(s8 *arg0, s32 arg1) {
         temp_v1 = *temp_a0;
         if (temp_v1 >= 2) {
             *temp_a0 = temp_v1 - 1;
-            temp_v0 = PvAllocSwCopyImpl__FiPv(sp, M2C_FIELD(arg0, s32 **, 0xE4), 0x10, 0x100, 0x10);
+            temp_v0 = PvAllocSwCopyImpl__FiPv(sp, arg1, 0x10, 0x100, 0x10);
             M2C_FIELD(arg0, s32 **, 0xE4) = temp_v0;
             *temp_v0 = arg1;
         }

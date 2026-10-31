@@ -21,7 +21,7 @@ struct _m2c_stack_printf {
     /* 0x80 */ s64 sp80;                            /* inferred */
     /* 0x88 */ s64 sp88;                            /* inferred */
 };                                                  /* size = 0x90 */
-M2C_UNK vprintf(s64 *);                             /* extern */
+M2C_UNK vprintf(void);                             /* extern */
 void printf(s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 arg5, s64 arg6, s64 arg7, f32 fparg0, f32 fparg2, f32 fparg4, f32 fparg6) {
     f32 sp48;
     f32 sp4C;
@@ -45,6 +45,6 @@ void printf(s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 arg5, s64 arg6, s64 arg7
     sp4C = fparg2;
     sp50 = fparg4;
     sp54 = fparg6;
-    vprintf(&sp58);
+    vprintf();
 }
 }

@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_SetupDraw__8CFontBrxP8CTextBoxP4GIFS {
     /* 0x00 */ char pad0[0x70];
 };                                                  /* size = 0x70 */
-M2C_UNK AddPrimList__4GIFSiUl(s32, M2C_UNK, M2C_UNK); /* extern */
+M2C_UNK AddPrimList__4GIFSiUl(s32, M2C_UNK); /* extern */
 M2C_UNK AddPrimPack__4GIFSiiUl(s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
 s32 FEnsureLoaded__8CFontBrxP4GIFS(s8 *, s32);    /* extern */
 M2C_UNK PackAD__4GIFSll(s32, M2C_UNK, s64);         /* extern */
@@ -48,6 +48,6 @@ void SetupDraw__8CFontBrxP8CTextBoxP4GIFS(s8 *arg0, s8 *arg1, s32 arg2) {
     PackAD__4GIFSll(arg2, 0x14, 0x60);
     PackAD__4GIFSll(arg2, 8, 5);
     PackAD__4GIFSll(arg2, 0, 0x1D6);
-    AddPrimList__4GIFSiUl(arg2, 5, 0x43431);
+    AddPrimList__4GIFSiUl(arg2, 5);
 }
 }

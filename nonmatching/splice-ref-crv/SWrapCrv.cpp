@@ -7,7 +7,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-f32 GModPositive__Fff(f32);                         /* extern */
+f32 GModPositive__Fff(void);                         /* extern */
 
 f32 SWrapCrv(s8 *arg0, f32 fparg0) {
     f32 temp_f13;
@@ -15,7 +15,7 @@ f32 SWrapCrv(s8 *arg0, f32 fparg0) {
 
     var_f0 = fparg0;
     if ((M2C_FIELD(arg0, s32 *, 0xE4) != 0) && ((temp_f13 = M2C_FIELD(((M2C_FIELD(arg0, s32 *, 0xE8) * 4) + M2C_FIELD(arg0, s32 *, 0xF0)), f32 *, -4), !(fparg0 >= 0.0f)) || (var_f0 = fparg0, !(fparg0 <= temp_f13)))) {
-        var_f0 = GModPositive__Fff(temp_f13);
+        var_f0 = GModPositive__Fff();
     }
     return var_f0;
 }

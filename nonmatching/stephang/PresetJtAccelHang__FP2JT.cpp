@@ -45,18 +45,18 @@ extern "C" void PresetJtAccelHang__FP2JT(JT *pjt)
     asm("vmulax.xyz ACC, vf3, vf6x\n\tvmadday.xyz ACC, vf2, vf6y\n\tvmaddz.xyz vf5, vf1, vf6z" : "=j" (v5) : "j" (v3), "j" (v2), "j" (v1), "j" (v6));
     asm("vmulax.xyz ACC, vf3, vf8x\n\tvmadday.xyz ACC, vf2, vf8y\n\tvmaddz.xyz vf4, vf1, vf8z" : "=j" (v4) : "j" (v3), "j" (v2), "j" (v1), "j" (v8));
     asm("vmulax.xyz ACC, vf3, vf7x\n\tvmadday.xyz ACC, vf2, vf7y\n\tvmaddz.xyz vf3, vf1, vf7z" : "=j" (v3) : "j" (v3), "j" (v2), "j" (v1), "j" (v7));
-    l.yawCopy[0] = v8;
-    l.yaw[1] = v3;
-    l.yawCopy[1] = v7;
-    l.goalCopy[1] = v3;
     l.yaw[2] = v5;
-    l.goal[0] = v4;
-    l.goalCopy[2] = v5;
     l.yaw[0] = v4;
-    l.goal[2] = v5;
-    l.yawCopy[2] = v6;
-    l.goalCopy[0] = v4;
-    AccelSoTowardMatSmooth__FP2SOfP7MATRIX3P3SMP(pjt, l.goal, &D_002BF548);
+    l.goalCopy[1] = v3;
+    l.yaw[1] = v3;
+    l.yawCopy[0] = v8;
     l.goal[1] = v3;
+    l.goalCopy[2] = v5;
+    l.goal[2] = v5;
+    l.yawCopy[1] = v7;
+    l.goal[0] = v4;
+    l.yawCopy[2] = v6;
+    AccelSoTowardMatSmooth__FP2SOfP7MATRIX3P3SMP(pjt, l.goal, &D_002BF548);
+    l.goalCopy[0] = v4;
     return;
 }

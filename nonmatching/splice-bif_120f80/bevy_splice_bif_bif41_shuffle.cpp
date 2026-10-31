@@ -55,8 +55,8 @@ void *bevy_splice_bif_bif41_shuffle(void *result, int unused, LISTREF_120FB0 *li
             for (round = 0; round < count; round++) {
                 index = NRandInRange(0, count - 1);
                 held = items[index];
-                items[index] = items[round];
                 items[round] = held;
+                items[index] = items[round];
             }
             zeroIndex = count;
             if (items[0] == saved) {

@@ -14,12 +14,12 @@ struct _m2c_stack_RefOpHitTestObjects {
 };                                                  /* size = 0x50 */
 M2C_UNK CRef_CopyConstruct(s32, M2C_UNK *);         /* extern */
 M2C_UNK CRef_Destruct(M2C_UNK *);                   /* extern */
-M2C_UNK RefOpHitTestObjectsImpl(M2C_UNK *, M2C_UNK, s32, s32, s32, s32); /* extern */
+M2C_UNK RefOpHitTestObjectsImpl(M2C_UNK *, M2C_UNK, s32, s32, s32); /* extern */
 M2C_UNK __as__4CRefRC4CRef(M2C_UNK *, M2C_UNK *);   /* extern */
 s32 RefOpHitTestObjects(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK sp10;
-    RefOpHitTestObjectsImpl(&sp10, 0x7B, arg1, arg2, arg3, -1);
+    RefOpHitTestObjectsImpl(&sp10, 0x7B, arg1, arg2, arg3);
     __as__4CRefRC4CRef((M2C_UNK *)(sp), &sp10);
     CRef_Destruct(&sp10);
     CRef_CopyConstruct(arg0, (M2C_UNK *)(sp));
