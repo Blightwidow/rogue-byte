@@ -21,6 +21,7 @@ goes through scripts/matching/try.py (the score with the link check) on --jobs t
 import argparse
 import concurrent.futures
 import itertools
+import math
 import random
 import os
 import re
@@ -70,7 +71,8 @@ def sampled_orders(count, sample, seed=1):
     generator = random.Random(seed)
     chosen = set()
     identity = tuple(range(count))
-    while len(chosen) < min(sample, 100000):
+    wanted = min(sample, 100000, math.factorial(count) - 1)  # more than count! - 1 distinct orders never exist
+    while len(chosen) < wanted:
         order = list(range(count))
         generator.shuffle(order)
         if tuple(order) != identity:
