@@ -35,7 +35,7 @@ s32 func_00167DA0(s32 arg0, s32 arg1, f32 *arg2) {
     asm volatile("vsqrt Q, vf1x");
     asm volatile("vwaitq");
     asm volatile("vaddq.x vf1, vf0, Q");
-    s32 vu_1;
+    float vu_1;
     asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
     temp_v0 = vu_1;
     s32 vu_2;
@@ -45,7 +45,7 @@ s32 func_00167DA0(s32 arg0, s32 arg1, f32 *arg2) {
         *arg2 = (temp_v0 + temp_f1) * 0.5f;
         asm volatile("qmtc2.ni %0, vf1" : : "r"(((temp_v0 - temp_f1) * 0.5f) / temp_v0));
         asm volatile("sqc2 vf1, (%0)" : : "r"(sp));
-        asm volatile("vadda.xyzw ACC, vf0, vf6");
+        asm volatile("vadda.xyzw ACC, vf6, vf0");
         asm volatile("vmaddx.xyzw vf6, vf2, vf1x");
         s32 vu_3;
         asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_3));

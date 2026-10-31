@@ -24,27 +24,23 @@ int FJtInFocusRange(char *jt, int fWide)
         dzLow -= D_002BCC90;
         dzHigh += D_002BCC90;
     }
-    QW save;
-    QW delta;
-    asm("" : "=m"(delta));
-    asm("" : "=m"(save));
+    struct { QW delta; QW save; } loc;
     int chain;
     float horizontal;
-    QW posObj = PosLoWorld(jt);
+    QW posObj = PosLoWorld(*(char **)(jt + 0x10E8));
     asm("qmtc2.ni %0, vf1" : : "r" (posObj));
-    asm("sqc2 vf1, %0" : "=m" (save));
+    asm("sqc2 vf1, %0" : "=m" (loc.save));
     QW posJt = PosLoWorld(jt);
     asm("qmtc2.ni %1, vf2" : "=r" (chain) : "r" (posJt));
-    asm("lqc2 vf1, %1" : "+r" (chain) : "m" (save));
+    asm("lqc2 vf1, %1" : "+r" (chain) : "m" (loc.save));
     asm("vsub.xyzw vf1, vf1, vf2" : "+r" (chain));
     asm("vmul.xy vf2, vf1, vf1" : "+r" (chain));
     asm("vaddy.x vf2, vf2, vf2y" : "+r" (chain));
-    asm("sqc2 vf1, %0" : "=m" (delta) : "r" (chain));
+    asm("sqc2 vf1, %0" : "=m" (loc.delta) : "r" (chain));
     asm("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q" : "+r" (chain));
     asm("qmfc2.ni %0, vf2" : "=r" (horizontal) : "r" (chain));
-    if (horizontal < range && dzLow < ((float *)&delta)[2] && ((float *)&delta)[2] < dzHigh)
-        { result = 1; goto done; }
-    { result = 0; goto done; }
-done:
+    result = 0;
+    if (horizontal < range && dzLow < ((float *)&loc.delta)[2] && ((float *)&loc.delta)[2] < dzHigh)
+        result = 1;
     return result;
 }

@@ -430,3 +430,17 @@ Six workers, 44 matches (61%), the best rate yet; the pool was the largest untou
 - **A structure wrong in m2c's draft** (not a register problem) is fixed by rewriting it: `switch (mode) { case 0: case 3: ... case 1: case 2: ... }` for a `goto` chain; an element size read from a constant (`0x38E38E39`: 0x120 bytes, pad the struct).
 - **A type suffix on `CRef` changes the mangled name** and adds link mismatches: keep plain `CRef` where the callee symbol is mangled with it.
 - **An exhaustive search of the store orders** (24 orders of four stores) found two matches that guessing missed: retail's visible order is not the source order.
+
+### Sonnet round 8: near misses at 1 to 10 words (183 functions, 2026-10-31)
+
+Six workers, 50 matches landed (8 of 31 in the best batch, 0 of 31 in the worst) and 19 more functions improved. The pool was every untried near miss at 1 to 10 words outside the SDK range; about a third of it was not code. New:
+
+- **Fragments are in the pool.** A 8 to 32 byte "function" that holds a `jr` delay slot, a lone `addiu $sp` or a `sw`/`swc1` belongs to the function before it (worker 1: 18 of 31, worker 6: 7 of 28). Drop them from a pool before dealing it.
+- **A banned `asm("")`, `volatile` or register pin props up a score.** Removing it moved `1EE988` from 7 to 26, `204108` from 6 to 18, `135940` from 7 to 26, `150F58` from 8 to 39: the manifest overstates those functions. Some went the other way (`19FD30` from 4 to 0 without the empty `asm`). Judge a draft without the trick first.
+- **A wrong callee prototype caused most of the matches.** An `a1` set before a call means a second argument; a `jal` with no `a0` setup means the first argument is untouched (a real unused `arg0`: the `PjsgeAllocJsg` family); `por $a1,$zero,$a2` means a 128-bit argument; a fifth argument equal to the third (`daddu t0,a2`) is `fn(this+delta, 4, x, 4, x)`.
+- **Stack stores before a call are a local struct** (`{size, align}`, a 0x70-byte command struct): give each local its real size and alignment, then declaration order stops mattering.
+- **Pointer scaling:** `(char *)&sym + N` where m2c wrote `&sym + N` (it scales by the type); a typed element struct (`B + var_s0` on an `s32 *`) gives retail's strides where `var += 0x18` does not.
+- **Nest a call in the argument list** (`f(&B, 1, g(x), ...)`) when retail keeps an address in a callee-saved register across the inner call.
+- **A duplicated switch arm** (`SetButtonButtons(p, 1)` in both cases, no `goto`) gives gcc's shared-block layout; a float compare against a re-read field gives the loop's extra register copy.
+- **Walls again:** a VU instruction (`qmfc2`, `lqc2`, `sqc2`, `qmtc2`) in a branch or `jal` delay slot, the `sq` order of a prologue, and `sqrt.s $f1,$f0; mov.s $f0,$f1` (`__builtin_sqrtf` and helpers all give `sqrt.s $f0,$f0`).
+- `16E1A8` is instruction-exact at score 1: its last call links an address-0 `%hi/%lo` pair no symbol covers.

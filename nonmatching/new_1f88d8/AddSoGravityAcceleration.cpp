@@ -1,6 +1,6 @@
 #include "sly2.h"
-static inline QW Rot(QW q) { QW r; asm volatile("prot3w %0, %1" : "=r" (r) : "r" (q)); return r; }
-static inline QW Ext(QW q) { QW r; asm volatile("pextuw %0, $0, %1" : "=r" (r) : "r" (q)); return r; }
+static inline QW Rot(QW q) { QW r; asm("prot3w %0, %1" : "=r" (r) : "r" (q)); return r; }
+static inline QW Ext(QW q) { QW r; asm("pextuw %0, $0, %1" : "=r" (r) : "r" (q)); return r; }
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 struct PHYS { char pad[0x80]; QW gravity; char pad1[0xC0 - 0x90]; int ctForce; };
 struct SO { char pad[0x58]; void *pxfLinear; char pad1[0xE8 - 0x5C]; PHYS *pphys; char pad2[0x138 - 0xEC]; int driven; };
@@ -12,7 +12,6 @@ void UpdateSoDriven(SO *);
 static inline int NearLane(float a, float b) { return FFloatsNear__Ffff(a, b, 0.0001f); }
 void AddSoGravityAcceleration(SO *pso)
 {
-    register QW zeroReg asm("$0");
     QW gravity = pso->pphys->gravity;
     QW zero = g_2a2dd0;
     int apply = 0;

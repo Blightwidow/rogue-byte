@@ -7,18 +7,15 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_func_001E0D38 {
-    /* 0x00 */ char pad0[0x60];
-};                                                  /* size = 0x60 */
-s8 *PjsgeAllocJsg(M2C_UNK, M2C_UNK);              /* extern */
-void func_001E0D38(s32 arg1, s32 arg2, s32 arg3, s32 arg4, f32 fparg0, f32 fparg1) {
+s8 *PjsgeAllocJsg(s32, s32, s32);
+void func_001E0D38(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, f32 fparg0, f32 fparg1) {
     s8 *temp_v0;
-    temp_v0 = PjsgeAllocJsg(0x28, 0);
+    temp_v0 = PjsgeAllocJsg(arg0, 0x28, 0);
     M2C_FIELD(temp_v0, s32 *, 0x10) = arg1;
     M2C_FIELD(temp_v0, f32 *, 0x14) = fparg0;
-    M2C_FIELD(temp_v0, s32 *, 0x18) = arg2;
-    M2C_FIELD(temp_v0, s32 *, 0x24) = arg4;
-    M2C_FIELD(temp_v0, f32 *, 0x1C) = fparg1;
     M2C_FIELD(temp_v0, s32 *, 0x20) = arg3;
+    M2C_FIELD(temp_v0, s32 *, 0x18) = arg2;
+    M2C_FIELD(temp_v0, f32 *, 0x1C) = fparg1;
+    M2C_FIELD(temp_v0, s32 *, 0x24) = arg4;
 }
 }

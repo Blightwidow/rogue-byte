@@ -1,10 +1,11 @@
 #include "sly2.h"
 struct B8 { char b[8]; };
+struct B12 { B8 xy; int z; };
 struct LM;
 extern "C" LM g_2bbb60;
 struct SW {
     char p0[0x3D5C]; int count; char p1[0x3E10 - 0x3D60];
-    float hue, sat, val, pad; float bright; float opac; B8 rgb; int rgbz; float opacOut; int biasFlag;
+    float hue, sat, val, pad; float bright; float opac; B12 rgb; float opacOut; int biasFlag;
 };
 extern "C" {
 void ConvertHsvToRgb__FP6VECTORT0(VECTOR *, VECTOR *);
@@ -26,8 +27,7 @@ void UpdateSwFog(SW *psw)
     asm("lqc2 vf1, %0" : : "m" (rgb));
     asm("qmtc2.ni %2, vf2\n\tvmulx.xyzw vf1, vf1, vf2x\n\tsqc2 vf2, %1\n\tsqc2 vf1, %0" : "=m" (rgb), "=m" (spill) : "r" (*(int *)&bright));
     GreyColor_1ed2d8(prgb);
-    psw->rgbz = *(int *)&rgb.z;
-    psw->rgb = *(B8 *)&rgb;
+    psw->rgb = *(B12 *)&rgb;
     float opac = psw->opac * k;
     psw->opacOut = opac;
     if (psw->biasFlag != 0)

@@ -28,7 +28,7 @@ int func_001423A0(char *jt)
             asm("lqc2 vf3, %1" : "+r" (chain) : "m" (posAttach));
             asm("vsub.xyzw vf1, vf2, vf3\n\tvmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z" : "+r" (chain));
             asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "+r" (chain));
-            asm("qmfc2.ni %0, vf1\n\tnop" : "=r" (distance) : "r" (chain));
+            asm("qmfc2.ni %1, vf1\n\tmtc1 %1, %0\n\tnop" : "=f" (distance), "+r" (chain));
             if (5.0f < distance)
                 return 0;
             if (*(int *)(jt + 0x9A4) != 1)

@@ -25,8 +25,10 @@ void ThrowMurrayObject(MURRAY *self)
         asm("qmtc2.ni %0, vf3" : : "r" (pos));
         float sv = self->svThrow;
         asm("vsub.xyzw vf1, vf3, vf2\n\tvmul.xy vf1, vf1, vf1\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q");
-        asm("qmfc2.ni %0, vf1" : "=r" (bits));
-        float length = *(float *)&bits;
+        QW lane;
+        asm("qmfc2.ni %0, vf1" : "=r" (lane));
+        float length;
+        asm("mtc1 %1, %0\n\tnop" : "=f" (length) : "r" (lane));
         float time = length / sv;
         QW pos2 = PosLoWorld(plo);
         QW target = self->posTarget;
