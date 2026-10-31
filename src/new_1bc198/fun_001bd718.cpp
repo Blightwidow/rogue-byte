@@ -14,12 +14,11 @@ struct Locals { QW posTarget; QW posExit; float sPos; float sFar; };
 extern "C" int func_001BD718(float sNow, QW pos, void *ppathzone, void *pquery, void *pcrv, int fForward, void **ppobstacle, float *psExit)
 {
     Locals l;
-    float sTarget;
+    float sWrapped;
     if (fForward != 0)
-        sTarget = g_2c0ac4 + sNow;
+        sWrapped = SWrapCrv(pcrv, sNow + g_2c0ac4);
     else
-        sTarget = sNow - g_2c0ac4;
-    float sWrapped = SWrapCrv(pcrv, sTarget);
+        sWrapped = SWrapCrv(pcrv, sNow - g_2c0ac4);
     GetPathPosFromS(pcrv, sWrapped, &l.posTarget, 0);
     void *pobstacle = PobstacleFindEdgeBlocker(ppathzone, pquery, pos, l.posTarget);
     if (ppobstacle != 0)

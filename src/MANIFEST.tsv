@@ -949,6 +949,7 @@ address	name	size	file
 0X11D9D8	Force__FPv	8	util/Force__FPv.c
 0X11DCD8	UnpackColorU8ToVec_11dcd8	88	new_11dcd8/UnpackColorU8ToVec_11dcd8.c
 0X11DD30	PackColorVecToU8_11dd30	96	new_11dcd8/PackColorVecToU8_11dd30.cpp
+0X11DFA0	ConvertUserHsvToUserRgb__FP6VECTORT0	128	shd/ConvertUserHsvToUserRgb__FP6VECTORT0.cpp
 0X11E040	StaticInitSlotheaps_11e040	308	new_11e040/StaticInitSlotheaps_11e040.c
 0X11E178	func_0011E178	32	new_11e040/fun_0011e178.c
 0X11E2D8	GetNormalVectors__FP6VECTORN30	184	vec/GetNormalVectors__FP6VECTORN30.cpp
@@ -1599,6 +1600,7 @@ address	name	size	file
 0X1466F0	func_001466F0	104	new_144b58/fun_001466f0.cpp
 0X146758	func_00146758	56	new_144b58/fun_00146758.c
 0X146790	GoalPartnerAttackSly_FIdle	16	new_144b58/GoalPartnerAttackSly_FIdle.c
+0X146E18	func_00146E18	124	new_144b58/fun_00146e18.cpp
 0X146E98	func_00146E98	72	new_144b58/fun_00146e98.c
 0X146EE0	func_00146EE0	56	new_144b58/fun_00146ee0.cpp
 0X146F18	GoalMurrayAi_Update	332	new_144b58/GoalMurrayAi_Update.cpp
@@ -1804,6 +1806,8 @@ address	name	size	file
 0X1524D8	AddDancerMove	72	rip-game/AddDancerMove.cpp
 0X152520	PaloFindDancerAnim	88	rip-game/PaloFindDancerAnim.cpp
 0X152578	ResolveDancerMoves	172	rip-game/ResolveDancerMoves.cpp
+0X152628	ICheerFromOid	88	rip-game/ICheerFromOid.cpp
+0X152680	OidFromICheer	84	rip-game/OidFromICheer.cpp
 0X1527C8	PostRhythmLoad	68	rip-game/PostRhythmLoad.cpp
 0X152810	BindRhythmCrowd	352	rip-game/BindRhythmCrowd.cpp
 0X152B58	UpdateRhythmCrowd	256	rip-game/UpdateRhythmCrowd.cpp
@@ -2039,6 +2043,7 @@ address	name	size	file
 0X163E88	RefuseTaskState	188	sensor-geom/RefuseTaskState.cpp
 0X163F48	LeaveTask	204	sensor-geom/LeaveTask.cpp
 0X164018	FIsCurrentTask	20	sensor-geom/FIsCurrentTask.c
+0X164030	FTaskComplete	104	sensor-geom/FTaskComplete.c
 0X164098	func_00164098	104	unsorted/fun_00164098.cpp
 0X164100	VisitTaskInOrder	368	sensor-geom/VisitTaskInOrder.cpp
 0X164270	RestoreTaskStateFromSave	316	sensor-geom/RestoreTaskStateFromSave.cpp
@@ -2050,6 +2055,7 @@ address	name	size	file
 0X164C58	func_00164C58	144	sensor-geom/fun_00164c58.cpp
 0X164CE8	CollectTaskPrerequisites	260	sensor-geom/CollectTaskPrerequisites.cpp
 0X165118	SendTaskTimeLimit	88	sensor-geom/SendTaskTimeLimit.cpp
+0X165170	SendTaskEvent	104	sensor-geom/SendTaskEvent.cpp
 0X1651D8	RestartAtTaskOid	168	sensor-geom/RestartAtTaskOid.cpp
 0X1657A8	PostTaskJobEvent	40	sensor-geom/PostTaskJobEvent.c
 0X165A60	SetTaskStateCascade	220	sensor-geom/SetTaskStateCascade.cpp
@@ -2171,6 +2177,7 @@ address	name	size	file
 0X172320	SetSearchState	560	new_1715f0/SetSearchState.cpp
 0X172550	func_00172550	16	new_1715f0/fun_00172550.c
 0X172560	func_00172560	128	new_1715f0/fun_00172560.cpp
+0X1725E0	SetSearchGoal	120	new_1715f0/SetSearchGoal.cpp
 0X172760	func_00172760	52	new_1715f0/fun_00172760.cpp
 0X172888	func_00172888	36	unsorted/fun_00172888.cpp
 0X172F10	func_00172F10	236	new_1715f0/fun_00172f10.cpp
@@ -2436,6 +2443,7 @@ address	name	size	file
 0X183FB8	AttachPt_OnAdd	52	hide-splice-gc/AttachPt_OnAdd.c
 0X183FF0	AttachPt_OnRemove	52	hide-splice-gc/AttachPt_OnRemove.c
 0X184028	func_00184028	20	unsorted/fun_00184028.c
+0X184040	func_00184040	116	unsorted/fun_00184040.cpp
 0X1840B8	AttachPt_FAddRsmg	64	hide-splice-gc/AttachPt_FAddRsmg.cpp
 0X1840F8	AttachPt_FAddTaskStateRequest	56	hide-splice-gc/AttachPt_FAddTaskStateRequest.cpp
 0X184130	func_00184130	188	hide-splice-gc/fun_00184130.cpp
@@ -2610,7 +2618,9 @@ address	name	size	file
 0X1A15D0	ZapContinue	216	new_1a1148/ZapContinue.cpp
 0X1A16A8	WarpZapToSafePoint	32	new_1a1148/WarpZapToSafePoint.c
 0X1A1F68	UpdateUbgSgs__FP3UBG	60	ub/UpdateUbgSgs__FP3UBG.cpp
+0X1A1FA8	func_001A1FA8	124	ub-light/fun_001a1fa8.cpp
 0X1A2028	func_001A2028	84	ub-light/fun_001a2028.cpp
+0X1A2080	func_001A2080	124	ub-light/fun_001a2080.cpp
 0X1A2100	AdjustJtZapNewXp	92	ub-light/AdjustJtZapNewXp.cpp
 0X1A2160	bevy_player_p7_damage_1a2160	64	ub-light/bevy_player_p7_damage_1a2160.cpp
 0X1A21A0	JT_FInvulnerable	140	ub-light/JT_FInvulnerable.cpp
@@ -2807,6 +2817,7 @@ address	name	size	file
 0X1AE130	func_001AE130	32	memcard-memory/fun_001ae130.c
 0X1AE150	func_001AE150	24	memcard-memory/fun_001ae150.c
 0X1AE1C8	CheckForOutOfMemory__Fv	8	memory/CheckForOutOfMemory__Fv.c
+0X1AE1D0	PvAllocSwImpl__Fi	104	memory/PvAllocSwImpl__Fi.cpp
 0X1AE238	PvAllocSwCopyImpl__FiPv	104	memory/PvAllocSwCopyImpl__FiPv.cpp
 0X1AE2A0	PvAllocSwClearImpl__Fi	92	memory/PvAllocSwClearImpl__Fi.cpp
 0X1AE300	FreeSw__Fv	20	memory/FreeSw__Fv.c
@@ -2819,6 +2830,7 @@ address	name	size	file
 0X1AE4F0	free	8	memory/free.c
 0X1AE4F8	__builtin_new	40	memory/__builtin_new.cpp
 0X1AE520	__builtin_delete	8	memory/__builtin_delete.c
+0X1AE528	CopyAqw__FPvT0i	116	memory/CopyAqw__FPvT0i.cpp
 0X1AE678	StaticInitSlotheaps_1ae678	308	new_1ae678/StaticInitSlotheaps_1ae678.c
 0X1AE7B0	GlobalCtorSlotheaps_1ae7b0	32	new_1ae678/GlobalCtorSlotheaps_1ae7b0.c
 0X1AE7D0	StaticInitSlotheaps_1ae7d0	308	new_1ae678/StaticInitSlotheaps_1ae7d0.c
@@ -3003,6 +3015,7 @@ address	name	size	file
 0X1BC570	Obstacle_PostLoad	276	new_1bc198/Obstacle_PostLoad.cpp
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	new_1bc198/Obstacle_RemoveFromPathzone.c
 0X1BD310	PobstacleFindEdgeBlocker	240	new_1bc198/PobstacleFindEdgeBlocker.cpp
+0X1BD718	func_001BD718	396	new_1bc198/fun_001bd718.cpp
 0X1BDBC8	func_001BDBC8	36	unsorted/fun_001bdbc8.cpp
 0X1BDE18	Obstacle_JoinGroup	104	new_1bc198/Obstacle_JoinGroup.cpp
 0X1BE1E8	AssignObstaclesToPathzones	84	rog/AssignObstaclesToPathzones.cpp
@@ -3368,6 +3381,7 @@ address	name	size	file
 0X1DC820	GetShopRowPrice	108	game-stepguard/GetShopRowPrice.cpp
 0X1DC890	GetLootRowName	304	game-stepguard/GetLootRowName.cpp
 0X1DC9C0	GetLootRowPrice	112	game-stepguard/GetLootRowPrice.cpp
+0X1DCA30	func_001DCA30	128	game-stepguard/fun_001dca30.cpp
 0X1DCAB0	func_001DCAB0	420	game-stepguard/fun_001dcab0.cpp
 0X1DCC58	JobMenu_Construct	68	game-stepguard/JobMenu_Construct.cpp
 0X1DCCA0	JobMenu_PostLoad	52	game-stepguard/JobMenu_PostLoad.cpp
@@ -3701,6 +3715,7 @@ address	name	size	file
 0X1F1900	func_001F1900	316	sm-so/fun_001f1900.cpp
 0X1F1CF8	func_001F1CF8	292	sm-so/fun_001f1cf8.cpp
 0X1F1E20	func_001F1E20	148	sm-so/fun_001f1e20.cpp
+0X1F1EB8	func_001F1EB8	124	sm-so/fun_001f1eb8.cpp
 0X1F1FB0	StaticInitSoSlotheaps	308	sm-so/StaticInitSoSlotheaps.c
 0X1F20E8	func_001F20E8	32	sm-so/fun_001f20e8.c
 0X1F2108	InitSo	172	sm-so/InitSo.cpp
@@ -3711,6 +3726,7 @@ address	name	size	file
 0X1F2740	func_001F2740	24	unsorted/fun_001f2740.cpp
 0X1F2758	func_001F2758	16	unsorted/fun_001f2758.cpp
 0X1F2768	func_001F2768	44	unsorted/fun_001f2768.cpp
+0X1F2798	func_001F2798	88	sm-so/fun_001f2798.cpp
 0X1F27F0	EnsureSoOxa	124	sm-so/EnsureSoOxa.c
 0X1F2870	AddSoGeomToOxa	192	sm-so/AddSoGeomToOxa.cpp
 0X1F2A60	func_001F2A60	108	sm-so/fun_001f2a60.cpp
@@ -3772,6 +3788,7 @@ address	name	size	file
 0X1F5FF8	func_001F5FF8	56	so/fun_001f5ff8.cpp
 0X1F6030	PpartFindAlo	56	so/PpartFindAlo.cpp
 0X1F66F0	CloneAloHierarchy	148	so/CloneAloHierarchy.cpp
+0X1F6788	PasegaFindAlo	84	so/PasegaFindAlo.cpp
 0X1F6838	GetSoNoXpsAll	40	so/GetSoNoXpsAll.cpp
 0X1F6860	SetSoNoXpsAll	68	so/SetSoNoXpsAll.cpp
 0X1F68A8	func_001F68A8	108	so/fun_001f68a8.cpp
@@ -3967,6 +3984,7 @@ address	name	size	file
 0X2020C8	UpdateReconLinkFades	300	sprbuf-stepguard/UpdateReconLinkFades.cpp
 0X2021F8	bevy_ui_binoc_recon_2021f8	164	sprbuf-stepguard/bevy_ui_binoc_recon_2021f8.cpp
 0X2022A0	ClearReconVisibility	52	sprbuf-stepguard/ClearReconVisibility.cpp
+0X2022D8	bevy_ui_binoc_recon_2022d8	116	sprbuf-stepguard/bevy_ui_binoc_recon_2022d8.cpp
 0X202350	func_00202350	40	unsorted/fun_00202350.cpp
 0X2026F8	func_002026F8	56	sprbuf-stepguard/fun_002026f8.cpp
 0X202730	func_00202730	56	sprbuf-stepguard/fun_00202730.cpp
@@ -4093,6 +4111,7 @@ address	name	size	file
 0X209840	func_00209840	48	step-rwm/fun_00209840.c
 0X209870	SetGuardGrfsgs	28	step-rwm/SetGuardGrfsgs.c
 0X209890	AddGuardSgs	224	step-rwm/AddGuardSgs.cpp
+0X209970	RemoveGuardSgs	128	step-rwm/RemoveGuardSgs.cpp
 0X2099F0	FIsSgsInGrfsgs	52	step-rwm/FIsSgsInGrfsgs.cpp
 0X209A28	CsgsMatchGrfsgs	64	step-rwm/CsgsMatchGrfsgs.cpp
 0X209A68	FIsGuardInSgs	28	step-rwm/FIsGuardInSgs.c
@@ -4297,6 +4316,7 @@ address	name	size	file
 0X215730	func_00215730	284	screen-font/fun_00215730.cpp
 0X2158C0	func_002158C0	156	screen-font/fun_002158c0.cpp
 0X215960	func_00215960	128	screen-font/fun_00215960.cpp
+0X215A50	IglyphFromFontCh	108	screen-font/IglyphFromFontCh.cpp
 0X215BA8	func_00215BA8	252	screen-font/fun_00215ba8.cpp
 0X215D00	CMovieText_SetBaseColor	64	screen-font/CMovieText_SetBaseColor.cpp
 0X215E30	CMovieText_Cch	80	screen-font/CMovieText_Cch.cpp

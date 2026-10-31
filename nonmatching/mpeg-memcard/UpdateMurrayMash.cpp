@@ -1,7 +1,7 @@
 extern "C" char B_003DD490[];
 extern "C" char D_002C0908[];
 extern "C" char D_002C0948[];
-extern "C" float D_FLT_002C0900;
+extern "C" const float RO_002C0900;
 extern "C" float g_2dded4;
 
 extern "C" int PpoSwFocusBase(void *);
@@ -41,8 +41,8 @@ void UpdateMurrayMash(char *arg0)
                     var_v0 = (var_s1 - 0x1CB) * 4;
                     var_v1 = D_002C0948;
                 }
-                var_s1 = *(int *)(var_v1 + var_v0 + var_a0);
-            } else if (D_FLT_002C0900 < *(float *)(arg0 + 0x1528) - temp_f2) {
+                var_s1 = *(int *)((char *)(var_v0 + var_a0) + (int)var_v1);
+            } else if (RO_002C0900 < *(float *)(arg0 + 0x1528) - temp_f2) {
                 var_s1 = 0x1CA;
             }
             temp_a0_2 = *(int *)(arg0 + 0x1530);

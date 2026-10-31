@@ -1,27 +1,17 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+typedef int s32; typedef short s16;
 extern "C" {
-void VirtualRefPtr_Assign(s8 **arg0, s8 *arg1) {
-    s8 *temp_a1;
-    s8 *temp_v0;
-    s8 *temp_v0_2;
-
-    if (arg1 != NULL) {
-        temp_v0 = M2C_FIELD(arg1, s8 **, 0xC);
-        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *), 0xC)(arg1 + M2C_FIELD(temp_v0, s16 *, 8));
-    }
-    temp_a1 = *arg0;
-    if (temp_a1 != NULL) {
-        temp_v0_2 = M2C_FIELD(temp_a1, s8 **, 0xC);
-        M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, s8 *), 0x14)(temp_a1 + M2C_FIELD(temp_v0_2, s16 *, 0x10), temp_a1);
-    }
+struct Obj_258040;
+struct VT_258040 {
+    char pad0[8]; s16 d8; s16 pa; void (*fnC)(char *);
+    s16 d10; s16 p12; void (*fn14)(char *, Obj_258040 *);
+};
+struct Obj_258040 { char pad[0xC]; VT_258040 *vt; };
+void VirtualRefPtr_Assign(Obj_258040 **arg0, Obj_258040 *arg1) {
+    if (arg1 != 0)
+        arg1->vt->fnC((char *)arg1 + arg1->vt->d8);
+    Obj_258040 *old = *arg0;
+    if (old != 0)
+        old->vt->fn14((char *)old + old->vt->d10, old);
     *arg0 = arg1;
 }
-
 }

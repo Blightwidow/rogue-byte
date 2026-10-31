@@ -1,24 +1,22 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+typedef int s32; typedef short s16;
 extern "C" {
-struct _m2c_stack_func_00206170 {
-    /* 0x00 */ char pad0[4];
-    /* 0x04 */ M2C_UNK sp4;                         /* inferred */
-    /* 0x04 */ char pad4[0x2C];
-};                                                  /* size = 0x30 */
-void func_00206170(s8 *arg0) {
-    M2C_UNK sp4;
-    s8 *temp_v0;
-    s8 *temp_v1;
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK), 0xD4)(arg0 + M2C_FIELD(temp_v0, s16 *, 0xD0), 0);
-    temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK, s32), 0x1C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x18), 0xE, 1, 1, &sp4, 0, 0);
+struct VT_206170 {
+    char pad0[0x18];
+    s16 d18;
+    s16 p1a;
+    void (*fn1c)(char *, s32, s32, s32, void *, s32);
+    char pad1[0xD0 - 0x20];
+    s16 dD0;
+    s16 pD2;
+    void (*fnD4)(char *, s32);
+};
+struct Obj_206170 { char pad[0xC]; VT_206170 *vt; };
+struct Node_206170 { s32 first; s32 *last; };
+void func_00206170(Obj_206170 *arg0) {
+    Node_206170 node;
+    arg0->vt->fnD4((char *)arg0 + arg0->vt->dD0, 0);
+    node.last = &node.first;
+    node.first = 0;
+    arg0->vt->fn1c((char *)arg0 + arg0->vt->d18, 0xE, 1, 1, &node.last, 0);
 }
 }

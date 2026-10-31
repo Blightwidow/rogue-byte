@@ -444,3 +444,16 @@ Six workers, 50 matches landed (8 of 31 in the best batch, 0 of 31 in the worst)
 - **A duplicated switch arm** (`SetButtonButtons(p, 1)` in both cases, no `goto`) gives gcc's shared-block layout; a float compare against a re-read field gives the loop's extra register copy.
 - **Walls again:** a VU instruction (`qmfc2`, `lqc2`, `sqc2`, `qmtc2`) in a branch or `jal` delay slot, the `sq` order of a prologue, and `sqrt.s $f1,$f0; mov.s $f0,$f1` (`__builtin_sqrtf` and helpers all give `sqrt.s $f0,$f0`).
 - `16E1A8` is instruction-exact at score 1: its last call links an address-0 `%hi/%lo` pair no symbol covers.
+
+### Sonnet round 9: near misses at 7 to 14 words, a filtered pool (60 functions, 2026-10-31)
+
+Three workers, 20 matches (33%; all 20 held in the full build). The pool had no fragments (under 48 bytes dropped) and no drafts with a banned construct, so the scores were honest; the brief carried the round 8 lessons. New:
+
+- **A compare chain that mixes `==` and `<`** is a `switch` without a jump table (fewer than five cases); a three-case `switch` (-1, 0, 1) gives retail's compare-and-branch layout with the constant in the delay slot where nested `if`/`goto` does not. For four cases, `permute.py` over the case order found the match in 24 compiles.
+- **Virtual call:** drop a trailing `obj` argument when retail has no separate copy of it (three functions); stack stores before a call plus `t0 = sp` are a local struct or an array of pointers passed by address.
+- **Expression shape:** `s32 top = g - 1; (top + align) & -align` fixes an add order that both other groupings reassociate; one counter shared by two loops gives both the same register; a local `unsigned last = width - 1` pins a subtract before a `movz`.
+- **Pointer arithmetic:** `+= 0x10` on an `s32 *` is scaled: index a 16-byte element in a counted `for` loop. `(s64)0x8000 << 19` gives retail's `ori`/`dsll` where a plain constant gives `lui`.
+- **A frame with no stores is a dead local** (`s32 dead[2]; (void)dead;`), the case AGENTS.md allows.
+- **Return type:** a callee returning `s64` (`ld`/`nor`/`and`) fixed `RemoveGuardSgs`. Branch arm order picks the delay-slot form (`if (diff > 0) lo = ...; else hi = ...` gives `blezl`; an empty `if (bit) {} else return` drops an `xori`).
+- **Nested ifs:** `if (x < 5) { if (x >= 2) ... }` gives retail's `slti`/`bnel` where `&&` gives `sltiu`.
+- **Walls seen more than once:** the child virtual call `$a2` copy (four functions at 8), the inlined list-iterator init order (load/store), the prologue `sq` order, and a VU instruction in a `jal` delay slot.

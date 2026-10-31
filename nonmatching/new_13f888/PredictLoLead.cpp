@@ -9,9 +9,11 @@ QW PredictLoLead(LO *plo, char *plead, float dt)
     VT *vt = plo->vt;
     QW velocity = vt->fn((char *)plo + vt->delta);
     struct { QW dtSlot; QW horizontal; } l;
-    asm("qmtc2.ni %0, vf3" : : "r" (velocity));
+    QW *gp = &g_2a2dc0;
+    int fence;
+    asm("qmtc2.ni %1, vf3" : "=r" (fence) : "r" (velocity));
     asm("lqc2 vf1, 0(%0)\n\tvmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z\n\t"
-        "vmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2" : : "r" (&g_2a2dc0), "r" (velocity));
+        "vmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2" : : "r" (gp), "r" (fence));
     asm("sqc2 vf3, %0" : "=m" (l.horizontal));
     QW  pos;
     pos = PosLoWorld(plo);

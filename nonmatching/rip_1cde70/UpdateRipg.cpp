@@ -18,15 +18,15 @@ inline void PushDli(DLI *it, DL *list)
 {
     it->list = list;
     it->current = (char *)list;
-    it->offset = list->offset;
-    it->next = g_2dd2fc;
+    DLI *prev = g_2dd2fc;
     g_2dd2fc = it;
+    it->offset = list->offset;
+    it->next = prev;
 }
 inline char *PvFirst(DLI *it)
 {
-    int offset = it->offset;
     char *item = it->list->first;
-    it->current = item + offset;
+    it->current = item + it->offset;
     return item;
 }
 inline char *PvStep(DLI *it)

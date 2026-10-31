@@ -11,7 +11,7 @@ extern "C" void ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL(JT *pjt, BL *pbl, void *p
     struct { QW vecDir; void *ptarget; } l;
     float radMax = pjt->jts == 0 ? 3.15f : 1.6f;
     ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(pjt, 2, D_002BF4C0, pjt->heading, 0.15f, &l.ptarget, &l.vecDir, radMax);
-    float blend = 1.0f;
+    float blend;
     if (l.ptarget != 0) {
         float scaled = (*((float *)&l.vecDir + 2) - -50.0f) * 0.009090909f;
         if (scaled < 0.0f)
@@ -20,7 +20,8 @@ extern "C" void ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL(JT *pjt, BL *pbl, void *p
             blend = 1.0f;
         else
             blend = scaled;
-    }
+    } else
+        blend = 1.0f;
     pbl->w3 = blend;
     pbl->w0 = 1.0f - blend;
     ReblendAsegbl(pasegbl);
