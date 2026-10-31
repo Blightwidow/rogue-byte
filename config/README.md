@@ -9,6 +9,16 @@ Everything here describes the retail executable; no game bytes.
 | `us/image.ld` | The retail layout of the two loaded segments, the base of the linker script `link_image.py` writes |
 | `us/checksum.sha1` | SHA-1 of the USA executable; `setup.sh` and `scripts/verify_image.py` check your copy against it |
 
+The other version, PAL (Europe, v2.01, `SCES_525.29`), has no Splat config: it is paired with the US functions and checked, not rebuilt. `config/eu/` (addresses only, no game bytes):
+
+| File | What |
+| :--- | :--- |
+| `eu/map.tsv` | `us_address`, `other_address`, `size`, `status` (`identical`, `same`, `gap`, `none`), written by `scripts/pair_versions.py` |
+| `eu/c_status.tsv` | per matched US function: does the same C reproduce the PAL code (`score`), and do its relocation sites resolve to the paired PAL addresses (`addresses`), written by `scripts/version_check.py` |
+| `eu/addresses.tsv` | the data addresses the matched functions use, US to PAL, with the sites that agree |
+
+Regenerate with `make pal` (needs `work/elf/SCES_525.29`); `make pal-check` (part of `make check`) needs no executable. See [docs/build/building.md](../docs/build/building.md#other-versions-pal).
+
 Reference data, tracked (what the name recovery produced and the Sly 1 decompilation it starts from):
 
 | Path | What |

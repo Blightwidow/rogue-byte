@@ -12,6 +12,7 @@
 > [!WARNING]
 > Rogue Byte does not include game data, executables, disc images, or proprietary toolchains.<br>
 > A legitimately obtained copy of the **USA / NTSC-U** release (`SCUS_97316`) is required; the tools rebuild everything locally.<br>
+> The **PAL** release (`SCES_52529`) is optional: with its executable the tools also check that the matched C reproduces the PAL code.<br>
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 <p align="center">
@@ -36,7 +37,7 @@
 | `src/` | matched C/C++, one function per file, grouped by module ([src/README.md](src/README.md)) |
 | `nonmatching/` | the best source that compiles for each unmatched function: starting points that count as partial work in the report ([nonmatching/README.md](nonmatching/README.md)) |
 | `include/` | shared headers (`sly2.h`) and the assembler macros |
-| `config/` | the Splat configuration and the retail layout ([config/README.md](config/README.md)) |
+| `config/` | the Splat configuration and the US retail layout, and `config/eu/`, the PAL pairing and check results ([config/README.md](config/README.md)) |
 | `scripts/build/` | the image pipeline: split, link, pack, objdiff |
 | `scripts/names/`, `scripts/ghidra/` | name recovery: the Sly 1 code matcher, headless Ghidra scripts |
 | `scripts/decompile/`, `scripts/matching/` | decompilation helpers, compile-and-compare tooling for matching |
@@ -52,6 +53,8 @@
 2. `make elf` splits the executable with Splat, compiles `src/` with the original compiler, rebuilds the image and checks
    it byte for byte ([docs/build/building.md](docs/build/building.md)).
 3. `make progress` writes the numbers behind the [progress page](docs/build/progress.md).
+4. Optional, PAL: `python3 scripts/disc_extract.py discs/<disc>.iso` puts `SCES_525.29` in `work/elf/`, then `make pal` pairs the functions and checks
+   the matched C against it ([docs/build/building.md](docs/build/building.md#other-versions-pal)). The US build is the reference: PAL is verified, not rebuilt.
 
 Name recovery needs more (Ghidra 12.1.4 with the ghidra-emotionengine-reloaded extension, Java 21, your Sly 1 executable):
 [docs/build/name-recovery.md](docs/build/name-recovery.md) and [docs/build/decompilation.md](docs/build/decompilation.md).

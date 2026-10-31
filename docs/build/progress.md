@@ -26,6 +26,7 @@ named and unmatched, or matched and unnamed (`fun_<address>` in `src/`).
 ```
 make elf        # the image and the status of every function
 make objdiff    # optional: the objdiff report
+make pal        # optional, needs work/elf/SCES_525.29: config/eu and site/data/objdiff-report-eu.json
 make progress   # site/data/*.json (incl. the Naming Desk's context.json), site/progress-map.svg, site/assets/og.png
 ```
 
@@ -37,6 +38,7 @@ Commit the changed files under `site/`. `site/data/history.json` gets one point 
 | `site/data/summary.json` | Totals and per-module numbers, the file the page and the pull request comment read |
 | `site/data/history.json` | One entry per run |
 | `site/data/objdiff-report.json` | The objdiff report |
+| `site/data/objdiff-report-eu.json` | The same report for PAL: a function counts as matched when the same C reproduces the PAL code and its addresses resolve (`make pal`, [building.md](building.md#other-versions-pal)) |
 | `site/data/context.json` | For the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) (`site/naming.html`): per function its callers, callees, identifier-like strings it points at and where its name comes from (`scripts/gen_context.py`) |
 | `site/progress-map.svg` | Treemap of the code: one block per module, one cell per function, area in bytes |
 | `site/assets/` | Logo, favicon and the social preview image (`og.png`) |
@@ -66,7 +68,7 @@ the numbers against `main`. Neither builds the game. `pages.yml` deploys `site/`
 
 [bytematch.dev/Blightwidow/rogue-byte](https://bytematch.dev/Blightwidow/rogue-byte) reads the objdiff report. On every push to `main`,
 `progress.yml` uploads the committed `site/data/objdiff-report.json` (from `make objdiff`) as the artifact `SCUS_973.16_report`
-(`report.json`), which bytematch.dev picks up within its polling interval (15 minutes by default; the project's manage page has
+(`report.json`), and, as `SCES_525.29_report`, the committed `site/data/objdiff-report-eu.json` (PAL; register that version on bytematch.dev once by hand), which bytematch.dev picks up within its polling interval (15 minutes by default; the project's manage page has
 "Re-read latest run"). So the page shows what was last committed: run `make elf`, `make objdiff` and `make progress` and commit `site/` after
 changing `src/`. Each unit is a module, `complete` when all its functions are matched, and the one progress category is "Game code".
 

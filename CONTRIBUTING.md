@@ -1,6 +1,7 @@
 # Contributing
 
 Rogue Byte is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA), built from your own copy of the game.
+The US executable is what functions are matched against; the PAL one (optional) is used to check the result.
 Matching a function, recovering a name, fixing a tool and improving the docs all help.
 
 ## Loop
@@ -9,10 +10,11 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 2. Follow [docs/build/name-recovery.md](docs/build/name-recovery.md) to build the Ghidra project and recovered data.
 3. Change a script or data file. Run every tool from the repository root.
 4. `make check` before committing (ruff, compile, shellcheck, links, regression tests). After touching `src/` run `make elf`, then `make unit UNIT=<module>`: every matched function must still link from C. Then `make objdiff` and `make progress` and commit the regenerated `site/` files: ByteMatch reads `site/data/objdiff-report.json`, which CI cannot rebuild. Commit messages: [docs/contributing/commit-messages.md](docs/contributing/commit-messages.md); the added code follows [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md).
-5. Optional: `pre-commit install --hook-type pre-commit --hook-type commit-msg` (or `prek install`) with `.pre-commit-config.yaml`.
-6. Judge and fix a function: [docs/contributing/matching.md](docs/contributing/matching.md) (what `score` counts, the usual fixes).
-7. Finish a draft: `nonmatching/` holds the best compiling source of every unmatched function ([nonmatching/README.md](nonmatching/README.md)).
-8. Name a function: the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) lists the ones that need a name, with callers and strings, and opens a prefilled issue. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size`.
+5. Optional, PAL: with `work/elf/SCES_525.29` (`scripts/disc_extract.py`), `make pal` checks the matched functions against PAL; commit `config/eu/` and `site/data/objdiff-report-eu.json` with the change. Without the executable `make check` still verifies that the committed PAL data is current (`pal-check`).
+6. Optional: `pre-commit install --hook-type pre-commit --hook-type commit-msg` (or `prek install`) with `.pre-commit-config.yaml`.
+7. Judge and fix a function: [docs/contributing/matching.md](docs/contributing/matching.md) (what `score` counts, the usual fixes).
+8. Finish a draft: `nonmatching/` holds the best compiling source of every unmatched function ([nonmatching/README.md](nonmatching/README.md)).
+9. Name a function: the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) lists the ones that need a name, with callers and strings, and opens a prefilled issue. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size`.
 
 ## Rules
 

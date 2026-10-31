@@ -8,6 +8,8 @@ docs/contributing/matching.md and docs/build/building.md. People follow the same
 Rogue Byte is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA, `SCUS_973.16`). Matched C++ goes in `src/`,
 best attempts for the rest in `nonmatching/`, recovered names and types in `config/`, and the tools in `scripts/`. A function
 counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` still reproduces the retail image byte for byte.
+Matching is done against the US executable only. PAL (`SCES_525.29`) is checked afterwards: `make pal` (end of `make land`) says whether the same C
+reproduces the PAL code; `config/eu/` holds the results and `make check` fails when they are stale.
 
 ## Layout
 
@@ -15,7 +17,7 @@ counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` 
 | :--- | :--- |
 | `src/` | matched C++, one unit per module, published by `scripts/matching/export_src.py` |
 | `nonmatching/` | best compiling source of every unmatched function, with `MANIFEST.tsv` scores |
-| `config/` | splat config, symbol addresses, compiler and assembler lists (`config/us/gnu_as.txt`, `ps2eeas_loop5.txt`, `sony_gcc29.txt`) |
+| `config/` | splat config, symbol addresses, compiler and assembler lists (`config/us/gnu_as.txt`, `ps2eeas_loop5.txt`, `sony_gcc29.txt`); `config/eu/` PAL pairing and status |
 | `include/` | headers for the matched code |
 | `scripts/` | tools: `matching/` (try, permute, scorer), `build/`, `names/`, `ghidra/` |
 | `docs/` | `build/`, `contributing/`, `game/`; start with docs/contributing/matching.md |
@@ -61,6 +63,7 @@ Details: docs/contributing/matching.md ("Teams of workers").
 - Stage files by name (never `git add .` or `-A`); never skip hooks (`--no-verify`) without the maintainer's say-so.
 - Format, lint and compile before committing: `make check`. Don't commit what fails.
 - **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
+- After matching or removing a matched function: `make pal` when `work/elf/SCES_525.29` exists (`make land` does it), and commit `config/eu/` and `site/data/objdiff-report-eu.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A function that no longer reproduces PAL is a finding, not a blocker: say so in the commit body.
 - After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `site/data/objdiff-report.json`;
   CI only uploads it, cannot rebuild it) and `make progress`; commit the regenerated `site/` files with the work.
 
