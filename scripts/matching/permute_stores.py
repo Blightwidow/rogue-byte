@@ -43,6 +43,46 @@ def regions(lines):
     return sorted(found, key=len, reverse=True)
 
 
+def climb(address, lines, region, lang, budget, start_score):
+    """Hill climb over the order of the stores of one region: every move of one store to another place of the region (the other lines stay), the first
+    that scores lower is kept and the climb restarts from it; a move to an equal score is kept too (at most 30 times in a row: a plateau is crossed by
+    a move that changes nothing visible). Returns (score, lines, compiles). Random orders (permute.marked_search) cannot reach an order that is
+    ten moves from the start in a region of 14 stores; a climb gets there in a few hundred compiles."""
+    stores = [lines[index] for index in region]
+    best_score, spent, sideways = start_score, 0, 0
+    seen = {tuple(stores)}
+
+    def placed(order):
+        changed = list(lines)
+        for index, line in zip(region, order):
+            changed[index] = line
+        return changed
+
+    improved = True
+    while improved and best_score > 0 and spent < budget:
+        improved = False
+        for source in range(len(stores)):
+            for target in range(len(stores)):
+                if source == target:
+                    continue
+                order = list(stores)
+                order.insert(target, order.pop(source))
+                if tuple(order) in seen:
+                    continue
+                seen.add(tuple(order))
+                score = permute.judge(address, '\n'.join(placed(order)), lang)
+                spent += 1
+                if score is not None and (score < best_score or (score == best_score and sideways < 30)):
+                    sideways = sideways + 1 if score == best_score else 0
+                    best_score, stores, improved = score, order, True
+                    break
+                if spent >= budget:
+                    break
+            if improved or spent >= budget:
+                break
+    return best_score, placed(stores), spent
+
+
 def search(address, source, budget, seed=1):
     lang = 'c' if source.endswith('.c') else 'c++'
     text = open(os.path.join(ROOT, source), encoding='utf-8').read()
@@ -60,6 +100,11 @@ def search(address, source, budget, seed=1):
         spent += used
         if score is not None and score < best_score:
             best_score, best_text = score, '\n'.join(line[:-4] if line.endswith(' //P') else line for line in candidate.split('\n'))
+        if best_score > 0 and len(region) > 5:  # too many orders for a random sample: climb from the best order found
+            score, climbed, used = climb(address, best_text.split('\n'), region, lang, budget, best_score)
+            spent += used
+            if score < best_score:
+                best_score, best_text = score, '\n'.join(climbed)
     return start, best_score, best_text
 
 

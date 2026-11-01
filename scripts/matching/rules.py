@@ -27,6 +27,11 @@ Rules:
   result_local   `return a || b;` as `int r = 0; if (a || b) r = 1; return r;`, and `v = c ? 1 : 0;` as `v = 0; if (c) v = 1;`
   condition_split `if (a && b) { ... }` as nested ifs, `if (a || b) { return x; }` as two ifs
   for_to_while   `for (init; cond; step) { body }` as `init; while (cond) { body step; }`
+  early_return_split `if (c) { A; r = x; } else { B; r = y; } return r;` as two early returns (either arm first, the condition negated for the second form):
+                 a result local shared by both arms keeps one pseudo for both, where retail gives each arm's value its own register
+  scalar_buffer  `T buf[16 / sizeof(T)] __attribute__((aligned(16)));` read as `buf[0]` and passed as `buf` as `T buf;` read as `buf` and passed as `&buf`
+  chained_store  two stores of the same constant a few statements apart as one chain `a = b = k;` (either order): the scheduler emits the outer store
+                 early and the inner late, and the constant stays in one register
   vcall_raw      m2c's untouched `M2C_FIELD(vt, R (**)(A, B, O), 0x18C)(obj + delta, x, obj)` without its trailing `obj`
 """
 import re
@@ -634,8 +639,134 @@ def hoist_field(text):
             yield (f'hoist_field *{name}', text[:first] + f'{indent}{kind} {local} = *{name};\n' + replaced)
 
 
+# ---- early_return_split ----
+
+FLIPPED_COMPARISON = {'<': '>=', '>': '<=', '<=': '>', '>=': '<', '==': '!=', '!=': '=='}
+SIMPLE_COMPARISON = re.compile(r'^(?P<left>[\w.>\[\]\-]+) (?P<operator><=|>=|==|!=|<|>) (?P<right>[\w.>\[\]\-]+)$')
+LAST_ASSIGNMENT = re.compile(r'(?:^|[;{}])\s*(?P<name>\w+) = (?P<value>[^;{}]+);\s*$')
+
+
+def negated(condition):
+    """`a < b` as `a >= b`; anything else as `!(...)`."""
+    simple = SIMPLE_COMPARISON.match(condition.strip())
+    if simple:
+        return f"{simple.group('left')} {FLIPPED_COMPARISON[simple.group('operator')]} {simple.group('right')}"
+    return f'!({condition})'
+
+
+def arm_with_return(body, name, kind, indent):
+    """An arm's statements with its assignment `name = value;` turned into the arm's own return: at the end `return value;`; earlier, a block-local
+    `kind name = value;` kept in place and `return name;` added at the end. None when the arm has no such assignment or has nested blocks."""
+    if '{' in body or '}' in body:
+        return None
+    assignment = re.search(rf'^[ \t]*{name} = (?P<value>[^;]+);[ \t]*$', body, re.M)
+    if not assignment:
+        return None
+    before, after = body[:assignment.start()].rstrip(), body[assignment.end():].rstrip()
+    value = assignment.group('value').strip()
+    if not after.strip():
+        return f'{before}\n{indent}    return {value};'
+    if not kind:
+        return None
+    return f'{before}\n{indent}    {kind} {name} = {value};{after}\n{indent}    return {name};'
+
+
+def early_return_split(text):
+    """`if (c) { A; r = x; B; } else { C; r = y; D; } return r;` as `if (c) { A; T r = x; B; return r; } C; T r = y; D; return r;` and as the second arm
+    first under the negated condition: each arm's value then has its own block-local register instead of one pseudo shared by both arms, which is
+    how the stream reads (U16/S16/U32/S32) match. The assignment may be anywhere in an arm."""
+    for head in IF_HEAD.finditer(text):
+        condition_end = balanced_end(text, head.end(), '(', ')')
+        if condition_end is None:
+            continue
+        condition = text[head.end():condition_end - 1]
+        opening = re.match(r'\s*\{', text[condition_end:])
+        if not opening:
+            continue
+        then_start = condition_end + opening.end()
+        then_end = balanced_end(text, then_start, '{', '}')
+        if then_end is None:
+            continue
+        otherwise = re.match(r'\s*else\s*\{', text[then_end:])
+        if not otherwise:
+            continue
+        else_start = then_end + otherwise.end()
+        else_end = balanced_end(text, else_start, '{', '}')
+        if else_end is None:
+            continue
+        returned = re.match(r'\s*return (\w+);', text[else_end:])
+        if not returned:
+            continue
+        name = returned.group(1)
+        declaration = None
+        for declaration in re.finditer(rf'^[ \t]*(?P<kind>[A-Za-z_][\w ]*?[\w*])\s+{name};[ \t]*$', text[:head.start()], re.M):
+            pass
+        kind = declaration.group('kind').strip() if declaration else ''
+        indent = head.group('indent')
+        then_arm = arm_with_return(text[then_start:then_end - 1], name, kind, indent)
+        else_arm = arm_with_return(text[else_start:else_end - 1], name, kind, indent)
+        if then_arm is None or else_arm is None:
+            continue
+        tail = text[else_end + returned.end():]
+        front = text[:head.start()]
+        if declaration:  # the shared local is gone: each arm declares its own
+            front = front[:declaration.start()] + front[declaration.end() + 1:]
+        yield ('early_return_split then-first',
+               front + f'{indent}if ({condition}) {{{then_arm}\n{indent}}}{else_arm.replace(chr(10) + indent + "    ", chr(10) + indent)}' + tail)
+        yield ('early_return_split else-first',
+               front + f'{indent}if ({negated(condition)}) {{{else_arm}\n{indent}}}{then_arm.replace(chr(10) + indent + "    ", chr(10) + indent)}' + tail)
+
+
+# ---- scalar_buffer ----
+
+BUFFER_DECLARATION = re.compile(r'^(?P<indent>[ \t]*)(?P<kind>[A-Za-z_][\w ]*?)\s+(?P<name>\w+)\[(?P<size>[^\]\n]*)\](?:\s*__attribute__\(\(aligned\(\d+\)\)\))?;[ \t]*\n', re.M)
+
+
+def scalar_buffer(text):
+    """A one-element buffer (`T buf[16 / sizeof(T)] __attribute__((aligned(16)));`, `T buf[1];`) as a plain `T buf;`: `buf[0]` becomes `buf`
+    and a bare `buf` (an argument) becomes `&buf`. Retail's frame slot is the scalar's; the aligned array changes where the slot goes."""
+    for match in BUFFER_DECLARATION.finditer(text):
+        size = match.group('size').strip()
+        if size != '1' and 'sizeof' not in size:
+            continue
+        name, kind = match.group('name'), match.group('kind').strip()
+        rest = text[match.end():]
+        marker = '\x01'  # stands for `name[0]` while the bare names are rewritten
+        rest = re.sub(rf'\b{name}\[0\]', marker, rest)
+        rest = re.sub(rf'(?<![\w&.>]){name}\b(?!\s*\[)', f'&{name}', rest)
+        rest = rest.replace(marker, name)
+        yield (f'scalar_buffer {name}', text[:match.start()] + f"{match.group('indent')}{kind} {name};\n" + rest)
+
+
+# ---- chained_store ----
+
+PLAIN_STORE = re.compile(r'^(?P<indent>[ \t]*)(?P<target>[^=;(){}\n]+?[^=;(){}\s]) = (?P<value>-?[\w.]+f?);[ \t]*$')
+
+
+def chained_store(text):
+    """Two stores of one constant or name, up to three statements apart, as `a = b = k;` at the first one's place (either order) or the second's."""
+    lines = text.split('\n')
+    stores = [(index, PLAIN_STORE.match(line)) for index, line in enumerate(lines)]
+    stores = [(index, found) for index, found in stores if found and '==' not in lines[index]]
+    for position, (first, first_match) in enumerate(stores):
+        for second, second_match in stores[position + 1:]:
+            if second - first > 3:
+                break
+            if second_match.group('value') != first_match.group('value') or second_match.group('target') == first_match.group('target'):
+                continue
+            indent = first_match.group('indent')
+            targets = (first_match.group('target'), second_match.group('target'))
+            for order, (outer, inner) in (('a', targets), ('b', targets[::-1])):
+                chained = f"{indent}{outer} = {inner} = {first_match.group('value')};"
+                for place in (first, second):
+                    changed = list(lines)
+                    changed[place] = chained
+                    del changed[second if place == first else first]
+                    yield (f'chained_store {order}{"1" if place == first else "2"}', '\n'.join(changed))
+
+
 RULES = (index_loop, index_first, constify, return_result, missing_parameter, vcall_object, global_array, call_arguments, float_position, long_long, by_value,
-         inline_local, vcall_raw, hoist_field, result_local, condition_split, for_to_while)
+         inline_local, vcall_raw, hoist_field, result_local, condition_split, for_to_while, early_return_split, scalar_buffer, chained_store)
 
 
 def edits(text):

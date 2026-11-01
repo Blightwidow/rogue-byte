@@ -237,6 +237,28 @@ class RulesTests(unittest.TestCase):
     def labels(self, source):
         return [label for label, _ in rules.edits(source).values()]
 
+    def test_early_return_split_gives_each_arm_its_own_return(self):
+        source = ('int Read(S *stream)\n{\n    int result;\n    int remaining = stream->remaining;\n    if (remaining < 2) {\n        Fill(stream);\n'
+                  '        result = stream->value;\n    } else {\n        result = stream->cursor[0];\n        stream->remaining = remaining - 2;\n    }\n    return result;\n}\n')
+        edited = dict((label, text) for text, (label, _) in rules.edits(source).items())
+        then_first, else_first = edited['early_return_split then-first'], edited['early_return_split else-first']
+        self.assertNotIn('    int result;\n', then_first)
+        self.assertIn('return stream->value;', then_first)
+        self.assertIn('int result = stream->cursor[0];', then_first)
+        self.assertIn('if (remaining >= 2) {', else_first)
+
+    def test_scalar_buffer_becomes_a_scalar_and_its_address(self):
+        edited = list(rules.scalar_buffer('void f()\n{\n    short value[16 / sizeof(short)] __attribute__((aligned(16)));\n    Read(2, value);\n    use(value[0]);\n}\n'))
+        self.assertEqual(len(edited), 1)
+        self.assertIn('    short value;\n', edited[0][1])
+        self.assertIn('Read(2, &value);', edited[0][1])
+        self.assertIn('use(value);', edited[0][1])
+
+    def test_chained_store_joins_stores_of_one_constant(self):
+        edited = [text for _, text in rules.chained_store('void f(G *g)\n{\n    g->a = -1.0f;\n    g->b = 0;\n    g->c = -1.0f;\n}\n')]
+        self.assertTrue(any('g->a = g->c = -1.0f;' in text and 'g->c = -1.0f;\n}' not in text for text in edited))
+        self.assertTrue(any('g->c = g->a = -1.0f;' in text for text in edited))
+
     def test_index_first_rewrites_an_address_of_an_element(self):
         edited = rules.edits('void f(int i) { g(&table[i]); }')
         self.assertTrue(any('(unsigned)(table)' in text and '(i) * sizeof' in text for text in edited))
