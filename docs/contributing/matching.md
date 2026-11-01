@@ -457,3 +457,18 @@ Three workers, 20 matches (33%; all 20 held in the full build). The pool had no 
 - **Return type:** a callee returning `s64` (`ld`/`nor`/`and`) fixed `RemoveGuardSgs`. Branch arm order picks the delay-slot form (`if (diff > 0) lo = ...; else hi = ...` gives `blezl`; an empty `if (bit) {} else return` drops an `xori`).
 - **Nested ifs:** `if (x < 5) { if (x >= 2) ... }` gives retail's `slti`/`bnel` where `&&` gives `sltiu`.
 - **Walls seen more than once:** the child virtual call `$a2` copy (four functions at 8), the inlined list-iterator init order (load/store), the prologue `sq` order, and a VU instruction in a `jal` delay slot.
+
+### Sonnet round 10: near misses at 6 to 20 words (241 functions, 2026-11-01)
+
+Ten workers, 79 matches (33%, the same rate as round 9; all 79 held in the full build, PAL reproduces 4,922 of the 4,973 matched functions). The pool was every near miss at 6 to 20 words outside the SDK range, over 48 bytes, without a banned construct, and without a note newer than five days. 2.66M subagent tokens, about 34k per match. New:
+
+- **A virtual call with a wrong argument count was the biggest single cause** (about a dozen matches: `1DD6C8`, `1DD728`, `1DD820`, `1BEAD0`, `1C5DF0`, `20FA50`, `224190`, `1ACB58`, `1ACBB8`, `1A3078`). Retail passes only `obj + delta` (plus the real arguments): drop the trailing `obj` that m2c adds. The `$a2` that looks like a third argument is register allocation.
+- **Loop shape:** `while ((p = *pp))` with `break`, not `return` (`133448`); a `goto` search loop where `while` or a ternary gets rotated (`1F90D0`, `1F4DA8`); a loop bound re-read from the struct instead of a count local (`217BA0`, `217CA8`); `igoal = cgoal; igoal--; for (; igoal >= 0; igoal--)` for a backward loop (`1EED10`); a `do`/`while` that reloads the state (`174B68`, `1A12F0`).
+- **Condition shape:** `result = 0; if (a || b) result = 1;` where a plain `if`/`else` folds to `xor`/`sltiu` (`1EE420`, `1FE888`); `(a == 11) & (b == id)` gives `xor`/`sltiu`/`movn` (`12F938`); an early return first, then nested `if`s, for range checks (`15A170`, `1E66C8`, `224190`); a switch of three cases for a compare chain again (`1AAB68`, `135FF0`).
+- **Types:** a struct returned by value to get the callee's temp-slot order (`1A71B0` `M4`, `1F8AD8` `Rows3`); a 64-bit flag word as a bitfield struct (`1A6CA8`); a pointer field typed as `int` address when the code does arithmetic on it (`226C58`); a struct must not be named `CRef` when it defines `operator=` (`124F00`).
+- **Hidden parameters:** an `a1` loaded before a call is a hidden second argument (`231598`: `matLocal = *pmat * matLocal`); a stray constant argument is not one (`1635F8`: remove the `0x18`).
+- **Search:** `permute.py` on the first seven stores found an order guessing missed (`134648`); `1C42E8` the same.
+- **Variadics:** `char *va_list = __builtin_next_arg(format) - 56` passed to `vprintf` (`21EC18`, `21ECD8`).
+- **Judge:** `2565E0` (`Vector_Add`) matches only with a local `CARY *pary = &pvec->ary` used for the call and the count reads; without it the score is 10. Landed, but it is the one match here a reviewer should look at against the "variable that only moves a register" rule.
+- **Walls seen again:** the 11 `new()` plus two-vtable factories at `110CD0` (retail keeps the new object in `$v1` and copies it to `$v0`) all stay at 10; the child virtual call `$a2` copy; `sqrt.s $f1,$f0; mov.s $f0,$f1`; a VU instruction in a delay slot. Drafts that carried a banned construct got it removed first, as the brief says, and their scores rose (`11BCF8` went from 18 to an honest 37; `12C570` from a pin to 7).
+
