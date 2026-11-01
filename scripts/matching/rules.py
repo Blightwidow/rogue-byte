@@ -22,6 +22,12 @@ Rules:
   float_position a float parameter moved to another position of a callee's prototype (the order the argument instructions are emitted in)
   long_long      `long long` (128-bit under SN) as `long`
   by_value       `T *F(T *pret, ...)` returning `pret` as a by-value return (retail's delay-slot filler then emits a plain branch)
+  inline_local   a local that holds a value read once, written out at each use (retail re-reads the field where m2c named the load)
+  hoist_field    a read that appears twice (`M2C_FIELD(x, T *, off)`, or `*p` of a parameter) named once as a local before its first use
+  result_local   `return a || b;` as `int r = 0; if (a || b) r = 1; return r;`, and `v = c ? 1 : 0;` as `v = 0; if (c) v = 1;`
+  condition_split `if (a && b) { ... }` as nested ifs, `if (a || b) { return x; }` as two ifs
+  for_to_while   `for (init; cond; step) { body }` as `init; while (cond) { body step; }`
+  vcall_raw      m2c's untouched `M2C_FIELD(vt, R (**)(A, B, O), 0x18C)(obj + delta, x, obj)` without its trailing `obj`
 """
 import re
 import sys
@@ -393,7 +399,243 @@ def by_value(text):
         return
 
 
-RULES = (index_loop, index_first, constify, return_result, missing_parameter, vcall_object, global_array, call_arguments, float_position, long_long, by_value)
+# ---- inline_local ----
+
+CALL_IN_EXPRESSION = re.compile(r'\b(?!M2C_FIELD\b|M2C_BITWISE\b|sizeof\b)(\w+)\s*\(')
+LOCAL_WITH_VALUE = re.compile(r'^(?P<indent>[ \t]+)(?P<type>[A-Za-z_][\w \t\*]*?[ \t\*])(?P<name>[A-Za-z_]\w*) = (?P<value>[^;{}\n]+);[ \t]*\n', re.M)
+LOCAL_DECLARED = re.compile(r'^[ \t]+(?P<type>[A-Za-z_][\w \t\*]*?[ \t\*])(?P<name>[A-Za-z_]\w*);[ \t]*\n', re.M)
+LOCAL_ASSIGNED = re.compile(r'^[ \t]+(?P<name>[A-Za-z_]\w*) = (?P<value>[^;{}\n]+);[ \t]*\n', re.M)
+TYPE_WORDS = {'return', 'goto', 'else', 'case', 'typedef', 'extern', 'struct', 'static'}
+
+
+def plain_value(value):
+    """Safe to evaluate again at each use: loads and arithmetic only, no call."""
+    return not CALL_IN_EXPRESSION.search(value)
+
+
+def uses_of(name):
+    return re.compile(rf'(?<![\w.])(?<!->)\b{re.escape(name)}\b(?!\s*\()')
+
+
+def inline_local(text):
+    """A local that holds a value read once (`T x = p->f;`, or m2c's `T x;` ... `x = p->f;`) written out at each use: retail often re-reads
+    the field where m2c named the load, and the load then schedules and allocates differently. One local per rewrite, never one that is
+    assigned again or has its address taken, never a value with a call in it."""
+    candidates = []
+    for match in LOCAL_WITH_VALUE.finditer(text):
+        first_word = match.group('type').split()[0] if match.group('type').split() else ''
+        if first_word in TYPE_WORDS or match.group('name') in TYPE_WORDS:
+            continue
+        candidates.append((match.group('name'), match.group('value').strip(), match.start(), match.end(), None))
+    for declared in LOCAL_DECLARED.finditer(text):
+        name = declared.group('name')
+        assigned = [found for found in LOCAL_ASSIGNED.finditer(text) if found.group('name') == name and found.start() > declared.end()]
+        if len(assigned) == 1:
+            candidates.append((name, assigned[0].group('value').strip(), assigned[0].start(), assigned[0].end(), (declared.start(), declared.end())))
+    produced = 0
+    for name, value, start, end, declaration in candidates:
+        if not plain_value(value) or re.search(rf'&\s*{re.escape(name)}\b|(?<![\w.])(?<!->){re.escape(name)}\s*(\+\+|--|[-+*/|&^]?=(?!=))', text[end:]):
+            continue
+        rest = text[end:]
+        if not uses_of(name).search(rest):
+            continue
+        replacement = value if re.fullmatch(r'[\w>.\[\]\- *()]+', value) and '*' not in value.replace('->', '') and not re.search(r'[+\-]\s', value) else f'({value})'
+        replaced = uses_of(name).sub(lambda _: replacement, rest)
+        head = text[:start]
+        if declaration:
+            head = text[:declaration[0]] + text[declaration[1]:start]
+        yield f'inline_local {name}', head + replaced
+        produced += 1
+        if produced >= 12:
+            return
+
+
+# ---- vcall_raw ----
+
+RAW_VCALL = re.compile(r'M2C_FIELD\(\s*(?P<object>[^,()]+(?:\([^()]*\))?[^,()]*),\s*(?P<type>[^,]*?\(\*\*\)\s*\((?P<types>[^()]*)\)),\s*(?P<offset>0x[0-9A-Fa-f]+|\d+)\s*\)\s*\(')
+
+
+def vcall_raw(text):
+    """m2c's untouched virtual call `M2C_FIELD(vt, R (**)(A, B, O), 0x18C)(obj + delta, x, obj)` (the form of a draft nobody has rewritten, which
+    vcall_object's `(*fn)(...)` pattern does not see): drop the trailing `obj` and its type when a0 is built from it."""
+    for call in RAW_VCALL.finditer(text):
+        types = split_parameters(call.group('types'))
+        end = balanced_end(text, call.end(), '(', ')')
+        if len(types) < 2 or end is None:
+            continue
+        args = split_parameters(text[call.end():end - 1])
+        if len(args) != len(types) or re.sub(r'^\(\s*[\w\s\*]+\)\s*', '', args[-1]) not in args[0]:
+            continue
+        new_type = call.group('type').replace(call.group('types'), ', '.join(types[:-1]), 1)
+        yield (f'vcall_raw {call.group("offset")}',
+               text[:call.start('type')] + new_type + text[call.end('type'):call.end()] + ', '.join(args[:-1]) + text[end - 1:])
+
+
+# ---- condition shapes ----
+
+def top_level_split(expression, operator):
+    """The parts of an expression at parenthesis depth 0 around `operator` (` && `), or the whole expression as one part."""
+    parts, depth, start, index = [], 0, 0, 0
+    while index < len(expression):
+        character = expression[index]
+        if character in '([':
+            depth += 1
+        elif character in ')]':
+            depth -= 1
+        elif depth == 0 and expression.startswith(operator, index):
+            parts.append(expression[start:index].strip())
+            index += len(operator)
+            start = index
+            continue
+        index += 1
+    parts.append(expression[start:].strip())
+    return parts
+
+
+RETURN_CONDITION = re.compile(r'^(?P<indent>[ \t]*)return (?P<expression>[^;{}?\n]+);[ \t]*\n', re.M)
+TERNARY_FLAG = re.compile(r'^(?P<indent>[ \t]*)(?P<target>[\w>.\[\]\-]+) = (?P<condition>[^;{}?\n]+) \? 1 : 0;[ \t]*\n', re.M)
+COMPARISON = re.compile(r'\|\||&&|[=!<>]=|(?<![<>-])[<>](?![<>=])')
+
+
+def result_local(text):
+    """`return a || b;` (or `return x < y;`) as `int result = 0; if (a || b) result = 1; return result;`, and `v = cond ? 1 : 0;` as `v = 0; if (cond) v = 1;`:
+    retail's compare then folds to its own xor/sltiu/movn shape where the one-expression form does not."""
+    for match in RETURN_CONDITION.finditer(text):
+        expression = match.group('expression').strip()
+        if not COMPARISON.search(expression) or re.search(r'\bresult_local\b', text):
+            continue
+        indent = match.group('indent')
+        yield ('result_local return',
+               text[:match.start()] + f'{indent}int result_local = 0;\n{indent}if ({expression}) result_local = 1;\n{indent}return result_local;\n' + text[match.end():])
+    for match in TERNARY_FLAG.finditer(text):
+        indent, target = match.group('indent'), match.group('target')
+        yield (f'result_local {target}',
+               text[:match.start()] + f'{indent}{target} = 0;\n{indent}if ({match.group("condition").strip()}) {target} = 1;\n' + text[match.end():])
+
+
+IF_HEAD = re.compile(r'^(?P<indent>[ \t]*)if \(', re.M)
+
+
+def condition_split(text):
+    """`if (a && b) { body }` as `if (a) { if (b) { body } }` and `if (a || b) { return x; }` as two ifs: gcc folds the one-test form into a range
+    test or a merged branch (`sltiu`, a shared `beq`) where retail has a compare and a branch each. No `else` on the statement."""
+    for head in IF_HEAD.finditer(text):
+        condition_end = balanced_end(text, head.end(), '(', ')')
+        if condition_end is None:
+            continue
+        condition = text[head.end():condition_end - 1]
+        rest = text[condition_end:]
+        opening = re.match(r'\s*\{', rest)
+        if not opening:
+            continue
+        body_end = balanced_end(text, condition_end + opening.end(), '{', '}')
+        if body_end is None or re.match(r'\s*else\b', text[body_end:]):
+            continue
+        body = text[condition_end + opening.end():body_end - 1]
+        indent = head.group('indent')
+        parts = top_level_split(condition, ' && ')
+        if len(parts) >= 2:
+            inner = ' && '.join(parts[1:])
+            yield ('condition_split and',
+                   text[:head.start()] + f'{indent}if ({parts[0]}) {{\n{indent}    if ({inner}) {{{body}}}\n{indent}}}' + text[body_end:])
+        parts = top_level_split(condition, ' || ')
+        statements = [line.strip() for line in body.strip().split(';') if line.strip()]
+        if len(parts) >= 2 and len(statements) == 1 and re.match(r'(return\b|goto\b)', statements[0]):
+            yield ('condition_split or',
+                   text[:head.start()] + '\n'.join(f'{indent}if ({part}) {{{body}}}' for part in parts) + text[body_end:])
+
+
+# ---- loop forms ----
+
+FOR_HEAD = re.compile(r'^(?P<indent>[ \t]*)for \(', re.M)
+
+
+def for_to_while(text):
+    """`for (init; cond; step) { body }` as `init; while (cond) { body step; }` (no `continue` in the body): the loop's test and step then sit where
+    the source put them instead of where the compiler's for-loop lowering puts them."""
+    for head in FOR_HEAD.finditer(text):
+        header_end = balanced_end(text, head.end(), '(', ')')
+        if header_end is None:
+            continue
+        pieces = [piece.strip() for piece in text[head.end():header_end - 1].split(';')]
+        opening = re.match(r'\s*\{', text[header_end:])
+        if len(pieces) != 3 or not pieces[1] or not opening:
+            continue
+        body_end = balanced_end(text, header_end + opening.end(), '{', '}')
+        if body_end is None:
+            continue
+        body = text[header_end + opening.end():body_end - 1]
+        if re.search(r'\bcontinue\b', body):
+            continue
+        indent = head.group('indent')
+        initial = f'{indent}{pieces[0]};\n' if pieces[0] else ''
+        step = f'{indent}    {pieces[2]};\n' if pieces[2] else ''
+        yield ('for_to_while',
+               text[:head.start()] + initial + f'{indent}while ({pieces[1]}) {{{body.rstrip()}\n{step}{indent}}}' + text[body_end:])
+
+
+# ---- hoist_field ----
+
+M2C_READ = re.compile(r'M2C_FIELD\(')
+SIGNATURE = re.compile(r'^[^\n(]*\b(?P<name>\w+)\((?P<parameters>[^()\n]*)\)\s*\{', re.M)
+
+
+def value_type(pointer_type):
+    """The type an `M2C_FIELD(x, T *, off)` read yields: T without its last `*`; None for a function pointer or a non-pointer."""
+    pointer_type = pointer_type.strip()
+    if '(' in pointer_type or not pointer_type.endswith('*'):
+        return None
+    return pointer_type[:-1].strip()
+
+
+def statement_start(text, index):
+    return text.rfind('\n', 0, index) + 1
+
+
+def hoist_field(text):
+    """The opposite of inline_local: a read that appears twice or more (m2c's `M2C_FIELD(x, T *, off)`, or `*p` of a parameter `T *p`) named once as
+    a local before its first use. Retail keeps the object, the vtable or the child in a callee-saved register or a spill where m2c re-reads it."""
+    counts = {}
+    for match in M2C_READ.finditer(text):
+        end = balanced_end(text, match.end(), '(', ')')
+        if end is None:
+            continue
+        expression = text[match.start():end]
+        arguments = split_parameters(text[match.end():end - 1])
+        if len(arguments) == 3 and value_type(arguments[1]) and plain_value(arguments[0].replace('M2C_FIELD(', '(')):
+            counts.setdefault(expression, [value_type(arguments[1]), []])[1].append(match.start())
+    produced = 0
+    for expression, (kind, places) in counts.items():
+        if len(places) < 2:
+            continue
+        first = statement_start(text, places[0])
+        indent = re.match(r'[ \t]*', text[first:]).group(0)
+        name = f'hoisted_{produced}'
+        declaration = f'{indent}{kind} {name} = {expression};\n'
+        yield (f'hoist_field read{produced}', text[:first] + declaration + text[first:].replace(expression, name))
+        produced += 1
+        if produced >= 6:
+            return
+    signature = SIGNATURE.search(text)
+    if signature:
+        for parameter in split_parameters(signature.group('parameters')):
+            found = re.match(r'(?P<kind>[\w \t]+?[ \t]*\*+)\s*(?P<name>\w+)$', parameter)
+            if not found or not found.group('kind').strip().endswith('*'):
+                continue
+            name, pointer_kind = found.group('name'), found.group('kind').strip()
+            reads = [m for m in re.finditer(rf'(?<![\w*])\*\s*{re.escape(name)}\b(?!\s*=(?!=))', text[signature.end():])]
+            if len(reads) < 2 or re.search(rf'\*\s*{re.escape(name)}\s*=(?!=)', text[signature.end():]):
+                continue
+            first = statement_start(text, signature.end() + reads[0].start())
+            indent = re.match(r'[ \t]*', text[first:]).group(0)
+            local = f'{name}_value'
+            kind = pointer_kind[:-1].strip()
+            replaced = re.sub(rf'(?<![\w*])\*\s*{re.escape(name)}\b(?!\s*=(?!=))', local, text[first:])
+            yield (f'hoist_field *{name}', text[:first] + f'{indent}{kind} {local} = *{name};\n' + replaced)
+
+
+RULES = (index_loop, index_first, constify, return_result, missing_parameter, vcall_object, global_array, call_arguments, float_position, long_long, by_value,
+         inline_local, vcall_raw, hoist_field, result_local, condition_split, for_to_while)
 
 
 def edits(text):

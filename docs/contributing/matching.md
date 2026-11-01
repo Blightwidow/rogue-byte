@@ -478,3 +478,31 @@ Ten workers, 79 matches (33%, the same rate as round 9; all 79 held in the full 
 - **Judge:** `2565E0` (`Vector_Add`) matches only with a local `CARY *pary = &pvec->ary` used for the call and the count reads; without it the score is 10. Landed, but it is the one match here a reviewer should look at against the "variable that only moves a register" rule.
 - **Walls seen again:** the 11 `new()` plus two-vtable factories at `110CD0` (retail keeps the new object in `$v1` and copies it to `$v0`) all stay at 10; the child virtual call `$a2` copy; `sqrt.s $f1,$f0; mov.s $f0,$f1`; a VU instruction in a delay slot. Drafts that carried a banned construct got it removed first, as the brief says, and their scores rose (`11BCF8` went from 18 to an honest 37; `12C570` from a pin to 7).
 
+### Sonnet round 11: small functions at 21 to 100 words (155 functions, 2026-11-01)
+
+Eight workers, 31 matches (20%; all held in the full build). The pool was functions of 48 to 400 bytes at 21 to 100 words or never tried, with 54 drafts that carried a banned construct (stripped first, scores rose to the honest value). 2.42M subagent tokens, about 78k per match. New:
+
+- **The same inline reads template matches a family:** `LocateGcNode` reads the count and pool globals directly instead of as arguments and re-reads `*ppnodeHead` (`255588`, `255C00`, `255F38`); `ShopMenu_SetDirection` and `JobMenu_SetDirection` share one shape (`1DC4B0`, `1DD558`). Match one, then try the siblings.
+- **A symbol size from the split can be wrong:** `1DC4B0` is 228 bytes (a jump-table tail sits in the next label) and `1B7E40` is 84 instructions where the packet showed 0x44 bytes. A packet whose asm ends early is a boundary question, not a C one.
+- **Re-read instead of caching:** the loop bound or found-test re-read from the struct (`156EB8`, `1F81E0`, `1F1F38` with no local for `owner->part`).
+- **Shared tails:** a result variable returned through one `done` label, with the tail duplicated in one case so cross-jumping matches (`206EB0`); a switch whose every arm has the same call gives the shared tail by cross-jumping (`18D568`).
+- **Types:** by-value `RGBA4` copies passed by pointer (`215850`, `1C8CC0`); a callee returning `int` with a `QW` second argument (`156C80`); a clamp helper with native ternaries for `min.s`/`max.s` operand order (`217FE0`, `210F80`).
+- **Banned asm removed:** the plain 64-bit mask, `(unsigned)(grf >> 60) & 1` then `(unsigned long)bit << 60` (`1A5270`). `1B17B8` matches with an `asm volatile sqrt.s` that the record scan accepts (a real instruction, precedent `220D40`); fast-math fuses `1/sqrtf` into `rsqrt.s` otherwise.
+- **Walls:** retail keeps `CRef` addresses and constants in saved registers where ours re-derives them (`13D328`, `143AF0`, `136118`, `12D108`); the VU lane and prologue walls of the earlier rounds.
+
+### Opus round 12: a sample of large functions (12 functions, 2026-11-01)
+
+A stratified sample of the 158 functions over 1,000 bytes (outside the SDK range and `config/us/handwritten_asm.txt`), four Opus workers with about 30 compiles per function: 2 matches (`1281B0`, `1B4AA0`), 4 of 12 at 20 or below, and large drops where nothing matched (361 to 19, 232 to 3, 1124 to 128, 412 to 335). 1.42M subagent tokens for the 12, about 118k per function. The strata and results are in `work/matching/r12_sample.json` and `r12_results.json` (local), so the outcomes can be weighted to the pool without more compiles. New:
+
+- **Honest starts matter:** four of the twelve registry scores rested on banned constructs and went up when stripped (`11FEC8` 55 to 60, `173F18` 225 to 228, `1F9410` 245 to 281, `2206C8` 66 to 76).
+- **What moved large functions:** a locals struct at retail's stack offsets; real callee prototypes and parameter order (the Sly 1 order for `12F9B8`); a global that is really a member of a global struct (`1281B0`, 260 to 0); inline helpers whose locals share one stack slot (`1C9B08`); the `DLI` iterator helpers of `139250` (`140F90`; none of the other ~20 DLI functions is matched yet).
+- **Work front to back:** the first-mismatch offset of `try.py` orders the blocks; every block outside one loop matched in `12F9B8` and 39 of 40 in `140F90`.
+- **Walls:** loop-invariant hoisting and strength reduction that retail does and ours does not (`12F9B8`, `1C9B08`, `1F9410`, `173F18`); MMI lane access and the float-to-vector register pun (`197F98`, `11FEC8`).
+- **Tools:** `compare.py` shadowed the function start in its link checks (near misses with a `switch` scored 1 to 2 words too high) and crashed on a mispaired `%hi/%lo`; both fixed.
+
+### What `make rules` can reach (control, 2026-11-01)
+
+The control is the 97 sources of the r9 and r10 matches as they stood before the workers (clean, score 6 to 20), searched at depth 3 with 400 compiles each. Of the 97 the search alone solved 2 (`1ACB58`, `1ACBB8`, both virtual-call fixes) and improved 1. `vcall_object` did not fire on the others: in `1DD6C8` the matching edit also inlined the temporary locals, and in `1A3078` the draft keeps m2c's raw `M2C_FIELD(...)(args)` call that the pattern does not see. Six rules were added (`inline_local`, `vcall_raw`, `hoist_field`, `result_local`, `condition_split`, `for_to_while`): the control then solved 3 and improved 13, none lost; a search to depth 5 with 1,500 compiles found nothing more (the neighbourhood is exhausted). The labels of the improving runs: `vcall_raw` 8, `swap_adjacent` 4, `condition_split` 3, `inline_local` 3, `vcall_object` 2, `hoist_field` 1.
+
+The honest reading: single rewrites seldom finish a function; the worker matches combined several changes (typed structs, callee prototypes, a local named or inlined, a loop re-read) that no rule expresses alone. Rules move scores, models finish them. Keep the control as the regression test (a new rule must solve at least what these do and lose none); `hoist_field`, `result_local` and `for_to_while` have not yet contributed to a solve.
+
