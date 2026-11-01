@@ -1,8 +1,7 @@
-#include "sly2.h"
 struct V4 { float x, y, z, w; };
 struct MT { char pad0[0x14]; unsigned char rgba[4]; char pad18[8]; V4 add; V4 mul; V4 addBase; V4 mulBase; };
 
-void CMovieText_UpdateFont(MT *t)
+extern "C" void CMovieText_UpdateFont(MT *t)
 {
     t->mul.z = t->mulBase.z;
     float red = t->addBase.x + (float)t->rgba[0];

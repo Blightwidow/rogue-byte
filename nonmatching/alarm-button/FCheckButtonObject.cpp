@@ -11,11 +11,9 @@ static inline int IndexOf(int *a, int n, int x)
 }
 int FCheckButtonObject(Button *pbutton, int pobject)
 {
-    int result;
-    int cploPush = pbutton->cploPush;
-    if (cploPush > 0) {
-        if (IndexOf(pbutton->aploPush, cploPush, pobject) >= cploPush)
-            { result = 0; goto done; }
+    if (pbutton->cploPush > 0) {
+        if (IndexOf(pbutton->aploPush, pbutton->cploPush, pobject) >= pbutton->cploPush)
+            return 0;
     }
     if (pbutton->ccidPush > 0) {
         int icid;
@@ -25,7 +23,5 @@ int FCheckButtonObject(Button *pbutton, int pobject)
         if (icid >= pbutton->ccidPush)
             return 0;
     }
-    { result = 1; goto done; }
-done:
-    return result;
+    return 1;
 }

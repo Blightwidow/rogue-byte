@@ -7,8 +7,7 @@ extern "C" void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(CM *);
 extern "C" void SetCmPosMat(CM *, QW *);
 extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
 {
-    register QW zeroReg asm("$0");
-    float z = Lane(__builtin_pextuw(zeroReg, vecDegrees));
+    float z = Lane(__builtin_pextuw(0, vecDegrees));
     float x = Lane(vecDegrees);
     float y = Lane(__builtin_prot3w(vecDegrees));
     const float rDegToRad = 0.0174532942f;

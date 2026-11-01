@@ -27,7 +27,7 @@ void StartupAll(void)
     printf(RO_002A6A58, D_STR_002C46D8, D_STR_002C46C0, 0x2B0);
     func_001C2A78(1);
     Begin__5CProg(&l.prog);
-    int fAfterGs = 0;
+    long fAfterGs = 0;
     for (unsigned istep = 0; istep < 0x13; istep++) {
         MarkClockTick__FP5CLOCK(g_2dded0, 1);
         if (fAfterGs)

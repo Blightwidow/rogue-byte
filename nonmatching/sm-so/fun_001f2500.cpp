@@ -1,66 +1,77 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+// SPDX-License-Identifier: GPL-3.0-or-later
+typedef int QW __attribute__((mode(TI)));
+struct Slot1F2500 {
+    struct Node1F2500 *owner;
+    char *position;
+    int refs;
+    char pad0[0x10 - 0xC];
+    float maxA;
+    char pad1[0x1C - 0x14];
+    float maxB;
+    float radius;
+};
+struct Node1F2500 {
+    char pad0[0x10];
+    Node1F2500 *parent;
+    char pad1[0x60 - 0x14];
+    int anchor;
+    char pad2[0xA0 - 0x64];
+    float radiusBase;
+    char pad3[0xD0 - 0xA4];
+    long flags;
+    char pad4[0x134 - 0xD8];
+    Slot1F2500 *slot;
+    char pad5[0x13C - 0x138];
+    float radiusValue;
+    char pad6[0x148 - 0x140];
+    long packed;
+};
+extern char B_003E12D4;
 extern "C" {
-struct _m2c_stack_func_001F2500 {
-    /* 0x00 */ char pad0[0x30];
-};                                                  /* size = 0x30 */
-s32 PosLoWorld(s8 *);                             /* extern */
-s8 *PvAllocSlotheapImpl(M2C_UNK *);               /* extern */
-extern M2C_UNK B_003E12D4;
-void func_001F2500(s8 *arg0) {
-    f32 temp_f1;
-    s8 *temp_a0;
-    s8 *temp_a0_2;
-    s8 *temp_a2;
-    s8 *temp_v0;
-    s8 *var_a0;
-    s8 *var_s1;
-    s8 *var_v1;
-    if (M2C_FIELD(arg0, s64 *, 0xD0) & (0xC000 << 0x12)) {
-        var_v1 = M2C_FIELD(arg0, s8 **, 0x134);
-        var_s1 = arg0;
-        if (var_v1 == NULL) {
-            var_a0 = M2C_FIELD(var_s1, s8 **, 0x10);
-loop_3:
-            if (var_a0 != NULL) {
-                if (((s32) (((s64) (M2C_FIELD(var_s1, s64 *, 0x148) << 0x20) >> 0x20) << 8) >> 0x1C) != 1) {
-                    var_s1 = var_a0;
-                    var_v1 = M2C_FIELD(var_s1, s8 **, 0x134);
-                    if (var_v1 == NULL) {
-                        var_a0 = M2C_FIELD(var_s1, s8 **, 0x10);
-                        goto loop_3;
+QW PosLoWorld(void *);
+void *PvAllocSlotheapImpl(void *);
+}
+static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+extern "C" void func_001F2500(Node1F2500 *self)
+{
+    if (self->flags & (0xC000L << 18)) {
+        Slot1F2500 *slot = self->slot;
+        Node1F2500 *walker = self;
+        if (slot == 0) {
+            Node1F2500 *parent = walker->parent;
+loop:
+            if (parent != 0) {
+                long word = (long)(walker->packed << 32) >> 32;
+                if (((int)(word << 8) >> 28) != 1) {
+                    walker = parent;
+                    slot = walker->slot;
+                    if (slot == 0) {
+                        parent = walker->parent;
+                        goto loop;
                     }
-                    M2C_FIELD(arg0, s8 **, 0x134) = var_v1;
-                    goto block_13;
+                    self->slot = slot;
+                    goto increment;
                 }
-                goto block_7;
             }
-block_7:
-            temp_v0 = PvAllocSlotheapImpl(&B_003E12D4);
-            M2C_FIELD(var_s1, s8 **, 0x134) = temp_v0;
-            M2C_FIELD(arg0, s8 **, 0x134) = temp_v0;
-            M2C_FIELD(temp_v0, s32 *, 4) = (s32) (M2C_FIELD(var_s1, s32 *, 0x60) + 0x70);
-            temp_a0 = M2C_FIELD(arg0, s8 **, 0x134);
-            M2C_FIELD(temp_a0, s32 *, 8) = (s32) (M2C_FIELD(temp_a0, s32 *, 8) + 1);
-            M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x134), f32 *, 0x20) = (f32) M2C_FIELD(arg0, f32 *, 0x13C);
-            M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x134), s8 **, 0) = arg0;
-            if (var_s1 != arg0) {
-                var_v1 = M2C_FIELD(arg0, s8 **, 0x134);
-                goto block_13;
+            slot = (Slot1F2500 *)PvAllocSlotheapImpl(&B_003E12D4);
+            walker->slot = slot;
+            self->slot = slot;
+            slot->position = (char *)(walker->anchor + 0x70);
+            self->slot->refs = self->slot->refs + 1;
+            self->slot->radius = self->radiusValue;
+            self->slot->owner = self;
+            if (walker != self) {
+                slot = self->slot;
+                goto increment;
             }
         } else {
-block_13:
-            M2C_FIELD(var_v1, s32 *, 8) = (s32) (M2C_FIELD(var_v1, s32 *, 8) + 1);
+increment:
+            slot->refs = slot->refs + 1;
         }
-        temp_a2 = M2C_FIELD(arg0, s8 **, 0x134);
-        asm volatile("qmtc2.ni %0, vf3" : : "r"(PosLoWorld(arg0)));
-        asm volatile("lqc2 vf2, (%0)" : : "r"(M2C_FIELD(temp_a2, s32 *, 4)));
+        Slot1F2500 *held = self->slot;
+        QW world = PosLoWorld(self);
+        asm volatile("qmtc2.ni %0, vf3" : : "r"(world));
+        asm volatile("lqc2 vf2, 0(%0)" : : "r"(held->position));
         asm volatile("vsub.xyzw vf1, vf3, vf2");
         asm volatile("vmul.xyz vf1, vf1, vf1");
         asm volatile("vaddw.x vf2, vf0, vf0w");
@@ -69,18 +80,17 @@ block_13:
         asm volatile("vsqrt Q, vf1x");
         asm volatile("vwaitq");
         asm volatile("vaddq.x vf1, vf0, Q");
-        s32 vu_1;
-        asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        temp_f1 = M2C_FIELD(arg0, f32 *, 0xA0) + vu_1;
-        if ((M2C_FIELD(arg0, s64 *, 0xD0) & (0x8000 << 0x11)) && (M2C_FIELD(temp_a2, f32 *, 0x10) < temp_f1)) {
-            M2C_FIELD(temp_a2, f32 *, 0x10) = temp_f1;
+        QW distance;
+        asm volatile("qmfc2.ni %0, vf1" : "=r"(distance));
+        float reach = self->radiusBase + Lane(distance);
+        if (self->flags & (0x8000L << 17)) {
+            if (held->maxA < reach)
+                held->maxA = reach;
         }
-        if (M2C_FIELD(arg0, s64 *, 0xD0) & (0x8000 << 0x12)) {
-            temp_a0_2 = M2C_FIELD(arg0, s8 **, 0x134);
-            if (M2C_FIELD(temp_a0_2, f32 *, 0x1C) < temp_f1) {
-                M2C_FIELD(temp_a0_2, f32 *, 0x1C) = temp_f1;
-            }
+        if (self->flags & (0x8000L << 18)) {
+            Slot1F2500 *again = self->slot;
+            if (again->maxB < reach)
+                again->maxB = reach;
         }
     }
-}
 }

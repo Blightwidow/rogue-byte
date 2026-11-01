@@ -1,24 +1,11 @@
-#include "m2c_macros.h"
-extern "C" {
+extern "C" void Clear__13CFileLocation(void *);
+struct L { int word0; int word1; int mode; char pad[0x110 - 12]; L() { mode = 2; Clear__13CFileLocation(this); } };
+extern "C" int CFileLocation_Cb(void *);
+struct S { int f0; int f4; char pad[0x2C]; int f34; int f38; int f3C; };
 
-s32 CFileLocation_Cb(void *);                       /* extern */
-M2C_UNK Clear__13CFileLocation(void *);        /* extern */
-
-s32 FUN_0018c1e8(void *arg0) {
-    char sp[0x120];
-    s32 var_v0;
-    s32 var_v0_2;
-
-    Clear__13CFileLocation(sp);
-    if (arg0 != NULL) {
-        var_v0_2 = M2C_FIELD(arg0, s32 *, 4) != M2C_FIELD(arg0, s32 *, 0x3C);
-    } else {
-        var_v0_2 = 0;
-    }
-    var_v0 = 0;
-    if (var_v0_2 != 0) {
-        var_v0 = CFileLocation_Cb(sp);
-    }
-    return var_v0;
-}
+extern "C" int FUN_0018c1e8(S *source) {
+ L location;
+ int valid;
+ if (source == 0) { valid = 0; } else { location.word0 = (source->f0 ^ source->f34) + 0xCA0; location.word1 = source->f4 ^ source->f3C; location.mode = 2; valid = location.word1 != 0; }
+ int result = 0; if (valid) result = CFileLocation_Cb(&location); return result;
 }

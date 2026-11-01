@@ -27,7 +27,7 @@ extern "C" QW PosSmooth(float dt, QW posCur, QW posGoal, SMP *psmp, QW *pvecVelo
         float gScale2 = sSmoothed / sDelta;
         asm("lqc2 vf2, %0" : : "m" (frame.posCurSaved));
         asm("lqc2 vf3, %0" : : "m" (frame.vecDelta));
-        asm("qmtc2.ni %0, vf1\n\tvadda.xyzw ACC, vf0, vf2\n\tvmaddx.xyzw vf2, vf3, vf1x" : : "r" (gScale2));
+        asm("qmtc2.ni %0, vf1\n\tvadda.xyzw ACC, vf2, vf0\n\tvmaddx.xyzw vf2, vf3, vf1x" : : "r" (gScale2));
         asm("sqc2 vf1, %0" : "=m" (frame.junk));
         asm("qmfc2.ni %0, vf2" : "=r" (result));
     } else {

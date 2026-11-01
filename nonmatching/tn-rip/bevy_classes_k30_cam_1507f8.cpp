@@ -59,7 +59,12 @@ s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
         asm volatile("qmtc2.ni %0, vf3" : : "r"(bevy_classes_k30_cam_150780(arg0)));
         s32 vu_1;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        asm volatile("qmtc2.ni %0, vf1" : : "r"(-vu_1));
+        f32 negated;
+        asm("mtc1 %1, %0" : "=f"(negated) : "r"(vu_1));
+        negated = -negated;
+        s32 negatedBits;
+        asm("mfc1 %0, %1" : "=r"(negatedBits) : "f"(negated));
+        asm volatile("qmtc2.ni %0, vf1" : : "r"(negatedBits));
         asm volatile("vmulx.xyzw vf2, vf2, vf1x");
         asm volatile("sqc2 vf1, 0x10(%0)" : : "r"(sp));
         asm volatile("vadd.xyzw vf1, vf3, vf2");

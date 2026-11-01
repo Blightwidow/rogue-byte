@@ -27,20 +27,18 @@ extern "C" void HandleAsegaEvents(ASEGB *pasega)
         ASEG *paseg = pasega->paseg;
         int iea = pasega->iea;
         float tTarget = pasega->tTarget;
-        float svtLocal = pasega->svtLocal;
-        bool fForward = false;
         if (iea < paseg->cea) {
-            float tEvent = paseg->aea[iea].tLocal;
-            fForward = tEvent < tTarget || (tTarget == tEvent && zero < svtLocal);
-        }
-        if (fForward) {
-            pasega->iea = iea + 1;
-            HandleAsegaEvent(pasega, &paseg->aea[iea]);
-            continue;
+            EA *pea = &paseg->aea[iea];
+            float tEvent = pea->tLocal;
+            if (tEvent < tTarget || (tTarget == tEvent && zero < pasega->svtLocal)) {
+                pasega->iea = iea + 1;
+                HandleAsegaEvent(pasega, pea);
+                continue;
+            }
         }
         if (iea > 0) {
             float tPrev = paseg->aea[iea - 1].tLocal;
-            if (tTarget < tPrev || (tTarget == tPrev && svtLocal < zero)) {
+            if (tTarget < tPrev || (tTarget == tPrev && pasega->svtLocal < zero)) {
                 pasega->iea = iea - 1;
                 HandleAsegaEvent(pasega, &paseg->aea[iea - 1]);
                 continue;

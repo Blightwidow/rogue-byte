@@ -1,69 +1,66 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+// SPDX-License-Identifier: GPL-3.0-or-later
+#include "sly2.h"
+struct VT1C5E48 { char pad[0x260]; short delta; short index; void (*fn)(void *, int); };
+struct LO1C5E48 { char pad[0xC]; VT1C5E48 *vt; };
+struct DPRIZE1C5E48 {
+    char pad0[0xC]; VT1C5E48 *vt; char pad1[0x150 - 0x10];
+    unsigned state; float startTime; char pad2[0x188 - 0x158];
+    float timer; char pad3[0x1C4 - 0x18C];
+    int flag;
+};
 extern "C" {
-struct _m2c_stack_UpdateDprize {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-M2C_UNK CheckDprizeBounce(...);         /* extern */
-M2C_UNK CheckDprizeCollect(s8 *);                 /* extern */
-M2C_UNK UpdateSo();                                 /* extern */
-M2C_UNK func_001C6308(s8 *);                      /* extern */
-extern f32 D_FLT_002C0D50;
-extern f32 g_2dded0;
-void UpdateDprize(s8 *arg0) {
-    M2C_UNK var_a1;
-    u32 temp_v1;
-    s8 *temp_v0;
-    UpdateSo();
-    func_001C6308(arg0);
-    temp_v1 = M2C_FIELD(arg0, u32 *, 0x150);
-    switch (temp_v1) {
-    case 0:
-        asm volatile("lqc2 vf1, 0x180(%0)" : : "r"(arg0));
+void UpdateSo(DPRIZE1C5E48 *);
+void func_001C6308(DPRIZE1C5E48 *);
+void CheckDprizeBounce(DPRIZE1C5E48 *);
+void CheckDprizeCollect(DPRIZE1C5E48 *);
+extern float D_FLT_002C0D50;
+extern float g_2dded0;
+void UpdateDprize(DPRIZE1C5E48 *dprize)
+{
+    UpdateSo(dprize);
+    func_001C6308(dprize);
+    int arg;
+    switch (dprize->state) {
+    case 0: {
+        float lengthSquared;
+        asm volatile("lqc2 vf1, 0x180(%0)" : : "r"(dprize));
         asm volatile("vmul.xyz vf1, vf1, vf1");
         asm volatile("vaddw.x vf2, vf0, vf0w");
         asm volatile("vadday.x ACC, vf1, vf1y");
         asm volatile("vmaddz.x vf1, vf2, vf1z");
-        s32 vu_1;
-        asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        if (vu_1 > 10000.0f) {
-            CheckDprizeBounce(arg0);
-        }
-        /* fallthrough */
+        asm volatile("qmfc2.ni $2, vf1\n\tmtc1 $2, %0" : "=f"(lengthSquared) : : "$2");
+        if (10000.0f < lengthSquared)
+            CheckDprizeBounce(dprize);
+    }
     case 5:
-        CheckDprizeCollect(arg0);
+        CheckDprizeCollect(dprize);
+        return;
+    case 1:
+    case 2:
+    case 6:
         return;
     case 3:
-        var_a1 = 4;
-        if (M2C_FIELD(arg0, f32 *, 0x188) < 0.0f) {
-block_11:
-            temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK), 0x264)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x260), var_a1);
-            return;
+        if (dprize->timer < 0.0f) {
+            arg = 4;
+            goto call;
         }
-    default:
         return;
     case 4:
-        if (M2C_FIELD(arg0, s32 *, 0x1C4) != 0) {
-            var_a1 = 0;
-            if (M2C_FIELD(arg0, f32 *, 0x188) < 25.0f) {
-                M2C_FIELD(arg0, s32 *, 0x1C4) = 0;
-                goto block_11;
-            }
+        if (dprize->flag != 0 && dprize->timer < 25.0f) {
+            dprize->flag = 0;
+            arg = 0;
+            goto call;
         }
-        var_a1 = 2;
-        if (D_FLT_002C0D50 < (g_2dded0 - M2C_FIELD(arg0, f32 *, 0x154))) {
-            goto block_11;
-        }
-        CheckDprizeBounce(arg0, 2);
-        CheckDprizeCollect(arg0);
-        break;
+        arg = 2;
+        if (D_FLT_002C0D50 < g_2dded0 - dprize->startTime)
+            goto call;
+        CheckDprizeBounce(dprize);
+        CheckDprizeCollect(dprize);
+        return;
+    default:
+        return;
     }
+call:
+    dprize->vt->fn((char *)dprize + dprize->vt->delta, arg);
 }
 }

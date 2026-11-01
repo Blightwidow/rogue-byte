@@ -31,6 +31,8 @@ void Obstacle_UpdatePlanes(s8 *arg0) {
         temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
         temp_v0_2 = M2C_FIELD(temp_v1, s32 (**)(s8 *), 0xFC)(arg0 + M2C_FIELD(temp_v1, s16 *, 0xF8));
         asm volatile("lqc2 vf5, (%0)" : : "r"(temp_v0_2));
+        s32 hasMore = var_s1 < M2C_FIELD(arg0, s32 *, 0xE8);
+        s32 firstElement = M2C_FIELD(arg0, s32 *, 0xF4);
         asm volatile("sqc2 vf5, (%0)" : : "r"(sp));
         asm volatile("lqc2 vf4, 0x10(%0)" : : "r"(temp_v0_2));
         asm volatile("sqc2 vf4, 0x10(%0)" : : "r"(sp));
@@ -38,17 +40,18 @@ void Obstacle_UpdatePlanes(s8 *arg0) {
         asm volatile("sqc2 vf3, 0x20(%0)" : : "r"(sp));
         asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(temp_v0_2));
         asm volatile("sqc2 vf2, 0x30(%0)" : : "r"(sp));
-        asm volatile("lqc2 vf1, (%0)" : : "r"(M2C_FIELD(arg0, s32 *, 0xF4)));
+        asm volatile("lqc2 vf1, (%0)" : : "r"(firstElement));
         asm volatile("vmulax.xyz ACC, vf5, vf1x");
         asm volatile("vmadday.xyz ACC, vf4, vf1y");
         asm volatile("vmaddaz.xyz ACC, vf3, vf1z");
         asm volatile("vmaddw.xyz vf5, vf2, vf0w");
-        if (M2C_FIELD(arg0, s32 *, 0xE8) > 1) {
+        if (hasMore) {
             var_s2 = 0;
             do {
+                s32 element = (var_s1 * 0x10) + M2C_FIELD(arg0, s32 *, 0xF4);
                 asm volatile("vmove.xyzw vf2, vf5");
                 asm volatile("lqc2 vf3, 0x20(%0)" : : "r"(sp));
-                asm volatile("lqc2 vf5, (%0)" : : "r"((var_s1 * 0x10) + M2C_FIELD(arg0, s32 *, 0xF4)));
+                asm volatile("lqc2 vf5, (%0)" : : "r"(element));
                 temp_a0 = M2C_FIELD(arg0, s32 *, 0x1EC) + var_s2;
                 asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(sp));
                 var_s1 += 1;
@@ -59,6 +62,8 @@ void Obstacle_UpdatePlanes(s8 *arg0) {
                 asm volatile("vmadday.xyz ACC, vf6, vf5y");
                 asm volatile("vmaddaz.xyz ACC, vf3, vf5z");
                 asm volatile("vmaddw.xyz vf5, vf1, vf0w");
+                s32 vu_1;
+                asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_1));
                 asm volatile("lqc2 vf4, (%0)" : : "r"(&g_2a2dc0));
                 asm volatile("vsub.xyzw vf2, vf5, vf2");
                 asm volatile("vopmula.xyz ACC, vf2, vf4");
@@ -74,8 +79,6 @@ void Obstacle_UpdatePlanes(s8 *arg0) {
                 asm volatile("vdiv Q, vf0w, vf1x");
                 asm volatile("vwaitq");
                 asm volatile("vmulq.xyzw vf3, vf2, Q");
-                s32 vu_1;
-                asm volatile("qmfc2.ni %0, vf2" : "=r"(vu_1));
                 s32 vu_2;
                 asm volatile("qmfc2.ni %0, vf3" : "=r"(vu_2));
                 InitPlaneFromNormalPos(temp_a0, vu_2, vu_1);

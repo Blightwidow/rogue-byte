@@ -21,7 +21,6 @@ extern "C" void InitRhythm(RH* p)
     InitLo(p);
     B_002DE570 = p;
     float lo = -1.5f, hi = 1.0f;
-    asm("" : "+f"(lo), "+f"(hi));
     p->lmHi = hi;
     p->lmLo = lo;
     p->dtLate = 0.4f;

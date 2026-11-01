@@ -1,28 +1,34 @@
 #include "sly2.h"
-struct ITEM { int kind; int pad; int count; int *kinds; char pad2[0xC]; int flags; };
+struct ITEM1AFFC0 { int kind; int pad; int count; int *kinds; char pad2[0xC]; int flags; };
 extern char B_003D9ED0;
-extern "C" void PauseMenu_ApplyOption(char *, ITEM *);
+extern "C" void PauseMenu_ApplyOption(char *, ITEM1AFFC0 *);
 
-extern "C" void CycleOptionItem(ITEM *item)
+extern "C" void CycleOptionItem(ITEM1AFFC0 *item)
 {
     int index = 0;
-    if (item->count > 0) {
+    int count = item->count;
+    if (count > 0) {
         int *kinds = item->kinds;
         int kind = item->kind;
+        int next;
         if (kind == kinds[0]) {
-            item->kind = kinds[1 % item->count];
+            index = 1;
+            next = index % count;
         } else {
-            for (;;) {
+        again:
+            index++;
+            if (index < item->count) {
+                if (kind != kinds[index])
+                    goto again;
                 index++;
-                if (!(index < item->count))
-                    break;
-                if (kind == kinds[index]) {
-                    item->kind = kinds[(index + 1) % item->count];
-                    break;
-                }
+                next = index % item->count;
+            } else {
+                goto done;
             }
         }
+        item->kind = kinds[next];
     }
+done:
     PauseMenu_ApplyOption(&B_003D9ED0, item);
     item->flags |= 2;
 }

@@ -8,11 +8,11 @@ extern "C" void func_0022D148(void *, void *, int);
 extern QW g_2a2dd0;
 extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     char sp[0x130] __attribute__((aligned(16)));
-    Mat_1F4558 *spin = (Mat_1F4558 *)(sp + 0x60);
     Body_1F4558 *body = self->body;
     if (body == 0 || body->kind != 6) {
         return g_2a2dd0;
     }
+    Mat_1F4558 *spin = (Mat_1F4558 *)(sp + 0x60);
     func_0022D148(spin, body, 0);
     Mat_1F4558 *bodyMatrix = &body->matrix;
     *(Mat_1F4558 *)(sp + 0x30) = *spin;
@@ -57,9 +57,9 @@ extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     asm volatile("pextlw %0, %1, %0" : "=r"(packed) : "r"(z), "r"(y));
     QW joined;
     asm volatile("pcpyld %0, %1, %0" : "=r"(joined) : "r"(x), "r"(packed));
+    asm volatile("sqc2 vf5, 0x110(%0)" : : "r"(sp));
     QW result;
     asm volatile("por %0, $0, %1" : "=r"(result) : "r"(joined));
-    asm volatile("sqc2 vf5, 0x110(%0)" : : "r"(sp));
     asm volatile("sqc2 vf3, 0x120(%0)" : : "r"(sp));
     asm volatile("sqc2 vf7, 0x60(%0)" : : "r"(sp));
     asm volatile("sqc2 vf4, 0xa0(%0)" : : "r"(sp));

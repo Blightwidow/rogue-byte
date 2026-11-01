@@ -1,4 +1,4 @@
-struct VUDATA { char pad[0x3010]; int base; char pad2[0x3070 - 0x3014]; int u0; int u4; int rowA; int rowB; int rowEnd; int colA; int colB; int u1C; int alphaAFlag; int alphaBOff; int alphaAOff; };
+// SPDX-License-Identifier: GPL-3.0-or-later
 void func_00167E58(char *data)
 {
     char *p = data + 0x3070;
@@ -12,8 +12,9 @@ void func_00167E58(char *data)
     unsigned char *alphaA = (unsigned char *)(*(int *)(p + 0x20) + base);
     if (rowB < end) {
         do {
+            unsigned short *dstA = colA;
             unsigned short *dstB = colB;
-            *colA = ((rowA[4] >> 3) << 5) | (rowA[0] >> 3) | ((rowA[8] >> 3) << 10) | ((rowA[0xC] >> 7) << 15);
+            *dstA = ((rowA[4] >> 3) << 5) | (rowA[0] >> 3) | ((rowA[8] >> 3) << 10) | ((rowA[0xC] >> 7) << 15);
             colA++;
             colB++;
             *dstB = ((rowB[4] >> 3) << 5) | (rowB[0] >> 3) | ((rowB[8] >> 3) << 10) | ((rowA[0xC] >> 7) << 15);

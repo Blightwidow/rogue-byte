@@ -5,32 +5,43 @@ int IepSweepPathzoneCursor(float g, SAPEP *aep, int iep, unsigned *agrf, unsigne
 {
     SAPEP *pep = &aep[iep];
     if (g <= pep->g) {
-        do {
-            if (pep->fMin == fMin) {
-                unsigned *pgrf = &agrf[pep->islot >> 5];
+        SAPEP *cur = pep;
+        for (;;) {
+            if (pep->g < g)
+                break;
+            if (cur->fMin == fMin) {
+                unsigned islot = cur->islot;
+                unsigned word = islot >> 5;
+                unsigned bit = islot - (word << 5);
                 if (fMin == 0)
-                    *pgrf = *pgrf | (1u << (pep->islot & 0x1f));
+                    agrf[word] = agrf[word] | (1u << bit);
                 else
-                    *pgrf = *pgrf - (1u << (pep->islot & 0x1f));
+                    agrf[word] = agrf[word] - (1u << bit);
             }
             pep--;
             iep--;
-        } while (g <= pep->g);
+            cur = pep;
+        }
         return iep;
     }
-    pep = &aep[iep + 1];
-    int iepNext = iep + 1;
-    while (pep->g <= g) {
-        if (pep->fMin == fMin) {
-            unsigned *pgrf = &agrf[pep->islot >> 5];
+    iep++;
+    pep = &aep[iep];
+    SAPEP *cur = pep;
+    for (;;) {
+        if (g < pep->g)
+            break;
+        if (cur->fMin == fMin) {
+            unsigned islot = cur->islot;
+            unsigned word = islot >> 5;
+            unsigned bit = islot - (word << 5);
             if (fMin == 0)
-                *pgrf = *pgrf - (1u << (pep->islot & 0x1f));
+                agrf[word] = agrf[word] - (1u << bit);
             else
-                *pgrf = *pgrf | (1u << (pep->islot & 0x1f));
+                agrf[word] = agrf[word] | (1u << bit);
         }
         pep++;
-        iep = iepNext;
-        iepNext++;
+        iep++;
+        cur = pep;
     }
-    return iep;
+    return iep - 1;
 }

@@ -1,6 +1,7 @@
 typedef int QW __attribute__((mode(TI)));
 struct Mat3_22C8C0 { QW row[3]; };
-void *memcpy(void *, const void *, unsigned int); /* C++ linkage on purpose: extern "C" memcpy is a builtin */
+void *memcpy(void *, const void *, unsigned int);
+static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 extern "C" {
 void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(void *, QW);
 void *__as__6VECTORG9VU_VECTOR(void *, QW);
@@ -12,12 +13,9 @@ char *BuildXfLocalMatrix(char *dest, char *source, QW vec) {
     case 9:
     case 10: {
         memcpy(dest, source, 0x40);
-        int z, y;
-        asm("pextuw %0, %1, %2" : "=r"(z) : "r"(0), "r"(vec));
-        *(int *)(dest + 0x30) = (int)vec;
-        asm("prot3w %0, %1" : "=r"(y) : "r"(vec));
-        *(int *)(dest + 0x38) = z;
-        *(int *)(dest + 0x34) = y;
+        *(unsigned *)(dest + 0x30) = (unsigned)vec;
+        *(float *)(dest + 0x38) = Lane(__builtin_pextuw((QW)0, vec));
+        *(float *)(dest + 0x34) = Lane(__builtin_prot3w(vec));
         break;
     }
     case 2:
@@ -36,26 +34,24 @@ char *BuildXfLocalMatrix(char *dest, char *source, QW vec) {
         *(int *)(dest + 0xC) = 0;
         break;
     }
-    case 11: {
+    case 11:
         memcpy(dest, source, 0x40);
-        int z, y;
-        asm("pextuw %0, %1, %2" : "=r"(z) : "r"(0), "r"(vec));
         *(QW *)(dest + 0x10) = vec;
-        asm("prot3w %0, %1" : "=r"(y) : "r"(vec));
-        *(int *)(dest + 0x24) = z;
-        *(int *)(dest + 0x20) = y;
+        *(float *)(dest + 0x24) = Lane(__builtin_pextuw((QW)0, vec));
+        *(float *)(dest + 0x20) = Lane(__builtin_prot3w(vec));
         break;
-    }
-    case 12: {
+    case 12:
         memcpy(dest, source, 0x40);
-        int z, y;
-        asm("pextuw %0, %1, %2" : "=r"(z) : "r"(0), "r"(vec));
         *(QW *)dest = vec;
-        asm("prot3w %0, %1" : "=r"(y) : "r"(vec));
-        *(int *)(dest + 0x28) = z;
-        *(int *)(dest + 0x14) = y;
+        *(float *)(dest + 0x28) = Lane(__builtin_pextuw((QW)0, vec));
+        *(float *)(dest + 0x14) = Lane(__builtin_prot3w(vec));
         break;
-    }
+    case 0:
+    case 8:
+    case 13:
+    case 14:
+    case 15:
+        break;
     }
     return dest;
 }

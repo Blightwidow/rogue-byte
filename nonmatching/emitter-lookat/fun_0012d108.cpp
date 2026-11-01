@@ -15,18 +15,12 @@ void func_0012D108(Lookat *self, QW pos)
     asm("qmtc2.ni %0, vf2" : : "r" (pos));
     asm("lqc2 vf1, %0" : : "m" (self->pos));
     self->pos = pos;
-    QW *ppos = &pos;
-    asm volatile("" : : "r" (ppos));
     asm("vsub.xyzw vf2, vf2, vf1");
     if (self->owner->first != self)
         return;
     asm("qmfc2.ni %0, vf2" : "=r" (diff));
     QW g = g_2a2dd0;
-    int unchanged = 0;
-    if (FFloatsNear__Ffff(LaneX(g), LaneX(diff), 0.0001f)) {
-        if (FFloatsNear__Ffff(LaneY(g), LaneY(diff), 0.0001f))
-            unchanged = FFloatsNear__Ffff(LaneZ(g), LaneZ(diff), 0.0001f) != 0;
-    }
+    int unchanged = FFloatsNear__Ffff(LaneX(g), LaneX(diff), 0.0001f) && FFloatsNear__Ffff(LaneY(g), LaneY(diff), 0.0001f) && FFloatsNear__Ffff(LaneZ(g), LaneZ(diff), 0.0001f);
     if (!unchanged) {
         self->owner->pos = pos;
         WakeXf(self->palo, self->owner);

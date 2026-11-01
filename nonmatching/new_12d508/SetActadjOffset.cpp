@@ -13,29 +13,29 @@ static inline int Near(float a, float b) { return FFloatsNear__Ffff(a, b, 0.0001
 void SetActadjOffset(Act *self, QW offset)
 {
     QW delta;
-    asm("qmtc2.ni %0, vf2" : : "r" (offset));
-    asm("lqc2 vf1, %0" : : "m" (self->pos));
-    asm("vsub.xyzw vf3, vf2, vf1");
-    asm("sqc2 vf3, %0" : "=m" (delta));
-    asm("sqc2 vf2, %0" : "=m" (self->pos));
+    asm volatile("qmtc2.ni %0, vf2" : : "r" (offset));
+    asm volatile("lqc2 vf1, %0" : : "m" (self->pos));
+    asm volatile("vsub.xyzw vf3, vf2, vf1");
+    asm volatile("sqc2 vf3, %0" : "=m" (delta));
+    asm volatile("sqc2 vf2, %0" : "=m" (self->pos));
     if (self->owner->first != self)
         return;
     QW g = g_2a2dd0;
     QW dreg;
-    asm("qmfc2.ni %0, vf3" : "=r" (dreg));
+    asm volatile("qmfc2.ni %0, vf3" : "=r" (dreg));
     int unchanged = 0;
     if (Near(LaneX(g), LaneX(dreg))) {
         if (Near(LaneY(g), LaneY(delta)))
             unchanged = Near(LaneZ(g), LaneZ(delta)) != 0;
     }
     if (!unchanged) {
-        asm("lqc2 vf2, %0" : : "m" (delta));
-        asm("lqc2 vf1, %0" : : "m" (self->owner->pos));
-        asm("vadd.xyzw vf1, vf1, vf2");
-        asm("sqc2 vf1, %0" : "=m" (self->owner->pos));
-        asm("lqc2 vf1, %0" : : "m" (self->owner->pos2));
-        asm("vadd.xyzw vf1, vf1, vf2");
-        asm("sqc2 vf1, %0" : "=m" (self->owner->pos2));
+        asm volatile("lqc2 vf2, %0" : : "m" (delta));
+        asm volatile("lqc2 vf1, %0" : : "m" (self->owner->pos));
+        asm volatile("vadd.xyzw vf1, vf1, vf2");
+        asm volatile("sqc2 vf1, %0" : "=m" (self->owner->pos));
+        asm volatile("lqc2 vf1, %0" : : "m" (self->owner->pos2));
+        asm volatile("vadd.xyzw vf1, vf1, vf2");
+        asm volatile("sqc2 vf1, %0" : "=m" (self->owner->pos2));
         WakeXf(self->palo, self->owner);
     }
 }

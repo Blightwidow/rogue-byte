@@ -14,13 +14,12 @@ extern "C" void AttachCrv_GetRandomPos(float sNear, void *pcrv, QW *ppos, QW *pn
     float sArc = SRandNearCrv(sNear, pcrv, g_2be8b8);
     GetPathPosFromS(sArc, pcrv, &l.pos, &l.tangent);
     float length;
-    QW *pfallback = &g_2a2da0;
     QW *pup = &g_2a2dc0;
     asm("lqc2 vf2, %0" : : "m" (l.tangent));
     float eps = 0.0001f;
-    asm("lqc2 vf1, 0(%0)" : : "r" (pup));
+    asm("lqc2 vf1, %0" : : "m" (g_2a2dc0));
     asm("vopmula.xyz ACC, vf2, vf1\n\tvopmsub.xyz vf3, vf1, vf2\n\tvmul.xyz vf1, vf3, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z");
-    QW fallback = *pfallback;
+    QW fallback = g_2a2da0;
     asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q");
     int bits;
     asm("qmfc2.ni %0, vf1" : "=r" (bits));

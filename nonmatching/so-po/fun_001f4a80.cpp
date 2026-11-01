@@ -24,10 +24,14 @@ void func_001F4A80(SO *so, char *xf)
         asm volatile("sqc2 vf2, %0" : "=m"(copy.row[3]));
         VT *vtable = so->vptr;
         float *cf = (float *)&copy;
-        QW w = __builtin_pcpyld(Word(cf[1]), __builtin_pextlw(Word(cf[8]), Word(cf[6])));
+        float lane6 = cf[6];
+        float lane8 = cf[8];
+        float lane1 = cf[1];
+        QW low = Word(lane6);
+        QW mid = __builtin_pextlw(Word(lane8), low);
+        QW w = __builtin_pcpyld(Word(lane1), mid);
         QW v;
         asm volatile("lqc2 vf1, 0x70(%1)\n\tvmulax.xyz ACC, vf5, vf1x\n\tvmadday.xyz ACC, vf4, vf1y\n\tvmaddaz.xyz ACC, vf3, vf1z\n\tvmaddw.xyz vf6, vf2, vf0w\n\tqmfc2.ni %0, vf6" : "=r"(v) : "r"(xf));
-        *(volatile QW *)&u.spill = w;
         vtable->fn((char *)so + vtable->delta, v);
         vtable = so->vptr;
         vtable->fn2((char *)so + vtable->delta2, w);

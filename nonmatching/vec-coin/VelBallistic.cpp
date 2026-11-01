@@ -1,12 +1,12 @@
 #include "sly2.h"
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+static inline QW UpperWord(QW q) { QW r; asm("pextuw %0, $0, %1" : "=r" (r) : "r" (q)); return r; }
 static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
 extern QW g_2a2dc0;
 QW VelBallistic(float dt, QW from, QW to, QW accel)
 {
-    register QW zeroReg asm("$0");
     QW spill;
-    float accz = Lane(__builtin_pextuw(zeroReg, accel));
+    float accz = Lane(UpperWord(accel));
     asm("qmtc2.ni %0, vf1" : : "r" (to));
     float fall = (dt * 0.5f);
     asm("qmtc2.ni %0, vf2" : : "r" (from));
@@ -15,7 +15,7 @@ QW VelBallistic(float dt, QW from, QW to, QW accel)
     QW delta;
     asm("qmfc2.ni %0, vf3" : "=r" (delta));
     fall = dt * fall;
-    float dz = Lane(__builtin_pextuw(zeroReg, delta));
+    float dz = Lane(UpperWord(delta));
     asm("lqc2 vf2, %0" : : "m" (g_2a2dc0));
     fall = fall * accz;
     asm("vmul.xyz vf1, vf3, vf2\n\tvaddw.x vf5, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf5, vf1z");

@@ -1,8 +1,9 @@
 typedef signed char s8; typedef int s32; typedef unsigned int u32;
 extern "C" {
-struct VT_20C7E0 { char pad[0x18]; short delta; short unused; void (*fn)(char *, char *, int, char *, float, float); };
+struct VT_20C7E0 { char pad[0x18]; short delta; short unused; void (*fn)(char *, char *, int, float, float); };
 struct OBJ_20C7E0 { VT_20C7E0 *vt; };
-char *PchnFindAseg(char *, int, int, int);
+struct ASEG_20C7E0 { char pad0[4]; OBJ_20C7E0 *obj; };
+ASEG_20C7E0 *PchnFindAseg(char *, int, int, int);
 char *PloFindSwObject_thunk(void *, int, char *, int);
 extern char B_003DD490;
 void LoadDirAnimSet(char *arg0, int arg1) {
@@ -13,11 +14,9 @@ void LoadDirAnimSet(char *arg0, int arg1) {
             char *found = PloFindSwObject_thunk(&B_003DD490, 4, *(char **)entry, arg1);
             *(char **)entry = found;
             if (found != 0) {
-                char *aseg = PchnFindAseg(found, arg1, 1, 1);
-                OBJ_20C7E0 *obj = *(OBJ_20C7E0 **)(aseg + 4);
-                OBJ_20C7E0 *obj2 = *(OBJ_20C7E0 **)(aseg + 4);
-                obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, (char *)obj, 0.0f, 1.0f);
-                obj2->vt->fn((char *)obj2 + obj2->vt->delta, sp + 0x10, 0, (char *)obj2, *(float *)(found + 0x74), 1.0f);
+                ASEG_20C7E0 *aseg = PchnFindAseg(found, arg1, 1, 1);
+                aseg->obj->vt->fn((char *)aseg->obj + aseg->obj->vt->delta, sp, 0, 0.0f, 1.0f);
+                aseg->obj->vt->fn((char *)aseg->obj + aseg->obj->vt->delta, sp + 0x10, 0, *(float *)(found + 0x74), 1.0f);
                 asm volatile("qmtc2.ni %0, vf1" : : "r"(*(int *)(found + 0x74)));
                 asm volatile("lqc2 vf2, (%0)" : : "r"(sp));
                 asm volatile("lqc2 vf3, 0x10(%0)" : : "r"(sp));

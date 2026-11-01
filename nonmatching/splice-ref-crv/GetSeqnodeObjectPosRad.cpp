@@ -1,72 +1,64 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+// SPDX-License-Identifier: GPL-3.0-or-later
+typedef int QW __attribute__((mode(TI)));
+struct Vt1E4D40 {
+    char pad0[0xF8];
+    short delta;
+    short index;
+    float *(*getPos)(void *);
+};
+struct Basic1E4D40 {
+    char pad0[0xC];
+    Vt1E4D40 *vptr;
+};
+struct Seqnode1E4D40 {
+    char pad0[0x24];
+    Basic1E4D40 *object;
+    char pad1[0x44 - 0x28];
+    Basic1E4D40 *fallback;
+};
+struct Frame1E4D40 {
+    QW position;
+    float closestX;
+    float closestY;
+};
 extern "C" {
-struct _m2c_stack_GetSeqnodeObjectPosRad {
-    /* 0x00 */ s128 sp0;                            /* inferred */
-    /* 0x10 */ f32 sp10;                            /* inferred */
-    /* 0x14 */ f32 sp14;                            /* inferred */
-    /* 0x18 */ char pad18[0x68];
-};                                                  /* size = 0x80 */
-#define sp14 (*(f32 *)(sp + 0x14))
-s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);
-void FindCrvClosestPointAll(s8 *, M2C_UNK, M2C_UNK, s8 *, f32 *, M2C_UNK, M2C_UNK);
-s32 PosLoWorld(s8 *);
-f32 atan2f(f32, f32);
-void GetSeqnodeObjectPosRad(s8 *arg0, s8 *arg1, s128 *arg2, f32 *arg3) {
-    s8 sp[0x10] __attribute__((aligned(16)));
-    s128 sp0;
-    f32 sp10;
-    f32 *temp_s0;
-    f32 *temp_s0_2;
-    f32 var_f0;
-    s8 *temp_v1;
-    s8 *temp_v1_2;
-    s8 *temp_v1_3;
-    s8 *temp_v1_4;
-    s8 *var_s1;
-    var_s1 = M2C_FIELD(arg0, s8 **, 0x24);
-    if (var_s1 == NULL) {
-        var_s1 = M2C_FIELD(arg0, s8 **, 0x44);
-    }
-    if (arg1 != NULL) {
-        if (FIsBasicDerivedFrom(arg1, 0xA) != 0) {
-            s64 vu_1;
-            asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(var_s1)));
-            FindCrvClosestPointAll(arg1, vu_1, 0, sp, &sp10, 0, 0);
-            var_f0 = atan2f(sp14, sp10);
+int FIsBasicDerivedFrom(void *, int);
+QW PosLoWorld(void *);
+void FindCrvClosestPointAll(void *, QW, int, void *, float *, int, int);
+float atan2f(float, float);
+}
+extern "C" void GetSeqnodeObjectPosRad(Seqnode1E4D40 *node, Basic1E4D40 *curveObject, QW *outPosition, float *outRadians)
+{
+    Frame1E4D40 frame;
+    float radians;
+    Basic1E4D40 *object = node->object;
+    if (object == 0)
+        object = node->fallback;
+    if (curveObject != 0) {
+        if (FIsBasicDerivedFrom(curveObject, 0xA) != 0) {
+            FindCrvClosestPointAll(curveObject, PosLoWorld(object), 0, &frame, &frame.closestX, 0, 0);
+            radians = atan2f(frame.closestY, frame.closestX);
         } else {
-            sp0 = PosLoWorld(arg1);
-            temp_v1 = M2C_FIELD(arg1, s8 **, 0xC);
-            temp_v1_2 = M2C_FIELD(arg1, s8 **, 0xC);
-            temp_s0 = M2C_FIELD(temp_v1, f32 *(**)(s8 *), 0xFC)(arg1 + M2C_FIELD(temp_v1, s16 *, 0xF8));
-            var_f0 = atan2f(M2C_FIELD(temp_s0, f32 *, 4), *M2C_FIELD(temp_v1_2, f32 *(**)(s8 *), 0xFC)(arg1 + M2C_FIELD(temp_v1_2, s16 *, 0xF8)));
+            frame.position = PosLoWorld(curveObject);
+            float *forward = curveObject->vptr->getPos((char *)curveObject + curveObject->vptr->delta);
+            radians = atan2f(forward[1], *curveObject->vptr->getPos((char *)curveObject + curveObject->vptr->delta));
         }
     } else {
-        sp0 = PosLoWorld(var_s1);
-        asm volatile("lqc2 vf1, (%0)" : : "r"(sp));
-        if (FIsBasicDerivedFrom(var_s1, 0x33) != 0) {
-            asm volatile("lqc2 vf2, 0x240(%0)" : : "r"(var_s1));
+        frame.position = PosLoWorld(object);
+        int isCamera = FIsBasicDerivedFrom(object, 0x33);
+        asm volatile("lqc2 vf1, %0" : : "m"(frame.position));
+        if (isCamera != 0) {
+            asm volatile("lqc2 vf2, 0x240(%0)" : : "r"(object));
             asm volatile("vadd.xyzw vf1, vf1, vf2");
-            asm volatile("sqc2 vf1, (%0)" : : "r"(sp));
-            var_f0 = M2C_FIELD(var_s1, f32 *, 0x1A8);
+            asm volatile("sqc2 vf1, %0" : "=m"(frame.position));
+            radians = *(float *)((char *)object + 0x1A8);
         } else {
-            temp_v1_3 = M2C_FIELD(var_s1, s8 **, 0xC);
-            temp_v1_4 = M2C_FIELD(var_s1, s8 **, 0xC);
-            temp_s0_2 = M2C_FIELD(temp_v1_3, f32 *(**)(s8 *), 0xFC)(var_s1 + M2C_FIELD(temp_v1_3, s16 *, 0xF8));
-            var_f0 = atan2f(M2C_FIELD(temp_s0_2, f32 *, 4), *M2C_FIELD(temp_v1_4, f32 *(**)(s8 *), 0xFC)(var_s1 + M2C_FIELD(temp_v1_4, s16 *, 0xF8)));
+            float *forward = object->vptr->getPos((char *)object + object->vptr->delta);
+            radians = atan2f(forward[1], *object->vptr->getPos((char *)object + object->vptr->delta));
         }
     }
-    if (arg2 != NULL) {
-        *arg2 = sp0;
-    }
-    if (arg3 != NULL) {
-        *arg3 = var_f0;
-    }
-}
+    if (outPosition != 0)
+        *outPosition = frame.position;
+    if (outRadians != 0)
+        *outRadians = radians;
 }

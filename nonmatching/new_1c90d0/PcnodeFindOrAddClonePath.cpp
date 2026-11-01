@@ -14,26 +14,22 @@ CNODE *PcnodeFindOrAddClonePath(CNODE *pparent, int count, const int *acloneid)
     CNODE *pnode;
 again:
     pnode = pparent->first;
-    if (pnode != 0) {
-        while (pnode->cloneid != acloneid[0]) {
-            pnode = pnode->next;
-            if (pnode == 0)
-                goto create;
+    while (pnode != 0) {
+        if (pnode->cloneid == acloneid[0]) {
+            pparent = pnode;
+            if (count == 1)
+                return pnode;
+            count = count - 1;
+            acloneid = acloneid + 1;
+            goto again;
         }
-        pparent = pnode;
-        if (count == 1)
-            return pnode;
-        count = count - 1;
-        acloneid = acloneid + 1;
-        goto again;
+        pnode = pnode->next;
     }
-create:
     ALLOCREQ req;
     req.cb = count * 0x28;
     req.align = 0x10;
     CNODE *pnodes = (CNODE *)PvAllocSwClearImpl__Fi(&req);
     CNODE *plast = pparent;
-    pnode = 0;
     for (int index = 0; index < count; index++) {
         pnode = &pnodes[index];
         InitSl(&pnode->first, 0x14);
