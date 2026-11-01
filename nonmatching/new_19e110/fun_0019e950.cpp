@@ -21,16 +21,14 @@ void func_0019E950(s8 *arg0) {
     s128 sp10;
     s128 sp20;
     s128 temp_v0;
-    s8 *temp_t2;
     s8 *temp_v0_2;
     GetPathPosFromS(M2C_FIELD(arg0, s32 *, 0xC), sp, &sp10, M2C_FIELD(arg0, f32 *, 0x10));
     temp_v0 = ConvertAloPos(M2C_FIELD(arg0, s8 **, 0), 0, M2C_FIELD(arg0, s128 *, 0x30));
-    temp_t2 = M2C_FIELD(arg0, s8 **, 0);
     s64 vu_1;
     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(temp_v0));
     vu_1;
     sp20 = temp_v0;
-    temp_v0_2 = M2C_FIELD(temp_t2, s8 **, 0xC);
-    M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK, s32, s128), 0x294)(temp_t2 + M2C_FIELD(temp_v0_2, s16 *, 0x290), 7, M2C_FIELD(arg0, s32 *, 0xC), sp0);
+    temp_v0_2 = M2C_FIELD((M2C_FIELD(arg0, s8 **, 0)), s8 **, 0xC);
+    M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK, s32, s128), 0x294)((M2C_FIELD(arg0, s8 **, 0)) + M2C_FIELD(temp_v0_2, s16 *, 0x290), 7, M2C_FIELD(arg0, s32 *, 0xC), sp0);
 }
 }

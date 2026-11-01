@@ -5,7 +5,7 @@ extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
 extern "C" int FFilterHitTestDefault(void *, void *);
 extern "C" void bevy_camera_follow_push_out(void *, QW, QW, void *, void *, int *, int *);
-extern "C" void *PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(int, QW, QW, int, int, void *);
+extern "C" void *PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(int, QW, QW);
 // an FP value into lane 0 of a QW
 static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
 struct Locals { char frame[0x10]; char spill[0x10]; char lsg[0x60]; int csoAso[2]; int pad[2]; QW posStart; QW posEnd; };
@@ -28,7 +28,7 @@ extern "C" int FFindSurfaceAlongUp(float sStart, float sEnd, QW *ppos, long fSte
     if (pfnFilter == 0)
         pfnFilter = (void *)FFilterHitTestDefault;
     bevy_camera_follow_push_out(&B_003DD490, l.posStart, l.posEnd, pfnFilter, 0, &l.csoAso[0], &l.csoAso[1]);
-    void *pso = PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(1, l.posStart, l.posEnd, l.csoAso[0], l.csoAso[1], l.lsg);
+    void *pso = PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(1, l.posStart, l.posEnd);
     if (pso == 0 || *(float *)(l.lsg + 0x40) == 0.0f || (fSteepOk == 0 && *(float *)(l.lsg + 0x28) < 0.7f)) {
         CStackFrame_Destructor(l.frame, 2);
         return 0;

@@ -49,14 +49,13 @@ extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     asm volatile("sqc2 vf7, 0x30(%0)" : : "r"(sp));
     asm volatile("sqc2 vf1, 0x40(%0)" : : "r"(sp));
     asm volatile("sqc2 vf2, 0x50(%0)" : : "r"(sp));
-    float x = *(float *)(sp + 0x34);
     float y = *(float *)(sp + 0x48);
     float z = *(float *)(sp + 0x50);
     asm volatile("sqc2 vf4, 0x100(%0)" : : "r"(sp));
     QW packed;
     asm volatile("pextlw %0, %1, %0" : "=r"(packed) : "r"(z), "r"(y));
     QW joined;
-    asm volatile("pcpyld %0, %1, %0" : "=r"(joined) : "r"(x), "r"(packed));
+    asm volatile("pcpyld %0, %1, %0" : "=r"(joined) : "r"((*(float *)(sp + 0x34))), "r"(packed));
     asm volatile("sqc2 vf5, 0x110(%0)" : : "r"(sp));
     QW result;
     asm volatile("por %0, $0, %1" : "=r"(result) : "r"(joined));

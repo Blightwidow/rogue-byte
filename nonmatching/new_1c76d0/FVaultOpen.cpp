@@ -5,7 +5,7 @@ extern int B_003D4A60[];
 void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 SAVEPATH *PpathVaultFlag(void);
-CRef *CRef_Destruct(CRef *);
+CRef *CRef_Destruct(void);
 CRef *RefGetGameSaveValue(CRef *, SAVEPATH *, int *);
 }
 extern "C" int FVaultOpen(void)
@@ -16,9 +16,9 @@ extern "C" int FVaultOpen(void)
     SAVEPATH *path = PpathVaultFlag();
     int result;
     if (path != 0) {
-        RefGetGameSaveValue(&ref, path, B_003D4A60);
         result = ref.n;
-        CRef_Destruct(&ref);
+        RefGetGameSaveValue(&ref, path, B_003D4A60);
+        CRef_Destruct();
         CStackFrame_Destructor(frame, 2);
     } else {
         CStackFrame_Destructor(frame, 2);

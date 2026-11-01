@@ -1,6 +1,7 @@
-struct RefOp_120548 { int tag; int val; };
+struct RefOp_120548 { int tag; int val;  RefOp_120548() {} ~RefOp_120548(); };
 extern "C" {
-RefOp_120548 *bevy_splice_bif_ref_op_eqv(RefOp_120548 *out, int unused, RefOp_120548 *args, int flag) {
+RefOp_120548 bevy_splice_bif_ref_op_eqv(int unused, RefOp_120548 *args, int flag) return __ret
+{
     RefOp_120548 *second = args + 1;
     unsigned tag = args->tag;
     if (tag != second->tag) {
@@ -17,8 +18,8 @@ RefOp_120548 *bevy_splice_bif_ref_op_eqv(RefOp_120548 *out, int unused, RefOp_12
             break;
         }
     }
-    out->val = flag;
-    out->tag = 0x17;
-    return out;
+    __ret.val = flag;
+    __ret.tag = 0x17;
+    return;
 }
 }

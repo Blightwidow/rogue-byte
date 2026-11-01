@@ -16,7 +16,7 @@ void func_00206170(Obj_206170 *arg0) {
     Node_206170 node;
     arg0->vt->fnD4((char *)arg0 + arg0->vt->dD0, 0);
     node.last = &node.first;
-    node.first = 0;
     arg0->vt->fn1c((char *)arg0 + arg0->vt->d18, 0xE, 1, 1, &node.last, 0);
+    node.first = 0;
 }
 }

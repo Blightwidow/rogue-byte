@@ -17,9 +17,9 @@ void EquipJtGadget(char *jt, unsigned slot, int gadget)
     if (slot < 3) {
         Slot *equip = (Slot *)(jt + 0x1180 + slot * 0xC);
         SetJtGadgetSlotState(jt, equip, -1);
+        equip->gadget = gadget;
         equip->state = 0;
         equip->t = g_2dded0[0];
-        equip->gadget = gadget;
         Slot *scan = (Slot *)(jt + 0x1180);
         Slot *other = (Slot *)(jt + 0x1180);
         for (int index = 0; index < 3; index++, other++) {

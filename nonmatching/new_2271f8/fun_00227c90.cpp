@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct VOL { char pad0[0xEC]; void *cbsp; char pad1[0x20]; QW center; float radius; };
 extern "C" QW ConvertAloPos(void *, VOL *, QW);
-extern "C" int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int, QW);
+extern "C" int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int);
 int func_00227C90(VOL *vol, QW pos)
 {
     QW local = ConvertAloPos(0, vol, pos);
@@ -14,6 +14,6 @@ int func_00227C90(VOL *vol, QW pos)
     QW again;
     asm("qmfc2.ni %0, vf3" : "=r" (again));
     if (outside == 0)
-        return PcgtPointInCbspQuick__FP4CBSPP6VECTOR(vol->cbsp, 0x7FFFFFFF, again) != 0;
+        return PcgtPointInCbspQuick__FP4CBSPP6VECTOR(vol->cbsp, 0x7FFFFFFF) != 0;
     return 0;
 }

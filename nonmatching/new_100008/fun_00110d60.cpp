@@ -21,5 +21,5 @@ struct Obj110D60 {
 void *func_00110D60(void)
 {
     Obj110D60 *object = (Obj110D60 *)__builtin_new(0x1d0);
-    return object->init();
+    object->init();
 }

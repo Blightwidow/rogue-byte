@@ -1244,6 +1244,7 @@ us_address	name	other_address	pair	score	addresses
 0x12D890	DeactivateActadj	0X12D890	identical	0	ok
 0x12D8D8	ReselectActadj	0X12D8D8	same	0	ok
 0x12D9D0	GetActadjPositionGoal	0X12D9D0	identical	0	ok
+0x12DB50	PactNewForXf	0X12DB50	identical	0	ok
 0x12DBB0	CreateXfActadj	0X12DBB0	same	0	ok
 0x12DC18	func_0012DC18	0X12DC18	same	0	ok
 0x12DCA0	CreateXfActbank	0X12DCA0	same	0	ok
@@ -1495,6 +1496,7 @@ us_address	name	other_address	pair	score	addresses
 0x13E0E0	LoadSwBspFromBrx	0X13E0F8	same	0	ok
 0x13E210	func_0013E210	0X13E228	same	0	ok
 0x13E348	func_0013E348	0X13E360	same	0	ok
+0x13E368	PchzStringFromId	0X13E380	same	0	ok
 0x13E3C8	PloNew	0X13E3E0	same	0	ok
 0x13E510	PloCloneLo	0X13E528	same	0	ok
 0x13E590	DcbSetOptionPlo	0X13E5A8	same	0	ok
@@ -1511,6 +1513,7 @@ us_address	name	other_address	pair	score	addresses
 0x1403D0	UpdateJt	0X1403E8	same	0	ok
 0x140558	UpdateJtFocus	0X140570	same	0	ok
 0x140678	SetJtFocus	0X140690	same	0	ok
+0x1406E8	func_001406E8	0X140700	same	0	ok
 0x1409B8	func_001409B8	0X1409D0	same	0	ok
 0x1409E8	func_001409E8	0X140A00	same	0	ok
 0x140C30	func_00140C30	0X140C48	same	0	ok
@@ -1535,6 +1538,7 @@ us_address	name	other_address	pair	score	addresses
 0x141E78	IslotJtGadget	0X141E90	identical	0	ok
 0x141EA8	GrfbtnJtGadget	0X141EC0	same	0	ok
 0x141EF8	LoadJtGadgetSlots	0X141F10	same	0	ok
+0x141FC8	EquipJtGadget	0X141FE0	same	0	ok
 0x142140	SetJtAttach5	0X142158	same	0	ok
 0x1421A0	func_001421A0	0X1421B8	same	0	ok
 0x1421F8	func_001421F8	0X142210	same	0	ok
@@ -2227,6 +2231,7 @@ us_address	name	other_address	pair	score	addresses
 0x1749C0	GoalAnim_SetState	0X174948	same	0	ok
 0x174B28	func_00174B28	0X174AB0	same	0	ok
 0x174B68	GoalAnim_Update	0X174AF0	same	0	ok
+0x174EA0	func_00174EA0	0X174E28	same	0	ok
 0x174F08	func_00174F08	0X174E90	same	0	ok
 0x174FB8	FGoalAnimDone	0X174F40	gap	0	ok
 0x174FC8	func_00174FC8	0X174F50	same	0	ok
@@ -2564,6 +2569,7 @@ us_address	name	other_address	pair	score	addresses
 0x18E3E8	func_0018E3E8	0X18E370	same	0	ok
 0x18E520	StaticInitSly_thunk	0X18E4A8	same	0	ok
 0x18ED70	EnsureAloSfx__FP3ALO	0X18ECF8	same	0	ok
+0x18F050	ChooseJtCaneAlternateSwing	0X18EFD8	same	0	ok
 0x18F688	ChooseJtRushTarget__FP2JT	0X18F610	same	0	ok
 0x18F740	ChooseJtSmashTarget__FP2JT	0X18F6C8	same	0	ok
 0x18F7B0	StaticInitSlotheaps_18f7b0	0X18F738	same	0	ok
@@ -3328,6 +3334,7 @@ us_address	name	other_address	pair	score	addresses
 0x1D3F30	NotifyVehicleXpEnded	0X1D41A0	same	0	ok
 0x1D3FA8	func_001D3FA8	0X1D4218	identical	0	ok
 0x1D4050	AdjustVehicleNewXp	0X1D42C0	gap	0	ok
+0x1D4178	UpdateVehicleBounds	0X1D43E8	same	0	ok
 0x1D4940	SetVehicleState	0X1D4BB0	same	0	ok
 0x1D4B28	SetVehicleAiState	0X1D4D98	same	0	ok
 0x1D4B48	AddVehicleWheel	0X1D4DB8	identical	0	ok
@@ -3677,6 +3684,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EC8F8	PshdFromIndex	0X1ED0B8	same	0	ok
 0x1EC918	PsaaFromOid	0X1ED0D8	same	0	ok
 0x1EC968	UpdateSaas	0X1ED128	same	0	ok
+0x1ECAB0	BuildClutGifs__FP4CLUTiP4GIFS	0X1ED270	same	0	ok
 0x1ECB18	BuildBmpTex0__FP3BMPi	0X1ED2D8	same	0	ok
 0x1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	0X1ED3B0	same	0	ok
 0x1ED3A8	InitIdHashTables_1ed3a8	0X1EDB68	same	0	ok
@@ -4559,6 +4567,8 @@ us_address	name	other_address	pair	score	addresses
 0x226E88	UnpackHelper__4VIFS3UPKiiPiPPUi	0X2276A8	same	0	ok
 0x226FD0	VIFS_AddVifUnpackFromStream	0X2277F0	same	0	ok
 0x227010	AddVifUnpackRefs__4VIFS3UPKiPviPPPv	0X227830	same	0	ok
+0x2270C8	AddVifDirect__4VIFSiP2QWi	0X2278E8	same	0	ok
+0x227148	AddVifDirectRefs__4VIFSiP2QWi	0X227968	same	0	ok
 0x2271C8	AddVifGifs__4VIFSP4GIFS	0X2279E8	same	0	ok
 0x2271F8	StaticInitSlotheaps_2271f8	0X227A18	same	0	ok
 0x227330	func_00227330	0X227B50	same	0	ok
@@ -4915,6 +4925,7 @@ us_address	name	other_address	pair	score	addresses
 0x257F48	ResetProcHeap	0X258998	same	0	ok
 0x257F88	ResetSidebagHeap	0X2589D8	same	0	ok
 0x257FC8	func_00257FC8	0X258A18	same	0	ok
+0x258040	VirtualRefPtr_Assign	0X258A90	identical	0	ok
 0x2580A8	SidebagPtr_Assign	0X258AF8	same	0	ok
 0x258178	func_00258178	0X258BC8	same	0	ok
 0x2581B8	func_002581B8	0X258C08	gap	0	ok
@@ -5000,6 +5011,7 @@ us_address	name	other_address	pair	score	addresses
 0x259B00	func_00259B00	0X25A550	gap	0	ok
 0x259B08	func_00259B08	0X25A558	gap	0	ok
 0x259B10	func_00259B10	0X25A560	gap	0	ok
+0x259B48	func_00259B48	0X25A598	identical	0	ok
 0x259BB0	func_00259BB0	0X25A600	identical	0	ok
 0x259C08	func_00259C08	0X25A658	gap	0	ok
 0x259C10	func_00259C10	0X25A660	gap	0	ok

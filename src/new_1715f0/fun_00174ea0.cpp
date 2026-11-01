@@ -20,13 +20,15 @@ s32 func_00174EA0(s8 *arg0) {
         temp_v1 = M2C_FIELD(M2C_FIELD(temp_a1, s8 **, 8), s32 *, 0x10);
         var_v0 = 7;
         if (temp_v1 != 0) {
-            if ((temp_v1 >= 0) && (temp_v1 < 5)) {
+            if ((temp_v1 >= 0)) {
+                if ((temp_v1 < 5)) {
                 var_v0 = 1;
                 if (temp_v1 >= 3) {
                     return 7;
                 }
                 /* Duplicate return node #8. Try simplifying control flow for better match */
                 { result = var_v0; goto done; }
+            }
             }
             { result = 1; goto done; }
         }

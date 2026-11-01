@@ -39,20 +39,19 @@ void HandleAsegaEventsFF(ASEGA131100 *self)
     self->tCur = self->tPrev;
     while (FAsegaGone(self) == 0) {
         ASEGADEF131100 *pdef = self->pdef;
-        int index = self->index;
         float now = self->tCur;
         ASEGAEVENT131100 *event;
-        if (index < pdef->cevent) {
-            event = &pdef->aevent[index];
+        if (self->index < pdef->cevent) {
+            event = &pdef->aevent[self->index];
             if (event->time <= now && 0.0f <= self->dir) {
-                self->index = index + 1;
+                self->index = self->index + 1;
                 goto dispatch;
             }
         }
-        if (index > 0) {
-            if (now <= pdef->aevent[index - 1].time) {
+        if (self->index > 0) {
+            if (now <= pdef->aevent[self->index - 1].time) {
                 if (self->dir < 0.0f) {
-                    int previous = index - 1;
+                    int previous = self->index - 1;
                     self->index = previous;
                     event = &pdef->aevent[previous];
                     goto dispatch;
@@ -76,7 +75,7 @@ void HandleAsegaEventsFF(ASEGA131100 *self)
         case 22:
         case 23:
         case 24:
-            HandleAsegaEvent(self, event, index, pdef);
+            HandleAsegaEvent(self, event, self->index, pdef);
             break;
         }
     }

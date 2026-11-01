@@ -19,14 +19,13 @@ int FFloatsNear__Ffff(float, float, float);
 int func_0012C0E0(KEYS_12C140 *, float);
 }
 extern QW g_2a2dd0;
-/* lane 0 of a QW to an FP register (mtc1) */
-static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
-/* lane 1 of a QW: prot3w rotates it down (the compiler places it) */
-static inline QW Rot3(QW q) { return __builtin_prot3w(q); }
-/* lane 2 of a QW: pextuw with zero brings it down */
-static inline QW Upper(QW q) { QW r; asm("pextuw %0, $0, %1" : "=r" (r) : "r" (q)); return r; }
+static inline float LaneX(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+static inline QW RotY(QW q) { QW t; asm("prot3w %0, %1" : "=r" (t) : "r" (q)); return t; }
+static inline QW RotZ(QW q) { QW t; asm("pextuw %0, $0, %1" : "=r" (t) : "r" (q)); return t; }
+static inline QW RotY2(QW q, QW prev) { QW t; asm("prot3w %0, %1" : "=r" (t) : "r" (q), "0" (prev)); return t; }
+static inline QW RotZ2(QW q, QW prev) { QW t; asm("pextuw %0, $0, %1" : "=r" (t) : "r" (q), "0" (prev)); return t; }
+static inline float Mtc1(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 static inline int Near(float a, float b) { return FFloatsNear__Ffff(a, b, 0.0001f); }
-static inline int Near3(QW p, QW q) { return Near(Lane0(p), Lane0(q)) && Near(Lane0(Rot3(p)), Lane0(Rot3(q))) && Near(Lane0(Upper(p)), Lane0(Upper(q))); }
 extern "C" void bevy_anim_keys_axis_segment(KEYS_12C140 *keys, STATE_12C140 *state, int index) {
     int axis;
     int nearEnds = 0;
@@ -61,29 +60,56 @@ extern "C" void bevy_anim_keys_axis_segment(KEYS_12C140 *keys, STATE_12C140 *sta
             *(int *)outD = *(int *)(current + 4);
         } else {
             *outA = *defaultPtr;
-            *(int *)outB = 0;
-            *outC = *defaultPtr;
             *(int *)outD = 0;
+            *outC = *defaultPtr;
+            *(int *)outB = 0;
         }
         step++;
         outD++;
-        outB++;
         outC++;
+        outB++;
         outA++;
         defaultPtr++;
         axisPtr++;
     } while (step < 3U);
     QW first = *(QW *)state->vecA;
     QW second = *(QW *)state->vecC;
-    nearStart = Near3(second, first);
+    nearStart = 0;
+    if (Near(LaneX(second), LaneX(first))) {
+        QW ty = RotY(second);
+        float oy = Mtc1(ty);
+        if (Near(oy, Mtc1(RotY2(first, ty)))) {
+            QW tz = RotZ(second);
+            float oz = Mtc1(tz);
+            nearStart = Near(oz, Mtc1(RotZ2(first, tz))) != 0;
+        }
+    }
     if (nearStart != 0) {
         QW vec = *(QW *)state->vecB;
         QW origin = g_2a2dd0;
-        nearEnds = Near3(origin, vec);
+        nearEnds = 0;
+        if (Near(LaneX(origin), LaneX(vec))) {
+            QW ty = RotY(origin);
+            float oy = Mtc1(ty);
+            if (Near(oy, Mtc1(RotY2(vec, ty)))) {
+                QW tz = RotZ(origin);
+                float oz = Mtc1(tz);
+                nearEnds = Near(oz, Mtc1(RotZ2(vec, tz))) != 0;
+            }
+        }
         if (nearEnds != 0) {
             QW vec2 = *(QW *)state->vecD;
             QW origin2 = g_2a2dd0;
-            nearEnd = Near3(origin2, vec2);
+            nearEnd = 0;
+            if (Near(LaneX(origin2), LaneX(vec2))) {
+                QW ty = RotY(origin2);
+                float oy = Mtc1(ty);
+                if (Near(oy, Mtc1(RotY2(vec2, ty)))) {
+                    QW tz = RotZ(origin2);
+                    float oz = Mtc1(tz);
+                    nearEnd = Near(oz, Mtc1(RotZ2(vec2, tz))) != 0;
+                }
+            }
         }
     }
     short flagValue = 1;

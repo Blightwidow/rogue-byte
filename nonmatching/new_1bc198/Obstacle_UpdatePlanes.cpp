@@ -28,8 +28,8 @@ void Obstacle_UpdatePlanes(s8 *arg0) {
     }
     var_s1 = 1;
     if (M2C_FIELD(arg0, s32 *, 0x1E8) != var_s3) {
-        temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
         temp_v0_2 = M2C_FIELD(temp_v1, s32 (**)(s8 *), 0xFC)(arg0 + M2C_FIELD(temp_v1, s16 *, 0xF8));
+        temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
         asm volatile("lqc2 vf5, (%0)" : : "r"(temp_v0_2));
         s32 hasMore = var_s1 < M2C_FIELD(arg0, s32 *, 0xE8);
         s32 firstElement = M2C_FIELD(arg0, s32 *, 0xF4);

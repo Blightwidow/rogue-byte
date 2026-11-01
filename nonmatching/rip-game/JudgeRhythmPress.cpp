@@ -26,10 +26,9 @@ void JudgeRhythmPress(RhythmFull_1533B0 *self, Dancer_1533B0 *dancer) {
     int pressed = GrfbtnVjoyPressedWithin(pad, 0xF0, 0.0f);
     self->f230 = pressed;
     if (pressed != 0) {
-        int count = self->entryCount;
         int index;
         Entry_1533B0 *entry = self->entries;
-        for (index = 0; index < count; index++, entry++) {
+        for (index = 0; index < self->entryCount; index++, entry++) {
             {
                 if (entry->target == dancer) {
                     if (entry->f20 == 0) {

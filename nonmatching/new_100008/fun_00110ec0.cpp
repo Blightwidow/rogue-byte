@@ -21,5 +21,5 @@ struct Obj110EC0 {
 void *func_00110EC0(void)
 {
     Obj110EC0 *object = (Obj110EC0 *)__builtin_new(0x140);
-    return object->init();
+    object->init();
 }

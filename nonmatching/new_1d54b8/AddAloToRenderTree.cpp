@@ -7,7 +7,7 @@ struct ALO { char pad0[0xC]; VT *vt; char pad1[0x2D - 0x10]; unsigned char layer
 struct SWX { char pad[1]; };
 extern SWX B_003DD490;
 extern "C" {
-float GMaxAxisScale(M4 *);
+float GMaxAxisScale(void);
 RTE *AddSphereToRenderTree(float, float, SWX *, QW, int);
 void AddAloToRenderTree(ALO *alo)
 {
@@ -18,7 +18,7 @@ void AddAloToRenderTree(ALO *alo)
     asm("lqc2 vf3, %1\n\tsqc2 vf3, %0" : "=m" (mat.row[1]) : "m" (source->row[1]));
     asm("lqc2 vf2, %1\n\tsqc2 vf2, %0" : "=m" (mat.row[2]) : "m" (source->row[2]));
     asm("lqc2 vf1, %2\n\tvmulax.xyz ACC, vf4, vf5x\n\tvmadday.xyz ACC, vf3, vf5y\n\tvmaddaz.xyz ACC, vf2, vf5z\n\tvmaddw.xyz vf4, vf1, vf0w\n\tsqc2 vf4, %0\n\tsqc2 vf1, %1" : "=m" (posCentre), "=m" (mat.row[3]) : "m" (source->row[3]));
-    float scale = GMaxAxisScale(&mat);
+    float scale = GMaxAxisScale();
     QW pos;
     asm volatile("lqc2 vf4, %0" : : "m" (posCentre));
     asm("qmfc2.ni %0, vf4" : "=r" (pos));

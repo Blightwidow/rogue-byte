@@ -15,8 +15,8 @@ double GTrunc(double value)
         unsigned long fraction = ~0UL >> 12;
         long mantissa = bits & fraction;
         if ((mantissa & mask) == mask) {
-            out.u = (bits & (~0UL << 52)) | (fraction & mantissa & ~mask);
             result = __adddf3(out.d, 1.0);
+            out.u = (bits & (~0UL << 52)) | (fraction & mantissa & ~mask);
         } else {
             out.u = (bits & (~0UL << 52)) | (fraction & mantissa & ~mask);
             result = out.d;

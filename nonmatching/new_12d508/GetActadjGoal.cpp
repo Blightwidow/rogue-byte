@@ -12,19 +12,17 @@ struct _m2c_stack_GetActadjGoal {
 };                                                  /* size = 0x20 */
 M2C_UNK func_0012CF28(s8 *);              /* extern */
 void GetActadjGoal(s8 *arg0) {
-    s32 temp_v0_2;
     s32 temp_v1;
     s8 *temp_a1;
     s8 *temp_v0;
     temp_a1 = M2C_FIELD(arg0, s8 **, 0x1C);
     if (temp_a1 != NULL) {
-        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s8 *), 0x24)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x20), temp_a1);
         temp_v0 = M2C_FIELD(temp_a1, s8 **, 0x18);
-        temp_v0_2 = M2C_FIELD(arg0, s32 *, 8);
+        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *), 0x24)(temp_a1 + M2C_FIELD(temp_v0, s16 *, 0x20));
         asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(arg0));
-        asm volatile("lqc2 vf1, 0xc0(%0)" : : "r"(temp_v0_2));
+        asm volatile("lqc2 vf1, 0xc0(%0)" : : "r"((M2C_FIELD(arg0, s32 *, 8))));
         asm volatile("vadd.xyzw vf1, vf1, vf2");
-        asm volatile("sqc2 vf1, 0xc0(%0)" : : "r"(temp_v0_2));
+        asm volatile("sqc2 vf1, 0xc0(%0)" : : "r"((M2C_FIELD(arg0, s32 *, 8))));
         temp_v1 = M2C_FIELD(arg0, s32 *, 8);
         asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(arg0));
         asm volatile("lqc2 vf1, 0xe0(%0)" : : "r"(temp_v1));

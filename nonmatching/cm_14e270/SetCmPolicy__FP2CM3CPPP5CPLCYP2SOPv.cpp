@@ -12,11 +12,10 @@ extern "C" float g_2dded0;
 enum CPP { CPP_dummy };
 void SetCmPolicy(CM *pcm, CPP cpp, CPLCY *pcplcy, SO *psoFocus, void *pv)
 {
-    int ccpr = pcm->ccpr;
-    if ((unsigned)ccpr > 7)
+    if ((unsigned)pcm->ccpr > 7)
         return;
     int icpr;
-    for (icpr = 0; icpr < ccpr; icpr++)
+    for (icpr = 0; icpr < pcm->ccpr; icpr++)
         if (pcm->acpr[icpr].cpp < cpp)
             break;
     memmove(&pcm->acpr[icpr + 1], &pcm->acpr[icpr]);

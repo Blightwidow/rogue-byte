@@ -16,7 +16,7 @@ void bevy_player_p25_1371c8(s8 **arg0) {
     if (FAsegaGone(M2C_FIELD(*arg0, s32 *, 0x1030)) != 0) {
         temp_a2 = *arg0;
         temp_v0 = M2C_FIELD(temp_a2, s8 **, 0xC);
-        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x2C4)(temp_a2 + M2C_FIELD(temp_v0, s16 *, 0x2C0), 0, temp_a2);
+        M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, M2C_UNK), 0x2C4)(temp_a2 + M2C_FIELD(temp_v0, s16 *, 0x2C0), 0);
     }
 }
 

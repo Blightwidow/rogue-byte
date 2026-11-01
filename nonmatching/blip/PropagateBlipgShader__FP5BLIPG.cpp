@@ -14,10 +14,8 @@ extern "C" void PropagateBlipgShader__FP5BLIPG(BLIPG *pblipg, int oidShader)
     pblipg->pgifs = (pshd->flags & 1) ? &B_002DD600 : &B_002DD5C0;
     if (pblipg->hasColor == 0) {
         pblipg->hasColor = 1;
-        unsigned char *dst = pblipg->color;
-        unsigned char *src = pshd->color;
         for (int ib = 0; ib < 4; ib++)
-            dst[ib] = (src[ib] + 1) >> 1;
+            pblipg->color[ib] = (pshd->color[ib] + 1) >> 1;
     }
     int cframe = pshd->cframe;
     int cqw = 1;

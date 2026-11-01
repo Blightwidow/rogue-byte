@@ -1,6 +1,6 @@
 typedef int s32; typedef unsigned int u32; typedef signed char s8;
 extern "C" {
-int AddDmaBulk__4DMASiP2QW(s8 *, s32, s32);
+void AddDmaBulk__4DMASiP2QW(s8 *, s32, s32);
 int Align__4VIFSi(s8 *, int);
 void AddVifDirect__4VIFSiP2QWi(s8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     Align__4VIFSi(arg0, 3);

@@ -21,5 +21,5 @@ struct Obj111338 {
 void *func_00111338(void)
 {
     Obj111338 *object = (Obj111338 *)__builtin_new(0x110);
-    return object->init();
+    object->init();
 }

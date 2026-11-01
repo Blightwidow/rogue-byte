@@ -15,13 +15,11 @@ s32 FXfKindDynamic(s8 *);                            /* extern */
 void AddSoAngularAcceleration(s8 *arg0, s32 arg1) {
     s8 sp[0x10] __attribute__((aligned(16)));
     M2C_UNK temp_a2;
-    M2C_UNK temp_s1;
     s8 *temp_s0;
     s64 vu_1;
     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(arg1));
-    temp_s1 = vu_1;
     s64 vu_2;
-    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(temp_s1));
+    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(vu_1));
     temp_a2 = vu_2;
     if (FXfKindDynamic(arg0) != 0) {
         temp_s0 = M2C_FIELD(arg0, s8 **, 0x5C);

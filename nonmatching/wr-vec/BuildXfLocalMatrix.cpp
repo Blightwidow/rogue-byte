@@ -52,9 +52,9 @@ char *BuildXfLocalMatrix(char *dest, char *source, QW vec) {
     }
     case 12: {
         memcpy(dest, source, 0x40);
+        Store0(dest, vec);
         float lane2 = LaneOrdered(UpperWord(vec));
         float lane1 = LaneOrdered(__builtin_prot3w(vec));
-        Store0(dest, vec);
         *(float *)(dest + 0x28) = lane2;
         *(float *)(dest + 0x14) = lane1;
         break;

@@ -9,7 +9,7 @@ struct Trail21C1C8 {
     char pad130[0x154 - 0x130]; int fPaused; int count; Entry21C1C8 *entries; int head; int stillFrames;
     char pad168[0x180 - 0x168]; char *target; float length; float travelled; char pad18C[4]; QW lastPos;
 };
-extern float g_2dded0;
+extern float g_2dded0[];
 void ProjectSoTransform();
 QW PosLoWorld(char *);
 void func_0021C5F8(Trail21C1C8 *, QW);
@@ -22,7 +22,7 @@ void func_0021C1C8(Trail21C1C8 *trail)
     int next = slot + 1;
     trail->head = next % trail->count;
     Entry21C1C8 *entry = (Entry21C1C8 *)((char *)trail->entries + slot * 0x50);
-    entry->time = g_2dded0;
+    entry->time = g_2dded0[0];
     entry->scale = trail->speed;
     MATRIX4 *source = trail->vt->fnFC((char *)trail + trail->vt->deltaF8, 0x50);
     entry->matrix = *source;
