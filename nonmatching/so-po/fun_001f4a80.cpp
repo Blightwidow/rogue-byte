@@ -23,16 +23,21 @@ void func_001F4A80(SO *so, char *xf)
         asm volatile("sqc2 vf3, %0" : "=m"(copy.row[2]));
         asm volatile("sqc2 vf2, %0" : "=m"(copy.row[3]));
         VT *vtable = so->vptr;
+        char *self = (char *)so + vtable->delta;
         float *cf = (float *)&copy;
         float lane6 = cf[6];
         float lane8 = cf[8];
         float lane1 = cf[1];
-        QW low = Word(lane6);
-        QW mid = __builtin_pextlw(Word(lane8), low);
-        QW w = __builtin_pcpyld(Word(lane1), mid);
+        QW w; int tmp;
+        // packs float lanes into QW: lane 0 = a, lane 1 = b (pextlw), lane 2 = c (pcpyld into the upper half)
+        asm("mfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0\n\tmfc1 %1, %4\n\tpcpyld %0, %1, %0" : "=&r"(w), "=&r"(tmp) : "f"(lane6), "f"(lane8), "f"(lane1));
+        asm volatile("lqc2 vf1, 0x70(%0)" : : "r"(xf));
+        void (*fn)(void *, QW) = vtable->fn;
+        asm volatile("vmulax.xyz ACC, vf5, vf1x\n\tvmadday.xyz ACC, vf4, vf1y\n\tvmaddaz.xyz ACC, vf3, vf1z\n\tvmaddw.xyz vf6, vf2, vf0w");
         QW v;
-        asm volatile("lqc2 vf1, 0x70(%1)\n\tvmulax.xyz ACC, vf5, vf1x\n\tvmadday.xyz ACC, vf4, vf1y\n\tvmaddaz.xyz ACC, vf3, vf1z\n\tvmaddw.xyz vf6, vf2, vf0w\n\tqmfc2.ni %0, vf6" : "=r"(v) : "r"(xf));
-        vtable->fn((char *)so + vtable->delta, v);
+        asm volatile("qmfc2.ni %0, vf6" : "=r"(v));
+        u.spill = w;
+        fn(self, v);
         vtable = so->vptr;
         vtable->fn2((char *)so + vtable->delta2, w);
     }

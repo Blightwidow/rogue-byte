@@ -958,6 +958,7 @@ us_address	name	other_address	pair	score	addresses
 0x11EBB0	FIntersectRayTriangle	0X11EBB0	identical	0	ok
 0x11EF08	DecomposeCylind	0X11EF08	same	0	ok
 0x11EFB0	DecomposeSphere	0X11EFB0	same	0	ok
+0x11F198	GCosAngle	0X11F198	identical	0	ok
 0x11F2E8	bif__static_initialization_and_destruction_0	0X11F2E8	same	0	ok
 0x11F420	bif__GLOBAL__I_slotheaps	0X11F420	identical	0	ok
 0x1202D0	RefOpPrint	0X1202D0	identical	0	ok
@@ -2678,6 +2679,7 @@ us_address	name	other_address	pair	score	addresses
 0x1A30D0	func_001A30D0	0X1A3098	identical	0	ok
 0x1A3108	func_001A3108	0X1A30D0	same	0	ok
 0x1A3240	func_001A3240	0X1A3208	same	0	ok
+0x1A3260	func_001A3260	0X1A3228	same	0	ok
 0x1A3360	InitLight	0X1A3328	same	0	ok
 0x1A3400	PostLightLoad	0X1A33C8	same	0	ok
 0x1A3430	func_001A3430	0X1A33F8	same	0	ok
@@ -3739,6 +3741,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EF6F8	StaticInitSkySlotheaps	0X1EFEB8	same	0	ok
 0x1EF830	func_001EF830	0X1EFFF0	same	0	ok
 0x1EF850	func_001EF850	0X1F0010	same	0	ok
+0x1EF8C8	bevy_gfx_screen_C2d9500_v15	0X1F0088	same	0	ok
 0x1EF938	StaticInitSmSlotheaps	0X1F00F8	same	0	ok
 0x1EFA70	func_001EFA70	0X1F0230	same	0	ok
 0x1EFA90	InitSm	0X1F0250	same	0	ok

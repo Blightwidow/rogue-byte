@@ -4,11 +4,9 @@ struct Frame_11BFF0 { QW dead[1]; };
 extern "C" float GLimitAbs__Fff(float, float);
 extern "C" float asinf(float);
 extern "C" float atan2f(float, float);
-static inline QW Euler(float x, float y, float z)
-{
-    QW low = __builtin_pextlw(Word(y), Word(x));
-    return __builtin_pcpyld(Word(z), low);
-}
+static inline QW PairLow(float lane0, float lane1) { QW r; QW t; asm("mfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0" : "=r" (r), "=r" (t) : "f" (lane0), "f" (lane1)); return r; }
+static inline QW WithLane2(QW low, float lane2) { QW t; asm("mfc1 %1, %2\n\tpcpyld %0, %1, %0" : "+r" (low), "=r" (t) : "f" (lane2)); return low; }
+static inline QW Euler(float x, float y, float z) { return WithLane2(PairLow(x, y), z); }
 extern "C" QW DecomposeRotateMatrixEuler(float *pmat)
 {
     Frame_11BFF0 frame;
@@ -18,15 +16,14 @@ extern "C" QW DecomposeRotateMatrixEuler(float *pmat)
         if (-1.5706964f < eulY) {
             float a = atan2f(pmat[6], pmat[10]);
             float b = atan2f(pmat[1], pmat[0]);
-            result = Euler(a, eulY, b);
+            { QW t = Euler(a, eulY, b); frame.dead[0] = t; result = t; }
         } else {
             float b = atan2f(-pmat[4], -pmat[8]);
-            result = Euler(0.0f, eulY, b);
+            { QW t = Euler(0.0f, eulY, b); frame.dead[0] = t; result = t; }
         }
     } else {
         float b = atan2f(-pmat[4], pmat[8]);
-        result = Euler(0.0f, eulY, b);
+        { QW t = Euler(0.0f, eulY, b); frame.dead[0] = t; result = t; }
     }
-    frame.dead[0] = result;
     return result;
 }

@@ -1,7 +1,12 @@
 typedef int QW __attribute__((mode(TI)));
 struct Mat3_22C8C0 { QW row[3]; };
 void *memcpy(void *, const void *, unsigned int);
+static inline float LaneOrdered(QW q) { float f; asm volatile("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+// lane 2 of q moved to lane 0 (the zero operand is the $0 register)
+static inline QW UpperWord(QW q) { QW r; asm("pextuw %0, $0, %1" : "=r" (r) : "r" (q)); return r; }
+// lane 0 of q stored as a word: sw of the general register that holds the vector (C has no form without dsll32/dsra32)
+static inline void Store0(char *address, QW q) { asm("sw %1, %0" : "=m"(*(int *)address) : "r"(q)); }
 extern "C" {
 void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(void *, QW);
 void *__as__6VECTORG9VU_VECTOR(void *, QW);
@@ -13,9 +18,11 @@ char *BuildXfLocalMatrix(char *dest, char *source, QW vec) {
     case 9:
     case 10: {
         memcpy(dest, source, 0x40);
-        *(unsigned *)(dest + 0x30) = (unsigned)vec;
-        *(float *)(dest + 0x38) = Lane(__builtin_pextuw((QW)0, vec));
-        *(float *)(dest + 0x34) = Lane(__builtin_prot3w(vec));
+        float lane2 = LaneOrdered(UpperWord(vec));
+        float lane1 = LaneOrdered(__builtin_prot3w(vec));
+        Store0(dest + 0x30, vec);
+        *(float *)(dest + 0x38) = lane2;
+        *(float *)(dest + 0x34) = lane1;
         break;
     }
     case 2:
@@ -34,18 +41,24 @@ char *BuildXfLocalMatrix(char *dest, char *source, QW vec) {
         *(int *)(dest + 0xC) = 0;
         break;
     }
-    case 11:
+    case 11: {
         memcpy(dest, source, 0x40);
-        *(QW *)(dest + 0x10) = vec;
-        *(float *)(dest + 0x24) = Lane(__builtin_pextuw((QW)0, vec));
-        *(float *)(dest + 0x20) = Lane(__builtin_prot3w(vec));
+        float lane2 = LaneOrdered(UpperWord(vec));
+        float lane1 = LaneOrdered(__builtin_prot3w(vec));
+        Store0(dest + 0x10, vec);
+        *(float *)(dest + 0x24) = lane2;
+        *(float *)(dest + 0x20) = lane1;
         break;
-    case 12:
+    }
+    case 12: {
         memcpy(dest, source, 0x40);
-        *(QW *)dest = vec;
-        *(float *)(dest + 0x28) = Lane(__builtin_pextuw((QW)0, vec));
-        *(float *)(dest + 0x14) = Lane(__builtin_prot3w(vec));
+        float lane2 = LaneOrdered(UpperWord(vec));
+        float lane1 = LaneOrdered(__builtin_prot3w(vec));
+        Store0(dest, vec);
+        *(float *)(dest + 0x28) = lane2;
+        *(float *)(dest + 0x14) = lane1;
         break;
+    }
     case 0:
     case 8:
     case 13:

@@ -11,27 +11,35 @@ int IkeyFindAcrb(float);
 int FFloatsNear__Ffff(float, float, float);
 }
 extern QW g_2a2dd0;
-static inline int Near3(const float *p, const float *q)
+/* lane 0 of a QW to an FP register (mtc1) */
+static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+/* lane 1 of a QW: prot3w rotates it down, then mtc1 */
+static inline float Lane1(QW q) { float f; QW t; asm("prot3w %1, %2\n\tmtc1 %1, %0" : "=f" (f), "=r" (t) : "r" (q)); return f; }
+/* lane 2 of a QW: pextuw with zero brings it down, then mtc1 */
+static inline float Lane2(QW q) { float f; QW t; asm("pextuw %1, $0, %2\n\tmtc1 %1, %0" : "=f" (f), "=r" (t) : "r" (q)); return f; }
+static inline int Near3(QW p, QW q)
 {
-    return FFloatsNear__Ffff(p[0], q[0], 0.0001f) && FFloatsNear__Ffff(p[1], q[1], 0.0001f) &&
-           FFloatsNear__Ffff(p[2], q[2], 0.0001f);
+    return FFloatsNear__Ffff(Lane0(p), Lane0(q), 0.0001f) && FFloatsNear__Ffff(Lane1(p), Lane1(q), 0.0001f) &&
+           FFloatsNear__Ffff(Lane2(p), Lane2(q), 0.0001f);
 }
 extern "C" void func_0012B738(KEYS_12B738 *keys, STATE_12B738 *state)
 {
     int index = IkeyFindAcrb(*state->pcur);
-    char *base = keys->entries + index * 0x30;
-    state->t0 = *(float *)(base - 0x24);
-    state->a = *(V3_12B738 *)(base - 0x30);
-    state->q0 = *(QW *)(base - 0x10);
-    state->t1 = *(float *)(base + 0xC);
-    state->b = *(V3_12B738 *)base;
-    state->q1 = *(QW *)(base + 0x10);
-    int same = Near3(&state->a.x, &state->b.x);
-    int second = 0;
+    int stride = index * 0x30;
+    state->t0 = *(float *)(keys->entries + stride - 0x24);
+    state->a = *(V3_12B738 *)(keys->entries + stride - 0x30);
+    state->q0 = *(QW *)(keys->entries + stride - 0x10);
+    state->t1 = *(float *)(keys->entries + stride + 0xC);
+    state->b = *(V3_12B738 *)(keys->entries + stride);
+    state->q1 = *(QW *)(keys->entries + stride + 0x10);
+    int ok = 0;
+    int same = Near3(*(QW *)&state->a, *(QW *)&state->b);
     if (same) {
-        second = Near3((float *)&g_2a2dd0, (float *)&state->q0);
-        if (second)
-            second = Near3((float *)&g_2a2dd0, (float *)&state->q1);
+        int second = Near3(g_2a2dd0, state->q0);
+        if (second) {
+            second = Near3(g_2a2dd0, state->q1);
+            ok = second;
+        }
     }
-    state->flag = second ? 2 : 1;
+    state->flag = ok ? 2 : 1;
 }

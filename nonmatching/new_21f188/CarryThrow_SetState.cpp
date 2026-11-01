@@ -69,6 +69,8 @@ extern QW g_2a2dd0;
 extern QW g_2a2dc0;
 extern QW g_2a2da0;
 }
+// float into lane 0 of a QW (mfc1)
+static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r"(r) : "f"(f)); return r; }
 #define VCALL(obj, name, ...) (((Obj *)(obj))->vt->f##name((char *)(obj) + ((Obj *)(obj))->vt->d##name, ##__VA_ARGS__))
 void CarryThrow_SetState(CT *c, int stateNew)
 {
@@ -126,8 +128,9 @@ void CarryThrow_SetState(CT *c, int stateNew)
     case -1: {
         char *pso = c->pso;
         if (pso == g_2dd5bc && *(int *)(pso + 0x1800) == 0) {
-            f.u20.f = 400.0f;
-            f.u0.q = f.u20.q;
+            QW four = Word(400.0f);
+            f.u0.q = four;
+            f.u20.q = four;
             QW posBentley = PosLoWorld(pso);
             asm("qmtc2.ni %0, vf3" : : "r"(posBentley));
             asm("sqc2 vf3, %0" : "=m"(f.q40));

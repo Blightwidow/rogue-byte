@@ -30,7 +30,7 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
     int axis;
     int nearEnds = 0;
     int nearStart;
-    int nearEnd = 0;
+    int nearEnd;
     if (keys->count != 0) {
         index = func_0012C708(keys, *state->currentPtr);
         state->prevTime = keys->times[index - 1];
@@ -41,13 +41,13 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
         state->nextPtr = &state->nextTime;
         state->prevTime = 0;
     }
-    float **axisPtr = keys->axes;
     int offset = index * 8;
+    float **axisPtr = keys->axes;
     unsigned int step = 0;
-    float *outA = state->vecA;
-    float *outB = state->vecB;
-    float *outC = state->vecC;
     float *outD = state->vecD;
+    float *outC = state->vecC;
+    float *outB = state->vecB;
+    float *outA = state->vecA;
     float *defaultPtr = keys->defaults;
     do {
         char *base = (char *)*axisPtr;
@@ -75,6 +75,7 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
     QW first = *(QW *)state->vecA;
     QW second = *(QW *)state->vecC;
     nearStart = 0;
+    nearEnd = 0;
     if (Near(LaneX(second), LaneX(first))) {
         QW ty = RotY(second);
         float oy = Mtc1(ty);
@@ -112,9 +113,10 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
             }
         }
     }
-    short flagValue = 1;
-    if (nearEnd != 0) {
+    short flagValue;
+    if (nearEnd != 0)
         flagValue = 2;
-    }
+    else
+        flagValue = 1;
     state->flag = flagValue;
 }

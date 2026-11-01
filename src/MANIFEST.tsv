@@ -958,6 +958,7 @@ address	name	size	file
 0X11EBB0	FIntersectRayTriangle	392	new_11ea60/FIntersectRayTriangle.cpp
 0X11EF08	DecomposeCylind	164	cm/DecomposeCylind.cpp
 0X11EFB0	DecomposeSphere	216	cm/DecomposeSphere.cpp
+0X11F198	GCosAngle	224	util-splice-bif/GCosAngle.cpp
 0X11F2E8	bif__static_initialization_and_destruction_0	308	util-splice-bif/bif__static_initialization_and_destruction_0.c
 0X11F420	bif__GLOBAL__I_slotheaps	32	util-splice-bif/bif__GLOBAL__I_slotheaps.c
 0X1202D0	RefOpPrint	44	util-splice-bif/RefOpPrint.cpp
@@ -2678,6 +2679,7 @@ address	name	size	file
 0X1A30D0	func_001A30D0	52	ub-light/fun_001a30d0.cpp
 0X1A3108	func_001A3108	308	ub-light/fun_001a3108.c
 0X1A3240	func_001A3240	32	ub-light/fun_001a3240.c
+0X1A3260	func_001A3260	256	ub-light/fun_001a3260.cpp
 0X1A3360	InitLight	156	ub-light/InitLight.cpp
 0X1A3400	PostLightLoad	44	ub-light/PostLightLoad.c
 0X1A3430	func_001A3430	44	ub-light/fun_001a3430.c
@@ -3739,6 +3741,7 @@ address	name	size	file
 0X1EF6F8	StaticInitSkySlotheaps	308	shdanim-sm/StaticInitSkySlotheaps.c
 0X1EF830	func_001EF830	32	shdanim-sm/fun_001ef830.c
 0X1EF850	func_001EF850	116	shdanim-sm/fun_001ef850.cpp
+0X1EF8C8	bevy_gfx_screen_C2d9500_v15	108	shdanim-sm/bevy_gfx_screen_C2d9500_v15.cpp
 0X1EF938	StaticInitSmSlotheaps	308	shdanim-sm/StaticInitSmSlotheaps.c
 0X1EFA70	func_001EFA70	32	shdanim-sm/fun_001efa70.c
 0X1EFA90	InitSm	48	shdanim-sm/InitSm.cpp

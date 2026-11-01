@@ -6,10 +6,11 @@ int FFloatsNear__Ffff(float, float, float);
 void WakeXf(void *, void *);
 }
 extern QW g_2a2dd0;
+static inline int Near(float a, float b) { return FFloatsNear__Ffff(a, b, 0.0001f); }
 static inline float LaneX(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 static inline float LaneY(QW q) { QW t; float f; asm("prot3w %0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0" : "=f" (f) : "r" (t)); return f; }
 static inline float LaneZ(QW q) { QW t; float f; asm("pextuw %0, $0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0" : "=f" (f) : "r" (t)); return f; }
-void func_0012D108(Lookat *self, QW pos)
+extern "C" void func_0012D108(Lookat *self, QW pos)
 {
     QW diff;
     asm("qmtc2.ni %0, vf2" : : "r" (pos));
@@ -20,7 +21,7 @@ void func_0012D108(Lookat *self, QW pos)
         return;
     asm("qmfc2.ni %0, vf2" : "=r" (diff));
     QW g = g_2a2dd0;
-    int unchanged = FFloatsNear__Ffff(LaneX(g), LaneX(diff), 0.0001f) && FFloatsNear__Ffff(LaneY(g), LaneY(diff), 0.0001f) && FFloatsNear__Ffff(LaneZ(g), LaneZ(diff), 0.0001f);
+    int unchanged = Near(LaneX(g), LaneX(diff)) && Near(LaneY(g), LaneY(diff)) && Near(LaneZ(g), LaneZ(diff));
     if (!unchanged) {
         self->owner->pos = pos;
         WakeXf(self->palo, self->owner);

@@ -1,5 +1,10 @@
 #include "sly2.h"
+// lane 0 of a QW to an FP register
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
+// lane 2 (pextuw with $zero) of a QW to an FP register
+static inline float LaneTwo(QW q) { float f; QW t; asm("pextuw %1, $0, %2\n\tmtc1 %1, %0" : "=f" (f), "=&r" (t) : "r" (q)); return f; }
+// lane 1 (prot3w) of a QW to an FP register
+static inline float LaneOne(QW q) { float f; QW t; asm("prot3w %1, %2\n\tmtc1 %1, %0" : "=f" (f), "=&r" (t) : "r" (q)); return f; }
 static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
 struct CM { char pad[0x60]; QW mat[4]; };
 struct LOCALS { QW matNew[4]; QW vecEuler; MATRIX3 matRotate; };
@@ -7,14 +12,11 @@ extern "C" void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(CM *);
 extern "C" void SetCmPosMat(CM *, QW *);
 extern "C" void func_0014F4E0(CM *pcm, QW vecDegrees)
 {
-    float z = Lane(__builtin_pextuw(0, vecDegrees));
-    float x = Lane(vecDegrees);
-    float y = Lane(__builtin_prot3w(vecDegrees));
-    const float rDegToRad = 0.0174532942f;
     LOCALS l;
-    float zr = z * rDegToRad;
-    float yr = y * rDegToRad;
-    float xr = x * rDegToRad;
+    const float rDegToRad = 0.0174532942f;
+    float zr = LaneTwo(vecDegrees) * rDegToRad;
+    float xr = Lane(vecDegrees) * rDegToRad;
+    float yr = LaneOne(vecDegrees) * rDegToRad;
     l.matNew[0] = pcm->mat[0];
     l.matNew[1] = pcm->mat[1];
     l.matNew[2] = pcm->mat[2];
