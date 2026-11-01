@@ -1,25 +1,31 @@
-extern "C" void *__builtin_new(unsigned int);
-extern "C" char D_002D1EA8;
-extern "C" char D_002CB9F8;
-struct Obj1112F0 {
-    int a;
-    int b;
-    int c;
-    char *vt;
-    char pad[240];
-    char *vt2;
-    char pad2[156];
-    Obj1112F0 *init()
+// new() factory of a class with two bases: the primary base keeps its vptr at +0xC after three words (the first two
+// zeroed by its constructor), the second base sits at +0xF4 with its vptr at +0x100. The inline constructor of the
+// derived class (compiler-generated, multiple inheritance) gives retail's copy of the new object into $v1.
+// Link: gcc names the two vtables _vt$<derived> and _vt$<derived>$<second base>; they are retail's
+// D_ symbols of this function (primary at +0xC, secondary at +0x100).
+struct CPrimary1112F0 {
+    int unk0x0;
+    int unk0x4;
+    int unk0x8;
+    CPrimary1112F0()
     {
-        vt = &D_002CB9F8;
-        vt2 = &D_002D1EA8;
-        a = 0;
-        b = 0;
-        return this;
+        unk0x0 = 0;
+        unk0x4 = 0;
     }
+    virtual void Virtual0();
+};
+struct CPrimaryBody1112F0 : CPrimary1112F0 {
+    char pad[0xE4];
+};
+struct CSecondary1112F0 {
+    int unk0x0[3];
+    virtual void Virtual0();
+};
+struct CObject1112F0 : CPrimaryBody1112F0, CSecondary1112F0 {
+    char pad2[0x9C];
+    virtual void Virtual0();
 };
 void *func_001112F0(void)
 {
-    Obj1112F0 *object = (Obj1112F0 *)__builtin_new(0x1a0);
-    object->init();
+    return new CObject1112F0;
 }

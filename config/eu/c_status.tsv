@@ -843,8 +843,10 @@ us_address	name	other_address	pair	score	addresses
 0x117988	Align__18CBinaryInputStreami	0X117988	identical	0	ok
 0x1179B8	CBinaryInputStream_Skip	0X1179B8	identical	0	ok
 0x1179D8	func_001179D8	0X1179D8	identical	0	ok
+0x117C20	U16Read__18CBinaryInputStream	0X117C20	identical	0	ok
 0x117C80	U32Read__18CBinaryInputStream	0X117C80	identical	0	ok
 0x117D50	S16Read__18CBinaryInputStream	0X117D50	identical	0	ok
+0x117DB8	S32Read__18CBinaryInputStream	0X117DB8	identical	0	ok
 0x117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	0X117EB0	identical	0	ok
 0x117ED0	CBinaryInputStream_ReadMatrix	0X117ED0	identical	0	ok
 0x117F18	CBinaryInputStream_ReadMatrix4	0X117F18	identical	0	ok
@@ -957,6 +959,7 @@ us_address	name	other_address	pair	score	addresses
 0x11E040	StaticInitSlotheaps_11e040	0X11E040	same	0	ok
 0x11E178	func_0011E178	0X11E178	identical	0	ok
 0x11E1A0	SetVectorCylind__FP6VECTORfff	0X11E1A0	identical	0	ok
+0x11E208	SetVectorSphere__FP6VECTORfff	0X11E208	identical	0	ok
 0x11E2D8	GetNormalVectors__FP6VECTORN30	0X11E2D8	identical	0	ok
 0x11EA60	func_0011EA60	0X11EA60	identical	0	ok
 0x11EBB0	FIntersectRayTriangle	0X11EBB0	identical	0	ok
@@ -1170,6 +1173,7 @@ us_address	name	other_address	pair	score	addresses
 0x129248	CRef_ConstructVectorValue	0X129248	same	0	ok
 0x1292B0	CRef_ConstructMatrix	0X1292B0	same	0	ok
 0x129330	CRef_ConstructClq	0X129330	same	0	ok
+0x129398	CRef_ConstructLm	0X129398	same	0	ok
 0x129480	CRef_ConstructPair	0X129480	identical	0	ok
 0x1294A0	CRef_ConstructProc	0X1294A0	identical	0	ok
 0x1294C0	CRef_ConstructBasic	0X1294C0	identical	0	ok
@@ -1182,6 +1186,7 @@ us_address	name	other_address	pair	score	addresses
 0x1296A8	CRef_SetVectorPtr	0X1296A8	same	0	ok
 0x129780	CRef_SetMatrixPtr	0X129780	same	0	ok
 0x129808	CRef_SetClqPtr	0X129808	same	0	ok
+0x129878	CRef_SetLmPtr	0X129878	same	0	ok
 0x129970	bevy_splice_value_list_ref	0X129970	identical	0	ok
 0x1299C0	CRef_SetProc	0X1299C0	identical	0	ok
 0x129A10	CRef_SetBasic	0X129A10	identical	0	ok
@@ -1198,6 +1203,7 @@ us_address	name	other_address	pair	score	addresses
 0x12A828	StaticInitializeSidebagSlotheaps	0X12A828	same	0	ok
 0x12A960	StaticInitializeSidebagSlotheaps_thunk	0X12A960	identical	0	ok
 0x12A980	CSidebag_RefAddBinding	0X12A980	same	0	ok
+0x12AA70	CSidebag_RefSetBinding	0X12AA70	identical	0	ok
 0x12AB28	FFindBinding__8CSidebagiP4CRef	0X12AB28	identical	0	ok
 0x12AB78	PsidebagClone	0X12AB78	same	0	ok
 0x12ACC0	StaticInitSlotheaps_12acc0	0X12ACC0	same	0	ok
@@ -1222,6 +1228,7 @@ us_address	name	other_address	pair	score	addresses
 0x12BE68	func_0012BE68	0X12BE68	identical	0	ok
 0x12C0E0	func_0012C0E0	0X12C0E0	identical	0	ok
 0x12C440	func_0012C440	0X12C440	identical	0	ok
+0x12C570	func_0012C570	0X12C570	same	0	ok
 0x12C708	func_0012C708	0X12C708	identical	0	ok
 0x12CA68	func_0012CA68	0X12CA68	identical	0	ok
 0x12CB98	PacpNew__F4ACVK	0X12CB98	same	0	ok
@@ -1674,6 +1681,7 @@ us_address	name	other_address	pair	score	addresses
 0x1490A0	SetButtonButtons	0X1490E0	same	0	ok
 0x1490C0	TriggerButton	0X149100	same	0	ok
 0x1490E0	UntriggerButton	0X149120	same	0	ok
+0x149100	FCheckButtonObject	0X149140	identical	0	ok
 0x1491E0	AddButtonAseg	0X149220	same	0	ok
 0x149200	AddButtonOffAseg	0X149240	same	0	ok
 0x149220	func_00149220	0X149260	identical	0	ok
@@ -1748,6 +1756,7 @@ us_address	name	other_address	pair	score	addresses
 0x14C548	StaticInitSlotheaps_14c548	0X14C570	same	0	ok
 0x14C680	func_0014C680	0X14C6A8	same	0	ok
 0x14C6A0	ClsgClipEdgeToObject	0X14C6C8	same	0	ok
+0x14C6D8	ClsgClipEdgeToObjectPruned	0X14C700	same	0	ok
 0x14CDB0	ClsgClipEdgeToObjects	0X14CDD8	same	0	ok
 0x14CE88	func_0014CE88	0X14CEB0	same	0	ok
 0x14CFC0	StaticInitSharedSlotheaps_thunk	0X14CFE8	same	0	ok
@@ -1942,6 +1951,7 @@ us_address	name	other_address	pair	score	addresses
 0x158480	StaticInitSlotheaps_158480	0X1584A8	same	0	ok
 0x1585B8	func_001585B8	0X1585E0	same	0	ok
 0x1585D8	InitDzg	0X158600	same	0	ok
+0x158668	AppendDzgDz__FP3DZGP2DZ	0X158690	identical	0	ok
 0x158958	func_00158958	0X158980	identical	0	ok
 0x158FC0	dzg__static_initialization_and_destruction_0	0X158FE8	same	0	ok
 0x1590F8	func_001590F8	0X159120	same	0	ok
@@ -1963,6 +1973,7 @@ us_address	name	other_address	pair	score	addresses
 0x15BD20	EmitParticles__FiP5EMITBP5EMITG	0X15BD48	same	0	ok
 0x15BE28	EmitRipsSphere__FP6VECTORT0iP7EMITRIPP5EMITVPP4RIPGP2LO	0X15BE50	same	0	ok
 0x15C150	ExplodeExpl	0X15C178	same	0	ok
+0x15C198	ExplodeExplParams__FP4EXPLUiP3ALOP6VECTORT3ff	0X15C1C0	identical	0	ok
 0x15C1E0	ExplodeExplExplso	0X15C208	gap	0	ok
 0x15C1E8	LoadExplgFromBrx	0X15C210	same	0	ok
 0x15C310	func_0015C310	0X15C338	gap	0	ok
@@ -1974,6 +1985,7 @@ us_address	name	other_address	pair	score	addresses
 0x15CD68	InitEpsel	0X15CD90	same	0	ok
 0x15D5C8	LabelFromEpselMode	0X15D5F0	same	0	ok
 0x15D648	SetEpselMode	0X15D670	same	0	ok
+0x15D798	IrowLastEpselReplay	0X15D7C0	same	0	ok
 0x15D880	SetEpselHint	0X15D8A8	same	0	ok
 0x15D8F8	FormatEpselPercent	0X15D920	same	0	ok
 0x15D9C0	FormatEpselTime	0X15D9E8	same	0	ok
@@ -2239,6 +2251,7 @@ us_address	name	other_address	pair	score	addresses
 0x1733F8	func_001733F8	0X173380	same	0	ok
 0x173928	func_00173928	0X1738B0	same	0	ok
 0x173A18	PosSpawnerFocus	0X1739A0	same	0	ok
+0x173E78	func_00173E78	0X173E00	same	0	ok
 0x1746B8	func_001746B8	0X174640	same	0	ok
 0x174740	StaticInitGuardPools_174740	0X1746C8	same	0	ok
 0x174878	GlobalCtorGuardPools_174878	0X174800	same	0	ok
@@ -2284,6 +2297,7 @@ us_address	name	other_address	pair	score	addresses
 0x177D48	GoalBrain_FGotoTargetInWorld	0X177CD0	identical	0	ok
 0x177D70	func_00177D70	0X177CF8	identical	0	ok
 0x177DC0	GoalBrain_FCmdEqual	0X177D48	same	0	ok
+0x177E80	GoalFollowCrv_Init	0X177E08	same	0	ok
 0x177EF0	GoalFollowCrv_Activate	0X177E78	same	0	ok
 0x178CD8	GoalFollowCrv_SetState	0X178C60	same	0	ok
 0x178D80	GoalFollowCrv_FBlocked	0X178D08	gap	0	ok
@@ -2648,6 +2662,7 @@ us_address	name	other_address	pair	score	addresses
 0x19DE10	InitJtPipe	0X19DD98	identical	0	ok
 0x19DE58	PostJtLoadPipe	0X19DDE0	identical	0	ok
 0x19E110	bevy_player_p14_19e110	0X19E098	same	0	ok
+0x19E950	func_0019E950	0X19E8D8	same	0	ok
 0x19E9C8	func_0019E9C8	0X19E950	gap	0	ok
 0x19E9D8	func_0019E9D8	0X19E960	same	0	ok
 0x19EA60	UpdateJtPipeLook	0X19E9E8	same	0	ok
@@ -2835,6 +2850,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AB128	InitSave	0X1AB220	same	0	ok
 0x1AB1A0	UpdateSave__FP4SAVE		none		
 0x1AB398	CompareSaves__FP4SAVET0	0X1AB498	identical	0	ok
+0x1AB418	SetSaveState		none		
 0x1AB630	func_001AB630		none		
 0x1AB6C0	FormatMemcard	0X1AB7D8	same	0	ok
 0x1AB7D0	CreateSaveDirectory		none		
@@ -3231,11 +3247,13 @@ us_address	name	other_address	pair	score	addresses
 0x1C7A40	func_001C7A40	0X1C7CA8	identical	0	ok
 0x1C7A58	SelectCoinLootDef	0X1C7CC0	same	1	ok
 0x1C7B18	PpathClueFlag	0X1C7D80	same	0	ok
+0x1C7BB8	FClueFound	0X1C7E20	same	0	ok
 0x1C7D00	func_001C7D00	0X1C7F68	gap	0	ok
 0x1C7E38	func_001C7E38	0X1C80A0	same	0	ok
 0x1C7E68	func_001C7E68	0X1C80D0	same	0	ok
 0x1C7EA8	func_001C7EA8	0X1C8110	same	0	ok
 0x1C8030	PostClueLoad	0X1C8298	same	0	ok
+0x1C8110	FVaultOpen	0X1C8378	same	0	ok
 0x1C82F0	func_001C82F0	0X1C8560	same	0	ok
 0x1C8AF0	func_001C8AF0	0X1C8D60	same	0	ok
 0x1C8B68	func_001C8B68	0X1C8DD8	same	0	ok
@@ -3312,6 +3330,8 @@ us_address	name	other_address	pair	score	addresses
 0x1CDDC8	Pripg_InitSo	0X1CE038	same	0	ok
 0x1CDE70	SetRipgEmitb__FP4RIPGP5EMITB	0X1CE0E0	gap	0	ok
 0x1CE170	func_001CE170	0X1CE3E0	same	0	ok
+0x1CE1C8	UpdateRipg	0X1CE438	same	0	ok
+0x1CE608	RenderRipgSelf__FP4RIPGP2CMP2RO	0X1CE878	same	0	ok
 0x1CE6C0	func_001CE6C0	0X1CE930	gap	0	ok
 0x1CE888	PripNewRipg	0X1CEAF8	same	0	ok
 0x1CE920	InitRip__FP3RIPP6VECTORfP2SO	0X1CEB90	same	0	ok
@@ -3339,12 +3359,14 @@ us_address	name	other_address	pair	score	addresses
 0x1D00D0	RenderMatch__FP5MATCHP2CM	0X1D0340	same	0	ok
 0x1D0108	InitGlint__FP5GLINTP6VECTORfP2SO	0X1D0378	same	0	ok
 0x1D0158	ProjectGlintTransform	0X1D03C8	same	0	ok
+0x1D04E8	InitSmack__FP5SMACKP6VECTORfP2SO	0X1D0758	same	0	ok
 0x1D05A0	ProjectSmackTransform__FP5SMACKf	0X1D0810	same	0	ok
 0x1D0800	UpdateSmack	0X1D0A70	same	0	ok
 0x1D08D8	PostLeafEmit__FP4LEAFP5EMITB	0X1D0B48	same	0	ok
 0x1D0BF8	FBounceLeaf__FP4LEAFP2SOP6VECTORT2	0X1D0E68	same	0	ok
 0x1D0CA8	InitDroplet__FP7DROPLETP6VECTORfP2SO	0X1D0F18	same	0	ok
 0x1D0CE8	PostDropletEmit	0X1D0F58	same	0	ok
+0x1D0D28	TouchDroplet__FP7DROPLETi	0X1D0F98	same	0	ok
 0x1D10E8	TouchBublet__FP6BUBLETi	0X1D1358	same	0	ok
 0x1D1108	PostRemitEmit__FP5REMITP5EMITB	0X1D1378	same	0	ok
 0x1D1160	UpdateRemit__FP5REMITf	0X1D13D0	same	0	ok
@@ -3358,10 +3380,12 @@ us_address	name	other_address	pair	score	addresses
 0x1D2150	func_001D2150	0X1D23C0	same	0	ok
 0x1D2240	func_001D2240	0X1D24B0	same	0	ok
 0x1D22D0	func_001D22D0	0X1D2540	same	0	ok
+0x1D2420	func_001D2420	0X1D2690	same	0	ok
 0x1D2DD0	func_001D2DD0	0X1D3040	same	0	ok
 0x1D3E48	AddVehicleCustomXps	0X1D40B8	same	0	ok
 0x1D3F30	NotifyVehicleXpEnded	0X1D41A0	same	0	ok
 0x1D3FA8	func_001D3FA8	0X1D4218	identical	0	ok
+0x1D3FF0	func_001D3FF0	0X1D4260	same	0	ok
 0x1D4050	AdjustVehicleNewXp	0X1D42C0	gap	0	ok
 0x1D4178	UpdateVehicleBounds	0X1D43E8	same	0	ok
 0x1D4940	SetVehicleState	0X1D4BB0	same	0	ok
@@ -3484,6 +3508,7 @@ us_address	name	other_address	pair	score	addresses
 0x1DCC58	JobMenu_Construct	0X1DCFA0	same	0	ok
 0x1DCCA0	JobMenu_PostLoad	0X1DCFE8	same	0	ok
 0x1DCCD8	JobMenu_Reset	0X1DD020	same	0	ok
+0x1DCD08	JobMenu_InitPage	0X1DD050	same	0	ok
 0x1DCD30	JobMenu_Update	0X1DD078	same	0	ok
 0x1DCE90	JobMenu_Select	0X1DD1D8	same	0	ok
 0x1DD1F8	JobMenu_UpdateBlot	0X1DD540	same	0	ok
@@ -3807,6 +3832,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F07C8	GetSmaGoal	0X1F0F88	same	0	ok
 0x1F07E8	GetSmaCur	0X1F0FA8	same	0	ok
 0x1F0808	func_001F0808	0X1F0FC8	identical	0	ok
+0x1F0850	SetSmaSvt	0X1F1010	same	0	ok
 0x1F08D0	SnapSmaTransition	0X1F1090	same	0	ok
 0x1F0948	SnapSmaToGoal	0X1F1108	same	0	ok
 0x1F09D8	SeekSma	0X1F1198	same	0	ok
@@ -3989,6 +4015,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FAA48	DwFromImpulseAtPos	0X1FB208	same	0	ok
 0x1FAB48	VecVelocityAtPos	0X1FB308	identical	0	ok
 0x1FAC30	AddSoAcceleration	0X1FB3F0	same	0	ok
+0x1FAC98	AddSoAngularAcceleration	0X1FB458	same	0	ok
 0x1FADD0	func_001FADD0	0X1FB590	same	0	ok
 0x1FAE18	StaticInitSlotheaps_1fae18	0X1FB5D8	same	0	ok
 0x1FAF50	func_001FAF50	0X1FB710	same	0	ok
@@ -4292,6 +4319,7 @@ us_address	name	other_address	pair	score	addresses
 0x20B060	func_0020B060	0X20B820	same	0	ok
 0x20B090	GrfGuardCustomXps	0X20B850	same	0	ok
 0x20B210	ClearGuardPathMode	0X20B9D0	same	0	ok
+0x20B2A8	SetGuardPathTarget	0X20BA68	same	0	ok
 0x20B3D0	NGuardAlertLevel	0X20BB90	same	0	ok
 0x20B438	AddGuardBusyGoal	0X20BBF8	same	0	ok
 0x20B478	RemoveGuardBusyGoal	0X20BC38	same	0	ok
@@ -4302,6 +4330,7 @@ us_address	name	other_address	pair	score	addresses
 0x20B820	func_0020B820	0X20BFE0	same	0	ok
 0x20B840	func_0020B840	0X20C000	identical	0	ok
 0x20BB48	func_0020BB48	0X20C308	gap	0	ok
+0x20BC08	UpdateRunBlendFootsteps	0X20C3C8	same	0	ok
 0x20BD68	ResetRunBlendFootsteps	0X20C528	gap	0	ok
 0x20BD78	func_0020BD78	0X20C538	gap	0	ok
 0x20BF80	StartJumpAnim	0X20C740	same	0	ok
@@ -4455,6 +4484,7 @@ us_address	name	other_address	pair	score	addresses
 0x215850	func_00215850	0X216020	same	0	ok
 0x2158C0	func_002158C0	0X216090	same	0	ok
 0x215960	func_00215960	0X216130	same	0	ok
+0x2159E0	DrawMovieCharacter	0X2161B0	same	0	ok
 0x215A50	IglyphFromFontCh		none		
 0x215BA8	func_00215BA8	0X216388	same	0	ok
 0x215CA8	CMovieText_Reset	0X216488	same	0	ok
@@ -4482,6 +4512,7 @@ us_address	name	other_address	pair	score	addresses
 0x2183E8	UpdateSpriteInstance	0X218C08	same	0	ok
 0x2185D0	func_002185D0	0X218DF0	same	0	ok
 0x218638	StopRootSprite	0X218E58	same	0	ok
+0x218660	StopSpriteInstance	0X218E80	same	0	ok
 0x218710	func_00218710	0X218F30	identical	0	ok
 0x218738	func_00218738	0X218F58	gap	0	ok
 0x2188B0	RefreshSpriteInstance	0X2190D0	same	0	ok
@@ -4684,6 +4715,7 @@ us_address	name	other_address	pair	score	addresses
 0x22B700	func_0022B700	0X22BF20	same	0	ok
 0x22B720	func_0022B720	0X22BF40	same	0	ok
 0x22B7A0	func_0022B7A0	0X22BFC0	identical	0	ok
+0x22BE08	UNoise__Fi	0X22C628	identical	0	ok
 0x22BF40	UBias__Fff	0X22C760	identical	0	ok
 0x22BF70	GFromOnz__FP3ONZ	0X22C790	same	0	ok
 0x22C3B0	AddWrCircleWarp__FP2WR	0X22CBD0	same	0	ok
@@ -4904,6 +4936,7 @@ us_address	name	other_address	pair	score	addresses
 0x254A70	func_00254A70	0X2554C0	same	0	ok
 0x254C28	func_00254C28	0X255678	same	0	ok
 0x2550A0	func_002550A0	0X255AF0	same	0	ok
+0x2550F8	UnlinkPairNode	0X255B48	same	0	ok
 0x2553E0	InitVarbNode	0X255E30	same	0	ok
 0x255438	UnlinkVarbNode	0X255E88	same	0	ok
 0x255588	LinkFrameNode	0X255FD8	same	0	ok
@@ -4942,6 +4975,7 @@ us_address	name	other_address	pair	score	addresses
 0x256B48	PpairNew	0X257598	same	0	ok
 0x256C38	PairHandle_Init	0X257688	identical	0	ok
 0x256C58	PairHandle_Assign	0X2576A8	same	0	ok
+0x256CE8	__8VU_FLOATf	0X257738	identical	0	ok
 0x256D08	__9VU_VECTORRC6VECTOR	0X257758	gap	0	ok
 0x256D18	__as__6VECTORG9VU_VECTOR	0X257768	gap	0	ok
 0x256D28	__ml__FG8VU_FLOATG9VU_VECTOR	0X257778	gap	0	ok

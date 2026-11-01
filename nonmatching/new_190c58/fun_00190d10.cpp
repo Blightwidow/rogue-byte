@@ -20,14 +20,18 @@ extern "C" void func_00190D10(JT *self)
     QW sum;
     asm("lqc2 vf1, %0" : : "m" (self->grip));
     asm("qmtc2.ni %0, vf2" : : "r" (grip));
+    void *part = self->part;
     asm("vadd.xyzw vf2, vf2, vf1");
     asm("sqc2 vf2, %0" : "=m" (sum));
     QW diff;
+    QW world = PosLoWorld(part);
     PinP *pinA = self->pin;
-    QW world = PosLoWorld(self->part);
-    asm("qmtc2.ni %1, vf2\n\tlqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r" (diff) : "r" (world), "m" (sum));
-    PinP *pin = self->pin;
+    asm("qmtc2.ni %0, vf2" : : "r" (world));
+    asm("lqc2 vf1, %0" : : "m" (sum));
+    asm("vsub.xyzw vf1, vf1, vf2");
+    asm("qmfc2.ni %0, vf1" : "=r" (diff));
     QW off = ConvertXfVec(0, pinA->pparent, diff);
+    PinP *pin = self->pin;
     QW newpos;
     asm("qmtc2.ni %0, vf2" : : "r" (off));
     asm("lqc2 vf1, %0" : : "m" (pin->pos));
@@ -39,9 +43,9 @@ extern "C" void func_00190D10(JT *self)
     int gen = psw->gen + 1;
     psw->gen = gen;
     self->pin->gen = gen;
-    pin = self->pin;
-    MATRIX4 result = *(MATRIX4 *)((char *)pin->pparent + 0x40) * *(MATRIX4 *)pin;
-    pin->world = result;
+    PinP *pinB = self->pin;
+    MATRIX4 result = *(MATRIX4 *)((char *)pinB->pparent + 0x40) * *(MATRIX4 *)pinB;
+    pinB->world = result;
     SolveIkLimb(self, *(void **)((char *)self->pin2 + 0xA8));
     self->vt->fn((char *)self + self->vt->delta);
 }

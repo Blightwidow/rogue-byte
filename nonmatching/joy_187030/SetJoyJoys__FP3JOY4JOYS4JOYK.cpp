@@ -2,7 +2,8 @@
 
 extern "C" void InitRumble__FP6RUMBLEii(void *, int, int);
 extern "C" void *memset(void *, int, unsigned int);
-extern "C" char g_2dded0[];
+struct CLOCK_1875B8 { char pad[0x3C]; float f3C; };
+extern "C" CLOCK_1875B8 g_2dded0;
 
 void SetJoyJoys__FP3JOY4JOYS4JOYK(char *pjoy, int joys, int joyk)
 {
@@ -38,7 +39,6 @@ resetRun:
         memset(pjoy + 0x10C0, 0, 0xC);
         float zeroExtent = 0.0f;
         JOY_AT(int, 0x1028) = 0;
-        JOY_AT(float, 0x10AC) = zeroExtent;
         JOY_AT(float, 0x1044) = zeroExtent;
         JOY_AT(float, 0x1040) = zeroExtent;
         JOY_AT(float, 0x103C) = zeroExtent;
@@ -48,6 +48,7 @@ resetRun:
         JOY_AT(float, 0x10A8) = zeroExtent;
         JOY_AT(float, 0x10A4) = zeroExtent;
         JOY_AT(float, 0x10B0) = zeroExtent;
+        JOY_AT(float, 0x10AC) = zeroExtent;
         JOY_AT(int, 0x1024) = 0;
         unsigned int iAxis = 0;
         float *pLeftMaxB = (float *)(pjoy + 0x1054);
@@ -66,8 +67,7 @@ resetRun:
             pLeftMaxB += 2;
         } while (iAxis < 4U);
     }
-    char *defaultsBase = g_2dded0;
     JOY_AT(int, 0x100C) = joys;
     JOY_AT(int, 0x1010) = joyk;
-    JOY_AT(float, 0x1014) = *(float *)(defaultsBase + 0x3C);
+    JOY_AT(float, 0x1014) = g_2dded0.f3C;
 }

@@ -7,7 +7,7 @@ extern "C" const AFF RO_002A3A10;
 extern CM B_002DDF40;
 extern "C" QW PosLoWorld(void *);
 extern "C" QW ConvertCmWorldToScreen(CM *, QW);
-extern "C" void UpdateSpriteInstance(float, SPRITE *, int, AFF *, unsigned *, unsigned *);
+extern "C" void UpdateSpriteInstance(SPRITE *, float, int, AFF *, unsigned *, unsigned *);
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 static inline QW Rot3V(QW q) { QW r; asm volatile("prot3w %0, %1" : "=r"(r) : "r"(q)); return r; } // provisional: lane move order
 static inline AFF Mult(const AFF &child, const AFF &parent)
@@ -40,5 +40,5 @@ extern "C" void UpdateRootSprite(float dt, SPRITE *sprite)
     unsigned mul[4];
     add[0] = 0x7F7F7F7F;
     mul[0] = 0xFFFFFFFF;
-    UpdateSpriteInstance(dt, sprite, 0, &xf, add, mul);
+    UpdateSpriteInstance(sprite, dt, 0, &xf, add, mul);
 }
