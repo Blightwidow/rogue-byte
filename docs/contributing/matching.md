@@ -123,6 +123,11 @@ What moved the score:
   `QW` value to or from an FP register (`asm("mtc1 %1, %0" : "=f"(f) : "r"(q))`, the MMI lane instructions in the same asm) is allowed,
   like the VU0 blocks; `scripts/matching/record.py`'s scan waives it. Still banned: an `mfc1`/`mtc1` that moves an ordinary int or float
   between registers only to steer the allocator. Put the lane in a one-line `static inline` helper and name the lane in a comment.
+- **Provisionally allowed (2026-11-01, to be revisited):** an `asm volatile` on a lane-move asm to fix its order against another lane move
+  (`22C8C0`, `11EE08`), and a dead store through an escaped address (a union member whose address escapes: `u.spill = w`) that gives retail's
+  dead `sq` in a delay slot without `volatile` (`1F4A80`). Both only schedule; allow them where retail's code shows the instruction, mark each with
+  a comment, and list the function in the commit body so the decision can be reversed in one pass. Not allowed: a dead local that retail's frame
+  does not show.
 - **Left over.** Scheduling and register allocation around the asm (which s-register holds which parameter, where `ld $ra` lands,
   `beql` against `beqz` with the VU move in the delay slot). Run the permuter after the first compile: it fixed a load order in five compiles.
 - **Second round (pin-free).** Scores moved most from: a `"=r"(fence)` output on the first asm consumed as an input by the next
