@@ -10,7 +10,8 @@ struct HITFX {
 struct SW { char pad[0x3D68]; int counter; char pad2[0x3FFC - 0x3D6C]; char dl[0xC]; char heap[1]; };
 extern "C" SW B_003DD490;
 extern "C" char D_002CE2B8;
-extern "C" float g_2dded0;
+struct CLOCK_156548 { float t; float dt; int cframe; };
+extern "C" CLOCK_156548 g_2dded0;
 extern "C" void *PvAllocSlotheapImpl(void *);
 extern "C" void AppendDlEntry(void *, void *);
 extern "C" void CFramePtr_Assign(void *, int);
@@ -23,17 +24,17 @@ extern "C" void PhitfxSpawn_156548(PARMS *parms, QW pos, int owner, HITFX **out)
 {
     HITFX *fx = (HITFX *)PvAllocSlotheapImpl(B_003DD490.heap);
     memset(fx, 0, 0x60);
+    fx->vt = (VT *)&D_002CE2B8;
     fx->f0 = 0;
+    fx->f4 = 0;
+    fx->parms = parms;
     fx->pos20 = pos;
     fx->pos30 = pos;
-    fx->parms = parms;
     fx->owner = owner;
-    fx->vt = (VT *)&D_002CE2B8;
-    fx->f4 = 0;
     int id = B_003DD490.counter + 1;
     B_003DD490.counter = id;
     fx->id = id;
-    fx->time = g_2dded0;
+    fx->time = g_2dded0.t;
     fx->f54 = parms->param64;
     AppendDlEntry(B_003DD490.dl, fx);
     fx->vt->entry[0].fn((char *)fx + fx->vt->entry[0].delta);

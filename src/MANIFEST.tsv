@@ -844,6 +844,7 @@ address	name	size	file
 0X1179B8	CBinaryInputStream_Skip	28	bis/CBinaryInputStream_Skip.cpp
 0X1179D8	func_001179D8	24	bis/fun_001179d8.c
 0X117C80	U32Read__18CBinaryInputStream	116	bis/U32Read__18CBinaryInputStream.cpp
+0X117D50	S16Read__18CBinaryInputStream	100	bis/S16Read__18CBinaryInputStream.cpp
 0X117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	32	bis/ReadVector__18CBinaryInputStreamP6VECTOR.cpp
 0X117ED0	CBinaryInputStream_ReadMatrix	72	bis/CBinaryInputStream_ReadMatrix.c
 0X117F18	CBinaryInputStream_ReadMatrix4	84	bis/CBinaryInputStream_ReadMatrix4.cpp
@@ -942,6 +943,7 @@ address	name	size	file
 0X11D448	GRandInRange	136	util/GRandInRange.cpp
 0X11D4D0	FFloatsNear__Ffff	56	util/FFloatsNear__Ffff.cpp
 0X11D5B0	PrescaleClq__FP3CLQffT0	88	util/PrescaleClq__FP3CLQffT0.c
+0X11D740	GTrunc__Fd	176	util/GTrunc__Fd.cpp
 0X11D7F0	GTrunc__Ff	168	util/GTrunc__Ff.cpp
 0X11D898	GModPositive__Fff	60	util/GModPositive__Fff.cpp
 0X11D8D8	FitClq__FffffP3CLQ	52	util/FitClq__FffffP3CLQ.c
@@ -1888,6 +1890,7 @@ address	name	size	file
 0X156390	guardposts__static_initialization_and_destruction_0	308	crv-lo/guardposts__static_initialization_and_destruction_0.c
 0X1564C8	guardposts__static_initialization_and_destruction_0_thunk	32	crv-lo/guardposts__static_initialization_and_destruction_0_thunk.c
 0X1564E8	func_001564E8	96	crv-lo/fun_001564e8.cpp
+0X156548	PhitfxSpawn_156548	336	crv-lo/PhitfxSpawn_156548.cpp
 0X156698	PhitfxSpawn	32	crv-lo/PhitfxSpawn.cpp
 0X1566B8	HitFx_AddRef	16	crv-lo/HitFx_AddRef.c
 0X1566C8	HitFx_Release	92	crv-lo/HitFx_Release.cpp
@@ -2321,6 +2324,7 @@ address	name	size	file
 0X17B808	func_0017B808	56	hide-puffer/fun_0017b808.cpp
 0X17B840	func_0017B840	48	hide-puffer/fun_0017b840.c
 0X17B870	func_0017B870	60	hide-puffer/fun_0017b870.c
+0X17B8B0	func_0017B8B0	272	hide-puffer/fun_0017b8b0.cpp
 0X17BD78	func_0017BD78	344	hide-puffer/fun_0017bd78.cpp
 0X17BED0	func_0017BED0	56	hide-puffer/fun_0017bed0.cpp
 0X17BF08	func_0017BF08	172	hide-puffer/fun_0017bf08.cpp
@@ -2844,6 +2848,7 @@ address	name	size	file
 0X1AC900	WriteMemcardFile	160	memcard/WriteMemcardFile.cpp
 0X1AC9A0	ReadMemcardFile	160	memcard-memory/ReadMemcardFile.cpp
 0X1ACA40	DeleteMemcardFile	84	memcard-memory/DeleteMemcardFile.c
+0X1ACA98	MemcardMenu_Construct	76	memcard-memory/MemcardMenu_Construct.cpp
 0X1ACAE8	MemcardMenu_PostLoad	76	memcard-memory/MemcardMenu_PostLoad.c
 0X1ACB38	MemcardMenu_Reset	28	memcard-memory/MemcardMenu_Reset.c
 0X1ACB58	MemcardMenu_SetState	96	memcard-memory/MemcardMenu_SetState.cpp
@@ -3844,6 +3849,7 @@ address	name	size	file
 0X1F3FA0	PmatWorldSo	12	so-po/PmatWorldSo.c
 0X1F3FB0	func_001F3FB0	96	so-po/fun_001f3fb0.c
 0X1F4010	func_001F4010	144	so-po/fun_001f4010.cpp
+0X1F40A0	TranslateSoToPos	572	so-po/TranslateSoToPos.cpp
 0X1F4440	GetSoVelocityVec	68	so-po/GetSoVelocityVec.cpp
 0X1F4488	SetSoVelocityVec	208	so-po/SetSoVelocityVec.cpp
 0X1F4848	func_001F4848	40	so-po/fun_001f4848.c
@@ -3961,6 +3967,7 @@ address	name	size	file
 0X1F90D0	func_001F90D0	364	new_1f88d8/fun_001f90d0.cpp
 0X1FAA48	DwFromImpulseAtPos	80	new_1f88d8/DwFromImpulseAtPos.cpp
 0X1FAB48	VecVelocityAtPos	44	new_1f88d8/VecVelocityAtPos.cpp
+0X1FAC30	AddSoAcceleration	104	new_1f88d8/AddSoAcceleration.cpp
 0X1FADD0	func_001FADD0	68	new_1f88d8/fun_001fadd0.cpp
 0X1FAE18	StaticInitSlotheaps_1fae18	308	new_1f88d8/StaticInitSlotheaps_1fae18.c
 0X1FAF50	func_001FAF50	32	new_1f88d8/fun_001faf50.c
@@ -4034,6 +4041,7 @@ address	name	size	file
 0X1FE478	func_001FE478	316	new_1fe478/fun_001fe478.cpp
 0X1FE5B8	func_001FE5B8	36	new_1fe478/fun_001fe5b8.cpp
 0X1FE5E0	func_001FE5E0	16	new_1fe478/fun_001fe5e0.c
+0X1FE5F0	StartStream	324	new_1fe478/StartStream.cpp
 0X1FE738	StopStream	272	new_1fe478/StopStream.cpp
 0X1FE848	FStreamPlaying	60	new_1fe478/FStreamPlaying.cpp
 0X1FE888	TStream	260	new_1fe478/TStream.cpp
@@ -4398,6 +4406,7 @@ address	name	size	file
 0X212780	ReleaseBlotMovie	72	po-screen/ReleaseBlotMovie.cpp
 0X2127C8	func_002127C8	96	po-screen/fun_002127c8.cpp
 0X212828	SetBlotLabelListFromRef	88	po-screen/SetBlotLabelListFromRef.cpp
+0X212880	SetBlotLabelList	104	po-screen/SetBlotLabelList.cpp
 0X2128E8	Blot_Show	252	po-screen/Blot_Show.cpp
 0X2129E8	Blot_Hide	68	po-screen/Blot_Hide.cpp
 0X212A30	func_00212A30	32	po-screen/fun_00212a30.c
@@ -4871,6 +4880,7 @@ address	name	size	file
 0X254C28	func_00254C28	116	sdk/fun_00254c28.c
 0X2550A0	func_002550A0	88	sdk/fun_002550a0.cpp
 0X2553E0	InitVarbNode	88	sdk/InitVarbNode.cpp
+0X255438	UnlinkVarbNode	336	sdk/UnlinkVarbNode.cpp
 0X255588	LinkFrameNode	400	sdk/LinkFrameNode.cpp
 0X255718	InitFrameNode	88	sdk/InitFrameNode.cpp
 0X255A58	InitProcNode	88	sdk/InitProcNode.cpp

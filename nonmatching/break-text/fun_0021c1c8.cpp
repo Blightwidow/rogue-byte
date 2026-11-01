@@ -10,13 +10,13 @@ struct Trail21C1C8 {
     char pad168[0x180 - 0x168]; char *target; float length; float travelled; char pad18C[4]; QW lastPos;
 };
 extern float g_2dded0[];
-void ProjectSoTransform();
+void ProjectSoTransform(Trail21C1C8 *);
 QW PosLoWorld(char *);
 void func_0021C5F8(Trail21C1C8 *, QW);
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 void func_0021C1C8(Trail21C1C8 *trail)
 {
-    ProjectSoTransform();
+    ProjectSoTransform(trail);
     if (trail->fPaused != 0) return;
     int slot = trail->head;
     int next = slot + 1;
@@ -32,8 +32,10 @@ void func_0021C1C8(Trail21C1C8 *trail)
         if (trail->speed == 0.0f) trail->travelled = -4.0f;
         QW pos = PosLoWorld(trail->target);
         asm volatile("qmtc2.ni %0, vf2" : : "r"(pos));
+        float length = trail->length;
         asm volatile("lqc2 vf1, 0x190(%0)" : : "r"(trail));
         asm volatile("vsub.xyzw vf1, vf1, vf2");
+        float travelled = trail->travelled;
         asm volatile("vmul.xyz vf1, vf1, vf1");
         asm volatile("vaddw.x vf3, vf0, vf0w");
         asm volatile("vadday.x ACC, vf1, vf1y");
@@ -44,7 +46,7 @@ void func_0021C1C8(Trail21C1C8 *trail)
         asm volatile("vaddq.x vf1, vf0, Q");
         QW lane;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(lane));
-        float total = trail->travelled + Lane(lane) / trail->length;
+        float total = travelled + Lane(lane) / length;
         trail->travelled = total;
         entry->distance = total;
     }

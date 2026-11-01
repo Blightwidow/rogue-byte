@@ -42,23 +42,17 @@ void func_0016DD58(void *arg0, int unused, int arg2) {
     if (arg2 != 8) {
         if (g_2deb74 != 0) {
             AddPrimPack__4GIFSiiUl(&gifs, 0, 1, 0xE);
-            int xA = 0x7200;
-            int xB = 0x7000;
             func_0016D698(0, &gifs, &cursor);
-            int count = 0x1E0;
             PackAD__4GIFSll(&gifs, 0x4C, (long)(int)0xBFC00000 << 10);
             PackAD__4GIFSll(&gifs, 0x47, 0x31001);
             PackAD__4GIFSll(&gifs, 0x42, (0x8000L << 18) | 0xA9);
             PackAD__4GIFSll(&gifs, 1, 0x8000L << 17);
             PackAD__4GIFSll(&gifs, 0, 0x46);
             AddPrimList__4GIFSiUl(&gifs, 2, 0x55);
-            do {
-                GIFS_ListXYZ(&gifs, xB, 0x7900, 0);
-                xB += 0x200;
-                GIFS_ListXYZ(&gifs, xA, 0x8700, 0);
-                count -= 0x20;
-                xA += 0x200;
-            } while (count >= 0);
+            for (int i = 0; i < 0x200; i += 0x20) {
+                GIFS_ListXYZ(&gifs, (i + 0x700) * 0x10, 0x7900, 0);
+                GIFS_ListXYZ(&gifs, (i + 0x720) * 0x10, 0x8700, 0);
+            }
         }
         func_0016D6C8(&gifs, 0x810095, &cursor);
         func_0016D6C8(&gifs, 0x266, &cursor);

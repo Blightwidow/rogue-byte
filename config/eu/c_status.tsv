@@ -844,6 +844,7 @@ us_address	name	other_address	pair	score	addresses
 0x1179B8	CBinaryInputStream_Skip	0X1179B8	identical	0	ok
 0x1179D8	func_001179D8	0X1179D8	identical	0	ok
 0x117C80	U32Read__18CBinaryInputStream	0X117C80	identical	0	ok
+0x117D50	S16Read__18CBinaryInputStream	0X117D50	identical	0	ok
 0x117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	0X117EB0	identical	0	ok
 0x117ED0	CBinaryInputStream_ReadMatrix	0X117ED0	identical	0	ok
 0x117F18	CBinaryInputStream_ReadMatrix4	0X117F18	identical	0	ok
@@ -942,6 +943,7 @@ us_address	name	other_address	pair	score	addresses
 0x11D448	GRandInRange	0X11D448	identical	0	ok
 0x11D4D0	FFloatsNear__Ffff	0X11D4D0	identical	0	ok
 0x11D5B0	PrescaleClq__FP3CLQffT0	0X11D5B0	identical	0	ok
+0x11D740	GTrunc__Fd	0X11D740	same	0	ok
 0x11D7F0	GTrunc__Ff	0X11D7F0	identical	0	ok
 0x11D898	GModPositive__Fff	0X11D898	same	0	ok
 0x11D8D8	FitClq__FffffP3CLQ	0X11D8D8	identical	0	ok
@@ -1888,6 +1890,7 @@ us_address	name	other_address	pair	score	addresses
 0x156390	guardposts__static_initialization_and_destruction_0	0X1563B8	same	0	ok
 0x1564C8	guardposts__static_initialization_and_destruction_0_thunk	0X1564F0	same	0	ok
 0x1564E8	func_001564E8	0X156510	same	0	ok
+0x156548	PhitfxSpawn_156548	0X156570	same	0	ok
 0x156698	PhitfxSpawn	0X1566C0	same	0	ok
 0x1566B8	HitFx_AddRef	0X1566E0	gap	0	ok
 0x1566C8	HitFx_Release	0X1566F0	same	0	ok
@@ -2321,6 +2324,7 @@ us_address	name	other_address	pair	score	addresses
 0x17B808	func_0017B808	0X17B790	same	0	ok
 0x17B840	func_0017B840	0X17B7C8	same	0	ok
 0x17B870	func_0017B870	0X17B7F8	same	0	ok
+0x17B8B0	func_0017B8B0	0X17B838	same	0	ok
 0x17BD78	func_0017BD78	0X17BD00	same	0	ok
 0x17BED0	func_0017BED0	0X17BE58	same	0	ok
 0x17BF08	func_0017BF08	0X17BE90	same	0	ok
@@ -2844,6 +2848,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AC900	WriteMemcardFile	0X1AC9E0	same	0	ok
 0x1AC9A0	ReadMemcardFile	0X1ACA80	same	0	ok
 0x1ACA40	DeleteMemcardFile	0X1ACB20	same	0	ok
+0x1ACA98	MemcardMenu_Construct	0X1ACB78	same	0	ok
 0x1ACAE8	MemcardMenu_PostLoad	0X1ACBC8	same	0	ok
 0x1ACB38	MemcardMenu_Reset	0X1ACC18	same	0	ok
 0x1ACB58	MemcardMenu_SetState	0X1ACC38	identical	0	ok
@@ -3844,6 +3849,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F3FA0	PmatWorldSo	0X1F4760	gap	0	ok
 0x1F3FB0	func_001F3FB0	0X1F4770	same	0	ok
 0x1F4010	func_001F4010	0X1F47D0	same	0	ok
+0x1F40A0	TranslateSoToPos	0X1F4860	same	0	ok
 0x1F4440	GetSoVelocityVec	0X1F4C00	same	0	ok
 0x1F4488	SetSoVelocityVec	0X1F4C48	same	0	ok
 0x1F4848	func_001F4848	0X1F5008	same	0	ok
@@ -3961,6 +3967,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F90D0	func_001F90D0	0X1F9890	identical	0	ok
 0x1FAA48	DwFromImpulseAtPos	0X1FB208	same	0	ok
 0x1FAB48	VecVelocityAtPos	0X1FB308	identical	0	ok
+0x1FAC30	AddSoAcceleration	0X1FB3F0	same	0	ok
 0x1FADD0	func_001FADD0	0X1FB590	same	0	ok
 0x1FAE18	StaticInitSlotheaps_1fae18	0X1FB5D8	same	0	ok
 0x1FAF50	func_001FAF50	0X1FB710	same	0	ok
@@ -4034,6 +4041,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FE478	func_001FE478	0X1FEC38	same	0	ok
 0x1FE5B8	func_001FE5B8	0X1FED78	identical	0	ok
 0x1FE5E0	func_001FE5E0	0X1FEDA0	gap	0	ok
+0x1FE5F0	StartStream	0X1FEDB0	same	0	ok
 0x1FE738	StopStream	0X1FEEF8	same	0	ok
 0x1FE848	FStreamPlaying	0X1FF008	identical	0	ok
 0x1FE888	TStream	0X1FF048	same	0	ok
@@ -4398,6 +4406,7 @@ us_address	name	other_address	pair	score	addresses
 0x212780	ReleaseBlotMovie	0X212F50	identical	0	ok
 0x2127C8	func_002127C8	0X212F98	same	0	ok
 0x212828	SetBlotLabelListFromRef	0X212FF8	same	0	ok
+0x212880	SetBlotLabelList	0X213050	identical	0	ok
 0x2128E8	Blot_Show	0X2130B8	same	0	ok
 0x2129E8	Blot_Hide	0X2131B8	same	0	ok
 0x212A30	func_00212A30	0X213200	same	0	ok
@@ -4871,6 +4880,7 @@ us_address	name	other_address	pair	score	addresses
 0x254C28	func_00254C28	0X255678	same	0	ok
 0x2550A0	func_002550A0	0X255AF0	same	0	ok
 0x2553E0	InitVarbNode	0X255E30	same	0	ok
+0x255438	UnlinkVarbNode	0X255E88	same	0	ok
 0x255588	LinkFrameNode	0X255FD8	same	0	ok
 0x255718	InitFrameNode	0X256168	same	0	ok
 0x255A58	InitProcNode	0X2564A8	same	0	ok

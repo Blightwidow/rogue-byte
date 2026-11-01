@@ -43,12 +43,11 @@ void GoalHit_Activate(Hit179328 *self) {
     asm volatile("vmul.xyz vf1, vf1, vf1");
     asm volatile("vaddw.x vf2, vf0, vf0w");
     asm volatile("vadday.x ACC, vf1, vf1y");
-    asm volatile("vmaddz.x vf1, vf2, vf1z");
-    asm volatile("vsqrt Q, vf1x");
-    asm volatile("vwaitq");
-    asm volatile("vaddq.x vf1, vf0, Q");
+    /* the vmaddz result feeds the vsqrt below: `length` carries that dependency, so the
+       vsqrt/qmfc2 block stays after it while gcc is free to schedule the 0.0001f load */
     float length;
-    asm volatile("qmfc2.ni %0, vf1" : "=r"(length));
+    asm("vmaddz.x vf1, vf2, vf1z" : "=f"(length));
+    asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(length) : "f"(length));
     if (0.0001f < length)
         moving = self->flags != 0x40000;
     float heading;

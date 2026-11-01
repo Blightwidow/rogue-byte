@@ -6,6 +6,13 @@ extern "C" void InvertMatrix3(void *, void *);
 extern "C" void NormalizeRotateMatrix3__FP7MATRIX3(Mat_1F4558 *);
 extern "C" void func_0022D148(void *, void *, int);
 extern QW g_2a2dd0;
+// builds a QW from three floats: lane 0 = a, lane 1 = b, lane 2 = c
+static inline QW Vec3(float a, float b, float c)
+{
+    QW v, t;
+    asm("mfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0\n\tmfc1 %1, %4\n\tpcpyld %0, %1, %0" : "=&r"(v), "=&r"(t) : "f"(a), "f"(b), "f"(c));
+    return v;
+}
 extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     char sp[0x130] __attribute__((aligned(16)));
     Body_1F4558 *body = self->body;
@@ -51,14 +58,10 @@ extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     asm volatile("sqc2 vf2, 0x50(%0)" : : "r"(sp));
     float y = *(float *)(sp + 0x48);
     float z = *(float *)(sp + 0x50);
+    float x = *(float *)(sp + 0x34);
     asm volatile("sqc2 vf4, 0x100(%0)" : : "r"(sp));
-    QW packed;
-    asm volatile("pextlw %0, %1, %0" : "=r"(packed) : "r"(z), "r"(y));
-    QW joined;
-    asm volatile("pcpyld %0, %1, %0" : "=r"(joined) : "r"((*(float *)(sp + 0x34))), "r"(packed));
+    QW result = Vec3(y, z, x);
     asm volatile("sqc2 vf5, 0x110(%0)" : : "r"(sp));
-    QW result;
-    asm volatile("por %0, $0, %1" : "=r"(result) : "r"(joined));
     asm volatile("sqc2 vf3, 0x120(%0)" : : "r"(sp));
     asm volatile("sqc2 vf7, 0x60(%0)" : : "r"(sp));
     asm volatile("sqc2 vf4, 0xa0(%0)" : : "r"(sp));
@@ -69,6 +72,6 @@ extern "C" QW GetSoAngularVelocityVec(Obj_1F4558 *self) {
     asm volatile("sqc2 vf1, 0x70(%0)" : : "r"(sp));
     asm volatile("sqc2 vf2, 0x120(%0)" : : "r"(sp));
     asm volatile("sqc2 vf2, 0x80(%0)" : : "r"(sp));
-    *(QW *)(sp + 0x60) = joined;
+    *(QW *)(sp + 0x60) = result;
     return result;
 }

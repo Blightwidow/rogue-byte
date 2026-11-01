@@ -3,10 +3,11 @@ struct M4 { QW row[4]; };
 struct VT { char pad[0x90]; short delta; short index; void (*fn)(void *); };
 struct XF { char pad0[0x30]; QW rowLocal3; char pad1[0x40 - 0x40]; };
 struct XFN { M4 local; M4 world; char pad[0xA4 - 0x80]; int generation; };
+struct G_1F40A0 { char pad[0x3D58]; int counter; };
+extern G_1F40A0 B_003DD490;
 struct PHYS { char pad[0xDC]; int link; };
 struct SO { char pad0[0xC]; VT *vt; char pad1[0x58 - 0x10]; XFN *plinear; int pad2; XFN *proot; char pad3[0xE8 - 0x64]; PHYS *pphys; };
 extern "C" {
-extern char B_003DD490[];
 void InvertMatrix4Affine(M4 *, M4 *);
 void __ml__FRC7MATRIX4T0(M4 *, const M4 *, const M4 *);
 void *__as__6VECTORG9VU_VECTOR(void *, QW);
@@ -31,8 +32,9 @@ extern "C" void TranslateSoToPos(SO *pso, QW pos)
     ((float *)&l.target)[11] = 0;
     ((float *)&l.target)[3] = 0;
     ((float *)&l.target)[15] = 1.0f;
+    M4 *pa = &l.a;
     InvertMatrix4Affine(&l.b, &pso->plinear->world);
-    __ml__FRC7MATRIX4T0(&l.a, &l.b, &pso->proot->world);
+    __ml__FRC7MATRIX4T0(pa, &l.b, &pso->proot->world);
     l.rootInLinear = l.a;
     XFN *pparent = *(XFN **)((char *)pso->plinear + 0xA0);
     if (pparent != 0) {
@@ -45,18 +47,18 @@ extern "C" void TranslateSoToPos(SO *pso, QW pos)
         pp[5] = 1.0f;
         ((float *)&l.parent)[0] = 1.0f;
     }
+    M4 *pc = &l.c;
     InvertMatrix4Affine(&l.d, &l.parent);
-    __ml__FRC7MATRIX4T0(&l.c, &l.d, &l.target);
+    __ml__FRC7MATRIX4T0(pc, &l.d, &l.target);
     InvertMatrix4Affine(&l.e, &l.rootInLinear);
-    __ml__FRC7MATRIX4T0(&l.b, &l.c, &l.e);
+    __ml__FRC7MATRIX4T0(&l.b, pc, &l.e);
     l.a = l.b;
-    M4 &local = l.a;
     XFN *pxf = pso->plinear;
     __as__6VECTORG9VU_VECTOR(&pxf->local.row[3], l.b.row[3]);
     ((float *)&pxf->local)[15] = 1.0f;
-    (*(int *)(B_003DD490 + 0x3D58))++;
+    int gen = ++B_003DD490.counter;
+    pso->plinear->generation = gen;
     pso->vt->fn((char *)pso + pso->vt->delta);
-    pso->plinear->generation = *(int *)(B_003DD490 + 0x3D58);
     DiscardSoXps(pso);
     WakeXf(pso, pso->plinear);
     func_001F3900(pso);

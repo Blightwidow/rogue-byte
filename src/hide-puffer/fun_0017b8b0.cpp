@@ -8,11 +8,11 @@ struct GOALPICK {
     int pad0[4];
     GOALV *pguard;
     char child[0x18 - 0x14];
-    int pad1[9];
+    int pad1[6];
     int state;
-    GOALV *pick;
     float tState;
     int pad2[2];
+    GOALV *pick;
 };
 struct GOALR : GOALV { char pad[0x30 - 0x10]; GOALV *target; int unk34, unk38, unk3C; int flag; };
 extern "C" void Goal_Pop(void *);

@@ -2,7 +2,7 @@
 extern "C" {
 QW PosLoWorld(char *);
 QW func_001C1EC0(char *, QW);
-QW ClosestPointOnSegment(char *, QW, QW, QW *, float *);
+void ClosestPointOnSegment(QW, QW, QW, QW *, float *, float *);
 int FFindPathzoneCrv(int, QW, QW, char *);
 void GoalGoto_SetState(char *, int);
 void MeasureCrv(char *);
@@ -12,6 +12,15 @@ void func_002562A8(char *);
 extern char *B_003E1A5C;
 extern float g_2dded0;
 float fabsf(float);
+/* lane 2 (z) of a 128-bit vector to an FP register */
+static inline float LaneZ(QW q) { int bits; asm("pextuw %0, $0, %1" : "=r"(bits) : "r"(q)); return *(float *)&bits; }
+/* xy distance between vf1 (loaded before) and b on VU0 */
+static inline float DistanceXY(int loaded, QW b) {
+    int distanceBits, moved;
+    asm("qmtc2.ni %1, vf2" : "=r"(moved) : "r"(b), "r"(loaded));
+    asm("vsub.xyzw vf1, vf1, vf2\n\tvmul.xy vf1, vf1, vf1\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(distanceBits) : "r"(moved));
+    return *(float *)&distanceBits;
+}
 void GoalGoto_Replan(char *goal) {
     QW buffer[4];
     if (*(int *)(goal + 0x30) != -1) {
@@ -34,17 +43,18 @@ void GoalGoto_Replan(char *goal) {
                         QW position = PosLoWorld(*(char **)(goal + 0x10));
                         QW start = func_001C1EC0(path + 0x60, position);
                         QW end = func_001C1EC0(path + 0x80, position);
-                        ClosestPointOnSegment(goal, start, end, &buffer[2], (float *)&buffer[3]);
+                        ClosestPointOnSegment(position, start, end, &buffer[2], (float *)&buffer[3], 0);
                         int near = 0;
                         float along = *(float *)&buffer[3];
-                        if (along > 0.0f && along < 1.0f) {
-                            int distanceBits;
-                            asm volatile("lqc2 vf1, 0x20(%1)\n\tqmtc2.ni %2, vf2\n\tvsub.xyzw vf1, vf1, vf2\n\tvmul.xy vf1, vf1, vf1\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(distanceBits) : "r"(buffer), "r"(position) : "memory");
-                            if (*(float *)&distanceBits < 50.0f) {
-                                int zBits;
-                                asm("pextuw %0, $0, %1" : "=r"(zBits) : "r"(position));
-                                if (fabsf(*(float *)((char *)&buffer[2] + 8) - *(float *)&zBits) < 300.0f) {
-                                    near = 1;
+                        if (along > 0.0f) {
+                            /* VU0: vf1 = closest point (buffer[2]) */
+                            int loaded;
+                            asm("lqc2 vf1, 0x20(%1)" : "=r"(loaded) : "r"(buffer), "m"(buffer[2]));
+                            if (along < 1.0f) {
+                                if (DistanceXY(loaded, position) < 50.0f) {
+                                    if (fabsf(*(float *)((char *)&buffer[2] + 8) - LaneZ(position)) < 300.0f) {
+                                        near = 1;
+                                    }
                                 }
                             }
                         }

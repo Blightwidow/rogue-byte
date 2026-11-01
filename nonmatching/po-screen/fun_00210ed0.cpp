@@ -1,22 +1,20 @@
-#include "m2c_macros.h"
-extern "C" {
+// SPDX-License-Identifier: GPL-3.0-or-later
+struct CRef { int tagk; int n; };
+extern "C" char B_003D4A60[];
+extern "C" const char RO_002A8AA0[];
+extern "C" CRef *RefGetGameSaveValue(CRef *, int *, void *);
+extern "C" void CRef_Destruct(CRef *);
+extern "C" int sprintf(char *, const char *, ...);
 
-M2C_UNK CRef_Destruct(void *);                      /* extern */
-M2C_UNK RefGetGameSaveValue(void); /* extern */
-M2C_UNK sprintf(s32, M2C_UNK *, s32);               /* extern */
-extern M2C_UNK B_003D4A60;
-extern M2C_UNK RO_002A8AA0;
-
-void func_00210ED0(s32 arg0, s32 **arg1) {
-    char sp[0x20];
-    M2C_UNK sp4;
-    s32 *temp_a1;
-
-    temp_a1 = *arg1;
-    if ((temp_a1 != NULL) && (*temp_a1 != 0)) {
-        RefGetGameSaveValue();
-        CRef_Destruct(sp);
-        sprintf(arg0, &RO_002A8AA0, sp4);
+extern "C" void func_00210ED0(char *out, int **pkey)
+{
+    int *key = *pkey;
+    if (key && *key) {
+        const char *format = RO_002A8AA0;
+        CRef ref;
+        RefGetGameSaveValue(&ref, key, B_003D4A60);
+        int value = ref.n;
+        CRef_Destruct(&ref);
+        sprintf(out, format, value);
     }
-}
 }
