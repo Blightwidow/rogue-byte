@@ -23,9 +23,8 @@ void UpdateSwFog(SW *psw)
     hsv.z = psw->val * k;
     VECTOR *prgb = &rgb;
     ConvertHsvToRgb__FP6VECTORT0(&hsv, prgb);
-    float bright = psw->bright * k;
     asm("lqc2 vf1, %0" : : "m" (rgb));
-    asm("qmtc2.ni %2, vf2\n\tvmulx.xyzw vf1, vf1, vf2x\n\tsqc2 vf2, %1\n\tsqc2 vf1, %0" : "=m" (rgb), "=m" (spill) : "r" (*(int *)&bright));
+    asm("qmtc2.ni %2, vf2\n\tvmulx.xyzw vf1, vf1, vf2x\n\tsqc2 vf2, %1\n\tsqc2 vf1, %0" : "=m" (rgb), "=m" (spill) : "r" (psw->bright * k));
     GreyColor_1ed2d8(prgb);
     psw->rgb = *(B12 *)&rgb;
     float opac = psw->opac * k;

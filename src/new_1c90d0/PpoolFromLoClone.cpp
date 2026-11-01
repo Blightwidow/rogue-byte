@@ -6,11 +6,11 @@ extern "C" int IcloneFromCloneId(int);
 extern "C" int IsetFromCloneId(int);
 extern Set_1CB658 *B_003E1398;
 extern "C" int PpoolFromLoClone(Obj_1CB658 *self) {
-    if (self->clone != 0 && self->clone->active != 0) {
+    if (self->clone == 0 || self->clone->active == 0) return 0;
         int set_index = IsetFromCloneId(self->clone->id);
         int clone_index = IcloneFromCloneId(self->clone->id);
         Set_1CB658 *set = &B_003E1398[set_index];
-        return set->items[clone_index - set->first].value;
-    }
-    return 0;
+        Item_1CB658 *item = set->items;
+        item += clone_index - set->first;
+    return item->value;
 }

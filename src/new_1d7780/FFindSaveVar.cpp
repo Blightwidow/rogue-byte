@@ -5,7 +5,6 @@ struct SAVEVARLOC { SAVEVARREC *prec; int iElement; };
 
 int FFindSaveVar(SAVEVARS *psavevars, SAVEPATH *ppath, SAVEVARLOC *psavevarloc)
 {
-    unsigned short irec;
     SAVEVARREC *base = psavevars->arec;
     if (base->irecChild == 0)
         return 0;
@@ -26,14 +25,13 @@ int FFindSaveVar(SAVEVARS *psavevars, SAVEPATH *ppath, SAVEVARLOC *psavevarloc)
             }
             if (prec->savek != -1)
                 return 0;
-            irec = prec->irecChild;
-            if (irec == 0)
+            if (prec->irecChild == 0)
                 return 0;
+            prec = psavevars->arec + prec->irecChild;
         } else {
-            irec = prec->irecNext;
-            if (irec == 0)
+            if (prec->irecNext == 0)
                 return 0;
+            prec = psavevars->arec + prec->irecNext;
         }
-        prec = psavevars->arec + irec;
     }
 }

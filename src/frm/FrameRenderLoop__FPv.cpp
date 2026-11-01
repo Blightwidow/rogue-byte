@@ -9,7 +9,7 @@ extern int g_2deb18;
 extern int g_2deb1c;
 extern int g_2deb20;
 extern int g_2dedbc;
-extern "C" int WaitSema(void);
+extern "C" int WaitSema(int);
 extern "C" void SignalSema(int);
 extern "C" void FlushSaaUnpacks(void);
 extern "C" void RestoreGsBuffers__Fv(void);
@@ -18,11 +18,15 @@ extern "C" void SendDmaSyncGsFinish__FP10sceDmaChanP2QW(int, void *);
 extern "C" void BlendPrevFrame__Fv(void);
 extern "C" void func_002417F0(int, int, int);
 extern "C" void SwapGsBuffers__Fv(void);
+static inline void SendDmaSync_160B70(int chan, void *pqw)
+{
+    SendDmaSyncGsFinish__FP10sceDmaChanP2QW(chan, pqw);
+}
 extern "C" void FrameRenderLoop__FPv(void *pv)
 {
     for (;;) {
         g_2deb20 = 1;
-        WaitSema();
+        WaitSema(g_2deb18);
         g_2deb14 = (FRM *)(B_002DEA50 + B_002DEB0C * 0x50);
         g_2deb20 = 0;
         B_002DEB0C = B_002DEB0C + 1;
@@ -31,8 +35,8 @@ extern "C" void FrameRenderLoop__FPv(void *pv)
         FlushSaaUnpacks();
         RestoreGsBuffers__Fv();
         BuildAllDrawEnvGifs();
-        SendDmaSyncGsFinish__FP10sceDmaChanP2QW(g_2de594, g_2deb14->pqwVif);
-        SendDmaSyncGsFinish__FP10sceDmaChanP2QW(g_2de598, g_2deb14->pqwGif);
+        SendDmaSync_160B70(g_2de594, g_2deb14->pqwVif);
+        SendDmaSync_160B70(g_2de598, g_2deb14->pqwGif);
         if ((g_2deb14->grf & 1) != 0)
             BlendPrevFrame__Fv();
         func_002417F0(g_2de594, 0, 0);

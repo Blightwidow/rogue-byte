@@ -105,9 +105,9 @@ void RenderVehicleSelf(VEHICLE *pv)
         pxfOut->row[1] = RA[1];
         pxfOut->row[2] = RA[2];
         ((float *)&pxfOut->row[3])[3] = 1.0f;
-        ((float *)&pxfOut->row[2])[3] = 0.0f;
         ((float *)&pxfOut->row[1])[3] = 0.0f;
         ((float *)&pxfOut->row[0])[3] = 0.0f;
+        ((float *)&pxfOut->row[2])[3] = 0.0f;
         int generation = ++B_003DD490.generation;
         pwheel->pxf->generation = generation;
     }

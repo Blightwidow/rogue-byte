@@ -1,6 +1,6 @@
 extern "C" char B_003DD490[];
-extern "C" char D_002C0908[];
-extern "C" char D_002C0948[];
+extern "C" int D_002C0908[][5];
+extern "C" int D_002C0948[][5];
 extern "C" const float RO_002C0900;
 extern "C" float g_2dded4;
 
@@ -14,12 +14,8 @@ extern "C" void SetSmaGoal__FP3SMA3OID(int, int);
 void UpdateMurrayMash(char *arg0)
 {
     float temp_f2;
-    int temp_a0;
     int temp_a0_2;
-    int var_a0;
     int var_s1;
-    int var_v0;
-    char *var_v1;
 
     if (PpoSwFocusBase(B_003DD490) == (int)arg0 && FSwHandsOff(B_003DD490) == 0) {
         var_s1 = GetSmaCur(*(int *)(arg0 + 0x1034));
@@ -31,17 +27,10 @@ void UpdateMurrayMash(char *arg0)
             }
             temp_f2 = *(float *)(arg0 + 0x1524);
             if (temp_f2 <= 0.0f) {
-                temp_a0 = *(int *)(arg0 + 0x1534);
-                if (*(int *)(arg0 + 0x152C) <= 0) {
-                    var_a0 = temp_a0 * 0x14;
-                    var_v0 = (var_s1 - 0x1CB) * 4;
-                    var_v1 = D_002C0908;
-                } else {
-                    var_a0 = temp_a0 * 0x14;
-                    var_v0 = (var_s1 - 0x1CB) * 4;
-                    var_v1 = D_002C0948;
-                }
-                var_s1 = *(int *)((char *)(var_v0 + var_a0) + (int)var_v1);
+                if (*(int *)(arg0 + 0x152C) <= 0)
+                    var_s1 = D_002C0908[*(int *)(arg0 + 0x1534)][var_s1 - 0x1CB];
+                else
+                    var_s1 = D_002C0948[*(int *)(arg0 + 0x1534)][var_s1 - 0x1CB];
             } else if (RO_002C0900 < *(float *)(arg0 + 0x1528) - temp_f2) {
                 var_s1 = 0x1CA;
             }

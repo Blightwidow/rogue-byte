@@ -26,7 +26,6 @@ address	name	size	file	score
 0X117BC8	func_00117BC8	8	bis/fun_00117bc8.c	1
 0X117BD0	U8Read__18CBinaryInputStream	80	bis/U8Read__18CBinaryInputStream.cpp	10
 0X117C20	U16Read__18CBinaryInputStream	96	bis/U16Read__18CBinaryInputStream.cpp	6
-0X117C80	U32Read__18CBinaryInputStream	120	bis/U32Read__18CBinaryInputStream.cpp	11
 0X117CF8	func_00117CF8	8	bis/fun_00117cf8.cpp	1
 0X117D00	S8Read__18CBinaryInputStream	80	bis/S8Read__18CBinaryInputStream.cpp	10
 0X117D50	S16Read__18CBinaryInputStream	104	bis/S16Read__18CBinaryInputStream.cpp	7
@@ -41,7 +40,7 @@ address	name	size	file	score
 0X118A88	PruneBsp__FP3BSPP6VECTORfPP3BSP	640	bsp/PruneBsp__FP3BSPP6VECTORfPP3BSP.c	186
 0X118FB0	PcgtPointInCbspQuick__FP4CBSPP6VECTOR	224	path/PcgtPointInCbspQuick__FP4CBSPP6VECTOR.cpp	12
 0X119090	PcgtPointInCbsp	344	new_119090/PcgtPointInCbsp.cpp	29
-0X119308	BuildPlane	136	bsp-crout/BuildPlane.cpp	4
+0X119308	BuildPlane	136	bsp-crout/BuildPlane.cpp	2
 0X1193D0	func_001193D0	8	bsp-crout/fun_001193d0.cpp	1
 0X1195E0	CroutDecomp__FiPfT1	792	crout/CroutDecomp__FiPfT1.cpp	304
 0X119BC0	func_00119BC0	16	crout-dl/fun_00119bc0.cpp	2
@@ -72,7 +71,6 @@ address	name	size	file	score
 0X11D740	GTrunc__Fd	176	util_11cf60/GTrunc__Fd.cpp	13
 0X11D9E0	MinimizeRange__FPFPvf_fPvffffPfT6	752	util_11cf60/MinimizeRange__FPFPvf_fPvffffPfT6.c	242
 0X11E020	func_0011E020	32	shd/fun_0011e020.c	6
-0X11E1A0	SetVectorCylind__FP6VECTORfff	104	vec/SetVectorCylind__FP6VECTORfff.cpp	20
 0X11E208	SetVectorSphere__FP6VECTORfff	136	vec/SetVectorSphere__FP6VECTORfff.cpp	12
 0X11E290	SProjectVector__FP6VECTORT0	72	vec/SProjectVector__FP6VECTORT0.cpp	6
 0X11E390	GetPerpendicularVector	288	vec/GetPerpendicularVector.cpp	57
@@ -85,7 +83,7 @@ address	name	size	file	score
 0X11EE08	ClosestPointOnSegment	248	new_11ea60/ClosestPointOnSegment.cpp	6
 0X11F088	PosSmooth	272	util_11f088/PosSmooth.cpp	29
 0X11F278	func_0011F278	16	util-splice-bif/fun_0011f278.cpp	1
-0X11F288	VecMinOfVerts	48	util-splice-bif/VecMinOfVerts.c	13
+0X11F288	VecMinOfVerts	48	util-splice-bif/VecMinOfVerts.cpp	2
 0X11F2B8	VecMaxOfVerts	48	util-splice-bif/VecMaxOfVerts.c	13
 0X11F440	RefOpAdd	656	util-splice-bif/RefOpAdd.cpp	149
 0X11F6D0	RefOpSub	656	util-splice-bif/RefOpSub.cpp	149
@@ -185,7 +183,7 @@ address	name	size	file	score
 0X13D328	Crfodb_SetLootId	216	new_13cf38/Crfodb_SetLootId.cpp	25
 0X13FAD0	func_0013FAD0	112	new_13f888/fun_0013fad0.cpp	13
 0X13FB40	LoadSwObjectsFromBrx	728	new_13f888/LoadSwObjectsFromBrx.cpp	116
-0X13FF70	InitJt	328	new_13f888/InitJt.cpp	7
+0X13FF70	InitJt	328	new_13f888/InitJt.cpp	2
 0X1400B8	PostJtLoad	640	new_13f888/PostJtLoad.cpp	96
 0X140750	func_00140750	616	new_13f888/fun_00140750.c	102
 0X140AF8	FJtInFocusRange	312	new_13f888/FJtInFocusRange.cpp	2
@@ -327,7 +325,6 @@ address	name	size	file	score
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	23
 0X1603B8	LoadXfMirrors	304	new_160260/LoadXfMirrors.cpp	13
 0X1604E8	UpdateXfMirror	352	new_160260/UpdateXfMirror.cpp	15
-0X160B70	FrameRenderLoop__FPv	272	frm/FrameRenderLoop__FPv.cpp	3
 0X160CE0	ClearPendingFrame__FP3FRM	392	frm/ClearPendingFrame__FP3FRM.cpp	51
 0X160F98	BlendPrevFrame__Fv	672	frm/BlendPrevFrame__Fv.cpp	87
 0X161478	UpdatePlayTime	488	new_161458/UpdatePlayTime.cpp	65
@@ -369,7 +366,7 @@ address	name	size	file	score
 0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
 0X16F868	ResetGs__Fv	80	gs/ResetGs__Fv.c	11
 0X16F960	BuildClearGifs__FP2QWG4RGBAi	408	gs/BuildClearGifs__FP2QWG4RGBAi.cpp	3
-0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	20
+0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	21
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.cpp	73
 0X171468	FGuardScriptWaiting	336	jsg-jt/FGuardScriptWaiting.cpp	9
 0X1715F0	ExecuteGuardScriptCmd	1288	new_1715f0/ExecuteGuardScriptCmd.cpp	116
@@ -483,7 +480,6 @@ address	name	size	file	score
 0X18EE38	ChooseJtCaneSwing	536	new_18ed98/ChooseJtCaneSwing.cpp	89
 0X18F0A8	UpdateJtCaneInput	520	new_18ed98/UpdateJtCaneInput.cpp	115
 0X18F2B0	ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2	688	stepcane/ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2.cpp	46
-0X18F560	ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL	296	stepcane/ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL.cpp	8
 0X18F958	AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX	776	stephang/AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX.cpp	157
 0X1903B8	PresetJtAccelHang__FP2JT	296	stephang/PresetJtAccelHang__FP2JT.c	73
 0X190520	UpdateJtActiveHang__FP2JTP3JOY	1728	stephang/UpdateJtActiveHang__FP2JTP3JOY.c	398
@@ -610,7 +606,6 @@ address	name	size	file	score
 0X1B4728	InitMurray	352	mpeg-memcard/InitMurray.cpp	10
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.cpp	85
 0X1B5380	UpdateMurrayCarry	728	mpeg-memcard/UpdateMurrayCarry.cpp	101
-0X1B5820	UpdateMurrayMash	368	mpeg-memcard/UpdateMurrayMash.cpp	11
 0X1B5990	func_001B5990	928	mpeg-memcard/fun_001b5990.cpp	96
 0X1B6078	SetMurrayState	1712	mpeg-memcard/SetMurrayState.cpp	356
 0X1B68B8	HandleMurrayMessage	752	mpeg-memcard/HandleMurrayMessage.cpp	83
@@ -718,7 +713,6 @@ address	name	size	file	score
 0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	100
 0X1CB250	PloLeaseCloneObject	112	new_1c90d0/PloLeaseCloneObject.cpp	2
 0X1CB410	PleaseFromPlo	120	new_1c90d0/PleaseFromPlo.cpp	7
-0X1CB658	PpoolFromLoClone	128	new_1c90d0/PpoolFromLoClone.cpp	6
 0X1CBB58	func_001CBB58	80	new_1c90d0/fun_001cbb58.cpp	2
 0X1CBBA8	func_001CBBA8	432	new_1c90d0/fun_001cbba8.c	99
 0X1CC2E8	func_001CC2E8	768	new_1c90d0/fun_001cc2e8.cpp	126
@@ -759,7 +753,7 @@ address	name	size	file	score
 0X1D2E18	func_001D2E18	1592	rip-rumble/fun_001d2e18.cpp	302
 0X1D3450	func_001D3450	2552	rip-rumble/fun_001d3450.cpp	627
 0X1D3FF0	func_001D3FF0	96	rip-rumble/fun_001d3ff0.c	13
-0X1D41F8	func_001D41F8	880	rip-rumble/fun_001d41f8.cpp	11
+0X1D41F8	func_001D41F8	880	rip-rumble/fun_001d41f8.cpp	9
 0X1D4568	FAbsorbVehicleWkr	984	rip-rumble/FAbsorbVehicleWkr.cpp	103
 0X1D54B8	StoreAudioModeInSave	256	new_1d54b8/StoreAudioModeInSave.cpp	34
 0X1D5808	RenderGlobsetTree	2824	new_1d54b8/RenderGlobsetTree.cpp	881
@@ -770,7 +764,6 @@ address	name	size	file	score
 0X1D6B00	LaunchSoAtTarget	1504	vec-coin/LaunchSoAtTarget.cpp	285
 0X1D72A8	UpdateHub	368	new_1d7268/UpdateHub.cpp	77
 0X1D7480	SetHubState	712	new_1d7268/SetHubState.cpp	102
-0X1D7DA0	FFindSaveVar	224	new_1d7780/FFindSaveVar.cpp	14
 0X1D7ED8	RefGetSaveValue	496	new_1d7780/RefGetSaveValue.c	89
 0X1D80C8	RefSetSaveValue	496	new_1d7780/RefSetSaveValue.cpp	84
 0X1D82B8	NPercentCompleteSaveData	504	new_1d7780/NPercentCompleteSaveData.cpp	129
@@ -963,7 +956,7 @@ address	name	size	file	score
 0X20D9D0	Sw_Construct	1456	stream-chkpnt/Sw_Construct.cpp	192
 0X20E3C0	CreateSwSavePaths	896	new_20e040/CreateSwSavePaths.c	117
 0X20E890	ExecuteSwLoadRequest	1840	new_20e040/ExecuteSwLoadRequest.c	342
-0X20F1C8	UpdateSwFog	240	sw-button/UpdateSwFog.cpp	4
+0X20F1C8	UpdateSwFog	240	sw-button/UpdateSwFog.cpp	2
 0X20F318	LoadLevelTableFromBrx	696	sw-button/LoadLevelTableFromBrx.c	180
 0X20F7E0	UpdateSwHudBlots	360	sw-button/UpdateSwHudBlots.cpp	36
 0X20FAA0	bevy_camera_follow_push_out	448	sw-button/bevy_camera_follow_push_out.cpp	72
@@ -1034,7 +1027,7 @@ address	name	size	file	score
 0X225300	UpdateDysh	712	new_225300/UpdateDysh.cpp	138
 0X2255C8	func_002255C8	152	new_225300/fun_002255c8.cpp	16
 0X225660	SetDyshState	544	new_225300/SetDyshState.cpp	61
-0X225BA0	UpdateTankAim	760	new_225aa8/UpdateTankAim.cpp	15
+0X225BA0	UpdateTankAim	760	new_225aa8/UpdateTankAim.cpp	2
 0X226370	func_00226370	136	new_225aa8/fun_00226370.cpp	12
 0X226550	UpdateSw	624	new_225aa8/UpdateSw.cpp	82
 0X2267C0	UpdateSwPaused	416	new_225aa8/UpdateSwPaused.cpp	82

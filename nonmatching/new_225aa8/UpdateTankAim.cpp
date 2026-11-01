@@ -8,17 +8,10 @@ struct Tank_225BA0 {
     float pan; float tilt; float panRate; float tiltRate; char tiltLimit[8]; char panLimit[8]; char pad1AC[0x1BC - 0x1AC];
     float skill; char pad1C0[0x1CC - 0x1C0]; int visible; char pad1D0[8]; void *act;
 };
-// Builds (x, y, z, 0): mfc1 each float into a GPR, pextlw packs x,y, pcpyld adds z (lane 2).
-static inline QW Build(float x, float y, float z)
-{
-    QW result;
-    QW low;
-    asm("mfc1 %0, %1" : "=r"(low) : "f"(x));
-    asm("mfc1 %0, %1" : "=r"(result) : "f"(y));
-    low = __builtin_pextlw(result, low);
-    asm("mfc1 %0, %1" : "=r"(result) : "f"(z));
-    return __builtin_pcpyld(result, low);
-}
+/* A QW (x, y, z) from three floats: mfc1 x and y, pextlw into lanes 0 and 1, mfc1 z, pcpyld into the upper doubleword.
+   The leading nop is the mtc1 hazard nop retail's assembler put after the mtc1 of x; this source assembles with GNU as
+   (the VU asm before LoadLookAtMatrix's jal), which does not insert it. */
+static inline QW Vec3(float x, float y, float z) { QW r; int t; asm("nop\n\tmfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0\n\tmfc1 %1, %4\n\tpcpyld %0, %1, %0" : "=&r" (r), "=&r" (t) : "f" (x), "f" (y), "f" (z)); return r; }
 extern "C" {
 extern char B_003D4A60[];
 extern int B_003E0FE0;
@@ -87,9 +80,9 @@ void UpdateTankAim(Tank_225BA0 *self) {
     float tilt = GLimitLm__FP2LMf(self->tiltLimit, self->tilt);
     self->tilt = tilt;
     if (self->visible != 0) {
-        float negatedTilt = -tilt;
-        QW vector = Build(0.0f, negatedTilt, self->pan);
-        func_0012D108(self->act, vector);
+        QW vector[1];
+        vector[0] = Vec3(0.0f, -tilt, self->pan);
+        func_0012D108(self->act, vector[0]);
     }
 }
 }

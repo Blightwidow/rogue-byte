@@ -1643,7 +1643,7 @@
 <rect x="294.1" y="329.7" width="20.9" height="19.7" fill="#4a45a8"><title>func_001BB250 0X1BB250 432 bytes (draft)</title></rect>
 <rect x="294.1" y="349.8" width="20.9" height="18.2" fill="#4a45a8"><title>func_001B8D30 0X1B8D30 400 bytes (draft)</title></rect>
 <rect x="294.1" y="368.5" width="20.9" height="17.1" fill="#2f7af4"><title>ReleaseMurrayObject 0X1B7BA8 376 bytes (c)</title></rect>
-<rect x="294.1" y="386.0" width="20.9" height="16.7" fill="#4a45a8"><title>UpdateMurrayMash 0X1B5820 368 bytes (draft)</title></rect>
+<rect x="294.1" y="386.0" width="20.9" height="16.7" fill="#2f7af4"><title>UpdateMurrayMash 0X1B5820 368 bytes (c)</title></rect>
 <rect x="315.5" y="287.6" width="19.0" height="18.0" fill="#2f7af4"><title>func_001B5D30 0X1B5D30 360 bytes (c)</title></rect>
 <rect x="334.9" y="287.6" width="19.0" height="18.0" fill="#4a45a8"><title>FMurrayCanUseGadget 0X1B98A0 360 bytes (draft)</title></rect>
 <rect x="354.3" y="287.6" width="18.6" height="18.0" fill="#4a45a8"><title>InitMurray 0X1B4728 352 bytes (draft)</title></rect>
@@ -2480,7 +2480,7 @@
 <rect x="531.7" y="837.6" width="12.1" height="11.0" fill="#2f7af4"><title>func_001CC168 0X1CC168 144 bytes (c)</title></rect>
 <rect x="544.2" y="837.6" width="12.1" height="11.0" fill="#2f7af4"><title>func_001CC1F8 0X1CC1F8 144 bytes (c)</title></rect>
 <rect x="556.6" y="837.6" width="11.4" height="11.0" fill="#2f7af4"><title>func_001CB5D0 0X1CB5D0 136 bytes (c)</title></rect>
-<rect x="518.5" y="849.0" width="10.1" height="11.6" fill="#4a45a8"><title>PpoolFromLoClone 0X1CB658 128 bytes (draft)</title></rect>
+<rect x="518.5" y="849.0" width="10.1" height="11.6" fill="#2f7af4"><title>PpoolFromLoClone 0X1CB658 128 bytes (c)</title></rect>
 <rect x="529.0" y="849.0" width="10.1" height="11.6" fill="#2f7af4"><title>func_001CCA40 0X1CCA40 128 bytes (c)</title></rect>
 <rect x="539.5" y="849.0" width="9.4" height="11.6" fill="#4a45a8"><title>PleaseFromPlo 0X1CB410 120 bytes (draft)</title></rect>
 <rect x="549.4" y="849.0" width="9.4" height="11.6" fill="#2f7af4"><title>func_001CC9A8 0X1CC9A8 120 bytes (c)</title></rect>
@@ -3022,7 +3022,7 @@
 <rect x="707.2" y="446.1" width="16.3" height="15.6" fill="#2f7af4"><title>RefOpClqFit 0X123498 272 bytes (c)</title></rect>
 <rect x="723.9" y="375.5" width="14.5" height="16.9" fill="#2f7af4"><title>RefOpObjectOption__FiP4CRefP6CFrame4BIFK 0X123EB0 264 bytes (c)</title></rect>
 <rect x="738.8" y="375.5" width="14.1" height="16.9" fill="#2f7af4"><title>RefOpForEach 0X121C20 256 bytes (c)</title></rect>
-<rect x="753.3" y="375.5" width="14.1" height="16.9" fill="#2a2d6e"><title>RefOpVectorBallisticVelocity 0X122BE0 256 bytes (asm)</title></rect>
+<rect x="753.3" y="375.5" width="14.1" height="16.9" fill="#2f7af4"><title>RefOpVectorBallisticVelocity 0X122BE0 256 bytes (c)</title></rect>
 <rect x="767.8" y="375.5" width="14.1" height="16.9" fill="#4a45a8"><title>RefOpVectorRadianNormal 0X122CE0 256 bytes (draft)</title></rect>
 <rect x="782.3" y="375.5" width="13.6" height="16.9" fill="#4a45a8"><title>RefOpGetElement 0X1222C8 248 bytes (draft)</title></rect>
 <rect x="723.9" y="392.8" width="15.1" height="14.8" fill="#2f7af4"><title>RefOpMatrixDecomposeToRadianNormal 0X123118 240 bytes (c)</title></rect>
@@ -4882,7 +4882,7 @@
 <rect x="1135.2" y="317.2" width="14.2" height="16.0" fill="#2f7af4"><title>LoadSaveVarsFromBis 0X1D7B88 248 bytes (c)</title></rect>
 <rect x="1149.7" y="281.8" width="12.6" height="17.4" fill="#4a45a8"><title>func_001D8B20 0X1D8B20 240 bytes (draft)</title></rect>
 <rect x="1162.7" y="281.8" width="12.1" height="17.4" fill="#4a45a8"><title>func_001D8A38 0X1D8A38 232 bytes (draft)</title></rect>
-<rect x="1175.2" y="281.8" width="11.7" height="17.4" fill="#4a45a8"><title>FFindSaveVar 0X1D7DA0 224 bytes (draft)</title></rect>
+<rect x="1175.2" y="281.8" width="11.7" height="17.4" fill="#2f7af4"><title>FFindSaveVar 0X1D7DA0 224 bytes (c)</title></rect>
 <rect x="1149.7" y="299.6" width="15.2" height="12.9" fill="#2f7af4"><title>PsavepathNew 0X1D88D0 216 bytes (c)</title></rect>
 <rect x="1149.7" y="312.9" width="15.2" height="10.4" fill="#2f7af4"><title>ValidateSaveData 0X1D7C80 176 bytes (c)</title></rect>
 <rect x="1149.7" y="323.7" width="15.2" height="9.4" fill="#2f7af4"><title>SymidFindSymtab 0X1D8720 160 bytes (c)</title></rect>
@@ -5947,7 +5947,7 @@
 <rect x="1179.9" y="571.4" width="20.7" height="20.7" fill="#4a45a8"><title>Decompress__18CBinaryInputStream 0X1179F0 472 bytes (draft)</title></rect>
 <rect x="1153.8" y="592.5" width="13.5" height="22.9" fill="#2f7af4"><title>CBinaryInputStream_ReadBspc 0X118220 344 bytes (c)</title></rect>
 <rect x="1153.8" y="615.9" width="13.5" height="10.5" fill="#2f7af4"><title>func_00118380 0X118380 160 bytes (c)</title></rect>
-<rect x="1167.7" y="592.5" width="10.7" height="9.8" fill="#4a45a8"><title>U32Read__18CBinaryInputStream 0X117C80 120 bytes (draft)</title></rect>
+<rect x="1167.7" y="592.5" width="10.7" height="9.8" fill="#2f7af4"><title>U32Read__18CBinaryInputStream 0X117C80 120 bytes (c)</title></rect>
 <rect x="1178.8" y="592.5" width="10.7" height="9.8" fill="#4a45a8"><title>S32Read__18CBinaryInputStream 0X117DB8 120 bytes (draft)</title></rect>
 <rect x="1189.9" y="592.5" width="10.7" height="9.8" fill="#4a45a8"><title>F32Read__18CBinaryInputStream 0X117E38 120 bytes (draft)</title></rect>
 <rect x="1167.7" y="602.7" width="10.9" height="8.3" fill="#4a45a8"><title>S16Read__18CBinaryInputStream 0X117D50 104 bytes (draft)</title></rect>
@@ -6056,7 +6056,7 @@
 <rect x="1153.8" y="847.7" width="29.3" height="20.8" fill="#4a45a8"><title>BlendPrevFrame__Fv 0X160F98 672 bytes (draft)</title></rect>
 <rect x="1183.6" y="847.7" width="17.0" height="20.8" fill="#4a45a8"><title>ClearPendingFrame__FP3FRM 0X160CE0 392 bytes (draft)</title></rect>
 <rect x="1153.8" y="868.9" width="17.5" height="15.5" fill="#2f7af4"><title>FlushFrames__Fi 0X160E68 304 bytes (c)</title></rect>
-<rect x="1153.8" y="884.8" width="17.5" height="13.8" fill="#4a45a8"><title>FrameRenderLoop__FPv 0X160B70 272 bytes (draft)</title></rect>
+<rect x="1153.8" y="884.8" width="17.5" height="13.8" fill="#2f7af4"><title>FrameRenderLoop__FPv 0X160B70 272 bytes (c)</title></rect>
 <rect x="1171.8" y="868.9" width="14.7" height="14.5" fill="#2f7af4"><title>OpenFrame__Fv 0X160828 240 bytes (c)</title></rect>
 <rect x="1186.9" y="868.9" width="13.7" height="14.5" fill="#2f7af4"><title>FinalizeFrameVifs__FP4VIFSPiPP2QW 0X160940 224 bytes (c)</title></rect>
 <rect x="1171.8" y="883.8" width="12.9" height="14.8" fill="#2f7af4"><title>CloseFrame__Fv 0X160A98 216 bytes (c)</title></rect>
@@ -6174,7 +6174,7 @@
 <rect x="1522.0" y="477.3" width="13.0" height="12.4" fill="#2f7af4"><title>GetNormalVectors__FP6VECTORN30 0X11E2D8 184 bytes (c)</title></rect>
 <rect x="1522.0" y="490.2" width="13.0" height="10.7" fill="#4a45a8"><title>CalculateVectorPanTilt__FP6VECTORPfT1 0X11E958 160 bytes (draft)</title></rect>
 <rect x="1535.4" y="477.3" width="8.8" height="13.4" fill="#4a45a8"><title>SetVectorSphere__FP6VECTORfff 0X11E208 136 bytes (draft)</title></rect>
-<rect x="1544.6" y="477.3" width="6.6" height="13.4" fill="#4a45a8"><title>SetVectorCylind__FP6VECTORfff 0X11E1A0 104 bytes (draft)</title></rect>
+<rect x="1544.6" y="477.3" width="6.6" height="13.4" fill="#2f7af4"><title>SetVectorCylind__FP6VECTORfff 0X11E1A0 104 bytes (c)</title></rect>
 <rect x="1535.4" y="491.2" width="9.2" height="9.7" fill="#4a45a8"><title>LimitVectorLength__FP6VECTORfT0 0X11E9F8 104 bytes (draft)</title></rect>
 <rect x="1544.9" y="491.2" width="6.2" height="9.7" fill="#4a45a8"><title>SProjectVector__FP6VECTORT0 0X11E290 72 bytes (draft)</title></rect>
 <rect x="1504.3" y="455.2" width="48.3" height="47.1" fill="none" stroke="#05060f" stroke-width="2"/>
@@ -6763,7 +6763,7 @@
 </g>
 <g><title>stepcane: 1280 bytes</title>
 <rect x="1290.3" y="695.2" width="18.2" height="33.2" fill="#4a45a8"><title>ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2 0X18F2B0 688 bytes (draft)</title></rect>
-<rect x="1308.9" y="695.2" width="15.6" height="16.4" fill="#4a45a8"><title>ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL 0X18F560 296 bytes (draft)</title></rect>
+<rect x="1308.9" y="695.2" width="15.6" height="16.4" fill="#2f7af4"><title>ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL 0X18F560 296 bytes (c)</title></rect>
 <rect x="1308.9" y="712.0" width="15.6" height="10.1" fill="#2f7af4"><title>ChooseJtRushTarget__FP2JT 0X18F688 184 bytes (c)</title></rect>
 <rect x="1308.9" y="722.5" width="15.6" height="6.0" fill="#2f7af4"><title>ChooseJtSmashTarget__FP2JT 0X18F740 112 bytes (c)</title></rect>
 <rect x="1289.3" y="694.2" width="36.5" height="35.6" fill="none" stroke="#05060f" stroke-width="2"/>
