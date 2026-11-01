@@ -1146,6 +1146,7 @@ us_address	name	other_address	pair	score	addresses
 0x128118	frame__static_initialization_and_destruction_0_thunk	0X128118	identical	0	ok
 0x128138	CGc_Construct	0X128138	gap	0	ok
 0x128148	func_00128148	0X128148	same	0	ok
+0x1281B0	bevy_splice_eval_reset	0X1281B0	same	0	ok
 0x1285D8	CGc_MarkRef	0X1285D8	same	0	ok
 0x128A00	gc__static_initialization_and_destruction_0	0X128A00	same	0	ok
 0x128B40	gc__static_initialization_and_destruction_0_thunk	0X128B40	identical	0	ok
@@ -2975,6 +2976,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B4708	GlobalCtorMurray	0X1B4970	same	0	ok
 0x1B4888	LoadMurrayFromBrx	0X1B4AF0	same	0	ok
 0x1B49E0	PostMurrayLoad	0X1B4C48	same	0	ok
+0x1B4AA0	UpdateMurrayActive	0X1B4D08	same	0	ok
 0x1B5038	UpdateMurrayBinoc	0X1B52A0	same	0	ok
 0x1B5658	SetMurrayCarryState	0X1B58C0	same	0	ok
 0x1B5D30	func_001B5D30	0X1B5F98	same	0	ok

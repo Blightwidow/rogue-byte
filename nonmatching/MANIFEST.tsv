@@ -133,7 +133,7 @@ address	name	size	file	score
 0X12E120	func_0012E120	208	alo-missile/fun_0012e120.c	50
 0X12E238	PactNew	440	alo-missile/PactNew.cpp	44
 0X12F2A8	CAseg_LoadFromBrx	744	aseg/CAseg_LoadFromBrx.cpp	104
-0X12F9B8	ApplyAseg	1072	aseg/ApplyAseg.cpp	102
+0X12F9B8	ApplyAseg	1072	aseg/ApplyAseg.cpp	31
 0X1300B8	PredictAsegEffect	976	aseg/PredictAsegEffect.cpp	132
 0X130B18	RetractAsega	536	aseg-asega/RetractAsega.cpp	112
 0X130EB0	UpdateAsegaIeaCur__FP5ASEGA	216	asega/UpdateAsegaIeaCur__FP5ASEGA.cpp	33
@@ -183,7 +183,7 @@ address	name	size	file	score
 0X140750	func_00140750	616	new_13f888/fun_00140750.c	102
 0X140AF8	FJtInFocusRange	312	new_13f888/FJtInFocusRange.cpp	2
 0X140DB0	AdjustJtXpVelocity	256	new_13f888/AdjustJtXpVelocity.c	45
-0X140F90	HandleJtMessage	1528	new_13f888/HandleJtMessage.cpp	232
+0X140F90	HandleJtMessage	1528	new_13f888/HandleJtMessage.cpp	3
 0X141640	GetJtCpdefi	744	new_13f888/GetJtCpdefi.cpp	51
 0X141A50	UpdateJtGadgets	432	new_13f888/UpdateJtGadgets.cpp	102
 0X141C08	SetJtGadgetSlotState	200	new_13f888/SetJtGadgetSlotState.cpp	4
@@ -373,7 +373,6 @@ address	name	size	file	score
 0X173A68	func_00173A68	688	new_1715f0/fun_00173a68.cpp	103
 0X173D18	func_00173D18	352	new_1715f0/fun_00173d18.cpp	14
 0X173E78	func_00173E78	160	new_1715f0/fun_00173e78.cpp	15
-0X173F18	func_00173F18	1400	new_1715f0/fun_00173f18.cpp	225
 0X174BD0	GoalAnim_FHandleMessage	720	new_1715f0/GoalAnim_FHandleMessage.cpp	101
 0X174EA0	func_00174EA0	104	new_1715f0/fun_00174ea0.cpp	5
 0X1758A0	PsenseFindNotice	1120	new_1715f0/PsenseFindNotice.cpp	162
@@ -473,7 +472,7 @@ address	name	size	file	score
 0X18F560	ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL	296	stepcane/ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL.cpp	8
 0X18F958	AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX	776	stephang/AnticipateJtForce__FP2JTP2SOP6VECTORT2P2FX.cpp	157
 0X1903B8	PresetJtAccelHang__FP2JT	296	stephang/PresetJtAccelHang__FP2JT.c	73
-0X190520	UpdateJtActiveHang__FP2JTP3JOY	1728	stephang/UpdateJtActiveHang__FP2JTP3JOY.cpp	361
+0X190520	UpdateJtActiveHang__FP2JTP3JOY	1728	stephang/UpdateJtActiveHang__FP2JTP3JOY.c	398
 0X190C58	PosJtHangGrip	184	new_190c58/PosJtHangGrip.cpp	16
 0X190D10	func_00190D10	264	new_190c58/fun_00190d10.cpp	11
 0X190E18	UpdateJtHangPose	288	new_190c58/UpdateJtHangPose.c	55
@@ -505,7 +504,6 @@ address	name	size	file	score
 0X19A4A0	MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1	688	stephide_19a4a0/MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1.c	162
 0X19A750	GetJmpLaunchVelocity	776	stephide_19a4a0/GetJmpLaunchVelocity.c	182
 0X19AC88	GMeasureJumpSpire	376	stephide_19a4a0/GMeasureJumpSpire.cpp	20
-0X19B110	JtbsChooseJtLanding	4592	stephide_19a4a0/JtbsChooseJtLanding.cpp	1124
 0X19C300	MeasureJtJumpToTargetAtTime	904	stephide_19a4a0/MeasureJtJumpToTargetAtTime.c	209
 0X19C688	bevy_player_p14_jts8_enter	416	new_19c688/bevy_player_p14_jts8_enter.cpp	70
 0X19CD38	SetBinocState	1528	cnvo-steppipe/SetBinocState.cpp	280
@@ -591,7 +589,6 @@ address	name	size	file	score
 0X1B3BD0	Execute__5CMpeg	752	mpeg/Execute__5CMpeg.cpp	78
 0X1B44D8	func_001B44D8	248	mpeg-memcard/fun_001b44d8.c	52
 0X1B4728	InitMurray	352	mpeg-memcard/InitMurray.cpp	10
-0X1B4AA0	UpdateMurrayActive	1432	mpeg-memcard/UpdateMurrayActive.cpp	142
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.cpp	85
 0X1B5380	UpdateMurrayCarry	728	mpeg-memcard/UpdateMurrayCarry.cpp	101
 0X1B5820	UpdateMurrayMash	368	mpeg-memcard/UpdateMurrayMash.cpp	11
@@ -691,6 +688,7 @@ address	name	size	file	score
 0X1C9058	StartLoadingLogo	56	prog-memcard/StartLoadingLogo.cpp	6
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	149
 0X1C99D8	PcnodeFindOrAddClonePath	304	new_1c90d0/PcnodeFindOrAddClonePath.cpp	9
+0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	60
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	55
 0X1CA500	InitCloneSets	648	new_1c90d0/InitCloneSets.cpp	165
 0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	72
@@ -855,6 +853,7 @@ address	name	size	file	score
 0X1F7598	PaloAbsorbWkr	552	so-sm/PaloAbsorbWkr.cpp	67
 0X1F77C0	ExpireSwWkrs	224	so-sm/ExpireSwWkrs.cpp	12
 0X1F9240	func_001F9240	464	new_1f88d8/fun_001f9240.cpp	118
+0X1F9410	SolveSwGroup	1808	new_1f88d8/SolveSwGroup.cpp	162
 0X1F9B20	AddSoGravityAcceleration	296	new_1f88d8/AddSoGravityAcceleration.cpp	6
 0X1F9C48	SleepSo	552	new_1f88d8/SleepSo.cpp	82
 0X1F9E70	bevy_physics_driver_1f9e70	1208	new_1f88d8/bevy_physics_driver_1f9e70.cpp	271
@@ -987,6 +986,7 @@ address	name	size	file	score
 0X21F418	CarryThrow_Update	1792	new_21f188/CarryThrow_Update.c	535
 0X21FB70	CarryThrow_UpdateArc	2072	new_21f188/CarryThrow_UpdateArc.c	457
 0X220508	func_00220508	160	new_21f188/fun_00220508.cpp	4
+0X2206C8	CarryThrow_SetState	1312	new_21f188/CarryThrow_SetState.cpp	40
 0X220DD8	GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN	248	tn_220dd8/GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN.cpp	4
 0X221298	UpdateTnCallback	240	tn_220dd8/UpdateTnCallback.c	30
 0X221408	CalculateTnCrv	440	tn_220dd8/CalculateTnCrv.cpp	41

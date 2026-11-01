@@ -1146,6 +1146,7 @@ address	name	size	file
 0X128118	frame__static_initialization_and_destruction_0_thunk	32	new_127e90/frame__static_initialization_and_destruction_0_thunk.c
 0X128138	CGc_Construct	12	new_127e90/CGc_Construct.c
 0X128148	func_00128148	100	new_127e90/fun_00128148.c
+0X1281B0	bevy_splice_eval_reset	1064	new_127e90/bevy_splice_eval_reset.cpp
 0X1285D8	CGc_MarkRef	264	new_127e90/CGc_MarkRef.cpp
 0X128A00	gc__static_initialization_and_destruction_0	320	new_127e90/gc__static_initialization_and_destruction_0.c
 0X128B40	gc__static_initialization_and_destruction_0_thunk	32	new_127e90/gc__static_initialization_and_destruction_0_thunk.c
@@ -2975,6 +2976,7 @@ address	name	size	file
 0X1B4708	GlobalCtorMurray	32	mpeg-memcard/GlobalCtorMurray.c
 0X1B4888	LoadMurrayFromBrx	344	mpeg-memcard/LoadMurrayFromBrx.cpp
 0X1B49E0	PostMurrayLoad	188	mpeg-memcard/PostMurrayLoad.cpp
+0X1B4AA0	UpdateMurrayActive	1432	mpeg-memcard/UpdateMurrayActive.cpp
 0X1B5038	UpdateMurrayBinoc	120	mpeg-memcard/UpdateMurrayBinoc.cpp
 0X1B5658	SetMurrayCarryState	452	mpeg-memcard/SetMurrayCarryState.cpp
 0X1B5D30	func_001B5D30	360	mpeg-memcard/fun_001b5d30.cpp

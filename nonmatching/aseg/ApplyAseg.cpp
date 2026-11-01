@@ -1,185 +1,167 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-extern "C" {
-struct _m2c_stack_ApplyAseg {
-    /* 0x00 */ s8 *sp0;                           /* inferred */
-    /* 0x04 */ s32 sp4;                             /* inferred */
-    /* 0x08 */ s32 sp8;                             /* inferred */
-    /* 0x0C */ s8 *spC;                           /* inferred */
-    /* 0x10 */ s32 sp10;                            /* inferred */
-    /* 0x14 */ s32 sp14;                            /* inferred */
-    /* 0x18 */ s32 sp18;                            /* inferred */
-    /* 0x1C */ char pad1C[0xB4];
-};                                                  /* size = 0xD0 */
-s32 AppendDlEntry(M2C_UNK *, s8 *);
-void BindAsegChn(s8 *, s32, s8 *, s32 *, s32 *);
-void CFramePtr_Assign(s8 *, s32);
-f32 GetSuck(M2C_UNK *);
-void HandleAsegaEvent(s8 *, s32);
-void HandleAsegaEventsFF(s8 *);
-void InsertXfAct(s32, s32, s8 *);
-s32 *PvAllocAct(M2C_UNK);
-s32 *PvAllocSlotheapImpl(M2C_UNK *);
-void SetAsegaHandsOff(s8 *, s32);
-f32 SetAsegaSpeed(s8 *, f32);
-void SnapAsega(s8 *, s32);
-s32 UpdateAsegaIeaCur__FP5ASEGA(s8 *);
-s32 *func_0012CE50(M2C_UNK);
-void func_00130010(s8 *, s32, s8 *, s8 **, s32 *);
-void func_001F8668(s32, M2C_UNK);
-s32 memset(s8 *, M2C_UNK, M2C_UNK);
-extern M2C_UNK B_002DE578;
-extern M2C_UNK B_003E1218;
-extern M2C_UNK B_003E1224;
-extern M2C_UNK D_002CAF08;
-extern M2C_UNK D_002CAF48;
-void ApplyAseg(s8 *arg0, s32 arg1, s32 arg2, s8 **arg3, f32 fparg0, f32 fparg1) {
-    s8 *sp0;
-    s32 sp4;
-    s32 sp8;
-    s8 *spC;
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    M2C_UNK *temp_v0_3;
-    M2C_UNK *temp_v0_4;
-    M2C_UNK *temp_v1;
-    f32 temp_f0;
-    f32 temp_f4;
-    f32 temp_f5;
-    f32 var_f3;
-    s32 temp_a1;
-    s32 temp_v0_6;
-    s32 var_s0;
-    s32 var_s3;
-    s32 var_s3_2;
-    s32 var_s4;
-    s8 *temp_s0;
-    s8 *temp_s0_2;
-    s8 *temp_v0;
-    s8 *temp_v0_2;
-    s8 *temp_v0_5;
-    s8 *temp_v0_7;
-    s8 *temp_v0_8;
-    s8 *temp_v0_9;
-    temp_v0 = (s8 *)(PvAllocSlotheapImpl(&B_003E1224));
-    memset(temp_v0, 0, 0x60);
-    M2C_FIELD(temp_v0, s32 *, 0) = 0;
-    M2C_FIELD(temp_v0, s32 *, 4) = 0;
-    M2C_FIELD(temp_v0, M2C_UNK **, 0xC) = &D_002CAF48;
-    M2C_FIELD(temp_v0, s32 *, 0x5C) = 0;
-    M2C_FIELD(temp_v0, s8 **, 0x14) = arg0;
-    M2C_FIELD(temp_v0, s32 *, 0x18) = arg1;
-    M2C_FIELD(temp_v0, f32 *, 0x1C) = fparg0;
-    M2C_FIELD(temp_v0, s32 *, 0x3C) = arg2;
-    M2C_FIELD(temp_v0, f32 *, 0x48) = (f32) M2C_FIELD(arg0, f32 *, 0x78);
-    temp_f0 = GetSuck(&B_002DE578);
-    temp_v0_2 = arg0 + 0x80;
-    temp_f4 = M2C_FIELD(arg0, f32 *, 0x90);
-    var_f3 = M2C_FIELD(arg0, f32 *, 0x80) + (temp_f0 * (M2C_FIELD(temp_v0_2, f32 *, 4) + (temp_f0 * M2C_FIELD(temp_v0_2, f32 *, 8))));
-    temp_f5 = M2C_FIELD(arg0, f32 *, 0x94);
-    if (var_f3 < temp_f4) {
-        var_f3 = temp_f4;
-    } else if (temp_f5 < var_f3) {
-        var_f3 = temp_f5;
-    }
-    M2C_FIELD(temp_v0, f32 *, 0x4C) = var_f3;
-    SetAsegaSpeed(temp_v0, fparg1);
-    AppendDlEntry(&B_003E1218, temp_v0);
-    AppendDlEntry((M2C_UNK *)(arg0 + 0x50), temp_v0);
-    temp_v0_3 = M2C_FIELD(temp_v0, M2C_UNK **, 0xC);
-    M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *), 0xC)(temp_v0 + M2C_FIELD(temp_v0_3, s16 *, 8));
-    sp0 = temp_v0;
-    temp_v0_4 = M2C_FIELD(temp_v0, M2C_UNK **, 0xC);
-    M2C_FIELD(temp_v0_4, M2C_UNK (**)(s8 *), 0xC)(temp_v0 + M2C_FIELD(temp_v0_4, s16 *, 8));
-    CFramePtr_Assign(temp_v0, M2C_FIELD(arg0, s32 *, 0));
-    if (arg3 != NULL) {
-        *arg3 = temp_v0;
-    }
-    sp18 = arg2 >> 2;
-    var_s3 = 0;
-    sp14 = arg2 & 2;
-    if (M2C_FIELD(arg0, s32 *, 0x5C) > 0) {
-        do {
-            temp_s0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x60) + (var_s3 * 8));
-            if (!(M2C_FIELD(temp_s0, s32 *, 0) & 0x40000000)) {
-                BindAsegChn(arg0, arg1, temp_s0, &sp4, &sp8);
-                if (sp8 != 0) {
-                    func_001F8668(sp4, 0);
-                    temp_v0_5 = (s8 *)(PvAllocAct(0x2C));
-                    M2C_FIELD(temp_v0_5, M2C_UNK **, 0x18) = &D_002CAF08;
-                    M2C_FIELD(temp_v0_5, s32 *, 0) = 0;
-                    temp_v0_6 = M2C_FIELD(temp_s0, s32 *, 4);
-                    if (M2C_FIELD(temp_s0, s32 *, 0) & 0x80000000) {
-                        M2C_FIELD(temp_v0_5, s32 *, 0x20) = temp_v0_6;
-                    } else {
-                        M2C_FIELD(temp_v0_5, s32 *, 0x1C) = temp_v0_6;
-                    }
-                    M2C_FIELD(temp_v0_5, s32 *, 4) = sp4;
-                    M2C_FIELD(temp_v0_5, s32 *, 8) = sp8;
-                    M2C_FIELD(temp_v0_5, s32 *, 0x14) = (s32) ((arg2 & 1) ? 7 : 5);
-                    M2C_FIELD(temp_v0_5, s32 *, 0xC) = (s32) M2C_FIELD(arg0, s32 *, 0x6C);
-                    M2C_FIELD(temp_v0_5, s8 **, 0x24) = temp_v0;
-                    M2C_FIELD(temp_v0_5, s8 **, 0x28) = (s8 *) M2C_FIELD(temp_v0, s8 **, 0x34);
-                    M2C_FIELD(temp_v0, s8 **, 0x34) = temp_v0_5;
-                    InsertXfAct(sp4, sp8, temp_v0_5);
-                }
-            }
-            var_s3 += 1;
-        } while (var_s3 < M2C_FIELD(arg0, s32 *, 0x5C));
-    }
-    var_s3_2 = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x64) > 0) {
-        var_s4 = 0;
-        do {
-            temp_s0_2 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x68) + var_s4);
-            func_00130010(arg0, arg1, temp_s0_2, &spC, &sp10);
-            if (sp10 != 0) {
-                temp_v0_7 = (s8 *)(func_0012CE50(0x14));
-                M2C_FIELD(temp_v0_7, s32 *, 0) = (s32) M2C_FIELD(temp_s0_2, s32 *, 8);
-                M2C_FIELD(temp_v0_7, s32 *, 4) = sp10;
-                M2C_FIELD(temp_v0_7, s8 **, 8) = spC;
-                M2C_FIELD(temp_v0_7, s32 *, 0xC) = (s32) M2C_FIELD(temp_s0_2, s32 *, 0);
-                M2C_FIELD(temp_v0_7, s8 **, 0x10) = (s8 *) M2C_FIELD(temp_v0, s8 **, 0x38);
-                M2C_FIELD(temp_v0, s8 **, 0x38) = temp_v0_7;
-                temp_v0_8 = M2C_FIELD(spC, s8 **, 0xC);
-                M2C_FIELD(temp_v0_8, M2C_UNK (**)(s8 *, s32, s8 *), 0x164)(spC + M2C_FIELD(temp_v0_8, s16 *, 0x160), M2C_FIELD(temp_s0_2, s32 *, 0), spC);
-            }
-            var_s3_2 += 1;
-            var_s4 += 0xC;
-        } while (var_s3_2 < M2C_FIELD(arg0, s32 *, 0x64));
-    }
-    var_s0 = 0;
-    SetAsegaHandsOff(temp_v0, M2C_FIELD(arg0, s32 *, 0x70));
-    M2C_FIELD(temp_v0, f32 *, 0x20) = fparg0;
-    if (M2C_FIELD(arg0, s32 *, 0x98) > 0) {
-loop_22:
-        temp_a1 = var_s0 * 0x10;
-        var_s0 += 1;
-        HandleAsegaEvent(temp_v0, M2C_FIELD(arg0, s32 *, 0x9C) + temp_a1);
-        if (var_s0 < M2C_FIELD(arg0, s32 *, 0x98)) {
-            goto loop_22;
-        }
-    }
-    M2C_FIELD(temp_v0, f32 *, 0x1C) = (f32) M2C_FIELD(temp_v0, f32 *, 0x20);
-    SnapAsega(temp_v0, sp18 & 1);
-    if (sp14 != 0) {
-        if (M2C_FIELD(temp_v0, f32 *, 0x40) < 0.0f) {
-            M2C_FIELD(temp_v0, s32 *, 0x50) = (s32) M2C_FIELD(arg0, s32 *, 0xA0);
-        }
-        HandleAsegaEventsFF(temp_v0);
-    } else {
-        UpdateAsegaIeaCur__FP5ASEGA(temp_v0);
-    }
-    temp_v1 = M2C_FIELD(temp_v0, M2C_UNK **, 0xC);
-    M2C_FIELD(temp_v1, M2C_UNK (**)(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK), 0x1C)(temp_v0 + M2C_FIELD(temp_v1, s16 *, 0x18), 2, 0, 0, 0, 0);
-    temp_v0_9 = M2C_FIELD(sp0, s8 **, 0xC);
-    M2C_FIELD(temp_v0_9, M2C_UNK (**)(s8 *, s8 *), 0x14)(sp0 + M2C_FIELD(temp_v0_9, s16 *, 0x10), sp0);
+#include "sly2.h"
+struct ALO_12F9B8;
+struct XF_12F9B8;
+struct ASEGA_12F9B8;
+struct ACTVT_12F9B8;
+struct ASEGAVT_12F9B8 {
+    char pad0[8];
+    short deltaRetain; short indexRetain; void (*pfnRetain)(void *);
+    short deltaRelease; short indexRelease; void (*pfnRelease)(void *);
+    short deltaUpdate; short indexUpdate; void (*pfnUpdate)(void *, int, int, int, int, int);
+};
+struct ASEGCHN_12F9B8 { int packed; int value; };
+struct CHNPART_12F9B8 { int ipart; int oid; int value; };
+struct EVENT_12F9B8 { int pad[4]; };
+struct CLQ_12F9B8 { float g0; float g1; float g2; };
+struct LM_12F9B8 { float gMin; float gMax; };
+struct DL_12F9B8 { int pad[3]; };
+struct ASEG_12F9B8 {
+    int frame;
+    char pad4[0x4C];
+    DL_12F9B8 dlAsega;
+    int cchn;
+    ASEGCHN_12F9B8 *achn;
+    int cpart;
+    CHNPART_12F9B8 *apart;
+    int grfAct;
+    int handsOff;
+    int pad74;
+    float rate;
+    int pad7C;
+    CLQ_12F9B8 clqSpeed;
+    int pad8C;
+    LM_12F9B8 lmSpeed;
+    int cevent;
+    EVENT_12F9B8 *aevent;
+    int iea;
+};
+struct ACT_12F9B8 {
+    int field0; ALO_12F9B8 *palo; XF_12F9B8 *pxf; int grf; int pad10; int kind; ACTVT_12F9B8 *vt; int target1C; int target20;
+    ASEGA_12F9B8 *pasega; ACT_12F9B8 *pactNext;
+};
+struct PARTLINK_12F9B8 { int value; unsigned nTarget; void *palo; int ipart; PARTLINK_12F9B8 *pnext; };
+struct ASEGA_12F9B8 {
+    int field0; int field4; int pad8; ASEGAVT_12F9B8 *vt; int pad10;
+    ASEG_12F9B8 *paseg; ALO_12F9B8 *palo; float tLocal; float tTarget; int pad24[4];
+    ACT_12F9B8 *pact; PARTLINK_12F9B8 *plink; int grfapl; float svt; int pad44; float rate; float speed; int iea; int pad54[2]; int field5C;
+};
+struct PARTVT_12F9B8 { char pad[0x160]; short delta; short index; void (*fn)(void *, int); };
+struct PARTOBJ_12F9B8 { char pad[0xC]; PARTVT_12F9B8 *vt; };
+static inline float GFromClq(CLQ_12F9B8 *pclq, float g) { return pclq->g0 + g * (pclq->g1 + g * pclq->g2); }
+static inline float GLimitLm(LM_12F9B8 *plm, float g)
+{
+    float gMin = plm->gMin;
+    float gMax = plm->gMax;
+    if (g < gMin)
+        g = gMin;
+    else if (gMax < g)
+        g = gMax;
+    return g;
 }
+struct LOCK_12F9B8 {
+    ASEGA_12F9B8 *p;
+    LOCK_12F9B8(ASEGA_12F9B8 *pasega) { p = pasega; p->vt->pfnRetain((char *)p + p->vt->deltaRetain); }
+    ~LOCK_12F9B8() { p->vt->pfnRelease((char *)p + p->vt->deltaRelease); }
+};
+extern "C" {
+extern int B_003E1224;
+extern int B_003E1218;
+extern int B_002DE578;
+extern ASEGAVT_12F9B8 D_002CAF48;
+extern ACTVT_12F9B8 D_002CAF08;
+void *PvAllocSlotheapImpl(int *);
+float GetSuck(int *);
+void SetAsegaSpeed(ASEGA_12F9B8 *, float);
+void AppendDlEntry(void *, void *);
+void CFramePtr_Assign(ASEGA_12F9B8 *, int);
+void BindAsegChn(ASEG_12F9B8 *, ALO_12F9B8 *, ASEGCHN_12F9B8 *, ALO_12F9B8 **, XF_12F9B8 **);
+void func_001F8668(ALO_12F9B8 *, int);
+ACT_12F9B8 *PvAllocAct(int);
+void InsertXfAct(ALO_12F9B8 *, XF_12F9B8 *, ACT_12F9B8 *);
+void func_00130010(ASEG_12F9B8 *, ALO_12F9B8 *, CHNPART_12F9B8 *, PARTOBJ_12F9B8 **, unsigned *);
+PARTLINK_12F9B8 *func_0012CE50(int);
+void SetAsegaHandsOff(ASEGA_12F9B8 *, int);
+void HandleAsegaEvent(ASEGA_12F9B8 *, EVENT_12F9B8 *);
+void SnapAsega(ASEGA_12F9B8 *, int);
+void HandleAsegaEventsFF(ASEGA_12F9B8 *);
+void UpdateAsegaIeaCur__FP5ASEGA(ASEGA_12F9B8 *);
+}
+extern "C" void ApplyAseg(ASEG_12F9B8 *paseg, ALO_12F9B8 *paloRoot, float tLocal, float svtLocal, int grfapl, ASEGA_12F9B8 **ppasega)
+{
+    ASEGA_12F9B8 *pasega = (ASEGA_12F9B8 *)PvAllocSlotheapImpl(&B_003E1224);
+    memset(pasega, 0, 0x60);
+    pasega->field0 = 0;
+    pasega->field4 = 0;
+    pasega->vt = &D_002CAF48;
+    pasega->field5C = 0;
+    pasega->paseg = paseg;
+    pasega->palo = paloRoot;
+    pasega->tLocal = tLocal;
+    pasega->grfapl = grfapl;
+    pasega->rate = paseg->rate;
+    float suck = GetSuck(&B_002DE578);
+    pasega->speed = GLimitLm(&paseg->lmSpeed, GFromClq(&paseg->clqSpeed, suck));
+    SetAsegaSpeed(pasega, svtLocal);
+    AppendDlEntry(&B_003E1218, pasega);
+    AppendDlEntry(&paseg->dlAsega, pasega);
+    pasega->vt->pfnRetain((char *)pasega + pasega->vt->deltaRetain);
+    LOCK_12F9B8 lock(pasega);
+    CFramePtr_Assign(pasega, paseg->frame);
+    if (ppasega)
+        *ppasega = pasega;
+    for (int ichn = 0; ichn < paseg->cchn; ichn++) {
+        ASEGCHN_12F9B8 *pchn = &paseg->achn[ichn];
+        if (pchn->packed & 0x40000000)
+            continue;
+        ALO_12F9B8 *palo;
+        XF_12F9B8 *pxf;
+        BindAsegChn(paseg, paloRoot, pchn, &palo, &pxf);
+        if (pxf) {
+            func_001F8668(palo, 0);
+            ACT_12F9B8 *pact = PvAllocAct(0x2C);
+            pact->vt = &D_002CAF08;
+            pact->field0 = 0;
+            if (pchn->packed & 0x80000000)
+                pact->target20 = pchn->value;
+            else
+                pact->target1C = pchn->value;
+            pact->palo = palo;
+            pact->pxf = pxf;
+            pact->kind = (grfapl & 1) ? 7 : 5;
+            pact->grf = paseg->grfAct;
+            pact->pasega = pasega;
+            pact->pactNext = pasega->pact;
+            pasega->pact = pact;
+            InsertXfAct(palo, pxf, pact);
+        }
+    }
+    for (int ipart = 0; ipart < paseg->cpart; ipart++) {
+        CHNPART_12F9B8 *ppart = &paseg->apart[ipart];
+        PARTOBJ_12F9B8 *pobj;
+        unsigned nTarget;
+        func_00130010(paseg, paloRoot, ppart, &pobj, &nTarget);
+        if (nTarget) {
+            PARTLINK_12F9B8 *plink = func_0012CE50(0x14);
+            plink->value = ppart->value;
+            plink->nTarget = nTarget;
+            plink->palo = pobj;
+            plink->ipart = ppart->ipart;
+            plink->pnext = pasega->plink;
+            pasega->plink = plink;
+            pobj->vt->fn((char *)pobj + pobj->vt->delta, ppart->ipart);
+        }
+    }
+    SetAsegaHandsOff(pasega, paseg->handsOff);
+    pasega->tTarget = tLocal;
+    for (int ievent = 0; ievent < paseg->cevent; ievent++)
+        HandleAsegaEvent(pasega, &paseg->aevent[ievent]);
+    pasega->tLocal = pasega->tTarget;
+    SnapAsega(pasega, (grfapl >> 2) & 1);
+    if (grfapl & 2) {
+        if (pasega->svt < 0.0f)
+            pasega->iea = paseg->iea;
+        HandleAsegaEventsFF(pasega);
+    } else
+        UpdateAsegaIeaCur__FP5ASEGA(pasega);
+    pasega->vt->pfnUpdate((char *)pasega + pasega->vt->deltaUpdate, 2, 0, 0, 0, 0);
 }
