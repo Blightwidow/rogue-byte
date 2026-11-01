@@ -428,7 +428,6 @@ address	name	size	file	score
 0X1758A0	PsenseFindNotice	1120	new_1715f0/PsenseFindNotice.cpp	162
 0X175D00	func_00175D00	752	new_1715f0/fun_00175d00.cpp	61
 0X176098	GoalNotice_Update	960	new_1715f0/GoalNotice_Update.cpp	108
-0X176458	GoalNotice_SetState	640	new_1715f0/GoalNotice_SetState.cpp	0
 0X176750	GoalBrain_SetCommand	1072	new_1715f0/GoalBrain_SetCommand.cpp	18
 0X176BE8	GoalBrain_FHandleMessage	2608	new_1715f0/GoalBrain_FHandleMessage.cpp	249
 0X177618	GoalBrain_Update	1416	new_1715f0/GoalBrain_Update.cpp	192
