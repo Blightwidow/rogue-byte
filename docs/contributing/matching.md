@@ -72,6 +72,12 @@ Reported by other PS2 decompilations with the same compiler family (Ratchet & Cl
 Patterns the source cannot reach (record them in the file and move on):
 
 - Hand-written assembly: trapping `add`/`addi`, `$at` used as a general register, MMI and VU0 sequences in delay slots.
+  `config/us/handwritten_asm.txt` lists the functions spimdisasm marks as hand-written (130, 121 of them in the SDK range); regenerate it
+  with `python3 scripts/matching/handwritten.py`. Nothing counts from it and matching one is allowed, but a lead dealing out work leaves them out of the pool.
+- **VU0 and MMI near misses: about ten compiles, then stop.** The walls are a VU instruction in a branch or `jal` delay slot, the `sq` order of
+  a prologue, and which s-register holds which parameter around the `asm`. When the diff is one of these and ten compiles did not move it,
+  write the best source to the function's note and add a `Behaviour:` line (what it computes, inputs, outputs, fields it touches) so the
+  port can reimplement it as plain math. A match is still welcome, it just stops being the goal of the function.
 - A chunk of the split that is a fragment of a larger function (`addiu $sp,$sp,N ; nop` remnants, a single instruction) is a splitting
   question, not a C question.
 - A register-allocation difference that three different wordings leave unchanged.
