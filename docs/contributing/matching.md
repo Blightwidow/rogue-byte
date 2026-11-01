@@ -512,3 +512,13 @@ The control is the 97 sources of the r9 and r10 matches as they stood before the
 
 The honest reading: single rewrites seldom finish a function; the worker matches combined several changes (typed structs, callee prototypes, a local named or inlined, a loop re-read) that no rule expresses alone. Rules move scores, models finish them. Keep the control as the regression test (a new rule must solve at least what these do and lose none); `hoist_field`, `result_local` and `for_to_while` have not yet contributed to a solve.
 
+### Sonnet round 13: a sample of 401 to 1,000 byte functions (20 functions, 2026-11-01)
+
+A stratified sample of the 490 open functions of the tier (outside the SDK range and `config/us/handwritten_asm.txt`), four Sonnet workers with about 20 compiles per function: 2 matches (`141A50`, `164640`), 17 of 20 improved. 752K subagent tokens in 10 minutes, about 38K per function and 376K per match (r11, smaller functions: 78K; r12, Opus on large ones: 710K). With 2 matches in 20 the 95% interval on the rate is roughly 1 to 32%: read 10% of 490 (about 49 matches for 18M tokens) as an order of magnitude. Strata and results are in `work/matching/r13_sample.json` and `r13_results.json` (local). Score drops by stratum: 7 at 20 or below, 15.5 at 21 to 50, 22 at 51 to 100, 49 above 100, 70 for the untried. New:
+
+- **A `switch` on the secondary state** fixed `164640` after 13 tries at 14 with if-chains (the round 9 lesson once more).
+- **An inverted condition puts the second vtable call last** (`141A50`: `if (!((mask & button) && fn318(...))) SetState(..., 0); else fn328(...)`, 102 to 0 in seven compiles).
+- **A `const` global hoists a load into a float register:** a non-const `D_002BDDE8` took `158B20` from 120 to 89.
+- **A memory clobber on the real `sqc2` asm** stops the `group->list` hoist (`158E20`, 60 to 9); a non-volatile last `qmfc2` sinks into the delay slot (`179328`).
+- **Walls:** the `PvAllocStackImpl` request block, where retail stores `align` in the `jal` delay slot through `v0` (`158E20`, 9); the hazard `nop` after `mtc1` that retail has and ours lacks (`179328`, `18B460`); retail hoisting `%hi(global)` into a saved register before the first call (`14FF38`); and the lane-move family (`12B738`, `12BBD0`, `12C140`, `12C768`, `18B460`), which the 2026-11-01 lane-move rule now allows.
+
