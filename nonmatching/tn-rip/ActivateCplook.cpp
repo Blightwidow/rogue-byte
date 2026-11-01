@@ -25,7 +25,6 @@ void SetCmNearClip(void *, float);
 }
 extern "C" void ActivateCplook(Plook *pcplook, void *psoFocus, void *pv)
 {
-    Cm *pcm = &B_002DDF40;
     ActivateCplcy(pcplook, psoFocus);
     void *emitter = NewEmitter(0x26);
     SetEmitterUnpositioned(emitter, 0);
@@ -34,6 +33,7 @@ extern "C" void ActivateCplook(Plook *pcplook, void *psoFocus, void *pv)
     SetEmitterUnpositioned(emitter, 0);
     VirtualRefPtr_Assign(&pcplook->pambBinoc, emitter);
     PauseAmb(pcplook->pambZoom);
+    Cm *pcm = &B_002DDF40;
     DecomposeRotateMatrixPanTilt__FP7MATRIX3PfT1(pcm->mat, &pcplook->radPan, &pcplook->radTilt);
     if (FIsBasicDerivedFrom(pcplook->psoFocus, 0x34)) {
         *(B8 *)&pcplook->lim[0] = D_002BD950;

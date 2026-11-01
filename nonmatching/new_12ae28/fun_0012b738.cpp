@@ -1,0 +1,37 @@
+#include "sly2.h"
+struct V3_12B738 { float x; float y; float z; };
+struct KEY_12B738 { V3_12B738 a; float t; QW q0; V3_12B738 b; float u; QW q1; };
+struct KEYS_12B738 { char pad[8]; char *entries; };
+struct STATE_12B738 {
+    char pad0[0x80]; float t0; float t1; float *pcur; char pad8c[0x9A - 0x8C]; short flag;
+    char pad9c[0xC0 - 0x9C]; V3_12B738 a; float pada; QW q0; V3_12B738 b; float padb; QW q1;
+};
+extern "C" {
+int IkeyFindAcrb(float);
+int FFloatsNear__Ffff(float, float, float);
+}
+extern QW g_2a2dd0;
+static inline int Near3(const float *p, const float *q)
+{
+    return FFloatsNear__Ffff(p[0], q[0], 0.0001f) && FFloatsNear__Ffff(p[1], q[1], 0.0001f) &&
+           FFloatsNear__Ffff(p[2], q[2], 0.0001f);
+}
+extern "C" void func_0012B738(KEYS_12B738 *keys, STATE_12B738 *state)
+{
+    int index = IkeyFindAcrb(*state->pcur);
+    char *base = keys->entries + index * 0x30;
+    state->t0 = *(float *)(base - 0x24);
+    state->a = *(V3_12B738 *)(base - 0x30);
+    state->q0 = *(QW *)(base - 0x10);
+    state->t1 = *(float *)(base + 0xC);
+    state->b = *(V3_12B738 *)base;
+    state->q1 = *(QW *)(base + 0x10);
+    int same = Near3(&state->a.x, &state->b.x);
+    int second = 0;
+    if (same) {
+        second = Near3((float *)&g_2a2dd0, (float *)&state->q0);
+        if (second)
+            second = Near3((float *)&g_2a2dd0, (float *)&state->q1);
+    }
+    state->flag = second ? 2 : 1;
+}

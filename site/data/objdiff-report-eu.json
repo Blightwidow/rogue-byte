@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 39.823678,
+  "fuzzy_match_percent": 39.892415,
   "total_code": "1402432",
-  "matched_code": "558500",
-  "matched_code_percent": 39.823678,
+  "matched_code": "559464",
+  "matched_code_percent": 39.892415,
   "total_data": "1038916",
   "total_functions": 6822,
-  "matched_functions": 4938,
-  "matched_functions_percent": 72.383465,
+  "matched_functions": 4940,
+  "matched_functions_percent": 72.412782,
   "complete_code": "42744",
   "complete_code_percent": 3.047848,
   "total_units": 434,
@@ -4556,9 +4556,9 @@
     {
      "name": "func_0021BD18",
      "size": "956",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "328",
-     "fuzzy_match_percent": 0.0
+     "address": "328"
     },
     {
      "name": "func_0021C0D8",
@@ -6745,9 +6745,9 @@
     {
      "name": "UpdateCmMat4",
      "size": "936",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2016",
-     "fuzzy_match_percent": 0.0
+     "address": "2016"
     },
     {
      "name": "func_0014E000",
@@ -6951,9 +6951,9 @@
     {
      "name": "func_0014F4E0",
      "size": "192",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4720",
-     "fuzzy_match_percent": 0.0
+     "address": "4720"
     },
     {
      "name": "SetCmFov",
@@ -9009,11 +9009,11 @@
     {
      "name": "SolveDzgFric__FP3DZGiiPP2XPPiPPP2SOf",
      "size": "764",
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "SolveDzgFric(DZG*, int, int, XP**, int*, SO***, float)"
      },
-     "address": "1208",
-     "fuzzy_match_percent": 0.0
+     "address": "1208"
     }
    ],
    "metadata": {
@@ -16768,11 +16768,11 @@
     {
      "name": "CsbiIntersectSphereBsp__FP6VECTORfiP3BSPT3P4GEOMiP3SBI",
      "size": "1888",
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CsbiIntersectSphereBsp(VECTOR *, float, int, BSP *, BSP *, GEOM *, int, SBI *)"
      },
-     "address": "4024",
-     "fuzzy_match_percent": 0.0
+     "address": "4024"
     }
    ],
    "metadata": {
@@ -19629,9 +19629,9 @@
     {
      "name": "func_001B8D30",
      "size": "400",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "19296",
-     "fuzzy_match_percent": 0.0
+     "address": "19296"
     },
     {
      "name": "func_001B8EC0",
@@ -27439,7 +27439,7 @@
     {
      "name": ".text",
      "size": "20940",
-     "fuzzy_match_percent": 42.827125,
+     "fuzzy_match_percent": 44.87106,
      "metadata": {}
     }
    ],
@@ -27678,7 +27678,7 @@
     {
      "name": "UpdateJtGadgets",
      "size": "428",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
      "address": "8648"
     },
@@ -28231,14 +28231,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 42.827125,
+    "fuzzy_match_percent": 44.87106,
     "total_code": "20940",
-    "matched_code": "8968",
-    "matched_code_percent": 42.827125,
+    "matched_code": "9396",
+    "matched_code_percent": 44.87106,
     "matched_data_percent": 100.0,
     "total_functions": 111,
-    "matched_functions": 86,
-    "matched_functions_percent": 77.477477,
+    "matched_functions": 87,
+    "matched_functions_percent": 78.378378,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -32140,9 +32140,9 @@
     {
      "name": "FCheckJtCaneSide",
      "size": "160",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0",
-     "fuzzy_match_percent": 0.0
+     "address": "0"
     },
     {
      "name": "ChooseJtCaneSwing",
@@ -32987,9 +32987,9 @@
     {
      "name": "func_001A63B0",
      "size": "160",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "288",
-     "fuzzy_match_percent": 0.0
+     "address": "288"
     },
     {
      "name": "bevy_world_loads_b5_apply_xform",
@@ -37840,9 +37840,9 @@
     {
      "name": "AddGadgetBurstWkr",
      "size": "980",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1608",
-     "fuzzy_match_percent": 0.0
+     "address": "1608"
     },
     {
      "name": "ExplodeGadgetBurst",
@@ -40882,9 +40882,9 @@
     {
      "name": "UpdateCplookat",
      "size": "824",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "72",
-     "fuzzy_match_percent": 0.0
+     "address": "72"
     },
     {
      "name": "func_00151F70",
@@ -41837,11 +41837,11 @@
     {
      "name": "FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3",
      "size": "476",
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FRenderRipPosMat(RIP*, CM*, VECTOR*, MATRIX3*)"
      },
-     "address": "664",
-     "fuzzy_match_percent": 0.0
+     "address": "664"
     },
     {
      "name": "RenderRip",
@@ -48983,7 +48983,7 @@
     {
      "name": ".text",
      "size": "12176",
-     "fuzzy_match_percent": 54.533509,
+     "fuzzy_match_percent": 58.935611,
      "metadata": {}
     }
    ],
@@ -49117,7 +49117,7 @@
     {
      "name": "RequestTaskState",
      "size": "536",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
      "address": "4168"
     },
@@ -49341,14 +49341,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 54.533509,
+    "fuzzy_match_percent": 58.935611,
     "total_code": "12176",
-    "matched_code": "6640",
-    "matched_code_percent": 54.533509,
+    "matched_code": "7176",
+    "matched_code_percent": 58.935611,
     "matched_data_percent": 100.0,
     "total_functions": 49,
-    "matched_functions": 37,
-    "matched_functions_percent": 75.510204,
+    "matched_functions": 38,
+    "matched_functions_percent": 77.55102,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -52251,9 +52251,9 @@
     {
      "name": "AddSoWaterAcceleration",
      "size": "1384",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "96",
-     "fuzzy_match_percent": 0.0
+     "address": "96"
     },
     {
      "name": "func_00229D60",
@@ -63417,11 +63417,11 @@
     {
      "name": "SetVectorSphere__FP6VECTORfff",
      "size": "136",
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "SetVectorSphere(VECTOR*, float, float, float)"
      },
-     "address": "104",
-     "fuzzy_match_percent": 0.0
+     "address": "104"
     },
     {
      "name": "SProjectVector__FP6VECTORT0",
@@ -64539,14 +64539,14 @@
    "id": "game",
    "name": "Game code",
    "measures": {
-    "fuzzy_match_percent": 42.785865,
+    "fuzzy_match_percent": 42.862896,
     "total_code": "1251432",
-    "matched_code": "535436",
-    "matched_code_percent": 42.785865,
+    "matched_code": "536400",
+    "matched_code_percent": 42.862896,
     "matched_data_percent": 100.0,
     "total_functions": 6067,
-    "matched_functions": 4742,
-    "matched_functions_percent": 78.160541,
+    "matched_functions": 4744,
+    "matched_functions_percent": 78.193506,
     "complete_code": "42744",
     "complete_code_percent": 3.415607,
     "complete_data_percent": 100.0,
@@ -64577,14 +64577,14 @@
    "id": "sly1",
    "name": "Sly 1 engine code",
    "measures": {
-    "fuzzy_match_percent": 40.107429,
+    "fuzzy_match_percent": 40.174261,
     "total_code": "802016",
-    "matched_code": "321668",
-    "matched_code_percent": 40.107429,
+    "matched_code": "322204",
+    "matched_code_percent": 40.174261,
     "matched_data_percent": 100.0,
     "total_functions": 3851,
-    "matched_functions": 2918,
-    "matched_functions_percent": 75.772527,
+    "matched_functions": 2919,
+    "matched_functions_percent": 75.798494,
     "complete_code": "29972",
     "complete_code_percent": 3.737083,
     "complete_data_percent": 100.0,
@@ -64596,14 +64596,14 @@
    "id": "new",
    "name": "Sly 2-only code",
    "measures": {
-    "fuzzy_match_percent": 47.56573,
+    "fuzzy_match_percent": 47.660964,
     "total_code": "449416",
-    "matched_code": "213768",
-    "matched_code_percent": 47.56573,
+    "matched_code": "214196",
+    "matched_code_percent": 47.660964,
     "matched_data_percent": 100.0,
     "total_functions": 2216,
-    "matched_functions": 1824,
-    "matched_functions_percent": 82.310469,
+    "matched_functions": 1825,
+    "matched_functions_percent": 82.355596,
     "complete_code": "12772",
     "complete_code_percent": 2.84191,
     "complete_data_percent": 100.0,
@@ -64615,14 +64615,14 @@
    "id": "core",
    "name": "Core and memory",
    "measures": {
-    "fuzzy_match_percent": 36.556947,
+    "fuzzy_match_percent": 36.946548,
     "total_code": "109856",
-    "matched_code": "40160",
-    "matched_code_percent": 36.556947,
+    "matched_code": "40588",
+    "matched_code_percent": 36.946548,
     "matched_data_percent": 100.0,
     "total_functions": 566,
-    "matched_functions": 393,
-    "matched_functions_percent": 69.434629,
+    "matched_functions": 394,
+    "matched_functions_percent": 69.611307,
     "complete_code": "4844",
     "complete_code_percent": 4.409409,
     "complete_data_percent": 100.0,
@@ -64710,14 +64710,14 @@
    "id": "objects",
    "name": "World objects and physics",
    "measures": {
-    "fuzzy_match_percent": 44.182138,
+    "fuzzy_match_percent": 44.35946,
     "total_code": "302276",
-    "matched_code": "133552",
-    "matched_code_percent": 44.182138,
+    "matched_code": "134088",
+    "matched_code_percent": 44.35946,
     "matched_data_percent": 100.0,
     "total_functions": 1536,
-    "matched_functions": 1188,
-    "matched_functions_percent": 77.34375,
+    "matched_functions": 1189,
+    "matched_functions_percent": 77.408854,
     "complete_code": "10956",
     "complete_code_percent": 3.624502,
     "complete_data_percent": 100.0,

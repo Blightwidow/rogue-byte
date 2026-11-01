@@ -1523,6 +1523,7 @@ address	name	size	file
 0X141588	func_00141588	184	new_13f888/fun_00141588.cpp
 0X141928	func_00141928	60	new_13f888/fun_00141928.c
 0X141968	func_00141968	228	new_13f888/fun_00141968.cpp
+0X141A50	UpdateJtGadgets	428	new_13f888/UpdateJtGadgets.cpp
 0X141C00	func_00141C00	8	new_13f888/fun_00141c00.c
 0X141CD0	SpendJtGadgetPower	104	new_13f888/SpendJtGadgetPower.cpp
 0X141D38	func_00141D38	148	new_13f888/fun_00141d38.c
@@ -2070,6 +2071,7 @@ address	name	size	file
 0X164098	func_00164098	104	unsorted/fun_00164098.cpp
 0X164100	VisitTaskInOrder	368	sensor-geom/VisitTaskInOrder.cpp
 0X164270	RestoreTaskStateFromSave	316	sensor-geom/RestoreTaskStateFromSave.cpp
+0X164640	RequestTaskState	536	sensor-geom/RequestTaskState.cpp
 0X164858	ForceTaskState	372	sensor-geom/ForceTaskState.cpp
 0X1649D0	UpdateCurrentJob	212	sensor-geom/UpdateCurrentJob.cpp
 0X164AA8	func_00164AA8	144	sensor-geom/fun_00164aa8.cpp

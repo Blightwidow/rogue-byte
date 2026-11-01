@@ -56,18 +56,19 @@ void RequestTaskState(TASK *task, int request, int causeArg)
     if (state != -1) {
         switch (request) {
         case 4:
-            if (state == 0) {
+            switch (state) {
+            case 0:
                 if (FTaskPrerequisitesDone(task)) {
                     SetTaskState(task, 1);
-                    goto sw;
-                }
-                RefuseTaskState(task, 4);
-                goto done;
+                    SwitchCurrentTask(task);
+                } else
+                    RefuseTaskState(task, 4);
+                break;
+            case 3:
+                break;
+            default:
+                SwitchCurrentTask(task);
             }
-            if (state == 3)
-                goto done;
-        sw:
-            SwitchCurrentTask(task);
             break;
         case 5:
             LeaveTaskIfCurrent(task);

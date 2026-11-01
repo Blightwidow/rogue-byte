@@ -1,78 +1,58 @@
-#include "m2c_macros.h"
+struct SMP11D018 { float a; float b; float c; };
+extern "C" int CSolveQuadratic(float, float, float, float *);
 extern "C" {
+float GSmooth__FfffP3SMPPf(float target, float start, float t, SMP11D018 *psmp, float *pvel)
+{
+    float roots[2];
+    float pos;
+    float vel;
+    int flipped = 0;
+    float dist;
 
-s32 CSolveQuadratic__FfffPf(void *, f32, f32, f32); /* extern */
-
-f32 GSmooth__FfffP3SMPPf(void *arg0, f32 *arg1, f32 fparg0, f32 fparg1, f32 fparg2) {
-    char sp[0x10];
-    f32 temp_f0;
-    f32 temp_f0_2;
-    f32 temp_f0_3;
-    f32 temp_f14;
-    f32 temp_f1;
-    f32 temp_f1_2;
-    f32 temp_f1_3;
-    f32 temp_f2;
-    f32 temp_f3;
-    f32 var_f12;
-    f32 var_f12_2;
-    f32 var_f14;
-    f32 var_f20;
-    f32 var_f2;
-    s32 var_s2;
-
-    var_s2 = 0;
-    temp_f3 = M2C_FIELD(arg0, f32 *, 0);
-    var_f20 = fparg2;
-    if (temp_f3 == 0.0f) {
-        if (arg1 != NULL) {
-            *arg1 = 0.0f;
-            return fparg0;
-        }
-        return fparg0;
+    if (psmp->a == 0.0f) {
+        if (pvel)
+            *pvel = 0.0f;
+        return target;
     }
-    var_f14 = fparg0 - fparg1;
-    if (var_f14 < 0.0f) {
-        var_f14 = -var_f14;
-        var_s2 = 1;
+    dist = target - start;
+    if (dist < 0.0f) {
+        dist = -dist;
+        flipped = 1;
     }
-    temp_f1 = M2C_FIELD(arg0, f32 *, 8);
-    temp_f1_2 = (M2C_FIELD(arg0, f32 *, 4) + temp_f3) * temp_f1 * 0.5f;
-    if (temp_f1_2 <= var_f14) {
-        temp_f0 = (var_f14 - temp_f1_2) / temp_f3;
-        if (!(var_f20 <= temp_f0)) {
-            var_f20 -= temp_f0;
-            var_f14 = temp_f1_2;
-            goto block_13;
-        }
-        var_f2 = -temp_f3;
-        var_f12_2 = var_f14 - (temp_f3 * var_f20);
-    } else {
-block_13:
-        temp_f0_2 = M2C_FIELD(arg0, f32 *, 4);
-        temp_f14 = *(sp + ((CSolveQuadratic__FfffPf(sp, (M2C_FIELD(arg0, f32 *, 0) - temp_f0_2) / (2.0f * temp_f1), temp_f0_2, -var_f14) - 1) * 4)) - var_f20;
-        var_f12_2 = 0.0f;
-        if (!(temp_f14 > 0.0f)) {
-            var_f2 = -M2C_FIELD(arg0, f32 *, 4);
+    float ramp = (psmp->b + psmp->a) * psmp->c * 0.5f;
+    if (ramp <= dist) {
+        float cruise = (dist - ramp) / psmp->a;
+        if (t <= cruise) {
+            vel = -psmp->a;
+            pos = dist - psmp->a * t;
         } else {
-            temp_f2 = M2C_FIELD(arg0, f32 *, 4);
-            temp_f1_3 = M2C_FIELD(arg0, f32 *, 8);
-            temp_f0_3 = (M2C_FIELD(arg0, f32 *, 0) - temp_f2) * temp_f14;
-            var_f2 = -(temp_f2 + (temp_f0_3 / temp_f1_3));
-            var_f12_2 = ((temp_f0_3 * temp_f14) / (2.0f * temp_f1_3)) + (temp_f2 * temp_f14);
-        }
-    }
-    if (var_s2 != 0) {
-        var_f12 = fparg1 - var_f12_2;
-        if (arg1 != NULL) {
-            *arg1 = -var_f2;
+            t -= cruise;
+            dist = ramp;
+            goto quad;
         }
     } else {
-        var_f12 = var_f12_2 + fparg1;
-        if (arg1 != NULL) {
-            *arg1 = var_f2;
+    quad:
+        int count = CSolveQuadratic((psmp->a - psmp->b) / (2.0f * psmp->c), psmp->b, -dist, roots);
+        float rem = roots[count - 1] - t;
+        pos = 0.0f;
+        if (rem > 0.0f) {
+            float v = (psmp->a - psmp->b) * rem;
+            vel = -(psmp->b + v / psmp->c);
+            pos = (v * rem) / (2.0f * psmp->c) + psmp->b * rem;
+        } else {
+            vel = -psmp->b;
         }
     }
-    return var_f12;
+done:
+    if (flipped) {
+        pos = start - pos;
+        if (pvel)
+            *pvel = -vel;
+    } else {
+        pos = pos + start;
+        if (pvel)
+            *pvel = vel;
+    }
+    return pos;
 }
 }

@@ -1523,6 +1523,7 @@ us_address	name	other_address	pair	score	addresses
 0x141588	func_00141588	0X1415A0	same	0	ok
 0x141928	func_00141928	0X141940	same	0	ok
 0x141968	func_00141968	0X141980	same	0	ok
+0x141A50	UpdateJtGadgets	0X141A68	same	0	ok
 0x141C00	func_00141C00	0X141C18	gap	0	ok
 0x141CD0	SpendJtGadgetPower	0X141CE8	same	0	ok
 0x141D38	func_00141D38	0X141D50	same	0	ok
@@ -2070,6 +2071,7 @@ us_address	name	other_address	pair	score	addresses
 0x164098	func_00164098	0X164000	identical	0	ok
 0x164100	VisitTaskInOrder	0X164068	same	0	ok
 0x164270	RestoreTaskStateFromSave	0X1641D8	same	0	ok
+0x164640	RequestTaskState	0X1645B8	same	0	ok
 0x164858	ForceTaskState	0X1647D0	same	0	ok
 0x1649D0	UpdateCurrentJob	0X164948	same	0	ok
 0x164AA8	func_00164AA8	0X164A20	same	0	ok

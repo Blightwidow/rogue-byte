@@ -58,17 +58,17 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
                     total += weight;
                 } while (count < 6U);
                 int roll = NRandInRange(0, total - 1);
-                int weight = row->pairs[0].weight;
+                Pair_1F1A40 *pick = row->pairs;
                 unsigned index = 0;
-                while (roll >= weight) {
-                    index += 1;
-                    roll -= weight;
-                    if (index >= 6U) {
-                        goto finished;
-                    }
-                    weight = row->pairs[index].weight;
-                }
-                saved.a8 = row->pairs[index].value;
+                goto cond;
+            again:
+                index += 1;
+                roll -= pick->weight;
+                if (index >= 6U) goto finished;
+                pick = &row->pairs[index];
+            cond:
+                if (roll >= pick->weight) goto again;
+                saved.a8 = pick->value;
             finished:
                 saved.count = 1;
                 saved.type = 0x2B5;
@@ -80,11 +80,10 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
         int pieces = NRandInRange(2, 3);
         if (pieces > 0) {
             int done = 0;
-            int remaining = pieces;
             do {
                 int count = self->itemCount;
                 self->itemCount = count + 1;
-                int share = budget / remaining;
+                int share = budget / (pieces - done);
                 Item_1F1A40 *item = &self->items[count];
                 item->type = 0x2B3;
                 item->a4 = 0;
@@ -95,7 +94,6 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
                     break;
                 }
                 done += 1;
-                remaining = pieces - done;
             } while (done < pieces);
         }
         if (saved.count > 0) {
