@@ -6,7 +6,8 @@
 
 Each data/matching/src/fn/<ADDRESS>.cpp (or .c, judged as C) is judged by scripts/matching/try.py, which picks the assembler by
 address (config/us). The registry row (data/matching/functions.tsv) gets status `matched` with the source at score 0, else `tried` with
-the best score so far and one more try. A function of the SDK range (status `library`) is registered the same way.
+the best score so far and one more try (a near miss that holds a banned construct, see below, does not lower the best score; a match is scanned
+afterwards). A function of the SDK range (status `library`) is registered the same way.
 
 A new match is scanned for what AGENTS.md bans because it only steers the compiler: `volatile` on ordinary data (a pointer to a hardware
 register, an address from 0x10000000 up, is allowed), `register` pins, an empty `asm` with clobbers, and `mfc1` asm that moves a register.
@@ -89,8 +90,8 @@ def main():
             continue
         if os.path.getmtime(path) > since:
             row['tries'] = str(int(row['tries'] or 0) + 1)
-        if score is not None and (row['best'] == '' or score < int(row['best'])):
-            row['best'] = str(score)
+        if score is not None and (row['best'] == '' or score < int(row['best'])) and (score == 0 or not scan(open(path, encoding='utf-8').read())):
+            row['best'] = str(score)  # a near miss that leans on a banned construct does not lower `best` (export_nonmatching.py sets it from the honest source)
         if score == 0:
             row['status'], row['source'] = 'matched', path
             new_matches.append(row)

@@ -4,8 +4,11 @@
 compiles with the original compiler, to nonmatching/<module>/<function>.<c|cpp> and nonmatching/MANIFEST.tsv (address, name, size, file, score).
 
 Candidates: a hand-written draft in data/matching/src/fn/<ADDRESS>.cpp and the best m2c draft the sweep found (work/matching/sweep/results.json).
-Each is scored with scripts/matching/try.py (instructions that differ from the retail function; 0 would be a match) and the lowest score
-wins, a hand-written draft on a tie. Sources that do not compile are left out. The files are never part of the image: they only give
+A candidate that holds a construct AGENTS.md bans (scripts/matching/record.py `scan`: volatile on ordinary data, register pins, an empty asm,
+mfc1 asm) is left out, so a published score never leans on a trick. Each is scored with scripts/matching/try.py (instructions that differ
+from the retail function; 0 would be a match) and the lowest score wins, a hand-written draft on a tie. Sources that do not compile are left
+out. The registry (data/matching/functions.tsv) gets that score as `best` for every unmatched function with a published source, so an
+honest rewrite of an inflated draft lowers or raises it to the truth. The files are never part of the image: they only give
 objdiff something to compare (`make objdiff`), so the progress report counts partial work. Run from the repository root after
 `make elf`; needs the compiler (see docs/build/compiler-identification.md) and your executable."""
 import argparse
@@ -20,6 +23,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from progress import Progress  # noqa: E402
+from record import scan  # noqa: E402  (what AGENTS.md bans because it only steers the compiler)
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 OUTPUT = 'nonmatching'
@@ -68,7 +72,7 @@ def main():
     os.chdir(ROOT)
     report = json.load(open(os.path.join('site', 'data', 'report.json')))
     swept = {address: (path, 'c' if path.endswith('.c') else 'c++') for address, _, _, path in json.load(open(arguments.sweep)) if path}
-    jobs, functions = [], {}
+    jobs, functions, banned_dropped = [], {}, []
     fragments = {int(row['address'], 16) for row in csv.DictReader(open(os.path.join('data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t')
                  if row['status'] == 'fragment'}  # words between two functions: no source to publish for them
     for function in report['functions']:
@@ -78,10 +82,11 @@ def main():
         functions[address] = function
         candidates = []
         hand = os.path.join('data', 'matching', 'src', 'fn', f'{address:06X}.cpp')
-        if os.path.exists(hand):
-            candidates.append((hand, 'c++'))
-        if address in swept:
-            candidates.append(swept[address])
+        for candidate in ([(hand, 'c++')] if os.path.exists(hand) else []) + ([swept[address]] if address in swept else []):
+            if scan(open(candidate[0], encoding='utf-8').read()):
+                banned_dropped.append(address)
+            else:
+                candidates.append(candidate)
         if candidates:
             jobs.append((address, candidates))
     progress = Progress(len(jobs), 'nonmatching')
@@ -112,6 +117,22 @@ def main():
     if readme is not None:
         with open(os.path.join(OUTPUT, 'README.md'), 'w') as handle:
             handle.write(readme)
+    registry_path = os.path.join('data', 'matching', 'functions.tsv')
+    if os.path.exists(registry_path):
+        rows = list(csv.DictReader(open(registry_path, encoding='utf-8'), delimiter='\t'))
+        honest = {address: points for address, (points, _, _) in results}
+        changed = 0
+        for row in rows:
+            address = int(row['address'], 16)
+            if address in honest and row['status'] in ('tried', 'todo') and row['best'] != str(honest[address]):
+                row['best'] = str(honest[address])
+                changed += 1
+        with open(registry_path, 'w', encoding='utf-8', newline='') as out:
+            writer = csv.DictWriter(out, list(rows[0].keys()), delimiter='\t', lineterminator='\n')
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f'registry: best set from the published source for {changed} functions')
+    print(f'{len(banned_dropped)} candidates left out for a banned construct')
     print(f'{len(manifest)} of {len(functions)} unmatched functions have a source that compiles -> {OUTPUT}/')
 
 
