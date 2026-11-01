@@ -40,9 +40,9 @@ extern "C" void SetEpselMode(EPSEL *pepsel, int mode, int sub)
     pepsel->a78 = -1;
     SetTimerTimers__FP5TIMER6TIMERS(pepsel, 1);
     SetBlotBlots(pepsel, 1);
-    pepsel->sub = sub;
     pepsel->mode = mode;
-    pepsel->tmode = g_2ddf0c;
+    pepsel->sub = sub;
+    pepsel->tmode = *(float *)&g_2ddf0c;
     int label = LabelFromEpselMode(pepsel);
     if (label != -1) {
         VEntry *entry = &pepsel->vptr[49];

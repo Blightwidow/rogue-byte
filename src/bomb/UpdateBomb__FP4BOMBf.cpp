@@ -18,9 +18,11 @@ static inline int VelocityBelowLimit(BOMB *pbomb)
     asm("qmtc2.ni %0, vf3" : : "r" (velocity));
     float limit = pbomb->svDetonate;
     asm("vmul.xyz vf1, vf3, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z");
+    int below = 1;
     asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q");
     asm("qmfc2.ni %0, vf1" : "=r" (length));
-    return length < limit;
+    below = (length < limit) ? below : 0;
+    return below;
 }
 void UpdateBomb__FP4BOMBf(BOMB *pbomb)
 {

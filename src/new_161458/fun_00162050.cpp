@@ -14,17 +14,17 @@ struct _m2c_stack_func_00162050 {
     /* 0x30 */ s32 sp30;                            /* inferred */
     /* 0x34 */ char pad34[0x3C];
 };                                                  /* size = 0x70 */
-M2C_UNK CRef_Destruct(M2C_UNK *);                   /* extern */
+M2C_UNK CRef_Destruct(void *);
 s32 GrfOfStates(s32, s8 *);                       /* extern */
-M2C_UNK func_002013D8(M2C_UNK *, s32, M2C_UNK, M2C_UNK, s32 *, s8 *); /* extern */
+M2C_UNK func_002013D8(void *, s32, M2C_UNK, M2C_UNK, s32 *, s8 *); /* extern */
 s32 func_00162050(s32 arg0) {
-    s8 sp[0x30] __attribute__((aligned(16)));
-    M2C_UNK sp20;
+    s8 sp[0x20] __attribute__((aligned(16)));
+    s8 ref[0x10] __attribute__((aligned(16)));
     s32 sp30;
     s32 temp_s0;
-    func_002013D8(&sp20, arg0, 0x1050, 6, &sp30, sp);
+    func_002013D8(ref, arg0, 0x1050, 6, &sp30, sp);
     temp_s0 = GrfOfStates(sp30, sp);
-    CRef_Destruct(&sp20);
+    CRef_Destruct(ref);
     return temp_s0;
 }
 }

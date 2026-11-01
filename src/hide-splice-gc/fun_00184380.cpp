@@ -12,11 +12,9 @@ struct _m2c_stack_func_00184380 {
 };                                                  /* size = 0x10 */
 s32 func_001A6AF8(s8 *, s32);             /* extern */
 s32 func_00184380(s8 *arg0, s8 *arg1) {
-    s32 var_v0;
-    var_v0 = 1;
-    if (M2C_FIELD(arg1, s32 *, 0xF4) == M2C_FIELD(arg0, s32 *, 0x19C)) {
-        var_v0 = func_001A6AF8(arg1, M2C_FIELD(arg0, s32 *, 0x180));
+    if (M2C_FIELD(arg1, s32 *, 0xF4) != M2C_FIELD(arg0, s32 *, 0x19C)) {
+        return 1;
     }
-    return var_v0;
+    return func_001A6AF8(arg1, M2C_FIELD(arg0, s32 *, 0x180));
 }
 }

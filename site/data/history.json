@@ -583,5 +583,14 @@
   "bytes": 1264368,
   "named": 3904,
   "functions": 6067
+ },
+ {
+  "date": "2026-11-01",
+  "commit": "aa8f282",
+  "c_bytes": 567024,
+  "matched_bytes": 640,
+  "bytes": 1264368,
+  "named": 3904,
+  "functions": 6067
  }
 ]

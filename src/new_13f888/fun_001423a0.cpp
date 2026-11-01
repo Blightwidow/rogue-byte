@@ -1,6 +1,6 @@
 #include "sly2.h"
 extern "C" {
-void *PredictXfTransform(void *, int, float, void *, int);
+void PredictXfTransform(void *, int, float, void *, int);
 QW PosLoWorld(void *);
 extern float g_2dded0;
 }

@@ -7,20 +7,20 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-extern s128 D_002BF740;
+s32 FIsBasicDerivedFrom(s32, s32);
+void func_0017F1A0(s8 *, s32, s32);
+void func_0017F5B0(s8 *, s32);
 
-void InitJmp(s8 *arg0, s32 arg1) {
-    M2C_FIELD(arg0, s32 *, 0) = arg1;
-    M2C_FIELD(arg0, s32 *, 4) = -1;
-    M2C_FIELD(arg0, s32 *, 0x1C) = -1;
-    M2C_FIELD(arg0, s128 *, 0xF0) = (s128) D_002BF740;
-    M2C_FIELD(arg0, f32 *, 0x164) = 1.0f;
-    M2C_FIELD(arg0, f32 *, 0x108) = -60.0f;
-    M2C_FIELD(arg0, f32 *, 0x10C) = -50.0f;
-    M2C_FIELD(arg0, f32 *, 0x114) = 50.0f;
-    M2C_FIELD(arg0, f32 *, 0x118) = -150.0f;
-    M2C_FIELD(arg0, f32 *, 0x110) = 75.0f;
-    M2C_FIELD(arg0, f32 *, 0x11C) = 75.0f;
+void Swarm_AdjustNewXp(s8 *arg0, s32 arg1, s32 arg2) {
+    s32 temp_s0;
+
+    func_0017F1A0(arg0, arg1, arg2);
+    if (M2C_FIELD(arg0, s32 *, 0x188) != 0) {
+        temp_s0 = M2C_FIELD((arg1 + ((1 - arg2) << 6)), s32 *, 0xC);
+        if (FIsBasicDerivedFrom(temp_s0, 0x47) != 0) {
+            func_0017F5B0(arg0, temp_s0);
+        }
+    }
 }
 
 }

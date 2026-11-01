@@ -27,7 +27,8 @@ extern "C" void CalculateSinCos__FfPfT1(float rad, float *pgSin, float *pgCos)
         gSin = highest;
     float gCosSquared = 1.0f - gSin * gSin;
     float gCos;
-    asm("sqrt.s %0, %1" : "=f" (gCos) : "f" (gCosSquared));
+    // sqrt.s as in retail (asm: the compiler path emits no hazard nop); "=&f" keeps the result out of the input register (sqrt.s f1,f0)
+    asm("sqrt.s %0, %1" : "=&f" (gCos) : "f" (gCosSquared));
     if (fOdd)
         gCos = -gCos;
     *pgCos = gCos;

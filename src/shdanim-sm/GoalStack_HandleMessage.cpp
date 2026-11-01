@@ -3,9 +3,9 @@ struct Obj { char pad[0xC]; VT *vt; };
 struct Stack { int pad; int count; Obj *items[1]; };
 extern "C" void GoalStack_HandleMessage(Stack *stack, int a, int b) {
     int index = stack->count;
-    Obj **cursor = (Obj **)(index * 4 + (unsigned)stack->items);
     while (--index >= 0) {
-        Obj *obj = *--cursor;
-        if (obj->vt->fn((void *)((int)obj + obj->vt->delta), a, b)) break;
+        Obj *obj = stack->items[index];
+        VT *vt = obj->vt;
+        if (vt->fn((char *)obj + vt->delta, a, b)) break;
     }
 }

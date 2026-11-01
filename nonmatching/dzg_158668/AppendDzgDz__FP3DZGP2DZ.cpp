@@ -10,9 +10,11 @@ void AppendDzgDz(DZG *dzg, void *dz, DZX *dzx)
     int ipxp = dzx->xp->ipxp;
     int index = 0;
     if (index < dzg->cdz) do {
-        int *mpidzg = dzg->adz[index].mpidzg;
+        DZ *pdz = &dzg->adz[index];
+        int *mpidzg = pdz->mpidzg;
         if (mpidzg != 0) {
-            QW *vec = (QW *)((ipxp << 4) + (int)dzg->adzx[index].mpipxpdv);
+            DZXROW *prow = &dzg->adzx[index];
+            QW *vec = (QW *)((ipxp << 4) + (int)prow->mpipxpdv);
             int result;
             asm("lqc2 vf2, %1\n\tlqc2 vf1, %2\n\tvmul.xyz vf2, vf2, vf1\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf3, vf2z\n\tqmfc2.ni %0, vf2" : "=r" (result) : "m" (dzx->dir), "m" (*vec));
             mpidzg[dzg->cdz] = result;

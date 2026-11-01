@@ -7254,3 +7254,4 @@ dpmul = 0x0023D808; // type:func (__muldf3)
 dpdiv = 0x0023DAB0; // type:func (__divdf3)
 dptofp = 0x0023DFA0; // type:func (__truncdfsf2)
 copysign = 0x0024A738; // type:func
+VU1_START_0 = 0x00000000; // source:matching

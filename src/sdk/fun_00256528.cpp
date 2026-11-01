@@ -7,20 +7,18 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-s32 FIsBasicDerivedFrom(s8 *, s32, M2C_UNK);
-void func_0017F1A0();
-void func_0017F5B0(s8 *, s32);
+struct _m2c_stack_func_00256528 {
+    /* 0x00 */ char pad0[0x20];
+};                                                  /* size = 0x20 */
 
-void Swarm_AdjustNewXp(s8 *arg0, s32 arg1, s32 arg2) {
-    s32 temp_s0;
+void AppendSlEntry(s32, s8 *);                 /* extern */
 
-    func_0017F1A0();
-    if (M2C_FIELD(arg0, s32 *, 0x188) != 0) {
-        temp_s0 = M2C_FIELD((arg1 + ((1 - arg2) << 6)), s32 *, 0xC);
-        if (FIsBasicDerivedFrom(arg0, temp_s0, 0x47) != 0) {
-            func_0017F5B0(arg0, temp_s0);
-        }
-    }
+void func_00256528(s8 *arg0, s32 **arg1, s32 arg2) {
+    M2C_FIELD(arg0, s32 **, 0) = (s32 *) *arg1;
+    M2C_FIELD(arg0, s32 *, 0x10) = arg2;
+    M2C_FIELD(arg0, s32 ***, 0xC) = arg1;
+    AppendSlEntry((int)((char *)arg1 + 0x28), arg0);
+    M2C_FIELD(arg0, s32 *, 0x20) = (s32) *M2C_FIELD(arg0, s32 **, 0);
 }
 
 }

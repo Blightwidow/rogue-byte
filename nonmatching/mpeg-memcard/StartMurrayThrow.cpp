@@ -9,14 +9,14 @@ extern "C" void StartMurrayThrow(Murray_1B7A78 *murray, void *target)
 {
     SetMurrayState(murray, 7);
     if (target != 0) {
-        QW spill = PosLoWorld(target);
-        murray->pos = spill;
+        QW spill;
+        spill = murray->pos = PosLoWorld(target);
         QW current = PosLoWorld(murray);
-        int dummy;
-        asm volatile("lqc2 vf1, %0\n\tqmtc2.ni %1, vf2" : : "m" (spill), "r" (current));
-        asm volatile("vsub.xyzw vf1, vf1, vf2" : "=r" (dummy));
+        asm volatile("lqc2 vf1, %0" : : "m" (spill));
+        asm volatile("qmtc2.ni %0, vf2" : : "r" (current));
+        asm volatile("vsub.xyzw vf1, vf1, vf2");
         QW diff;
-        asm volatile("qmfc2.ni %0, vf1" : "=r" (diff) : "r" (dummy));
+        asm volatile("qmfc2.ni %0, vf1" : "=r" (diff));
         SetStepRadTargetDir(murray, diff);
     }
 }

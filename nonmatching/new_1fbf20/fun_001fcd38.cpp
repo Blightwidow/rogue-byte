@@ -65,7 +65,8 @@ SND *func_001FCD38(SND *psnd)
     psnd->clqA.a = 3.0f;
     clqA->b = 0;
     float seed = *(float *)&clqA->b;
-    FitClq__FffffP3CLQ((clqA->c = 0.25f, seed), RO_FLT_002A83B8[1], half, RO_FLT_002A83B8[0], &psnd->fitA);
+    float lo1 = RO_FLT_002A83B8[1];
+    FitClq__FffffP3CLQ((clqA->c = 0.25f, seed), lo1, half, RO_FLT_002A83B8[0], &psnd->fitA);
     FitClq__FffffP3CLQ(seed, RO_FLT_002A83C0[1], half, RO_FLT_002A83C0[0], &psnd->fitB);
     psnd->unk58 = 0;
     return psnd;

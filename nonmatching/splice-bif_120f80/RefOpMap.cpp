@@ -36,12 +36,12 @@ extern "C" CRef RefOpMap(int unused, ArgBlock *aref, Frame *frame) return __ret
 #define temp l.temp
 #define callee l.callee
 #define arg l.arg
-    PairHandle_Init((&__ret), PpairNew());
+    PairHandle_Init((CRef *)&holder, PpairNew());
     func_00121578(&call, &callee, &arg);
     *callee = aref->first;
     for (Pair *element = aref->head; element != 0; element = element->next) {
         *arg = element->ref;
-        PairHandle_Init((&__ret), PpairNew());
+        PairHandle_Init((CRef *)&value, PpairNew());
         CRef *pvalueRef = &value.p->ref;
         RefEval(&temp, call.p, frame);
         *pvalueRef = temp;

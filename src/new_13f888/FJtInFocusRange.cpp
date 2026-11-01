@@ -39,6 +39,7 @@ int FJtInFocusRange(char *jt, int fWide)
     asm volatile("sqc2 vf1, %0" : "=m" (loc.delta));
     asm volatile("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q");
     asm volatile("qmfc2.ni %0, vf2" : "=r" (horizontal));
+    asm volatile("nop"); // hazard nop after the compiler-emitted mtc1 that retail shows
     if (horizontal < range && dzLow < ((float *)&loc.delta)[2] && ((float *)&loc.delta)[2] < dzHigh)
         result = 1;
     return result;

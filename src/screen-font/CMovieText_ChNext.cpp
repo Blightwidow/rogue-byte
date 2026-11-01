@@ -20,13 +20,15 @@ unsigned char CMovieText_ChNext(MT *t)
                     t->p = p + 2;
                     t->cur = t->base;
                     t->rgbaCur = t->rgbaBase;
+                    t->changed = 1;
+                    CMovieText_UpdateFont(t);
                 } else {
                     t->p = p + 2;
                     t->cur = t->other;
                     t->rgbaCur = t->rgbaOther;
+                    t->changed = 1;
+                    CMovieText_UpdateFont(t);
                 }
-                t->changed = 1;
-                CMovieText_UpdateFont(t);
             }
         } else {
             done = 1;

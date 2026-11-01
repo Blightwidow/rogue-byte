@@ -1,12 +1,6 @@
-// 0x256CE8 __8VU_FLOATf
-extern "C" void __8VU_FLOATf(int a0, float f12);
-void __8VU_FLOATf(int a0, float f12) {
-    int v0 = a0;
-    int v1 = 0;
-    __asm__ ("mfc1 $v1, $f12");
-    __asm__ ("sq $v1, 0($v0)");
-    __asm__ ("sq $v1, 0($sp)");
-    __asm__ ("jr $ra");
-    __asm__ ("addiu $sp, $sp, 0x10");
-    return;
-}
+// Behaviour: VU_FLOAT::VU_FLOAT(float): stores f into lane 0 of a 128-bit value at *this (other lanes = the raw bits' lane 0 only); returns this.
+typedef int QW __attribute__((mode(TI)));
+// lane 0 move: mfc1 into the 128-bit register
+static inline QW FromLane0(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
+struct VU_FLOAT { QW value; VU_FLOAT(float f); };
+VU_FLOAT::VU_FLOAT(float f) { value = FromLane0(f); }

@@ -7,23 +7,16 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_FGadgetOnSale {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
+struct _m2c_stack_Vector_Init {
+    /* 0x00 */ char pad0[0x30];
+};                                                  /* size = 0x30 */
 
-s32 NEpisodeBest(void);                     /* extern */
-extern M2C_UNK D_002BCD00;
+void AppendSlEntry(s32, s8 *);                 /* extern */
 
-s32 FGadgetOnSale(s32 arg0) {
-    s32 temp_a0;
-    s8 *temp_s0;
-
-    temp_a0 = arg0 << 5;
-    temp_s0 = (s8 *)(temp_a0 + &D_002BCD00);
-    if (M2C_FIELD(temp_s0, s32 *, 0x10) == -1) {
-        return 0;
-    }
-    return NEpisodeBest() >= M2C_FIELD(temp_s0, s32 *, 0x10);
+void Vector_Init(s8 *arg0, s32 *arg1) {
+    M2C_FIELD(arg0, s32 **, 0) = arg1;
+    AppendSlEntry((int)((char *)arg1 + 4), arg0);
+    M2C_FIELD(arg0, s32 *, 0x24) = (s32) *arg1;
 }
 
 }
