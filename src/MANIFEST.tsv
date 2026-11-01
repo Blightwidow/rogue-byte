@@ -943,7 +943,6 @@ address	name	size	file
 0X11D448	GRandInRange	136	util/GRandInRange.cpp
 0X11D4D0	FFloatsNear__Ffff	56	util/FFloatsNear__Ffff.cpp
 0X11D5B0	PrescaleClq__FP3CLQffT0	88	util/PrescaleClq__FP3CLQffT0.c
-0X11D608	CalculateSinCos__FfPfT1	308	util/CalculateSinCos__FfPfT1.cpp
 0X11D740	GTrunc__Fd	176	util/GTrunc__Fd.cpp
 0X11D7F0	GTrunc__Ff	168	util/GTrunc__Ff.cpp
 0X11D898	GModPositive__Fff	60	util/GModPositive__Fff.cpp

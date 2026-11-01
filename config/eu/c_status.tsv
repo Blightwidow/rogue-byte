@@ -943,7 +943,6 @@ us_address	name	other_address	pair	score	addresses
 0x11D448	GRandInRange	0X11D448	identical	0	ok
 0x11D4D0	FFloatsNear__Ffff	0X11D4D0	identical	0	ok
 0x11D5B0	PrescaleClq__FP3CLQffT0	0X11D5B0	identical	0	ok
-0x11D608	CalculateSinCos__FfPfT1	0X11D608	identical	0	ok
 0x11D740	GTrunc__Fd	0X11D740	same	0	ok
 0x11D7F0	GTrunc__Ff	0X11D7F0	identical	0	ok
 0x11D898	GModPositive__Fff	0X11D898	same	0	ok

@@ -100,7 +100,7 @@ def main():
     since = os.path.getmtime(STAMP) if os.path.exists(STAMP) else 0
     for address, score, path in results:
         row = by_address.get(address)
-        if not row or row['status'] == 'matched':
+        if not row or row['status'] in ('matched', 'fragment'):  # a fragment (words between two functions, set by hand) stays one
             continue
         if os.path.getmtime(path) > since:
             row['tries'] = str(int(row['tries'] or 0) + 1)
