@@ -39,15 +39,29 @@ BANNED = [
 VU_ASM = re.compile(r'asm\s+volatile\s*\(\s*"(?:lqc2|sqc2|qmtc2|qmfc2|v[a-z]|prot|pext|pcpy|ppac)')
 
 
+LANE_OPERATIONS = re.compile(r'\b(?:prot3w|pextuw|pextlw|pcpyld|pcpyud|pextub|pextlb|pextuh|pextlh|ppacw|qmfc2|qmtc2)\b')
+
+
+def lane_move(code, quadword_names):
+    """An `mtc1`/`mfc1` asm that moves one lane of a 128-bit value (a `QW` operand, or MMI lane instructions in the same asm) to or from an FP
+    register: C has no form for it (retail holds the vector in a general register and moves lane 0 with `mtc1`), so AGENTS.md allows it."""
+    if LANE_OPERATIONS.search(code):
+        return True
+    return any(re.search(rf'\(\s*\*?\s*{re.escape(name)}\s*\)', code) for name in quadword_names)
+
+
 def scan(text):
     """[(line number, what, line)] of the constructs AGENTS.md bans in a source."""
     found = []
+    quadword_names = set(re.findall(r'\bQW\s*\*?\s*(\w+)', text))
     for number, line in enumerate(text.split('\n'), 1):
         code = line.split('//')[0]
         for what, pattern in BANNED:
             if pattern.search(code):
                 if what == 'volatile' and (HARDWARE_ADDRESS.search(code) or VU_ASM.search(code)):
                     continue  # a hardware register, or the VU0 asm of a matched source
+                if what == 'mfc1 asm' and lane_move(code, quadword_names):
+                    continue  # a lane of a 128-bit value moved to or from an FP register: no C form
                 found.append((number, what, line.strip()[:100]))
     return found
 

@@ -117,6 +117,12 @@ What moved the score:
 - **Registers and slots.** Declare pointer locals in retail's load order (it decides `$v0`/`$v1`); `"m"` operand order decides stack
   slots (spills are allocated in reverse use order); reuse one variable for a loaded value (`obj = obj->scale;`) to keep a callee-saved
   register. Read each callee's real argument list from the asm first.
+- **Lane moves (allowed from 2026-11-01).** Retail holds a 128-bit vector in a general register and moves lane 0 to a float with `mtc1`
+  (lanes 1 and 2 through `prot3w`/`pextuw`/`pextlw`/`pcpyld`), and a float into a vector register with `mfc1`. C has no form for that: reading the
+  lane through memory gives `lwc1`, a union or a cast gives memory traffic or an internal compiler error. An `asm` that moves one lane of a
+  `QW` value to or from an FP register (`asm("mtc1 %1, %0" : "=f"(f) : "r"(q))`, the MMI lane instructions in the same asm) is allowed,
+  like the VU0 blocks; `scripts/matching/record.py`'s scan waives it. Still banned: an `mfc1`/`mtc1` that moves an ordinary int or float
+  between registers only to steer the allocator. Put the lane in a one-line `static inline` helper and name the lane in a comment.
 - **Left over.** Scheduling and register allocation around the asm (which s-register holds which parameter, where `ld $ra` lands,
   `beql` against `beqz` with the VU move in the delay slot). Run the permuter after the first compile: it fixed a load order in five compiles.
 - **Second round (pin-free).** Scores moved most from: a `"=r"(fence)` output on the first asm consumed as an input by the next

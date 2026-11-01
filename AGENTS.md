@@ -28,7 +28,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 - **A match is retail's bytes in a build that equals retail.** Not a compiled object alone, not a masked comparison, not a
   model's say-so. Report the command you ran and what it printed, failures included.
 - **Plain C++.** Inline assembly only for what C cannot express (VU0 macro code and MMI: the matched sources in `src/` use `asm` blocks with
-  constraints for these; unaligned 8-byte accesses are plain struct copies, see docs/contributing/matching.md), no register pins.
+  constraints for these, and the `mtc1`/`mfc1` that moves one lane of a 128-bit value to or from an FP register; unaligned 8-byte accesses are plain
+  struct copies, see docs/contributing/matching.md), no register pins.
 - **The test for a trick.** A construct is allowed when it could plausibly be in the original source and changes no behaviour: casts, types,
   statement order, and a dead local that retail's frame shows (a stack area with no stores). It is not allowed when its only purpose is to steer
   the compiler: `volatile` on ordinary data, an empty `asm` with clobbers, register pins, or a variable that exists only to move a register.
