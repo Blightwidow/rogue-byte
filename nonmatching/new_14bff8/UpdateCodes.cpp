@@ -7,6 +7,7 @@ struct CODE {
     int fRemove;
 };
 struct CODELIST;
+struct CODE;
 struct SLI {
     CODELIST *psl;
     int ppv;
@@ -19,6 +20,7 @@ struct CODELIST {
     int ibSle;
     float tFire;
 };
+static inline int FMatched(CODE *code) { return code->igrfMatched >= code->cgrfSequence; }
 extern "C" {
 extern float g_2ddf0c;
 extern SLI *g_2dd2f8;
@@ -49,7 +51,7 @@ void UpdateCodes(CODELIST *list)
                     RemoveSlEntry(list, code);
                     code->igrfMatched = 0;
                     code->fRemove = 0;
-                } else if (code->igrfMatched >= code->cgrfSequence) {
+                } else if (FMatched(code)) {
                     if (best == 0 || best->cgrfSequence < code->cgrfSequence)
                         best = code;
                 }

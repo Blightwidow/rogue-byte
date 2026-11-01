@@ -9,7 +9,7 @@ struct Obj {
     int count; Rec *records; int next; int idle;
 };
 extern float g_2dded0;
-static inline float ItoF(int v) { float r; asm("mtc1 %1, %0\n\tnop\n\tcvt.s.w %0, %0" : "=f" (r) : "r" (v)); return r; }
+static inline float ItoF(int v) { return (float)v; }
 
 extern "C" void func_0021BC08(Obj *obj)
 {

@@ -6,24 +6,25 @@ extern "C" QW g_2a2e20;
 extern "C" void CMovieText_Reset(MT *, int);
 MT *func_00215AC0(MT *t, int a, float scale)
 {
+    char *base = B_003DD490;
     t->a = a;
-    t->f80 = 1.0f;
-    t->ox = 1792.0f;
-    t->oy = 1936.0f;
-    t->f84 = scale * 51.2f;
-    t->f7c = 1.0f;
-    t->f88 = scale;
-    t->i8c = 1;
-    t->i94 = 6;
-    t->z6c = 0;
-    t->z70 = 0;
-    t->z74 = 0;
-    t->z78 = 0;
-    t->i90 = 1;
-    int pf = *(unsigned long *)(*(char **)(B_003DD490 + 0x3BE8) + 0x54);
+    t->f7c = 1.0f; //P
+    t->f88 = scale; //P
+    t->f80 = 1.0f; //P
+    t->ox = 1792.0f; //P
+    t->i90 = 1; //P
+    t->oy = 1936.0f; //P
+    t->i8c = 1; //P
+    t->i94 = 6; //P
+    t->z6c = 0; //P
+    t->z70 = 0; //P
+    t->z74 = 0; //P
+    t->z78 = 0; //P
+    t->f84 = scale * 51.2f; //P
+    int pf = *(int *)(*(char **)(base + 0x3BE8) + 0x54);
     t->base = pf;
     t->cur = pf;
-    t->other = *(int *)(*(char **)(B_003DD490 + 0x3BE8) + 0x54) + 0x40;
+    t->other = *(int *)(*(char **)(base + 0x3BE8) + 0x54) + 0x40;
     t->rgba = 0x80808080;
     t->r0 = g_2a2e10;
     t->r1 = g_2a2e20;

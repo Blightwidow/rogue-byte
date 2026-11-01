@@ -7,7 +7,7 @@ struct Sprite { unsigned short labelCount; unsigned short instCount; Label *labe
 struct Blot { char pad[0x80]; unsigned short spriteCount; unsigned short pad82; Sprite *sprites; };
 
 static inline Sprite *SpriteAt(Blot *blot, int i) { return &blot->sprites[i]; }
-static inline int LabelIdAt(Sprite *sprite, int j) { return sprite->labels[j].id; }
+static inline int LabelIdAt(Sprite *sprite, int j) { int offset = j * 0x18; return *(int *)((char *)sprite->labels + offset + 0x14); }
 
 extern "C" void SeekBlotLabel(float u, Blot *blot, int label)
 {

@@ -1,4 +1,3 @@
-#include "sly2.h"
 struct LO { char pad[0x40]; unsigned grf; };
 struct ENTRY { char b[8]; };
 struct EN { unsigned grf; LO *lo; };
@@ -9,11 +8,10 @@ void AddSwGrfEntry(SW *sw, LO *lo)
         return;
     int count = sw->count;
     if (count >= 0x1000 || (float)sw->dead / (float)count > 0.1f) {
-        EN * base;
-        EN *dest = base;
-        base = sw->table;
-        EN *runningEntry = sw->running ? base + *sw->running : 0;
+        EN *base = sw->table;
         EN *end = base + count;
+        EN *dest = base;
+        EN *runningEntry = sw->running ? base + *sw->running : 0;
         for (EN *source = base; source < end; source++) {
             if (source == runningEntry)
                 runningEntry = dest;

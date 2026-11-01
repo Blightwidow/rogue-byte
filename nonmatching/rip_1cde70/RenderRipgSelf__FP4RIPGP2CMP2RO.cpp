@@ -8,18 +8,17 @@ extern DLI *g_2dd2fc;
 extern float g_2dded0;
 struct CM; struct RO;
 
-inline void PushDli(DLI *it, DL *list)
+inline char *BeginDli(DLI *it, DL *list)
 {
-    it->list = list;
-    it->current = (char *)list;
-    it->offset = list->offset;
-    it->next = g_2dd2fc;
     g_2dd2fc = it;
-}
-inline char *PvFirst(DLI *it)
-{
-    char *item = it->list->first;
-    it->current = item + it->list->offset;
+    DLI *prev = g_2dd2fc;
+    it->next = prev;
+    int offset = list->offset;
+    it->current = (char *)list;
+    it->list = list;
+    it->offset = offset;
+    char *item = list->first;
+    it->current = item + offset;
     return item;
 }
 inline char *PvStep(DLI *it)
@@ -33,8 +32,7 @@ inline void PopDli(DLI *it) { g_2dd2fc = it->next; }
 void RenderRipgSelf__FP4RIPGP2CMP2RO(RIPG *ripg, CM *cm, RO *ro)
 {
     DLI iterator;
-    PushDli(&iterator, &ripg->rips);
-    for (char *item = PvFirst(&iterator); item != 0; item = PvStep(&iterator)) {
+    for (char *item = BeginDli(&iterator, &ripg->rips); item != 0; item = PvStep(&iterator)) {
         RIP *rip = (RIP *)item;
         float limit = g_2dded0;
         float created = rip->created;

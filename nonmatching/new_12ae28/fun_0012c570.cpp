@@ -30,7 +30,7 @@ void func_0012C570(Acr *acr, Bis *bis)
             continue;
         req.cbAlign = 0x10;
         req.cb = acr->ckey << 3;
-        register float *base asm("$4");
+        float *base;
         base = (float *)PvAllocSwImpl((int)&req);
         acr->apg[iaxis] = base;
         float *apg = base;

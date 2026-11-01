@@ -25,21 +25,20 @@ int FJtInFocusRange(char *jt, int fWide)
         dzHigh += D_002BCC90;
     }
     struct { QW delta; QW save; } loc;
-    int chain;
     float horizontal;
     QW posObj = PosLoWorld(*(char **)(jt + 0x10E8));
     asm("qmtc2.ni %0, vf1" : : "r" (posObj));
     asm("sqc2 vf1, %0" : "=m" (loc.save));
     QW posJt = PosLoWorld(jt);
-    asm("qmtc2.ni %1, vf2" : "=r" (chain) : "r" (posJt));
-    asm("lqc2 vf1, %1" : "+r" (chain) : "m" (loc.save));
-    asm("vsub.xyzw vf1, vf1, vf2" : "+r" (chain));
-    asm("vmul.xy vf2, vf1, vf1" : "+r" (chain));
-    asm("vaddy.x vf2, vf2, vf2y" : "+r" (chain));
-    asm("sqc2 vf1, %0" : "=m" (loc.delta) : "r" (chain));
-    asm("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q" : "+r" (chain));
-    asm("qmfc2.ni %0, vf2" : "=r" (horizontal) : "r" (chain));
+    asm volatile("qmtc2.ni %0, vf2" : : "r" (posJt));
+    asm volatile("lqc2 vf1, %0" : : "m" (loc.save));
     result = 0;
+    asm volatile("vsub.xyzw vf1, vf1, vf2");
+    asm volatile("vmul.xy vf2, vf1, vf1");
+    asm volatile("vaddy.x vf2, vf2, vf2y");
+    asm volatile("sqc2 vf1, %0" : "=m" (loc.delta));
+    asm volatile("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q");
+    asm volatile("qmfc2.ni %0, vf2" : "=r" (horizontal));
     if (horizontal < range && dzLow < ((float *)&loc.delta)[2] && ((float *)&loc.delta)[2] < dzHigh)
         result = 1;
     return result;

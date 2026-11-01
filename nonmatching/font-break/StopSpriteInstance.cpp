@@ -1,4 +1,3 @@
-#include "sly2.h"
 struct AMB;
 struct SPRITEINST { char pad[8]; short ilabel; short pad2; float t; int fPaused; AMB *pamb; };
 struct SPRITE { char pad[8]; SPRITEINST *ainst; long stamp; float tStopped; int ilabelStopped; int ilabelPending; };

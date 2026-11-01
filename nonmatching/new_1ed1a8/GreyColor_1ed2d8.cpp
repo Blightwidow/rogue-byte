@@ -14,11 +14,11 @@ void GreyColor_1ed2d8(VECTOR *prgb)
     if (B_003E12C8) {
         int bits;
         weights[0] = 0.3f;
-        weights[1] = 0.6f;
         weights[2] = 0.1f;
+        weights[1] = 0.6f;
         float h0 = D_FLT_002C3690;
         float h1 = D_FLT_002C3694;
-        asm("lqc2 vf1, 0(%1)\n\tlqc2 vf2, 0(%2)\n\tvmul.xyz vf1, vf1, vf2\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf3, vf1z\n\tqmfc2.ni %0, vf1" : "=r"(bits) : "r"(prgb), "r"(weights), "f"(h0), "f"(h1) : "memory");
+        asm("lqc2 vf1, 0(%1)\n\tlqc2 vf2, 0(%2)\n\tvmul.xyz vf1, vf1, vf2\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf3, vf1z\n\tqmfc2.ni %0, vf1" : "=r"(bits) : "r"(prgb), "r"(weights) : "memory");
         float lum = *(float *)&bits;
         hsv[0] = h0;
         hsv[1] = h1;

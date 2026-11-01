@@ -17,22 +17,31 @@ void MemcardMenu_Reset(void *);
 void Menu_Reset(void *);
 }
 
+static inline char *DliNext(DLI *dli)
+{
+    char *item = *(char **)dli->current;
+    dli->current = item + dli->offset;
+    return item;
+}
+
+static inline char *DliFirst(DLI *d, DL *l)
+{
+    char *first = l->first;
+    d->next = g_2dd2fc;
+    d->list = l;
+    g_2dd2fc = d;
+    d->current = first + l->offset;
+    d->offset = l->offset;
+    return first;
+}
 void CGc_Shutdown(DL *pdl)
 {
     DLI dli;
-    int offset = pdl->offset;
-    char *item;
-    g_2dd2fc = &dli;
-    dli.next = g_2dd2fc;
-    dli.offset = offset;
-    item = pdl->first;
-    dli.current = item + offset;
-    dli.list = pdl;
+    char *item = DliFirst(&dli, pdl);
     while (item != 0) {
         SVT *vt = ((SCR *)item)->vt;
         vt->fn(item + vt->delta);
-        item = *(char **)dli.current;
-        dli.current = item + dli.offset;
+        item = DliNext(&dli);
     }
     g_2dd318 = 0;
     ReleaseMeter(&B_003D9E80);

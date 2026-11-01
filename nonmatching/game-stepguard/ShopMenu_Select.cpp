@@ -49,12 +49,11 @@ void ShopMenu_Select(SHOPMENU *pshop, int isel)
             }
             int ifirst = pshop->ifirst;
             if (ifirst < ifirstMin) {
-                pshop->ifirst = ifirstMin;
-            } else {
-                if (!(isel < ifirst))
-                    isel = ifirst;
-                pshop->ifirst = isel;
+                ifirst = ifirstMin;
+            } else if (isel < ifirst) {
+                ifirst = isel;
             }
+            pshop->ifirst = ifirst;
         }
         pshop->loot = pshop->aent[pshop->isel].id;
         pshop->gadget = pshop->aent[pshop->isel].id;

@@ -10,14 +10,11 @@ void func_0020B140(char *guard, char *target)
 {
     QW posTarget = PosLoWorld(target);
     char *slot = 0;
-    char *fx;
     if (*(void **)(guard + 0xE60)) {
         PhitfxSpawn_156548(*(void **)(guard + 0xE60), PosLoWorld(guard), guard, &slot);
-        fx = slot;
     } else {
         char *sw = B_003DD490;
         slot = PhitfxSpawn(*(void **)(sw + 0x4030), PosLoWorld(guard), guard);
-        fx = slot;
     }
     float dt = D_002C3DB8;
     *(QW *)(slot + 0x30) = posTarget;

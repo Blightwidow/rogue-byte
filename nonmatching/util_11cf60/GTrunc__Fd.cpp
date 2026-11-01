@@ -13,12 +13,12 @@ double GTrunc(double value)
     if (exponent < 52) {
         unsigned long mask = (1UL << (52 - exponent)) - 1;
         unsigned long fraction = ~0UL >> 12;
-        int long mantissa = bits & fraction;
+        long mantissa = bits & fraction;
         if ((mantissa & mask) == mask) {
+            out.u = (bits & (~0UL << 52)) | (fraction & mantissa & ~mask);
             result = __adddf3(out.d, 1.0);
-            out.u = (bits & (~0UL << 52)) | (mantissa & ~mask & fraction);
         } else {
-            out.u = (bits & (~0UL << 52)) | (mantissa & ~mask & fraction);
+            out.u = (bits & (~0UL << 52)) | (fraction & mantissa & ~mask);
             result = out.d;
         }
     }

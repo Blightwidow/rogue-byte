@@ -14,10 +14,10 @@ struct GadgetObj {
     int stick;
 };
 static inline int Less(float a, float b) { return a < b; }
-static inline float Length(QW &saved, float range)
+static inline float Length(QW &saved)
 {
     int bits;
-    asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tvmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r" (bits) : "m" (saved), "f" (range));
+    asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tvmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r" (bits) : "m" (saved));
     return *(float *)&bits;
 }
 extern "C" void UpdateSo(void *);
@@ -35,8 +35,7 @@ extern "C" void UpdateGadgetObj(GadgetObj *pgadget)
         asm("sqc2 vf1, %0" : "=m" (saved));
         QW b = PosLoWorld(pgadget->other);
         asm("qmtc2.ni %0, vf2" : : "r" (b));
-        float range = pgadget->range;
-        if (Less(range, Length(saved, range))) {
+        if (Less(pgadget->range, Length(saved))) {
             VT *vt = pgadget->vt;
             vt->fn((char *)pgadget + vt->delta, 0);
         }

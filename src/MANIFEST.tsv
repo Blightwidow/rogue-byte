@@ -827,6 +827,7 @@ address	name	size	file
 0X116CC0	func_00116CC0	28	memory-bez/fun_00116cc0.cpp
 0X116CE0	func_00116CE0	28	memory-bez/fun_00116ce0.c
 0X116D00	func_00116D00	28	memory-bez/fun_00116d00.cpp
+0X116D28	func_00116D28	72	memory-bez/fun_00116d28.cpp
 0X116D70	CAry_Reserve	188	memory-bez/CAry_Reserve.cpp
 0X116E30	func_00116E30	116	memory-bez/fun_00116e30.cpp
 0X116ED8	func_00116ED8	308	memory-bez/fun_00116ed8.c
@@ -1066,6 +1067,8 @@ address	name	size	file
 0X124730	RefOpFindClassObjects	168	splice-bif-splice-eval/RefOpFindClassObjects.cpp
 0X1247D8	RefOpFindObjectsInBoundingBox	212	splice-bif-splice-eval/RefOpFindObjectsInBoundingBox.cpp
 0X1248B0	RefOpFindObjectsInBoundingSphere	248	splice-bif-splice-eval/RefOpFindObjectsInBoundingSphere.cpp
+0X124F00	RefOpHitTestObjects	124	splice-bif-splice-eval/RefOpHitTestObjects.cpp
+0X124F80	RefOpHitTestObjectsFirst	124	splice-bif-splice-eval/RefOpHitTestObjectsFirst.cpp
 0X125000	RefOpConvertObjectPosition	92	splice-bif-splice-eval/RefOpConvertObjectPosition.cpp
 0X1250D8	RefOpConvertObjectMatrix	144	splice-bif-splice-eval/RefOpConvertObjectMatrix.cpp
 0X1251E8	RefOpStartSound	92	splice-bif-splice-eval/RefOpStartSound.cpp
@@ -1282,6 +1285,7 @@ address	name	size	file
 0X12F248	InitAseg__FP4ASEG	96	aseg/InitAseg__FP4ASEG.cpp
 0X12F8C0	PostAsegLoadCallback	48	aseg/PostAsegLoadCallback.cpp
 0X12F8F0	PostAsegLoad	72	aseg/PostAsegLoad.cpp
+0X12F938	PeaFindAsegLabel	84	aseg/PeaFindAsegLabel.cpp
 0X12F990	TFindAsegLabel__FP4ASEG3OID	40	aseg/TFindAsegLabel__FP4ASEG3OID.cpp
 0X12FDE8	func_0012FDE8	108	aseg/fun_0012fde8.cpp
 0X12FE58	BindAsegChn	180	aseg/BindAsegChn.cpp
@@ -1361,6 +1365,7 @@ address	name	size	file
 0X1331F8	PostScriptMessage	324	new_132b08/PostScriptMessage.cpp
 0X133340	EnableLasen__FP5LASEN5SENSM	60	sensor/EnableLasen__FP5LASEN5SENSM.cpp
 0X133380	func_00133380	60	sensor-bbmark/fun_00133380.cpp
+0X133448	UnsubscribeLoObject	92	sensor-bbmark/UnsubscribeLoObject.cpp
 0X1334A8	Basic_FreeSubscribers	92	sensor-bbmark/Basic_FreeSubscribers.cpp
 0X133508	PostLoMessage	136	sensor-bbmark/PostLoMessage.cpp
 0X133590	HandleLoMessage	8	sensor-bbmark/HandleLoMessage.c
@@ -1377,6 +1382,7 @@ address	name	size	file
 0X1344D0	GlobalCtorBbmark	32	bbmark-blend/GlobalCtorBbmark.c
 0X1344F0	StaticInitBentley	308	bbmark-blend/StaticInitBentley.c
 0X134628	GlobalCtorBentley	32	bbmark-blend/GlobalCtorBentley.c
+0X134648	InitBentley	292	bbmark-blend/InitBentley.cpp
 0X134770	LoadBentleyFromBrx	56	bbmark-blend/LoadBentleyFromBrx.c
 0X1347A8	PostBentleyLoad	168	bbmark-blend/PostBentleyLoad.cpp
 0X134D30	UpdateBentleyBinoc	120	bbmark-blend/UpdateBentleyBinoc.cpp
@@ -1391,6 +1397,8 @@ address	name	size	file
 0X135E38	func_00135E38	8	bbmark-blend/fun_00135e38.c
 0X135E40	func_00135E40	108	bbmark-blend/fun_00135e40.cpp
 0X135EB0	func_00135EB0	196	bbmark-blend/fun_00135eb0.cpp
+0X135F78	FInvulnerableBentley	120	bbmark-blend/FInvulnerableBentley.cpp
+0X135FF0	func_00135FF0	80	bbmark-blend/fun_00135ff0.cpp
 0X136040	SetBentleyGadgetAnim	216	bbmark-blend/SetBentleyGadgetAnim.cpp
 0X136298	ReleaseBentleyGadget	92	bbmark-blend/ReleaseBentleyGadget.c
 0X1362F8	SetBentleyAimState	60	bbmark-blend/SetBentleyAimState.c
@@ -1411,6 +1419,7 @@ address	name	size	file
 0X1378D8	StaticInitSlotheaps_1378d8	308	bbmark-blend/StaticInitSlotheaps_1378d8.c
 0X137A10	func_00137A10	32	bbmark-blend/fun_00137a10.c
 0X137FB8	FillBlAmrsg__FiiPviiP3OID	312	blend/FillBlAmrsg__FiiPviiP3OID.cpp
+0X138370	ImrsgLookUp__FffiP4MRSGPf	128	blend/ImrsgLookUp__FffiP4MRSGPf.cpp
 0X1383F0	SetAsegblIpasegDominant	204	blend-ac/SetAsegblIpasegDominant.cpp
 0X1384C0	ReblendAsegbl	412	blend-ac/ReblendAsegbl.cpp
 0X138DB0	StaticInitSlotheaps_138db0	308	ac-blip/StaticInitSlotheaps_138db0.c
@@ -1473,6 +1482,7 @@ address	name	size	file
 0X13D580	Reset__10CByteQueue	32	bq/Reset__10CByteQueue.cpp
 0X13D5A0	CbFill__10CByteQueueiP11CQueueInput	264	bq/CbFill__10CByteQueueiP11CQueueInput.cpp
 0X13D6A8	CbDrain__10CByteQueueiP12CQueueOutput	296	bq/CbDrain__10CByteQueueiP12CQueueOutput.cpp
+0X13D7D0	CbFill__10CByteQueueiPUc	72	bq/CbFill__10CByteQueueiPUc.cpp
 0X13D818	FreeDrain__10CByteQueuei	52	bq/FreeDrain__10CByteQueuei.c
 0X13D850	CbRead__17CQueueInputMemoryiPv	104	bq/CbRead__17CQueueInputMemoryiPv.c
 0X13D8B8	CQueueInput_CbRead	8	new_13d8b8/CQueueInput_CbRead.c
@@ -1504,6 +1514,7 @@ address	name	size	file
 0X140D00	func_00140D00	108	new_13f888/fun_00140d00.cpp
 0X140D70	func_00140D70	60	new_13f888/fun_00140d70.c
 0X140EB0	func_00140EB0	40	new_13f888/fun_00140eb0.c
+0X140ED8	FInvulnerableJt	120	new_13f888/FInvulnerableJt.cpp
 0X140F50	func_00140F50	28	new_13f888/fun_00140f50.c
 0X140F70	func_00140F70	28	new_13f888/fun_00140f70.c
 0X141588	func_00141588	184	new_13f888/fun_00141588.cpp
@@ -1577,6 +1588,7 @@ address	name	size	file
 0X144B90	GoalFollowCrvVjoy_Update	52	new_144b58/GoalFollowCrvVjoy_Update.c
 0X144E20	func_00144E20	68	new_144b58/fun_00144e20.c
 0X144E68	func_00144E68	124	new_144b58/fun_00144e68.cpp
+0X144EE8	GoalGotoPos_FArrived	84	new_144b58/GoalGotoPos_FArrived.cpp
 0X144F48	GoalGotoPos_SetPos	200	new_144b58/GoalGotoPos_SetPos.cpp
 0X145010	func_00145010	108	new_144b58/fun_00145010.cpp
 0X145080	func_00145080	48	new_144b58/fun_00145080.c
@@ -1626,6 +1638,7 @@ address	name	size	file
 0X148668	PostAshLoad	172	new_147f40/PostAshLoad.cpp
 0X148718	InitBtn	28	new_147f40/InitBtn.cpp
 0X148738	LoadBtn	8	new_147f40/LoadBtn.c
+0X148740	PostBtnLoad	92	new_147f40/PostBtnLoad.cpp
 0X1487A0	TriggerBtn	188	new_147f40/TriggerBtn.cpp
 0X148AF8	AddBtnAseg	28	button-alarm/AddBtnAseg.c
 0X148B18	AddBtnOffAseg	28	button-alarm/AddBtnOffAseg.c
@@ -1914,6 +1927,7 @@ address	name	size	file
 0X15A138	PauseEmitter__FP7EMITTERf	20	emitter/PauseEmitter__FP7EMITTERf.c
 0X15A150	PauseEmitterIndefinite__FP7EMITTER	16	emitter/PauseEmitterIndefinite__FP7EMITTER.cpp
 0X15A160	UnpauseEmitter__FP7EMITTER	16	emitter/UnpauseEmitter__FP7EMITTER.c
+0X15A170	FPausedEmitter__FP7EMITTER	80	emitter/FPausedEmitter__FP7EMITTER.cpp
 0X15A1C0	OnEmitterValuesChanged__FP7EMITTER	128	emitter/OnEmitterValuesChanged__FP7EMITTER.c
 0X15A240	SetEmitterEnabled__FP7EMITTERi	112	emitter/SetEmitterEnabled__FP7EMITTERi.cpp
 0X15A2B0	func_0015A2B0	16	unsorted/fun_0015a2b0.c
@@ -2032,6 +2046,7 @@ address	name	size	file
 0X163400	FEndTaskComplete	44	new_161458/FEndTaskComplete.c
 0X163430	func_00163430	44	new_161458/fun_00163430.cpp
 0X1635A0	InitTask	88	sensor/InitTask.cpp
+0X1635F8	LoadTaskFromBrx	492	sensor-geom/LoadTaskFromBrx.cpp
 0X1637E8	FTaskRunning	76	sensor-geom/FTaskRunning.cpp
 0X163838	AddTaskToggle	104	sensor-geom/AddTaskToggle.cpp
 0X1638A0	AddTaskAnim	84	sensor-geom/AddTaskAnim.cpp
@@ -2200,6 +2215,7 @@ address	name	size	file
 0X174950	func_00174950	108	new_1715f0/fun_00174950.cpp
 0X1749C0	GoalAnim_SetState	356	new_1715f0/GoalAnim_SetState.cpp
 0X174B28	func_00174B28	60	new_1715f0/fun_00174b28.c
+0X174B68	GoalAnim_Update	100	new_1715f0/GoalAnim_Update.cpp
 0X174F08	func_00174F08	172	new_1715f0/fun_00174f08.cpp
 0X174FB8	FGoalAnimDone	16	new_1715f0/FGoalAnimDone.c
 0X174FC8	func_00174FC8	44	new_1715f0/fun_00174fc8.cpp
@@ -2228,6 +2244,7 @@ address	name	size	file
 0X176458	GoalNotice_SetState	636	new_1715f0/GoalNotice_SetState.cpp
 0X1766D8	GoalBrain_Init	44	new_1715f0/GoalBrain_Init.cpp
 0X176708	GoalBrain_Activate	68	new_1715f0/GoalBrain_Activate.cpp
+0X176750	GoalBrain_SetCommand	1072	new_1715f0/GoalBrain_SetCommand.cpp
 0X176B80	GoalBrain_AbsorbDamage	104	new_1715f0/GoalBrain_AbsorbDamage.cpp
 0X177BA0	GoalBrain_ChooseNextCommand	384	new_1715f0/GoalBrain_ChooseNextCommand.cpp
 0X177D20	func_00177D20	40	new_1715f0/fun_00177d20.c
@@ -2492,6 +2509,7 @@ address	name	size	file
 0X187030	StartupJoy__Fv	68	joy/StartupJoy__Fv.c
 0X187078	AddGrfusr__Fi	40	joy/AddGrfusr__Fi.c
 0X1870A0	RemoveGrfusr__Fi	44	joy/RemoveGrfusr__Fi.cpp
+0X1870D0	UpdateGrfjoytFromGrfusr__Fv	128	joy/UpdateGrfjoytFromGrfusr__Fv.cpp
 0X187150	InitJoy	112	joy/InitJoy.cpp
 0X187D80	FJoyButtonPressed	76	joy/FJoyButtonPressed.c
 0X187DD0	FJoyButtonPeek	12	joy/FJoyButtonPeek.c
@@ -2547,6 +2565,7 @@ address	name	size	file
 0X1910F8	LoadAttach	176	new_190c58/LoadAttach.cpp
 0X1928F8	StartAttach	304	new_190c58/StartAttach.cpp
 0X193C98	MatchJtXmgRail__FP2JTP3XMGP6ACTADJ	332	stephide/MatchJtXmgRail__FP2JTP3XMGP6ACTADJ.cpp
+0X1940B0	SetJtHfdk__FP2JT4HFDK	104	stephide/SetJtHfdk__FP2JT4HFDK.cpp
 0X194558	FAttachAllowsGadget	228	new_1942f0/FAttachAllowsGadget.cpp
 0X194640	func_00194640	68	new_1942f0/fun_00194640.cpp
 0X194F48	func_00194F48	36	unsorted/fun_00194f48.cpp
@@ -2566,6 +2585,7 @@ address	name	size	file
 0X19B088	GAdjustJtLandingScore	32	stephide/GAdjustJtLandingScore.cpp
 0X19B0A8	func_0019B0A8	104	unsorted/fun_0019b0a8.cpp
 0X19C828	bevy_player_19c828	68	new_19c688/bevy_player_19c828.cpp
+0X19C870	func_0019C870	60	new_19c688/fun_0019c870.cpp
 0X19C8B0	func_0019C8B0	32	new_19c688/fun_0019c8b0.c
 0X19C8D0	FJmpAllowsGadget	228	new_19c688/FJmpAllowsGadget.cpp
 0X19C9B8	InitCnvo__FP4CNVO	48	cnvo/InitCnvo__FP4CNVO.c
@@ -2594,6 +2614,7 @@ address	name	size	file
 0X19EEF0	func_0019EEF0	92	new_19e110/fun_0019eef0.cpp
 0X19EF50	func_0019EF50	308	new_19e110/fun_0019ef50.c
 0X19F088	func_0019F088	32	new_19e110/fun_0019f088.c
+0X19F0A8	func_0019F0A8	120	new_19e110/fun_0019f0a8.cpp
 0X19F120	UpdateSwGuardsFrozen	76	new_19e110/UpdateSwGuardsFrozen.cpp
 0X19F170	SetSwGuardsFrozen	176	new_19e110/SetSwGuardsFrozen.cpp
 0X19F220	SetSwGuardsMode	112	new_19e110/SetSwGuardsMode.cpp
@@ -2602,6 +2623,7 @@ address	name	size	file
 0X19F3E8	func_0019F3E8	8	new_19e110/fun_0019f3e8.c
 0X19F3F0	func_0019F3F0	8	new_19e110/fun_0019f3f0.c
 0X19F3F8	func_0019F3F8	324	new_19e110/fun_0019f3f8.cpp
+0X19F540	WarpJtToPoint	76	transition/WarpJtToPoint.cpp
 0X19FAF8	FindBestSafePoint	308	jp-stepzap/FindBestSafePoint.cpp
 0X19FD30	AddSafePointOnMember	380	jp-stepzap/AddSafePointOnMember.cpp
 0X1A0048	RemoveSafePoints	136	jp-stepzap/RemoveSafePoints.cpp
@@ -2614,6 +2636,7 @@ address	name	size	file
 0X1A0B18	InitJtZap	40	jp-stepzap/InitJtZap.cpp
 0X1A1098	PostJtLoadZap__FP2JT	172	stepzap/PostJtLoadZap__FP2JT.cpp
 0X1A1148	PresetJtAccelZap	424	new_1a1148/PresetJtAccelZap.cpp
+0X1A12F0	UpdateZap	104	new_1a1148/UpdateZap.cpp
 0X1A15B0	SetZapContinuation	32	new_1a1148/SetZapContinuation.cpp
 0X1A15D0	ZapContinue	216	new_1a1148/ZapContinue.cpp
 0X1A16A8	WarpZapToSafePoint	32	new_1a1148/WarpZapToSafePoint.c
@@ -2627,6 +2650,7 @@ address	name	size	file
 0X1A2358	func_001A2358	44	ub-light/fun_001a2358.cpp
 0X1A2388	JT_Die	52	ub-light/JT_Die.cpp
 0X1A23C0	bevy_player_p7_damage_1a23c0	56	ub-light/bevy_player_p7_damage_1a23c0.cpp
+0X1A23F8	bevy_player_p7_damage_1a23f8	100	ub-light/bevy_player_p7_damage_1a23f8.cpp
 0X1A2A78	func_001A2A78	308	ub-light/fun_001a2a78.c
 0X1A2BB0	func_001A2BB0	32	ub-light/fun_001a2bb0.c
 0X1A2BD0	func_001A2BD0	68	ub-light/fun_001a2bd0.cpp
@@ -2639,6 +2663,7 @@ address	name	size	file
 0X1A3000	func_001A3000	32	ub-light/fun_001a3000.c
 0X1A3020	func_001A3020	76	ub-light/fun_001a3020.c
 0X1A3070	func_001A3070	8	ub-light/fun_001a3070.c
+0X1A3078	func_001A3078	84	ub-light/fun_001a3078.cpp
 0X1A30D0	func_001A30D0	52	ub-light/fun_001a30d0.cpp
 0X1A3108	func_001A3108	308	ub-light/fun_001a3108.c
 0X1A3240	func_001A3240	32	ub-light/fun_001a3240.c
@@ -2683,6 +2708,7 @@ address	name	size	file
 0X1A5800	AddLoHierarchy	68	light-stepguard/AddLoHierarchy.cpp
 0X1A5848	RemoveLoHierarchy	136	light-stepguard/RemoveLoHierarchy.cpp
 0X1A58D0	func_001A58D0	48	light-stepguard/fun_001a58d0.cpp
+0X1A5900	SetLoParent	640	light-stepguard/SetLoParent.cpp
 0X1A5B80	func_001A5B80	104	light-stepguard/fun_001a5b80.c
 0X1A5BE8	CReturnZeroLo	8	stepguard/CReturnZeroLo.c
 0X1A5BF0	func_001A5BF0	52	stepguard-jt/fun_001a5bf0.cpp
@@ -2722,6 +2748,7 @@ address	name	size	file
 0X1A6BE8	SetLoPosMat	92	button-stepguard/SetLoPosMat.cpp
 0X1A6C48	func_001A6C48	72	button-stepguard/fun_001a6c48.cpp
 0X1A6C90	func_001A6C90	20	unsorted/fun_001a6c90.cpp
+0X1A6CA8	func_001A6CA8	124	button-stepguard/fun_001a6ca8.cpp
 0X1A6D28	SetLoGrfzon	148	button-stepguard/SetLoGrfzon.cpp
 0X1A6DC0	func_001A6DC0	8	button-stepguard/fun_001a6dc0.c
 0X1A6DC8	func_001A6DC8	108	button-stepguard/fun_001a6dc8.cpp
@@ -2734,6 +2761,7 @@ address	name	size	file
 0X1A6F00	ConvertAloPos	188	stepguard-sw/ConvertAloPos.cpp
 0X1A6FC0	bevy_camera_follow_track_heading_weight	144	stepguard-sw/bevy_camera_follow_track_heading_weight.cpp
 0X1A7050	ConvertLoMat	348	stepguard-sw/ConvertLoMat.cpp
+0X1A71B0	ConvertAloMat	288	stepguard-sw/ConvertAloMat.cpp
 0X1A72D0	ConvertMatPos	120	stepguard-sw/ConvertMatPos.cpp
 0X1A7348	ConvertAloVec	104	stepguard-sw/ConvertAloVec.cpp
 0X1A73C0	StaticInitSlotheaps_1a73c0	308	stepguard-sw/StaticInitSlotheaps_1a73c0.c
@@ -2754,6 +2782,7 @@ address	name	size	file
 0X1AA978	func_001AA978	64	mark-memcard/fun_001aa978.c
 0X1AA9B8	ConvertMcDirEntry	400	memcard/ConvertMcDirEntry.c
 0X1AAB48	ClassifyMcStart	32	memcard/ClassifyMcStart.cpp
+0X1AAB68	ClassifyMcSync	84	memcard/ClassifyMcSync.cpp
 0X1AAED8	InitMemcard__FP7MEMCARD	64	memcard/InitMemcard__FP7MEMCARD.c
 0X1AAF18	MemcardThreadMain	116	memcard/MemcardThreadMain.cpp
 0X1AAF90	CreateMemcardThread__FP7MEMCARDii	176	memcard/CreateMemcardThread__FP7MEMCARDii.cpp
@@ -2792,6 +2821,8 @@ address	name	size	file
 0X1ACA40	DeleteMemcardFile	84	memcard-memory/DeleteMemcardFile.c
 0X1ACAE8	MemcardMenu_PostLoad	76	memcard-memory/MemcardMenu_PostLoad.c
 0X1ACB38	MemcardMenu_Reset	28	memcard-memory/MemcardMenu_Reset.c
+0X1ACB58	MemcardMenu_SetState	96	memcard-memory/MemcardMenu_SetState.cpp
+0X1ACBB8	MemcardMenu_ClearState	96	memcard-memory/MemcardMenu_ClearState.cpp
 0X1ACC18	MemcardMenu_SetDir	32	memcard-memory/MemcardMenu_SetDir.c
 0X1ACC38	func_001ACC38	72	memcard-memory/fun_001acc38.cpp
 0X1ACC80	MemcardMenu_KindOfState	68	memcard-memory/MemcardMenu_KindOfState.cpp
@@ -2816,6 +2847,7 @@ address	name	size	file
 0X1AE110	func_001AE110	32	memcard-memory/fun_001ae110.c
 0X1AE130	func_001AE130	32	memcard-memory/fun_001ae130.c
 0X1AE150	func_001AE150	24	memcard-memory/fun_001ae150.c
+0X1AE168	func_001AE168	96	unsorted/fun_001ae168.cpp
 0X1AE1C8	CheckForOutOfMemory__Fv	8	memory/CheckForOutOfMemory__Fv.c
 0X1AE1D0	PvAllocSwImpl__Fi	104	memory/PvAllocSwImpl__Fi.cpp
 0X1AE238	PvAllocSwCopyImpl__FiPv	104	memory/PvAllocSwCopyImpl__FiPv.cpp
@@ -2824,6 +2856,7 @@ address	name	size	file
 0X1AE318	PvAllocStackImpl__Fi	96	memory/PvAllocStackImpl__Fi.c
 0X1AE378	PvAllocStackClearImpl__Fi	92	memory/PvAllocStackClearImpl__Fi.cpp
 0X1AE3D8	InitStackImpl__Fv	76	memory/InitStackImpl__Fv.cpp
+0X1AE428	FreeStackImpl__Fv	76	memory/FreeStackImpl__Fv.cpp
 0X1AE478	CStackFrame_Construct	40	memory-splice-ref/CStackFrame_Construct.c
 0X1AE4A0	CStackFrame_Destructor	68	splice-ref/CStackFrame_Destructor.c
 0X1AE4E8	malloc	8	memory/malloc.c
@@ -2884,6 +2917,7 @@ address	name	size	file
 0X1B1B10	func_001B1B10	8	ac-rog/fun_001b1b10.c
 0X1B1B18	func_001B1B18	128	ac-rog/fun_001b1b18.cpp
 0X1B1B98	func_001B1B98	88	ac-rog/fun_001b1b98.cpp
+0X1B1BF0	ResolveSlotSoAsegs	108	ac-rog/ResolveSlotSoAsegs.cpp
 0X1B1C60	StaticInitSlotheaps_1b1c60	308	ac-rog/StaticInitSlotheaps_1b1c60.c
 0X1B1D98	func_001B1D98	32	ac-rog/fun_001b1d98.c
 0X1B1DB8	InitMissile	68	ac-rog/InitMissile.c
@@ -3026,6 +3060,7 @@ address	name	size	file
 0X1BEA40	func_001BEA40	72	rog-path/fun_001bea40.c
 0X1BEA88	RtAlo_LoadFromBrx	28	rog-path/RtAlo_LoadFromBrx.c
 0X1BEAA8	func_001BEAA8	40	unsorted/fun_001beaa8.cpp
+0X1BEAD0	func_001BEAD0	84	rog-path/fun_001bead0.cpp
 0X1BECF8	RtAlo_Show_thunk	28	rog-path/RtAlo_Show_thunk.c
 0X1BED18	func_001BED18	248	rog-path/fun_001bed18.cpp
 0X1BEE10	func_001BEE10	80	rog-path/fun_001bee10.cpp
@@ -3053,6 +3088,7 @@ address	name	size	file
 0X1C18B8	RemovePathzoneEndpoints	176	new_1c0920/RemovePathzoneEndpoints.cpp
 0X1C1968	RemovePathzoneObstacle	204	new_1c0920/RemovePathzoneObstacle.cpp
 0X1C1BA0	AddPathzoneObstacle	380	new_1c0920/AddPathzoneObstacle.cpp
+0X1C1EC0	func_001C1EC0	104	new_1c0920/fun_001c1ec0.cpp
 0X1C1F28	func_001C1F28	120	new_1c0920/fun_001c1f28.cpp
 0X1C2048	InitPzlink	48	new_1c0920/InitPzlink.cpp
 0X1C2078	AddPzlinkHierarchy	56	new_1c0920/AddPzlinkHierarchy.cpp
@@ -3097,6 +3133,7 @@ address	name	size	file
 0X1C40F8	FIsPoSwFocus	52	new_1c3df8/FIsPoSwFocus.c
 0X1C4130	func_001C4130	136	new_1c3df8/fun_001c4130.cpp
 0X1C4280	VJOY_constructor	100	new_1c3df8/VJOY_constructor.cpp
+0X1C42E8	ResetVjoy	72	new_1c3df8/ResetVjoy.cpp
 0X1C4468	UpdateVjoy	320	new_1c3df8/UpdateVjoy.cpp
 0X1C45A8	UpdateVjoyPressTimes	148	new_1c3df8/UpdateVjoyPressTimes.cpp
 0X1C4640	SetVjoyMode	28	new_1c3df8/SetVjoyMode.c
@@ -3118,6 +3155,7 @@ address	name	size	file
 0X1C5098	func_001C5098	172	new_1c3df8/fun_001c5098.cpp
 0X1C5570	FFilterDprizeObjects	108	new_1c3df8/FFilterDprizeObjects.cpp
 0X1C5D18	CheckDprizeCollect	216	new_1c3df8/CheckDprizeCollect.cpp
+0X1C5DF0	FAbsorbDprizeWkr	84	new_1c3df8/FAbsorbDprizeWkr.cpp
 0X1C5FA0	RenderDprizeAll	276	new_1c3df8/RenderDprizeAll.cpp
 0X1C64F8	func_001C64F8	16	new_1c3df8/fun_001c64f8.cpp
 0X1C6508	func_001C6508	128	new_1c3df8/fun_001c6508.cpp
@@ -3152,6 +3190,7 @@ address	name	size	file
 0X1C8B68	func_001C8B68	308	new_1c76d0/fun_001c8b68.c
 0X1C8CA0	StaticInitKeypadFile_thunk	32	new_1c76d0/StaticInitKeypadFile_thunk.c
 0X1C8D20	Begin__5CProg	28	prog/Begin__5CProg.cpp
+0X1C8D40	SetRemain__5CProgi	120	prog/SetRemain__5CProgi.cpp
 0X1C8DB8	End__5CProg	28	prog/End__5CProg.cpp
 0X1C9090	func_001C9090	8	prog-memcard/fun_001c9090.c
 0X1C9098	StopLoadingLogo	56	memcard/StopLoadingLogo.c
@@ -3161,6 +3200,7 @@ address	name	size	file
 0X1C9950	IsetFromCloneId	8	new_1c90d0/IsetFromCloneId.c
 0X1C9958	IcloneFromCloneId	12	new_1c90d0/IcloneFromCloneId.c
 0X1C9968	OidFromCloneId	108	new_1c90d0/OidFromCloneId.cpp
+0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.cpp
 0X1CA370	InstantiateClone	396	new_1c90d0/InstantiateClone.cpp
 0X1CA788	func_001CA788	48	new_1c90d0/fun_001ca788.c
 0X1CA7B8	func_001CA7B8	260	new_1c90d0/fun_001ca7b8.cpp
@@ -3391,9 +3431,12 @@ address	name	size	file
 0X1DD1F8	JobMenu_UpdateBlot	264	game-stepguard/JobMenu_UpdateBlot.cpp
 0X1DD648	func_001DD648	68	game-stepguard/fun_001dd648.cpp
 0X1DD690	func_001DD690	52	game-stepguard/fun_001dd690.cpp
+0X1DD6C8	func_001DD6C8	92	game-stepguard/fun_001dd6c8.cpp
+0X1DD728	func_001DD728	88	game-stepguard/fun_001dd728.cpp
 0X1DD780	func_001DD780	56	game-stepguard/fun_001dd780.cpp
 0X1DD7B8	Menu52D_SetDirection	32	game-stepguard/Menu52D_SetDirection.c
 0X1DD7D8	TitleMenu_Construct	68	game-stepguard/TitleMenu_Construct.cpp
+0X1DD820	func_001DD820	100	game-stepguard/fun_001dd820.cpp
 0X1DD888	func_001DD888	88	game-stepguard/fun_001dd888.cpp
 0X1DD8E0	SelectLanguage	60	game-stepguard/SelectLanguage.cpp
 0X1DD920	TitleMenu_Update	484	game-stepguard/TitleMenu_Update.cpp
@@ -3562,6 +3605,7 @@ address	name	size	file
 0X1E6630	UMaxCrv	24	splice-ref-crv/UMaxCrv.c
 0X1E6648	SMaxCrv	24	splice-ref-crv/SMaxCrv.c
 0X1E6660	UWrapCrv	104	splice-ref-crv/UWrapCrv.cpp
+0X1E66C8	SWrapCrv	88	splice-ref-crv/SWrapCrv.cpp
 0X1E6728	func_001E6728	140	splice-ref-crv/fun_001e6728.cpp
 0X1E6DB8	FindCrvcClosestPointFromU	284	crv/FindCrvcClosestPointFromU.cpp
 0X1E6ED8	FindCrvClosestPointFromU	56	stephang/FindCrvClosestPointFromU.c
@@ -3584,6 +3628,7 @@ address	name	size	file
 0X1E9828	RemeasureRopeSim	44	new_1e7a28/RemeasureRopeSim.c
 0X1E9C30	EnsureCrvExcludedRanges	84	new_1e7a28/EnsureCrvExcludedRanges.cpp
 0X1E9F50	PobstacleFindAtPos	176	new_1e7a28/PobstacleFindAtPos.cpp
+0X1EA3B0	PgFindCrvExcludedRange	92	new_1e7a28/PgFindCrvExcludedRange.cpp
 0X1EA410	CreateSharedSlotheaps_1ea410	308	new_1e7a28/CreateSharedSlotheaps_1ea410.c
 0X1EA548	CreateSharedSlotheaps_1ea410_thunk	32	new_1e7a28/CreateSharedSlotheaps_1ea410_thunk.c
 0X1EA568	func_001EA568	288	new_1e7a28/fun_001ea568.cpp
@@ -3608,6 +3653,7 @@ address	name	size	file
 0X1EC880	PshdframesFromOid	76	shd-glob/PshdframesFromOid.cpp
 0X1EC8D0	PshdframesOrFirst	40	shd-glob/PshdframesOrFirst.c
 0X1EC8F8	PshdFromIndex	24	shd-glob/PshdFromIndex.c
+0X1EC918	PsaaFromOid	76	shd-glob/PsaaFromOid.cpp
 0X1EC968	UpdateSaas	100	glob/UpdateSaas.cpp
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp
@@ -3623,6 +3669,7 @@ address	name	size	file
 0X1EDA20	FUpdatableSaa__FP3SAA	44	shdanim/FUpdatableSaa__FP3SAA.c
 0X1EDA50	func_001EDA50	8	shdanim/fun_001eda50.c
 0X1EDA58	UCompleteSaa__FP3SAA	12	shdanim/UCompleteSaa__FP3SAA.c
+0X1EDA68	SetSaiIframe	112	shdanim/SetSaiIframe.cpp
 0X1EDAD8	SetSaiDuDv	164	shdanim/SetSaiDuDv.cpp
 0X1EDB80	FMatchesSaaOid	20	shdanim/FMatchesSaaOid.c
 0X1EDB98	InitLoop__FP4LOOPP4SAAF	164	shdanim/InitLoop__FP4LOOPP4SAAF.cpp
@@ -3635,6 +3682,7 @@ address	name	size	file
 0X1EDFE0	UpdateShuffle__FP7SHUFFLEf	172	shdanim/UpdateShuffle__FP7SHUFFLEf.cpp
 0X1EE228	UpdateEyes__FP4EYESf	388	eyes/UpdateEyes__FP4EYESf.cpp
 0X1EE3B0	SetEyesClosed__FP4EYESf	108	eyes/SetEyesClosed__FP4EYESf.cpp
+0X1EE420	PsaiFromEyesShd__FP4EYESP3SHD	92	eyes/PsaiFromEyesShd__FP4EYESP3SHD.cpp
 0X1EE480	InitScroller__FP8SCROLLERP4SAAF	96	shdanim/InitScroller__FP8SCROLLERP4SAAF.cpp
 0X1EE4E0	UpdateScroller__FP8SCROLLERf	212	shdanim/UpdateScroller__FP8SCROLLERf.cpp
 0X1EE5B8	UCompleteScroller__FP8SCROLLER	188	shdanim/UCompleteScroller__FP8SCROLLER.cpp
@@ -3652,6 +3700,7 @@ address	name	size	file
 0X1EEC68	func_001EEC68	8	shdanim-sm/fun_001eec68.c
 0X1EEC70	GoalStack_AllocGoals	96	shdanim-sm/GoalStack_AllocGoals.cpp
 0X1EECD0	GoalStack_Clear	60	shdanim-sm/GoalStack_Clear.cpp
+0X1EED10	GoalStack_Update	104	shdanim-sm/GoalStack_Update.cpp
 0X1EEED0	GoalStack_Pop	16	shdanim-sm/GoalStack_Pop.c
 0X1EEEE0	GoalStack_PgoalFind	136	shdanim-sm/GoalStack_PgoalFind.cpp
 0X1EEF68	func_001EEF68	8	shdanim-sm/fun_001eef68.c
@@ -3702,6 +3751,7 @@ address	name	size	file
 0X1F0CF0	PsmtChooseSmAny	148	sm-so/PsmtChooseSmAny.cpp
 0X1F0FA0	EndSmaTransition	56	sm-so/EndSmaTransition.cpp
 0X1F0FD8	SendSmaMessage	156	sm-so/SendSmaMessage.cpp
+0X1F1078	HandleSmaMessage	120	sm-so/HandleSmaMessage.cpp
 0X1F10F0	SkipSma	184	sm-so/SkipSma.cpp
 0X1F1350	SetSmaMask	88	sm-so/SetSmaMask.c
 0X1F13A8	NotifySmaSpliceOnEnterState	160	sm-so/NotifySmaSpliceOnEnterState.cpp
@@ -3767,6 +3817,7 @@ address	name	size	file
 0X1F4C58	func_001F4C58	68	so-po/fun_001f4c58.cpp
 0X1F4CA0	func_001F4CA0	172	so-po/fun_001f4ca0.cpp
 0X1F4D50	func_001F4D50	88	so-po/fun_001f4d50.c
+0X1F4DA8	func_001F4DA8	128	so-po/fun_001f4da8.cpp
 0X1F4E28	DiscardSoXps	232	so-po/DiscardSoXps.cpp
 0X1F4F10	func_001F4F10	152	so-po/fun_001f4f10.cpp
 0X1F4FA8	func_001F4FA8	8	so-po/fun_001f4fa8.c
@@ -3789,6 +3840,7 @@ address	name	size	file
 0X1F6030	PpartFindAlo	56	so/PpartFindAlo.cpp
 0X1F66F0	CloneAloHierarchy	148	so/CloneAloHierarchy.cpp
 0X1F6788	PasegaFindAlo	84	so/PasegaFindAlo.cpp
+0X1F67E0	PsmaFindAlo	84	so/PsmaFindAlo.cpp
 0X1F6838	GetSoNoXpsAll	40	so/GetSoNoXpsAll.cpp
 0X1F6860	SetSoNoXpsAll	68	so/SetSoNoXpsAll.cpp
 0X1F68A8	func_001F68A8	108	so/fun_001f68a8.cpp
@@ -3857,6 +3909,7 @@ address	name	size	file
 0X1F8910	func_001F8910	204	new_1f88d8/fun_001f8910.cpp
 0X1F89E0	func_001F89E0	148	new_1f88d8/fun_001f89e0.cpp
 0X1F8A78	func_001F8A78	96	new_1f88d8/fun_001f8a78.cpp
+0X1F8AD8	func_001F8AD8	128	new_1f88d8/fun_001f8ad8.cpp
 0X1F8B58	func_001F8B58	152	new_1f88d8/fun_001f8b58.cpp
 0X1F8BF0	func_001F8BF0	76	new_1f88d8/fun_001f8bf0.cpp
 0X1F8C40	StaticInitSlotheaps_1f8c40	372	new_1f88d8/StaticInitSlotheaps_1f8c40.cpp
@@ -3864,6 +3917,7 @@ address	name	size	file
 0X1F8DD8	SolveSw	184	new_1f88d8/SolveSw.cpp
 0X1F8E90	func_001F8E90	236	new_1f88d8/fun_001f8e90.cpp
 0X1F8F80	func_001F8F80	332	new_1f88d8/fun_001f8f80.cpp
+0X1F90D0	func_001F90D0	364	new_1f88d8/fun_001f90d0.cpp
 0X1FAA48	DwFromImpulseAtPos	80	new_1f88d8/DwFromImpulseAtPos.cpp
 0X1FAB48	VecVelocityAtPos	44	new_1f88d8/VecVelocityAtPos.cpp
 0X1FADD0	func_001FADD0	68	new_1f88d8/fun_001fadd0.cpp
@@ -3903,6 +3957,7 @@ address	name	size	file
 0X1FC138	NewStreamAmb	84	new_1fbf20/NewStreamAmb.cpp
 0X1FC190	InitStreamAmb	220	new_1fbf20/InitStreamAmb.cpp
 0X1FC2E0	SetAmbSlotVolume	160	new_1fbf20/SetAmbSlotVolume.cpp
+0X1FC408	AddAmbSlotSource	236	new_1fbf20/AddAmbSlotSource.cpp
 0X1FC4F8	GetStreamAmbKind	24	new_1fbf20/GetStreamAmbKind.cpp
 0X1FC698	StopStreamAmb	56	new_1fbf20/StopStreamAmb.cpp
 0X1FC6D0	PauseStreamAmb	56	new_1fbf20/PauseStreamAmb.cpp
@@ -3931,6 +3986,7 @@ address	name	size	file
 0X1FDA48	func_001FDA48	352	new_1fcff8/fun_001fda48.cpp
 0X1FDBA8	func_001FDBA8	92	new_1fcff8/fun_001fdba8.cpp
 0X1FDEC0	func_001FDEC0	8	new_1fcff8/fun_001fdec0.c
+0X1FE0E8	RunStreamCue	100	new_1fcff8/RunStreamCue.cpp
 0X1FE310	DequeueStream	228	new_1fcff8/DequeueStream.cpp
 0X1FE3F8	MarkClockTickRealOnly__FP5CLOCK	128	clock/MarkClockTickRealOnly__FP5CLOCK.cpp
 0X1FE478	func_001FE478	316	new_1fe478/fun_001fe478.cpp
@@ -3938,6 +3994,7 @@ address	name	size	file
 0X1FE5E0	func_001FE5E0	16	new_1fe478/fun_001fe5e0.c
 0X1FE738	StopStream	272	new_1fe478/StopStream.cpp
 0X1FE848	FStreamPlaying	60	new_1fe478/FStreamPlaying.cpp
+0X1FE888	TStream	260	new_1fe478/TStream.cpp
 0X1FE990	func_001FE990	56	new_1fe478/fun_001fe990.cpp
 0X1FE9C8	SetSndPlaybackMode	48	light/SetSndPlaybackMode.c
 0X1FE9F8	SetSndbankMasterVolume	104	light-button/SetSndbankMasterVolume.cpp
@@ -3974,6 +4031,7 @@ address	name	size	file
 0X2013D8	func_002013D8	240	new_2013d8/fun_002013d8.cpp
 0X2014C8	func_002014C8	308	new_2013d8/fun_002014c8.c
 0X201600	func_00201600	32	new_2013d8/fun_00201600.c
+0X201998	func_00201998	88	sprbuf/fun_00201998.cpp
 0X201D58	func_00201D58	32	sprbuf/fun_00201d58.c
 0X201D78	func_00201D78	80	sprbuf-stepguard/fun_00201d78.cpp
 0X201DC8	func_00201DC8	192	sprbuf-stepguard/fun_00201dc8.cpp
@@ -3994,6 +4052,7 @@ address	name	size	file
 0X203670	func_00203670	120	new_203670/fun_00203670.cpp
 0X2036E8	SetReconTargetDone	108	new_203670/SetReconTargetDone.cpp
 0X203758	FReconTargetDone	52	lookat/FReconTargetDone.cpp
+0X203790	FReconTargetPickable	92	new_203790/FReconTargetPickable.cpp
 0X2037F0	StaticInitStepSlotheaps	308	new_203790/StaticInitStepSlotheaps.c
 0X203928	func_00203928	32	new_203790/fun_00203928.c
 0X203948	InitStep	120	new_203790/InitStep.cpp
@@ -4228,10 +4287,12 @@ address	name	size	file
 0X20F2B8	SetSwFogHsv	28	sw-button/SetSwFogHsv.c
 0X20F2D8	func_0020F2D8	28	sw-button/fun_0020f2d8.c
 0X20F2F8	func_0020F2F8	28	sw-button/fun_0020f2f8.c
+0X20F5D0	func_0020F5D0	112	sw-button/fun_0020f5d0.cpp
 0X20F640	func_0020F640	204	sw-button/fun_0020f640.cpp
 0X20F710	InitSwHudBlots	204	sw-button/InitSwHudBlots.cpp
 0X20F948	FFilterOxa	196	sw-button/FFilterOxa.cpp
 0X20FA10	FFilterOxaBasic	60	sw-button/FFilterOxaBasic.cpp
+0X20FA50	FFilterHitTestDefault	76	sw-button/FFilterHitTestDefault.cpp
 0X20FDC8	ExtractUniqueSosFromGeoms	244	sw-button/ExtractUniqueSosFromGeoms.cpp
 0X20FEC0	FAddRsmg__FP4RSMGiPii3OIDN24	176	button/FAddRsmg__FP4RSMGiPii3OIDN24.cpp
 0X20FF70	TriggerRsmg	128	button-po/TriggerRsmg.cpp
@@ -4284,6 +4345,7 @@ address	name	size	file
 0X211E70	JobBlot_AddOptionalJob	40	po-screen/JobBlot_AddOptionalJob.cpp
 0X211E98	JobBlot_AddRequiredJob	40	po-screen/JobBlot_AddRequiredJob.cpp
 0X211EC0	JobBlot_PostLoad	204	po-screen/JobBlot_PostLoad.cpp
+0X211F90	JobBlot_Update	452	po-screen/JobBlot_Update.cpp
 0X212158	Blot_Construct	112	po-screen/Blot_Construct.cpp
 0X2121C8	func_002121C8	32	po-screen/fun_002121c8.c
 0X2121E8	FBlotLabelPlaying	176	po-screen/FBlotLabelPlaying.cpp
@@ -4323,11 +4385,14 @@ address	name	size	file
 0X215E80	CMovieText_Trim	84	font/CMovieText_Trim.cpp
 0X215ED8	CMovieText_Dx	100	font-break/CMovieText_Dx.cpp
 0X2161C8	CMovieText_DxMaxLine	148	font-break/CMovieText_DxMaxLine.cpp
+0X216260	CMovieText_GetExtents	120	font-break/CMovieText_GetExtents.cpp
 0X2162D8	CMovieText_BuildGsMatrix	216	font-break/CMovieText_BuildGsMatrix.cpp
 0X2166B0	CMovieText_DrawAffine	156	font-break/CMovieText_DrawAffine.cpp
 0X216B40	PglyphFromFontCh	64	font-break/PglyphFromFontCh.cpp
 0X216B80	DxFromFontCh	68	font-break/DxFromFontCh.cpp
+0X217BA0	PlayRootSpriteLabel	124	font-break/PlayRootSpriteLabel.cpp
 0X217C20	PlayRootSpriteLabelIndex	136	font-break/PlayRootSpriteLabelIndex.cpp
+0X217CA8	PlaceSpriteInstance	240	font-break/PlaceSpriteInstance.cpp
 0X217D98	StartSpriteInstance	352	font-break/StartSpriteInstance.cpp
 0X217EF8	IinstFindFreeSprite	64	font-break/IinstFindFreeSprite.cpp
 0X217F38	ClearSpriteInstance	124	font-break/ClearSpriteInstance.cpp
@@ -4366,6 +4431,7 @@ address	name	size	file
 0X21D4E0	func_0021D4E0	308	break-text/fun_0021d4e0.c
 0X21D618	func_0021D618	32	break-text/fun_0021d618.c
 0X21D638	CchParsePchzInt__FPcPi	120	text/CchParsePchzInt__FPcPi.cpp
+0X21D9F0	WriteTftPchz__FP3TFTP5OSTRMPc	324	text/WriteTftPchz__FP3TFTP5OSTRMPc.cpp
 0X21DB38	FNegTftUl__FP3TFTP2UL	224	text/FNegTftUl__FP3TFTP2UL.cpp
 0X21DC18	UnRadixFromChConversion__Fc	84	text/UnRadixFromChConversion__Fc.cpp
 0X21DC70	CchAchFromUl__FPciUlUi	208	text/CchAchFromUl__FPciUlUi.cpp
@@ -4373,11 +4439,14 @@ address	name	size	file
 0X21E0D8	ChDigitFromG__Fdii	216	text/ChDigitFromG__Fdii.cpp
 0X21EAC8	CchOstrmPrintf__FP5OSTRMPcT1	240	text/CchOstrmPrintf__FP5OSTRMPcT1.cpp
 0X21EBB8	vprintf	92	text/vprintf.cpp
+0X21EC18	printf	72	text/printf.cpp
 0X21EC60	vsprintf	116	text/vsprintf.cpp
+0X21ECD8	sprintf	68	text/sprintf.cpp
 0X21ED28	strlen	48	text/strlen.cpp
 0X21ED58	strcpy	72	text/strcpy.cpp
 0X21EDA0	strcat	88	text/strcat.cpp
 0X21EDF8	strchr	48	text/strchr.cpp
+0X21EE30	UpperizePchz__FPc	72	text/UpperizePchz__FPc.cpp
 0X21EE78	func_0021EE78	308	new_21ee78/fun_0021ee78.c
 0X21EFB0	InitSharedSlotheaps_thunk	32	new_21ee78/InitSharedSlotheaps_thunk.c
 0X21EFD0	NewSema	76	rwm/NewSema.cpp
@@ -4419,11 +4488,13 @@ address	name	size	file
 0X223FE0	LoadGadgetObjFromBrx	72	tn-screen/LoadGadgetObjFromBrx.c
 0X224028	AddGadgetObjLoHierarchy	64	tn-screen/AddGadgetObjLoHierarchy.cpp
 0X224068	RemoveGadgetObjLoHierarchy	68	tn-screen/RemoveGadgetObjLoHierarchy.cpp
+0X224190	FReleaseGadgetObj	72	screen/FReleaseGadgetObj.cpp
 0X224258	StickGadgetObj	132	new_2241d8/StickGadgetObj.cpp
 0X2242E0	FIgnoreGadgetObjIntersection	108	new_2241d8/FIgnoreGadgetObjIntersection.cpp
 0X224350	AdjustGadgetObjNewXp	48	new_2241d8/AdjustGadgetObjNewXp.cpp
 0X224508	FGadgetObjAcceptsStick	136	new_2241d8/FGadgetObjAcceptsStick.cpp
 0X224590	FGadgetObjActive	36	new_2241d8/FGadgetObjActive.cpp
+0X2245B8	ReleaseGadgetObj	88	new_2241d8/ReleaseGadgetObj.cpp
 0X224610	FGadgetObjKept	36	new_2241d8/FGadgetObjKept.cpp
 0X224638	FGadgetObjCanStick	80	new_2241d8/FGadgetObjCanStick.cpp
 0X224688	FGadgetObjIsKindB	16	new_2241d8/FGadgetObjIsKindB.c
@@ -4445,6 +4516,7 @@ address	name	size	file
 0X226AB8	StaticInitSlotheaps_226ab8	308	new_225aa8/StaticInitSlotheaps_226ab8.c
 0X226BF0	func_00226BF0	32	new_225aa8/fun_00226bf0.c
 0X226C10	__4VIFS	68	vifs/__4VIFS.c
+0X226C58	Align__4VIFSi	80	vifs/Align__4VIFSi.cpp
 0X226CA8	AddVifBaseOffset__4VIFSii	52	vifs/AddVifBaseOffset__4VIFSii.cpp
 0X226CE0	AddVifMscal__4VIFSPv	48	vifs/AddVifMscal__4VIFSPv.cpp
 0X226D10	AddVifFlush__4VIFS	24	vifs/AddVifFlush__4VIFS.cpp
@@ -4452,6 +4524,7 @@ address	name	size	file
 0X226D40	AddVifStcycl__4VIFSii	36	vifs/AddVifStcycl__4VIFSii.cpp
 0X226D68	AddVifStrow__4VIFSP2QW	104	vifs/AddVifStrow__4VIFSP2QW.cpp
 0X226DD0	AddVifStmask__4VIFSUi	56	vifs/AddVifStmask__4VIFSUi.cpp
+0X226E10	VIFS_AddUnpackCommand	120	vifs/VIFS_AddUnpackCommand.cpp
 0X226E88	UnpackHelper__4VIFS3UPKiiPiPPUi	156	vifs/UnpackHelper__4VIFS3UPKiiPiPPUi.cpp
 0X226FD0	VIFS_AddVifUnpackFromStream	64	vifs/VIFS_AddVifUnpackFromStream.cpp
 0X227010	AddVifUnpackRefs__4VIFS3UPKiPviPPPv	180	vifs/AddVifUnpackRefs__4VIFS3UPKiPviPPPv.cpp
@@ -4478,6 +4551,7 @@ address	name	size	file
 0X227FC8	func_00227FC8	32	new_2271f8/fun_00227fc8.c
 0X2280D0	func_002280D0	108	new_2271f8/fun_002280d0.cpp
 0X228140	func_00228140	44	new_2271f8/fun_00228140.cpp
+0X228170	func_00228170	116	new_2271f8/fun_00228170.cpp
 0X2281E8	InitWarp	104	new_2271f8/InitWarp.cpp
 0X228250	func_00228250	96	new_2271f8/fun_00228250.cpp
 0X2282B0	LoadWarpFromBrx	164	new_2271f8/LoadWarpFromBrx.cpp
@@ -4500,6 +4574,7 @@ address	name	size	file
 0X228D20	UpdateSwXaList__FP2SWPP2XA	300	water/UpdateSwXaList__FP2SWPP2XA.cpp
 0X2292D8	AddWaterExternalAccelerations	48	water-sw/AddWaterExternalAccelerations.cpp
 0X229308	RemoveWater	104	water-sw/RemoveWater.cpp
+0X229370	HandleWaterMessage	244	water-sw/HandleWaterMessage.cpp
 0X229680	UpdateSoBounds_thunk	28	water-sw/UpdateSoBounds_thunk.c
 0X2296A0	PxaAllocSw	28	water-sw/PxaAllocSw.c
 0X2296C0	FreeSwXaList__FP2SWP2XA	76	sw/FreeSwXaList__FP2SWP2XA.cpp
@@ -4526,6 +4601,7 @@ address	name	size	file
 0X22B7A0	func_0022B7A0	56	so-wr/fun_0022b7a0.cpp
 0X22BF40	UBias__Fff	48	wr/UBias__Fff.c
 0X22BF70	GFromOnz__FP3ONZ	180	wr/GFromOnz__FP3ONZ.cpp
+0X22C3B0	AddWrCircleWarp__FP2WR	128	wr/AddWrCircleWarp__FP2WR.cpp
 0X22C430	AddWrBendWarp__FP2WR	112	wr/AddWrBendWarp__FP2WR.cpp
 0X22C4A0	PwreGetWrCur__FP2WR4ENSK4WREK	52	wr/PwreGetWrCur__FP2WR4ENSK4WREK.cpp
 0X22C4D8	PwreGetWrCircle__FP2WR4ENSK	28	wr/PwreGetWrCircle__FP2WR4ENSK.cpp
@@ -4563,6 +4639,7 @@ address	name	size	file
 0X230CD0	func_00230CD0	32	alo-lo/fun_00230cd0.cpp
 0X230FA8	alo__static_initialization_and_destruction_0	308	alo-lo/alo__static_initialization_and_destruction_0.c
 0X2310E0	func_002310E0	32	alo-lo/fun_002310e0.c
+0X231100	InitXfm	112	alo-lo/InitXfm.cpp
 0X231170	LoadXfmFromBrx	60	lo/LoadXfmFromBrx.c
 0X2311B0	CloneXfm	112	lo-sdk/CloneXfm.c
 0X231220	func_00231220	124	lo-sdk/fun_00231220.c
@@ -4571,6 +4648,7 @@ address	name	size	file
 0X2313F0	InvalidateXfmMatWorld	76	lo-sdk/InvalidateXfmMatWorld.cpp
 0X231440	GetXfmMatWorld	40	lo-sdk/GetXfmMatWorld.c
 0X231550	func_00231550	68	lo-sdk/fun_00231550.c
+0X231598	ApplyXfmProxy	84	lo-sdk/ApplyXfmProxy.cpp
 0X231768	LoadXfmBaseFromBrx	120	lo-sdk/LoadXfmBaseFromBrx.cpp
 0X2317E0	LoadPloarrayFromBrx	172	lo-sdk/LoadPloarrayFromBrx.cpp
 0X231890	func_00231890	308	lo-sdk/fun_00231890.c
@@ -4759,6 +4837,7 @@ address	name	size	file
 0X2564B8	func_002564B8	8	sdk/fun_002564b8.c
 0X2564C0	func_002564C0	8	sdk/fun_002564c0.c
 0X256588	Vector_NotifyAdd	84	sdk/Vector_NotifyAdd.cpp
+0X2565E0	Vector_Add	116	sdk/Vector_Add.cpp
 0X256658	Vector_Clear	84	sdk/Vector_Clear.cpp
 0X2566B0	func_002566B0	36	sdk/fun_002566b0.cpp
 0X2566D8	Vector_Load	244	sdk/Vector_Load.cpp

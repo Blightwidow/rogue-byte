@@ -1,10 +1,5 @@
 #include "sly2.h"
-static inline float SqrtHazard(float value)
-{
-    float result;
-    asm("nop\n\tnop\n\tsqrt.s %0, %1" : "=&f" (result) : "f" (value));
-    return result;
-}
+static inline float SqrtHazard(float value) { return __builtin_sqrtf(value); }
 extern "C" {
 float acosf(float);
 float fabsf(float);

@@ -14,16 +14,16 @@ int FFindCrvSInPathzone(CRV *pcrv, PATHZONE *ppathzone, float *psFound, int fSaf
         do {
             float sWrapped = SWrapCrv(pcrv, s - ds);
             GetPathPosFromS(pcrv, &l.posMinus, 0, sWrapped);
-            if (!FPosInPathzone(ppathzone, l.posMinus, fSafe)) {
-                sWrapped = SWrapCrv(pcrv, s + ds);
-                GetPathPosFromS(pcrv, &l.posPlus, 0, sWrapped);
-                if (!FPosInPathzone(ppathzone, l.posPlus, fSafe))
-                    goto next;
+            if (FPosInPathzone(ppathzone, l.posMinus, fSafe)) {
+                if (psFound) *psFound = sWrapped;
+                return 1;
             }
-            if (psFound)
-                *psFound = sWrapped;
-            return 1;
-        next:
+            sWrapped = SWrapCrv(pcrv, s + ds);
+            GetPathPosFromS(pcrv, &l.posPlus, 0, sWrapped);
+            if (FPosInPathzone(ppathzone, l.posPlus, fSafe)) {
+                if (psFound) *psFound = sWrapped;
+                return 1;
+            }
             ds += g_2c0abc;
         } while (ds < sRange);
     }

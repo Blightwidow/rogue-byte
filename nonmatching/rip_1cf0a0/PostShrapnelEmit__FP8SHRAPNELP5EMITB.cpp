@@ -12,13 +12,14 @@ void PostShrapnelEmit__FP8SHRAPNELP5EMITB(SHRAPNEL *pshrapnel, EMITB *pemitb)
     func_001CE9B8();
     float lifetime = GRandInRange(g_2c1f78[0], g_2c1f78[1]);
     float scaled = pshrapnel->dtLifetime;
-    asm("lqc2 vf1, %0" : : "m" (pshrapnel->v));
-    asm("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q");
+    int chain;
+    asm("lqc2 vf1, %1" : "=r" (chain) : "m" (pshrapnel->v));
+    asm("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "+r" (chain));
     unsigned int bits;
-    asm("qmfc2.ni %0, vf1" : "=r" (bits));
+    asm("qmfc2.ni %0, vf1" : "=r" (bits) : "r" (chain));
     float speed;
     asm("mtc1 %1, %0" : "=f" (speed) : "r" (bits));
-    pshrapnel->dtLifetime = lifetime * scaled;
+    pshrapnel->dtLifetime = scaled * lifetime;
     pshrapnel->radius = pemitb->radius;
     pshrapnel->elasticity = pemitb->elasticity;
     pshrapnel->friction = pemitb->friction;

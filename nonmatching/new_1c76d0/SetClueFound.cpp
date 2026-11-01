@@ -1,32 +1,39 @@
-struct CRef { int tagk; int n; int pad[2]; };
+struct CRef;
 extern "C" {
-void CStackFrame_Construct(void);
-void CStackFrame_Destructor(void *, int);
-void *PpathClueFlag(int);
-int CcluesFound();
-void CRef_CopyConstruct(CRef *, CRef *);
+CRef *CRef_CopyConstruct(CRef *, CRef *);
 void CRef_Destruct(CRef *);
-void RefSetGameSaveValue(CRef *, void *);
-extern char B_003D4A60[];
-extern int B_003E1BF4;
 }
+struct CRef {
+    int tagk; int n; int p2; int p3;
+    CRef() {}
+    CRef(CRef &other) { CRef_CopyConstruct(this, &other); }
+    ~CRef() { CRef_Destruct(this); }
+};
+struct SAVEPATH { int csym; short *asym; };
+extern int B_003D4A60;
+extern int B_003E1BF4;
+extern "C" void CStackFrame_Construct(void *);
+extern "C" void CStackFrame_Destructor(void *, int);
+extern "C" SAVEPATH *PpathClueFlag(int);
+extern "C" int CcluesFound(void);
+extern "C" CRef RefSetGameSaveValue(SAVEPATH *, CRef &, int *);
+
 void SetClueFound(int idClue, int fFound)
 {
-    char frame[0x10];
-    CRef refs[3];
-    CStackFrame_Construct();
-    void *ppath = PpathClueFlag(idClue);
-    if (ppath == 0) {
+    char frame[16];
+    CStackFrame_Construct(frame);
+    SAVEPATH *path = PpathClueFlag(idClue);
+    if (path == 0) {
         CStackFrame_Destructor(frame, 2);
         return;
     }
-    refs[0].n = fFound != 0;
-    refs[0].tagk = 0x17;
-    RefSetGameSaveValue(&refs[2], ppath);
-    CRef_CopyConstruct(&refs[1], &refs[0]);
-    CRef_Destruct(&refs[2]);
-    CRef_Destruct(&refs[1]);
-    CRef_Destruct(&refs[0]);
+    {
+        CRef value;
+        value.tagk = 0x17;
+        value.n = fFound != 0;
+        CRef copy(value);
+        RefSetGameSaveValue(path, copy, &B_003D4A60);
+    }
     B_003E1BF4 = CcluesFound();
-    return CStackFrame_Destructor(frame, 2);
+    CStackFrame_Destructor(frame, 2);
 }
