@@ -110,7 +110,10 @@ def rodata_matches(object_path, object_start, addend, actual, address, size, elf
                 for relocation in section.iter_relocations():
                     relocated[relocation["r_offset"]] = relocation["r_info_type"]
     word = lambda blob, offset: int.from_bytes(blob[offset:offset + 4], "little")
-    first = read_target_words(elf_path, actual, 4)[0]
+    try:
+        first = read_target_words(elf_path, actual, 4)[0]
+    except SystemExit:  # a %hi/%lo pair the aligner paired wrongly: the address is not in the image, so it is not this function's table
+        return False
     if not address <= first < address + size:
         return addend + 4 <= len(data) and word(data, addend) == first and (addend not in relocated)
     count = 0
@@ -198,9 +201,9 @@ def compare(arguments):
     target_keys = list(target_words)
     aligned = {}  # object index -> target index
     aligner = difflib.SequenceMatcher(None, target_mnemonics, object_mnemonics, autojunk=False)
-    for operation, target_start, target_end, object_start, object_end in aligner.get_opcodes():
+    for operation, target_start, target_end, block_object_start, block_object_end in aligner.get_opcodes():
         if operation in ("equal", "replace"):
-            for target_index, object_index in zip(range(target_start, target_end), range(object_start, object_end)):
+            for target_index, object_index in zip(range(target_start, target_end), range(block_object_start, block_object_end)):
                 aligned[object_index] = target_index
                 relocation = relocations.get(object_index)
                 if relocation:
@@ -243,19 +246,19 @@ def compare(arguments):
     register_only = 0
     first_bad = min(link_errors) if link_errors else len(target_words)  # target index of the first difference
     lines = []
-    for operation, target_start, target_end, object_start, object_end in matcher.get_opcodes():
+    for operation, target_start, target_end, block_object_start, block_object_end in matcher.get_opcodes():
         if operation != "equal":
             first_bad = min(first_bad, target_start)
-            score += max(target_end - target_start, object_end - object_start)
-            for target_index, object_index in zip(range(target_start, target_end), range(object_start, object_end)):
+            score += max(target_end - target_start, block_object_end - block_object_start)
+            for target_index, object_index in zip(range(target_start, target_end), range(block_object_start, block_object_end)):
                 if (target_words[target_index] >> 26) == (object_words[object_index] >> 26) and \
                         disassemble(target_words[target_index]).split()[0] == disassemble(object_words[object_index]).split()[0]:
                     register_only += 1
-        width = max(target_end - target_start, object_end - object_start)
+        width = max(target_end - target_start, block_object_end - block_object_start)
         for step in range(width):
-            target_index, object_index = target_start + step, object_start + step
+            target_index, object_index = target_start + step, block_object_start + step
             left = disassemble(target_words[target_index]) if target_index < target_end else ""
-            right = disassemble(object_words[object_index], relocations.get(object_index)) if object_index < object_end else ""
+            right = disassemble(object_words[object_index], relocations.get(object_index)) if object_index < block_object_end else ""
             marker = " " if operation == "equal" else ("|" if left and right else ("<" if left else ">"))
             if operation == "equal" and target_index in link_errors:
                 marker, right = "!", right + "  LINK: " + link_errors[target_index]
