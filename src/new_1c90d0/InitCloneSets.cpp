@@ -8,12 +8,21 @@ struct CLONESET { int cpalo; LO **apalo; int cclone; int icloneFree; char pad10[
 struct SW { char pad[0x3F04]; int cset; CLONESET *acloneSet; };
 struct MAT { VECTOR pos; VECTOR row[3]; };
 struct ROWS3 { VECTOR row[3]; };
+struct XFC { VECTOR pos; float mat[16]; };
 extern "C" {
 unsigned MakeCloneId(int, int);
 void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 QW PosLoWorld(LO *);
 ROWS3 *PmatLoWorld(LO *);
 void NormalizeRotateMatrix3__FP7MATRIX3(MATRIX3 *);
+static inline void SetIdentity_1CA500(float *mat)
+{
+    memset(mat, 0, 0x40);
+    mat[0xF] = 1.0f;
+    mat[10] = 1.0f;
+    mat[5] = 1.0f;
+    mat[0] = 1.0f;
+}
 void InitCloneSets(SW *sw) {
     int iset = 0;
     int iclone, index;
@@ -54,16 +63,8 @@ void InitCloneSets(SW *sw) {
             request.cb = (set->cclone - set->icloneFree) * 0x50;
             request.cbAlign = 0x10;
             set->axf = (char *)PvAllocSwClearImpl__Fi(&request);
-            iclone = set->icloneFree;
-            while (iclone < set->cclone) {
-                float *diag = (float *)((iclone - set->icloneFree) * 0x50 + set->axf + 0x10);
-                iclone++;
-                memset(diag, 0, 0x40);
-                diag[0] = 1.0f; //P
-                diag[10] = 1.0f; //P
-                diag[5] = 1.0f; //P
-                diag[0xF] = 1.0f; //P
-            }
+            for (iclone = set->icloneFree; iclone < set->cclone; iclone++)
+                SetIdentity_1CA500(((XFC *)set->axf)[iclone - set->icloneFree].mat);
         }
         iset = next;
     }

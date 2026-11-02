@@ -23,6 +23,13 @@ void SetCmLookAt(CM *, QW, QW, float, float);
 void RecalcCmFrustrum(CM *);
 void SetResetFlag(CM *);
 void SetCmPolicy(CM *, CPP, CPLCY *, SO *, void *);
+static inline void SetCmVec(CM *cm, float *vec, float u, float sNear, float sFar)
+{
+    cm->f2C = u;
+    vec[3] = sFar;
+    vec[2] = sNear;
+    *(int *)&vec[1] = 0;
+}
 extern "C" void InitCm(CM *cm)
 {
     if (B_002DDF34 == 0) {
@@ -32,21 +39,18 @@ extern "C" void InitCm(CM *cm)
     float *vec = (float *)((char *)cm + 0x2C);
     float *mat = cm->mat;
     char *cptn = cm->cptn;
-    cm->f4C = 100.0f;
     cm->f240 = RO_002BD81C;
-    cm->f244 = RO_002BD820;
-    cm->f248 = RO_002BD824;
-    cm->f3C = 1.2987015f;
-    cm->f50 = 100000.0f;
     cm->f1C = 1.0f;
     cm->f18 = 1.0f;
+    cm->f244 = RO_002BD820;
     cm->f24 = 1.0f;
+    cm->f248 = RO_002BD824;
+    cm->f3C = 1.2987015f;
+    cm->f4C = 100.0f;
+    cm->f50 = 100000.0f;
     cm->f20 = 1.0f;
     cm->packed24C = *(U32 *)&B_002DDF30;
-    cm->f2C = 0.5f;
-    vec[3] = 10.0f;
-    vec[2] = 0.1f;
-    *(int *)&vec[1] = 0;
+    SetCmVec(cm, vec, 0.5f, 0.1f, 10.0f);
     memset(mat, 0, 0x40);
     mat[15] = 1.0f;
     mat[10] = 1.0f;

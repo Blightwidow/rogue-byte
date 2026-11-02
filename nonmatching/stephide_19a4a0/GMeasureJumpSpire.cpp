@@ -5,7 +5,7 @@ struct Locals19AC88 { TRI19AC88 tri; char pad[4]; QW landing; QW velocity; QW be
 struct Jt19AC88 { char pad[0xE8]; char *pdt; char pad2[0x1F30 - 0xEC]; float gStandoff; };
 struct Spire19AC88 { Jt19AC88 **ppjt; void *plo; char pad8[8]; QW vel; };
 extern "C" QW PosLoWorld(void *);
-extern "C" int PredictSurfaceLanding(void *plo, QW pos, QW vel, QW gravity, TRI19AC88 *ptri, QW *pposLanding, QW *pvelLanding, float gStandoff);
+extern "C" int PredictSurfaceLanding(void *plo, QW pos, QW vel, QW gravity, TRI19AC88 *ptri, QW *pposLanding, QW *pvelLanding, float gStandoff, float time);
 extern "C" void EvaluateBezierPos__FfffP6VECTORN63(float, float, float, QW, QW, QW, QW, QW *, QW *, QW *);
 static inline float GMin19AC88(float a, float b) { return a < b ? a : b; }
 static inline float Length19AC88(QW *pvec)
@@ -27,13 +27,10 @@ extern "C" float GMeasureJumpSpire(Spire19AC88 *spire, float time)
     Jt19AC88 *pjt = *spire->ppjt;
     QW pos = PosLoWorld(pjt);
     QW vel = spire->vel;
-    PredictSurfaceLanding(plo, pos, vel, *(QW *)(*(char **)((char *)pjt + 0xE8) + 0x80), &l.tri, &l.landing, &l.velocity, pjt->gStandoff);
+    PredictSurfaceLanding(plo, pos, vel, *(QW *)(*(char **)((char *)pjt + 0xE8) + 0x80), &l.tri, &l.landing, &l.velocity, pjt->gStandoff, time);
     EvaluateBezierPos__FfffP6VECTORN63(time, 0.0f, 1.0f, pos, vel, l.landing, l.velocity, 0, 0, &l.bez0);
     float first = Length19AC88(&l.bez0);
     EvaluateBezierPos__FfffP6VECTORN63(time, time, 1.0f, pos, vel, l.landing, l.velocity, 0, 0, &l.bez1);
     float second = Length19AC88(&l.bez1);
-    time *= 0.5f;
-    first += second;
-    first *= time;
-    return GMin19AC88(first, 1000000.0f);
+    return GMin19AC88(1000000.0f, (first + second) * (time * 0.5f));
 }

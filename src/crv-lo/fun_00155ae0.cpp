@@ -18,7 +18,7 @@ void func_0020AC28(void *, int, int, QW);
 extern QW g_2a2dd0;
 extern float g_2dded0[];
 void func_00155AE0(Goal_155AE0 *self, int newState) {
-    QW dead;
+    QW targetPos;
     int old = self->state;
     if (newState != old) {
         switch (old) {
@@ -40,13 +40,14 @@ void func_00155AE0(Goal_155AE0 *self, int newState) {
             self->target = func_00155A68(self);
             Ent_155AE0 *ent = func_00205438(self->owner, 0x9D);
             ent->f3C = 0xB;
-            dead = PosLoWorld(self->target);
-            int token0, token1, xBits, yBits;
-            asm("qmtc2.ni %1, vf2" : "=r"(token0) : "r"(PosLoWorld(self->owner)));
-            asm("lqc2 vf1, 0(%1)\n\tvsub.xyzw vf1, vf1, vf2" : "=r"(token1) : "r"(&dead), "r"(token0) : "memory");
-            asm("qmfc2.ni %0, vf1" : "=r"(xBits) : "r"(token1));
-            asm("prot3w %0, %1" : "=r"(yBits) : "r"(xBits));
-            func_00209818(atan2f(*(float *)&yBits, *(float *)&xBits) + 3.1415927f, (char *)self->owner + 0xFD0);
+            targetPos = PosLoWorld(self->target);
+            asm("qmtc2.ni %0, vf2" : : "r"(PosLoWorld(self->owner)));
+            asm("lqc2 vf1, %0" : : "m"(targetPos));
+            asm("vsub.xyzw vf1, vf1, vf2");
+            int bits, rotated;
+            float x, y;
+            asm volatile("qmfc2.ni %1, vf1\n\tprot3w %0, %1\n\tmtc1 %1, %2\n\tmtc1 %0, %3" : "=r"(rotated), "=r"(bits), "=f"(x), "=f"(y));
+            func_00209818(atan2f(y, x) + 3.1415927f, (char *)self->owner + 0xFD0);
             ent->vt->f44((char *)ent + ent->vt->d40);
             self->f3C = 3.4028235e38f;
             break; }
@@ -61,7 +62,8 @@ void func_00155AE0(Goal_155AE0 *self, int newState) {
             crv->fE8 = newState;
             QW *first = crv->fF4;
             *first = PosLoWorld(self->owner);
-            crv->fF4[1] = PosLoWorld(self->target);
+            QW *second = crv->fF4;
+            second[1] = PosLoWorld(self->target);
             MeasureCrv(crv);
             GoalFollowCrv_SetCrv(ent, crv, 0);
             ent->fC0 = 8;

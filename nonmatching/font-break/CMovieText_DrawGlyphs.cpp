@@ -80,11 +80,10 @@ void CMovieText_DrawGlyphs(Text_216750 *text, Ctx_216750 *ctx, Dest_216750 *dest
                     float width = *widthPointer * scale * 0.8f;
                     float shift = text->roomX * scale * 0.8f;
                     if (text->centerX == 2) {
-                        shift = shift - width;
+                        ctx->x = startX + (shift - width);
                     } else {
-                        shift = (shift - width) * 0.5f;
+                        ctx->x = startX + (shift - width) * 0.5f;
                     }
-                    ctx->x = startX + shift;
                 }
                 firstOfLine = 0;
             }

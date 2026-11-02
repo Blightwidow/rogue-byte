@@ -8,7 +8,7 @@ struct Menu { char pad0[0xC]; MVT *vt; char pad1[0x24 - 0x10]; int count; char p
 extern char B_002DEB80[];
 static inline int RegLow(char *base) { return *(int *)(base + 0x18); }
 static inline long RegWide(char *base) { return *(long *)(base + 0x18); }
-extern float B_FLT_002F6468, B_FLT_002F646C, B_FLT_003DD18C, B_FLT_003DD190;
+extern float B_002F6468, B_002F646C, B_003DD18C, B_003DD190;
 extern "C" {
 void func_00213B00(Blot *, int);
 void SeekBlotLabel(Blot *, int, float);
@@ -100,18 +100,18 @@ extern "C" void PauseMenu_SetState(Menu *menu, unsigned state)
                 case 0x67:
                     func_00213B00(entry->blot, 0x333);
                     func_00213B00(entry->blot, 0x315);
-                    SeekBlotLabel(entry->blot, 0x315, B_FLT_003DD190);
+                    SeekBlotLabel(entry->blot, 0x315, B_003DD190);
                     break;
                 case 0x68:
                     func_00213B00(entry->blot, 0x334);
                     func_00213B00(entry->blot, 0x315);
-                    SeekBlotLabel(entry->blot, 0x315, B_FLT_003DD18C);
+                    SeekBlotLabel(entry->blot, 0x315, B_003DD18C);
                     break;
                 case 0x3F:
                     func_00213B00(entry->blot, 0x335);
-                    B_FLT_002F6468 = (float)(unsigned)(RegLow(B_002DEB80) & 0xFFF);
+                    B_002F6468 = (float)(unsigned)(RegLow(B_002DEB80) & 0xFFF);
                     int shifted = (int)((RegWide(B_002DEB80) << 20) >> 32);
-                    B_FLT_002F646C = (float)(unsigned)(shifted & 0x7FF);
+                    B_002F646C = (float)(unsigned)(shifted & 0x7FF);
                     break;
                 }
             }

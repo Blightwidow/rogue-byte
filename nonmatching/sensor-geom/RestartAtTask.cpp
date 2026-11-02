@@ -62,7 +62,7 @@ extern "C" {
 extern SW B_003DD490;
 extern const char RO_002A5238[];
 void CRef_Destruct(CRefX *);
-void EndJob(TASK *, int, SW *);
+void EndJob(TASK *);
 int IdCurrentLevel(int);
 int PdescFromLevelRow(int);
 void RequestTransition(SW *, int, int, int, int, int);
@@ -77,7 +77,7 @@ void RestartAtTask(TASK *task)
     if (task->pjob != B_003DD490.pcurjob) {
         if (B_003DD490.pcurjob != 0) {
             CJobHold holdCur(B_003DD490.pcurjob, 2);
-            EndJob(B_003DD490.pcurjob, 2, &B_003DD490);
+            EndJob(B_003DD490.pcurjob);
         }
         if (task->pjob != 0)
             SetCurrentJob(task->pjob);

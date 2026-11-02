@@ -36,6 +36,7 @@ void SnapAsega(void *, void *);
 void SetAloSelectedOid(int, int);
 int FIsBasicDerivedFrom(int, int);
 void SetJtLookLimits(int, void *, void *, void *);
+static inline int FlipIf(int f, int fFlip) { return fFlip ^ f; }
 void HandleAsegaEvent(ASEGA *pasega, EVT *pevt)
 {
     HOLD hold(pasega);
@@ -83,11 +84,11 @@ void HandleAsegaEvent(ASEGA *pasega, EVT *pevt)
         break;
     case 9:
     case 10:
-        SetAsegaHandsOff(pasega, fInside ^ (pevt->type == 9));
+        SetAsegaHandsOff(pasega, FlipIf(fInside, pevt->type == 9));
         break;
     case 7:
     case 8:
-        ShowHideLo(&B_003DD490, fInside ^ (pevt->type == 7), pevt->pv, PloRootOrAseg(pasega), paloRoot, pevt->u.f);
+        ShowHideLo(&B_003DD490, FlipIf(fInside, pevt->type == 7), pevt->pv, PloRootOrAseg(pasega), paloRoot, pevt->u.f);
         break;
     case 11: {
         MSG msg;
@@ -98,8 +99,9 @@ void HandleAsegaEvent(ASEGA *pasega, EVT *pevt)
         break;
     }
     case 12: {
-        void *pv = (char *)pevt + 8;
-        pasega->v2(4, 0, 1, &pv, 0);
+        void *apv[1];
+        apv[0] = (char *)pevt + 8;
+        pasega->v2(4, 0, 1, apv, 0);
         break;
     }
     case 17:
@@ -110,11 +112,11 @@ void HandleAsegaEvent(ASEGA *pasega, EVT *pevt)
     }
     case 13:
     case 14:
-        ShowHideLoGlob(&B_003DD490, fInside ^ (pevt->type == 13), pevt->pv, pevt->u.i, self->oidSel, PloRootOrAseg(pasega), paloRoot);
+        ShowHideLoGlob(&B_003DD490, FlipIf(fInside, pevt->type == 13), pevt->pv, pevt->u.i, self->oidSel, PloRootOrAseg(pasega), paloRoot);
         break;
     case 15:
     case 16:
-        EnableDisableLoPart(&B_003DD490, fInside ^ (pevt->type == 15), pevt->pv, pevt->u.i, self->oidSel, PloRootOrAseg(pasega), paloRoot);
+        EnableDisableLoPart(&B_003DD490, FlipIf(fInside, pevt->type == 15), pevt->pv, pevt->u.i, self->oidSel, PloRootOrAseg(pasega), paloRoot);
         break;
     case 18:
         ShowCountdownBlot(&B_003DD490, self->tEvent);

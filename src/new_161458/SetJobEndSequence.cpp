@@ -76,17 +76,17 @@ void SetJobEndSequence(OBJ *self, int arg1) {
         ClearHandsOff(B_003DD490, 2);
         return;
     }
-    case 3: {
-        V *objC = self->vBC;
-        VT *vt = objC->vt;
-        vt->fn18C((char *)objC + vt->delta188, -1);
-        return;
-    }
     case 1: {
         V *objB = self->vB8;
         VT *vt = objB->vt;
         vt->fn18C((char *)objB + vt->delta188, -1);
         func_00213B00(self->vB8, self->seqA);
+        return;
+    }
+    case 3: {
+        V *objC = self->vBC;
+        VT *vt = objC->vt;
+        vt->fn18C((char *)objC + vt->delta188, -1);
         return;
     }
     case 2:

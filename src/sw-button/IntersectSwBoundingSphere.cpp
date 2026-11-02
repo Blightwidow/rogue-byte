@@ -8,7 +8,7 @@ void *PvAllocStackImpl__Fi(Alloc20FC60 *);
 void UpdateSwAaox__FP2SW(World20FC60 *);
 void func_00133E30(World20FC60 *);
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
-void IntersectSwBoundingSphere(World20FC60 *world, QW center, int (*filter)(int, Obj20FC60 *), int context, int *pcount, Obj20FC60 ***plist, float radius)
+void IntersectSwBoundingSphere(World20FC60 *world, QW center, int (*filter)(int, Obj20FC60 *), int context, int *pcount, float radius, Obj20FC60 ***plist)
 {
     int count = 0;
     Alloc20FC60 req;

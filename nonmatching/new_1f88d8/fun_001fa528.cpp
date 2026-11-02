@@ -45,10 +45,10 @@ void func_001FA528(char *self)
             asm("qmtc2.ni %0, vf2" : : "r"(moved));
             WORD(vecPtr, 8) = 0;
             WORD(self, 0xF0) = 0;
-            asm("lqc2 vf1, 0x30(%0)" : : "r"(target));
-            asm("vadd.xyzw vf2, vf1, vf2");
             QW sum;
-            asm("qmfc2.ni %0, vf2" : "=r"(sum));
+            asm("lqc2 vf1, 0x30(%1)
+	vadd.xyzw vf2, vf1, vf2
+	qmfc2.ni %0, vf2" : "=r"(sum) : "r"(target), "m"(AT(target, 0x30)));
             __as__6VECTORG9VU_VECTOR(target + 0x30, sum);
             *(float *)(target + 0x3C) = 1.0f;
             char *world = B_003DD490;

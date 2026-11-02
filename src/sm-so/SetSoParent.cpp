@@ -43,28 +43,32 @@ void SetSoParent(SO *self, SO *newParent, int arg2, int arg3)
         }
     }
     int flag4 = arg3 & 4;
-    int flag8 = arg3 & 8;
     if (flag4 != 0) {
         V108 *vtable = (V108 *)self->vt;
         pos = vtable->f((char *)self + vtable->d);
-        flag8 = arg3 & 8;
     }
+    int flag8 = arg3 & 8;
     if (flag8 != 0) {
         V110 *vtable = (V110 *)self->vt;
         vel = vtable->f((char *)self + vtable->d);
     }
     PARENT *owner = self->owner;
-    int rangeCount = 1;
+    int rangeCount;
     int rangeBase;
     if (owner != 0) {
-        rangeBase = owner->base;
         rangeCount = owner->count;
+        rangeBase = owner->base;
     } else {
+        rangeCount = 1;
         rangeBase = 0;
     }
-    int value = arg2;
-    if (arg2 == 0 && newParent != 0)
+    int value;
+    if (arg2 != 0)
+        value = arg2;
+    else if (newParent != 0)
         value = *(int *)((char *)newParent + 0x60);
+    else
+        value = 0;
     int index = 0;
     if (self->count > 0) {
         do {

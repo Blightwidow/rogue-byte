@@ -53,8 +53,13 @@ extern "C" CRef *RefOpSub(CRef *pref, int carg, CRef *aref, CFrame *pframe)
     case 0x1A:
         CRef_SetVectorPtr(&refResult, (void *)aref[0].n);
         for (; node != 0; node = node->next)
-            asm("lqc2 vf2, %1\n\tlqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0"
-                : "=m"(*(QW *)refResult.n) : "m"(*(QW *)node->ref.n), "m"(*(QW *)refResult.n));
+        {
+            QW *source = (QW *)node->ref.n;
+            QW *destination = (QW *)refResult.n;
+            asm volatile("lqc2 vf2, %0\n\tlqc2 vf1, %1" : : "m"(*source), "m"(*destination));
+            asm volatile("vsub.xyzw vf1, vf1, vf2");
+            asm volatile("sqc2 vf1, %0" : "=m"(*destination));
+        }
         break;
     case 0x1B:
         CRef_SetMatrixPtr(&refResult, (void *)aref[0].n);

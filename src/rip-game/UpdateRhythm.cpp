@@ -49,7 +49,8 @@ void UpdateRhythm(Rhythm *self) {
         }
         break;
     }
-    *(f32 *)((char *)self + 0x288) = GSmooth__FfffP3SMPPf((char *)self + 0x28C, 0, *(f32 *)((char *)self + 0x288), *(f32 *)((char *)self + 0x284), Second(g_2dded0));
+    f32 dt = Second(g_2dded0);
+    *(f32 *)((char *)self + 0x288) = GSmooth__FfffP3SMPPf((char *)self + 0x28C, 0, *(f32 *)((char *)self + 0x288), *(f32 *)((char *)self + 0x284), dt);
     UpdateRhythmCrowd(self);
 }
 }

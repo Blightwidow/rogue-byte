@@ -47,7 +47,7 @@ struct SWC {
     char end[1];
 };
 extern "C" {
-void CreateSlotheapSwAlign(void *, int, int, int);
+void *CreateSlotheapSwAlign(void *, int, int, int);
 void InitDl__FP2DLi(void *, int);
 void InitSl(void *, int);
 int func_001CF5C8();

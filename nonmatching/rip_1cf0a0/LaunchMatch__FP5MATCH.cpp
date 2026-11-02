@@ -22,10 +22,10 @@ void LaunchMatch__FP5MATCH(MATCH1CFD30 *match)
     M3_1CFD30 *pmat = PmatLoWorld(match->plo);
     match->mat = *pmat;
     PredictXfTransform(match->pxfo->xf, match->t, 0, stack.frame, 0);
-    float t = match->t;
-    float negativeHalf = t * -0.5f;
-    float inverse = 1.0f / t;
+    float inverse = 1.0f / match->t;
+    float negativeHalf = match->t * -0.5f;
     void *pproduct = &stack.product;
+    void *pframe = stack.frame;
     void *pmatrix = &match->mat;
     asm volatile("lqc2 vf1, 0x70(%0)" : : "r"(match));
     asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(stack.frame));
@@ -38,15 +38,14 @@ void LaunchMatch__FP5MATCH(MATCH1CFD30 *match)
     asm volatile("vmaddx.xyzw vf2, vf1, vf4x");
     asm volatile("sqc2 vf2, 0x90(%0)" : : "r"(match));
     asm volatile("sqc2 vf4, 0x70(%0)" : : "r"(stack.frame));
-    MatMulMatTransMat(pproduct, stack.frame, pmatrix);
+    MatMulMatTransMat(pproduct, pframe, pmatrix);
     stack.local = stack.product;
     DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(&stack.local, &match->rad, &match->normal);
     float rad = match->rad;
     if (0.0f < rad)
-        rad = rad + 6.2831855f;
+        match->rad = rad + 6.2831855f;
     else
-        rad = rad - 6.2831855f;
-    match->rad = rad;
+        match->rad = rad - 6.2831855f;
     LO1CFD30 *plo = match->plo;
     plo->vt->fn((char *)plo + plo->vt->delta);
     match->plo = 0;
