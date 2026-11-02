@@ -12,12 +12,19 @@ side-by-side diff (binary left, ours right). The function in the object is the o
 registry's name for the address, else the only function in the object.
 
 --record: counts the try in data/matching/functions.tsv (tries, best score; status `tried`, or `matched` with the
-source path at score 0). The size compared is the split's (work/matching/split: spimdisasm, jump tables included).
+source path at score 0).
+
+Every run is also appended to work/matching/runs.log (time, TRY_ARM, address, score, sha1, kept copy under work/matching/kept/);
+the lead lands from that log (claim.py). TRY_ARM=<name> TRY_BUDGET=<n> in the environment limits the arm to n runs per function:
+the n+1th prints BUDGET and exits 3 without compiling. The size compared is the split's (work/matching/split: spimdisasm, jump tables included).
 """
 import argparse
 import csv
+import fcntl
 import hashlib
 import os
+import shutil
+import time
 import subprocess
 import sys
 
@@ -50,6 +57,40 @@ def note_repeat(address, source, score):
     return ''
 
 
+RUNS_LOG = os.path.join(LAB, 'work', 'matching', 'runs.log')
+KEPT = os.path.join(LAB, 'work', 'matching', 'kept')
+
+
+def runs_of(arm, address):
+    """How many runs the log holds for this arm (TRY_ARM) and function."""
+    if not os.path.exists(RUNS_LOG):
+        return 0
+    count = 0
+    for line in open(RUNS_LOG, encoding='utf-8'):
+        fields = line.rstrip('\n').split('\t')
+        if len(fields) > 3 and fields[1] == arm and int(fields[2], 16) == address:
+            count += 1
+    return count
+
+
+def log_run(arm, address, score, source, lang, quiet):
+    """The tool's own record of a run (the lead lands from this, not from a worker's message): time, arm, address, score,
+    sha1 and a kept copy of the source. A --quiet run without TRY_ARM (the permuter judges thousands) is logged only at score 0."""
+    if quiet and not arm and score != 0:
+        return
+    data = open(source, 'rb').read()
+    digest = hashlib.sha1(data).hexdigest()
+    extension = '.c' if lang == 'c' else '.cpp'
+    os.makedirs(KEPT, exist_ok=True)
+    kept = os.path.join(KEPT, f'{address:06X}-{digest[:10]}{extension}')
+    if not os.path.exists(kept):
+        shutil.copyfile(source, kept)
+    os.makedirs(os.path.dirname(RUNS_LOG), exist_ok=True)
+    with open(RUNS_LOG, 'a', encoding='utf-8') as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        handle.write(f'{int(time.time())}\t{arm}\t{address:06X}\t{"error" if score is None else score}\t{digest}\t{os.path.relpath(kept, LAB)}\n')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('address', type=lambda text: int(text, 16))
@@ -64,6 +105,11 @@ def main():
     row = next((row for row in rows if int(row['address'], 16) == arguments.address), None)
     if not row:
         sys.exit(f'0x{arguments.address:X} is not a function start in the split')
+    arm = os.environ.get('TRY_ARM', '')
+    budget = int(os.environ.get('TRY_BUDGET') or 0)
+    if arm and budget and runs_of(arm, arguments.address) >= budget:
+        print(f'BUDGET: {budget} runs of 0x{arguments.address:X} used by {arm}: stop, hand in the best source and say NEAR')
+        return 3
     compiler = COMPILER if os.path.isdir(os.path.join(COMPILER, 'bin')) else os.path.join(COMPILER, 'cc')
     version = os.listdir(os.path.join(compiler, 'lib', 'gcc-lib', 'ee'))[0]
     build = os.path.join(LAB, 'work', 'matching', 'build', 'try')
@@ -96,6 +142,7 @@ def main():
         score = int(output.split()[1]) if output.startswith('score ') else None
     if os.path.exists(obj):
         os.remove(obj)
+    log_run(arm or '-', arguments.address, score, source, arguments.lang, arguments.quiet)
     if not arguments.quiet:
         repeated = note_repeat(arguments.address, source, score)
         if repeated:
