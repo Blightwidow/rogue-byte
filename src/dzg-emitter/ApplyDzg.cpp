@@ -16,7 +16,7 @@ struct Dzg158E20 {
     Body158E20 **bodies;
     Group158E20 *groups;
 };
-void CStackFrame_Construct(char *);
+int CStackFrame_Construct(char *);
 void CStackFrame_Destructor(char *, int);
 void *PvAllocStackImpl__Fi(Req158E20 *);
 QW LimitVectorLength__FP6VECTORfT0(QW, float);

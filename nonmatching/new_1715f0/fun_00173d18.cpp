@@ -4,7 +4,8 @@ struct Point { int kind; int oid; Plo *plo; };
 struct Slot { Plo *actor; float tSpawn; float tFree; Point *point; int kindRelease; char pad14[0xC]; QW posRelease; };
 struct Spawner { char pad0[0x5C]; int slotCount; Slot *slots; };
 extern "C" float D_FLT_002BE5DC;
-extern "C" float g_2dded0;
+struct g_2dded0_T { float v; };
+extern "C" g_2dded0_T g_2dded0;
 static inline int FFar(QW *from, QW *to)
 {
     float length;
@@ -29,7 +30,7 @@ extern "C" void func_00173D18(Spawner *spawner, QW posFocus)
             if (slot->kindRelease == 1) {
                 if (FFar(&slot->posRelease, &posFocus)) {
                     slot->kindRelease = 0;
-                    slot->tFree = g_2dded0;
+                    slot->tFree = g_2dded0.v;
                 }
             }
         } else if (*(int *)((char *)actor + 0x330) != 0) {

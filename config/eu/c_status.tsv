@@ -1995,6 +1995,7 @@ us_address	name	other_address	pair	score	addresses
 0x158668	AppendDzgDz__FP3DZGP2DZ	0X158690	identical	0	ok
 0x158958	func_00158958	0X158980	identical	0	ok
 0x158988	SolveDzg__FP3DZGiiPP2XPPiPPP2SO	0X1589B0	same	0	ok
+0x158E20	ApplyDzg	0X158E48	same	0	ok
 0x158FC0	dzg__static_initialization_and_destruction_0	0X158FE8	same	0	ok
 0x1590F8	func_001590F8	0X159120	same	0	ok
 0x159118	InitEmitb	0X159140	same	0	ok
@@ -3192,6 +3193,7 @@ us_address	name	other_address	pair	score	addresses
 0x1BC208	CmpPosXy	0X1BC470	identical	0	ok
 0x1BC530	Obstacle_IposWrap	0X1BC798	identical	0	ok
 0x1BC570	Obstacle_PostLoad	0X1BC7D8	same	0	ok
+0x1BCF18	FFindCrvSInPathzone	0X1BD180	same	0	ok
 0x1BD1E0	Obstacle_RemoveFromPathzone	0X1BD448	same	0	ok
 0x1BD310	PobstacleFindEdgeBlocker	0X1BD578	same	0	ok
 0x1BD560	func_001BD560	0X1BD7C8	same	0	ok
@@ -3623,6 +3625,7 @@ us_address	name	other_address	pair	score	addresses
 0x1DDF00	func_001DDF00	0X1DE6C0	same	0	ok
 0x1DDF60	GetTriangleHintText	0X1DE720	same	0	ok
 0x1DDFB0	GetPercentCompleteText	0X1DE770	same	0	ok
+0x1DE008	StaticInitMenus	0X1DE7C8	same	0	ok
 0x1DE260	StaticInitMenus_thunk	0X1DEA20	same	0	ok
 0x1DE280	StaticDestructMenus_thunk	0X1DEA40	same	0	ok
 0x1DE2A0	func_001DE2A0	0X1DEA60	same	0	ok

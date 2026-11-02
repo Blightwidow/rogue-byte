@@ -4,7 +4,7 @@ struct CRef { int tagk; union { int n; QW *pv; }; };
 struct CPair { int cref; int pad4; CRef ref; CPair *next; };
 struct CFrame;
 extern "C" {
-void CRef_ConstructVector(CRef *, QW *);
+int CRef_ConstructVector(CRef *, QW *);
 CRef *CRef_CopyConstruct(CRef *, CRef *);
 void CRef_Destruct(CRef *);
 extern QW g_2a2dd0;

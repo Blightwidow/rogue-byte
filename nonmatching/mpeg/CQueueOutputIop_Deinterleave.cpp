@@ -1,7 +1,7 @@
 struct ALLOCREQ1B2AA0 { int cb; int cbAlign; };
 struct QueueIop1B2AA0 { char pad0[4]; int wfmt; char pad8[4]; int cchan; int cbChunk; };
 extern "C" {
-void CStackFrame_Construct(char *);
+int CStackFrame_Construct(char *);
 void CStackFrame_Destructor(char *, int);
 void *PvAllocStackImpl__Fi(ALLOCREQ1B2AA0 *);
 void CopyAb__FPvT0Ui(void *, void *, unsigned);

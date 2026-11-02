@@ -6,7 +6,7 @@ extern "C" float g_2c0abc;
 extern "C" float SWrapCrv(CRV *, float);
 extern "C" void GetPathPosFromS(CRV *, void *, int, float);
 extern "C" int FPosInPathzone(PATHZONE *, QW, int);
-int FFindCrvSInPathzone(CRV *pcrv, PATHZONE *ppathzone, float *psFound, int fSafe, float s, float sRange)
+int FFindCrvSInPathzone(float s, CRV *pcrv, PATHZONE *ppathzone, float *psFound, int fSafe, float sRange)
 {
     struct { QW posMinus; QW posPlus; } l;
     float ds = 0.0f;

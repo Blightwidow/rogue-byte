@@ -14,7 +14,6 @@ extern "C" int FAbsorbBombWkr(BOMB *pbomb, int *pwkr)
     if (fAbsorbed != 0) {
         if (pwkr[0x11] & 8) {
             QW normal;
-            QW *pnormal = &normal;
             QW def = g_2a2dc0;
             float length;
             asm("lqc2 vf3, %0" : : "m" (pwkr[0xC]));
@@ -27,7 +26,7 @@ extern "C" int FAbsorbBombWkr(BOMB *pbomb, int *pwkr)
             } else {
                 asm("nop\n\tnop\n\tvdiv Q, vf0w, vf1x\n\tvwaitq\n\tvmulq.xyzw vf1, vf3, Q");
             }
-            asm("sqc2 vf1, 0(%0)" : : "r" (pnormal) : "memory");
+            asm("sqc2 vf1, 0(%0)" : : "r" ((&normal)) : "memory");
             PrepareBombDetonation(pbomb, PosLoWorld(pbomb), normal);
             if (FIsBasicDerivedFrom(*(void **)pwkr, 0x4F)) {
                 PrimeBomb__FP4BOMBf(pbomb, 0.25f);

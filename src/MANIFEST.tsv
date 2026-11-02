@@ -1995,6 +1995,7 @@ address	name	size	file
 0X158668	AppendDzgDz__FP3DZGP2DZ	188	dzg/AppendDzgDz__FP3DZGP2DZ.cpp
 0X158958	func_00158958	44	dzg/fun_00158958.c
 0X158988	SolveDzg__FP3DZGiiPP2XPPiPPP2SO	408	dzg/SolveDzg__FP3DZGiiPP2XPPiPPP2SO.cpp
+0X158E20	ApplyDzg	412	dzg-emitter/ApplyDzg.cpp
 0X158FC0	dzg__static_initialization_and_destruction_0	308	dzg-emitter/dzg__static_initialization_and_destruction_0.c
 0X1590F8	func_001590F8	32	dzg-emitter/fun_001590f8.c
 0X159118	InitEmitb	152	dzg-emitter/InitEmitb.cpp
@@ -3192,6 +3193,7 @@ address	name	size	file
 0X1BC208	CmpPosXy	112	new_1bc198/CmpPosXy.cpp
 0X1BC530	Obstacle_IposWrap	60	new_1bc198/Obstacle_IposWrap.cpp
 0X1BC570	Obstacle_PostLoad	276	new_1bc198/Obstacle_PostLoad.cpp
+0X1BCF18	FFindCrvSInPathzone	292	new_1bc198/FFindCrvSInPathzone.cpp
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	new_1bc198/Obstacle_RemoveFromPathzone.c
 0X1BD310	PobstacleFindEdgeBlocker	240	new_1bc198/PobstacleFindEdgeBlocker.cpp
 0X1BD560	func_001BD560	436	new_1bc198/fun_001bd560.cpp
@@ -3623,6 +3625,7 @@ address	name	size	file
 0X1DDF00	func_001DDF00	96	game-stepguard/fun_001ddf00.cpp
 0X1DDF60	GetTriangleHintText	76	game-stepguard/GetTriangleHintText.c
 0X1DDFB0	GetPercentCompleteText	84	game-stepguard/GetPercentCompleteText.c
+0X1DE008	StaticInitMenus	600	game-stepguard/StaticInitMenus.cpp
 0X1DE260	StaticInitMenus_thunk	32	game-stepguard/StaticInitMenus_thunk.c
 0X1DE280	StaticDestructMenus_thunk	32	game-stepguard/StaticDestructMenus_thunk.c
 0X1DE2A0	func_001DE2A0	56	game-stepguard/fun_001de2a0.cpp

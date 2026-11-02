@@ -1,7 +1,7 @@
 struct OBJ { int a; int b; int c; void *vt; };
 extern "C" {
 void StartupJmt__Fv(void *);
-void GadgetMenu_Construct(void *);
+int GadgetMenu_Construct(void *);
 void ShopMenu_Construct(void *);
 void JobMenu_Construct(void *);
 void func_001DD648(void *);
