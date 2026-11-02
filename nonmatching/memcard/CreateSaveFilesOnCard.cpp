@@ -37,8 +37,8 @@ s32 CreateSaveFilesOnCard(s8 *arg0) {
     s8 *var_s0;
     var_s3 = McSync((int)(arg0 + 0xFD5C), sceMcGetEntSpace(M2C_FIELD(arg0, s32 *, 0), M2C_FIELD(arg0, s32 *, 4), (M2C_UNK *)("/")), 0x12, &sp50);
     if (var_s3 == 0) {
-        temp_v0 = FUN_0018c1e8(&RO_002A38E8);
         temp_a1 = temp_v0 + 0x3FF;
+        temp_v0 = FUN_0018c1e8(&RO_002A38E8);
         var_s3 = 1;
         if (M2C_FIELD(arg0, s32 *, 0x1C) >= (((sp50 == 0) ? 2 : 1) + 5 + ((s32) ((temp_a1 > -1) ? temp_a1 : (temp_v0 + 0x7FE)) >> 0xA) + 0x42)) {
             var_s3 = CreateSaveDirectory(arg0, temp_a1);
@@ -67,8 +67,8 @@ block_9:
                 temp_a1_2 = var_s0;
                 var_s0 += 0x5464;
                 BuildSlotFilePath(arg0, temp_a1_2, (M2C_UNK *)(sp));
-                var_s2_2 -= 1;
                 DeleteMemcardFile(arg0, (M2C_UNK *)(sp));
+                var_s2_2 -= 1;
             } while (var_s2_2 >= 0);
             DeleteMemcardFile(arg0, (M2C_UNK *)("/BASCUS-97316YAOTWTD!/icon.sys"));
             DeleteMemcardFile(arg0, (M2C_UNK *)("/BASCUS-97316YAOTWTD!/memcard_icon.ico"));

@@ -7,7 +7,7 @@ struct OBJ2 { char pad[0xC]; VT2 *vt; };
 extern "C" {
 void func_0012E460(void *);
 void SetXfKind(void *, void *, int);
-void RecalcSwOxfFilterForObject(void *, void *);
+void RecalcSwOxfFilterForObject(void *, int);
 void DiscardSoXps(void *);
 void GoalAnim_SetState(void *, int);
 void func_0017AA78(void *, void *, QW *, QW *);
@@ -74,7 +74,7 @@ void GoalAnimLeap_SetState(char *goal, int state)
     *(int *)(goal + 0x50) = state;
     if (drivenBefore != drivenAfter) {
         void *pobj = *(void **)(goal + 0x10);
-        RecalcSwOxfFilterForObject(B_003DD490, pobj);
+        RecalcSwOxfFilterForObject(B_003DD490, state);
         DiscardSoXps(*(void **)(goal + 0x10));
         *(int *)(goal + 0x50) = state;
     }

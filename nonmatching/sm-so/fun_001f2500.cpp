@@ -54,12 +54,12 @@ loop:
                 }
             }
             slot = (Slot1F2500 *)PvAllocSlotheapImpl(&B_003E12D4);
-            walker->slot = slot;
-            self->slot = slot;
             slot->position = (char *)(walker->anchor + 0x70);
             self->slot->refs = self->slot->refs + 1;
             self->slot->radius = self->radiusValue;
             self->slot->owner = self;
+            walker->slot = slot;
+            self->slot = slot;
             if (walker != self) {
                 slot = self->slot;
                 goto increment;
@@ -68,8 +68,8 @@ loop:
 increment:
             slot->refs = slot->refs + 1;
         }
-        Slot1F2500 *held = self->slot;
         QW world = PosLoWorld(self);
+        Slot1F2500 *held = self->slot;
         asm volatile("qmtc2.ni %0, vf3" : : "r"(world));
         asm volatile("lqc2 vf2, 0(%0)" : : "r"(held->position));
         asm volatile("vsub.xyzw vf1, vf3, vf2");

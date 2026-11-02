@@ -25,26 +25,24 @@ extern "C" void HandleAsegaEvents(ASEGB *pasega)
     pasega->tTarget = pasega->tLocal;
     while (!FAsegaGone(pasega)) {
         ASEG *paseg = pasega->paseg;
-        int iea = pasega->iea;
-        float tTarget = pasega->tTarget;
-        if (iea < paseg->cea) {
-            EA *pea = &paseg->aea[iea];
+        if (pasega->iea < paseg->cea) {
+            EA *pea = (__typeof__(&(paseg->aea)[0]))((pasega->iea) * sizeof((paseg->aea)[0]) + (unsigned)(paseg->aea));
             float tEvent = pea->tLocal;
-            if (tEvent < tTarget || (tTarget == tEvent && zero < pasega->svtLocal)) {
-                pasega->iea = iea + 1;
+            if (tEvent < pasega->tTarget || (pasega->tTarget == tEvent && zero < pasega->svtLocal)) {
+                pasega->iea = pasega->iea + 1;
                 HandleAsegaEvent(pasega, pea);
                 continue;
             }
         }
-        if (iea > 0) {
-            float tPrev = paseg->aea[iea - 1].tLocal;
-            if (tTarget < tPrev || (tTarget == tPrev && pasega->svtLocal < zero)) {
-                pasega->iea = iea - 1;
-                HandleAsegaEvent(pasega, &paseg->aea[iea - 1]);
+        if (pasega->iea > 0) {
+            float tPrev = paseg->aea[pasega->iea - 1].tLocal;
+            if (pasega->tTarget < tPrev || (pasega->tTarget == tPrev && pasega->svtLocal < zero)) {
+                pasega->iea = pasega->iea - 1;
+                HandleAsegaEvent(pasega, &paseg->aea[pasega->iea - 1]);
                 continue;
             }
         }
-        pasega->tLocal = tTarget;
+        pasega->tLocal = pasega->tTarget;
         break;
     }
 }

@@ -14,7 +14,9 @@ extern "C" void *PasegAttachBase(AttachPaseg1944C8 *attach, int *secondary)
         break;
     case 8:
         paseg = 0;
-        if (attach->sub < 11 && attach->sub > 8) { paseg = attach->a64; isSecondary = 1; }
+        if (attach->sub < 11) {
+            if (attach->sub > 8) { paseg = attach->a64; isSecondary = 1; }
+        }
         break;
     default:
         paseg = 0;

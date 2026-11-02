@@ -10,13 +10,13 @@ extern "C" {
 struct _m2c_stack_InitAndWriteSaveSlot {
     /* 0x00 */ char pad0[0x80];
 };                                                  /* size = 0x80 */
-M2C_UNK BuildSlotFilePath(s32, s32, s8 *);        /* extern */
+M2C_UNK BuildSlotFilePath(s32, s32);        /* extern */
 M2C_UNK ResetSaveKeepingOptions(s32, M2C_UNK);      /* extern */
 M2C_UNK WriteMemcardFile(s32, s8 *, s32, M2C_UNK); /* extern */
 void InitAndWriteSaveSlot(s32 arg0, s32 arg1) {
     s8 sp[0x50] __attribute__((aligned(16)));
     ResetSaveKeepingOptions(arg1, 0);
-    BuildSlotFilePath(arg0, arg1, sp);
+    BuildSlotFilePath(arg0, arg1);
     WriteMemcardFile(arg0, sp, arg1, 0x5408);
 }
 }

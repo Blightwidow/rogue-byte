@@ -42,7 +42,7 @@ void HandleAsegaEventsFF(ASEGA131100 *self)
         float now = self->tCur;
         ASEGAEVENT131100 *event;
         if (self->index < pdef->cevent) {
-            event = &pdef->aevent[self->index];
+            event = (__typeof__(&(pdef->aevent)[0]))((self->index) * sizeof((pdef->aevent)[0]) + (unsigned)(pdef->aevent));
             if (event->time <= now && 0.0f <= self->dir) {
                 self->index = self->index + 1;
                 goto dispatch;

@@ -6,10 +6,10 @@ struct INST { int cslot; SLOT *aslot; int pad[4]; };
 struct SPRITE { char pad0[8]; INST *ainst; char pad1[0x30 - 0xC]; };
 struct BLOT { char pad[0x84]; SPRITE *psprite; };
 extern "C" {
-void StopSpriteInstance(SPRITE *, int);
+void StopSpriteInstance(SPRITE *);
 void ClearSle(void *);
 int IinstFindFreeSprite(SPRITE *);
-void StartSpriteInstance(float, SPRITE *, int, int, void *, void *, void *);
+void StartSpriteInstance(float, SPRITE *, int, int, void *);
 int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth, int cslot, SLOT *aslot)
 {
     if (aslot == 0) {
@@ -24,16 +24,16 @@ int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth,
             continue;
         if (pchar->isprite == isprite) {
             if (idDepth == slot->idDepth) {
-                StopSpriteInstance(&pblot->psprite[isprite], slot->iinst);
+                StopSpriteInstance(&pblot->psprite[isprite]);
                 ClearSle(slot->sle);
                 slot->iinst = IinstFindFreeSprite(&pblot->psprite[isprite]);
                 unsigned addv = 0x7F7F7F7F;
-                int mulv = 0xFFFFFFFF;
+                unsigned int mulv = 0xFFFFFFFF;
                 unsigned add[4];
                 unsigned mul[4];
                 add[0] = addv;
                 mul[0] = mulv;
-                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos, add, mul);
+                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos);
                 return 1;
             }
         } else {

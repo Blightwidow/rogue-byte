@@ -74,7 +74,7 @@ s32 SortRenderRecords(s32 arg0, s32 *arg1, s32 arg2, s8 *arg3, s8 *arg4) {
         temp_v0_2 = *var_a3_2;
         var_a3_2 += 4;
         *var_a5 = temp_v0_2;
-        var_a5 += 4;
+        var_a5 += 1;
     } while (var_a4_2 >= 0);
     var_a2_3 = arg0;
     if (arg0 > 0) {

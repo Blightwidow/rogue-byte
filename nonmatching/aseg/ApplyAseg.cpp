@@ -127,8 +127,8 @@ extern "C" void ApplyAseg(ASEG_12F9B8 *paseg, ALO_12F9B8 *paloRoot, float tLocal
                 pact->target1C = pchn->value;
             pact->palo = palo;
             pact->pxf = pxf;
-            pact->kind = (grfapl & 1) ? 7 : 5;
             pact->grf = paseg->grfAct;
+            pact->kind = (grfapl & 1) ? 7 : 5;
             pact->pasega = pasega;
             pact->pactNext = pasega->pact;
             pasega->pact = pact;

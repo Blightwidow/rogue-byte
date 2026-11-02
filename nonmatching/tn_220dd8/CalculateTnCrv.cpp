@@ -17,10 +17,10 @@ struct _m2c_stack_CalculateTnCrv {
     /* 0xB0 */ char padB0[0x40];
 };                                                  /* size = 0xF0 */
 void BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(M2C_UNK *, s128, s128);
-s32 ConvertAloPos(M2C_UNK, s8 *, s128);
+s32 ConvertAloPos(void);
 void GetPathPosFromS(s32, s8 *, s128 *, f32);
 s32 PmatLoWorld(s8 *);
-s32 SetVectorCylind__FP6VECTORfff(s32, f32, f32, M2C_UNK);
+s32 SetVectorCylind__FP6VECTORfff(s32, f32, f32, f32);
 extern s128 g_2a2dc0;
 void CalculateTnCrv(s8 *arg0, s128 arg1, s128 *arg2, s128 *arg3) {
     s8 sp[0x90] __attribute__((aligned(16)));
@@ -101,6 +101,6 @@ block_4:
     asm volatile("vwaitq");
     asm volatile("vmulq.xyzw vf2, vf1, Q");
     asm volatile("sqc2 vf2, (%0)" : : "r"(arg3));
-    *arg2 = ConvertAloPos(0, arg0, spA0);
+    *arg2 = ConvertAloPos();
 }
 }

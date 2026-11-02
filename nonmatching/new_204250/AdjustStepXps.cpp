@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_AdjustStepXps {
     /* 0x00 */ char pad0[0x20];
 };                                                  /* size = 0x20 */
-M2C_UNK FreeSwMqList__FP2SWP2MQ(M2C_UNK *, s8 *, s8 **, s8 **); /* extern */
+M2C_UNK FreeSwMqList__FP2SWP2MQ(M2C_UNK *); /* extern */
 M2C_UNK func_001F4F10();                            /* extern */
 extern M2C_UNK B_003DD490;
 extern f32 g_2dded0;
@@ -37,7 +37,8 @@ loop_1:
         var_v1 = M2C_FIELD(var_a2, s8 **, 0);
     }
     if (var_v1 != NULL) {
-        var_v0 = M2C_FIELD(var_v1, s32 *, 0x9C);
+        s32 hoisted_2 = M2C_FIELD(var_v1, s32 *, 0x9C);
+        var_v0 = hoisted_2;
 loop_8:
         if (var_v0 == 0xE) {
             temp_f0 = M2C_FIELD(var_v1, f32 *, 0x90);
@@ -48,7 +49,7 @@ loop_8:
         }
         var_v1 = M2C_FIELD(var_v1, s8 **, 0xAC);
         if (var_v1 != NULL) {
-            var_v0 = M2C_FIELD(var_v1, s32 *, 0x9C);
+            var_v0 = hoisted_2;
             goto loop_8;
         }
     }
@@ -94,6 +95,6 @@ loop_23:
         var_a2_2 = M2C_FIELD(var_a2_2, s8 ***, 4);
         goto loop_19;
     }
-    FreeSwMqList__FP2SWP2MQ(&B_003DD490, var_a1, var_a2_2, var_a3);
+    FreeSwMqList__FP2SWP2MQ(&B_003DD490);
 }
 }

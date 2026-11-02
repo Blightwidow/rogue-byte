@@ -3,8 +3,8 @@
 struct OBJ1D2490 { char pad0[0x51C]; float speed; char pad1[0x544 - 0x520]; float heading; char pad2[0x550 - 0x548]; float turn; char pad3[0x5AC - 0x554]; void *crv; float s; };
 extern "C" {
 QW PosLoWorld(OBJ1D2490 *);
-void FindCrvClosestPointFromS(void *, QW, int, QW *, QW *, int, float *, float);
-float atan2f(float, float);
+void FindCrvClosestPointFromS(void *, QW, int, QW *, QW *, int, float *);
+float atan2f(void);
 extern const float g_2c20d0[];
 extern const float g_2c20e0[];
 void func_001D2490(OBJ1D2490 *obj)
@@ -12,7 +12,7 @@ void func_001D2490(OBJ1D2490 *obj)
     struct { QW closest; QW tangent; QW scale; QW pos; } stack;
     QW pos = PosLoWorld(obj);
     stack.pos = pos;
-    FindCrvClosestPointFromS(obj->crv, pos, 0, &stack.closest, &stack.tangent, 0, &obj->s, obj->s);
+    FindCrvClosestPointFromS(obj->crv, pos, 0, &stack.closest, &stack.tangent, 0, &obj->s);
     const float *coefficients = g_2c20d0;
     float distance;
     asm volatile("lqc2 vf1, 0(%0)" : : "r"(&stack.closest));
@@ -24,7 +24,7 @@ void func_001D2490(OBJ1D2490 *obj)
     asm volatile("vwaitq");
     asm volatile("vaddq.x vf1, vf0, Q");
     asm volatile("qmfc2.ni $2, vf1\n\tmtc1 $2, %0" : "=f"(distance) : : "$2");
-    float t = coefficients[0] + distance * (coefficients[1] + distance * coefficients[2]);
+    float t = distance + coefficients[0] * (coefficients[1] + distance * coefficients[2]);
     if (t < g_2c20e0[0])
         t = g_2c20e0[0];
     else if (g_2c20e0[1] < t)
@@ -57,7 +57,7 @@ void func_001D2490(OBJ1D2490 *obj)
     }
     float x, y;
     asm("prot3w $2, %2\n\tmtc1 %2, %0\n\tmtc1 $2, %1" : "=f"(x), "=f"(y) : "r"(direction) : "$2");
-    obj->heading = atan2f(y, x);
+    obj->heading = atan2f();
     obj->turn = obj->speed * 0.75f;
 }
 }

@@ -7,17 +7,17 @@ extern "C" {
 extern const char RO_002A3A10[];
 void ClearSle(void *);
 void InitDepthSlot(DepthSlot2156B8 *slot) {
-    slot->f44 = RO_002A3A10;
-    slot->f4c = 0x7F7F7F7F;
-    slot->f50 = 0xFFFFFFFF;
-    slot->f64 = -1;
     slot->f30 = 0;
     slot->f54 = 0;
-    slot->a0 = 0x7F7F7F7F;
+    slot->f44 = RO_002A3A10;
+    slot->f4c = 0x7F7F7F7F;
     slot->a4 = 0xFFFFFFFF;
     slot->f3c = 0x7F7F7F7F;
     slot->f40 = 0xFFFFFFFF;
+    slot->a0 = 0x7F7F7F7F;
     slot->f58 = 0;
+    slot->f50 = 0xFFFFFFFF;
+    slot->f64 = -1;
     slot->f34 = 0;
     slot->f5c = 0;
     slot->f38 = 0;

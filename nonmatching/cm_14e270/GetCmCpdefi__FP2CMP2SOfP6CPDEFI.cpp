@@ -9,7 +9,7 @@ void GetCmCpdefi(CM *cm, SO *so, float dt, CPDEFI *cpdefi)
     if (so == cm->psoCpdefi) {
         *cpdefi = cm->cpdefi;
     } else {
-        so->vt->fn((char *)so + so->vt->delta, dt, cpdefi);
+        so->vt->fn((short *)so + so->vt->delta, dt, cpdefi);
         QW adjust = CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR(cm, cpdefi);
         asm("lqc2 vf1, 0x10(%0)" : : "r" (cpdefi));
         asm("qmtc2.ni %0, vf2" : : "r" (adjust));

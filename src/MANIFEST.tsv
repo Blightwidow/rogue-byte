@@ -847,6 +847,7 @@ address	name	size	file
 0X117C80	U32Read__18CBinaryInputStream	116	bis/U32Read__18CBinaryInputStream.cpp
 0X117D50	S16Read__18CBinaryInputStream	100	bis/S16Read__18CBinaryInputStream.cpp
 0X117DB8	S32Read__18CBinaryInputStream	116	bis/S32Read__18CBinaryInputStream.cpp
+0X117E38	F32Read__18CBinaryInputStream	120	bis/F32Read__18CBinaryInputStream.cpp
 0X117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	32	bis/ReadVector__18CBinaryInputStreamP6VECTOR.cpp
 0X117ED0	CBinaryInputStream_ReadMatrix	72	bis/CBinaryInputStream_ReadMatrix.c
 0X117F18	CBinaryInputStream_ReadMatrix4	84	bis/CBinaryInputStream_ReadMatrix4.cpp
@@ -937,6 +938,7 @@ address	name	size	file
 0X11CF40	StaticInitSlotheaps_11ce08_thunk	32	new_11ce08/StaticInitSlotheaps_11ce08_thunk.c
 0X11CF60	RadNormalize__Ff	124	util/RadNormalize__Ff.cpp
 0X11CFE0	GLimitAbs__Fff	52	util/GLimitAbs__Fff.cpp
+0X11D018	GSmooth__FfffP3SMPPf	420	util/GSmooth__FfffP3SMPPf.cpp
 0X11D1C0	GSmoothA__FffffP4SMPAPf	260	util/GSmoothA__FffffP4SMPAPf.cpp
 0X11D2D0	RadSmooth__FfffP3SMPPf	108	util/RadSmooth__FfffP3SMPPf.cpp
 0X11D340	RadSmoothA__FffffP4SMPAPf	124	util/RadSmoothA__FffffP4SMPAPf.cpp
@@ -2155,6 +2157,7 @@ address	name	size	file
 0X1699E8	func_001699E8	220	new_167320/fun_001699e8.cpp
 0X169EB8	CopyGlobDmaChain	324	new_167320/CopyGlobDmaChain.cpp
 0X16D698	func_0016D698	48	new_167320/fun_0016d698.cpp
+0X16DD58	func_0016DD58	1100	new_167320/fun_0016dd58.cpp
 0X16E1A8	func_0016E1A8	128	new_167320/fun_0016e1a8.cpp
 0X16E228	func_0016E228	112	new_167320/fun_0016e228.cpp
 0X16E298	AddBitmapUploads	124	new_167320/AddBitmapUploads.cpp
@@ -4194,6 +4197,7 @@ address	name	size	file
 0X2064C0	func_002064C0	20	unsorted/fun_002064c0.c
 0X2064D8	func_002064D8	64	step-rwm/fun_002064d8.c
 0X206518	OnGuardAdd	560	step-rwm/OnGuardAdd.cpp
+0X206748	OnGuardRemove	216	step-rwm/OnGuardRemove.cpp
 0X2068D8	func_002068D8	36	unsorted/fun_002068d8.c
 0X206D48	FIsGuardSpecialClass	104	step-rwm/FIsGuardSpecialClass.cpp
 0X206DB0	func_00206DB0	156	step-rwm/fun_00206db0.cpp
@@ -4402,6 +4406,7 @@ address	name	size	file
 0X20FFF0	TriggerRsmgEntry	268	button-po/TriggerRsmgEntry.cpp
 0X210100	PdcbAllocSw	32	button-po/PdcbAllocSw.c
 0X210120	func_00210120	32	button-po/fun_00210120.c
+0X210140	AddSwGrfEntry	292	button-po/AddSwGrfEntry.cpp
 0X210268	RemoveSwGrfEntry	56	button-po/RemoveSwGrfEntry.cpp
 0X2102A0	func_002102A0	144	button-po/fun_002102a0.cpp
 0X210330	func_00210330	8	button-po/fun_00210330.c

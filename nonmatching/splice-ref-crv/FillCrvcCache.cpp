@@ -20,7 +20,7 @@ struct _m2c_stack_FillCrvcCache {
 #define sp30 (*(s128 *)(sp + 0x30))
 #define sp40 (*(s128 *)(sp + 0x40))
 #define sp50 (*(s128 *)(sp + 0x50))
-M2C_UNK EvaluateBezierPos__FfffP6VECTORN63(s128, s128, s128, s128, s128 *, M2C_UNK, M2C_UNK, f32, f32, M2C_UNK); /* extern */
+M2C_UNK EvaluateBezierPos__FfffP6VECTORN63(s128, s128, s128, s128, s128 *, M2C_UNK, M2C_UNK); /* extern */
 void FillCrvcCache(s8 *arg0, s32 arg1) {
     s8 sp[0x50] __attribute__((aligned(16)));
     s128 sp10;
@@ -67,7 +67,7 @@ void FillCrvcCache(s8 *arg0, s32 arg1) {
         temp_f20 = M2C_FIELD(temp_a0, f32 *, 4) - M2C_FIELD(temp_a0, f32 *, 0);
         asm volatile("sqc2 vf4, 0x40(%0)" : : "r"(sp));
         do {
-            EvaluateBezierPos__FfffP6VECTORN63(sp20, sp40, sp30, sp50, &sp10, 0, 0, temp_f20, (f32) var_s2 * 0.1f * temp_f20, 0x3F800000);
+            EvaluateBezierPos__FfffP6VECTORN63(sp20, sp40, sp30, sp50, &sp10, 0, 0);
             asm volatile("lqc2 vf2, 0x10(%0)" : : "r"(sp));
             if (var_s2 > 0) {
                 asm volatile("lqc2 vf1, (%0)" : : "r"(sp));
@@ -84,7 +84,7 @@ void FillCrvcCache(s8 *arg0, s32 arg1) {
                 M2C_FIELD(var_s0, f32 *, 0) = (f32) (M2C_FIELD(var_s0, f32 *, -4) + vu_1);
             }
             var_s2 += 1;
-            var_s0 += 4;
+            var_s0 += 1;
         } while (var_s2 < 0xB);
         M2C_FIELD(arg0, s32 *, 0x148) = arg1;
     }

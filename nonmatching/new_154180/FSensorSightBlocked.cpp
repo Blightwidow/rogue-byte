@@ -15,9 +15,9 @@ extern "C" char B_003DD490;
 extern "C" QW D_002BDBF0[1];
 extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
-extern "C" QW func_00153E60(SENSOR *);
+extern "C" QW func_00153E60(void);
 extern "C" void *PvAllocStackImpl__Fi(void *);
-extern "C" QW ConvertAloPos(void *, int, QW);
+extern "C" QW ConvertAloPos(QW, void *, int);
 extern "C" int FFilterSensorSight(void *, void *);
 extern "C" int FFilterSensorBasic(void *, void *);
 extern "C" void bevy_camera_follow_push_out(void *, QW, QW, void *, void *, int *, int *);
@@ -26,16 +26,16 @@ extern "C" int FSensorSightBlocked(SENSOR *sensor, void *plo)
 {
     LOCALS1545F0 l;
     CStackFrame_Construct(l.frame);
-    QW anchor = func_00153E60(sensor);
-    l.req.cb = 0x10;
+    QW anchor = func_00153E60();
     l.req.cbAlign = 0x10;
+    l.req.cb = 0x10;
     QW *probes = (QW *)PvAllocStackImpl__Fi(&l.req);
     asm volatile("qmtc2.ni %0, vf3" : : "r" (anchor));
     asm volatile("qmtc2.ni %0, vf2" : : "r" (anchor));
     for (int i = 0; i < 1; i++) {
         asm volatile("sqc2 vf2, %0" : "=m" (l.spillMin));
         asm volatile("sqc2 vf3, %0" : "=m" (l.spillMax));
-        QW pos = ConvertAloPos(plo, 0, D_002BDBF0[i]);
+        QW pos = ConvertAloPos(D_002BDBF0[i], plo, 0);
         asm volatile("qmtc2.ni %1, vf1\n\tsqc2 vf1, %0" : "=m" (probes[i]) : "r" (pos));
         asm volatile("lqc2 vf3, %0\n\tlqc2 vf2, %1\n\tvmax.xyz vf3, vf3, vf1\n\tvmini.xyz vf2, vf2, vf1" : : "m" (l.spillMax), "m" (l.spillMin));
     }

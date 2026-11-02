@@ -79,7 +79,7 @@ loop_5:
                     temp_f13 = *var_s0;
                     var_s0 += 4;
                     var_s3_2 -= 1;
-                    temp_f0 = GSmooth__FfffP3SMPPf(&D_002C3C68, 0, *var_s1, temp_f13, M2C_FIELD(&g_2dded0, f32 *, 4));
+                    temp_f0 = GSmooth__FfffP3SMPPf(&D_002C3C68, 0, temp_f13, *var_s1, M2C_FIELD(&g_2dded0, f32 *, 4));
                     temp_f1 = *var_s1;
                     var_s1 += 4;
                     *var_s2_2 = (temp_f0 - temp_f1) / M2C_FIELD(&g_2dded0, f32 *, 4);

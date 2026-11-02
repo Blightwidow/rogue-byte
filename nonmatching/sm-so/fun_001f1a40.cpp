@@ -83,11 +83,10 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
             do {
                 int count = self->itemCount;
                 self->itemCount = count + 1;
-                int share = budget / (pieces - done);
                 Item_1F1A40 *item = &self->items[count];
                 item->type = 0x2B3;
                 item->a4 = 0;
-                int amount = (share > 0) ? share : 1;
+                int amount = ((budget / (pieces - done)) > 0) ? (budget / (pieces - done)) : 1;
                 budget -= amount;
                 item->count = amount;
                 if (budget == 0) {

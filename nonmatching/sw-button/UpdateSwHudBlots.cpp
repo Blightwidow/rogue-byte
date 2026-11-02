@@ -21,13 +21,12 @@ void UpdateSwHudBlots(Hud2Owner20F7E0 *owner)
         if (movie == 0 || FDrawBlotMovie(movie) == 0) {
             blot->fresh = 1;
         } else {
-            Hud20F7E0 *hud = movie->hud;
             if (blot->fresh != 0) {
-                hud->value = level;
+                movie->hud->value = level;
                 blot->velocity = 0.0f;
                 blot->fresh = 0;
             } else {
-                movie->hud->value = GSmoothA__FffffP4SMPAPf(hud->value, blot->velocity, level, g_2dded0[1], (SMPA20F7E0 *)&D_002C3E88, &blot->velocity);
+                movie->hud->value = GSmoothA__FffffP4SMPAPf(movie->hud->value, blot->velocity, level, g_2dded0[1], (SMPA20F7E0 *)&D_002C3E88, &blot->velocity);
             }
             level += D_002C3E80;
             if (index == 3) {

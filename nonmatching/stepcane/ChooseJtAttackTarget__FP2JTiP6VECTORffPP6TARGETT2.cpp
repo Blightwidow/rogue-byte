@@ -10,9 +10,9 @@ struct JOBJ { char pad[0xC]; JVT *vt; };
 extern "C" {
 QW PosLoWorld(void *);
 void LoadRotateMatrixRad(M4 *, float, QW);
-QW ConvertAloPos(void *, void *, QW);
+QW ConvertAloPos(void);
 void PredictXfTransform(void *, void *, float, M4 *, void *);
-void ClosestPointOnSegment(QW, QW, QW, void *, float *, float *);
+void ClosestPointOnSegment(QW, QW, QW, void *, float *);
 void *PloFindSwObjectByClass(void *, int, int, void *);
 float RadNormalize__Ff(float);
 float atan2f(float, float);
@@ -47,9 +47,9 @@ void ChooseJtAttackTarget(JOBJ *jt, int grf, QW *poffset, float radHeading, floa
     asm("mfc1 %0, %1" : "=r" (scaleBits) : "f" (dt));
     l.scale = scaleBits;
     LoadRotateMatrixRad(&l.mat, radHeading, g_2a2dc0);
-    l.heading.row[0] = l.mat.row[0];
-    l.heading.row[2] = l.mat.row[2];
     l.heading.row[1] = l.mat.row[1];
+    l.heading.row[2] = l.mat.row[2];
+    l.heading.row[0] = l.mat.row[0];
     l.posJt = PosLoWorld(jt);
     JVT *vt = jt->vt;
     short delta = vt->delta;
@@ -61,7 +61,7 @@ void ChooseJtAttackTarget(JOBJ *jt, int grf, QW *poffset, float radHeading, floa
     asm("qmtc2.ni %0, vf4" : : "r" (vel));
     asm("vadda.xyzw ACC, vf0, vf2\n\tvmaddx.xyzw vf1, vf4, vf3x");
     asm("sqc2 vf1, %0" : "=m" (l.posLead));
-    QW posConv = ConvertAloPos(jt, 0, *poffset);
+    QW posConv = ConvertAloPos();
     asm("lqc2 vf3, %0" : : "m" (*poffset));
     asm("lqc2 vf1, %0" : : "m" (l.heading.row[2]));
     asm("lqc2 vf5, %0" : : "m" (l.heading.row[0]));
@@ -88,7 +88,7 @@ void ChooseJtAttackTarget(JOBJ *jt, int grf, QW *poffset, float radHeading, floa
         asm("vmulax.xyz ACC, vf4, vf5x\n\tvmadday.xyz ACC, vf3, vf5y\n\tvmaddaz.xyz ACC, vf2, vf5z\n\tvmaddw.xyz vf6, vf1, vf0w");
         QW posSub;
         asm("qmfc2.ni %0, vf6" : "=r" (posSub));
-                ClosestPointOnSegment(l.posAim, l.posTarget, posSub, 0, &l.closest[0], &l.closest[1]);
+                ClosestPointOnSegment(l.posAim, l.posTarget, posSub, 0, &l.closest[0]);
         if (PloFindSwObjectByClass(B_003DD490, 3, 0x33, obj))
             l.closest[1] = l.closest[1] + D_002BF4B8;
         if (l.closest[1] < sBest) {

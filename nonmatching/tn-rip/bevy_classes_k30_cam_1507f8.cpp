@@ -26,7 +26,7 @@ struct _m2c_stack_bevy_classes_k30_cam_1507f8 {
 M2C_UNK LoadRotateMatrixPanTilt(M2C_UNK *, f32, f32); /* extern */
 s32 PosLoWorld(s32);                                /* extern */
 f32 atan2f(f32, f32);                               /* extern */
-s32 bevy_classes_k30_cam_150780(s8 *);            /* extern */
+s32 bevy_classes_k30_cam_150780(void);            /* extern */
 extern s128 RO_002A5000;
 s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
     s8 sp[0x60] __attribute__((aligned(16)));
@@ -37,7 +37,7 @@ s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
     if (temp_a0 != 0) {
         asm volatile("qmtc2.ni %0, vf1" : : "r"(PosLoWorld(temp_a0)));
         asm volatile("sqc2 vf1, 0x60(%0)" : : "r"(sp));
-        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780(arg0)));
+        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780()));
         asm volatile("lqc2 vf1, 0x60(%0)" : : "r"(sp));
         asm volatile("vsub.xyzw vf1, vf1, vf2");
         asm volatile("vmul.xyz vf2, vf1, vf1");
@@ -61,7 +61,7 @@ s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
         asm volatile("vsqrt Q, vf1x");
         asm volatile("vwaitq");
         asm volatile("vaddq.x vf1, vf0, Q");
-        asm volatile("qmtc2.ni %0, vf3" : : "r"(bevy_classes_k30_cam_150780(arg0)));
+        asm volatile("qmtc2.ni %0, vf3" : : "r"(bevy_classes_k30_cam_150780()));
         s128 vu_1;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
         s128 negatedBits = WordOf(-LaneZero(vu_1));
@@ -79,7 +79,7 @@ s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
         asm volatile("vmulax.xyz ACC, vf3, vf4x");
         asm volatile("vmadday.xyz ACC, vf2, vf4y");
         asm volatile("vmaddz.xyz vf1, vf1, vf4z");
-        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780(arg0)));
+        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780()));
         asm volatile("vadd.xyzw vf1, vf2, vf1");
     }
     s32 vu_2;

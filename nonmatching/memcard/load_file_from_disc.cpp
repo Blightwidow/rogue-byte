@@ -15,8 +15,8 @@ void *PvAllocStackImpl__Fi(ALLOCREQ *);
 void CBinaryInputStream_ConstructFromBuffer(STREAM *, int, void *, int);
 int CBinaryFileStream_FOpenLocation(STREAM *, CFileLocation *);
 int CBinaryInputStream_Read(STREAM *, int, void *);
-void CBinaryFileStream_Close(STREAM *);
-void CBinaryFileStream_Destructor(STREAM *, int);
+void CBinaryFileStream_Close(void);
+void CBinaryFileStream_Destructor(void);
 extern const char RO_002A6CB8[];
 }
 extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned *record, const char *file)
@@ -63,10 +63,10 @@ extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned 
         }
     done:
         int closeError = McClose(psave, fd);
-        CBinaryFileStream_Close(&stream);
+        CBinaryFileStream_Close();
         if (error == 0)
             error = closeError;
-        CBinaryFileStream_Destructor(&stream, 2);
+        CBinaryFileStream_Destructor();
     }
     CStackFrame_Destructor(frame, 2);
     return error;

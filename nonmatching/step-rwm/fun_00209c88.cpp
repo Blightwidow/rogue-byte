@@ -6,7 +6,7 @@ struct GUARD { char pad0[0xC]; VT *vt; char pad1[0x218 - 0x10]; QW *pdir; char p
 extern "C" {
 extern QW g_2a2da0;
 void func_001F4FA8(void);
-void GetPathPosFromS(void *, QW *, QW *, float);
+void GetPathPosFromS(void *, QW *, QW *);
 QW PosLoWorld(void *);
 QW *PmatLoWorld(void *);
 void func_00209C88(GUARD *guard)
@@ -20,13 +20,13 @@ void func_00209C88(GUARD *guard)
     func_001F4FA8();
     switch (guard->mode) {
     case 0:
-        GetPathPosFromS(guard->target, &bufA, &bufB, guard->s);
+        GetPathPosFromS(guard->target, &bufA, &bufB);
         slot = &guard->vt->slot;
         slot->fn((char *)guard + slot->delta, 0x22, guard->target, bufA, bufB, *guard->pdir);
         break;
     case 1:
         slot = &guard->vt->slot;
-        GetPathPosFromS(guard->target, &bufA, &bufB, guard->s);
+        GetPathPosFromS(guard->target, &bufA, &bufB);
         self = (char *)guard + slot->delta;
         posA = bufA;
         posB = bufB;

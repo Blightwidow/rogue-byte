@@ -23,7 +23,7 @@ extern "C" void func_001991A0(JMP *pjmp)
     asm("sqc2 vf2, %0" : "=m" (l.neg));
     asm("sqc2 vf1, %0" : "=m" (l.normalIn));
     QW *pside = &l.side0;
-    GetNormalVectors__FP6VECTORN30(normalIn, g_2a2dc0, g_2a2db0, pside);
+    GetNormalVectors__FP6VECTORN30(g_2a2dc0, normalIn, g_2a2db0, pside);
     QW hang;
     asm("lqc2 vf3, %1\n\tlqc2 vf5, %2\n\tlqc2 vf4, %3\n\tlqc2 vf2, %4\n\tlqc2 vf1, %5\n\tvmulax.xyz ACC, vf5, vf3x\n\tvmadday.xyz ACC, vf4, vf3y\n\tvmaddz.xyz vf3, vf2, vf3z\n\tvsub.xyzw vf1, vf1, vf3\n\tsqc2 vf1, %6\n\tqmfc2.ni %0, vf1" : "=r" (hang) : "m" (pjmp->offset), "m" (l.normalIn), "m" (l.side0), "m" (l.side1), "m" (l.posLedge), "m" (l.posLedge));
     OBJ *pjt = pjmp->pjt;

@@ -16,7 +16,7 @@ s32 FStgSwitchInStageRange(s8 *);                 /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 s32 PpoSwFocusBase(M2C_UNK *);                      /* extern */
 M2C_UNK RunStgSwitchStage(s8 *, s8 *);          /* extern */
-M2C_UNK SpawnSwHitFx(s8 *, M2C_UNK, M2C_UNK, s32); /* extern */
+M2C_UNK SpawnSwHitFx(s8 *, M2C_UNK); /* extern */
 M2C_UNK bevy_camera_follow_activity(M2C_UNK *, M2C_UNK, s8 *); /* extern */
 extern M2C_UNK B_002DEB30;
 extern M2C_UNK B_003DD490;
@@ -82,7 +82,7 @@ block_20:
 block_21:
                 s64 vu_1;
                 asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(arg0)));
-                SpawnSwHitFx((s8 *)(&B_003DD490 - 0x2B70), 0, vu_1, M2C_FIELD(arg0, s32 *, 0x16C));
+                SpawnSwHitFx(arg0, 0);
             }
             if (M2C_FIELD(temp_s2, s32 *, 4) > 0) {
                 temp_v0_2 = M2C_FIELD(arg0, s32 *, 0x158) + 1;

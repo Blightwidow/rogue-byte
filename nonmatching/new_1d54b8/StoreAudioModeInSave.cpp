@@ -14,7 +14,7 @@ struct CRef {
     ~CRef() { CRef_Destruct(this); }
 };
 extern "C" {
-CRef RefSetGameSaveValue(int, CRef, int *);
+CRef RefSetGameSaveValue(int, CRef);
 extern int g_2c2d8c;
 extern int B_003E0FD8;
 extern int B_003D4A60;
@@ -26,14 +26,15 @@ void StoreAudioModeInSave(void)
         break;
     case 2: {
         CRef mode(0x17, 0);
-        int path = B_003E0FD8;
-        RefSetGameSaveValue(path, mode, &B_003D4A60);
+        int  path;
+        RefSetGameSaveValue(path, mode);
+        path = B_003E0FD8;
         break;
     }
     case 3: {
         CRef mode(0x17, 1);
         int path = B_003E0FD8;
-        RefSetGameSaveValue(path, mode, &B_003D4A60);
+        RefSetGameSaveValue(path, mode);
         break;
     }
     }

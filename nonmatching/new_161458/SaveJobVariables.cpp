@@ -26,9 +26,8 @@ void SaveJobVariables(JOB *job)
         SetSaveRef(path, &ref);
         CRef_Destruct(&ref);
     }
-    char *pathpathComplete = job->pathComplete;
-    if (*(int *)pathpathComplete != 0) {
-        char *path = pathpathComplete;
+    if (*(int *)job->pathComplete != 0) {
+        char *path = job->pathComplete;
         CRef ref;
         ref.tagk = 0x17;
         ref.n = FEndTaskComplete(job) ? 1 : 0;

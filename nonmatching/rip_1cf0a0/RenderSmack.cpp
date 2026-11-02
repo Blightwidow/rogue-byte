@@ -34,13 +34,11 @@ void RenderSmack(s8 *arg0) {
     s128 spC0;
     s128 spD0;
     f32 sp160;
-    M2C_UNK temp_s4;
     f32 temp_f20;
     s32 temp_s3;
     temp_s3 = (s32)(arg0 + 0x40);
     s64 vu_1;
     asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(ConvertCmScreenToWorld(&B_002DDF40, M2C_FIELD(arg0, s128 *, 0x100))));
-    temp_s4 = vu_1;
     MatMulMatTransMat(&spD0, temp_s3, (s8 *)(&B_002DDF40 + 0x60));
     DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(sp, &sp160, &spC0, spD0, spD0, spE0, spF0);
     temp_f20 = (g_2dded0 - M2C_FIELD(arg0, f32 *, 0x14)) / M2C_FIELD(arg0, f32 *, 0x18);
@@ -92,7 +90,7 @@ void RenderSmack(s8 *arg0) {
     asm volatile("sqc2 vf6, 0x150(%0)" : : "r"(sp));
     asm volatile("sqc2 vf6, 0xf0(%0)" : : "r"(sp));
     s64 vu_2;
-    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(temp_s4));
+    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(vu_1));
     FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3(arg0, vu_2, &sp90);
 }
 }

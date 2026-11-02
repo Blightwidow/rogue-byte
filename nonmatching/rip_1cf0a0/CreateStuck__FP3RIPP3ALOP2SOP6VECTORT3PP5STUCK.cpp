@@ -10,11 +10,11 @@ struct STK {
     char pad5[0xEC - 0xA0]; VTS *vptr; void *pxf;
 };
 extern "C" STK *PripNewRipg(void *, int, void *);
-extern "C" QW ConvertXfPos(void *, void *, QW);
+extern "C" QW ConvertXfPos(SRC *, void *, QW);
 extern "C" float GRandInRange(float, float);
-extern "C" void GetNormalVectors__FP6VECTORN30(QW, QW, QW, QW *);
+extern "C" void GetNormalVectors__FP6VECTORN30(QW, QW, QW);
 extern "C" void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(void *, QW);
-extern "C" void BuildRotateVectorsMatrix(void *, QW, QW);
+extern "C" void BuildRotateVectorsMatrix(SRC *, QW, QW);
 extern "C" char B_003DD490[];
 extern "C" QW g_2a2da0, g_2a2db0, g_2a2dc0;
 extern "C" float g_2dded0;
@@ -31,7 +31,7 @@ extern "C" STK *CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK(SRC *src, void *p
         stuck = PripNewRipg(B_003DD490, 10, 0);
         if (stuck != 0) {
             float zero = 0.0f;
-            f.posLocal = ConvertXfPos(0, pxf, pos);
+            f.posLocal = ConvertXfPos(src, pxf, pos);
             float u = (g_2dded0 - src->tCreated) / src->dt;
             CLQ *clq = &src->clq;
             float scale = clq->a + u * (u * clq->c + clq->b);
@@ -43,7 +43,7 @@ extern "C" STK *CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK(SRC *src, void *p
             stuck->pxf = pxf;
             QW *pda = &g_2a2da0;
             QW *pdb = &g_2a2db0;
-            GetNormalVectors__FP6VECTORN30(normal, *pda, *pdb, f.surf);
+            GetNormalVectors__FP6VECTORN30(normal, *pda, *pdb);
             f.surf[2] = normal;
             f.euler.y = zero;
             f.euler.x = zero;
@@ -82,7 +82,7 @@ extern "C" STK *CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK(SRC *src, void *p
                 asm("qmfc2.ni %0, vf3" : "=r"(nxy));
                 f.em[0] = nxy;
                 ((float *)&f.em[0])[2] = zero;
-                BuildRotateVectorsMatrix(f.rot, f.em[0], nxy);
+                BuildRotateVectorsMatrix(src, f.em[0], nxy);
                 float m50 = -50.0f;
                 asm("lqc2 vf4, %0" : : "m"(f.rot[0]));
                 asm("lqc2 vf2, %0" : : "m"(f.rot[1]));

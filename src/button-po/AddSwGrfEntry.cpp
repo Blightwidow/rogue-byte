@@ -8,11 +8,10 @@ void AddSwGrfEntry(SW *sw, LO *lo)
         return;
     int count = sw->count;
     if (count >= 0x1000 || (float)sw->dead / (float)count > 0.1f) {
-        EN *base = sw->table;
-        EN *end = base + count;
-        EN *dest = base;
-        EN *runningEntry = sw->running ? base + *sw->running : 0;
-        for (EN *source = base; source < end; source++) {
+        EN *end = sw->table + count;
+        EN *runningEntry = sw->running ? sw->table + *sw->running : 0;
+        EN *dest = sw->table;
+        for (EN *source = sw->table; source < end; source++) {
             if (source == runningEntry)
                 runningEntry = dest;
             if (source->lo) {

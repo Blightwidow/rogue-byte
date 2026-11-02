@@ -1,7 +1,7 @@
 typedef int QW __attribute__((mode(TI)));
 extern "C" {
 QW ConvertAloPos(void *, void *, QW);
-int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int, QW);
+int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int);
 QW PosLoWorld(void *);
 void *PpoSwFocusBase(void *);
 void QueueMovie(void *, int);
@@ -41,7 +41,7 @@ void UpdateWarp(char *self) {
         void *focus = PpoSwFocusBase(B_003DD490);
         if (focus != 0) {
             QW world = PosLoWorld(focus);
-            int inside = PcgtPointInCbspQuick__FP4CBSPP6VECTOR(*(void **)(self + 0xEC), 0x7FFFFFFF, pos.q) != 0;
+            int inside = PcgtPointInCbspQuick__FP4CBSPP6VECTOR(*(void **)(self + 0xEC), 0x7FFFFFFF) != 0;
             pos.q = ConvertAloPos(0, self, world);
             switch (*(char *)(self + 0x13C)) {
             case 3:

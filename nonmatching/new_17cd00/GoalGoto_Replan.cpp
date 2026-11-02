@@ -2,7 +2,7 @@
 extern "C" {
 QW PosLoWorld(char *);
 QW func_001C1EC0(char *, QW);
-void ClosestPointOnSegment(QW, QW, QW, QW *, float *, float *);
+void ClosestPointOnSegment(char *, QW, QW, QW *, float *, float *);
 int FFindPathzoneCrv(int, QW, QW, char *);
 void GoalGoto_SetState(char *, int);
 void MeasureCrv(char *);
@@ -43,7 +43,7 @@ void GoalGoto_Replan(char *goal) {
                         QW position = PosLoWorld(*(char **)(goal + 0x10));
                         QW start = func_001C1EC0(path + 0x60, position);
                         QW end = func_001C1EC0(path + 0x80, position);
-                        ClosestPointOnSegment(position, start, end, &buffer[2], (float *)&buffer[3], 0);
+                        ClosestPointOnSegment(goal, start, end, &buffer[2], (float *)&buffer[3], 0);
                         int near = 0;
                         float along = *(float *)&buffer[3];
                         if (along > 0.0f) {

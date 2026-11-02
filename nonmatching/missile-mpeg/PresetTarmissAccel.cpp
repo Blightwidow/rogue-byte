@@ -9,7 +9,7 @@ static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r" (r) : "f" (f)); 
 static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 extern "C" {
 void PosPredictMissileTarget(VECTOR *, TARMISS *, float);
-int FFloatsNear__Ffff(float, float, float);
+int FFloatsNear__Ffff(float, float);
 QW PosLoWorld(void *);
 void EvaluateBezierPos__FfffP6VECTORN63(float, float, float, QW, QW, QW, QW, QW *, QW *, QW *);
 void AddSoAcceleration(TARMISS *, QW);
@@ -33,9 +33,9 @@ void PresetTarmissAccel(TARMISS *self)
     QW target = self->vTarget;
     QW zeroVec = g_2a2dd0;
     int isZero = 0;
-    if (FFloatsNear__Ffff(Lane(zeroVec), Lane(target), 0.0001f)) {
-        if (FFloatsNear__Ffff(Lane(__builtin_prot3w(zeroVec)), Lane(__builtin_prot3w(target)), 0.0001f))
-            isZero = FFloatsNear__Ffff(Lane(Upper(zeroVec)), Lane(Upper(target)), 0.0001f) != 0;
+    if (FFloatsNear__Ffff(Lane(zeroVec), Lane(target))) {
+        if (FFloatsNear__Ffff(Lane(__builtin_prot3w(zeroVec)), Lane(__builtin_prot3w(target))))
+            isZero = FFloatsNear__Ffff(Lane(Upper(zeroVec)), Lane(Upper(target))) != 0;
     }
     if (isZero) {
         float rDt = 1.5f / remaining;
@@ -56,8 +56,8 @@ void PresetTarmissAccel(TARMISS *self)
     float dt = g_2dded0.dt;
     QW pos = PosLoWorld(self);
     QW vel = self->vt->fnVel((char *)self + self->vt->delta);
-    EvaluateBezierPos__FfffP6VECTORN63(remaining, dt, 1.0f, pos, vel, L.s30, *(QW *)&L.s00, 0, &L.s10, 0);
     QW velNew = L.s10;
+    EvaluateBezierPos__FfffP6VECTORN63(remaining, dt, 1.0f, pos, vel, L.s30, *(QW *)&L.s00, 0, &L.s10, 0);
     asm volatile("sq %1, %0" : "=m" (L.s70) : "r" (velNew));
     QW velNow = self->vt->fnVel((char *)self + self->vt->delta);
     int dtBits = *(int *)&g_2dded0.dt;

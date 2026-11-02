@@ -10,11 +10,11 @@ extern "C" {
 struct _m2c_stack_CalculateVolPan {
     /* 0x00 */ char pad0[0x60];
 };                                                  /* size = 0x60 */
-s32 ConvertAloVec(M2C_UNK, M2C_UNK *, M2C_UNK);     /* extern */
+s32 ConvertAloVec(M2C_UNK, s8 *, M2C_UNK);     /* extern */
 f32 GLimitLm__FP2LMf(M2C_UNK *, f32);               /* extern */
 s32 PosLoWorld(s32);                                /* extern */
-s32 PpoSwFocus(M2C_UNK *, s128);                    /* extern */
-f32 atan2f(f32, s32);                               /* extern */
+s32 PpoSwFocus(M2C_UNK *);                    /* extern */
+f32 atan2f(f32);                               /* extern */
 extern M2C_UNK B_002DDF40;
 extern M2C_UNK B_003DD490;
 extern M2C_UNK g_2bbb60;
@@ -26,7 +26,7 @@ void CalculateVolPan(s128 arg1, s8 *arg2, f32 *arg3, s32 *arg4) {
     f32 var_f2;
     s32 temp_v0;
     s32 temp_v0_2;
-    temp_v0 = PpoSwFocus(&B_003DD490, arg1);
+    temp_v0 = PpoSwFocus(&B_003DD490);
     if (temp_v0 == 0) {
         asm volatile("lqc2 vf1, 0x90(%0)" : : "r"(&B_002DDF40));
     } else {
@@ -54,10 +54,10 @@ void CalculateVolPan(s128 arg1, s8 *arg2, f32 *arg3, s32 *arg4) {
         if (temp_f1 > 0.0f) {
             s32 vu_2;
             asm volatile("qmfc2.ni %0, vf3" : "=r"(vu_2));
-            temp_v0_2 = ConvertAloVec(0, &g_2ddfa0, vu_2);
+            temp_v0_2 = ConvertAloVec(0, arg2, vu_2);
             s64 vu_3;
             asm volatile("prot3w %0, %1" : "=r"(vu_3) : "r"(temp_v0_2));
-            var_f2 = atan2f(-vu_3, temp_v0_2);
+            var_f2 = atan2f(-vu_3);
             if (M2C_FIELD(arg2, f32 *, 4) < M2C_FIELD(arg2, f32 *, 0)) {
                 var_f2 += 3.1415927f;
             }

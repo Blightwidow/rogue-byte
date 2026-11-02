@@ -847,6 +847,7 @@ us_address	name	other_address	pair	score	addresses
 0x117C80	U32Read__18CBinaryInputStream	0X117C80	identical	0	ok
 0x117D50	S16Read__18CBinaryInputStream	0X117D50	identical	0	ok
 0x117DB8	S32Read__18CBinaryInputStream	0X117DB8	identical	0	ok
+0x117E38	F32Read__18CBinaryInputStream	0X117E38	identical	0	ok
 0x117EB0	ReadVector__18CBinaryInputStreamP6VECTOR	0X117EB0	identical	0	ok
 0x117ED0	CBinaryInputStream_ReadMatrix	0X117ED0	identical	0	ok
 0x117F18	CBinaryInputStream_ReadMatrix4	0X117F18	identical	0	ok
@@ -937,6 +938,7 @@ us_address	name	other_address	pair	score	addresses
 0x11CF40	StaticInitSlotheaps_11ce08_thunk	0X11CF40	identical	0	ok
 0x11CF60	RadNormalize__Ff	0X11CF60	identical	0	ok
 0x11CFE0	GLimitAbs__Fff	0X11CFE0	identical	0	ok
+0x11D018	GSmooth__FfffP3SMPPf	0X11D018	identical	0	ok
 0x11D1C0	GSmoothA__FffffP4SMPAPf	0X11D1C0	identical	0	ok
 0x11D2D0	RadSmooth__FfffP3SMPPf	0X11D2D0	identical	0	ok
 0x11D340	RadSmoothA__FffffP4SMPAPf	0X11D340	identical	0	ok
@@ -2155,6 +2157,7 @@ us_address	name	other_address	pair	score	addresses
 0x1699E8	func_001699E8	0X169970	same	0	ok
 0x169EB8	CopyGlobDmaChain	0X169E40	same	0	ok
 0x16D698	func_0016D698	0X16D620	identical	0	ok
+0x16DD58	func_0016DD58	0X16DCE0	same	5	ok
 0x16E1A8	func_0016E1A8	0X16E130	same	0	ok
 0x16E228	func_0016E228	0X16E1B0	same	0	ok
 0x16E298	AddBitmapUploads	0X16E220	same	0	ok
@@ -4194,6 +4197,7 @@ us_address	name	other_address	pair	score	addresses
 0x2064C0	func_002064C0	0X206C80	gap	0	ok
 0x2064D8	func_002064D8	0X206C98	same	0	ok
 0x206518	OnGuardAdd	0X206CD8	same	0	ok
+0x206748	OnGuardRemove	0X206F08	same	0	ok
 0x2068D8	func_002068D8	0X207098	identical	0	ok
 0x206D48	FIsGuardSpecialClass	0X207508	same	0	ok
 0x206DB0	func_00206DB0	0X207570	same	0	ok
@@ -4402,6 +4406,7 @@ us_address	name	other_address	pair	score	addresses
 0x20FFF0	TriggerRsmgEntry	0X2107E8	same	0	ok
 0x210100	PdcbAllocSw	0X2108F8	identical	0	ok
 0x210120	func_00210120	0X210918	identical	0	ok
+0x210140	AddSwGrfEntry	0X210938	identical	0	ok
 0x210268	RemoveSwGrfEntry	0X210A60	identical	0	ok
 0x2102A0	func_002102A0	0X210A98	same	0	ok
 0x210330	func_00210330	0X210B28	gap	0	ok

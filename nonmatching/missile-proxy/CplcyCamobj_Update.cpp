@@ -10,7 +10,7 @@ QW *PmatLoWorld(void *);
 void SetCmLookAt(void *, float, float, QW, QW);
 void SetCmPosMat(void *, M4 *);
 void SetCmFov(void *, float);
-void __as__6VECTORG9VU_VECTOR(void *, QW);
+void __as__6VECTORG9VU_VECTOR(void);
 float atanf(float);
 }
 // lane 0 of a QW from an FP constant
@@ -38,13 +38,13 @@ extern "C" void CplcyCamobj_Update(Cplcy *self)
         asm("sqc2 vf4, %0" : "=m" (l.negX));
         asm("sqc2 vf3, %0" : "=m" (l.copy[2]));
         QW pos = PosLoWorld(camobj);
-        __as__6VECTORG9VU_VECTOR(&l.mat.row[3], pos);
         l.mat.row[0] = l.negZ;
+        __as__6VECTORG9VU_VECTOR();
         l.mat.row[1] = l.negX;
         l.mat.row[2] = l.rowY;
         ((int *)&l.mat.row[2])[3] = 0;
-        ((int *)&l.mat.row[1])[3] = 0;
         ((int *)&l.mat.row[0])[3] = 0;
+        ((int *)&l.mat.row[1])[3] = 0;
         ((float *)&l.mat.row[3])[3] = 1.0f;
         SetCmPosMat(B_002DDF40, &l.mat);
     }

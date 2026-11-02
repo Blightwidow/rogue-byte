@@ -13,7 +13,7 @@ struct _m2c_stack_SetBlotBlots {
 M2C_UNK PlayBlotLabel(s8 *, s32);                 /* extern */
 M2C_UNK PrepareBlotMovie(s8 *);                   /* extern */
 M2C_UNK ReleaseBlotMovie(s8 *, s32);              /* extern */
-M2C_UNK SetClockRate(M2C_UNK *, M2C_UNK, f32);  /* extern */
+M2C_UNK SetClockRate(s8 *, M2C_UNK, f32);  /* extern */
 M2C_UNK StopBlotLabel(s8 *, s32);                 /* extern */
 extern M2C_UNK B_003DD490;
 extern s32 g_2be538;
@@ -21,8 +21,6 @@ extern s32 g_2dd318;
 extern M2C_UNK g_2dded0;
 void SetBlotBlots(s8 *arg0, s32 arg1) {
     s32 temp_a1;
-    s32 temp_v0;
-    s32 temp_v0_2;
     s32 temp_v0_3;
     s32 temp_v1;
     s32 temp_v1_2;
@@ -30,15 +28,14 @@ void SetBlotBlots(s8 *arg0, s32 arg1) {
     temp_v1 = M2C_FIELD(arg0, s32 *, 0x58);
     if (temp_v1 != arg1) {
         if (M2C_FIELD(arg0, s32 *, 0xA4) >= 0x10) {
-            temp_v0 = arg1 < 2;
             if (temp_v1 < 2) {
-                if (temp_v0 == 0) {
+                if ((arg1 < 2) == 0) {
                     var_v0 = M2C_FIELD(&B_003DD490, s32 *, 0x3BEC) + 1;
                     goto block_8;
                 }
                 goto block_6;
             }
-            if (temp_v0 != 0) {
+            if ((arg1 < 2) != 0) {
 block_6:
                 if (M2C_FIELD(arg0, s32 *, 0x58) >= 2) {
                     var_v0 = M2C_FIELD(&B_003DD490, s32 *, 0x3BEC) - 1;
@@ -48,24 +45,23 @@ block_8:
             }
         }
         if (M2C_FIELD(arg0, s32 *, 0xB0) != 0) {
-            temp_v0_2 = arg1 < 2;
             if (M2C_FIELD(arg0, s32 *, 0x58) < 2) {
-                if (temp_v0_2 == 0) {
+                if ((arg1 < 2) == 0) {
                     temp_v1_2 = g_2dd318 + 1;
                     g_2dd318 = temp_v1_2;
                     if (temp_v1_2 == 1) {
-                        SetClockRate(&g_2dded0, 7, 0);
+                        SetClockRate(arg0, 7, 0);
                     }
                 } else {
                     goto block_15;
                 }
-            } else if (temp_v0_2 != 0) {
+            } else if ((arg1 < 2) != 0) {
 block_15:
                 if (M2C_FIELD(arg0, s32 *, 0x58) >= 2) {
                     temp_v0_3 = g_2dd318 - 1;
                     g_2dd318 = temp_v0_3;
                     if (temp_v0_3 == 0) {
-                        SetClockRate(&g_2dded0, 7, 0x3F800000);
+                        SetClockRate(arg0, 7, 0x3F800000);
                     }
                 }
             }

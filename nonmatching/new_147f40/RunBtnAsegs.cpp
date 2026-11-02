@@ -14,8 +14,8 @@ extern char B_002DEB30[];
 extern "C" {
 void *PloFindSwObject_thunk(void *, int, int, void *);
 void PasegaEnsureAseg__FP4ASEGP3ALO4SEEKffi(Aseg *, void *, SEEK, float, float, int);
-void TriggerRsmg(void *, int, void *, void *, int);
-void StartJsg(int, int);
+void TriggerRsmg(void *, int, void *, void *);
+void StartJsg(Btn *, int);
 void ApplyTaskStateRequests(void *, int, void *, void *);
 }
 extern "C" void RunBtnAsegs(Btn *pbtn, int iash)
@@ -45,10 +45,10 @@ extern "C" void RunBtnAsegs(Btn *pbtn, int iash)
             }
         }
     }
-    TriggerRsmg(B_003DD490, pbtn->crsmg, pbtn->arsmg, pbtn->owner, iash == 0);
+    TriggerRsmg(B_003DD490, pbtn->crsmg, pbtn->arsmg, pbtn->owner);
     if (iash == 0) {
         if (pbtn->pjsg != 0)
-            StartJsg(pbtn->pjsg, pbtn->pjsgSubject);
+            StartJsg(pbtn, pbtn->pjsgSubject);
         ApplyTaskStateRequests(B_002DEB30, *(int *)((char *)pbtn + 0x134), (char *)pbtn + 0x138, pbtn->owner);
     }
 }

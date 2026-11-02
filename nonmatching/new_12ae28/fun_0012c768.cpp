@@ -42,11 +42,11 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
         state->prevTime = 0;
     }
     int offset = index * 8;
-    float **axisPtr = keys->axes;
     unsigned int step = 0;
+    float *outB = state->vecB;
     float *outD = state->vecD;
     float *outC = state->vecC;
-    float *outB = state->vecB;
+    float **axisPtr = keys->axes;
     float *outA = state->vecA;
     float *defaultPtr = keys->defaults;
     do {
@@ -74,8 +74,8 @@ extern "C" void func_0012C768(KEYS_12C768 *keys, STATE_12C768 *state, int index)
     } while (step < 3U);
     QW first = *(QW *)state->vecA;
     QW second = *(QW *)state->vecC;
-    nearStart = 0;
     nearEnd = 0;
+    nearStart = 0;
     if (Near(LaneX(second), LaneX(first))) {
         QW ty = RotY(second);
         float oy = Mtc1(ty);

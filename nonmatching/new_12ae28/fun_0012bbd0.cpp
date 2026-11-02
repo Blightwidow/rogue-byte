@@ -25,13 +25,12 @@ static inline int Near3(QW p, QW q)
 extern "C" void func_0012BBD0(KEYS_12BBD0 *keys, STATE_12BBD0 *state)
 {
     int index = func_0012BB70(*state->pcur);
-    int stride = index * 0x20;
-    state->t0 = *(float *)(keys->entries + stride - 0x14);
-    state->a = *(V3_12BBD0 *)(keys->entries + stride - 0x20);
-    state->q0 = *(QW *)(keys->entries + stride - 0x10);
-    state->t1 = *(float *)(keys->entries + stride + 0xC);
-    state->b = *(V3_12BBD0 *)(keys->entries + stride);
-    state->q1 = *(QW *)(keys->entries + stride + 0x10);
+    state->t0 = *(float *)(keys->entries + (index * 0x20) - 0x14);
+    state->a = *(V3_12BBD0 *)(keys->entries + (index * 0x20) - 0x20);
+    state->q0 = *(QW *)(keys->entries + (index * 0x20) - 0x10);
+    state->t1 = *(float *)(keys->entries + (index * 0x20) + 0xC);
+    state->b = *(V3_12BBD0 *)(keys->entries + (index * 0x20));
+    state->q1 = *(QW *)(keys->entries + (index * 0x20) + 0x10);
     int ok = 0;
     int same = Near3(*(QW *)&state->a, *(QW *)&state->b);
     if (same) {

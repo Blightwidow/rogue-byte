@@ -12,14 +12,13 @@ int FPzlinkUsable(void *graph, LINK *link, PLO *plo)
     int count = plo->count;
     if (count > 0) {
         int zoneFrom = link->zoneFrom;
-        int zoneTo = link->zoneTo;
         int from = 0;
         int to = 0;
         for (int index = 0; index < count; index++) {
             int zone = plo->zones[index];
             if (zone == zoneFrom)
                 from = 1;
-            if (zone == zoneTo)
+            if (zone == link->zoneTo)
                 to = 1;
             if (from && to)
                 break;

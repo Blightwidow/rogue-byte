@@ -15,7 +15,6 @@ void FindClosestPointBetweenLines__FP6VECTORN30PfT4T0(s32 arg0, s32 arg1, s32 ar
     s8 sp[0x10] __attribute__((aligned(16)));
     f32 temp_f1;
     f32 temp_v0;
-    s32 temp_cond;
     asm volatile("qmtc2.ni %0, vf1" : : "r"(arg0));
     asm volatile("qmtc2.ni %0, vf2" : : "r"(arg2));
     asm volatile("qmtc2.ni %0, vf3" : : "r"(arg1));
@@ -58,12 +57,11 @@ void FindClosestPointBetweenLines__FP6VECTORN30PfT4T0(s32 arg0, s32 arg1, s32 ar
         asm volatile("vmaddz.x vf1, vf2, vf1z");
         s32 vu_3;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_3));
-        temp_cond = vu_3 < 0.0f;
         s32 vu_4;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_4));
         M2C_FIELD(arg4, f32 *, 0) = (f32) (vu_4 / temp_v0);
         M2C_FIELD(arg4, f32 *, 4) = temp_f1;
-        if (temp_cond) {
+        if ((vu_3 < 0.0f)) {
             asm volatile("qmtc2.ni %0, vf1" : : "r"(0xBF800000));
             asm volatile("sqc2 vf1, (%0)" : : "r"(sp));
             asm volatile("vmulx.xyzw vf5, vf5, vf1x");

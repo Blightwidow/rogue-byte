@@ -23,8 +23,8 @@ void LaunchMatch__FP5MATCH(MATCH1CFD30 *match)
     match->mat = *pmat;
     PredictXfTransform(match->pxfo->xf, match->t, 0, stack.frame, 0);
     float t = match->t;
-    float inverse = 1.0f / t;
     float negativeHalf = t * -0.5f;
+    float inverse = 1.0f / t;
     void *pproduct = &stack.product;
     void *pmatrix = &match->mat;
     asm volatile("lqc2 vf1, 0x70(%0)" : : "r"(match));

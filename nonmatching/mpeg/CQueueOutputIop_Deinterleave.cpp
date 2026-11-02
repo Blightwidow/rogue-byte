@@ -12,8 +12,9 @@ void CQueueOutputIop_Deinterleave(QueueIop1B2AA0 *queue, int cbTotal, char *pb)
     if (wfmt == 0x10 && queue->cchan != 1) {
         CStackFrame_Construct(l.frame);
         char *pbCur = pb;
-        int cbBlock = queue->cchan << 10;
+        int  cbBlock;
         l.req.cb = cbBlock;
+        cbBlock = queue->cchan << 10;
         l.req.cbAlign = wfmt;
         char *pbTemp = (char *)PvAllocStackImpl__Fi(&l.req);
         int cbLeft = cbTotal;
@@ -35,8 +36,8 @@ void CQueueOutputIop_Deinterleave(QueueIop1B2AA0 *queue, int cbTotal, char *pb)
                     ib += queue->cbChunk;
                 }
                 char *pbDest = pbCur;
-                pbCur += cbBlock;
                 CopyAb__FPvT0Ui(pbDest, pbTemp, cbBlock);
+                pbCur += cbBlock;
                 cbLeft = cbLeft - cbBlock;
             } while (cbLeft != 0);
         }

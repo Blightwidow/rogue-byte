@@ -33,11 +33,10 @@ void RotateSoToMat(SO *pso, ROW16 *pmat)
     if (pso->pxfAngular == 0)
         return;
     MATLOCALS locals;
-    XF *pxfParent = pso->pxfAngular->pparent;
-    if (pxfParent != 0) {
-        locals.parent[0] = pxfParent->world[0];
-        locals.parent[1] = pxfParent->world[1];
-        locals.parent[2] = pxfParent->world[2];
+    if (pso->pxfAngular->pparent != 0) {
+        locals.parent[0] = pso->pxfAngular->pparent->world[0];
+        locals.parent[1] = pso->pxfAngular->pparent->world[1];
+        locals.parent[2] = pso->pxfAngular->pparent->world[2];
         NormalizeRotateMatrix3(locals.parent);
     } else {
         memset(locals.parent, 0, 0x30);

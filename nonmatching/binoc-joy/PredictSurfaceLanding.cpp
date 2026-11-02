@@ -3,7 +3,7 @@ struct B8 { char b[8]; };
 struct TRI { B8 first; int third; };
 struct L { TRI tri; char pad[4]; QW closest; QW normal; QW scratch; QW grav; QW dtv; QW vel; };
 extern "C" {
-int Spire_FindClosestPoint(void *, QW, int, TRI *, QW *, QW *);
+int Spire_FindClosestPoint(void *);
 extern int D_002BE918;
 }
 extern "C" int PredictSurfaceLanding(void *plo, QW pos, QW vel, QW gravity, TRI *ptri, QW *pposLanding, QW *pvelLanding, float gStandoff, float dt)
@@ -23,7 +23,7 @@ extern "C" int PredictSurfaceLanding(void *plo, QW pos, QW vel, QW gravity, TRI 
     asm("sqc2 vf1, %0" : "=m" (l.scratch));
     asm("sqc2 vf5, %0" : "=m" (l.dtv));
     asm("sqc2 vf6, %0" : "=m" (l.vel));
-    Spire_FindClosestPoint(plo, ballistic, 0, &l.tri, &l.closest, &l.normal);
+    Spire_FindClosestPoint(plo);
     asm("lqc2 vf3, %0" : : "m" (l.normal));
     asm("lqc2 vf1, %0" : : "m" (l.closest));
     *ptri = l.tri;

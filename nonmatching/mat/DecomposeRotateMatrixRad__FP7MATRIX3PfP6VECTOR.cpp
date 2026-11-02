@@ -16,9 +16,8 @@ extern "C" void DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(MATRIX3 *pmat, fl
     }
     float *normal = &pnormal->x;
     float remaining = 1.0f;
-    float denominator = remaining - cosine;
     for (int axis = 0; axis < 2; axis++) {
-        float square = fabsf((ag[5 * axis] - cosine) / denominator);
+        float square = fabsf((ag[5 * axis] - cosine) / (remaining - cosine));
         if (remaining < square)
             square = remaining;
         else if (square < 0.0f)

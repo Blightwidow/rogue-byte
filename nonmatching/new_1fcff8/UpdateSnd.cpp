@@ -13,7 +13,7 @@ struct _m2c_stack_UpdateSnd {
 void ContinueAmb(...);
 f32 GSmooth__FfffP3SMPPf(s8 *, M2C_UNK, f32, f32, f32);
 void PauseAmb(...);
-void SetSndbankVolumeFactor(s8 *, M2C_UNK, M2C_UNK, f32);
+void SetSndbankVolumeFactor(s8 *, M2C_UNK, f32, M2C_UNK);
 s32 TickReadCount(M2C_UNK *);
 void UpdateAmb(s8 *);
 void UpdateSndMix(s8 *);
@@ -21,7 +21,7 @@ void UpdateStreamCues(s8 *);
 void func_001FDA48(s8 *);
 void func_001FDBA8(s8 *);
 void func_001FDEC0(s8 *);
-s32 func_001FE5E0(s8 *, s32, f32);
+s32 func_001FE5E0(s8 *);
 s32 snd_FlushSoundCommands(s8 *);
 extern M2C_UNK RO_002A8288;
 extern s32 g_2bd4c0;
@@ -36,7 +36,6 @@ void UpdateSnd(s8 *arg0) {
     s32 temp_a0_3;
     s32 temp_a0_4;
     s32 temp_v0;
-    s32 temp_v0_2;
     s32 var_a1;
     s8 *var_a0;
     s8 *var_s0;
@@ -50,9 +49,8 @@ void UpdateSnd(s8 *arg0) {
     } else {
         var_a1 = 0;
     }
-    temp_v0_2 = M2C_FIELD(arg0, s32 *, 0x58);
     if (g_2bd4c0 == 3) {
-        if (temp_v0_2 != 0) {
+        if ((M2C_FIELD(arg0, s32 *, 0x58)) != 0) {
             if (var_a1 != 0) {
                 ContinueAmb(var_a1, var_a1);
             }
@@ -68,7 +66,7 @@ void UpdateSnd(s8 *arg0) {
                 M2C_FIELD(arg0, s32 *, 0x58) = 0;
             }
         }
-    } else if (temp_v0_2 == 0) {
+    } else if ((M2C_FIELD(arg0, s32 *, 0x58)) == 0) {
         if (var_a1 != 0) {
             PauseAmb(var_a1, var_a1);
         }
@@ -93,16 +91,16 @@ void UpdateSnd(s8 *arg0) {
     temp_v1 = vu_2;
     asm volatile("sdl %0, 0x7(%1)" : : "r"(temp_v1), "r"(sp));
     asm volatile("sdr %0, (%1)" : : "r"(temp_v1), "r"(sp));
-    if (func_001FE5E0(arg0, M2C_FIELD(&RO_002A8288, s32 *, 8), M2C_FIELD(&RO_002A8288, s32 *, 8)) != 0) {
+    if (func_001FE5E0(arg0) != 0) {
         if (M2C_FIELD(&g_2dded0, f32 *, 4) == 0.0f) {
             var_f21 = 0.0f;
         }
     }
     temp_f0 = GSmooth__FfffP3SMPPf(sp, 0, M2C_FIELD(arg0, f32 *, 0x15C), var_f21, M2C_FIELD(&g_2dded0, f32 *, 0x40));
-    SetSndbankVolumeFactor(arg0, 0, 2, temp_f0);
-    SetSndbankVolumeFactor(arg0, 1, 2, temp_f0);
+    SetSndbankVolumeFactor(arg0, 0, temp_f0, 2);
+    SetSndbankVolumeFactor(arg0, 1, temp_f0, 2);
     var_s0 = M2C_FIELD(arg0, s8 **, 0x4C);
-    SetSndbankVolumeFactor(arg0, 2, 2, var_f21);
+    SetSndbankVolumeFactor(arg0, 2, var_f21, 2);
     var_a0 = var_s0;
     if (var_s0 != NULL) {
         do {

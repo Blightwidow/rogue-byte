@@ -1,14 +1,14 @@
 extern "C" {
-struct VT_1FF188 { char pad[0x10]; short delta; short unused; void (*fn)(char *, char *); };
+struct VT_1FF188 { char pad[0x10]; short delta; short unused; void (*fn)(char *); };
 struct OBJ_1FF188 { char pad[0xC]; VT_1FF188 *vt; };
-void BASIC_Destruct(void *, int);
+void BASIC_Destruct(void);
 void CreateSlotheapSwAlign(void *, int, int, int);
 void func_001FCD38(void *);
 extern int B_002DD2E0, B_002DD2E4, B_002DD2E8, B_002DD2EC, B_002DD2F0, B_002DD2F4;
 struct SND_1FF188 { char pad[0x200]; OBJ_1FF188 *obj200; char pad204[4]; OBJ_1FF188 *array[8]; OBJ_1FF188 *obj228; };
 extern SND_1FF188 B_003DD040;
 extern char B_004520A8[], B_004520D0[], B_004520F8[], B_00452120[], B_00452148[], B_00452170[];
-#define DESTROY(object) ((OBJ_1FF188 *)(object))->vt->fn((char *)(object) + ((OBJ_1FF188 *)(object))->vt->delta, (char *)(object))
+#define DESTROY(object) ((OBJ_1FF188 *)(object))->vt->fn((char *)(object) + ((OBJ_1FF188 *)(object))->vt->delta)
 void StaticInitDestroySndbank(int arg0, int arg1) {
     if (arg1 == 0xFFFF) {
         if (arg0 != 0) {
@@ -36,7 +36,7 @@ void StaticInitDestroySndbank(int arg0, int arg1) {
             if (B_003DD040.obj200 != 0) {
                 DESTROY(B_003DD040.obj200);
             }
-            BASIC_Destruct(&B_003DD040, 2);
+            BASIC_Destruct();
         }
     }
 }

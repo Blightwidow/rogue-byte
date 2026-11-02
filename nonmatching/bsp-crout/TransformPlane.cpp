@@ -1,6 +1,6 @@
 #include "sly2.h"
 extern "C" void func_002564C0(QW *);
-extern "C" QW *func_002564A8(QW *, QW);
+extern "C" QW *func_002564A8(QW *);
 extern "C" void SetPlane(QW *, QW, float);
 extern "C" QW TransformPlane(MATRIX4 *pmat, QW plane)
 {
@@ -22,7 +22,7 @@ extern "C" QW TransformPlane(MATRIX4 *pmat, QW plane)
     asm("sq %3, %1" : "=r" (t6b), "=m" (frame.temp) : "r" (t6), "r" (planeCopy));
     asm("sqc2 vf3, %1" : "=r" (t7), "=m" (frame.normal) : "r" (t6b));
     asm("sqc2 vf2, %0" : "=m" (frame.row3) : "r" (t7));
-    func_002564A8(&frame.result, planeCopy);
+    func_002564A8(&frame.result);
     float w = ((float *)&frame.result)[3];
     int t8, t9;
     asm("lqc2 vf3, %1" : "=r" (t8) : "m" (frame.normal));

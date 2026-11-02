@@ -23,7 +23,6 @@ s8 *func_0014B290(s8 *arg0) {
     s32 var_s3;
     s32 var_s4;
     s32 var_s5;
-    s8 *temp_a0;
     s8 *temp_s0;
     s8 *temp_v1;
     s8 *var_fp;
@@ -51,7 +50,6 @@ block_8:
                         }
                         asm volatile("lqc2 vf2, (%0)" : : "r"(sp));
                         asm volatile("qmtc2.ni %0, vf3" : : "r"(PosLoWorld(M2C_FIELD(temp_s0, s8 **, 0))));
-                        temp_a0 = M2C_FIELD(temp_s0, s8 **, 0);
                         asm volatile("vsub.xyzw vf1, vf2, vf3");
                         asm volatile("vmul.xyz vf1, vf1, vf1");
                         asm volatile("vaddw.x vf2, vf0, vf0w");
@@ -63,13 +61,13 @@ block_8:
                         s32 vu_1;
                         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
                         var_f3 = vu_1;
-                        if ((s32)temp_a0 == M2C_FIELD(arg0, s32 *, 0x38C)) {
+                        if ((s32)(M2C_FIELD(temp_s0, s8 **, 0)) == M2C_FIELD(arg0, s32 *, 0x38C)) {
                             var_f3 = M2C_FIELD(&g_2bd4b0, f32 *, 0) + (var_f3 * (M2C_FIELD(&g_2bd4b0, f32 *, 4) + (var_f3 * M2C_FIELD(&g_2bd4b0, f32 *, 8))));
                         }
                         if ((var_s1 < var_s5) || ((var_s1 == var_s5) && (var_f3 < var_f20))) {
                             var_s5 = var_s1;
                             var_f20 = var_f3;
-                            var_fp = temp_a0;
+                            var_fp = (M2C_FIELD(temp_s0, s8 **, 0));
                         }
                     }
             }

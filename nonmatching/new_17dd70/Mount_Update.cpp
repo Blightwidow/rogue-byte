@@ -7,8 +7,8 @@ void Mount_SetState(char *, int);
 void PauseAmb(char *);
 void SetAmbVolume(char *, float);
 void SetSmaGoal__FP3SMA3OID(void *, int);
-QW SetVectorCylind__FP6VECTORfff(float, float, float);
-void UpdateSo();
+QW SetVectorCylind__FP6VECTORfff(float, float);
+void UpdateSo(char *);
 void func_0012D108(void *, QW);
 int func_0017F550(char *);
 extern SMP D_002BE7F0;
@@ -17,7 +17,7 @@ extern float g_2dded4;
 void Mount_Update(char *mount) {
     unsigned state;
     unsigned after;
-    UpdateSo();
+    UpdateSo(mount);
     do {
         state = *(unsigned *)(mount + 0x1C0);
         if (state == 2 && func_0017F550(mount) != 0) {
@@ -62,7 +62,7 @@ void Mount_Update(char *mount) {
         char *data = *(char **)(mount + 0x150);
         int index = 0;
         *(float *)(mount + 0x218) = *(float *)(data + 0x18);
-        *(QW *)(mount + 0x220) = SetVectorCylind__FP6VECTORfff(*(float *)(data + 0x18), *(float *)(data + 0x1C) * g_2be7e8, 0.0f);
+        *(QW *)(mount + 0x220) = SetVectorCylind__FP6VECTORfff(*(float *)(data + 0x18), *(float *)(data + 0x1C) * g_2be7e8);
         float second = *(float *)(*(char **)(mount + 0x150) + 0x28);
         QW vector;
         asm("pextlw %0, %1, %2\n\tpcpyld %0, %3, %0" : "=r"(vector) : "r"(0), "r"(0), "r"(second));

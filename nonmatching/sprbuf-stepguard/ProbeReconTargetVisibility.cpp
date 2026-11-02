@@ -15,11 +15,11 @@ struct _m2c_stack_ProbeReconTargetVisibility {
     /* 0x64 */ s32 sp64;                            /* inferred */
     /* 0x68 */ char pad68[0x88];
 };                                                  /* size = 0xF0 */
-M2C_UNK CStackFrame_Construct(s8 *);              /* extern */
+M2C_UNK CStackFrame_Construct(s8 *, s8 *);              /* extern */
 M2C_UNK CStackFrame_Destructor(s8 *, M2C_UNK);    /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 s32 PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(M2C_UNK, s128, s128, s32, s32, M2C_UNK); /* extern */
-M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, M2C_UNK, s128, M2C_UNK *, M2C_UNK, s32 *, s32 *); /* extern */
+M2C_UNK bevy_camera_follow_push_out(M2C_UNK *, s8 *, s128, M2C_UNK *, M2C_UNK, s32 *, s32 *); /* extern */
 extern M2C_UNK B_003DD490;
 extern M2C_UNK func_00202350;
 extern M2C_UNK g_2ddfa0;
@@ -36,13 +36,13 @@ void ProbeReconTargetVisibility(s8 *arg0, s8 *arg1) {
     u32 var_s4;
     var_s1 = 0;
     var_s4 = 0;
-    CStackFrame_Construct(sp);
+    CStackFrame_Construct(sp, arg1);
     asm volatile("qmtc2.ni %0, vf6" : : "r"(PosLoWorld(arg1)));
     temp_f20 = M2C_FIELD(arg1, f32 *, 0xE4);
     asm volatile("sqc2 vf6, 0x70(%0)" : : "r"(sp));
     s32 vu_1;
     asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_1));
-    bevy_camera_follow_push_out(&B_003DD490, vu_1, M2C_FIELD(arg0, s128 *, 0x20), &func_00202350, 0, &sp60, &sp64);
+    bevy_camera_follow_push_out(&B_003DD490, arg1, M2C_FIELD(arg0, s128 *, 0x20), &func_00202350, 0, &sp60, &sp64);
     asm volatile("lqc2 vf1, 0x20(%0)" : : "r"(arg0));
     asm volatile("lqc2 vf6, 0x70(%0)" : : "r"(sp));
     asm volatile("vsub.xyzw vf1, vf1, vf6");

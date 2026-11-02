@@ -22,23 +22,22 @@ extern "C" QW GetPerpendicularVector(QW vec)
     float absX = __builtin_fabsf(x);
     float absY = __builtin_fabsf(y);
     float absZ = __builtin_fabsf(z);
-    float zero = 0.0f;
     QW helper;
     int fence;
     if (absX <= absY) {
         if (absX <= absZ) {
-            helper = Vec3(zero, z, -y);
+            helper = Vec3(0.0f, z, -y);
             asm("qmtc2.ni %1, vf1" : "=r" (fence) : "r" (helper));
         } else {
-            helper = Vec3(y, -x, zero);
+            helper = Vec3(y, -x, 0.0f);
             asm("qmtc2.ni %1, vf1" : "=r" (fence) : "r" (helper));
         }
     } else if (absY <= absZ) {
-        helper = Vec3(z, zero, -x);
+        helper = Vec3(z, 0.0f, -x);
         asm("qmtc2.ni %1, vf1" : "=r" (fence) : "r" (helper));
         frame.dead[0] = helper;
     } else {
-        helper = Vec3(y, -x, zero);
+        helper = Vec3(y, -x, 0.0f);
         frame.dead[0] = helper;
         asm("qmtc2.ni %1, vf1" : "=r" (fence) : "r" (helper));
     }

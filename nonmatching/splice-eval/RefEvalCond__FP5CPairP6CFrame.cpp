@@ -41,8 +41,8 @@ s32 RefEvalCond__FP5CPairP6CFrame(s32 arg0, s8 *arg1, s32 arg2) {
                 var_s2 = 1;
                 goto block_12;
             }
-            var_s2 = 0;
             RefEval(&sp20, temp_s1, arg2);
+            var_s2 = 0;
             __as__4CRefRC4CRef(&sp10, &sp20);
             CRef_Destruct(&sp20);
             if ((sp10 != 0x17) || (sp14 != 0)) {

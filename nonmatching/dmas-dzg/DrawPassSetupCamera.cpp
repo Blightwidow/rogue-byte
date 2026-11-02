@@ -35,7 +35,7 @@ void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
     } else {
         AddDmaCall__4DMASP2QW(arg0, B_002DF800);
     }
-    *(short *)(arg0 + 0x20) = 1;
+    *(int *)(arg0 + 0x20) = 1;
     AddDmaCnt__4DMAS(arg0);
     AddVifFlush__4VIFS(arg0);
     AddVifDirect__4VIFSiP2QWi(arg0, 0x25, B_002DF010, 0);
@@ -55,7 +55,7 @@ void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
         } else {
             mode = 2;
         }
-        mat1 = (QW *)bevy_camera_cm_14f768(&B_002DDF40, mode, 0, mat, mat + 4);
+        mat1 = (QW *)bevy_camera_cm_14f768(&B_002DDF40, arg1, 0, mat, mat + 4);
     } else {
         mat1 = mat + 4;
         char *proj = (char *)&B_002DDF40 + 0x140;

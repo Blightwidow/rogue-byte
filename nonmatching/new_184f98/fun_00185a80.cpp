@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 typedef int s32;
 extern const float RO_002A568C;
-extern "C" void SolveInequalities(s32, s32 *, float *, s32 *, float);
+extern "C" void SolveInequalities(s32, s32 *, float *, s32 *);
 s32 func_00185A80(s32 arg0, s32 *arg1, s32 arg2)
 {
     char sp[0xF0] __attribute__((aligned(16)));
@@ -56,7 +56,7 @@ s32 func_00185A80(s32 arg0, s32 *arg1, s32 arg2)
             } while (index < *arg1);
         }
         asm volatile("sqc2 vf4, 0xe0(%0)" : : "r"(sp));
-        SolveInequalities(*arg1, (s32 *)sp, (float *)(sp + 0x90), (s32 *)(sp + 0xB0), RO_002A568C);
+        SolveInequalities(arg0, (s32 *)sp, (float *)(sp + 0x90), (s32 *)(sp + 0xB0));
         s32 remaining = *arg1;
         asm volatile("lqc2 vf4, 0xe0(%0)" : : "r"(sp));
         if (remaining > 0) {

@@ -12,10 +12,9 @@ struct _m2c_stack_MeasureCrv {
 };                                                  /* size = 0x30 */
 M2C_UNK FillCrvcCache(s8 *, s32);                 /* extern */
 M2C_UNK InvalidateCrvCache();                       /* extern */
-M2C_UNK RemeasureRopeSim(s32, s32);                 /* extern */
+M2C_UNK RemeasureRopeSim(s32);                 /* extern */
 void MeasureCrv(s8 *arg0) {
     f32 var_f1;
-    s32 temp_a0_2;
     s32 temp_a0_3;
     s32 temp_v1_2;
     s32 var_a2;
@@ -51,7 +50,6 @@ void MeasureCrv(s8 *arg0) {
         if (M2C_FIELD(arg0, s32 *, 0xE8) > 1) {
             do {
                 asm volatile("lqc2 vf2, 0x20(%0)" : : "r"(var_a1));
-                temp_a0_2 = var_a2 * 4;
                 asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(var_a1));
                 asm volatile("lqc2 vf4, (%0)" : : "r"((var_a2 * 0x10) + M2C_FIELD(arg0, s32 *, 0xF4)));
                 var_a2 += 1;
@@ -72,8 +70,8 @@ void MeasureCrv(s8 *arg0) {
                 asm volatile("vmove.xyzw vf6, vf3");
                 s32 vu_1;
                 asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
+                *((var_a2 * 4) + M2C_FIELD(arg0, M2C_UNK32 **, 0xF0)) = var_f1;
                 var_f1 += vu_1;
-                *(temp_a0_2 + M2C_FIELD(arg0, M2C_UNK32 **, 0xF0)) = var_f1;
             } while (var_a2 < M2C_FIELD(arg0, s32 *, 0xE8));
         }
     } else {
@@ -93,7 +91,7 @@ void MeasureCrv(s8 *arg0) {
     }
     temp_a0_3 = M2C_FIELD(arg0, s32 *, 0x17C);
     if (temp_a0_3 != 0) {
-        RemeasureRopeSim(temp_a0_3, (s32) var_a1);
+        RemeasureRopeSim(temp_a0_3);
     }
 }
 }

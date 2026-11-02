@@ -16,11 +16,10 @@ void func_002057E8(SO *pso, QW (*out)[3])
     int bits = *(int *)&half;
     asm("qmtc2.ni %0, vf1" : : "r" (bits));
     float nhalf = -half;
-    int nbits = *(int *)&nhalf;
     asm("lqc2 vf4, %0" : : "m" (f.rowy));
     asm("vmulx.xyzw vf2, vf4, vf1x");
     asm("lqc2 vf6, %0" : : "m" (f.rowx));
-    asm("qmtc2.ni %0, vf3" : : "r" (nbits));
+    asm("qmtc2.ni %0, vf3" : : "r" ((*(int *)&nhalf)));
     asm("sqc2 vf1, %0" : "=m" (f.junk));
     asm("vmulx.xyzw vf5, vf6, vf3x\n\tvmulx.xyzw vf1, vf6, vf1x");
     asm("lqc2 vf6, %0" : : "m" (f.base));

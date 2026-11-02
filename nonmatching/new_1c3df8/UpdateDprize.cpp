@@ -54,8 +54,8 @@ void UpdateDprize(DPRIZE1C5E48 *dprize)
         arg = 2;
         if (D_FLT_002C0D50 < g_2dded0 - dprize->startTime)
             goto call;
-        CheckDprizeBounce(dprize);
         CheckDprizeCollect(dprize);
+        CheckDprizeBounce(dprize);
         return;
     default:
         return;

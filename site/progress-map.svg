@@ -1579,7 +1579,7 @@
 <rect x="312.1" y="83.2" width="42.0" height="31.5" fill="#4a45a8"><title>LoadGlobsetFromBrx 0X167320 1360 bytes (draft)</title></rect>
 <rect x="354.5" y="83.2" width="38.2" height="31.5" fill="#4a45a8"><title>LoadGlobStreamedFromBrx 0X16CAA0 1240 bytes (draft)</title></rect>
 <rect x="393.1" y="83.2" width="35.5" height="31.5" fill="#4a45a8"><title>CloneGlobset 0X16EA80 1152 bytes (draft)</title></rect>
-<rect x="312.1" y="115.1" width="34.1" height="31.4" fill="#4a45a8"><title>func_0016DD58 0X16DD58 1104 bytes (draft)</title></rect>
+<rect x="312.1" y="115.1" width="34.1" height="31.4" fill="#2f7af4"><title>func_0016DD58 0X16DD58 1104 bytes (c)</title></rect>
 <rect x="312.1" y="146.9" width="34.1" height="28.7" fill="#2a2d6e"><title>func_00169AC8 0X169AC8 1008 bytes (asm)</title></rect>
 <rect x="312.1" y="176.0" width="34.1" height="25.4" fill="#4a45a8"><title>func_0016D6C8 0X16D6C8 896 bytes (draft)</title></rect>
 <rect x="346.6" y="115.1" width="28.0" height="27.0" fill="#4a45a8"><title>func_0016DA48 0X16DA48 784 bytes (draft)</title></rect>
@@ -2048,7 +2048,7 @@
 <rect x="553.2" y="50.4" width="14.8" height="14.2" fill="#2f7af4"><title>AddGuardSgs 0X209890 224 bytes (c)</title></rect>
 <rect x="472.2" y="64.9" width="14.2" height="14.8" fill="#2f7af4"><title>func_0020A298 0X20A298 224 bytes (c)</title></rect>
 <rect x="486.7" y="64.9" width="13.6" height="14.8" fill="#2f7af4"><title>func_00206380 0X206380 216 bytes (c)</title></rect>
-<rect x="500.8" y="64.9" width="13.6" height="14.8" fill="#4a45a8"><title>OnGuardRemove 0X206748 216 bytes (draft)</title></rect>
+<rect x="500.8" y="64.9" width="13.6" height="14.8" fill="#2f7af4"><title>OnGuardRemove 0X206748 216 bytes (c)</title></rect>
 <rect x="514.8" y="64.9" width="13.6" height="14.8" fill="#2f7af4"><title>func_00209EE0 0X209EE0 216 bytes (c)</title></rect>
 <rect x="528.9" y="64.9" width="13.1" height="14.8" fill="#2f7af4"><title>StopAnimref 0X209360 208 bytes (c)</title></rect>
 <rect x="542.4" y="64.9" width="12.6" height="14.8" fill="#2f7af4"><title>UpdateGuardModeTimeout 0X207288 200 bytes (c)</title></rect>
@@ -5604,7 +5604,7 @@
 </g>
 <g><title>util_11cf60: 3448 bytes</title>
 <rect x="1219.5" y="396.2" width="35.7" height="19.4" fill="#4a45a8"><title>MinimizeRange__FPFPvf_fPvffffPfT6 0X11D9E0 752 bytes (draft)</title></rect>
-<rect x="1255.6" y="396.2" width="20.0" height="19.4" fill="#4a45a8"><title>GSmooth__FfffP3SMPPf 0X11D018 424 bytes (draft)</title></rect>
+<rect x="1255.6" y="396.2" width="20.0" height="19.4" fill="#2f7af4"><title>GSmooth__FfffP3SMPPf 0X11D018 424 bytes (c)</title></rect>
 <rect x="1219.5" y="416.0" width="13.9" height="20.3" fill="#4a45a8"><title>CalculateSinCos__FfPfT1 0X11D608 312 bytes (draft)</title></rect>
 <rect x="1219.5" y="436.7" width="13.9" height="17.1" fill="#2f7af4"><title>GSmoothA__FffffP4SMPAPf 0X11D1C0 264 bytes (c)</title></rect>
 <rect x="1233.8" y="416.0" width="12.3" height="12.7" fill="#2f7af4"><title>GTrunc__Fd 0X11D740 176 bytes (c)</title></rect>
@@ -5771,7 +5771,7 @@
 <g><title>button-po: 3072 bytes</title>
 <rect x="1100.5" y="456.2" width="20.5" height="18.7" fill="#4a45a8"><title>StartSwAmbSfx 0X210740 424 bytes (draft)</title></rect>
 <rect x="1121.4" y="456.2" width="15.4" height="18.7" fill="#2f7af4"><title>func_00210538 0X210538 320 bytes (c)</title></rect>
-<rect x="1137.2" y="456.2" width="14.2" height="18.7" fill="#4a45a8"><title>AddSwGrfEntry 0X210140 296 bytes (draft)</title></rect>
+<rect x="1137.2" y="456.2" width="14.2" height="18.7" fill="#2f7af4"><title>AddSwGrfEntry 0X210140 296 bytes (c)</title></rect>
 <rect x="1100.5" y="475.3" width="16.8" height="14.5" fill="#2f7af4"><title>TriggerRsmgEntry 0X20FFF0 272 bytes (c)</title></rect>
 <rect x="1100.5" y="490.2" width="16.8" height="11.0" fill="#2f7af4"><title>ShowHideLo 0X210338 208 bytes (c)</title></rect>
 <rect x="1100.5" y="501.7" width="16.8" height="10.6" fill="#2f7af4"><title>SetEyesClosedByOid 0X210678 200 bytes (c)</title></rect>
@@ -5949,7 +5949,7 @@
 <rect x="1153.8" y="615.9" width="13.5" height="10.5" fill="#2f7af4"><title>func_00118380 0X118380 160 bytes (c)</title></rect>
 <rect x="1167.7" y="592.5" width="10.7" height="9.8" fill="#2f7af4"><title>U32Read__18CBinaryInputStream 0X117C80 120 bytes (c)</title></rect>
 <rect x="1178.8" y="592.5" width="10.7" height="9.8" fill="#2f7af4"><title>S32Read__18CBinaryInputStream 0X117DB8 120 bytes (c)</title></rect>
-<rect x="1189.9" y="592.5" width="10.7" height="9.8" fill="#4a45a8"><title>F32Read__18CBinaryInputStream 0X117E38 120 bytes (draft)</title></rect>
+<rect x="1189.9" y="592.5" width="10.7" height="9.8" fill="#2f7af4"><title>F32Read__18CBinaryInputStream 0X117E38 120 bytes (c)</title></rect>
 <rect x="1167.7" y="602.7" width="10.9" height="8.3" fill="#2f7af4"><title>S16Read__18CBinaryInputStream 0X117D50 104 bytes (c)</title></rect>
 <rect x="1167.7" y="611.4" width="10.9" height="7.6" fill="#2f7af4"><title>U16Read__18CBinaryInputStream 0X117C20 96 bytes (c)</title></rect>
 <rect x="1167.7" y="619.4" width="10.9" height="6.9" fill="#2f7af4"><title>CBinaryInputStream_ReadMatrix4 0X117F18 88 bytes (c)</title></rect>

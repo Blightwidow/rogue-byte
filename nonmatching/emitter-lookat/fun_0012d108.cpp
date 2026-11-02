@@ -20,8 +20,7 @@ extern "C" void func_0012D108(Lookat *self, QW pos)
     if (self->owner->first != self)
         return;
     asm("qmfc2.ni %0, vf2" : "=r" (diff));
-    QW g = g_2a2dd0;
-    int unchanged = Near(LaneX(g), LaneX(diff)) && Near(LaneY(g), LaneY(diff)) && Near(LaneZ(g), LaneZ(diff));
+    int unchanged = Near(LaneX(g_2a2dd0), LaneX(diff)) && Near(LaneY(g_2a2dd0), LaneY(diff)) && Near(LaneZ(g_2a2dd0), LaneZ(diff));
     if (!unchanged) {
         self->owner->pos = pos;
         WakeXf(self->palo, self->owner);

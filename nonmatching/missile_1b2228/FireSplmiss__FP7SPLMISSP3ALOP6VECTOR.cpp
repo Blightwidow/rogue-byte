@@ -13,7 +13,7 @@ void FireMissile(SPLMISS *, void *, QW *);
 void PosPredictMissileTarget(V4 *, SPLMISS *, float);
 QW LimitVectorLength__FP6VECTORfT0(QW, float);
 QW PosLoWorld(void);
-int ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(QW, float, QW, QW, int, void *);
+int ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(void);
 }
 static inline QW Word(float f) { QW r; asm volatile("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
 
@@ -59,7 +59,7 @@ void FireSplmiss__FP7SPLMISSP3ALOP6VECTOR(SPLMISS *p, void *alo, QW *pos)
         QW line1;
         asm volatile("qmfc2.ni %0, vf1" : "=r" (line1));
         asm volatile("sqc2 vf1, %0" : "=m" (f.q30));
-        ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG(g_2a2dd0, p->svMax, *(QW *)&f.t20, line1, 1, f.lsg);
+        ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG();
         float hit = *(float *)(f.lsg + 0x44);
         float u = hit > 0.25f ? hit : 0.25f;
         result = g_2dded0.time + 1.0f / u;

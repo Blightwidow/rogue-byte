@@ -22,7 +22,6 @@ extern s32 g_2dded4;
 void ProjectRipTransform__FP3RIPf(s8 *arg0) {
     s8 sp[0xa0] __attribute__((aligned(16)));
     M2C_UNK sp50;
-    f32 temp_v1;
     s32 var_s1;
     s8 *temp_v0;
     if (FIsZeroW__FP6VECTOR(M2C_FIELD(arg0, s128 *, 0xD0)) == 0) {
@@ -40,9 +39,8 @@ void ProjectRipTransform__FP3RIPf(s8 *arg0) {
         asm volatile("vaddq.x vf1, vf0, Q");
         s32 vu_1;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        temp_v1 = vu_1;
-        if (temp_v1 > 0.0001f) {
-            asm volatile("qmtc2.ni %0, vf1" : : "r"(temp_v1));
+        if (vu_1 > 0.0001f) {
+            asm volatile("qmtc2.ni %0, vf1" : : "r"(vu_1));
             asm volatile("vdiv Q, vf0w, vf1x");
             asm volatile("vwaitq");
             asm volatile("vmulq.xyzw vf2, vf4, Q");

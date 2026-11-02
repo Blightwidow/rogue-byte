@@ -8,12 +8,11 @@ struct Rhythm {
 };
 extern "C" float GMeanRhythmScore(Rhythm *rhythm)
 {
-    int window = rhythm->window;
-    if (window < 1)
+    if (rhythm->window < 1)
         return 0.0f;
     float sum = 0.0f;
     int index = rhythm->count;
-    int first = index - window;
+    int first = index - rhythm->window;
     if (first < 0)
         first = 0;
     index--;
@@ -21,5 +20,5 @@ extern "C" float GMeanRhythmScore(Rhythm *rhythm)
         sum += rhythm->scores[index];
         index--;
     }
-    return GLimitLm__FP2LMf(rhythm->lm, sum / (float)window);
+    return GLimitLm__FP2LMf(rhythm->lm, sum / (float)rhythm->window);
 }

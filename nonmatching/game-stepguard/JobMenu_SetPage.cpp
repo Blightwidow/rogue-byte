@@ -22,7 +22,7 @@ struct JOBMENU {
 };
 extern "C" {
 extern char B_003DD490[];
-extern float g_2ddf0c;
+extern float g_2ddf0c[];
 extern int B_003E0F9C;
 void SetHandsOff(void *, int);
 void ClearHandsOff(void *, int);
@@ -43,7 +43,7 @@ void JobMenu_SetPage(JOBMENU *menu, int page)
     }
     int pagePrev = menu->page;
     menu->page = pageNew;
-    menu->tPage = g_2ddf0c;
+    menu->tPage = g_2ddf0c[0];
     switch (pageNew) {
     case -1:
         ClearHandsOff(B_003DD490, 0);
@@ -70,10 +70,10 @@ void JobMenu_SetPage(JOBMENU *menu, int page)
         int pjob = B_003E0F9C;
         if (menu->isel >= 0 && menu->isel < menu->cent)
             pjob = menu->aent[menu->isel].pobj;
-        menu->pjobSel = pjob;
         menu->fFromJobs = pagePrev == 0;
         menu->crowMax = 4;
         menu->pblot->a70 = 0x4E6;
+        menu->pjobSel = pjob;
         menu->pblot->a78 = 0x4E5;
         if (pagePrev == 0)
             menu->pblot->a74 = 0x4E7;

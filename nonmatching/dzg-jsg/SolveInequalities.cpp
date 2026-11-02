@@ -17,15 +17,14 @@ void SolveInequalities(int c, const float *aag, const float *ag, float *agSoln, 
     char pdzg[0x50];
     func_0011A550(pdzg, c);
     ALLOC alloc;
-    int cbRow = c * 4;
     for (int idz = 0; idz < c; idz++) {
         char *pdz = *(char **)(pdzg + 0x8) + idz * 0x28;
         *(float *)(pdz + 0x8) = sfMax;
-        alloc.cb = cbRow;
+        alloc.cb = (c * 4);
         alloc.align = 0x10;
         void *mpidzg = PvAllocStackImpl__Fi();
         *(void **)(pdz + 0x18) = mpidzg;
-        CopyAb__FPvT0Ui(mpidzg, aag + idz * c, cbRow);
+        CopyAb__FPvT0Ui(mpidzg, aag + idz * c, (c * 4));
         *(float *)(pdz + 0x10) = ag[idz];
         AppendDlEntry(pdzg + 0x30, pdz);
     }

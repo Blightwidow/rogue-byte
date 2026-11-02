@@ -15,7 +15,7 @@ struct _m2c_stack_ConvertXfMat {
     /* 0x060 */ char pad60[0xA0];
 };                                                  /* size = 0x100 */
 M2C_UNK InvertMatrix3(M2C_UNK *, s32);              /* extern */
-M2C_UNK memcpy(s32, s8 *, M2C_UNK);               /* extern */
+M2C_UNK memcpy(void);               /* extern */
 s32 ConvertXfMat(s32 arg0, s32 arg1, s32 arg2, s8 *arg3) {
     s8 sp[0xb0] __attribute__((aligned(16)));
     M2C_UNK sp30;
@@ -65,7 +65,7 @@ s32 ConvertXfMat(s32 arg0, s32 arg1, s32 arg2, s8 *arg3) {
             asm volatile("sqc2 vf6, 0x90(%0)" : : "r"(sp));
             asm volatile("sqc2 vf4, 0xa0(%0)" : : "r"(sp));
             asm volatile("sqc2 vf8, 0xb0(%0)" : : "r"(sp));
-            memcpy(arg0, sp, 0x30);
+            memcpy();
         } else {
             temp_v0_2 = arg1 + 0x40;
             asm volatile("lqc2 vf4, 0x40(%0)" : : "r"(arg1));
@@ -89,7 +89,7 @@ s32 ConvertXfMat(s32 arg0, s32 arg1, s32 arg2, s8 *arg3) {
             asm volatile("sqc2 vf2, 0x30(%0)" : : "r"(sp));
             asm volatile("sqc2 vf4, 0x40(%0)" : : "r"(sp));
             asm volatile("sqc2 vf6, 0x50(%0)" : : "r"(sp));
-            memcpy(arg0, sp, 0x30);
+            memcpy();
         }
     } else if (arg2 != 0) {
         InvertMatrix3(&sp30, arg2 + 0x40);
@@ -114,9 +114,9 @@ s32 ConvertXfMat(s32 arg0, s32 arg1, s32 arg2, s8 *arg3) {
         asm volatile("sqc2 vf2, 0x60(%0)" : : "r"(sp));
         asm volatile("sqc2 vf4, 0x70(%0)" : : "r"(sp));
         asm volatile("sqc2 vf6, 0x80(%0)" : : "r"(sp));
-        memcpy(arg0, sp, 0x30);
+        memcpy();
     } else {
-        memcpy(arg0, arg3, 0x30);
+        memcpy();
     }
     return arg0;
 }

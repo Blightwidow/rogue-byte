@@ -60,10 +60,9 @@ extern "C" void bevy_player_p25_1375d0(char *porbit, int side)
         char *pj = *(char **)porbit;
         asm("lqc2 vf4, %0" : : "m" (vecRoot[0]));
         VTC *vtc = *(VTC **)(pj + 0xC);
-        QW *prow = (QW *)(pj + 0x1B0);
-        asm("lqc2 vf2, %0" : : "m" (prow[0]));
-        asm("lqc2 vf1, %0" : : "m" (prow[1]));
-        asm("lqc2 vf3, %0" : : "m" (prow[2]));
+        asm("lqc2 vf2, %0" : : "m" (((QW *)(pj + 0x1B0))[0]));
+        asm("lqc2 vf1, %0" : : "m" (((QW *)(pj + 0x1B0))[1]));
+        asm("lqc2 vf3, %0" : : "m" (((QW *)(pj + 0x1B0))[2]));
         asm("vmulax.xyz ACC, vf2, vf4x");
         asm("vmadday.xyz ACC, vf1, vf4y");
         asm("vmaddz.xyz vf5, vf3, vf4z");

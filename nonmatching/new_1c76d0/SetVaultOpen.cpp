@@ -6,8 +6,8 @@ void CRef_Destruct(CRef *);
 }
 struct CRef {
     int tagk;
-    int n;
     int pad0;
+    int n;
     int pad1;
     CRef(int tag, int count) { tagk = tag; n = count; }
     CRef(CRef &other) { CRef_CopyConstruct(this, &other); }
@@ -32,7 +32,7 @@ void SetVaultOpen(int open)
         return;
     }
     if (open != 0) {
-        int saved = RefGetGameSaveValue(path, &B_003D4A60).n;
+        int saved = RefGetGameSaveValue(open, &B_003D4A60).n;
         if (saved == 0)
             TryAutosave(&B_002E65E0, 0);
     }

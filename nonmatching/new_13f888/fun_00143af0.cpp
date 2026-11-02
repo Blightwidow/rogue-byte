@@ -9,7 +9,7 @@ void *PpathFindBootyOid(int);
 void RefSetGameSaveValue(CRef *, void *, CRef *);
 void CRef_CopyConstruct(CRef *, CRef *);
 void CRef_Destruct(CRef *);
-void func_001D8B20(CRef *, CRef *, void *, const char *, int);
+void func_001D8B20(CRef *, CRef *);
 }
 struct Jt { char pad[0x18]; int oid; };
 void *func_00143AF0(Jt *pjt, int idLoot)
@@ -28,7 +28,7 @@ void *func_00143AF0(Jt *pjt, int idLoot)
     refs[1].tagk = 0x15;
     refs[1].n = -1;
     JtObj *obj = (JtObj *)pjt;
-    func_001D8B20(&refs[0], &refs[1], obj->vt->fn((char *)obj + obj->vt->delta), RO_002A4DB0, 0);
+    func_001D8B20(&refs[0], &refs[1]);
     CRef_Destruct(&refs[1]);
     CRef_Destruct(&refs[0]);
     return ppath;

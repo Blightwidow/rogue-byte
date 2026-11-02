@@ -18,7 +18,7 @@ struct _m2c_stack_CedgeFindAtPos {
 M2C_UNK CStackFrame_Construct(s8 *);              /* extern */
 M2C_UNK CStackFrame_Destructor(s8 *, M2C_UNK);    /* extern */
 s32 PruneBsp__FP3BSPP6VECTORfPP3BSP(s32, M2C_UNK, s128, s32 *, s32 *, M2C_UNK); /* extern */
-s32 PvAllocStackImpl__Fi(s32 *, s32, s32 *, M2C_UNK); /* extern */
+s32 PvAllocStackImpl__Fi(s32 *); /* extern */
 s32 CedgeFindAtPos(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3, s32 *arg4) {
     s8 sp[0x20] __attribute__((aligned(16)));
     s32 sp10;
@@ -39,12 +39,12 @@ s32 CedgeFindAtPos(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3, s32 *arg4) {
     s8 *var_a1;
     CStackFrame_Construct(sp);
     temp_a0 = M2C_FIELD(arg1, s32 *, 4);
-    temp_v1 = (temp_a0 <= 0x1554) ? temp_a0 : 0x1555;
     temp_a1 = temp_v1 * 0xC;
+    temp_v1 = (temp_a0 <= 0x1554) ? temp_a0 : 0x1555;
     sp20 = temp_v1;
     sp10 = temp_a1;
     M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-    temp_v0 = PvAllocStackImpl__Fi(&sp10, temp_a1, &sp10, 0x10);
+    temp_v0 = PvAllocStackImpl__Fi(&sp10);
     sp24 = temp_v0;
     if (PruneBsp__FP3BSPP6VECTORfPP3BSP(M2C_FIELD(arg1, s32 *, 0xC), 0x7FFFFFFF, *(s32 *)((arg2 * 0x10) + M2C_FIELD(arg0, s32 *, 4)), &sp20, &sp24, 0x3F800000) != 2) {
         CStackFrame_Destructor(sp, 2);

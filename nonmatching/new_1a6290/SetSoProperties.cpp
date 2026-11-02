@@ -28,7 +28,7 @@ void SetSoProperties(SO *pso, int cref, const LOREF *aref)
                 }
             }
         } else if (pref->grf & 0x20) {
-            void *pgeom = PpartFindAlo(pso, pref->key);
+            void *pgeom = PpartFindAlo(pso, cref);
             iref++;
             if (pgeom) {
                 *(void **)((char *)pso + pref->ibField) = pgeom;
@@ -36,7 +36,7 @@ void SetSoProperties(SO *pso, int cref, const LOREF *aref)
                     func_001F2AD0(pso);
             }
         } else if (pref->grf & 0x40) {
-            void *pglob = func_001F5FF8(pso, pref->key);
+            void *pglob = func_001F5FF8(pso, cref);
             iref++;
             if (pglob) {
                 *(void **)((char *)pso + pref->ibField) = pglob;

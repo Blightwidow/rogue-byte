@@ -1,8 +1,8 @@
 #include "sly2.h"
 struct VT_1C60B8 {
-    char p0[8]; short d8; short pa; void (*f8)(void *, void *);
-    short d10; short pb; void (*f10)(void *, void *);
-    char p1[0x28]; short d40; short pc; void (*f40)(void *, void *);
+    char p0[8]; short d8; short pa; void (*f8)(void *);
+    short d10; short pb; void (*f10)(void *);
+    char p1[0x28]; short d40; short pc; void (*f40)(void *);
     short d48; short pd; void (*f48)(void *, void *);
 };
 struct OBJ_1C60B8 { char pad[0xC]; VT_1C60B8 *vt; };
@@ -65,7 +65,7 @@ extern "C" void SetDprizeDprizes(void *self, unsigned state)
     if (state == 0 || ((int)state >= 0 && (int)state < 6 && (int)state >= 4)) {
         OBJ_1C60B8 *child = F(OBJ_1C60B8 *, self, 0x16C);
         if (child != 0)
-            child->vt->f40((char *)child + child->vt->d40, child);
+            child->vt->f40((char *)child + child->vt->d40);
     } else {
         OBJ_1C60B8 *child = F(OBJ_1C60B8 *, self, 0x16C);
         if (child != 0)
@@ -78,7 +78,7 @@ extern "C" void SetDprizeDprizes(void *self, unsigned state)
         if (current == 0) {
             OBJ_1C60B8 *created = (OBJ_1C60B8 *)PsmaApplySm(F(int, self, 0x164), state, sma, 0);
             F(void *, self, 0x168) = created;
-            created->vt->f8((char *)created + created->vt->d8, created);
+            created->vt->f8((char *)created + created->vt->d8);
             float skip = F(float, self, 0x160);
             if (skip > 0.0f)
                 SkipSma(F(void *, self, 0x168), skip);
@@ -90,7 +90,7 @@ extern "C" void SetDprizeDprizes(void *self, unsigned state)
         if (current != 0) {
             RetractSma(current);
             OBJ_1C60B8 *again = F(OBJ_1C60B8 *, self, 0x168);
-            again->vt->f10((char *)again + again->vt->d10, again);
+            again->vt->f10((char *)again + again->vt->d10);
             F(void *, self, 0x168) = 0;
         }
     }

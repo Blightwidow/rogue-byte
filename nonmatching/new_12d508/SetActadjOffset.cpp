@@ -3,7 +3,7 @@ struct Owner { char pad[0x90]; void *first; char pad2[0x2C]; VECTOR pos; char pa
 struct Act { int pad0; void *palo; Owner *owner; char pad1[0x14]; VECTOR pos; };
 extern "C" {
 int FFloatsNear__Ffff(float, float, float);
-void WakeXf(void *, void *);
+void WakeXf(void *);
 }
 extern QW g_2a2dd0;
 static inline float LaneX(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
@@ -20,13 +20,12 @@ void SetActadjOffset(Act *self, QW offset)
     asm volatile("sqc2 vf2, %0" : "=m" (self->pos));
     if (self->owner->first != self)
         return;
-    QW g = g_2a2dd0;
     QW dreg;
     asm volatile("qmfc2.ni %0, vf3" : "=r" (dreg));
     int unchanged = 0;
-    if (Near(LaneX(g), LaneX(dreg))) {
-        if (Near(LaneY(g), LaneY(delta)))
-            unchanged = Near(LaneZ(g), LaneZ(delta)) != 0;
+    if (Near(LaneX(g_2a2dd0), LaneX(dreg))) {
+        if (Near(LaneY(g_2a2dd0), LaneY(delta)))
+            unchanged = Near(LaneZ(g_2a2dd0), LaneZ(delta)) != 0;
     }
     if (!unchanged) {
         asm volatile("lqc2 vf2, %0" : : "m" (delta));
@@ -36,6 +35,6 @@ void SetActadjOffset(Act *self, QW offset)
         asm volatile("lqc2 vf1, %0" : : "m" (self->owner->pos2));
         asm volatile("vadd.xyzw vf1, vf1, vf2");
         asm volatile("sqc2 vf1, %0" : "=m" (self->owner->pos2));
-        WakeXf(self->palo, self->owner);
+        WakeXf(self->palo);
     }
 }

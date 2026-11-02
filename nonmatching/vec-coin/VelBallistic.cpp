@@ -5,8 +5,8 @@ static inline QW Word(float f) { QW r; asm volatile("mfc1 %0, %1" : "=r" (r) : "
 extern QW g_2a2dc0;
 QW VelBallistic(float dt, QW from, QW to, QW accel)
 {
-    QW spill;
     float fall = (dt * 0.5f);
+    QW spill;
     QW accu = UpperWord(accel);
     asm volatile("qmtc2.ni %0, vf1" : : "r" (to));
     float accz = Lane(accu);
@@ -16,8 +16,9 @@ QW VelBallistic(float dt, QW from, QW to, QW accel)
     float inv = 1.0f / dt;
     QW delta;
     asm volatile("qmfc2.ni %0, vf3" : "=r" (delta));
-    QW du = UpperWord(delta);
+    QW  du;
     float dz = Lane(du);
+    du = UpperWord(delta);
     asm volatile("lqc2 vf2, %0" : : "m" (g_2a2dc0));
     fall = fall * accz;
     asm volatile("vmul.xyz vf1, vf3, vf2\n\tvaddw.x vf5, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf5, vf1z");

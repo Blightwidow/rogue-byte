@@ -37,7 +37,7 @@ unsigned U8Read__18CBinaryInputStream(void *);
 void *PxfFromRef(int, void *, int);
 void CBinaryInputStream_ReadMatrix4(void *, MATRIX4 *);
 void CBinaryInputStream_Skip(void *, int);
-void CBinaryInputStream_Read_thunk(void *, int, void *);
+void CBinaryInputStream_Read_thunk(void);
 int func_001CB770(SW_1C9B08 *, int);
 int MakeCloneId(int, int);
 LO_1C9B08 *PloNew(int, void *, int, int);
@@ -119,7 +119,7 @@ void func_001C9B08(SW_1C9B08 *psw, void *paloParent, int cid, int oid, int ispli
             } else {
                 poption->cb = U16Read__18CBinaryInputStream(pbis);
                 poption->pv = PvAllocSw_1C9B08(poption->cb);
-                CBinaryInputStream_Read_thunk(pbis, poption->cb, poption->pv);
+                CBinaryInputStream_Read_thunk();
             }
         }
         int cbSkip = S32Read__18CBinaryInputStream(pbis);

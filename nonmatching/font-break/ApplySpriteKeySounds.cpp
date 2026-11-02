@@ -12,8 +12,8 @@ struct _m2c_stack_ApplySpriteKeySounds {
 };                                                  /* size = 0xA0 */
 s8 *NewEmitter(s32);                              /* extern */
 M2C_UNK SetEmitterUnpositioned(s8 *, M2C_UNK);    /* extern */
-M2C_UNK StartStream(M2C_UNK *, s32, M2C_UNK);       /* extern */
-M2C_UNK StopAmb(s32, s32, M2C_UNK);                 /* extern */
+M2C_UNK StartStream(M2C_UNK *);       /* extern */
+M2C_UNK StopAmb(s32, s32, f32);                 /* extern */
 M2C_UNK StopStream(M2C_UNK *);                      /* extern */
 M2C_UNK VirtualRefPtr_Assign(s8 *, s8 *);       /* extern */
 extern M2C_UNK B_003DD040;
@@ -58,7 +58,7 @@ void ApplySpriteKeySounds(s8 *arg0, s32 arg1, s32 arg2) {
                 }
                 break;
             case 2:
-                StartStream(&B_003DD040, M2C_FIELD(temp_a0, s32 *, 4), 0);
+                StartStream(&B_003DD040);
                 break;
             case 3:
                 StopStream(&B_003DD040);

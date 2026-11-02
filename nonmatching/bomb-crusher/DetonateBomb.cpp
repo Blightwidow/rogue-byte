@@ -6,7 +6,7 @@ struct VT_13B860 {
     short dF0; short iF0; void (*fF4)(void *, void *);
     char pad3[0x118 - 0xF8]; short d118; short i118; void (*f11C)(void *, QW);
     short d120; short i120; void (*f124)(void *, QW);
-    char pad4[0x198 - 0x128]; short d198; short i198; void (*f19C)(void *, void *, void *);
+    char pad4[0x198 - 0x128]; short d198; short i198; void (*f19C)(void *, void *);
 };
 struct Bomb_13B860;
 union W_13B860 { void *p; int i; float f; };
@@ -24,7 +24,7 @@ void CStackFrame_Construct(Frame_13B860 *);
 void CStackFrame_Destructor(Frame_13B860 *, int);
 int FIsBasicDerivedFrom(void *, int);
 void GetBombVictims(Bomb_13B860 *, int *, void ***);
-void PaloAbsorbWkr(Msg_13B860 *);
+void PaloAbsorbWkr(Bomb_13B860 *);
 Phit_13B860 *PhitfxSpawn(int, QW, void *);
 QW PosLoWorld(void *);
 void PrepareBombDetonation(Bomb_13B860 *, QW, QW);
@@ -67,7 +67,7 @@ void DetonateBomb(Bomb_13B860 *self) {
                     asm("qmtc2.ni %1, vf1" : "=r" (token4) : "r" (D_002BC9E0), "r" (token3));
                     index++;
                     asm("vmulx.xyzw vf2, vf2, vf1x\n\tsqc2 vf1, 0x70(%1)\n\tsqc2 vf2, 0x40(%1)" : : "r" (token4), "r" (&msg) : "memory");
-                    PaloAbsorbWkr(&msg);
+                    PaloAbsorbWkr(self);
                 } while (index < count);
             }
             CStackFrame_Destructor(&frame, 2);
@@ -82,7 +82,7 @@ void DetonateBomb(Bomb_13B860 *self) {
             msg.w4.p = self;
             msg.w8.f = self->f16C;
             msg.wC.f = self->f15C;
-            other->vt->f19C((char *)other + other->vt->d198, &msg, other);
+            other->vt->f19C((char *)other + other->vt->d198, &msg);
         }
         if (self->f1E0 != 0) {
             void *attacker = self->f200;
@@ -90,8 +90,7 @@ void DetonateBomb(Bomb_13B860 *self) {
             if (attacker != (void *)self && FIsBasicDerivedFrom(attacker, 0x70) != 0) {
                 void **link = ((Link_13B860 *)attacker)->f14;
                 if (link != 0) {
-                    void *linked = *link;
-                    owner = (linked == attacker) ? (void *)self : linked;
+                    owner = ((*link) == attacker) ? (void *)self : (*link);
                 }
             }
             PhitfxSpawn(*(int *)(B_003DD490 + 0x402C), PosLoWorld(self), owner)->f54 = 1;

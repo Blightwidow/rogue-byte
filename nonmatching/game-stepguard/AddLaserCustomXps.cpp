@@ -41,7 +41,7 @@ void AddLaserCustomXps(s8 *arg0, s8 *arg1) {
             var_s1 = 0;
             temp_s3 = M2C_FIELD(arg0, s32 *, 0x19C) + (var_s4 * 0x150);
             GetLaserBeamPoints(arg0, temp_s3, &sp10, 0);
-            if (ClsgClipEdgeToObject(arg1, sp10, sp20, 1, &sp40) == 0) {
+            if (ClsgClipEdgeToObject(arg0, sp10, sp20, 1, &sp40) == 0) {
                 temp_s0 = *M2C_FIELD(M2C_FIELD(arg1, s8 **, 4), s32 **, 0x14);
                 if (FIsBasicDerivedFrom(temp_s0, 0x33) != 0) {
                     var_s1 = func_00205670(temp_s0, sp10, sp20, &sp30);

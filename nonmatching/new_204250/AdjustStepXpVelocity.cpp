@@ -37,7 +37,6 @@ void AdjustStepXpVelocity(STEP *pstep, XP *pxp, int iside)
         limited = scaled > delta ? scaled : delta;
     }
     gSpeed = gSpeed + limited;
-    float neg = -gSpeed;
     QW *pvSide = (QW *)((char *)pxp + iside * 0x40);
     QW negBits;
     QW *pmat = &pstep->row0;
@@ -47,7 +46,7 @@ void AdjustStepXpVelocity(STEP *pstep, XP *pxp, int iside)
     asm("lqc2 vf3, %0" : : "m" (pstep->vTarget));
     asm("lqc2 vf4, %0" : : "m" (pxp->normal));
     asm("vmulax.xyz ACC, vf2, vf3x\n\tvmadday.xyz ACC, vf1, vf3y\n\tvmaddz.xyz vf3, vf5, vf3z");
-    asm("mfc1 %0, %1" : "=r" (negBits) : "f" (neg));
+    asm("mfc1 %0, %1" : "=r" (negBits) : "f" (-gSpeed));
     asm("vmul.xyz vf2, vf3, vf4\n\tvaddw.x vf1, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf1, vf2z");
     asm("qmtc2.ni %0, vf5" : : "r" (negBits));
     asm("vmulx.xyzw vf2, vf4, vf2x");

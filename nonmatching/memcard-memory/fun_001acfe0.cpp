@@ -27,7 +27,7 @@ void PauseMenu_Pop(void *);
 void StartNewGame(void *);
 void MemcardMenu_SetState(MENU *, int);
 void func_001ABD40(void *);
-CRef RefSetGameSaveValue(void *, CRef &, void *);
+CRef RefSetGameSaveValue(MENU *);
 }
 void func_001ACFE0(MENU *pmenu)
 {
@@ -66,9 +66,9 @@ void func_001ACFE0(MENU *pmenu)
         {
             CRef refValue;
             refValue.n = 1;
-            refValue.tagk = 0x17;
             CRef refTemp(refValue);
-            RefSetGameSaveValue(ppath, refTemp, B_003D4A60);
+            refValue.tagk = 0x17;
+            RefSetGameSaveValue(pmenu);
         }
         int mode = pmenu->mode;
         if (mode < 4) {

@@ -88,8 +88,8 @@ void func_001FA528(char *self)
             asm("sqc2 vf6, %0" : "=m"(AT(buf, 0x0)));
             asm("sqc2 vf6, %0" : "=m"(AT(target, 0)));
             AT(target, 0x10) = AT(buf, 0x10);
-            WORD(target, 0x1C) = 0;
             AT(target, 0x20) = AT(buf, 0x20);
+            WORD(target, 0x1C) = 0;
             WORD(target, 0x2C) = 0;
             WORD(target, 0xC) = 0;
             char *world = B_003DD490;

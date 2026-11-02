@@ -44,10 +44,10 @@ extern "C" void bevy_anim_keys_axis_segment(KEYS_12C140 *keys, STATE_12C140 *sta
     float **axisPtr = keys->axes;
     int offset = index * 0xC;
     unsigned int step = 0;
-    float *outA = state->vecA;
     float *outB = state->vecB;
-    float *outC = state->vecC;
     float *outD = state->vecD;
+    float *outC = state->vecC;
+    float *outA = state->vecA;
     float *defaultPtr = keys->defaults;
     do {
         char *base = (char *)*axisPtr;
@@ -69,8 +69,8 @@ extern "C" void bevy_anim_keys_axis_segment(KEYS_12C140 *keys, STATE_12C140 *sta
         outC++;
         outB++;
         outA++;
-        defaultPtr++;
         axisPtr++;
+        defaultPtr++;
     } while (step < 3U);
     QW first = *(QW *)state->vecA;
     QW second = *(QW *)state->vecC;

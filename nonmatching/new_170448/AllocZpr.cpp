@@ -1,7 +1,7 @@
 struct CHUNK { int start; int end; CHUNK *next; };
 struct ZPR { char pad[4]; int cur; char pad2[4]; CHUNK *free[8]; };
 extern "C" int ICeilLog2(int);
-extern "C" void FlushZprPage(ZPR *);
+extern "C" void FlushZprPage(void);
 extern "C" int AllocZpr(ZPR *zpr, int count)
 {
     int alloc;
@@ -22,9 +22,9 @@ loop:
                 int rest = ICeilLog2(chunk->end - chunk->start);
                 CHUNK **prest = &afree[rest];
                 if (rest != iclass) {
+                    *prest = chunk;
                     *head = chunk->next;
                     chunk->next = *prest;
-                    *prest = chunk;
                 }
             }
             goto done;
@@ -35,7 +35,7 @@ test:
     if (iclass < 8)
         goto loop;
     if (((zpr->cur + count) & mask) != (zpr->cur & mask))
-        FlushZprPage(zpr);
+        FlushZprPage();
     alloc = zpr->cur;
     zpr->cur = alloc + count;
 done:

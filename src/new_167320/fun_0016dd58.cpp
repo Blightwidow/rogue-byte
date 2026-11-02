@@ -2,7 +2,7 @@ struct GIFS { int pad0; unsigned start; int pad8; unsigned end; char pad10[0x20]
 typedef unsigned long u64;
 extern "C" {
 void AddDmaCall__4DMASP2QW(void *, void *);
-void AddDmaCnt__4DMAS();
+void AddDmaCnt__4DMAS(void *);
 void AddPrimList__4GIFSiUl(GIFS *, int, unsigned long);
 void AddPrimPack__4GIFSiiUl(GIFS *, int, int, unsigned long);
 void AddVifBaseOffset__4VIFSii(void *, int, int);
@@ -34,7 +34,7 @@ void func_0016DD58(void *arg0, int unused, int arg2) {
     char buffer[0x2000] __attribute__((aligned(16)));
     void *cursorStart;
     void *cursor;
-    AddDmaCnt__4DMAS();
+    AddDmaCnt__4DMAS(arg0);
     UnpackHelper__4VIFS3UPKiiPiPPUi(arg0, 5, 8, 0x1B, 0, &cursorStart);
     cursor = cursorStart;
     __4GIFS(&gifs);

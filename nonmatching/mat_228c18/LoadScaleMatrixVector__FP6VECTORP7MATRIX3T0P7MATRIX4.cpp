@@ -20,18 +20,18 @@ extern "C" void LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4(char *palo,
     l.posLocal.z = 0.0f;
     const Rows3 *source = &RO_002A2D00;
     __as__6VECTORG9VU_VECTOR((VECTOR *)l.mat.mat[3], *(QW *)&l.posLocal);
-    *(Rows3 *)&l.mat = *source;
-    l.mat.mat[2][3] = 0.0f;
-    l.mat.mat[1][3] = 0.0f;
-    l.mat.mat[0][3] = 0.0f;
+    l.matRate.mat[3][1] = *(float *)(palo + 0x164);
     l.mat.mat[3][3] = 1.0f;
+    *(Rows3 *)&l.mat = *source;
+    l.mat.mat[0][3] = 0.0f;
+    l.mat.mat[1][3] = 0.0f;
     memset(&l.matRate, 0, 0x40);
     l.matRate.mat[3][0] = *(float *)(palo + 0x160);
-    l.matRate.mat[3][1] = *(float *)(palo + 0x164);
+    l.mat.mat[2][3] = 0.0f;
     l.matRate.mat[3][2] = *(float *)(palo + 0x168);
     func_00230CD0(*(void **)(palo + 0x60), 0, &l.mat, &l.matRate);
     if (pvecVelocity)
         *pvecVelocity = *(QW *)l.matRate.mat[3];
     if (pvecAngular)
-        *pvecAngular = DecomposeRotateMatrix((char *)&l.matRate);
+        *pvecAngular = DecomposeRotateMatrix(palo);
 }

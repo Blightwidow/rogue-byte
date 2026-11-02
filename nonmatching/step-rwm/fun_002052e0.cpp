@@ -48,7 +48,7 @@ void func_002052E0(s8 *arg0, s8 *arg1) {
             s32 vu_1;
             asm volatile("qmfc2.ni %0, vf7" : "=r"(vu_1));
             temp_v0_2 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_a2, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0xEC)(arg0 + M2C_FIELD(temp_a2, s16 *, 0xE8), vu_1, temp_a2);
+            M2C_FIELD(temp_a2, M2C_UNK (**)(s8 *, M2C_UNK), 0xEC)(arg0 + M2C_FIELD(temp_a2, s16 *, 0xE8), vu_1);
             M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, s8 *), 0xF4)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0xF0), sp);
             if (FIsBasicDerivedFrom(arg0, 0x34) != 0) {
                 asm volatile("qmtc2.ni %0, vf3" : : "r"(M2C_FIELD(arg0, s32 *, 0x1048)));

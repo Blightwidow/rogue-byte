@@ -53,7 +53,7 @@ void SetBinocHudState(s8 *arg0, s32 arg1) {
             temp_a2 = M2C_FIELD(arg0, s8 **, 8);
             if (temp_a2 != NULL) {
                 temp_v0_2 = M2C_FIELD(temp_a2, s8 **, 0xC);
-                M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x18C)(temp_a2 + M2C_FIELD(temp_v0_2, s16 *, 0x188), -1, temp_a2);
+                M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, M2C_UNK), 0x18C)(temp_a2 + M2C_FIELD(temp_v0_2, s16 *, 0x188), -1);
                 func_00213B00(M2C_FIELD(arg0, s8 **, 8), 0x352);
                 func_00213B00(M2C_FIELD(arg0, s8 **, 8), 0x351);
                 SeekBlotLabel(M2C_FIELD(arg0, s8 **, 8), 0x352, (M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0), s8 **, 0), f32 *, 0x1A8) + 3.1415927f) * 0.15915494f);
@@ -64,7 +64,7 @@ void SetBinocHudState(s8 *arg0, s32 arg1) {
                 temp_a2_2 = M2C_FIELD(arg0, s8 **, 0x10);
                 if (temp_a2_2 != NULL) {
                     temp_v0_3 = M2C_FIELD(temp_a2_2, s8 **, 0xC);
-                    M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, M2C_UNK, s8 *), 0x18C)(temp_a2_2 + M2C_FIELD(temp_v0_3, s16 *, 0x188), -1, temp_a2_2);
+                    M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, M2C_UNK), 0x18C)(temp_a2_2 + M2C_FIELD(temp_v0_3, s16 *, 0x188), -1);
                 }
             }
             temp_a0 = M2C_FIELD(arg0, s32 *, 0x14);

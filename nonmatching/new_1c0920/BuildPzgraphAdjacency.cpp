@@ -14,7 +14,7 @@ struct _m2c_stack_BuildPzgraphAdjacency {
 };                                                  /* size = 0x90 */
 M2C_UNK CStackFrame_Construct(s8 *);              /* extern */
 M2C_UNK CStackFrame_Destructor(s8 *, M2C_UNK, s32); /* extern */
-s32 *PvAllocStackClearImpl__Fi(s32 *, M2C_UNK);     /* extern */
+s32 *PvAllocStackClearImpl__Fi(s32 *);     /* extern */
 s32 PvAllocSwImpl__Fi(s32 *);                       /* extern */
 void BuildPzgraphAdjacency(s8 *arg0) {
     s8 sp[0x10] __attribute__((aligned(16)));
@@ -37,7 +37,7 @@ void BuildPzgraphAdjacency(s8 *arg0) {
     CStackFrame_Construct(sp);
     sp10 = M2C_FIELD(arg0, s32 *, 0x10) * 4;
     M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-    temp_s0 = PvAllocStackClearImpl__Fi(&sp10, 0x10);
+    temp_s0 = PvAllocStackClearImpl__Fi(&sp10);
     var_a0 = 0;
     if (M2C_FIELD(arg0, s32 *, 0x20) > 0) {
 loop_2:
@@ -63,8 +63,8 @@ loop_10:
         var_s1 += 1;
         temp_s0_2 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x1C) + temp_v0_2);
         M2C_FIELD(temp_s0_2, s32 *, 0) = 0;
-        temp_v0_3 = *var_s3;
         M2C_FIELD(&sp10, s32 *, 4) = 0x10;
+        temp_v0_3 = *var_s3;
         var_s3 += 4;
         M2C_FIELD(temp_s0_2, s32 *, 4) = PvAllocSwImpl__Fi(&sp10);
         sp10 = temp_v0_3 * 4;

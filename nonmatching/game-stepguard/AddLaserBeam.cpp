@@ -7,15 +7,15 @@ extern "C" void AddLaserBeam(s8 *owner, int a, int w0, int b, int w1, float x0, 
     if (count < 0x40) {
         s8 *beam = (s8 *)(FIELD(owner, int *, 0x19C) + (count * 0x150));
         FIELD(beam, float *, 0x18) = x0;
-        s8 *start = beam + 0x18;
         FIELD(beam, int *, 0) = a;
+        s8 *start = beam + 0x18;
         FIELD(start, int *, 0xC) = w0;
         FIELD(start, float *, 4) = y0;
         FIELD(start, float *, 8) = z0;
         s8 *beam2 = (s8 *)(FIELD(owner, int *, 0x19C) + (FIELD(owner, int *, 0x198) * 0x150));
         FIELD(beam2, float *, 0xB8) = x1;
-        s8 *end = beam2 + 0xB8;
         FIELD(beam2, int *, 0xA0) = b;
+        s8 *end = beam2 + 0xB8;
         FIELD(end, int *, 0xC) = w1;
         FIELD(end, float *, 4) = y1;
         FIELD(end, float *, 8) = z1;

@@ -13,9 +13,9 @@ extern "C" void TransformGeom(void *pmat, GEOM *psrc, GEOM *pdst)
         return;
     TransformPoints(pmat, psrc->cpos, psrc->apos, pdst->apos);
     InvertMatrix3(&l.inv, pmat);
+    QW r2 = l.inv.row[2];
     QW r0 = l.inv.row[0];
     QW r1 = l.inv.row[1];
-    QW r2 = l.inv.row[2];
     QW lo0, hi0, lo2, hi2, c0, c1, c2;
     asm("pextlw %0, %1, %2" : "=r" (lo0) : "r" (r1), "r" (r0));
     asm("pextuw %0, %1, %2" : "=r" (hi0) : "r" (r1), "r" (r0));

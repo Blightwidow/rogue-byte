@@ -14,7 +14,7 @@ struct LOCALS {
 extern "C" {
 void SetTag__4CRef4TAGK(CRef *, int);
 CPAIR *PpairNew(void);
-void PairHandle_Init(CPAIR **, CPAIR *);
+void PairHandle_Init(CRef *, CPAIR *);
 void RefGetPeopid(CRef *, void *, EOPID *);
 CRef *CRef_Destruct(CRef *);
 void PairHandle_Assign(CPAIR **, CPAIR *);
@@ -52,7 +52,7 @@ CRef *RefSetArgListFromPvs(CRef *prefResult, int cpv, const int *aotyp, void **a
         locals.eopid.otyp = aotyp[ipv];
         CPAIR *ppairNew = PpairNew();
         RefGetPeopid(&locals.refElement, pv, &locals.eopid);
-        PairHandle_Init(&locals.ppairHandle, ppairNew);
+        PairHandle_Init(prefResult, ppairNew);
         ((CRef *)locals.ppairHandle->ref)->operator=(locals.refElement);
         CRef_Destruct(&locals.refElement);
         PairHandle_Assign(pppairTail, locals.ppairHandle);

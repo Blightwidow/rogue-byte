@@ -44,7 +44,6 @@ extern "C" int FCheckJtSingleEdge__FP2JTP2SOP4EDGEP6VECTOR(JT *pjt, SO *pso, EDG
                 goto found;
             }
         }
-        return result;
     }
 found:
     verts = psub->verts;
@@ -80,6 +79,5 @@ found:
         asm("sqc2 vf2, %0" : "=m" (*(QW *)&l.sx));
     }
     *pnormal = *(QW *)&l.sx;
-    result = 1;
-    return result;
+    return 1;
 }

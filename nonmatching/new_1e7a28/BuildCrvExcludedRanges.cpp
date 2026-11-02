@@ -7,7 +7,7 @@ struct ALLOCREQ { int cb; int cbAlign; };
 extern "C" float g_2c367c;
 extern "C" float SMinCrv(CRV *);
 extern "C" float SMaxCrv(CRV *);
-extern "C" void GetPathPosFromS(CRV *, void *, int, float);
+extern "C" void GetPathPosFromS(float, CRV *, void *, int);
 extern "C" PATHZONE *PpathzoneFindPos(QW, int);
 extern "C" int FPosInPathzone(PATHZONE *, QW, int);
 void *PvAllocSwCopyImpl(int, void *);
@@ -28,11 +28,11 @@ void BuildCrvExcludedRanges(CRVRANGES *pranges, CRV *pcrv)
     PATHZONE **papz = appathzone;
     float sPrevSample = sSample;
     float sMax = SMaxCrv(pranges->pcrv);
-    GetPathPosFromS(pranges->pcrv, &l.pos0, 0, sMin);
+    GetPathPosFromS(sMin, pranges->pcrv, &l.pos0, 0);
     PATHZONE *ppathzonePrev = PpathzoneFindPos(l.pos0, 0);
     if (sMin < sMax) {
         do {
-            GetPathPosFromS(pranges->pcrv, &pos, 0, sSample);
+            GetPathPosFromS(sSample, pranges->pcrv, &pos, 0);
             PATHZONE *ppathzone = PpathzoneFindPos(pos, 0);
             if (ppathzone != 0) {
                 int ipathzone;

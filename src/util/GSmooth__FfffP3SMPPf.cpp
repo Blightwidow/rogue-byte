@@ -37,8 +37,8 @@ float GSmooth__FfffP3SMPPf(float target, float start, float t, SMP11D018 *psmp, 
         pos = 0.0f;
         if (rem > 0.0f) {
             float v = (psmp->a - psmp->b) * rem;
-            vel = -(psmp->b + v / psmp->c);
             pos = (v * rem) / (2.0f * psmp->c) + psmp->b * rem;
+            vel = -(psmp->b + v / psmp->c);
         } else {
             vel = -psmp->b;
         }

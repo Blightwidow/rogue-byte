@@ -9,9 +9,9 @@ QW ConvertDeulToW__FP6VECTORN20(QW a, QW b, VECTOR *unused)
     VECTOR res;
     float sinY, cosY, sinZ, cosZ;
     CalculateSinCos__FfPfT1(Lane(__builtin_prot3w(a)), &sinY, &cosY);
+    float dz = Lane(UpperWord(b));
     CalculateSinCos__FfPfT1(Lane(UpperWord(a)), &sinZ, &cosZ);
     float dy = Lane(__builtin_prot3w(b));
-    float dz = Lane(UpperWord(b));
     float dx = Lane(b);
     float xv = cosY * cosZ * dx - sinZ * dy;
     float yv = cosY * sinZ * dx + cosZ * dy;

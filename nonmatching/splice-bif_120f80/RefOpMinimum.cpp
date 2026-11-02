@@ -8,8 +8,8 @@ CRef *CRef_CopyConstruct(CRef *, CRef *);
 extern "C" CRef *RefOpMinimum(CRef *pret, int carg, CRef *aref, CFrame *pframe)
 {
     CRef best;
-    CRef_CopyConstruct(&best, &aref[0]);
     CPAIR *pair = aref[1].tagk == 0 ? 0 : (CPAIR *)aref[1].pv;
+    CRef_CopyConstruct(pret, &aref[0]);
     for (; pair != 0; pair = pair->next) {
         CRef *other = &pair->ref;
         if (best.tagk == 0x15) {

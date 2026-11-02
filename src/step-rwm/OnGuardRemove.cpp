@@ -36,7 +36,7 @@ void ClearGuardPathMode(Guard *);
 void ClearGuardSensing(Guard *);
 void SetGuardMode(Guard *, int);
 extern "C" void func_00208540(Guard *, int);
-extern "C" void func_001F17F8(Guard *, int, int);
+extern "C" void func_001F17F8(Guard *, int);
 
 void OnGuardRemove(Guard *g)
 {
@@ -64,6 +64,6 @@ void OnGuardRemove(Guard *g)
     g->f4A0 = 1;
     g->fFF4 = RO_002A8610;
     g->f1000 = D_002C3CF0;
-    func_001F17F8(g, -1, 1);
+    func_001F17F8(g, -1);
     SetGuardMode(g, -1);
 }

@@ -5,13 +5,12 @@ int CSolveQuadratic(float a, float b, float c, float *roots)
     if (discriminant < 0.0f)
         return 0;
     float spread = __builtin_sqrtf(discriminant) / (a + a);
-    float center = -(b / (a + a));
     if (__builtin_fabsf(spread) < 0.0001f) {
-        roots[0] = center;
+        roots[0] = (-(b / (a + a)));
         return 1;
     }
-    float high = spread + center;
-    float low = center - spread;
+    float high = (-(b / (a + a))) + spread;
+    float low = (-(b / (a + a))) - spread;
     roots[1] = low;
     roots[0] = high;
     if (low < high) {

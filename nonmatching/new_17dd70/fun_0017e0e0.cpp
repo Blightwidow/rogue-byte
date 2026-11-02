@@ -18,9 +18,9 @@ struct _m2c_stack_func_0017E0E0 {
 };                                                  /* size = 0xE0 */
 s128 PosLoWorld(s8 *);                            /* extern */
 M2C_UNK SetGoalTarget(s32, M2C_UNK *);              /* extern */
-s32 SetVectorCylind__FP6VECTORfff(f32, f32, M2C_UNK); /* extern */
-f32 atan2f(s8 *, M2C_UNK, M2C_UNK);               /* extern */
-s32 func_001C0B50(s32, M2C_UNK, s8 *);            /* extern */
+s32 SetVectorCylind__FP6VECTORfff(f32, f32, f32); /* extern */
+f32 atan2f(s8 *);               /* extern */
+s32 func_001C0B50(s32, M2C_UNK);            /* extern */
 s32 func_001C1EC0(s32, s128);                       /* extern */
 M2C_UNK func_002562A8(M2C_UNK *);                   /* extern */
 extern f32 D_FLT_002BE770;
@@ -66,7 +66,7 @@ void func_0017E0E0(s8 *arg0) {
     var_f20 = 0.0f;
     s64 vu_2;
     asm volatile("prot3w %0, %1" : "=r"(vu_2) : "r"(temp_v1));
-    temp_f21 = atan2f(var_a0, vu_2, temp_v1);
+    temp_f21 = atan2f(var_a0);
     s64 vu_3;
     asm volatile("por %0, %1, %2" : "=r"(vu_3) : "r"(0), "r"(func_001C1EC0(temp_s6 + 0x40, sp40)));
     var_s0 = vu_3;
@@ -78,7 +78,7 @@ void func_0017E0E0(s8 *arg0) {
         asm volatile("lqc2 vf2, (%0)" : : "r"(sp));
         s32 vu_4;
         asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_4));
-        if (func_001C0B50(var_s3, vu_4, sp) != 0) {
+        if (func_001C0B50(var_s3, vu_4) != 0) {
             asm volatile("lqc2 vf3, 0x30(%0)" : : "r"(sp));
             asm volatile("vsub.xyzw vf1, vf2, vf3");
             asm volatile("vmul.xy vf1, vf1, vf1");

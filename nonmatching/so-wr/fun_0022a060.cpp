@@ -10,7 +10,7 @@ extern "C" {
 struct _m2c_stack_func_0022A060 {
     /* 0x00 */ char pad0[0x70];
 };                                                  /* size = 0x70 */
-s32 FIsBasicDerivedFrom(s8 *, s32);               /* extern */
+s32 FIsBasicDerivedFrom(s8 *);               /* extern */
 s32 PosLoWorld(s8 *);                             /* extern */
 s8 *PpoSwFocusBase(M2C_UNK *);                    /* extern */
 M2C_UNK UpdateSo();                                 /* extern */
@@ -29,7 +29,7 @@ void func_0022A060(s8 *arg0) {
     var_s2 = 0;
     if (temp_v0 != NULL) {
         var_s2 = 0;
-        if (FIsBasicDerivedFrom(temp_v0, M2C_FIELD(arg0, s32 *, 0x154)) != 0) {
+        if (FIsBasicDerivedFrom(temp_v0) != 0) {
             if (M2C_FIELD(arg0, s32 *, 0x164) == 0) {
                 var_f20 = M2C_FIELD(arg0, f32 *, 0x158);
             } else {
@@ -59,7 +59,7 @@ void func_0022A060(s8 *arg0) {
     if ((temp_v1 == 0) || (temp_v1 == 2)) {
         var_s2 = (M2C_FIELD(&B_003DD490, s32 *, 0x3B0C) != 0) ? 0 : var_s2;
     }
-    if ((var_s2 != 0) && (FIsBasicDerivedFrom(temp_v0, 0x34) != 0) && ((M2C_FIELD(temp_v0, s32 *, 0x2DC) != -1) || (temp_v1_2 = M2C_FIELD(temp_v0, s8 **, 0xC), (M2C_FIELD(temp_v1_2, s32 (**)(s8 *), 0x26C)(temp_v0 + M2C_FIELD(temp_v1_2, s16 *, 0x268)) == 2)))) {
+    if ((var_s2 != 0) && (FIsBasicDerivedFrom(temp_v0) != 0) && ((M2C_FIELD(temp_v0, s32 *, 0x2DC) != -1) || (temp_v1_2 = M2C_FIELD(temp_v0, s8 **, 0xC), (M2C_FIELD(temp_v1_2, s32 (**)(s8 *), 0x26C)(temp_v0 + M2C_FIELD(temp_v1_2, s16 *, 0x268)) == 2)))) {
         var_s2 = M2C_FIELD(arg0, s32 *, 0x164);
     }
     if (var_s2 != M2C_FIELD(arg0, s32 *, 0x164)) {

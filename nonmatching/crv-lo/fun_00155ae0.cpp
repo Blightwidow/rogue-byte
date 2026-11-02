@@ -13,10 +13,10 @@ QW PosLoWorld(void *);
 float atan2f(float, float);
 void *func_00155A68(void *);
 Ent_155AE0 *func_00205438(void *, int);
-void func_00209818(void *, float);
+void func_00209818(float, void *);
 void func_0020AC28(void *, int, int, QW);
 extern QW g_2a2dd0;
-extern float g_2dded0;
+extern float g_2dded0[];
 void func_00155AE0(Goal_155AE0 *self, int newState) {
     QW dead;
     int old = self->state;
@@ -27,14 +27,14 @@ void func_00155AE0(Goal_155AE0 *self, int newState) {
             break;
         case 3: {
             char *range = self->f54;
-            float now = g_2dded0;
+            float now = g_2dded0[0];
             self->owner->fF04 = now + GRandInRange(*(float *)(range + 0x60), *(float *)(range + 0x64));
             self->f54 = 0;
             break; }
         }
         Goal_Pop(self->child);
         self->state = newState;
-        self->t = g_2dded0;
+        self->t = g_2dded0[0];
         switch (newState) {
         case 0: {
             self->target = func_00155A68(self);
@@ -46,7 +46,7 @@ void func_00155AE0(Goal_155AE0 *self, int newState) {
             asm("lqc2 vf1, 0(%1)\n\tvsub.xyzw vf1, vf1, vf2" : "=r"(token1) : "r"(&dead), "r"(token0) : "memory");
             asm("qmfc2.ni %0, vf1" : "=r"(xBits) : "r"(token1));
             asm("prot3w %0, %1" : "=r"(yBits) : "r"(xBits));
-            func_00209818((char *)self->owner + 0xFD0, atan2f(*(float *)&yBits, *(float *)&xBits) + 3.1415927f);
+            func_00209818(atan2f(*(float *)&yBits, *(float *)&xBits) + 3.1415927f, (char *)self->owner + 0xFD0);
             ent->vt->f44((char *)ent + ent->vt->d40);
             self->f3C = 3.4028235e38f;
             break; }

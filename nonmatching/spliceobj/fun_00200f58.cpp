@@ -12,7 +12,7 @@ void SetTag__4CRef4TAGK(RefT *, int);
 void CPairPtr_Destructor(CPair **, int);
 void UnlinkPairNode(CPair *);
 void FreeSlotheapPv(SLOTHEAP *, void *);
-void *memset(void *, int, unsigned);
+void *memset(void *, int);
 void RefGetPeopid(RefT *, void *, EOPID *);
 void __as__4CRefRC4CRef(void *dst, void *src);
 void CRef_ConstructPair(RefT *, CPair *);
@@ -29,7 +29,7 @@ extern "C" RefT *func_00200F58(RefT *pret, int count, int otyp, void *pbasic)
     }
     HP *tail;
     head.p = 0;
-    memset(&eopid, 0, 0x28);
+    memset(&eopid, 0);
     PairHandle_Assign(&head.p, 0);
     eopid.grf = 2;
     eopid.otyp = otyp;

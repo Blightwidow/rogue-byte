@@ -1,8 +1,8 @@
 struct V;
 struct VT {
     char pad0[0x188];
-    short delta188; short unused188; void (*fn18C)(void *, int, void *);
-    short delta190; short unused190; void (*fn194)(void *, void *);
+    short delta188; short unused188; void (*fn18C)(void *, int);
+    short delta190; short unused190; void (*fn194)(void *);
 };
 struct V { char pad0[0xC]; VT *vt; };
 struct OBJ {
@@ -18,7 +18,7 @@ void SetHandsOff(void *, int);
 void func_001A6CA8(OBJ *, int);
 void func_00213B00(V *, int);
 extern char B_003DD490[];
-extern float g_2dded0;
+extern float g_2dded0[];
 void SetJobEndSequence(OBJ *self, int arg1) {
     if (self->state == arg1) return;
     if (self->state == 0) {
@@ -52,18 +52,18 @@ void SetJobEndSequence(OBJ *self, int arg1) {
         SetHandsOff(B_003DD490 + 0, 2);
     }
     self->state = arg1;
-    self->timer = g_2dded0;
+    self->timer = g_2dded0[0];
     switch (arg1) {
     case 0: {
         V *objC = self->vBC;
         if (objC != 0) {
             VT *vt = objC->vt;
-            vt->fn194((char *)objC + vt->delta190, objC);
+            vt->fn194((char *)objC + vt->delta190);
         }
         V *objB = self->vB8;
         if (objB != 0) {
             VT *vt = objB->vt;
-            vt->fn194((char *)objB + vt->delta190, objB);
+            vt->fn194((char *)objB + vt->delta190);
         }
         func_001A6CA8(self, 2);
         {
@@ -79,13 +79,13 @@ void SetJobEndSequence(OBJ *self, int arg1) {
     case 3: {
         V *objC = self->vBC;
         VT *vt = objC->vt;
-        vt->fn18C((char *)objC + vt->delta188, -1, objC);
+        vt->fn18C((char *)objC + vt->delta188, -1);
         return;
     }
     case 1: {
         V *objB = self->vB8;
         VT *vt = objB->vt;
-        vt->fn18C((char *)objB + vt->delta188, -1, objB);
+        vt->fn18C((char *)objB + vt->delta188, -1);
         func_00213B00(self->vB8, self->seqA);
         return;
     }

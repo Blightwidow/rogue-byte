@@ -53,12 +53,11 @@ extern "C" int CobstacleFindPathzoneBox(Pathzone *pathzone, SapQuery *pquery, QW
     asm("pand %0, %1, %2" : "=r" (anded) : "r" (*(QW *)pquery->agrfX), "r" (*(QW *)pquery->agrfY));
     l.junk = anded;
     *(QW *)l.agrfBoth = anded;
-    unsigned *agrfBoth = l.agrfBoth;
     int islot = 0;
     int cobstacle = 0;
     void **pout = apobstacle;
     for (; islot < pathzone->cslot; islot++) {
-        if ((agrfBoth[islot / 32] & (1 << islot)) == 0)
+        if ((l.agrfBoth[islot / 32] & (1 << islot)) == 0)
             continue;
         if (cobstacleMax < cobstacle)
             break;

@@ -18,9 +18,9 @@ extern const float RO_FLT_002A9240;
 extern const float RO_FLT_002A9244;
 extern char D_002C44F0[];
 void PostSoLoad();
-void *PvAllocSwClearImpl__Fi(Req_21BD18 *);
+void *PvAllocSwClearImpl__Fi(void);
 void CopyAb__FPvT0Ui(void *, void *, unsigned);
-void func_0016EF00(void *, int, void *);
+void func_0016EF00(void *, int);
 void func_0021BC08(Obj_21BD18 *);
 
 void func_0021BD18(Obj_21BD18 *self)
@@ -41,7 +41,7 @@ void func_0021BD18(Obj_21BD18 *self)
         Req_21BD18 *req = &frame.first.req;
         req->size = self->count * 0x50;
         req->align = 0x10;
-        self->buffer = PvAllocSwClearImpl__Fi(req);
+        self->buffer = PvAllocSwClearImpl__Fi();
         low = 3.4028235e38f;
         high = -3.4028235e38f;
         for (Node_21BD18 *node = self->nodes; node != 0; node = node->next) {
@@ -68,7 +68,7 @@ void func_0021BD18(Obj_21BD18 *self)
         int slot = (Elem_21BD18 *)node->id - self->elems;
         Slot_21BD18 *target = self->slots + slot;
         target->vtable = D_002C44F0;
-        func_0016EF00(self->sub80, slot, target);
+        func_0016EF00(self->sub80, slot);
         if (node->count > 0) {
             Req_21BD18 *request = (Req_21BD18 *)&req2;
             int index = 0;
@@ -77,7 +77,7 @@ void func_0021BD18(Obj_21BD18 *self)
                 CopyAb__FPvT0Ui(frame.buffer, sub->src, sub->count * 0x10);
                 request->size = sub->count << 5;
                 request->align = 0x10;
-                char *out = (char *)PvAllocSwClearImpl__Fi(request);
+                char *out = (char *)PvAllocSwClearImpl__Fi();
                 sub->out = out;
                 if (sub->count > 0) {
                     float range = high - low;

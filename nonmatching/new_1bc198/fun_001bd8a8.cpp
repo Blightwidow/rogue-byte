@@ -13,7 +13,7 @@ struct _m2c_stack_func_001BD8A8 {
     /* 0x40 */ char pad40[0xB0];
 };                                                  /* size = 0xF0 */
 s32 ClsgClipEdgeToObstacle(s8 *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK *); /* extern */
-s32 FObstacleContainsPos(s8 *, M2C_UNK);          /* extern */
+s32 FObstacleContainsPos(void);          /* extern */
 s32 func_001BD8A8(s8 *arg0, s8 *arg1) {
     s8 sp[0xa0] __attribute__((aligned(16)));
     M2C_UNK sp40;
@@ -80,6 +80,6 @@ block_6:
     asm volatile("vmaddw.xyz vf6, vf5, vf0w");
     s32 vu_3;
     asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_3));
-    return FObstacleContainsPos(arg0, vu_3) != 0;
+    return FObstacleContainsPos() != 0;
 }
 }

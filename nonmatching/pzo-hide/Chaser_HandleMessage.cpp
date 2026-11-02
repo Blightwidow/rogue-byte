@@ -18,7 +18,7 @@ struct _m2c_stack_Chaser_HandleMessage {
 #define sp50 (*(s128 *)(sp + 0x50))
 void HandlePoMessage();
 s32 LoadRotateMatrixRad(s128 *, s128, f32);
-s32 func_00204E38(s8 *, s32, s128, f32, s128, s128, s128);
+s32 func_00204E38(s8 *, s32, s128, s32, s128, s128, s128);
 extern s128 g_2a2dc0;
 void Chaser_HandleMessage(s8 *arg0, s32 arg1, s8 *arg2) {
     s8 sp[0x50] __attribute__((aligned(16)));

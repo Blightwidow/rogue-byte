@@ -23,8 +23,8 @@ static inline void DestroyPending(FRM *frm, DL *dl)
     iter.outer = outer;
     char *entry = frm->dlA.first;
     iter.list = dl;
-    iter.current = (DLE *)(entry + offset);
     iter.offset = offset;
+    iter.current = (DLE *)(entry + offset);
     if (entry) {
         do {
             RemoveDlEntry(dl, entry);
@@ -46,8 +46,8 @@ static inline void FreePending(FRM *frm, DL *dl)
     iter.outer = outer;
     char *entry = frm->dlB.first;
     iter.list = dl;
-    iter.current = (DLE *)(entry + offset);
     iter.offset = offset;
+    iter.current = (DLE *)(entry + offset);
     if (entry) {
         do {
             ENTRY *object = (ENTRY *)entry;
