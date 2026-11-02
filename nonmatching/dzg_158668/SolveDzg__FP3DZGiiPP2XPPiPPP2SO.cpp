@@ -7,81 +7,55 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 #define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_SolveDzg__FP3DZGiiPP2XPPiPPP2SO {
-    /* 0x00 */ char pad0[4];
-    /* 0x04 */ s8 **sp4;                          /* inferred */
-    /* 0x08 */ s32 sp8;                             /* inferred */
-    /* 0x0C */ s8 *spC;                           /* inferred */
-    /* 0x10 */ char pad10[0x70];
-};                                                  /* size = 0x80 */
-void AppendDlEntry(s8 *, s8 *);              /* extern */
-M2C_UNK EnforceDzgDz__FP3DZGP2DZ(s8 *, s8 *);   /* extern */
-M2C_UNK FillDzgDz(s8 *, s32, s8 *, s32);        /* extern */
-M2C_UNK RemoveDlEntry(s8 *, s8 *);              /* extern */
-s32 func_00158958(s8 *, s8 *);                  /* extern */
-extern s8 *g_2dd2fc;
+struct DzgFrame { s8 *list; s8 **cursor; s32 link; s8 *prev; };
+void AppendDlEntry(s8 *, s8 *);
+M2C_UNK EnforceDzgDz__FP3DZGP2DZ(s8 *, s8 *);
+M2C_UNK FillDzgDz(s8 *, s32, s8 *, s32);
+M2C_UNK RemoveDlEntry(s8 *, s8 *);
+s32 func_00158958(s8 *, s8 *);
+extern DzgFrame *g_2dd2fc;
 void SolveDzg__FP3DZGiiPP2XPPiPPP2SO(s8 *arg0, s32 arg1) {
-    s8 sp[0x20] __attribute__((aligned(16)));
-    s8 **sp4;
-    s32 sp8;
-    s8 *spC;
-    f32 temp_f0;
-    f32 var_f1;
-    s32 temp_v0;
-    s8 **temp_v1;
-    s8 *temp_a0;
-    s8 *temp_a1;
-    s8 *temp_v1_2;
-    s8 *var_s0;
-    s8 *var_s0_2;
-    s8 *var_v0;
-    temp_v1 = (s8 **)(arg0 + 0x30);
-    sp4 = temp_v1;
-    temp_a1 = g_2dd2fc;
-    temp_v0 = M2C_FIELD(temp_v1, s32 *, 8);
-    g_2dd2fc = sp;
-    spC = temp_a1;
-    temp_v1_2 = M2C_FIELD(arg0, s8 **, 0x30);
-    sp8 = temp_v0;
-    var_s0 = temp_v1_2;
-    sp4 = (s8 **)(temp_v1_2 + temp_v0);
-    if (var_s0 != NULL) {
-        do {
-            if (M2C_FIELD(var_s0, s32 *, 0) == 1) {
-                if (M2C_FIELD(var_s0, s32 *, 0x18) == 0) {
-                    FillDzgDz(arg0, arg1, var_s0, func_00158958(arg0, var_s0));
-                }
-                RemoveDlEntry(arg0 + 0x30, var_s0);
-                AppendDlEntry(arg0 + 0xC, var_s0);
-                M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (M2C_FIELD(arg0, s32 *, 0x3C) + 1);
+    DzgFrame frame;
+    s32 scratch[4];
+    (void)scratch;
+    s32 list = (s32)arg0 + 0x30;
+    frame.cursor = (s8 **)list;
+    frame.list = (s8 *)list;
+    s8 *old = (s8 *)g_2dd2fc;
+    s32 link = *(s32 *)(list + 8);
+    g_2dd2fc = &frame;
+    frame.prev = old;
+    s8 *head = *(s8 **)list;
+    frame.link = link;
+    frame.cursor = (s8 **)(head + link);
+    s8 *node = head;
+    while (node != NULL) {
+        if (*(s32 *)node == 1) {
+            if (*(s32 *)(node + 0x18) == 0) {
+                FillDzgDz(arg0, arg1, node, func_00158958(arg0, node));
             }
-            temp_a0 = *sp4;
-            sp4 = (s8 **)(temp_a0 + sp8);
-            var_s0 = temp_a0;
-        } while (var_s0 != NULL);
+            RemoveDlEntry(arg0 + 0x30, node);
+            AppendDlEntry(arg0 + 0xC, node);
+            *(s32 *)(arg0 + 0x3C) = *(s32 *)(arg0 + 0x3C) + 1;
+        }
+        s8 *next = *frame.cursor;
+        frame.cursor = (s8 **)(next + frame.link);
+        node = next;
     }
     EnforceDzgDz__FP3DZGP2DZ(arg0, NULL);
-    g_2dd2fc = spC;
-loop_8:
-    var_v0 = M2C_FIELD(arg0, s8 **, 0x30);
-    var_f1 = -0.01f;
-    var_s0_2 = NULL;
-    if (var_v0 != NULL) {
-        do {
-            temp_f0 = M2C_FIELD(var_v0, f32 *, 0x10);
-            if (temp_f0 < var_f1) {
-                var_f1 = temp_f0;
-                var_s0_2 = var_v0;
-            }
-            var_v0 = M2C_FIELD(var_v0, s8 **, 0x20);
-        } while (var_v0 != NULL);
-    }
-    if (var_s0_2 != NULL) {
-        if (M2C_FIELD(var_s0_2, s32 *, 0x18) == 0) {
-            FillDzgDz(arg0, arg1, var_s0_2, func_00158958(arg0, var_s0_2));
+    g_2dd2fc = (DzgFrame *)frame.prev;
+    for (;;) {
+        f32 best = -0.01f;
+        s8 *sel = NULL;
+        for (s8 *p = *(s8 **)(arg0 + 0x30); p != NULL; p = *(s8 **)(p + 0x20)) {
+            f32 value = *(f32 *)(p + 0x10);
+            if (value < best) { best = value; sel = p; }
         }
-        EnforceDzgDz__FP3DZGP2DZ(arg0, var_s0_2);
-        goto loop_8;
+        if (sel == NULL) break;
+        if (*(s32 *)(sel + 0x18) == 0) {
+            FillDzgDz(arg0, arg1, sel, func_00158958(arg0, sel));
+        }
+        EnforceDzgDz__FP3DZGP2DZ(arg0, sel);
     }
 }
 }

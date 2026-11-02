@@ -1,4 +1,5 @@
 #include "sly2.h"
+static inline float GMax(float a, float b) { return a >? b; }
 struct B8 { char b[6]; };
 struct Text { char data[0xA0]; };
 struct Icon { int grfbtn; unsigned char chGlyph; char pad[3]; float xIcons; float yIcons; };
@@ -15,15 +16,15 @@ struct Frame {
     float dyCursor;
 };
 extern "C" {
-extern const B8 RO_STR_002A5018;
-extern float D_FLT_002BDB50;
-extern float D_FLT_002BDB54;
-extern float D_FLT_002BDB58;
-extern float D_FLT_002BDB5C;
-extern char D_STR_002BDB60[];
-extern char D_STR_002BDB68[];
+extern const B8 RO_002A5018;
+extern float D_002BDB50;
+extern float D_002BDB54;
+extern float D_002BDB58;
+extern float D_002BDB5C;
+extern char D_002BDB60[];
+extern char D_002BDB68[];
 extern Icon D_002BDB70[4];
-extern float D_FLT_002BDBB0;
+extern float D_002BDBB0;
 extern QW D_002BDBC0;
 extern QW D_002BDBD0;
 extern float g_2dded4;
@@ -48,8 +49,8 @@ void DrawRhythmHud(char *prhythm)
     if (state < 3) {
         if (state > 0) {
             if (*(int *)(prhythm + 0x60) != 0) {
-                func_00215AC0(D_FLT_002BDB58, &f.unknown, D_STR_002BDB60);
-                func_00215AC0(D_FLT_002BDB5C, &f.cursor, D_STR_002BDB68);
+                func_00215AC0(D_002BDB58, &f.unknown, D_002BDB60);
+                func_00215AC0(D_002BDB5C, &f.cursor, D_002BDB68);
                 CTextBox_SetPos(&f.boxX, 0.0f, 0.0f);
                 CTextBox_SetSize(&f.boxX, 640.0f, 492.80002f);
                 unsigned *prgba = (unsigned *)f.glyph;
@@ -57,32 +58,32 @@ void DrawRhythmHud(char *prhythm)
                 CTextBox_SetTextColor(&f.boxX, prgba);
                 CTextBox_SetHorizontalJust(&f.boxX, 0);
                 CTextBox_SetVerticalJust(&f.boxX, 0);
-                *(B8 *)f.glyph = RO_STR_002A5018;
-                func_00215AC0(D_FLT_002BDB50, &f.bright, f.glyph);
+                *(B8 *)f.glyph = RO_002A5018;
+                func_00215AC0(D_002BDB50, &f.bright, f.glyph);
                 float dxBright = CMovieText_Dx(&f.bright);
                 float dyBright = *(float *)(f.bright.data + 0x84);
-                func_00215AC0(D_FLT_002BDB54, &f.dim, f.glyph);
+                func_00215AC0(D_002BDB54, &f.dim, f.glyph);
                 float dxDim = CMovieText_Dx(&f.dim);
                 float dyDim = *(float *)(f.dim.data + 0x84);
                 float dxUnknown = CMovieText_Dx(&f.unknown);
                 float dyUnknown = *(float *)(f.unknown.data + 0x84);
-                float half = 0.5f;
                 float dxCursor = CMovieText_Dx(&f.cursor);
                 f.dyCursor = *(float *)(f.cursor.data + 0x84);
                 for (int ibeat = 0; ibeat < *(int *)(prhythm + 0x60); ibeat++) {
                     Beat *pbeat = (Beat *)(prhythm + 0x70 + ibeat * 0x30);
+                    float half = 0.5f;
                     if (*(int *)(prhythm + 0x50) == 1 || pbeat->fHit != 0 || pbeat->tBeat + *(float *)(prhythm + 0x5C) < tMusic) {
                         for (unsigned iicon = 0; iicon < 4; iicon++) {
                             Icon *picon = &D_002BDB70[iicon];
                             float x = pbeat->x + picon->xIcons * dxDim;
                             float y = pbeat->y + picon->yIcons * dyDim;
                             unsigned char chGlyph = 'o';
-                            float gScale = D_FLT_002BDB54;
+                            float gScale = D_002BDB54;
                             if (picon->grfbtn == pbeat->grfbtnKind) {
                                 chGlyph = picon->chGlyph;
                                 x = x - (dxBright - dxDim) * 0.5f;
                                 y = y - (dyBright - dyDim) * 0.5f;
-                                gScale = D_FLT_002BDB50;
+                                gScale = D_002BDB50;
                             }
                             f.glyph[0] = '&';
                             f.glyph[1] = '2';
@@ -104,20 +105,22 @@ void DrawRhythmHud(char *prhythm)
                 int ibeatCursor = *(int *)(prhythm + 0x194);
                 if (ibeatCursor < *(int *)(prhythm + 0x60)) {
                     Beat *pbeatCursor = (Beat *)(prhythm + 0x70 + ibeatCursor * 0x30);
-                    if (*(int *)(prhythm + 0x190) == 0) {
-                        if (pbeatCursor->tBeat - tMusic < D_FLT_002BDBB0) {
-                            *(int *)(prhythm + 0x190) = 1;
+                    switch (*(int *)(prhythm + 0x190)) {
+                    case 0:
+                        if (pbeatCursor->tBeat - tMusic < D_002BDBB0) {
                             *(QW *)(prhythm + 0x1B0) = D_002BDBC0;
+                            *(int *)(prhythm + 0x190) = 1;
                         }
-                    } else if (*(int *)(prhythm + 0x190) == 1) {
+                        break;
+                    case 1:
                         if (pbeatCursor->tBeat < tMusic) {
                             *(int *)(prhythm + 0x190) = 0;
                             *(int *)(prhythm + 0x194) = ibeatCursor + 1;
                         }
+                        break;
                     }
                     if (*(int *)(prhythm + 0x190) == 1) {
-                        float tRemaining = pbeatCursor->tBeat - tMusic;
-                        float tDuration = tRemaining > g_2dded4 ? tRemaining : g_2dded4;
+                        float tDuration = GMax(pbeatCursor->tBeat - tMusic, g_2dded4);
                         EvaluateBezierPos__FfffP6VECTORN63(tDuration, g_2dded4, 1.0f, *(QW *)(prhythm + 0x1A0), *(QW *)(prhythm + 0x1B0), *(QW *)&pbeatCursor->x, D_002BDBD0, (QW *)(prhythm + 0x1A0), (QW *)(prhythm + 0x1B0), 0);
                     }
                 }

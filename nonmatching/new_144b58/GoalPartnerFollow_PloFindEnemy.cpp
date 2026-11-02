@@ -1,128 +1,96 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-extern "C" {
-struct _m2c_stack_GoalPartnerFollow_PloFindEnemy {
-    /* 0x00 */ s8 *sp0;                           /* inferred */
-    /* 0x04 */ char pad4[0xC];                      /* maybe part of sp0[4]? */
-    /* 0x10 */ s128 sp10;                           /* inferred */
-    /* 0x20 */ char pad20[0xB0];
-};                                                  /* size = 0xD0 */
-s32 FIsGuardInSgs(s8 *, M2C_UNK);                 /* extern */
-s32 GrfsgsFromSgs(M2C_UNK);                         /* extern */
-s8 *PalertFind(s8 *);                           /* extern */
-s128 PosLoWorld(s8 *);                            /* extern */
-extern M2C_UNK D_FLT_002BD300;
-extern M2C_UNK D_FLT_002BD310;
-extern M2C_UNK D_FLT_002BD320;
-s8 *GoalPartnerFollow_PloFindEnemy(s8 *arg0) {
-    s8 sp[0x10] __attribute__((aligned(16)));
-    s8 *sp0;
-    s128 sp10;
-    f32 temp_v1;
-    f32 var_f20;
-    f32 var_f20_2;
-    f32 var_f21;
-    s32 temp_fp;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 var_s6;
-    s32 var_s6_2;
-    s8 **var_s2;
-    s8 **var_s2_2;
-    s8 *temp_s1_2;
-    s8 *temp_s1_3;
-    s8 *temp_s3_2;
-    s8 *temp_v0;
-    var_s6 = 0;
-    var_f21 = 3.4028235e38f;
-    sp0 = NULL;
-    PosLoWorld(M2C_FIELD(arg0, s8 **, 0x10));
-    sp10 = PosLoWorld(M2C_FIELD(arg0, s8 **, 0x30));
-    temp_s0 = GrfsgsFromSgs(7);
-    temp_s4 = GrfsgsFromSgs(0x10);
-    temp_s3 = GrfsgsFromSgs(0x16);
-    temp_s2 = GrfsgsFromSgs(0x17);
-    temp_s1 = GrfsgsFromSgs(0x2A);
-    temp_s3_2 = M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x10), s8 **, 0x1088);
-    temp_fp = temp_s0 | temp_s4 | temp_s3 | temp_s2 | temp_s1 | GrfsgsFromSgs(0x2B);
-    if (M2C_FIELD(temp_s3_2, s32 *, 0x28) > 0) {
-        var_s2 = (s8 **)(temp_s3_2 + 0x2C);
-        do {
-            temp_s1_2 = *var_s2;
-            if (!(temp_fp & M2C_FIELD(temp_s1_2, s64 *, 0x2C0))) {
-                asm volatile("lqc2 vf2, 0x10(%0)" : : "r"(sp));
-                asm volatile("qmtc2.ni %0, vf3" : : "r"(PosLoWorld(temp_s1_2)));
-                asm volatile("vsub.xyzw vf1, vf2, vf3");
-                asm volatile("vmul.xyz vf1, vf1, vf1");
-                asm volatile("vaddw.x vf2, vf0, vf0w");
-                asm volatile("vadday.x ACC, vf1, vf1y");
-                asm volatile("vmaddz.x vf1, vf2, vf1z");
-                asm volatile("vsqrt Q, vf1x");
-                asm volatile("vwaitq");
-                asm volatile("vaddq.x vf1, vf0, Q");
-                s32 vu_1;
-                asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-                var_f20 = vu_1;
-                if ((s32)temp_s1_2 == M2C_FIELD(arg0, s32 *, 0x90)) {
-                    var_f20 = M2C_FIELD(&D_FLT_002BD300, f32 *, 0) + (var_f20 * (M2C_FIELD(&D_FLT_002BD300, f32 *, 4) + (var_f20 * M2C_FIELD(&D_FLT_002BD300, f32 *, 8))));
-                }
-                if (FIsGuardInSgs(temp_s1_2, 3) != 0) {
-                    var_f20 = M2C_FIELD(&D_FLT_002BD320, f32 *, 0) + (var_f20 * (M2C_FIELD(&D_FLT_002BD320, f32 *, 4) + (var_f20 * M2C_FIELD(&D_FLT_002BD320, f32 *, 8))));
-                }
-                if (var_f20 < var_f21) {
-                    sp0 = temp_s1_2;
-                    var_f21 = var_f20;
-                }
-            }
-            var_s6 += 1;
-            var_s2 += 4;
-        } while (var_s6 < M2C_FIELD(temp_s3_2, s32 *, 0x28));
-    }
-    temp_v0 = PalertFind(M2C_FIELD(arg0, s8 **, 0x30));
-    var_s6_2 = 0;
-    if ((temp_v0 != NULL) && (M2C_FIELD(temp_v0, s32 *, 0x28) > 0)) {
-        var_s2_2 = (s8 **)(temp_v0 + 0x2C);
-        do {
-            temp_s1_3 = *var_s2_2;
-            if (!(temp_fp & M2C_FIELD(temp_s1_3, s64 *, 0x2C0))) {
-                asm volatile("lqc2 vf2, 0x10(%0)" : : "r"(sp));
-                asm volatile("qmtc2.ni %0, vf3" : : "r"(PosLoWorld(temp_s1_3)));
-                asm volatile("vsub.xyzw vf1, vf2, vf3");
-                asm volatile("vmul.xyz vf1, vf1, vf1");
-                asm volatile("vaddw.x vf2, vf0, vf0w");
-                asm volatile("vadday.x ACC, vf1, vf1y");
-                asm volatile("vmaddz.x vf1, vf2, vf1z");
-                asm volatile("vsqrt Q, vf1x");
-                asm volatile("vwaitq");
-                asm volatile("vaddq.x vf1, vf0, Q");
-                s32 vu_2;
-                asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_2));
-                temp_v1 = vu_2;
-                var_f20_2 = M2C_FIELD(&D_FLT_002BD310, f32 *, 0) + (temp_v1 * (M2C_FIELD(&D_FLT_002BD310, f32 *, 4) + (temp_v1 * M2C_FIELD(&D_FLT_002BD310, f32 *, 8))));
-                if ((s32)temp_s1_3 == M2C_FIELD(arg0, s32 *, 0x90)) {
-                    var_f20_2 = M2C_FIELD(&D_FLT_002BD300, f32 *, 0) + (var_f20_2 * (M2C_FIELD(&D_FLT_002BD300, f32 *, 4) + (var_f20_2 * M2C_FIELD(&D_FLT_002BD300, f32 *, 8))));
-                }
-                if (FIsGuardInSgs(temp_s1_3, 3) != 0) {
-                    var_f20_2 = M2C_FIELD(&D_FLT_002BD320, f32 *, 0) + (var_f20_2 * (M2C_FIELD(&D_FLT_002BD320, f32 *, 4) + (var_f20_2 * M2C_FIELD(&D_FLT_002BD320, f32 *, 8))));
-                }
-                if (var_f20_2 < var_f21) {
-                    sp0 = temp_s1_3;
-                    var_f21 = var_f20_2;
-                }
-            }
-            var_s6_2 += 1;
-            var_s2_2 += 4;
-        } while (var_s6_2 < M2C_FIELD(temp_v0, s32 *, 0x28));
-    }
-    return sp0;
+#include "sly2.h"
+struct ENT { char pad[0x2C0]; long flags; };
+struct LIST { char pad[0x28]; int count; ENT *items[1]; };
+struct OWNER { char pad[0x1088]; LIST *plist; };
+struct PLO { char pad[0x10]; OWNER *powner; };
+struct POLY { float c0, c1, c2; };
+struct SELF { char pad0[0x10]; OWNER *powner; char pad1[0x1C]; void *ptarget; char pad2[0x5C]; ENT *penemy; };
+struct LOCALS { ENT *best; QW pos; };
+extern float RO_002A4E30;
+extern POLY RO_002BD300;
+extern POLY RO_002BD310;
+extern POLY RO_002BD320;
+extern "C" int FIsGuardInSgs(void *, int);
+extern "C" long GrfsgsFromSgs(int);
+extern "C" LIST *PalertFind(void *);
+extern "C" QW PosLoWorld(void *);
+static inline float LaneZero(QW value)
+{
+    float lane;
+    asm("mtc1 %1, %0" : "=f" (lane) : "r" (value));
+    return lane;
 }
+static inline float Distance(QW other, const QW &pos)
+{
+    int fence1, fence2, fence3, fence4, fence5, fence6, fence7, fence8;
+    asm("lqc2 vf2, %1" : "=r" (fence1) : "m" (pos));
+    asm("qmtc2.ni %1, vf3" : "=r" (fence2) : "r" (other), "r" (fence1));
+    asm("vsub.xyzw vf1, vf2, vf3" : "=r" (fence3) : "r" (fence2));
+    asm("vmul.xyz vf1, vf1, vf1" : "=r" (fence4) : "r" (fence3));
+    asm("vaddw.x vf2, vf0, vf0w" : "=r" (fence5) : "r" (fence4));
+    asm("vadday.x ACC, vf1, vf1y" : "=r" (fence6) : "r" (fence5));
+    asm("vmaddz.x vf1, vf2, vf1z" : "=r" (fence7) : "r" (fence6));
+    asm volatile("vsqrt Q, vf1x" : : "r" (fence7));
+    asm volatile("vwaitq");
+    asm volatile("vaddq.x vf1, vf0, Q");
+    QW result;
+    asm volatile("qmfc2.ni %0, vf1" : "=r" (result));
+    return LaneZero(result);
+}
+extern "C" ENT *GoalPartnerFollow_PloFindEnemy(SELF *self)
+{
+    LOCALS loc;
+    int index = 0;
+    float best_distance = RO_002A4E30;
+    loc.best = 0;
+    PosLoWorld(self->powner);
+    loc.pos = PosLoWorld(self->ptarget);
+    long mask = GrfsgsFromSgs(7) | GrfsgsFromSgs(0x10) | GrfsgsFromSgs(0x16) | GrfsgsFromSgs(0x17) | GrfsgsFromSgs(0x2A) | GrfsgsFromSgs(0x2B);
+    LIST *list = self->powner->plist;
+    if (list->count > 0) {
+        ENT **pentry = list->items;
+        do {
+            ENT *ent = *pentry;
+            if ((mask & ent->flags) == 0) {
+                QW other = PosLoWorld(ent);
+                ENT *enemy = self->penemy;
+                float distance = Distance(other, loc.pos);
+                if (ent == enemy)
+                    distance = RO_002BD300.c0 + distance * (RO_002BD300.c1 + distance * RO_002BD300.c2);
+                if (FIsGuardInSgs(ent, 3) != 0)
+                    distance = RO_002BD320.c0 + distance * (RO_002BD320.c1 + distance * RO_002BD320.c2);
+                if (distance < best_distance) {
+                    loc.best = ent;
+                    best_distance = distance;
+                }
+            }
+            index += 1;
+            pentry += 1;
+        } while (index < list->count);
+    }
+    LIST *alert = PalertFind(self->ptarget);
+    index = 0;
+    if (alert != 0 && alert->count > 0) {
+        ENT **pentry = alert->items;
+        do {
+            ENT *ent = *pentry;
+            if ((mask & ent->flags) == 0) {
+                QW other = PosLoWorld(ent);
+                ENT *enemy = self->penemy;
+                float distance = Distance(other, loc.pos);
+                distance = RO_002BD310.c0 + distance * (RO_002BD310.c1 + distance * RO_002BD310.c2);
+                if (ent == enemy)
+                    distance = RO_002BD300.c0 + distance * (RO_002BD300.c1 + distance * RO_002BD300.c2);
+                if (FIsGuardInSgs(ent, 3) != 0)
+                    distance = RO_002BD320.c0 + distance * (RO_002BD320.c1 + distance * RO_002BD320.c2);
+                if (distance < best_distance) {
+                    loc.best = ent;
+                    best_distance = distance;
+                }
+            }
+            index += 1;
+            pentry += 1;
+        } while (index < alert->count);
+    }
+    return loc.best;
 }

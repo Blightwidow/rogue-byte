@@ -2,7 +2,11 @@
 #include "sly2.h"
 struct SAVE;
 struct ALLOCREQ { int cb; int cbAlign; };
-struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[0x100]; void Clear(); };
+struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[0x100]; void Clear(); int Set(const unsigned *record)
+    {
+        return record != 0 ? (a = (record[0] ^ record[0xD]) + 0xCA0, c = 2, b = record[1] ^ record[0xF], b != 0) : 0;
+    }
+};
 struct STREAM { char pad[0x70]; };
 extern "C" {
 void CStackFrame_Construct(void *);
@@ -15,8 +19,8 @@ void *PvAllocStackImpl__Fi(ALLOCREQ *);
 void CBinaryInputStream_ConstructFromBuffer(STREAM *, int, void *, int);
 int CBinaryFileStream_FOpenLocation(STREAM *, CFileLocation *);
 int CBinaryInputStream_Read(STREAM *, int, void *);
-void CBinaryFileStream_Close(void);
-void CBinaryFileStream_Destructor(void);
+void CBinaryFileStream_Close(STREAM *);
+void CBinaryFileStream_Destructor(STREAM *);
 extern const char RO_002A6CB8[];
 }
 extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned *record, const char *file)
@@ -39,34 +43,29 @@ extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned 
         void *buffer = PvAllocStackImpl__Fi(req);
         STREAM stream;
         CBinaryInputStream_ConstructFromBuffer(&stream, 0x403F, buffer, 0);
-        int hasLocation = record != 0 ? (location.a = (record[0] ^ record[0xD]) + 0xCA0, loc->c = 2, location.b = record[1] ^ record[0xF], location.b != 0) : 0;
-        if (hasLocation && CBinaryFileStream_FOpenLocation(&stream, loc) != 0) {
-            char data[0x1000];
-            int written;
-            int count;
-            goto read;
-        body:
-            error = McWrite(psave, fd, data, count, &written);
-            if (error != 0)
-                goto done;
-            if (written != count) {
-                error = 7;
-                goto done;
-            }
-        read:
-            count = CBinaryInputStream_Read(&stream, 0x1000, data);
-            if (count != 0)
-                goto body;
-            error = 0;
-        } else {
+        char data[0x1000];
+        int written;
+        int count;
+        if (!location.Set(record) || CBinaryFileStream_FOpenLocation(&stream, &location) == 0) {
             error = 0x27;
+        } else {
+            while ((count = CBinaryInputStream_Read(&stream, 0x1000, data)) != 0) {
+                error = McWrite(psave, fd, data, count, &written);
+                if (error != 0)
+                    goto done;
+                if (written != count) {
+                    error = 7;
+                    goto done;
+                }
+            }
+            error = 0;
         }
     done:
+        CBinaryFileStream_Close(&stream);
         int closeError = McClose(psave, fd);
-        CBinaryFileStream_Close();
         if (error == 0)
             error = closeError;
-        CBinaryFileStream_Destructor();
+        CBinaryFileStream_Destructor(&stream);
     }
     CStackFrame_Destructor(frame, 2);
     return error;

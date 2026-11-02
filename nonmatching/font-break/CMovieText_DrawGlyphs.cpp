@@ -16,14 +16,27 @@ Slot_216750 *OnGameLoad__FP4GAME();
 Glyph_216750 *PglyphFromFontCh(void *, int);
 void *memset(void *, int, unsigned);
 extern float g_2c40a8, g_2c40ac, g_2c40b0, g_2c40b4;
-extern char g_2dea28[];
+struct DMAS_216750 { int a0; unsigned ab; unsigned *pqwCnt; unsigned *pb; };
+extern DMAS_216750 g_2dea28;
+static inline void PadDmas(DMAS_216750 *dmas)
+{
+    while ((unsigned)dmas->pb & 0xF) {
+        *dmas->pb = 0;
+        dmas->pb++;
+    }
+}
+static inline void AddRet(DMAS_216750 *dmas)
+{
+    *(long *)dmas->pb = 0x60000000;
+    dmas->pb += 4;
+}
 void CMovieText_DrawGlyphs(Text_216750 *text, Ctx_216750 *ctx, Dest_216750 *dest) {
     float lineWidth[32];
-    int cursorAtStart = *(int *)(g_2dea28 + 0xC);
+    int cursorAtStart = (int)g_2dea28.pb;
+    float lineHeight = text->scaleB * text->scaleA * 0.45454547f;
     int line = 0;
     float startX = ctx->x;
     *(int *)dest = 0;
-    float lineHeight = text->scaleB * text->scaleA * 0.45454547f;
     memset(lineWidth, 0, 0x80);
     CMovieText_Reset(text, 0);
     int first;
@@ -60,19 +73,18 @@ void CMovieText_DrawGlyphs(Text_216750 *text, Ctx_216750 *ctx, Dest_216750 *dest
             ctx->y = ctx->y + lineHeight;
         } else {
             if (firstOfLine != 0) {
-                if (text->centerX != 0) {
+                if (text->centerX == 0) {
+                    ctx->x = startX;
+                } else {
                     float scale = text->scaleX;
                     float width = *widthPointer * scale * 0.8f;
-                    float room = text->roomX * scale * 0.8f;
-                    float shift;
+                    float shift = text->roomX * scale * 0.8f;
                     if (text->centerX == 2) {
-                        shift = room - width;
+                        shift = shift - width;
                     } else {
-                        shift = (room - width) * 0.5f;
+                        shift = (shift - width) * 0.5f;
                     }
                     ctx->x = startX + shift;
-                } else {
-                    ctx->x = startX;
                 }
                 firstOfLine = 0;
             }
@@ -99,16 +111,8 @@ void CMovieText_DrawGlyphs(Text_216750 *text, Ctx_216750 *ctx, Dest_216750 *dest
             }
         }
     }
-    int cursor = *(int *)(g_2dea28 + 0xC);
-    if (cursor & 0xF) {
-        do {
-            *(int *)(g_2dea28 + 0xC) = cursor;
-            cursor = *(int *)(g_2dea28 + 0xC) + 4;
-            *(int *)cursor = 0;
-        } while (cursor & 0xF);
-    }
-    **(int **)(g_2dea28 + 0xC) = 0x60000000;
-    *(int *)(g_2dea28 + 0xC) = *(int *)(g_2dea28 + 0xC) + 0x10;
+    PadDmas(&g_2dea28);
+    AddRet(&g_2dea28);
     Slot_216750 *slot = OnGameLoad__FP4GAME();
     slot->tag = 0x15;
     slot->value = dest->depth + (float)(text->endPadding << 18);

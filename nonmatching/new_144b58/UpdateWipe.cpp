@@ -22,9 +22,9 @@ struct Regs { unsigned long tex0; unsigned long pad; unsigned long page; };
 extern Regs g_2decd0;
 extern QW D_002BD3B0[];
 extern M4 D_002BD410;
-extern float D_FLT_002BD398[];
-extern float D_FLT_002BD39C[];
-extern float D_FLT_002BD3F0[];
+extern float D_002BD398[];
+extern float D_002BD39C[];
+extern float D_002BD3F0[];
 }
 void UpdateWipe(char *wipe)
 {
@@ -42,6 +42,7 @@ void UpdateWipe(char *wipe)
     *(int *)(stream + 0x30) &= -2;
     if (*(int *)(stream + 0x24) == 0)
         *(int *)(stream + 0x24) = *(int *)g_2dea34;
+    Regs *pregs = &g_2decd0;
     EndDmaCnt__4DMAS(&B_002DEA00);
     unsigned node = 0;
     char **nodes = (char **)(wipe + 0x158);
@@ -49,7 +50,7 @@ void UpdateWipe(char *wipe)
     AddDmaCnt__4DMAS(&B_002DEA00);
     AddPrimPack__4GIFSiiUl(&B_002DEA00, 0, 1, 0xE);
     PackAD__4GIFSll(&B_002DEA00, 0x47, 0x31001);
-    PackAD__4GIFSll(&B_002DEA00, 6, (g_2decd0.page & 0x1FF) << 5 | (g_2decd0.tex0 >> 16 & 0x3F) << 14 | 0x6A8000000UL);
+    PackAD__4GIFSll(&B_002DEA00, 6, (pregs->page & 0x1FF) << 5 | (pregs->tex0 >> 16 & 0x3F) << 14 | 0x6A8000000UL);
     PackAD__4GIFSll(&B_002DEA00, 0x14, 0x61);
     PackAD__4GIFSll(&B_002DEA00, 0x3F, 0);
     PackAD__4GIFSll(&B_002DEA00, 8, 0x3800080000AL);
@@ -79,9 +80,8 @@ void UpdateWipe(char *wipe)
         }
         AddPrimPack__4GIFSiiUl(&B_002DEA00, 0x14, 3, 0x512);
         int which = quad & 1;
-        float *offsets0 = D_FLT_002BD398 + which * 2;
-        float *offsets1 = D_FLT_002BD39C + which * 2;
-        float *uv = D_FLT_002BD3F0;
+        float *offsets0 = D_002BD398 + which * 2;
+        float *offsets1 = D_002BD39C + which * 2;
         for (unsigned corner = 0; corner < 4; corner++) {
             QW clipValue = __ml__FRC7MATRIX4G10VU_VECTOR4(&D_002BD410, __ml__FRC7MATRIX4G10VU_VECTOR4(&matrices[which], D_002BD3B0[corner]));
             union { QW q; float f[4]; } clip;
@@ -98,8 +98,7 @@ void UpdateWipe(char *wipe)
             clip.f[0] = screenX;
             clip.f[1] = screenY;
             Force__FPv(&clip);
-            PackSTQ__4GIFSfff(&B_002DEA00, invW * (uv[0] + *offsets0), invW * (uv[1] + *offsets1), invW);
-            uv += 2;
+            PackSTQ__4GIFSfff(&B_002DEA00, invW * (D_002BD3F0[corner * 2] + *offsets0), invW * (D_002BD3F0[corner * 2 + 1] + *offsets1), invW);
             PackRGBA__4GIFSUi(&B_002DEA00, 0x80808080);
             PackXYZ__4GIFSiii(&B_002DEA00, ((int)clip.f[0] + 0x700) << 4, ((int)clip.f[1] + 0x790) << 4, 0);
         }

@@ -23,7 +23,8 @@ void func_0017A8C8(GOAL *pgoal, int nState)
             if (nState < 5) {
                 OBJ *pobj = func_00205438(pgoal->pguard, 0x9D);
                 KT kinds = RO_002A55A0;
-                pobj->kind = ((int *)&kinds)[pgoal->state];
+                int scaled = pgoal->state << 2;
+                pobj->kind = *(int *)((char *)&kinds + scaled);
                 VT *vt = pobj->vt;
                 vt->fn((char *)pobj + vt->delta);
                 pgoal->pguard->fDown = (unsigned)pgoal->state < 2;

@@ -8,6 +8,7 @@ extern "C" float DxFromCh__8CFontBrxc(void *, int);
 extern "C" int ClineWrap__9CRichTextf(CRichText *prich, float dxWrap)
 {
     int cline = 1;
+    int newline = 10;
     float dx = 0.0f;
     int ch;
     Reset__9CRichText(prich);
@@ -28,7 +29,7 @@ extern "C" int ClineWrap__9CRichTextf(CRichText *prich, float dxWrap)
                             cline++;
                             prich->pchCur = pch + 1;
                             dx = 0.0f;
-                            *pch = '\n';
+                            *pch = newline;
                             break;
                         }
                     }
@@ -36,7 +37,7 @@ extern "C" int ClineWrap__9CRichTextf(CRichText *prich, float dxWrap)
                 }
             }
             if (dx != 0.0f && *prich->pchCur != 0) {
-                *prich->pchCur = '\n';
+                *prich->pchCur = newline;
                 cline++;
                 dx = 0.0f;
             }

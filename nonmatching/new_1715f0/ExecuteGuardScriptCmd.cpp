@@ -9,6 +9,8 @@ struct OBJ { char pad0[0xC]; VT *vt; };
 struct PLAYER { char pad[0xF80]; int mode; };
 struct EIGHT { char bytes[8]; };
 struct CMD { unsigned op; int a; int b; int c; int d; float e; };
+struct CMDPOS { unsigned op; int a; QW *ppos; float g; };
+struct GTARGET { int target0; int target1; int pad18[2]; QW vec2; };
 struct OBJ2 { char pad[8]; float value; };
 struct GUARD {
     char pad0[0xC]; VT *vt; PLAYER *player; char pad1[0x30 - 0x14];
@@ -28,15 +30,16 @@ void ResetAnimref(void *, void *);
 void SetGoalTarget(void *, void *);
 void TeleportGuardScript(GUARD *, QW, float);
 void func_00171AF8(GUARD *, int, void *, void *);
-void func_0017CDB8(void *, void *);
-void func_0017D110(void *, void *);
+void func_0017CDB8(void *, int);
+void func_0017D110(void *, int);
 int func_001EEFC0(GUARD *);
 int func_001EF038(GUARD *);
 char *func_00205438(PLAYER *, int);
-void func_002562A8(void *);
+void func_002562A8(GTARGET *);
 extern float g_2dded0;
+static inline void InitGoalTarget(GTARGET *ptarget) { func_002562A8(ptarget); }
 void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
-    struct { QW vec; int target0; int target1; int pad18[2]; QW vec2; float sp30; CMD *sp34; int sp38; } L;
+    struct { QW vec; GTARGET target; float sp30; CMD *sp34; int sp38; } L;
     switch (cmd->op) {
     case 0:
         self->object = PloFindScriptObject(self, cmd->a);
@@ -60,21 +63,25 @@ void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
     }
     case 5: {
         PLAYER *player = self->player;
-        int mode = player->mode;
-        if (mode == 2) {
+        switch (player->mode) {
+        case 2: {
             OBJ *obj = (OBJ *)func_00205438(player, 0xBB);
             VT *vt = obj->vt;
             vt->fn44((char *)obj + vt->delta40);
-        } else if (mode < 3) {
-            if (mode == -1) {
-                OBJ *obj = (OBJ *)func_00205438(player, 0x9E);
-                VT *vt = obj->vt;
-                vt->fn44((char *)obj + vt->delta40);
-            }
-        } else if (mode == 3) {
+            break;
+        }
+        case 3: {
             OBJ *obj = (OBJ *)func_00205438(player, 0xBC);
             VT *vt = obj->vt;
             vt->fn44((char *)obj + vt->delta40);
+            break;
+        }
+        case -1: {
+            OBJ *obj = (OBJ *)func_00205438(player, 0x9E);
+            VT *vt = obj->vt;
+            vt->fn44((char *)obj + vt->delta40);
+            break;
+        }
         }
         self->done = 1;
         break;
@@ -84,58 +91,63 @@ void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
         if (found != 0) {
             PLAYER *player = self->player;
             int mode = player->mode;
-            if (mode == 0) {
-                char *obj = func_00205438(player, 0xB8);
-                func_0017CDB8(obj, &self->current->b);
-                VT *vt = ((OBJ *)obj)->vt;
-                vt->fn44(obj + vt->delta40);
-                self->done = 1;
-            } else if (mode == 1) {
-                char *obj = func_00205438(player, 0xB9);
-                func_0017D110(obj, &self->current->b);
-                VT *vt = ((OBJ *)obj)->vt;
-                vt->fn44(obj + vt->delta40);
-                self->done = 1;
-            } else if (mode == -1) {
+            switch (mode) {
+            case -1: {
                 char *obj = func_00205438(player, 0xC0);
                 *(int *)(obj + 0x30) = found;
                 *(int *)(obj + 0x34) = cmd->b;
                 *(int *)(obj + 0x58) = self->flag4C;
-                if (self->flag4C == 0) EnsureCrvExcludedRanges(found);
-                if (self->source != 0) *(float *)(obj + 0x38) = self->source->value;
-                int other = cmd->c;
-                if (other != mode) *(int *)(obj + 0x50) = PloFindScriptObject(self, other);
+                if (self->flag4C == 0)
+                    EnsureCrvExcludedRanges(found);
+                if (self->source != 0)
+                    *(float *)(obj + 0x38) = self->source->value;
+                if (cmd->c != -1)
+                    *(int *)(obj + 0x50) = PloFindScriptObject(self, cmd->c);
                 VT *vt = ((OBJ *)obj)->vt;
                 vt->fn44(obj + vt->delta40);
-                self->done = 1;
-            } else {
-                self->done = 1;
+                break;
             }
+            case 0: {
+                char *obj = func_00205438(player, 0xB8);
+                func_0017CDB8(obj, self->current->b);
+                VT *vt = ((OBJ *)obj)->vt;
+                vt->fn44(obj + vt->delta40);
+                break;
+            }
+            case 1: {
+                char *obj = func_00205438(player, 0xB9);
+                func_0017D110(obj, self->current->b);
+                VT *vt = ((OBJ *)obj)->vt;
+                vt->fn44(obj + vt->delta40);
+                break;
+            }
+            }
+            self->done = 1;
         }
         break;
     }
     case 7: {
-        func_002562A8(&L.target0);
+        InitGoalTarget(&L.target);
         CMD *current = self->current;
         int objectId = current->a;
         if (objectId == -1) {
-            L.vec2 = *(QW *)&current->b;
-            self->value48 = current->e;
+            L.target.vec2 = *((CMDPOS *)current)->ppos;
+            self->value48 = ((CMDPOS *)current)->g;
         } else {
             int found = PloFindScriptObject(self, objectId);
             if (found != 0) {
                 func_00171AF8(self, found, 0, &self->value48);
-                if (FIsBasicDerivedFrom(found, 0xA) == 0)
-                    L.target1 = found;
+                if (FIsBasicDerivedFrom(found, 0xA))
+                    L.target.target0 = found;
                 else
-                    L.target0 = found;
+                    L.target.target1 = found;
             }
         }
         PLAYER *player = self->player;
         int mode = player->mode;
         if (mode == -1) {
             char *obj = func_00205438(player, 0xBA);
-            SetGoalTarget(obj, &L.target0);
+            SetGoalTarget(obj, &L.target);
             int other = cmd->d;
             if (other != mode) *(int *)(obj + 0xA8) = PloFindScriptObject(self, other);
             VT *vt = ((OBJ *)obj)->vt;

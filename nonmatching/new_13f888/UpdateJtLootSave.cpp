@@ -1,192 +1,104 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+struct CRef;
+extern "C" int CRef_CopyConstruct(CRef *, const CRef *);
+extern "C" void CRef_Destruct(CRef *);
+struct CRef {
+    int tagk;
+    int n;
+    CRef(int tag, int value) { tagk = tag; n = value; }
+    CRef() { tagk = -1; }
+    CRef(const CRef &other) { CRef_CopyConstruct(this, &other); }
+    ~CRef() { CRef_Destruct(this); }
+    CRef &operator=(const CRef &);
+};
+struct BASE { int pad0[3]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69(); virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79(); virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89(); virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100(); virtual void v101();  virtual void *GetKey(); };
+struct BOOTY { char pad[0x158]; struct { int pad; int oid; } *pinfo; void *pplo; };
+struct SAVEDATA { int pad; struct { char pad[0xC]; unsigned short tag; } *ptag; };
+struct LOOT { char pad[0x194]; void *pbooty; };
+struct JT : BASE { char pad1[0x18 - 0x10]; int idSave; char pad2[0x11A8 - 0x1C]; BOOTY *ploot; };
+struct PLO { char pad[0x180]; int tag; };
 extern "C" {
-struct _m2c_stack_UpdateJtLootSave {
-    /* 0x00 */ char pad0[0x10];
-    /* 0x10 */ s8 *sp10;                          /* inferred */
-    /* 0x14 */ s32 sp14;                            /* inferred */
-    /* 0x18 */ char pad18[8];                       /* maybe part of sp14[3]? */
-    /* 0x20 */ s8 *sp20;                          /* inferred */
-    /* 0x24 */ s32 sp24;                            /* inferred */
-    /* 0x28 */ char pad28[8];                       /* maybe part of sp24[3]? */
-    /* 0x30 */ s8 *sp30;                          /* inferred */
-    /* 0x34 */ char pad34[0xC];                     /* maybe part of sp30[4]? */
-    /* 0x40 */ s8 *sp40;                          /* inferred */
-    /* 0x44 */ char pad44[0xC];                     /* maybe part of sp40[4]? */
-    /* 0x50 */ s8 *sp50;                          /* inferred */
-    /* 0x54 */ char pad54[0xC];                     /* maybe part of sp50[4]? */
-    /* 0x60 */ s8 *sp60;                          /* inferred */
-    /* 0x64 */ s32 sp64;                            /* inferred */
-    /* 0x68 */ char pad68[0x88];
-};                                                  /* size = 0xF0 */
-#define sp14 (*(s32 *)(sp + 0x14))
-s32 CRef_CopyConstruct(s8 **, s8 **);
-void CRef_Destruct(s8 **);
-s32 CStackFrame_Construct(s8 *);
-void CStackFrame_Destructor(s8 *, M2C_UNK);
-s32 CploFindSwObjectsByClass(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s8 **);
-s32 IdCurrentLevel();
-s32 LootId(s8 *);
-s32 PpathCrfodbLoot(s8 *);
-s32 PpathFindBootyOid(s32);
-s32 RefSetGameSaveValue(s8 **, s32, s8 **, M2C_UNK *);
-void __as__4CRefRC4CRef(s8 **, s8 **);
-s32 *func_00143AF0(s8 *, s32);
-void func_001D8A38(s8 **, M2C_UNK *, M2C_UNK *, s8 **, M2C_UNK);
-void func_001D8B20(...);
-s32 *func_002109B8(s32);
-s32 memcmp(s8 *, s32, M2C_UNK);
-void sprintf(s8 **, M2C_UNK *, s32);
-extern M2C_UNK B_003D4A60;
-extern M2C_UNK B_003DD490;
-extern M2C_UNK RO_002A4D50;
-extern M2C_UNK RO_002A4DB0;
-void UpdateJtLootSave(s8 *arg0, s32 arg1, s8 *arg2) {
-    s8 sp[0x30] __attribute__((aligned(16)));
-    s8 *sp10;
-    s8 *sp20;
-    s32 sp24;
-    s8 *sp30;
-    s8 *sp40;
-    s8 *sp50;
-    s8 *sp60;
-    s32 sp64;
-    M2C_UNK *temp_s0_2;
-    M2C_UNK *temp_s2;
-    s32 temp_a0_2;
-    s32 temp_a2;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
-    s32 temp_v0_4;
-    s32 temp_v0_6;
-    s32 var_a0;
-    s32 var_a2;
-    s32 var_v0;
-    u16 var_a0_2;
-    s8 *temp_a0;
-    s8 *temp_s1;
-    s8 *temp_v0_5;
-    s8 *temp_v0_7;
-    s8 *temp_v1;
-    s8 *temp_v1_2;
-    s8 *var_a1;
-    CStackFrame_Construct(sp);
-    switch (arg1) {                                 /* irregular */
-    case 0:
-        temp_a0 = M2C_FIELD(arg2, s8 **, 0x194);
-        if (temp_a0 != NULL) {
-            var_v0 = LootId(temp_a0);
+void CStackFrame_Construct(void *);
+void CStackFrame_Destructor(void *, int);
+CRef func_001D8B20(const CRef &, ...);
+CRef func_001D8A38(const char *, const char *, char *, int);
+CRef RefSetGameSaveValue(int, CRef, void *);
+int IdCurrentLevel();
+int LootId(void *);
+int PpathCrfodbLoot(void *);
+int PpathFindBootyOid(int);
+int CploFindSwObjectsByClass(void *, int, int, int, int, void *);
+SAVEDATA *func_00143AF0(void *, int);
+int *func_002109B8(int);
+int memcmp(const void *, const void *, unsigned);
+int sprintf(char *, const char *, ...);
+extern char B_003D4A60[];
+extern char B_003DD490[];
+extern char RO_002A4D50[], RO_002A4DB0[], RO_002A4DC0[], RO_002A4DC8[];
+static inline void SetSaveInt(int path, int number)
+{
+    CRef value(0x15, number);
+    RefSetGameSaveValue(path, value, B_003D4A60);
+}
+void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
+{
+    char frame[0x10];
+    CStackFrame_Construct(frame);
+    switch (mode) {
+    case 0: {
+        int lootId = loot->pbooty != 0 ? LootId(loot->pbooty) : -1;
+        CRef ref = func_001D8B20(CRef(0x15, lootId), self->GetKey(), RO_002A4DB0, 0);
+        if (self->ploot == 0) {
+            int path = PpathCrfodbLoot(loot);
+            SetSaveInt(path, self->idSave);
         } else {
-            var_v0 = -1;
-        }
-        sp24 = var_v0;
-        sp20 = (s8 *)0x15;
-        temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
-        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x338)), &RO_002A4DB0, NULL);
-        CRef_Destruct(&sp20);
-        if (M2C_FIELD(arg0, s8 **, 0x11A8) == NULL) {
-            temp_v0 = PpathCrfodbLoot(arg2);
-            sp20 = (s8 *)0x15;
-            sp24 = M2C_FIELD(arg0, s32 *, 0x18);
-            CRef_CopyConstruct(&sp30, &sp20);
-            RefSetGameSaveValue(&sp40, temp_v0, &sp30, &B_003D4A60);
-            CRef_Destruct(&sp40);
-            CRef_Destruct(&sp30);
-            CRef_Destruct(&sp20);
-        } else {
-            if (M2C_FIELD(arg2, s8 **, 0x194) == NULL) {
-                temp_v0_2 = PpathFindBootyOid(M2C_FIELD(arg0, s32 *, 0x18));
-                sp30 = (s8 *)0x15;
-                M2C_FIELD(&sp30, s32 *, 4) = -1;
-                CRef_CopyConstruct(&sp40, &sp30);
-                RefSetGameSaveValue(&sp50, temp_v0_2, &sp40, &B_003D4A60);
-                CRef_Destruct(&sp50);
-                CRef_Destruct(&sp40);
-                CRef_Destruct(&sp30);
+            if (loot->pbooty == 0) {
+                int oid = PpathFindBootyOid(self->idSave);
+                SetSaveInt(oid, -1);
             }
-            temp_s0 = PpathCrfodbLoot(arg2);
-            temp_v0_3 = LootId(M2C_FIELD(arg0, s8 **, 0x11A8));
-            sp20 = (s8 *)0x15;
-            sp24 = temp_v0_3;
-            CRef_CopyConstruct(&sp30, &sp20);
-            RefSetGameSaveValue(&sp40, temp_s0, &sp30, &B_003D4A60);
-            CRef_Destruct(&sp40);
-            CRef_Destruct(&sp30);
-            CRef_Destruct(&sp20);
+            int path = PpathCrfodbLoot(loot);
+            SetSaveInt(path, LootId(self->ploot));
         }
-        CRef_Destruct(&sp10);
         break;
-    case 1:
-        temp_v0_4 = PpathFindBootyOid(M2C_FIELD(arg0, s32 *, 0x18));
-        if (temp_v0_4 != 0) {
-            sp10 = (s8 *)0x15;
-            M2C_FIELD(&sp10, s32 *, 4) = -1;
-            CRef_CopyConstruct(&sp20, &sp10);
-            RefSetGameSaveValue(&sp30, temp_v0_4, &sp20, &B_003D4A60);
-            CRef_Destruct(&sp30);
-            CRef_Destruct(&sp20);
-            CRef_Destruct(&sp10);
+    }
+    case 1: {
+        int oid = PpathFindBootyOid(self->idSave);
+        if (oid != 0) {
+            SetSaveInt(oid, -1);
         }
-        sp20 = (s8 *)0x15;
-        M2C_FIELD(&sp20, s32 *, 4) = -1;
-        temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
-        func_001D8B20(&sp10, &sp20, M2C_FIELD(temp_v1_2, M2C_UNK *(**)(s8 *), 0x33C)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x338)), &RO_002A4DB0, NULL);
-        CRef_Destruct(&sp20);
-        temp_a2 = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x11A8), s8 **, 0x158), s32 *, 4);
-        if (temp_a2 != -1) {
-            sprintf(&sp20, &RO_002A4D50, temp_a2);
-            temp_s0_2 = (M2C_UNK *)("loot");
-            temp_s2 = (M2C_UNK *)("mplootkc");
-            func_001D8A38(&sp40, temp_s0_2, temp_s2, &sp20, 0);
-            __as__4CRefRC4CRef(&sp10, &sp40);
-            CRef_Destruct(&sp40);
-            sp60 = (s8 *)0x15;
-            sp64 = sp14 + 1;
-            func_001D8B20(&sp40, &sp60, temp_s0_2, temp_s2, &sp20, 0);
-            __as__4CRefRC4CRef(&sp10, &sp40);
-            CRef_Destruct(&sp40);
-            CRef_Destruct(&sp60);
+        CRef ref = func_001D8B20(CRef(0x15, -1), self->GetKey(), RO_002A4DB0, 0);
+        int number = self->ploot->pinfo->oid;
+        if (number != -1) {
+            char buffer[0x20];
+            sprintf(buffer, RO_002A4D50, number);
+            ref = func_001D8A38(RO_002A4DC0, RO_002A4DC8, buffer, 0);
+            ref = func_001D8B20(CRef(0x15, ref.n + 1), RO_002A4DC0, RO_002A4DC8, buffer, 0);
         }
-        CRef_Destruct(&sp10);
         break;
-    case 2:
-        temp_s1 = (s8 *)(func_00143AF0(arg0, LootId(M2C_FIELD(arg0, s8 **, 0x11A8))));
-        temp_a0_2 = IdCurrentLevel();
-        if ((temp_s1 != NULL) && (temp_a0_2 != -1)) {
-            temp_v0_5 = (s8 *)(func_002109B8(temp_a0_2));
-            var_a0 = 0;
-            if (M2C_FIELD(temp_v0_5, s32 *, 0) >= 4) {
-                var_a0 = (memcmp(M2C_FIELD(temp_s1, s8 **, 4), M2C_FIELD(temp_v0_5, s32 *, 4), 8) == 0) ? 1 : 0;
+    }
+    case 2: {
+        SAVEDATA *psave = func_00143AF0(self, LootId(self->ploot));
+        int level = IdCurrentLevel();
+        if (psave != 0 && level != -1) {
+            int *plevel = func_002109B8(level);
+            int fMatch = 0;
+            if (*plevel >= 4) {
+                if (memcmp(((void **)psave)[1], ((void **)plevel)[1], 8) == 0)
+                    fMatch = 1;
             }
-            if (var_a0 != 0) {
-                temp_v0_6 = CploFindSwObjectsByClass(&B_003DD490, 5, 0x25, 0, 0xF, &sp10);
-                var_a2 = 0;
-                if (temp_v0_6 > 0) {
-                    temp_v0_7 = M2C_FIELD(temp_s1, s8 **, 4);
-                    var_a1 = sp10;
-                    var_a0_2 = M2C_FIELD(temp_v0_7, u16 *, 0xC);
-loop_32:
-                    var_a2 += 1;
-                    if (M2C_FIELD(var_a1, s32 *, 0x180) == var_a0_2) {
-                        M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x11A8), s8 **, 0x15C) = var_a1;
-                    } else if (var_a2 < temp_v0_6) {
-                        var_a0_2 = M2C_FIELD(temp_v0_7, u16 *, 0xC);
-                        var_a1 = (&sp10)[var_a2];
-                        goto loop_32;
+            if (fMatch != 0) {
+                PLO *aplo[8];
+                int count = CploFindSwObjectsByClass(B_003DD490, 5, 0x25, 0, 0xF, aplo);
+                for (int index = 0; index < count; index++) {
+                    if (aplo[index]->tag == psave->ptag->tag) {
+                        self->ploot->pplo = aplo[index];
+                        break;
                     }
                 }
             }
         }
         break;
     }
-    CStackFrame_Destructor(sp, 2);
+    }
+    CStackFrame_Destructor(frame, 2);
 }
 }

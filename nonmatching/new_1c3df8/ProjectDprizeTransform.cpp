@@ -34,12 +34,17 @@ void LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(s128 *, s128);
 void ProjectSoTransform(...);
 f32 __as__6VECTORG9VU_VECTOR(s8 *, M2C_UNK);
 extern M2C_UNK B_002DDF40;
-extern M2C_UNK B_003DD490;
+struct SWC_1C5148 { char pad[0x3D58]; int counter; };
+extern SWC_1C5148 B_003DD490;
+static inline int NextStamp_1C5148(SWC_1C5148 *psw) { return ++psw->counter; }
 extern f32 RO_002C0D4C;
 extern s128 g_2a2dc0;
-extern M2C_UNK g_2dded0;
+struct CLOCK_1C5148 { float t; float dt; };
+extern CLOCK_1C5148 g_2dded0;
+static inline float Dt_1C5148(CLOCK_1C5148 *pclock) { return pclock->dt; }
+static inline int DtBits_1C5148(CLOCK_1C5148 *pclock) { return *(int *)&pclock->dt; }
 void ProjectDprizeTransform(s8 *arg0) {
-    s8 sp[0x120] __attribute__((aligned(16)));
+    s8 sp[0x110] __attribute__((aligned(16)));
 #define sp8 (*(s32 *)(sp + 0x08))
 #define sp10 (*(M2C_UNK *)(sp + 0x10))
 #define sp20 (*(M2C_UNK *)(sp + 0x20))
@@ -77,13 +82,13 @@ void ProjectDprizeTransform(s8 *arg0) {
     }
     {
         if (temp_v1 == 0 || temp_v1 == 5) {
-            var_f0 = (RO_002C0D4C * M2C_FIELD(&g_2dded0, f32 *, 4)) + 1.0f;
+            var_f0 = (RO_002C0D4C * Dt_1C5148(&g_2dded0)) + 1.0f;
         } else {
             var_f0 = 1.0f;
         }
         asm volatile("qmtc2.ni %0, vf3" : : "r"(var_f0));
         asm volatile("lqc2 vf2, 0x180(%0)" : : "r"(arg0));
-        asm volatile("qmtc2.ni %0, vf4" : : "r"(M2C_FIELD(&g_2dded0, s32 *, 4)));
+        asm volatile("qmtc2.ni %0, vf4" : : "r"(DtBits_1C5148(&g_2dded0)));
         asm volatile("lqc2 vf1, 0x190(%0)" : : "r"(arg0));
         asm volatile("sqc2 vf3, (%0)" : : "r"(sp));
         asm volatile("vmulax.xyzw ACC, vf2, vf3x");
@@ -91,9 +96,9 @@ void ProjectDprizeTransform(s8 *arg0) {
         asm volatile("sqc2 vf2, 0x180(%0)" : : "r"(arg0));
         asm volatile("lqc2 vf1, 0x170(%0)" : : "r"(arg0));
         temp_s0 = M2C_FIELD(arg0, s8 **, 0x58);
-        asm volatile("qmtc2.ni %0, vf3" : : "r"(M2C_FIELD(&g_2dded0, s32 *, 4)));
+        asm volatile("qmtc2.ni %0, vf3" : : "r"(DtBits_1C5148(&g_2dded0)));
         asm volatile("sqc2 vf4, (%0)" : : "r"(sp));
-        asm volatile("vadda.xyzw ACC, vf0, vf1");
+        asm volatile("vadda.xyzw ACC, vf1, vf0");
         asm volatile("vmaddx.xyzw vf1, vf2, vf3x");
         asm volatile("sqc2 vf3, (%0)" : : "r"(sp));
         asm volatile("sqc2 vf1, 0x170(%0)" : : "r"(arg0));
@@ -102,8 +107,7 @@ void ProjectDprizeTransform(s8 *arg0) {
         __as__6VECTORG9VU_VECTOR(temp_s0 + 0x30, vu_1);
         M2C_FIELD(temp_s0, f32 *, 0x3C) = 1.0f;
         M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x58), s128 *, 0xB0) = (s128) M2C_FIELD(arg0, s128 *, 0x180);
-        temp_v1_2 = M2C_FIELD(&B_003DD490, s32 *, 0x3D58) + 1;
-        M2C_FIELD(&B_003DD490, s32 *, 0x3D58) = temp_v1_2;
+        temp_v1_2 = NextStamp_1C5148(&B_003DD490);
         M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x58), s32 *, 0xA4) = temp_v1_2;
         temp_v0 = M2C_FIELD(arg0, s8 **, 0x168);
         if (temp_v0 != NULL) {
@@ -111,31 +115,19 @@ void ProjectDprizeTransform(s8 *arg0) {
             var_s5 = NULL;
             if (temp_s6 != NULL) {
                 temp_s3 = M2C_FIELD(temp_s6, s8 **, 0x14);
-                var_s2 = 0;
                 var_s4 = NULL;
-                if (M2C_FIELD(temp_s3, s32 *, 0x5C) > 0) {
-loop_10:
+                for (var_s2 = 0; var_s2 < M2C_FIELD(temp_s3, s32 *, 0x5C); var_s2++) {
                     temp_s0_2 = (s8 *)(M2C_FIELD(temp_s3, s32 *, 0x60) + (var_s2 * 8));
                     temp_a1 = M2C_FIELD(temp_s0_2, s32 *, 0);
                     if ((temp_a1 & 0x40000000) && (((s32) (temp_a1 << 0xC) >> 0xC) == M2C_FIELD(arg0, s32 *, 0x18))) {
                         temp_v1_3 = M2C_FIELD(arg0, s8 **, 0xC);
                         temp_v0_2 = M2C_FIELD(temp_v1_3, s32 (**)(s8 *, s32), 0x19C)(arg0 + M2C_FIELD(temp_v1_3, s16 *, 0x198), (s32) (temp_a1 * 4) >> 0x16);
-                        if ((s8 *)temp_v0_2 != M2C_FIELD(arg0, s8 **, 0x58)) {
-                            if ((s8 *)temp_v0_2 == M2C_FIELD(arg0, s8 **, 0x5C)) {
-                                var_s4 = M2C_FIELD(temp_s0_2, s8 ***, 4);
-                            }
-                        } else {
+                        if ((s8 *)temp_v0_2 == M2C_FIELD(arg0, s8 **, 0x58))
                             var_s5 = M2C_FIELD(temp_s0_2, s8 ***, 4);
-                        }
-                        if ((var_s5 == NULL) || (var_s4 == NULL)) {
-                            goto block_20;
-                        }
-                    } else {
-block_20:
-                        var_s2 += 1;
-                        if (var_s2 < M2C_FIELD(temp_s3, s32 *, 0x5C)) {
-                            goto loop_10;
-                        }
+                        else if ((s8 *)temp_v0_2 == M2C_FIELD(arg0, s8 **, 0x5C))
+                            var_s4 = M2C_FIELD(temp_s0_2, s8 ***, 4);
+                        if (var_s5 != NULL && var_s4 != NULL)
+                            break;
                     }
                 }
                 if ((var_s5 != NULL) || (var_s4 != NULL)) {
@@ -176,8 +168,7 @@ block_20:
                         asm volatile("vmaddz.xyz vf3, vf2, vf3z");
                         asm volatile("vadd.xyzw vf1, vf1, vf3");
                         asm volatile("sqc2 vf1, 0xb0(%0)" : : "r"(temp_v1_5));
-                        temp_v0_3 = M2C_FIELD(&B_003DD490, s32 *, 0x3D58) + 1;
-                        M2C_FIELD(&B_003DD490, s32 *, 0x3D58) = temp_v0_3;
+                        temp_v0_3 = NextStamp_1C5148(&B_003DD490);
                         M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x58), s32 *, 0xA4) = temp_v0_3;
                     }
                     if (var_s4 != NULL) {
@@ -223,8 +214,7 @@ block_20:
                         asm volatile("vmadday.xyz ACC, vf3, vf2y");
                         asm volatile("vmaddz.xyz vf2, vf1, vf2z");
                         asm volatile("sqc2 vf2, 0xb0(%0)" : : "r"(M2C_FIELD(arg0, s8 **, 0x5C)));
-                        temp_v0_4 = M2C_FIELD(&B_003DD490, s32 *, 0x3D58) + 1;
-                        M2C_FIELD(&B_003DD490, s32 *, 0x3D58) = temp_v0_4;
+                        temp_v0_4 = NextStamp_1C5148(&B_003DD490);
                         M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x5C), s32 *, 0xA4) = temp_v0_4;
                     }
                 }

@@ -17,13 +17,19 @@ extern "C" void LoadXfMirrors(ALO *palo, void *pbis)
         req.size = 0x10;
         req.align = 0x10;
         XFMIRROR *pmirror = (XFMIRROR *)PvAllocSwClearImpl__Fi(&req);
-        VEntry *entry = &palo->vptr[51];
-        XF *pxfSource = (XF *)entry->fn((char *)palo + entry->delta, S16Read__18CBinaryInputStream(pbis));
+        VEntry *entry = palo->vptr;
+        void *self = (char *)palo + entry[51].delta;
+        entry = entry + 51;
+        int index = S16Read__18CBinaryInputStream(pbis);
+        XF *pxfSource = (XF *)entry->fn(self, index);
         pmirror->pxfSource = pxfSource;
         if (pxfSource == 0)
             pmirror->pxfSource = (XF *)&D_002C44F0;
-        entry = &palo->vptr[51];
-        XF *pxfTarget = (XF *)entry->fn((char *)palo + entry->delta, S16Read__18CBinaryInputStream(pbis));
+        entry = palo->vptr;
+        self = (char *)palo + entry[51].delta;
+        entry = entry + 51;
+        index = S16Read__18CBinaryInputStream(pbis);
+        XF *pxfTarget = (XF *)entry->fn(self, index);
         pmirror->pxfTarget = pxfTarget;
         pmirror->fPosition = S8Read__18CBinaryInputStream(pbis);
         pmirror->fRotation = S8Read__18CBinaryInputStream(pbis);

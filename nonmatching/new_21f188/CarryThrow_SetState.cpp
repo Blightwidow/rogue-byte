@@ -109,10 +109,10 @@ void CarryThrow_SetState(CT *c, int stateNew)
         f.q10 = target;
         QW diff;
         QW pos = PosLoWorld(c->pjt);
-        asm("qmtc2.ni %0, vf2" : : "r"(pos));
-        asm("lqc2 vf1, %0" : : "m"(f.q10));
-        asm("vsub.xyzw vf1, vf1, vf2");
-        asm("qmfc2.ni %0, vf1" : "=r"(diff));
+        int fence7, fence8;
+        asm("qmtc2.ni %1, vf2" : "=r"(fence7) : "r"(pos));
+        asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2" : "=r"(fence8) : "m"(f.q10), "r"(fence7));
+        asm("qmfc2.ni %0, vf1" : "=r"(diff) : "r"(fence8));
         SetStepRadTargetDir(c->pjt, diff);
         *(int *)(c->pjt + 0x1A4) = 0;
         break;
@@ -137,8 +137,17 @@ void CarryThrow_SetState(CT *c, int stateNew)
             QW posOwner = PosLoWorld(c->pjt);
             QW axis = g_2a2da0;
             int lengthBits;
-            asm("qmtc2.ni %1, vf1\n\tlqc2 vf3, %2\n\tvsub.xyzw vf3, vf3, vf1\n\tlqc2 vf1, %3\n\tvmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z\n\tvmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2\n\tvmul.xyz vf1, vf3, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(lengthBits) : "r"(posOwner), "m"(f.q40), "m"(g_2a2dc0));
-            float length = *(float *)&lengthBits;
+            int fA, fB;
+            asm("qmtc2.ni %1, vf1" : "=r"(fA) : "r"(posOwner));
+            asm("lqc2 vf3, %1" : "=r"(fB) : "m"(f.q40), "r"(fA));
+            asm("vsub.xyzw vf3, vf3, vf1" : "=r"(fA) : "r"(fB));
+            asm("lqc2 vf1, %1" : "=r"(fB) : "m"(g_2a2dc0), "r"(fA));
+            asm("vmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z" : "=r"(fA) : "r"(fB));
+            asm("vmulx.xyzw vf2, vf1, vf2x" : "=r"(fB) : "r"(fA));
+            asm("vsub.xyzw vf3, vf3, vf2" : "=r"(fA) : "r"(fB));
+            asm("vmul.xyz vf1, vf3, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "=r"(fB) : "r"(fA));
+            float length;
+            asm("qmfc2.ni %1, vf1\n\tmtc1 %1, %0\n\tnop" : "=f"(length), "=r"(lengthBits) : "r"(fB));
             if (length < 0.0001f) {
                 asm("qmtc2.ni %0, vf3" : : "r"(axis));
             } else {

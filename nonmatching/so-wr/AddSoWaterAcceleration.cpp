@@ -52,6 +52,8 @@ extern float D_002C4470[3];
 extern float D_002C4480[3];
 extern float g_2dded4;
 }
+/* a float into lane 0 of a QW (mfc1) */
+static inline QW Word(float f) { QW r; asm("mfc1 %0, %1" : "=r"(r) : "f"(f)); return r; }
 void AddSoWaterAcceleration(char *pso, char *pwater)
 {
     Frame f;
@@ -80,7 +82,7 @@ void AddSoWaterAcceleration(char *pso, char *pwater)
         gBuoyancy = 0.0f;
     else
         gBuoyancy = *(float *)(*(char **)(pso + 0xE8) + 0xD4) * *(float *)(*(char **)(pwater + 0xE8) + 0xD4);
-    float gViscosity = *(float *)(*(char **)(pso + 0xE8) + 0xD8) * *(float *)(*(char **)(pwater + 0xE8) + 0xD8);
+    float gViscosity = *(float *)(*(char **)(pwater + 0xE8) + 0xD8) * *(float *)(*(char **)(pso + 0xE8) + 0xD8);
     if (gBuoyancy != 0.0f) {
         float scale = -gBuoyancy * uSubmerged;
         QW dv;
@@ -92,8 +94,13 @@ void AddSoWaterAcceleration(char *pso, char *pwater)
         VT *vt = *(VT **)(pso + 0xC);
         QW vSo = vt->fnGetVel(pso + vt->delta0);
         QW dvec;
-        asm("sq %0, %1\n\tqmtc2.ni %0, vf2\n\tlqc2 vf1, %2\n\tvsub.xyzw vf2, vf1, vf2" : : "r"(vSo), "m"(f.dv), "m"(f.curLin));
-        asm("qmfc2.ni %0, vf2" : "=r"(dvec));
+        f.dv = vSo;
+        {
+            int fa, fb;
+            asm("qmtc2.ni %1, vf2" : "=r"(fa) : "r"(vSo));
+            asm("lqc2 vf1, %1\n\tvsub.xyzw vf2, vf1, vf2" : "=r"(fb) : "m"(f.curLin), "r"(fa));
+            asm("qmfc2.ni %0, vf2" : "=r"(dvec) : "r"(fb));
+        }
         float sdvNormal = SProjectVector__FP6VECTORT0(dvec, f.normal, &f.dvNormal, &f.dvTangent);
         float uNormalScale;
         if (uSubmerged == 1.0f || 0.0f < sdvNormal)
@@ -104,11 +111,11 @@ void AddSoWaterAcceleration(char *pso, char *pwater)
             for (int index = 0; index < 3; index++)
                 f.clq[index] = D_002C4470[index] * uNormalScale * gViscosity;
             QW sum;
-            asm("lqc2 vf1, %1\n\tlqc2 vf3, %2\n\tvadd.xyzw vf3, vf3, vf1\n\tqmfc2.ni %0, vf3" : "=r"(sum) : "m"(f.dvNormal), "m"(f.dv));
+            { int fa, fb; asm("lqc2 vf1, %1\n\tlqc2 vf3, %2" : "=r"(fa) : "m"(f.dvNormal), "m"(f.dv)); asm("vadd.xyzw vf3, vf3, vf1" : "=r"(fb) : "r"(fa)); asm("qmfc2.ni %0, vf3" : "=r"(sum) : "r"(fb)); }
             AccelSoTowardPosSpring(pso, g_2a2dd0, 0, sum, f.clq);
             for (int index = 0; index < 3; index++)
                 f.clq[index] = D_002C4470[index] * uSubmerged * gViscosity;
-            asm("lqc2 vf1, %1\n\tlqc2 vf2, %2\n\tvadd.xyzw vf2, vf2, vf1\n\tqmfc2.ni %0, vf2" : "=r"(sum) : "m"(f.dvTangent), "m"(f.dv));
+            { int fa, fb; asm("lqc2 vf1, %1\n\tlqc2 vf2, %2" : "=r"(fa) : "m"(f.dvTangent), "m"(f.dv)); asm("vadd.xyzw vf2, vf2, vf1" : "=r"(fb) : "r"(fa)); asm("qmfc2.ni %0, vf2" : "=r"(sum) : "r"(fb)); }
             AccelSoTowardPosSpring(pso, g_2a2dd0, 0, sum, f.clq);
         }
         if (FXfKindDynamic(*(short *)(*(char **)(pso + 0x5C) + 0x98))) {
@@ -117,30 +124,44 @@ void AddSoWaterAcceleration(char *pso, char *pwater)
             f.wSo = wSo;
             float minusOne = -1.0f;
             QW dw;
-            asm("mfc1 $3, %2\n\tqmtc2.ni $3, vf1\n\tlqc2 vf2, %3\n\tvmulx.xyzw vf2, vf2, vf1x\n\tsqc2 vf1, %1\n\tqmfc2.ni %0, vf2" : "=r"(dw), "=m"(f.junk) : "f"(minusOne), "m"(f.wSo) : "$3");
+            {
+                int fa, fb;
+                asm("qmtc2.ni %1, vf1" : "=r"(fa) : "r"(Word(minusOne)));
+                asm("lqc2 vf2, %1\n\tvmulx.xyzw vf2, vf2, vf1x" : "=r"(fb) : "m"(f.wSo), "r"(fa));
+                asm("sqc2 vf1, %0" : "=m"(f.junk) : "r"(fb));
+                asm("qmfc2.ni %0, vf2" : "=r"(dw) : "r"(fb));
+            }
             SProjectVector__FP6VECTORT0(dw, f.normal, &f.dwNormal, &f.dwTangent);
             for (int index = 0; index < 3; index++)
                 f.clq[index] = D_002C4480[index] * uSubmerged * gViscosity;
             QW sum;
-            asm("lqc2 vf1, %1\n\tlqc2 vf3, %2\n\tvadd.xyzw vf3, vf3, vf1\n\tqmfc2.ni %0, vf3" : "=r"(sum) : "m"(f.dwNormal), "m"(f.wSo));
+            { int fa, fb; asm("lqc2 vf1, %1\n\tlqc2 vf3, %2" : "=r"(fa) : "m"(f.dwNormal), "m"(f.wSo)); asm("vadd.xyzw vf3, vf3, vf1" : "=r"(fb) : "r"(fa)); asm("qmfc2.ni %0, vf3" : "=r"(sum) : "r"(fb)); }
             AccelSoTowardMatSpring__FP2SOP7MATRIX3P3CLQP6VECTORT2f(pso, &RO_002A2D00, 0, sum, f.clq);
             for (int index = 0; index < 3; index++)
                 f.clq[index] = D_002C4480[index] * gViscosity;
-            asm("lqc2 vf1, %1\n\tlqc2 vf2, %2\n\tvadd.xyzw vf2, vf2, vf1\n\tqmfc2.ni %0, vf2" : "=r"(sum) : "m"(f.dwTangent), "m"(f.wSo));
+            { int fa, fb; asm("lqc2 vf1, %1\n\tlqc2 vf2, %2" : "=r"(fa) : "m"(f.dwTangent), "m"(f.wSo)); asm("vadd.xyzw vf2, vf2, vf1" : "=r"(fb) : "r"(fa)); asm("qmfc2.ni %0, vf2" : "=r"(sum) : "r"(fb)); }
             AccelSoTowardMatSpring__FP2SOP7MATRIX3P3CLQP6VECTORT2f(pso, &RO_002A2D00, 0, sum, f.clq);
         }
     } else {
-        ((float *)&f.curLin)[0] = 0.0f;
         ((float *)&f.curLin)[2] = 0.0f;
         ((float *)&f.curLin)[1] = 0.0f;
+        ((float *)&f.curLin)[0] = 0.0f;
     }
     if (gBuoyancy != 0.0f) {
         TiltMatUpright__FP7MATRIX3N20(PmatLoWorld(pso), &f.curAng, 0);
         float radTilt;
         DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(&f.curAng, &f.radTilt, f.clq);
-        float amount = *(float *)&f.radTilt * (gBuoyancy * 3.0f) * uSubmerged;
+        float gTorque = gBuoyancy * 3.0f;
+        float amount = *(float *)&f.radTilt * gTorque * uSubmerged;
         QW torque;
-        asm("mfc1 $3, %2\n\tqmtc2.ni $3, vf1\n\tlqc2 vf2, %3\n\tvmulx.xyzw vf3, vf2, vf1x\n\tsqc2 vf1, %1\n\tqmfc2.ni %0, vf3" : "=r"(torque), "=m"(f.curAng) : "f"(amount), "m"(f.clq[0]) : "$3");
+        {
+            int fa, fb, fc;
+            asm("lqc2 vf2, %1" : "=r"(fc) : "m"(f.clq[0]));
+            asm("qmtc2.ni %1, vf1" : "=r"(fa) : "r"(Word(amount)), "r"(fc));
+            asm("vmulx.xyzw vf3, vf2, vf1x" : "=r"(fb) : "r"(fa));
+            asm("sqc2 vf1, %0" : "=m"(f.dwNormal), "=r"(fc) : "r"(fb));
+            asm("qmfc2.ni %0, vf3" : "=r"(torque) : "r"(fc));
+        }
         AddSoAngularAcceleration(pso, torque);
     }
     if (0.0f < uSubmerged && uSubmerged < 1.0f && 0.9f < ((float *)&f.normal)[2]) {
@@ -148,7 +169,7 @@ void AddSoWaterAcceleration(char *pso, char *pwater)
         float sRadius = ((oxa[4] - oxa[0]) + (oxa[5] - oxa[1])) * 0.25f;
         WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(pso, pwater, g_2dded4, f.curLin, f.posSurface, 0.1f, sRadius);
     } else if (FIsBasicDerivedFrom(pso, 0x32)) {
-        REFBASE *pref = (SOD *)pso;
+        REFBASE *pref = (REFBASE *)(pso + 0x174);
         if (pref) {
             if (pref->ptr) {
                 StopAmb(pref->ptr, 0.0f);

@@ -14,9 +14,9 @@ extern QW g_2a2dd0;
 /* lane 0 of a QW to an FP register (mtc1) */
 static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
 /* lane 1 of a QW: prot3w rotates it down, then mtc1 */
-static inline float Lane1(QW q) { float f; QW t; asm("prot3w %1, %2\n\tmtc1 %1, %0" : "=f" (f), "=r" (t) : "r" (q)); return f; }
+static inline float Lane1(QW q) { float f; QW t; asm("prot3w %0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0" : "=f" (f) : "r" (t)); return f; }
 /* lane 2 of a QW: pextuw with zero brings it down, then mtc1 */
-static inline float Lane2(QW q) { float f; QW t; asm("pextuw %1, $0, %2\n\tmtc1 %1, %0" : "=f" (f), "=r" (t) : "r" (q)); return f; }
+static inline float Lane2(QW q) { float f; QW t; asm("pextuw %0, $0, %1" : "=r" (t) : "r" (q)); asm("mtc1 %1, %0" : "=f" (f) : "r" (t)); return f; }
 static inline int Near3(QW p, QW q)
 {
     return FFloatsNear__Ffff(Lane0(p), Lane0(q), 0.0001f) && FFloatsNear__Ffff(Lane1(p), Lane1(q), 0.0001f) &&

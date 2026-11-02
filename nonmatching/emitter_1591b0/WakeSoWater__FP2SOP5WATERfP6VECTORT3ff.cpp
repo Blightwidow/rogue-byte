@@ -1,4 +1,6 @@
 #include "sly2.h"
+/* lane 0 of a QW into a float register */
+static inline float Lane0(QW v) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (v)); return f; }
 static inline float GClamp(float g, float lo, float hi)
 {
     if (g < lo)
@@ -10,7 +12,7 @@ static inline float GClamp(float g, float lo, float hi)
 struct Emitrip { QW q[4]; };
 struct Emitv { QW q[7]; };
 union Work { int i[16]; float f[16]; QW q[4]; };
-union EmitvU { float f[28]; QW q[7]; };
+struct EmitvU { float f[4]; QW q1; QW q2; float g[16]; };
 struct Frame {
     Emitrip ripArg;
     Work w;
@@ -19,7 +21,8 @@ struct Frame {
     QW vCurrent;
 };
 struct SO { char pad[0xC]; char *vtable; };
-struct Rip { char pad[0xEC]; char *vtable; };
+struct RipVT { char pad[8]; short delta; short unused; void (*fn)(void *, QW, float, int); };
+struct Rip { char pad[0xEC]; RipVT *vt; };
 struct Puffer { char pad[0x170]; float tRipple; int amb; };
 struct Water { char pad[0x18]; int oid; char pad2[0x15C]; int rip178; int rip17C; int f180; };
 extern "C" {
@@ -48,11 +51,13 @@ void WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(SO *pso, Water *pwater, float dt, QW
     asm("sqc2 vf1, %0" : "=m"(f.vCurrent) : "r"(tokA));
     QW vSo = fnV((char *)pso + deltaV);
     float vRelative;
+    QW qRel;
     int tok1, tok2, tok3;
     asm("qmtc2.ni %1, vf2" : "=r"(tok1) : "r"(vSo));
     asm("lqc2 vf1, %1" : "=r"(tok2) : "m"(f.vCurrent), "r"(tok1));
     asm("vsub.xyzw vf1, vf1, vf2" : "=r"(tok3) : "r"(tok2));
-    asm("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(vRelative) : "r"(tok3));
+    asm("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r"(qRel) : "r"(tok3));
+    vRelative = Lane0(qRel);
     float gWakeInterval = GRandInRange(0.0f, 3.0f);
     int fLate = gWakeInterval < dt;
     Puffer *ppuffer = FIsBasicDerivedFrom(pso, 0x32) ? (Puffer *)pso : 0;
@@ -76,7 +81,9 @@ void WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(SO *pso, Water *pwater, float dt, QW
         if (ppuffer != 0) {
             fLate = dtInterval < g_2dded0 - ppuffer->tRipple;
         } else {
-            fLate = (int)(g_2dded0 / dtInterval) != (int)((g_2dded0 + dt) / dtInterval);
+            int iA = (int)(g_2dded0 / dtInterval);
+            int iB = (int)((g_2dded0 + dt) / dtInterval);
+            fLate = iA != iB;
         }
         if (!fLate)
             return;
@@ -86,9 +93,7 @@ void WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(SO *pso, Water *pwater, float dt, QW
     Rip *prip = PripNewRipg(B_003DD490, 7, 0);
     if (prip == 0)
         return;
-    short deltaR = *(short *)(prip->vtable + 8);
-    void (*fnR)(void *, QW, int, float) = *(void (**)(void *, QW, int, float))(prip->vtable + 0xC);
-    fnR((char *)prip + deltaR, posSurface, 0, gScale);
+    prip->vt->fn((char *)prip + prip->vt->delta, posSurface, gScale, 0);
     *(float *)((char *)prip + 0x20) = gScale;
     *(float *)((char *)prip + 0x24) = gScale * 0.6f;
     *(int *)((char *)prip + 0x1C) = pwater->rip17C;
@@ -108,14 +113,14 @@ void WakeSoWater__FP2SOP5WATERfP6VECTORT3ff(SO *pso, Water *pwater, float dt, QW
         f.ev.f[0] = vRelative * 0.5f;
         f.ev.f[1] = vRelative * 0.75f;
         f.ev.f[3] = 1.0f;
-        f.ev.q[1] = *(QW *)(*(char **)((char *)pso + 0xE8) + 0x80);
-        f.ev.q[2] = g_2a2dc0;
-        f.ev.f[14] = 1.0f;
-        f.ev.f[16] = 0.3926991f;
-        f.ev.f[17] = 1.0471976f;
-        f.ev.f[15] = 5.0f;
-        f.ev.f[24] = 1.0f;
-        f.ev.f[26] = -1.0f;
+        f.ev.q1 = *(QW *)(*(char **)((char *)pso + 0xE8) + 0x80);
+        f.ev.q2 = g_2a2dc0;
+        f.ev.g[4] = 0.3926991f;
+        f.ev.g[5] = 1.0471976f;
+        f.ev.g[12] = 1.0f;
+        f.ev.g[3] = 5.0f;
+        f.ev.g[2] = 1.0f;
+        f.ev.g[14] = -1.0f;
         f.emitvArg = *(Emitv *)&f.ev;
         memset(&f.w, 0, 0x14);
         f.w.q[2] = posSurface;

@@ -1,116 +1,88 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+struct CBinaryInputStream {
+    char pad0[0x10];
+    int pos;       // 0x10
+    int avail;     // 0x14
+    char pad1[0x1C];
+    int total;     // 0x34
+    int buffer;    // 0x38
+    char pad2[4];
+    int done;      // 0x40
+    int request;   // 0x44
+    int remaining; // 0x48
+    int base;      // 0x4C
+    int lsn;       // 0x50
+    int count;     // 0x54
+    int filled;    // 0x58
+    int current;   // 0x5C
+    int next;      // 0x60
+    void PumpCd();
+};
 extern "C" {
-struct _m2c_stack_PumpCd__18CBinaryInputStream {
-    /* 0x00 */ char pad0[0x60];
-};                                                  /* size = 0x60 */
-M2C_UNK ReadCdDirect__FUiUiPv(...); /* extern */
-s32 sceCdGetError();                                /* extern */
-s32 sceCdGetReadPos();                              /* extern */
-s32 sceCdSync(M2C_UNK, s32);                        /* extern */
-void PumpCd__18CBinaryInputStream(s8 *arg0) {
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_a0_3;
-    s32 temp_a1;
-    s32 temp_a1_2;
-    s32 temp_a1_3;
-    s32 temp_a1_4;
-    s32 temp_a2;
-    s32 temp_a2_2;
-    s32 temp_a3;
-    s32 temp_a4;
-    s32 temp_a5;
-    s32 temp_hi;
-    s32 temp_hi_2;
-    s32 temp_lo;
-    s32 temp_s1;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
-    s32 temp_v0_4;
-    s32 temp_v1;
-    s32 var_a3;
-    s32 var_v0;
-    temp_lo = (s32) M2C_FIELD(arg0, s32 *, 0x34) / (s32) M2C_FIELD(arg0, s32 *, 0x54);
-    temp_a1 = M2C_FIELD(arg0, s32 *, 0x14);
-    M2C_FIELD(arg0, s32 *, 0x14) = 0;
-    M2C_FIELD(arg0, s32 *, 0x10) = (s32) (M2C_FIELD(arg0, s32 *, 0x10) + temp_a1);
-    var_v0 = -0x800;
-    if (temp_lo > 0x8000) {
-        var_v0 = -0x8000;
-    }
-    temp_a0 = M2C_FIELD(arg0, s32 *, 0x58);
-    temp_s1 = temp_lo & var_v0;
-    if (temp_a0 > 0) {
-        temp_a2 = M2C_FIELD(arg0, s32 *, 0x38);
-        temp_a1_2 = M2C_FIELD(arg0, s32 *, 0x5C) + 1;
-        if (M2C_FIELD(arg0, s32 *, 0x10) == (temp_a2 + (temp_a1_2 * temp_s1))) {
-            temp_hi = temp_a1_2 % (s32) M2C_FIELD(arg0, s32 *, 0x54);
-            M2C_FIELD(arg0, s32 *, 0x58) = (s32) (temp_a0 - 1);
-            M2C_FIELD(arg0, s32 *, 0x5C) = temp_hi;
-            M2C_FIELD(arg0, s32 *, 0x10) = (s32) ((temp_hi * temp_s1) + temp_a2);
+int sceCdGetError();
+int sceCdGetReadPos();
+int sceCdSync(int, int);
+}
+void ReadCdDirect__FUiUiPv(unsigned, unsigned, void *, int, ...);
+static inline int ChunkOf(int quotient) {
+    return quotient > 0x8000 ? (quotient & -0x8000) : (quotient & -0x800);
+}
+void CBinaryInputStream::PumpCd() {
+    int quotient = total / count;
+    pos += avail;
+    avail = 0;
+    int chunk = ChunkOf(quotient);
+    if (filled > 0) {
+        int nextCurrent = current + 1;
+        int base0 = buffer;
+        if (pos == base0 + nextCurrent * chunk) {
+            int slot = nextCurrent % count;
+            filled--;
+            current = slot;
+            pos = base0 + slot * chunk;
         }
     }
-loop_9:
-    if (M2C_FIELD(arg0, s32 *, 0x44) > 0) {
-        temp_a1_3 = M2C_FIELD(arg0, s32 *, 0x44);
-        temp_v0 = sceCdGetReadPos() + M2C_FIELD(arg0, s32 *, 0x4C);
-        temp_v0_2 = (temp_v0 >= temp_a1_3) ? temp_a1_3 : temp_v0;
-        if (M2C_FIELD(arg0, s32 *, 0x40) < temp_v0_2) {
-            M2C_FIELD(arg0, s32 *, 0x40) = temp_v0_2;
-        } else if (sceCdSync(1, temp_a1_3) == 0) {
-            if (sceCdGetError() != 0) {
-                temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
-                temp_a5 = M2C_FIELD(arg0, s32 *, 0x60) * temp_s1;
-                temp_a4 = M2C_FIELD(arg0, s32 *, 0x50);
-                M2C_FIELD(arg0, s32 *, 0x4C) = temp_v1;
-                ReadCdDirect__FUiUiPv(temp_a4 + ((s32) ((temp_v1 > -1) ? temp_v1 : (temp_v1 + 0x7FF)) >> 0xB), (s32) (((M2C_FIELD(arg0, s32 *, 0x44) - temp_v1) + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + temp_a5 + temp_v1, 0, temp_a4, temp_a5);
-            } else {
-                temp_a0_2 = M2C_FIELD(arg0, s32 *, 0x44);
-                M2C_FIELD(arg0, s32 *, 0x40) = temp_a0_2;
-                M2C_FIELD(arg0, s32 *, 0x50) = (s32) (M2C_FIELD(arg0, s32 *, 0x50) + ((s32) ((temp_a0_2 > -1) ? temp_a0_2 : (temp_a0_2 + 0x7FF)) >> 0xB));
-                M2C_FIELD(arg0, s32 *, 0x48) = (s32) (M2C_FIELD(arg0, s32 *, 0x48) - temp_a0_2);
-                M2C_FIELD(arg0, s32 *, 0x44) = 0;
-                M2C_FIELD(arg0, s32 *, 0x4C) = 0;
+    do {
+        if (request > 0) {
+            int readPos = sceCdGetReadPos() + base;
+            if (readPos >= request) readPos = request;
+            if (done < readPos) {
+                done = readPos;
+            } else if (sceCdSync(1, request) == 0) {
+                if (sceCdGetError() == 0) {
+                    int size2 = request;
+                    done = size2;
+                    lsn += size2 / 0x800;
+                    remaining -= size2;
+                    request = 0;
+                    base = 0;
+                } else {
+                    int offset = done;
+                    int slotOffset = next * chunk;
+                    int sector = lsn;
+                    base = offset;
+                    ReadCdDirect__FUiUiPv(sector + (offset / 0x800), ((request - offset) + 0x7FF & ~0x7FF) >> 11, (char *)buffer + slotOffset + offset, 0);
+                }
             }
         }
-    }
-    temp_a3 = M2C_FIELD(arg0, s32 *, 0x58);
-    temp_a2_2 = M2C_FIELD(arg0, s32 *, 0x54);
-    if ((temp_a3 < temp_a2_2) && (M2C_FIELD(arg0, s32 *, 0x44) == 0)) {
-        temp_a0_3 = M2C_FIELD(arg0, s32 *, 0x48);
-        if (temp_a0_3 > 0) {
-            M2C_FIELD(arg0, s32 *, 0x40) = 0;
-            temp_a1_4 = (temp_a0_3 >= temp_s1) ? temp_s1 : temp_a0_3;
-            temp_hi_2 = (s32) (M2C_FIELD(arg0, s32 *, 0x60) + 1) % temp_a2_2;
-            M2C_FIELD(arg0, s32 *, 0x44) = temp_a1_4;
-            M2C_FIELD(arg0, s32 *, 0x58) = (s32) (temp_a3 + 1);
-            M2C_FIELD(arg0, s32 *, 0x60) = temp_hi_2;
-            ReadCdDirect__FUiUiPv(M2C_FIELD(arg0, s32 *, 0x50), (s32) ((temp_a1_4 + 0x7FF) & ~0x7FF) >> 0xB, M2C_FIELD(arg0, s32 *, 0x38) + (temp_hi_2 * temp_s1), 0, temp_hi_2);
+        if (filled < count && request == 0) {
+            int left = remaining;
+            if (left > 0) {
+                done = 0;
+                int length = left >= chunk ? chunk : left;
+                int nextSlot = (next + 1) % count;
+                request = length;
+                filled++;
+                next = nextSlot;
+                ReadCdDirect__FUiUiPv(lsn, (length + 0x7FF & ~0x7FF) >> 11, (char *)buffer + nextSlot * chunk, 0);
+            }
         }
-    }
-    temp_v0_3 = M2C_FIELD(arg0, s32 *, 0x58);
-    if (temp_v0_3 == 0) {
-        M2C_FIELD(arg0, s32 *, 0x14) = 0;
-    } else {
-        var_a3 = temp_s1;
-        if (temp_v0_3 == 1) {
-            var_a3 = M2C_FIELD(arg0, s32 *, 0x40);
+        if (filled == 0) {
+            avail = 0;
+        } else {
+            int limit = chunk;
+            if (filled == 1) limit = done;
+            int left2 = limit - (pos - (buffer + current * chunk));
+            if (left2 > 0xFFF) left2 = 0x1000; avail = left2;
         }
-        temp_v0_4 = var_a3 - (M2C_FIELD(arg0, s32 *, 0x10) - (M2C_FIELD(arg0, s32 *, 0x38) + (M2C_FIELD(arg0, s32 *, 0x5C) * temp_s1)));
-        M2C_FIELD(arg0, s32 *, 0x14) = (s32) ((temp_v0_4 <= 0xFFF) ? temp_v0_4 : 0x1000);
-    }
-    if (M2C_FIELD(arg0, s32 *, 0x14) == 0) {
-        if (M2C_FIELD(arg0, s32 *, 0x48) > 0) {
-            goto loop_9;
-        }
-    }
-}
+    } while (avail == 0 && remaining > 0);
 }

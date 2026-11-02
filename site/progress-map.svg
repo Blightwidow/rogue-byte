@@ -1748,7 +1748,7 @@
 <rect x="267.2" y="405.1" width="62.4" height="42.1" fill="#4a45a8"><title>GoalFollowCrv_Steer 0X177F78 2688 bytes (draft)</title></rect>
 <rect x="329.9" y="405.1" width="60.5" height="42.1" fill="#2a2d6e"><title>GoalBrain_FHandleMessage 0X176BE8 2608 bytes (asm)</title></rect>
 <rect x="390.9" y="405.1" width="37.7" height="42.1" fill="#4a45a8"><title>func_001728B0 0X1728B0 1632 bytes (draft)</title></rect>
-<rect x="267.2" y="447.6" width="34.9" height="39.5" fill="#4a45a8"><title>GoalBrain_Update 0X177618 1416 bytes (draft)</title></rect>
+<rect x="267.2" y="447.6" width="34.9" height="39.5" fill="#2f7af4"><title>GoalBrain_Update 0X177618 1416 bytes (c)</title></rect>
 <rect x="267.2" y="487.5" width="34.9" height="39.0" fill="#4a45a8"><title>func_00173F18 0X173F18 1400 bytes (draft)</title></rect>
 <rect x="267.2" y="527.0" width="34.9" height="35.9" fill="#4a45a8"><title>ExecuteGuardScriptCmd 0X1715F0 1288 bytes (draft)</title></rect>
 <rect x="267.2" y="563.2" width="34.9" height="31.1" fill="#4a45a8"><title>PsenseFindNotice 0X1758A0 1120 bytes (draft)</title></rect>
@@ -2527,7 +2527,7 @@
 </g>
 <g><title>bbmark-blend: 16248 bytes</title>
 <rect x="570.4" y="1.0" width="42.1" height="32.4" fill="#2a2d6e"><title>EnsureAsegBlendDynamic 0X137A30 1416 bytes (asm)</title></rect>
-<rect x="613.0" y="1.0" width="37.1" height="32.4" fill="#4a45a8"><title>UpdateBentleyActive 0X134850 1248 bytes (draft)</title></rect>
+<rect x="613.0" y="1.0" width="37.1" height="32.4" fill="#2f7af4"><title>UpdateBentleyActive 0X134850 1248 bytes (c)</title></rect>
 <rect x="650.4" y="1.0" width="35.2" height="32.4" fill="#4a45a8"><title>UpdateBentley 0X134DA8 1184 bytes (draft)</title></rect>
 <rect x="570.4" y="33.8" width="29.9" height="38.1" fill="#4a45a8"><title>SetBentleyState 0X135248 1184 bytes (draft)</title></rect>
 <rect x="570.4" y="72.3" width="29.9" height="23.0" fill="#4a45a8"><title>RecalcSwXpAll 0X134040 720 bytes (draft)</title></rect>
@@ -3120,7 +3120,7 @@
 </g>
 <g><title>sensor-geom: 12280 bytes</title>
 <rect x="688.0" y="577.8" width="31.0" height="24.8" fill="#4a45a8"><title>SetTaskState 0X164DF0 808 bytes (draft)</title></rect>
-<rect x="719.5" y="577.8" width="26.7" height="24.8" fill="#4a45a8"><title>func_00165280 0X165280 696 bytes (draft)</title></rect>
+<rect x="719.5" y="577.8" width="26.7" height="24.8" fill="#2f7af4"><title>func_00165280 0X165280 696 bytes (c)</title></rect>
 <rect x="746.5" y="577.8" width="25.1" height="24.8" fill="#4a45a8"><title>ApplyTaskState 0X1657D0 656 bytes (draft)</title></rect>
 <rect x="772.0" y="577.8" width="23.9" height="24.8" fill="#4a45a8"><title>RestartAtTask 0X165538 624 bytes (draft)</title></rect>
 <rect x="688.0" y="603.0" width="24.3" height="23.1" fill="#2f7af4"><title>PostLoadTask 0X1638F8 592 bytes (c)</title></rect>
@@ -5274,7 +5274,7 @@
 <rect x="1033.4" y="529.3" width="66.0" height="62.9" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>shdanim-sm: 4024 bytes</title>
-<rect x="1034.4" y="593.2" width="22.9" height="59.6" fill="#4a45a8"><title>PgoalConstruct 0X1EF138 1464 bytes (draft)</title></rect>
+<rect x="1034.4" y="593.2" width="22.9" height="59.6" fill="#2f7af4"><title>PgoalConstruct 0X1EF138 1464 bytes (c)</title></rect>
 <rect x="1057.7" y="593.2" width="20.0" height="14.2" fill="#2f7af4"><title>StaticInitGoalSlotheaps 0X1EEB08 312 bytes (c)</title></rect>
 <rect x="1078.1" y="593.2" width="20.0" height="14.2" fill="#2f7af4"><title>StaticInitSkySlotheaps 0X1EF6F8 312 bytes (c)</title></rect>
 <rect x="1057.7" y="607.8" width="19.0" height="15.0" fill="#2f7af4"><title>StaticInitSmSlotheaps 0X1EF938 312 bytes (c)</title></rect>

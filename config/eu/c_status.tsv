@@ -1419,6 +1419,7 @@ us_address	name	other_address	pair	score	addresses
 0x134648	InitBentley	0X134648	same	0	ok
 0x134770	LoadBentleyFromBrx	0X134770	same	0	ok
 0x1347A8	PostBentleyLoad	0X1347A8	same	0	ok
+0x134850	UpdateBentleyActive	0X134850	same	0	ok
 0x134D30	UpdateBentleyBinoc	0X134D30	same	0	ok
 0x1356E8	CalcBentleyBombTarget	0X1356E8	same	0	ok
 0x1357C0	ThrowBentleyBomb	0X1357C0	same	0	ok
@@ -2140,6 +2141,7 @@ us_address	name	other_address	pair	score	addresses
 0x165118	SendTaskTimeLimit	0X165090	same	0	ok
 0x165170	SendTaskEvent	0X1650E8	same	0	ok
 0x1651D8	RestartAtTaskOid	0X165150	same	0	ok
+0x165280	func_00165280	0X1651F8	same	0	ok
 0x1657A8	PostTaskJobEvent	0X165720	same	0	ok
 0x165A60	SetTaskStateCascade	0X1659D8	same	0	ok
 0x165C28	func_00165C28	0X165BA0	identical	0	ok
@@ -2319,6 +2321,7 @@ us_address	name	other_address	pair	score	addresses
 0x176708	GoalBrain_Activate	0X176690	same	0	ok
 0x176750	GoalBrain_SetCommand	0X1766D8	same	0	ok
 0x176B80	GoalBrain_AbsorbDamage	0X176B08	same	0	ok
+0x177618	GoalBrain_Update	0X1775A0	same	0	ok
 0x177BA0	GoalBrain_ChooseNextCommand	0X177B28	same	0	ok
 0x177D20	func_00177D20	0X177CA8	identical	0	ok
 0x177D48	GoalBrain_FGotoTargetInWorld	0X177CD0	identical	0	ok
@@ -3847,6 +3850,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EF0B8	Goal_FHandleMessage	0X1EF878	gap	0	ok
 0x1EF0C0	Goal_FillVjoy	0X1EF880	gap	0	ok
 0x1EF0D8	Goal_Pop	0X1EF898	same	0	ok
+0x1EF138	PgoalConstruct	0X1EF8F8	same	0	ok
 0x1EF6F0	CbGoalMax	0X1EFEB0	gap	0	ok
 0x1EF6F8	StaticInitSkySlotheaps	0X1EFEB8	same	0	ok
 0x1EF830	func_001EF830	0X1EFFF0	same	0	ok

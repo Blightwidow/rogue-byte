@@ -28,12 +28,16 @@ extern "C" QW g_2a2dc0, g_2a2dd0;
 #define F32(v, off) (*(float *)((char *)(v) + (off)))
 #define I32(v, off) (*(int *)((char *)(v) + (off)))
 
+static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f"(f) : "r"(q)); return f; }
+static inline float Lane1(QW q) { QW t; asm("prot3w %0, %1" : "=r"(t) : "r"(q)); return Lane0(t); }
+static inline float GMax(float a, float b) { return a > b ? a : b; }
 void PostVehicleLoad(VEHICLE *pv)
 {
-    struct { QW junk, posMax, posMin; } fr;
-#define junk fr.junk
-#define posMax fr.posMax
-#define posMin fr.posMin
+    union VQ { QW q; float f[4]; };
+    struct { VQ junk, posMax, posMin; } fr;
+#define junk fr.junk.q
+#define posMax fr.posMax.q
+#define posMin fr.posMin.q
     QW posMinReg;
     asm("vsub.xyzw vf1, vf0, vf0\n\tqmfc2.ni %0, vf1\n\tsqc2 vf1, %1" : "=r"(posMinReg), "=m"(posMax));
     posMin = posMinReg;
@@ -60,29 +64,11 @@ void PostVehicleLoad(VEHICLE *pv)
             asm("vadda.xyzw ACC, vf0, vf2\n\tvmaddx.xyzw vf2, vf1, vf4x\n\tsqc2 vf2, %0" : "=m"(pwheel->posBottom));
         }
     }
-    float maxX, minX;
-    asm("mtc1 %1, %0" : "=f"(maxX) : "r"(posMax));
-    asm("mtc1 %1, %0" : "=f"(minX) : "r"(posMin));
-    F32(pv, 0x4A0) = maxX - minX;
-    float dxHalfMax, dyHalfMax;
-    {
-        float negMinX = -minX;
-        dxHalfMax = maxX > negMinX ? maxX : negMinX;
-        QW tmin, tmax;
-        asm("prot3w %0, %1" : "=r"(tmin) : "r"(posMin));
-        asm("prot3w %0, %1" : "=r"(tmax) : "r"(posMax));
-        float minY, maxY;
-        asm("mtc1 %1, %0" : "=f"(minY) : "r"(tmin));
-        asm("mtc1 %1, %0" : "=f"(maxY) : "r"(tmax));
-        minY = -minY;
-        dyHalfMax = minY > maxY ? minY : maxY;
-    }
+    F32(pv, 0x4A0) = Lane0(posMax) - Lane0(posMin);
     for (iwheel = 0; iwheel < pv->cwheel; iwheel++) {
         WHEEL *pwheel = &WHEELS(pv)[iwheel];
-        float x = ((float *)&pwheel->posRest)[0];
-        float y = ((float *)&pwheel->posRest)[1];
-        pwheel->uSteer = x / dxHalfMax;
-        pwheel->uSteerSide = y / dyHalfMax;
+        pwheel->uSteer = ((float *)&pwheel->posRest)[0] / GMax(Lane0(posMax), -Lane0(posMin));
+        pwheel->uSteerSide = ((float *)&pwheel->posRest)[1] / GMax(Lane1(posMax), -Lane1(posMin));
     }
     char *pslot = (char *)pv + 0x570;
     int iaxle;

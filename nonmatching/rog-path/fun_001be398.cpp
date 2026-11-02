@@ -1,81 +1,59 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct GIFS { char pad[0x30]; };
+struct Pool { int f0, f4, top; };
+struct Target { int w, h; long tex; int f10, f14, f18, f1c; };
 extern "C" {
-struct _m2c_stack_func_001BE398 {
-    /* 0x000 */ char pad0[0x30];
-    /* 0x030 */ M2C_UNK sp30;                       /* inferred */
-    /* 0x030 */ char pad30[0x4A0];
-};                                                  /* size = 0x4D0 */
-M2C_UNK AddPrimEnd__4GIFS(s8 *);                  /* extern */
-M2C_UNK AddPrimPack__4GIFSiiUl(s8 *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK AllocStatic__4DMASiP2QW(...); /* extern */
-s32 AllocZpr(s8 *, M2C_UNK);                      /* extern */
-M2C_UNK DMAS_DetachCopyPermanent(s8 *, s8 *, M2C_UNK, s8 *); /* extern */
-s32 NLog2__FUi(...);              /* extern */
-M2C_UNK PackAD__4GIFSll(s8 *, M2C_UNK, s64);      /* extern */
-M2C_UNK PackXYZ__4GIFSiii(s8 *, s32, s32, M2C_UNK); /* extern */
-M2C_UNK __4GIFS(s8 *, s64);                       /* extern */
-void func_001BE398(s8 *arg0, s8 *arg1) {
-    s8 sp[0x4D0] __attribute__((aligned(16)));
-    M2C_UNK sp30;
-    s32 temp_s0;
-    s32 temp_s6;
-    s32 temp_s7;
-    s32 temp_v0;
-    s32 temp_v0_4;
-    s32 var_s4;
-    s64 temp_a1;
-    u32 temp_v0_2;
-    u32 temp_v0_3;
-    u32 temp_v1;
-    u32 temp_v1_2;
-    M2C_FIELD(arg0, u32 *, 4) = 0x80U;
-    M2C_FIELD(arg0, u32 *, 0) = 0x80U;
-    temp_v0 = AllocZpr(arg1, 0x100);
-    M2C_FIELD(arg0, s64 *, 8) = (s64) (((((M2C_FIELD(arg0, s64 *, 8) & ~0x3FFF) | (temp_v0 & 0x3FFF)) & (s64)(s32)0xFFF03FFF) | 0x8000) & (s64)(s32)0xFC0FFFFF);
-    M2C_FIELD(arg0, s64 *, 8) = (s64) ((M2C_FIELD(arg0, s64 *, 8) & (s64)(s32)0xC3FFFFFF) | ((NLog2__FUi(M2C_FIELD(arg0, u32 *, 0), 0xFFF03FFF, 0xFC0FFFFF) & 0xF) << 0x1A));
-    temp_a1 = 0x8000 << 0x13;
-    M2C_FIELD(arg0, s64 *, 8) = (s64) ((M2C_FIELD(arg0, s64 *, 8) & ((0x87FFFFFF * 8) | 7)) | ((NLog2__FUi(M2C_FIELD(arg0, u32 *, 4)) & 0xF) << 0x1E) | temp_a1);
-    temp_s0 = (s32) (M2C_FIELD(arg1, s32 *, 8) - 0x100) >> 5;
-    __4GIFS(sp, temp_a1);
-    temp_v1 = M2C_FIELD(arg0, u32 *, 0);
-    temp_v0_2 = M2C_FIELD(arg0, u32 *, 4);
-    temp_s7 = 0x800 - ((s32) (temp_v1 + (temp_v1 >> 0x1F)) >> 1);
-    temp_s6 = 0x800 - ((s32) (temp_v0_2 + (temp_v0_2 >> 0x1F)) >> 1);
-    var_s4 = temp_s7;
-    AllocStatic__4DMASiP2QW(sp, 0x40, &sp30, 0x800);
-    AddPrimPack__4GIFSiiUl(sp, 0, 1, 0xE);
-    temp_v1_2 = M2C_FIELD(arg0, u32 *, 0);
-    temp_v0_3 = ((s32) temp_v1_2 > 0x40) ? temp_v1_2 : 0x40U;
-    PackAD__4GIFSll(sp, 0x4C, (temp_v0 >> 5) | ((s64) ((s32) (((s32) temp_v0_3 > -1) ? temp_v0_3 : (temp_v0_3 + 0x3F)) >> 6) << 0x10));
-    PackAD__4GIFSll(sp, 0x4E, temp_s0 | 0x30000000);
-    PackAD__4GIFSll(sp, 0x18, (temp_s7 * 0x10) | ((temp_s6 * 0x10) << 0x20));
-    PackAD__4GIFSll(sp, 0x40, ((M2C_FIELD(arg0, u32 *, 0) - 1) << 0x10) | ((M2C_FIELD(arg0, u32 *, 4) - 1) << 0x30));
-    PackAD__4GIFSll(sp, 0x47, 0x30000);
-    PackAD__4GIFSll(sp, 1, 0);
-    AddPrimPack__4GIFSiiUl(sp, 6, 1, 5);
-    if (var_s4 < (var_s4 + M2C_FIELD(arg0, u32 *, 0))) {
-        do {
-            PackXYZ__4GIFSiii(sp, var_s4 * 0x10, temp_s6 * 0x10, 0);
-            temp_v0_4 = var_s4 + 0x20;
-            var_s4 = temp_v0_4;
-            PackXYZ__4GIFSiii(sp, temp_v0_4 * 0x10, (temp_s6 + M2C_FIELD(arg0, u32 *, 4)) * 0x10, 0);
-        } while (var_s4 < (temp_s7 + M2C_FIELD(arg0, u32 *, 0)));
-    }
-    AddPrimEnd__4GIFS(sp);
-    DMAS_DetachCopyPermanent(sp, arg0 + 0x10, 0, arg0 + 0x14);
-    AllocStatic__4DMASiP2QW(sp, 0x40, &sp30);
-    AddPrimPack__4GIFSiiUl(sp, 0, 1, 0xE);
-    PackAD__4GIFSll(sp, 6, M2C_FIELD(arg0, s64 *, 8));
-    PackAD__4GIFSll(sp, 0x14, 0x60);
-    PackAD__4GIFSll(sp, 8, 5);
-    AddPrimEnd__4GIFS(sp);
-    DMAS_DetachCopyPermanent(sp, arg0 + 0x18, 0, arg0 + 0x1C);
+void __4GIFS(GIFS *);
+void AllocStatic__4DMASiP2QW(GIFS *, int, QW *);
+void AddPrimPack__4GIFSiiUl(GIFS *, int, int, unsigned long);
+void PackAD__4GIFSll(GIFS *, long, long);
+void PackXYZ__4GIFSiii(GIFS *, int, int, int);
+void AddPrimEnd__4GIFS(GIFS *);
+void DMAS_DetachCopyPermanent(GIFS *, int *, int, int *);
+int AllocZpr(Pool *, int);
+int NLog2__FUi(unsigned);
 }
+extern "C" void func_001BE398(Target *target, Pool *pool)
+{
+    int tile = 0x40;
+    target->w = 0x80;
+    target->h = 0x80;
+    int tiles = target->w / tile;
+    int addr = AllocZpr(pool, 0x100);
+    target->tex = (long)(((((target->tex & ~0x3FFFL) | (addr & 0x3FFF)) & 0xFFFFFFFFFFF03FFFL) | 0x8000) & 0xFFFFFFFFFC0FFFFFL);
+    target->tex = (target->tex & 0xFFFFFFFFC3FFFFFFL) | ((long)(NLog2__FUi(target->w) & 0xF) << 26);
+    target->tex = (target->tex & ~(0xFL << 30)) | ((long)(NLog2__FUi(target->h) & 0xF) << 30) | (0x8000L << 19);
+    int base = (pool->top - 0x100) >> 5;
+    GIFS gifs;
+    QW buf[0x40];
+    __4GIFS(&gifs);
+    int x0 = 0x800 - target->w / 2;
+    int y0 = 0x800 - target->h / 2;
+    int x = x0;
+    AllocStatic__4DMASiP2QW(&gifs, 0x40, buf);
+    AddPrimPack__4GIFSiiUl(&gifs, 0, 1, 0xE);
+    int span = target->w > 0x40 ? target->w : 0x40;
+    PackAD__4GIFSll(&gifs, 0x4C, (addr >> 5) | ((long)(span / 0x40) << 16));
+    PackAD__4GIFSll(&gifs, 0x4E, base | 0x30000000);
+    PackAD__4GIFSll(&gifs, 0x18, (x0 * 0x10) | ((long)(y0 * 0x10) << 32));
+    PackAD__4GIFSll(&gifs, 0x40, ((long)(target->w - 1) << 16) | ((long)(target->h - 1) << 48));
+    PackAD__4GIFSll(&gifs, 0x47, 0x30000);
+    PackAD__4GIFSll(&gifs, 1, 0);
+    AddPrimPack__4GIFSiiUl(&gifs, 6, 1, 5);
+    if (x < x + target->w) {
+        do {
+            PackXYZ__4GIFSiii(&gifs, x * 0x10, y0 * 0x10, 0);
+            x += 0x20;
+            PackXYZ__4GIFSiii(&gifs, x * 0x10, (y0 + target->h) * 0x10, 0);
+        } while (x < x0 + target->w);
+    }
+    AddPrimEnd__4GIFS(&gifs);
+    DMAS_DetachCopyPermanent(&gifs, &target->f10, 0, &target->f14);
+    AllocStatic__4DMASiP2QW(&gifs, 0x40, buf);
+    AddPrimPack__4GIFSiiUl(&gifs, 0, 1, 0xE);
+    PackAD__4GIFSll(&gifs, 6, target->tex);
+    PackAD__4GIFSll(&gifs, 0x14, 0x60);
+    PackAD__4GIFSll(&gifs, 8, 5);
+    AddPrimEnd__4GIFS(&gifs);
+    DMAS_DetachCopyPermanent(&gifs, &target->f18, 0, &target->f1c);
 }

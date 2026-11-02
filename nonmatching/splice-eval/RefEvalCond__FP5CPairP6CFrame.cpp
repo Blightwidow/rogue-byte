@@ -31,7 +31,8 @@ s32 RefEvalCond__FP5CPairP6CFrame(s32 arg0, s8 *arg1, s32 arg2) {
     s8 *var_s0;
     s8 *var_s1;
     sp10 = -1;
-    CRef_Destruct((s32 *)(sp), -1);
+    M2C_FIELD(sp, s32 *, 0) = -1;
+    CRef_Destruct((s32 *)(sp));
     SetTag__4CRef4TAGK((s32 *)(sp), 0x24);
     var_s0 = M2C_FIELD(M2C_FIELD(arg1, s8 **, 0xC), s8 **, 0x10);
     if (var_s0 != NULL) {

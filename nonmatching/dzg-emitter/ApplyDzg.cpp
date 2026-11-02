@@ -18,16 +18,17 @@ struct Dzg158E20 {
 };
 void CStackFrame_Construct(char *);
 void CStackFrame_Destructor(char *, int);
-void *PvAllocStackImpl__Fi(void);
+void *PvAllocStackImpl__Fi(Req158E20 *);
 QW LimitVectorLength__FP6VECTORfT0(QW, float);
 void ApplyDzg(Dzg158E20 *dzg, float limitLinear, float limitAngular) {
     char frame[0x10] __attribute__((aligned(16)));
     Req158E20 req;
     Body158E20 *body;
     CStackFrame_Construct(frame);
-    req.size = dzg->bodyCount << 5;
-    req.align = 0x10;
-    PvAllocStackImpl__Fi();
+    Req158E20 *preq = &req;
+    preq->size = dzg->bodyCount << 5;
+    preq->align = 0x10;
+    PvAllocStackImpl__Fi(preq);
     for (int pairIndex = 0; pairIndex < dzg->pairCount; pairIndex++) {
         Pair158E20 *pair = &dzg->pairs[pairIndex];
         if (pair->scale != 0.0f) {

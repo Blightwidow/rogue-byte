@@ -1419,6 +1419,7 @@ address	name	size	file
 0X134648	InitBentley	292	bbmark-blend/InitBentley.cpp
 0X134770	LoadBentleyFromBrx	56	bbmark-blend/LoadBentleyFromBrx.c
 0X1347A8	PostBentleyLoad	168	bbmark-blend/PostBentleyLoad.cpp
+0X134850	UpdateBentleyActive	1248	bbmark-blend/UpdateBentleyActive.cpp
 0X134D30	UpdateBentleyBinoc	120	bbmark-blend/UpdateBentleyBinoc.cpp
 0X1356E8	CalcBentleyBombTarget	212	bbmark-blend/CalcBentleyBombTarget.cpp
 0X1357C0	ThrowBentleyBomb	232	bbmark-blend/ThrowBentleyBomb.cpp
@@ -2140,6 +2141,7 @@ address	name	size	file
 0X165118	SendTaskTimeLimit	88	sensor-geom/SendTaskTimeLimit.cpp
 0X165170	SendTaskEvent	104	sensor-geom/SendTaskEvent.cpp
 0X1651D8	RestartAtTaskOid	168	sensor-geom/RestartAtTaskOid.cpp
+0X165280	func_00165280	696	sensor-geom/fun_00165280.cpp
 0X1657A8	PostTaskJobEvent	40	sensor-geom/PostTaskJobEvent.c
 0X165A60	SetTaskStateCascade	220	sensor-geom/SetTaskStateCascade.cpp
 0X165C28	func_00165C28	108	unsorted/fun_00165c28.cpp
@@ -2319,6 +2321,7 @@ address	name	size	file
 0X176708	GoalBrain_Activate	68	new_1715f0/GoalBrain_Activate.cpp
 0X176750	GoalBrain_SetCommand	1072	new_1715f0/GoalBrain_SetCommand.cpp
 0X176B80	GoalBrain_AbsorbDamage	104	new_1715f0/GoalBrain_AbsorbDamage.cpp
+0X177618	GoalBrain_Update	1416	new_1715f0/GoalBrain_Update.cpp
 0X177BA0	GoalBrain_ChooseNextCommand	384	new_1715f0/GoalBrain_ChooseNextCommand.cpp
 0X177D20	func_00177D20	40	new_1715f0/fun_00177d20.c
 0X177D48	GoalBrain_FGotoTargetInWorld	36	new_1715f0/GoalBrain_FGotoTargetInWorld.cpp
@@ -3847,6 +3850,7 @@ address	name	size	file
 0X1EF0B8	Goal_FHandleMessage	8	shdanim-sm/Goal_FHandleMessage.c
 0X1EF0C0	Goal_FillVjoy	20	shdanim-sm/Goal_FillVjoy.c
 0X1EF0D8	Goal_Pop	92	shdanim-sm/Goal_Pop.cpp
+0X1EF138	PgoalConstruct	1460	shdanim-sm/PgoalConstruct.cpp
 0X1EF6F0	CbGoalMax	8	shdanim-sm/CbGoalMax.c
 0X1EF6F8	StaticInitSkySlotheaps	308	shdanim-sm/StaticInitSkySlotheaps.c
 0X1EF830	func_001EF830	32	shdanim-sm/fun_001ef830.c

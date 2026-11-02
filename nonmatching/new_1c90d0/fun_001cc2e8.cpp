@@ -71,9 +71,11 @@ extern "C" void func_001CC2E8(Carry *carry)
         break;
     }
     case 2: {
-        MATRIX4 rel;
-        rel = *(MATRIX4 *)GetMat(carry->ploTarget) * Inv(*(MATRIX4 *)&carry->matBase);
-        QW *rows = (QW *)&rel;
+        M4 *target = GetMat(carry->ploTarget);
+        MATRIX4 inv;
+        InvertMatrix4Affine((M4 *)&inv, &carry->matBase);
+        MATRIX4 mat = *(MATRIX4 *)target * inv;
+        QW *rows = (QW *)&mat;
         rot[0] = rows[0];
         rot[1] = rows[1];
         rot[2] = rows[2];
@@ -87,12 +89,12 @@ extern "C" void func_001CC2E8(Carry *carry)
     QW posLocal = ConvertAloPos(0, carry->pjt, posTarget);
     probe.pcarry = carry;
     QW chain;
-    float root;
+    int root;
     asm("qmtc2.ni %1, vf1\n\tvmul.xy vf2, vf1, vf1\n\tvaddy.x vf2, vf2, vf2y" : "=r" (chain) : "r" (posLocal));
     asm("sqc2 vf1, %0" : "=m" (flat) : "r" (chain));
     asm("vsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q\n\tqmfc2.ni %0, vf2" : "=r" (root) : "r" (chain));
     ((int *)&flat)[1] = 0;
-    *(int *)&flat = (int)root;
+    *(int *)&flat = root;
     probe.posFlat = ConvertAloPos(carry->pjt, 0, flat);
     if (carry->kind == 2) {
         MinimizeRange__FPFPvf_fPvffffPfT6(Carry_SDistEndCurves, &probe, &u, &sdist, 0.5f, 0.1f, 0.0f, 1.0f);

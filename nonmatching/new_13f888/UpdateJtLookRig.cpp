@@ -140,17 +140,20 @@ void UpdateJtLookRig(char *self)
     asm("lqc2 vf1, %0\n\tlqc2 vf6, %1\n\tlqc2 vf5, %2\n\tlqc2 vf4, %3\n\tvmulax.xyz ACC, vf1, vf4x\n\tvmadday.xyz ACC, vf6, vf4y\n\tvmaddz.xyz vf4, vf5, vf4z"
         : : "m" (f.rel.row[0]), "m" (f.rel.row[1]), "m" (f.rel.row[2]), "m" (f.pt.row[0]));
     asm("sqc2 vf4, %0" : "=m" (f.rel.row[0]));
-    asm("lqc2 vf2, %0\n\tvmulax.xyz ACC, vf1, vf2x\n\tvmadday.xyz ACC, vf6, vf2y\n\tvmaddz.xyz vf2, vf5, vf2z\n\tlqc2 vf3, %1\n\tvmulax.xyz ACC, vf1, vf3x\n\tvmadday.xyz ACC, vf6, vf3y\n\tvmaddz.xyz vf1, vf5, vf3z\n\tsqc2 vf2, %2\n\tsqc2 vf1, %3"
+    asm("lqc2 vf2, %2\n\tvmulax.xyz ACC, vf1, vf2x\n\tvmadday.xyz ACC, vf6, vf2y\n\tvmaddz.xyz vf2, vf5, vf2z\n\tlqc2 vf3, %3\n\tvmulax.xyz ACC, vf1, vf3x\n\tvmadday.xyz ACC, vf6, vf3y\n\tvmaddz.xyz vf1, vf5, vf3z\n\tsqc2 vf2, %0\n\tsqc2 vf1, %1"
         : "=m" (f.rel.row[1]), "=m" (f.rel.row[2]) : "m" (f.pt.row[1]), "m" (f.pt.row[2]));
     asm("sqc2 vf4, %0\n\tsqc2 vf4, %1\n\tsqc2 vf2, %2\n\tsqc2 vf2, %3\n\tsqc2 vf1, %4\n\tsqc2 vf1, %5"
         : "=m" (f.roll.row[0]), "=m" (f.goal.row[0]), "=m" (f.roll.row[1]), "=m" (f.goal.row[1]), "=m" (f.roll.row[2]), "=m" (f.goal.row[2]));
     float *lk = (float *)&f.look.row[0];
     float *rl = (float *)&f.rel.row[0];
     if (lk[0] + rl[0] < 0.0f && lk[1] * rl[1] < 0.0f) {
-        f.goal = *rest;
+        f.goal = *(Rows3 *)(self + 0x1150);
     } else {
-        asm("lqc2 vf6, %0\n\tlqc2 vf4, %1\n\tlqc2 vf1, %2\n\tlqc2 vf3, %3\n\tlqc2 vf2, %4\n\tlqc2 vf5, %5\n\tvmulax.xyz ACC, vf1, vf6x\n\tvmadday.xyz ACC, vf3, vf6y\n\tvmaddz.xyz vf6, vf2, vf6z\n\tvmulax.xyz ACC, vf1, vf4x\n\tvmadday.xyz ACC, vf3, vf4y\n\tvmaddz.xyz vf4, vf2, vf4z\n\tsqc2 vf6, %6\n\tvmulax.xyz ACC, vf1, vf5x\n\tvmadday.xyz ACC, vf3, vf5y\n\tvmaddz.xyz vf1, vf2, vf5z"
-            : "=m" (f.goal.row[2]) : "m" (rest->row[2]), "m" (rest->row[0]), "m" (f.look.row[0]), "m" (f.look.row[1]), "m" (f.look.row[2]), "m" (rest->row[1]));
+        asm("lqc2 vf6, %3\n\tlqc2 vf4, %4\n\tlqc2 vf1, %5\n\tlqc2 vf3, %6\n\tlqc2 vf2, %7\n\tlqc2 vf5, %8\n\tvmulax.xyz ACC, vf1, vf6x\n\tvmadday.xyz ACC, vf3, vf6y\n\tvmaddz.xyz vf6, vf2, vf6z\n\tvmulax.xyz ACC, vf1, vf4x\n\tvmadday.xyz ACC, vf3, vf4y\n\tvmaddz.xyz vf4, vf2, vf4z\n\tsqc2 vf6, %2\n\tvmulax.xyz ACC, vf1, vf5x\n\tvmadday.xyz ACC, vf3, vf5y\n\tvmaddz.xyz vf1, vf2, vf5z\n\tsqc2 vf4, %0\n\tsqc2 vf1, %1"
+            : "=m" (f.goal.row[0]), "=m" (f.goal.row[1]), "=m" (f.goal.row[2])
+            : "m" (rest->row[2]), "m" (*(QW *)(self + 0x1150)), "m" (f.look.row[0]), "m" (f.look.row[1]), "m" (f.look.row[2]), "m" (rest->row[1]));
+        asm("sqc2 vf4, %0\n\tsqc2 vf4, %1\n\tsqc2 vf1, %2\n\tsqc2 vf1, %3\n\tsqc2 vf6, %4\n\tsqc2 vf6, %5"
+            : "=m" (f.roll.row[0]), "=m" (f.pt.row[0]), "=m" (f.roll.row[1]), "=m" (f.pt.row[1]), "=m" (f.roll.row[2]), "=m" (f.pt.row[2]));
     }
     ConvertXfMat(ppt, *(void **)(self + 0x60), *(void **)(*(char **)(*(char **)(self + 0x10F4) + 8) + 0xA0), pgoal);
     f.goal = f.pt;
