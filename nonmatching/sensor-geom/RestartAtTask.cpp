@@ -94,9 +94,10 @@ void RestartAtTask(TASK *task)
         CRef_Destruct(&result);
         CRef_Destruct(&arg);
     }
-    int id = task->fB8;
     int mode = 4;
-    int row = ~id != 0 ? id : 0x189;
+    int row = task->fB8;
+    if (row == -1)
+        row = 0x189;
     if (B_003DD490.level != 0 && (task->fBC == -1 || task->fBC == IdCurrentLevel(B_003DD490.level)))
         mode = 0x24;
     RequestTransition(&B_003DD490, PdescFromLevelRow(task->fBC), row, -1, mode, 0x30A);

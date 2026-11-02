@@ -1,33 +1,24 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct Frame1C3A08 { QW mat[3]; QW pos; QW scale; };
+extern int g_2c0d04;
 extern "C" {
-struct _m2c_stack_func_001C3A08 {
-    /* 0x00 */ char pad0[0x30];
-    /* 0x30 */ M2C_UNK sp30;                        /* inferred */
-    /* 0x30 */ char pad30[0x60];
-};                                                  /* size = 0x90 */
-M2C_UNK GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(M2C_UNK); /* extern */
-M2C_UNK GetPathPosFromS(s32, M2C_UNK *, M2C_UNK, f32); /* extern */
-extern s32 g_2c0d04;
-void func_001C3A08(s32 arg0, s32 arg2, f32 fparg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
-    M2C_UNK sp30;
-    GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(1);
-    GetPathPosFromS(arg0, &sp30, 0, fparg0);
-    if (arg2 != 0) {
-        asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(sp));
-        asm volatile("qmtc2.ni %0, vf3" : : "r"(g_2c0d04));
-        asm volatile("lqc2 vf1, (%0)" : : "r"(sp));
-        asm volatile("vadda.xyzw ACC, vf0, vf2");
-        asm volatile("vmaddx.xyzw vf2, vf1, vf3x");
-        asm volatile("sqc2 vf3, 0x40(%0)" : : "r"(sp));
-        asm volatile("sqc2 vf2, (%0)" : : "r"(arg2));
+void GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(void *, int, float, void *);
+void GetPathPosFromS(void *, QW *, int, float);
+void func_001C3A08(void *jt, int unused, QW *out, float s)
+{
+    Frame1C3A08 frame;
+    GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3(jt, 1, s, &frame);
+    GetPathPosFromS(jt, &frame.pos, 0, s);
+    if (out != 0) {
+        int fence;
+        int fence2;
+        int fence3;
+        asm("lqc2 vf2, %1" : "=r"(fence) : "m"(frame.pos));
+        asm("qmtc2.ni %1, vf3" : "=r"(fence2) : "r"(g_2c0d04), "r"(fence));
+        asm("lqc2 vf1, %1\n\tvadda.xyzw ACC, vf2, vf0\n\tvmaddx.xyzw vf2, vf1, vf3x" : "=r"(fence3) : "m"(frame.mat[0]), "r"(fence2));
+        int fence4;
+        asm("sqc2 vf3, %1" : "=r"(fence4), "=m"(frame.scale) : "r"(fence3));
+        asm("sqc2 vf2, %0" : "=m"(*out) : "r"(fence4));
     }
 }
 }

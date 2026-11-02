@@ -4,7 +4,11 @@ struct SAVE;
 struct ALLOCREQ { int cb; int cbAlign; };
 struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[0x100]; void Clear(); int Set(const unsigned *record)
     {
-        return record != 0 ? (a = (record[0] ^ record[0xD]) + 0xCA0, c = 2, b = record[1] ^ record[0xF], b != 0) : 0;
+        if (record == 0) return 0;
+        a = (record[0] ^ record[0xD]) + 0xCA0;
+        c = 2;
+        b = record[1] ^ record[0xF];
+        return b != 0;
     }
 };
 struct STREAM { char pad[0x70]; };

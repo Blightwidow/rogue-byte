@@ -16,8 +16,10 @@ extern "C" void GoalPostRun_Update(GOAL *goal)
             QW posGuard = PosLoWorld(goal->guard);
             QW posTarget = PosLoWorld(goal->target);
             int result = 0;
-            float length;
-            asm volatile("lqc2 vf1, %1\n\tqmtc2.ni %2, vf3\n\tvsub.xyzw vf2, vf1, vf3\n\tvmul.xy vf1, vf2, vf2\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %0, vf1" : "=r" (length) : "m" (posGuard), "r" (posTarget));
+            int lengthBits, fence;
+            asm volatile("lqc2 vf1, %1\n\tqmtc2.ni %2, vf3\n\tvsub.xyzw vf2, vf1, vf3\n\tvmul.xy vf1, vf2, vf2\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "=r" (fence) : "m" (posGuard), "r" (posTarget));
+            asm volatile("qmfc2.ni %0, vf1" : "=r" (lengthBits) : "r" (fence));
+            float length = *(float *)&lengthBits;
             if (length < 850.0f) {
                 float z;
                 asm volatile("qmfc2.ni %0, vf2\n\tpextuw %0, $0, %0" : "=r" (z));
