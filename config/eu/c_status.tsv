@@ -1910,6 +1910,7 @@ us_address	name	other_address	pair	score	addresses
 0x154A80	func_00154A80	0X154AA8	gap	0	ok
 0x154D88	AddSuck	0X154DB0	same	0	ok
 0x154DC8	ChangeSuck__FfP10DIFFICULTY	0X154DF0	same	0	ok
+0x154E10	OnDifficultyBreak	0X154E38	same	0	ok
 0x155228	SFromCrvlU__FP4CRVLf	0X155250	same	0	ok
 0x155298	difficulty__static_initialization_and_destruction_0	0X1552C0	same	0	ok
 0x1553D0	difficulty__static_initialization_and_destruction_0_thunk	0X1553F8	same	0	ok
@@ -1979,6 +1980,7 @@ us_address	name	other_address	pair	score	addresses
 0x159118	InitEmitb	0X159140	same	0	ok
 0x1591B0	InitEmitter__FP7EMITTER	0X1591D8	same	0	ok
 0x1594D8	AddSwFocusFollower_thunk	0X159500	same	0	ok
+0x159500	CEmitter_PostLoad	0X159528	gap	0	ok
 0x159968	AttachEmitterToReference	0X159990	same	0	ok
 0x1599A8	HandleEmitterMessage	0X1599D0	identical	0	ok
 0x159A08	func_00159A08	0X159A30	gap	0	ok
@@ -2004,6 +2006,7 @@ us_address	name	other_address	pair	score	addresses
 0x15C650	PsfxEnsureExpls	0X15C678	same	0	ok
 0x15CD48	func_0015CD48	0X15CD70	same	0	ok
 0x15CD68	InitEpsel	0X15CD90	same	0	ok
+0x15CF30	UpdateEpsel	0X15CF58	same	0	ok
 0x15D5C8	LabelFromEpselMode	0X15D5F0	same	0	ok
 0x15D648	SetEpselMode	0X15D670	same	0	ok
 0x15D798	IrowLastEpselReplay	0X15D7C0	same	0	ok
@@ -2071,6 +2074,7 @@ us_address	name	other_address	pair	score	addresses
 0x1618F8	ShowCountdownBlot	0X161928	same	0	ok
 0x161958	HideCountdownBlot	0X161988	identical	0	ok
 0x1619A0	bevy_camera_follow_activity	0X1619D0	same	0	ok
+0x161A58	bevy_game_app_job_level_loaded		none		
 0x161F10	func_00161F10	0X161E68	identical	0	ok
 0x161F48	ApplyTaskStateRequests	0X161EA0	same	0	ok
 0x161FC8	GrfOfState	0X161F20	identical	0	ok
@@ -3499,6 +3503,7 @@ us_address	name	other_address	pair	score	addresses
 0x1D98B0	CGc_PushScreen	0X1D9BF8	same	0	ok
 0x1D9910	CGc_PopScreen	0X1D9C58	same	0	ok
 0x1D9B30	ReleaseMeter	0X1D9E78	same	0	ok
+0x1D9DF8	UpdateMeter	0X1DA140	same	0	ok
 0x1DA2E0	FindHudLabelBlot	0X1DA628	same	0	ok
 0x1DA320	InitHudLabel	0X1DA668	same	0	ok
 0x1DA350	UpdateHudLabel	0X1DA698	same	0	ok
@@ -4186,6 +4191,7 @@ us_address	name	other_address	pair	score	addresses
 0x202350	func_00202350	0X202B10	identical	0	ok
 0x2026F8	func_002026F8	0X202EB8	same	0	ok
 0x202730	func_00202730	0X202EF0	same	0	ok
+0x202768	bevy_ui_binoc_recon_202768	0X202F28	same	0	ok
 0x203568	func_00203568	0X203D28	same	0	ok
 0x2035A8	func_002035A8	0X203D68	same	0	ok
 0x203638	OnStepguardAdd__FP9STEPGUARD	0X203DF8	same	0	ok
@@ -4484,6 +4490,7 @@ us_address	name	other_address	pair	score	addresses
 0x2113B8	func_002113B8	0X211B88	same	0	ok
 0x2113E0	BindTextMarquee	0X211BB0	same	0	ok
 0x211420	func_00211420	0X211BF0	same	0	ok
+0x211528	func_00211528	0X211CF8	same	3	ok
 0x211A80	func_00211A80	0X212250	same	0	ok
 0x211C10	func_00211C10	0X2123E0	same	0	ok
 0x211C58	func_00211C58	0X212428	same	0	ok

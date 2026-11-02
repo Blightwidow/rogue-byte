@@ -1910,6 +1910,7 @@ address	name	size	file
 0X154A80	func_00154A80	16	new_154a80/fun_00154a80.cpp
 0X154D88	AddSuck	60	sw/AddSuck.c
 0X154DC8	ChangeSuck__FfP10DIFFICULTY	68	difficulty/ChangeSuck__FfP10DIFFICULTY.cpp
+0X154E10	OnDifficultyBreak	1048	difficulty-crv/OnDifficultyBreak.cpp
 0X155228	SFromCrvlU__FP4CRVLf	108	crv/SFromCrvlU__FP4CRVLf.cpp
 0X155298	difficulty__static_initialization_and_destruction_0	308	crv-lo/difficulty__static_initialization_and_destruction_0.c
 0X1553D0	difficulty__static_initialization_and_destruction_0_thunk	32	crv-lo/difficulty__static_initialization_and_destruction_0_thunk.c
@@ -1979,6 +1980,7 @@ address	name	size	file
 0X159118	InitEmitb	152	dzg-emitter/InitEmitb.cpp
 0X1591B0	InitEmitter__FP7EMITTER	144	emitter/InitEmitter__FP7EMITTER.cpp
 0X1594D8	AddSwFocusFollower_thunk	36	emitter/AddSwFocusFollower_thunk.c
+0X159500	CEmitter_PostLoad	1128	emitter/CEmitter_PostLoad.cpp
 0X159968	AttachEmitterToReference	64	emitter/AttachEmitterToReference.c
 0X1599A8	HandleEmitterMessage	92	emitter/HandleEmitterMessage.cpp
 0X159A08	func_00159A08	20	unsorted/fun_00159a08.c
@@ -2004,6 +2006,7 @@ address	name	size	file
 0X15C650	PsfxEnsureExpls	60	bomb/PsfxEnsureExpls.c
 0X15CD48	func_0015CD48	32	emitter-font/fun_0015cd48.c
 0X15CD68	InitEpsel	64	emitter-font/InitEpsel.cpp
+0X15CF30	UpdateEpsel	1684	emitter-font/UpdateEpsel.cpp
 0X15D5C8	LabelFromEpselMode	128	emitter-font/LabelFromEpselMode.cpp
 0X15D648	SetEpselMode	336	emitter-font/SetEpselMode.cpp
 0X15D798	IrowLastEpselReplay	228	emitter-font/IrowLastEpselReplay.cpp
@@ -2071,6 +2074,7 @@ address	name	size	file
 0X1618F8	ShowCountdownBlot	96	new_161458/ShowCountdownBlot.cpp
 0X161958	HideCountdownBlot	68	new_161458/HideCountdownBlot.cpp
 0X1619A0	bevy_camera_follow_activity	184	new_161458/bevy_camera_follow_activity.cpp
+0X161A58	bevy_game_app_job_level_loaded	1204	new_161458/bevy_game_app_job_level_loaded.cpp
 0X161F10	func_00161F10	52	new_161458/fun_00161f10.cpp
 0X161F48	ApplyTaskStateRequests	128	new_161458/ApplyTaskStateRequests.c
 0X161FC8	GrfOfState	40	new_161458/GrfOfState.cpp
@@ -3499,6 +3503,7 @@ address	name	size	file
 0X1D98B0	CGc_PushScreen	96	splice-gc-wipe/CGc_PushScreen.c
 0X1D9910	CGc_PopScreen	88	splice-gc-wipe/CGc_PopScreen.c
 0X1D9B30	ReleaseMeter	44	splice-gc-wipe/ReleaseMeter.cpp
+0X1D9DF8	UpdateMeter	1256	splice-gc-wipe/UpdateMeter.cpp
 0X1DA2E0	FindHudLabelBlot	60	splice-gc-wipe/FindHudLabelBlot.c
 0X1DA320	InitHudLabel	48	splice-gc-wipe/InitHudLabel.cpp
 0X1DA350	UpdateHudLabel	356	splice-gc-wipe/UpdateHudLabel.cpp
@@ -4186,6 +4191,7 @@ address	name	size	file
 0X202350	func_00202350	40	unsorted/fun_00202350.cpp
 0X2026F8	func_002026F8	56	sprbuf-stepguard/fun_002026f8.cpp
 0X202730	func_00202730	56	sprbuf-stepguard/fun_00202730.cpp
+0X202768	bevy_ui_binoc_recon_202768	1488	sprbuf-stepguard/bevy_ui_binoc_recon_202768.cpp
 0X203568	func_00203568	60	sprbuf-stepguard/fun_00203568.c
 0X2035A8	func_002035A8	140	sprbuf-stepguard/fun_002035a8.cpp
 0X203638	OnStepguardAdd__FP9STEPGUARD	56	stepguard/OnStepguardAdd__FP9STEPGUARD.c
@@ -4484,6 +4490,7 @@ address	name	size	file
 0X2113B8	func_002113B8	36	unsorted/fun_002113b8.c
 0X2113E0	BindTextMarquee	64	po-screen/BindTextMarquee.c
 0X211420	func_00211420	260	po-screen/fun_00211420.cpp
+0X211528	func_00211528	1364	po-screen/fun_00211528.cpp
 0X211A80	func_00211A80	400	po-screen/fun_00211a80.cpp
 0X211C10	func_00211C10	68	po-screen/fun_00211c10.cpp
 0X211C58	func_00211C58	76	po-screen/fun_00211c58.cpp

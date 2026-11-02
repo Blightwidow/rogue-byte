@@ -18,6 +18,14 @@ extern "C" void SetMeterState(Meter_1D9DF8 *, int);
 extern char B_003DD490[];
 extern char D_002C3248[];
 extern float g_2dded4;
+static inline void SetMeterIds(Meter_1D9DF8 *self, int first, int second, int third, int fourth, int fifth)
+{
+    self->id3C = first;
+    self->id40 = second;
+    self->id44 = third;
+    self->id48 = fourth;
+    self->id4C = fifth;
+}
 extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
     if (self->blot == 0) {
         return;
@@ -45,28 +53,12 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
         } else {
             SetMeterState(self, 5);
         }
-        int first;
-        int second;
-        int third;
-        int fourth;
-        int fifth;
-        if (FIsBasicDerivedFrom(self->player, 0x35) != 0) {
-            first = 0x33D; second = 0x33E; third = 0x33F; fourth = 0x340; fifth = 0x341;
-            goto storeIds;
-        }
-        if (FIsBasicDerivedFrom(self->player, 0x37) != 0) {
-            first = 0x347; second = 0x348; third = 0x349; fourth = 0x34A; fifth = 0x34B;
-            goto storeIds;
-        }
-        if (FIsBasicDerivedFrom(self->player, 0x36) != 0) {
-            first = 0x342; second = 0x343; third = 0x344; fourth = 0x345; fifth = 0x346;
-        storeIds:
-            self->id3C = first;
-            self->id40 = second;
-            self->id44 = third;
-            self->id48 = fourth;
-            self->id4C = fifth;
-        }
+        if (FIsBasicDerivedFrom(self->player, 0x35) != 0)
+            SetMeterIds(self, 0x33D, 0x33E, 0x33F, 0x340, 0x341);
+        else if (FIsBasicDerivedFrom(self->player, 0x37) != 0)
+            SetMeterIds(self, 0x347, 0x348, 0x349, 0x34A, 0x34B);
+        else if (FIsBasicDerivedFrom(self->player, 0x36) != 0)
+            SetMeterIds(self, 0x342, 0x343, 0x344, 0x345, 0x346);
         Player_1D9DF8 *player = self->player;
         float health = (float)*player->health / (float)player->maxHealth;
         self->f24 = health;
@@ -83,35 +75,26 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
         self->f24 = (float)*player->health / (float)player->maxHealth;
         float power = (float)GetJtPower(player) / (float)self->player->powerMax;
         self->f2C = power;
-        if (*self->player->health > 0) {
-            float shown = self->f20;
-            float goal = self->f24;
-            if (goal < shown) {
-                SetMeterState(self, 2);
-                return;
-            }
-            if (!(shown < goal)) {
-                if (FFloatsNear__Ffff(self->f28, power, 0.0001f) != 0) {
-                    Player_1D9DF8 *current = self->player;
-                    if (current->x10EC != 4) {
-                        if (current->x10C8 != -1) {
-                            SetMeterState(self, 6);
-                            return;
-                        }
-                        SetMeterState(self, 1);
-                        return;
-                    }
-                    SetMeterState(self, 7);
-                    return;
-                }
-                SetMeterState(self, 4);
-                return;
-            }
-            SetMeterState(self, 3);
-            return;
+        if (*self->player->health <= 0) {
+            SetMeterState(self, 0);
+            break;
         }
-        SetMeterState(self, 0);
-        return;
+        float shown = self->f20;
+        float goal = self->f24;
+        if (goal < shown) {
+            SetMeterState(self, 2);
+        } else if (shown < goal) {
+            SetMeterState(self, 3);
+        } else if (FFloatsNear__Ffff(self->f28, power, 0.0001f) == 0) {
+            SetMeterState(self, 4);
+        } else if (self->player->x10EC == 4) {
+            SetMeterState(self, 7);
+        } else if (self->player->x10C8 != -1) {
+            SetMeterState(self, 6);
+        } else {
+            SetMeterState(self, 1);
+        }
+        break;
     }
     case 2:
         if (FBlotLabelPlaying(self->blot, self->id40) == 0) {
@@ -126,11 +109,10 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
     case 0: {
         Player_1D9DF8 *player = self->player;
         self->f24 = (float)*player->health / (float)player->maxHealth;
-        float goal = self->f24;
         self->f2C = (float)GetJtPower(player) / (float)self->player->powerMax;
-        if (self->f20 < goal) {
-            self->f20 = goal;
-            SeekBlotLabel(self->blot, 0x34F, 1.0f - goal);
+        if (self->f20 < self->f24) {
+            self->f20 = self->f24;
+            SeekBlotLabel(self->blot, 0x34F, 1.0f - self->f24);
             float power = self->f2C;
             self->f28 = power;
             SeekBlotLabel(self->blot, 0x350, 1.0f - power);
@@ -155,8 +137,8 @@ extern "C" void UpdateMeter(Meter_1D9DF8 *self) {
         break;
     }
     case 4: {
-        float shown = self->f28;
         float goal = (float)GetJtPower(self->player) / (float)self->player->powerMax;
+        float shown = self->f28;
         self->f2C = goal;
         if (shown < goal) {
             self->f28 = goal;

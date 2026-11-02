@@ -3,7 +3,7 @@ void ClearHandsOff(void *, int);
 int ClearReconVisibility(char *, int);
 void HideReconLinks(char *);
 int NewEmitter(int, int);
-void SeekBlotLabel(char *, int, int);
+void SeekBlotLabel(char *, int, float);
 void SetBlotBlots(char *, int);
 void SetBlotModal(char *, int);
 void SetClockRate(void *, int, float);
@@ -22,8 +22,8 @@ void bevy_ui_binoc_recon_2021f8(char *);
 int bevy_ui_binoc_recon_2022d8(char *);
 void func_0014FE28(void *);
 int func_001FE5B8(void *, int, int);
-int func_00213928(char *, int);
-int func_00213B00(char *, int);
+void func_00213928(char *, int);
+void func_00213B00(char *, int);
 extern char B_002DE390;
 extern char B_002DEB30;
 extern char B_003DD040;
@@ -32,8 +32,23 @@ extern char g_2dded0;
 #define VTAB(object) (*(char **)((char *)(object) + 0xC))
 #define VADJ(object, off) ((char *)(object) + *(short *)(VTAB(object) + (off) - 4))
 #define VFN(object, off) (*(void **)(VTAB(object) + (off)))
-#define VCALL_INT_SELF(object, off, value) ((void (*)(char *, int, char *))VFN(object, off))(VADJ(object, off), (value), (char *)(object))
-#define VCALL_SELF(object, off) ((void (*)(char *, char *))VFN(object, off))(VADJ(object, off), (char *)(object))
+#define VCALL_INT_SELF(object, off, value) ((void (*)(char *, int))VFN(object, off))(VADJ(object, off), (value))
+#define VCALL_SELF(object, off) ((void (*)(char *))VFN(object, off))(VADJ(object, off))
+static inline int GrfOf(char *blot)
+{
+    int grf = *(int *)(blot + 0x40);
+    if (!(grf & 1))
+        return *(int *)grf;
+    return grf;
+}
+static inline void AddGrf(char *blot, int bits)
+{
+    int grf = *(int *)(blot + 0x40);
+    if (((grf ^ 1) & 1) != 0)
+        *(int *)grf |= bits;
+    else
+        *(int *)(blot + 0x40) = grf | bits;
+}
 void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
     int old = *(int *)arg0;
     if ((old != arg1) && (*(char **)(arg0 + 0xAC) != 0) && (*(char **)(arg0 + 0xB0) != 0)) {
@@ -123,13 +138,15 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
             return;
         case 1:
             func_00213928(*(char **)(arg0 + 0xAC), 0x35D);
-        case 2:
             VCALL_INT_SELF(*(char **)(arg0 + 0xB0), 0x18C, 0x339);
             return;
         case 5:
+            func_00213B00(*(char **)(arg0 + 0xB0), 0x35A);
+            SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x35A, 0.0f);
+            return;
         case 6:
             func_00213B00(*(char **)(arg0 + 0xB0), 0x35A);
-            SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x35A, 0);
+            SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x35A, 0.0f);
             return;
         case 7:
             SetEmitterUnpositioned(NewEmitter(0x52, previous), 0);
@@ -142,18 +159,8 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
             func_00213928(*(char **)(arg0 + 0xAC), 0x35B);
             func_00213B00(*(char **)(arg0 + 0xAC), 0x358);
             char **handle = *(char ***)(arg0 + 0xA8);
-            int tagged = *(int *)(*handle + 0x40);
-            if (!(tagged & 1)) {
-                tagged = *(int *)tagged;
-            }
-            *(int *)(arg0 + 0xA0) = tagged & ~1;
-            char *holder = *handle;
-            int second = *(int *)(holder + 0x40);
-            if (!(second & 1)) {
-                *(int *)second = *(int *)second | 0x102;
-            } else {
-                *(int *)(holder + 0x40) = second | 0x102;
-            }
+            *(int *)(arg0 + 0xA0) = GrfOf(*handle) & ~1;
+            AddGrf(*handle, 0x102);
             func_001FE5B8(&B_003DD040, 1, 0);
             SetClockRate(&g_2dded0, 0, 0.0f);
             return;
@@ -168,7 +175,10 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
             *(char **)(*(char **)(arg0 + 0xB0) + 0xF4) = *(char **)(arg0 + 0x8C);
             VCALL_INT_SELF(*(char **)(arg0 + 0xB0), 0x18C, 0x337);
             func_00213B00(*(char **)(arg0 + 0xB0), 0x359);
-            SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x359, 0);
+            SeekBlotLabel(*(char **)(arg0 + 0xB0), 0x359, 0.0f);
+            return;
+        case 2:
+            VCALL_INT_SELF(*(char **)(arg0 + 0xB0), 0x18C, 0x339);
             return;
         case 10:
             *(int *)(arg0 + 0xBC) = -1;

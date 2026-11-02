@@ -219,7 +219,6 @@ address	name	size	file	score
 0X154770	func_00154770	408	new_154180/fun_00154770.cpp	82
 0X154A90	OnDifficultyEvent	512	new_154a80/OnDifficultyEvent.c	70
 0X154C90	GetSuck	248	new_154a80/GetSuck.cpp	5
-0X154E10	OnDifficultyBreak	1048	difficulty-crv/OnDifficultyBreak.cpp	148
 0X155660	func_00155660	296	crv-lo/fun_00155660.cpp	9
 0X155868	func_00155868	328	crv-lo/fun_00155868.c	73
 0X155AE0	func_00155AE0	688	crv-lo/fun_00155ae0.cpp	11
@@ -236,7 +235,6 @@ address	name	size	file	score
 0X158B20	SolveDzgFric__FP3DZGiiPP2XPPiPPP2SOf	768	dzg_158668/SolveDzgFric__FP3DZGiiPP2XPPiPPP2SOf.cpp	89
 0X158E20	ApplyDzg	416	dzg-emitter/ApplyDzg.cpp	7
 0X159240	LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream	664	emitter_1591b0/LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream.cpp	118
-0X159500	CEmitter_PostLoad	1128	emitter_1591b0/CEmitter_PostLoad.cpp	122
 0X159A20	ModifyEmitterParticles__FP7EMITTER	608	emitter_1591b0/ModifyEmitterParticles__FP7EMITTER.cpp	73
 0X159C80	UpdateEmitter__FP7EMITTERf	1208	emitter_1591b0/UpdateEmitter__FP7EMITTERf.cpp	289
 0X15A2C0	WakeSoWater__FP2SOP5WATERfP6VECTORT3ff	1352	emitter_1591b0/WakeSoWater__FP2SOP5WATERfP6VECTORT3ff.cpp	21
@@ -250,7 +248,6 @@ address	name	size	file	score
 0X15BFD8	CalculateEmitdvMatrix	376	emitter_1591b0/CalculateEmitdvMatrix.cpp	48
 0X15CAD8	expl__static_initialization_and_destruction_0	624	emitter-font/expl__static_initialization_and_destruction_0.cpp	68
 0X15CDA8	PostEpselLoad	392	emitter-font/PostEpselLoad.cpp	18
-0X15CF30	UpdateEpsel	1688	emitter-font/UpdateEpsel.cpp	148
 0X15DD48	DrawFade	1168	emitter-font/DrawFade.c	300
 0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	146
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	201
@@ -264,7 +261,6 @@ address	name	size	file	score
 0X160F98	BlendPrevFrame__Fv	672	frm/BlendPrevFrame__Fv.cpp	87
 0X161478	UpdatePlayTime	488	new_161458/UpdatePlayTime.cpp	65
 0X1617E0	SetGameCoins	136	new_161458/SetGameCoins.cpp	13
-0X161A58	bevy_game_app_job_level_loaded	1208	new_161458/bevy_game_app_job_level_loaded.cpp	97
 0X163170	SetJobEndSequence	632	new_161458/SetJobEndSequence.cpp	18
 0X163460	SaveJobVariables	320	new_161458/SaveJobVariables.cpp	23
 0X1643B0	SaveTaskVariables	544	sensor-geom/SaveTaskVariables.cpp	84
@@ -670,7 +666,6 @@ address	name	size	file	score
 0X1D9408	CGc_Shutdown	280	jump-splice-spliceutils/CGc_Shutdown.cpp	11
 0X1D9968	InitMeter	456	splice-gc-wipe/InitMeter.cpp	73
 0X1D9B60	SetMeterState	664	splice-gc-wipe/SetMeterState.cpp	119
-0X1D9DF8	UpdateMeter	1256	splice-gc-wipe/UpdateMeter.cpp	92
 0X1DAC58	GadgetMenu_DrawSlotLabels	456	game-stepguard/GadgetMenu_DrawSlotLabels.cpp	76
 0X1DB0C8	GadgetMenu_SetDirection	712	game-stepguard/GadgetMenu_SetDirection.cpp	143
 0X1DB870	ShopMenu_Update	816	game-stepguard/ShopMenu_Update.cpp	203
@@ -789,7 +784,6 @@ address	name	size	file	score
 0X2019F0	sprbuf__static_initialization_and_destruction_0	872	sprbuf/sprbuf__static_initialization_and_destruction_0.cpp	118
 0X202378	ProbeReconTargetVisibility	456	sprbuf-stepguard/ProbeReconTargetVisibility.cpp	37
 0X202540	PickReconTarget	440	sprbuf-stepguard/PickReconTarget.cpp	39
-0X202768	bevy_ui_binoc_recon_202768	1488	sprbuf-stepguard/bevy_ui_binoc_recon_202768.cpp	118
 0X203AF0	CloneStepHullGeom	456	new_203790/CloneStepHullGeom.c	71
 0X203E08	UpdateStepPhys__FP4STEP	408	step/UpdateStepPhys__FP4STEP.cpp	50
 0X204250	AdjustStepNewXp	608	new_204250/AdjustStepNewXp.cpp	74
@@ -835,7 +829,6 @@ address	name	size	file	score
 0X20FC60	IntersectSwBoundingSphere	360	sw-button/IntersectSwBoundingSphere.cpp	4
 0X210740	StartSwAmbSfx	424	button-po/StartSwAmbSfx.cpp	15
 0X210ED0	func_00210ED0	128	po-screen/fun_00210ed0.cpp	2
-0X211528	func_00211528	1368	po-screen/fun_00211528.cpp	140
 0X211CA8	PromptBlot_Show	96	po-screen/PromptBlot_Show.cpp	3
 0X2124F0	PrepareBlotMovie	656	po-screen/PrepareBlotMovie.cpp	143
 0X212A70	SetBlotBlots	480	screen-font/SetBlotBlots.cpp	46
