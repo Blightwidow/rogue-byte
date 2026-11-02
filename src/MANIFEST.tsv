@@ -1696,6 +1696,7 @@ address	name	size	file
 0X148C08	LoadButtonFromBrx	48	alarm-button/LoadButtonFromBrx.c
 0X148C38	PostButtonLoad	56	alarm-button/PostButtonLoad.c
 0X148C70	CloneButton	40	alarm-button/CloneButton.c
+0X148C98	UpdateButton	644	alarm-button/UpdateButton.cpp
 0X148F20	FAbsorbButtonWkr	240	alarm-button/FAbsorbButtonWkr.cpp
 0X149010	func_00149010	144	alarm-button/fun_00149010.cpp
 0X1490A0	SetButtonButtons	28	alarm-button/SetButtonButtons.c
@@ -2019,6 +2020,7 @@ address	name	size	file
 0X15DC60	func_0015DC60	32	emitter-font/fun_0015dc60.c
 0X15DC80	InitFade	88	emitter-font/InitFade.cpp
 0X15DCD8	UpdateFade	108	emitter-font/UpdateFade.cpp
+0X15DD48	DrawFade	1168	emitter-font/DrawFade.cpp
 0X15E1D8	StartFade	76	emitter-font/StartFade.cpp
 0X15E228	fade__static_initialization_and_destruction_0	308	emitter-font/fade__static_initialization_and_destruction_0.c
 0X15E360	func_0015E360	32	emitter-font/fun_0015e360.c
@@ -2604,6 +2606,7 @@ address	name	size	file
 0X188468	func_00188468	32	joy-jt/fun_00188468.c
 0X188488	InitSly	300	joy-jt/InitSly.cpp
 0X1885B8	LoadSlyFromBrx	80	joy-jt/LoadSlyFromBrx.cpp
+0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.cpp
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp
 0X189488	GetSlyExposeMode	108	joy-jt/GetSlyExposeMode.cpp
 0X1894F8	FAllowBinocSly	48	joy-jt/FAllowBinocSly.cpp
@@ -3091,8 +3094,10 @@ address	name	size	file
 0X1B8450	func_001B8450	140	mpeg-memcard/fun_001b8450.cpp
 0X1B84E0	FMurrayAttackCanChain	40	mpeg-memcard/FMurrayAttackCanChain.c
 0X1B8938	EndMurrayAttack	80	mpeg-memcard/EndMurrayAttack.cpp
+0X1B8EC0	func_001B8EC0	500	mpeg-memcard/fun_001b8ec0.cpp
 0X1B9130	AdjustMurrayNewXp	456	mpeg-memcard/AdjustMurrayNewXp.cpp
 0X1B92F8	UpdateMurrayLift	240	mpeg-memcard/UpdateMurrayLift.cpp
+0X1B93E8	SetMurrayLiftState	1176	mpeg-memcard/SetMurrayLiftState.cpp
 0X1B9880	func_001B9880	28	mpeg-memcard/fun_001b9880.cpp
 0X1B9A08	UseMurrayGadget	344	mpeg-memcard/UseMurrayGadget.cpp
 0X1B9B60	GetMurraySaveRoot	12	mpeg-memcard/GetMurraySaveRoot.cpp
@@ -3301,6 +3306,7 @@ address	name	size	file
 0X1C8D20	Begin__5CProg	28	prog/Begin__5CProg.cpp
 0X1C8D40	SetRemain__5CProgi	120	prog/SetRemain__5CProgi.cpp
 0X1C8DB8	End__5CProg	28	prog/End__5CProg.cpp
+0X1C8DD8	Draw__5CProg	636	prog/Draw__5CProg.cpp
 0X1C9090	func_001C9090	8	prog-memcard/fun_001c9090.c
 0X1C9098	StopLoadingLogo	56	memcard/StopLoadingLogo.c
 0X1C90D0	InitLoadingLogoThread	188	new_1c90d0/InitLoadingLogoThread.cpp
@@ -4132,6 +4138,7 @@ address	name	size	file
 0X1FDA48	func_001FDA48	352	new_1fcff8/fun_001fda48.cpp
 0X1FDBA8	func_001FDBA8	92	new_1fcff8/fun_001fdba8.cpp
 0X1FDEC0	func_001FDEC0	8	new_1fcff8/fun_001fdec0.c
+0X1FDEC8	UpdateStreamCues	544	new_1fcff8/UpdateStreamCues.cpp
 0X1FE0E8	RunStreamCue	100	new_1fcff8/RunStreamCue.cpp
 0X1FE310	DequeueStream	228	new_1fcff8/DequeueStream.cpp
 0X1FE3F8	MarkClockTickRealOnly__FP5CLOCK	128	clock/MarkClockTickRealOnly__FP5CLOCK.cpp
@@ -4150,6 +4157,7 @@ address	name	size	file
 0X1FEEA0	func_001FEEA0	16	light-button/fun_001feea0.c
 0X1FEEB0	IncrementCounterB_1feeb0	16	light-button/IncrementCounterB_1feeb0.c
 0X1FEEC0	DecrementCounterB_1feec0	16	light-button/DecrementCounterB_1feec0.c
+0X1FEED0	func_001FEED0	564	light-button/fun_001feed0.cpp
 0X1FF108	func_001FF108	124	light-button/fun_001ff108.cpp
 0X1FF378	StaticInitDestroySndbank_thunk	32	light-button/StaticInitDestroySndbank_thunk.c
 0X1FF398	StaticInitDestroySndbank_thunk2	32	light-button/StaticInitDestroySndbank_thunk2.c
@@ -4519,6 +4527,7 @@ address	name	size	file
 0X212A30	func_00212A30	32	po-screen/fun_00212a30.c
 0X212A50	SetTimerTimers__FP5TIMER6TIMERS	32	screen/SetTimerTimers__FP5TIMER6TIMERS.c
 0X212C50	UpdateBlotMovie	492	screen-font/UpdateBlotMovie.cpp
+0X2130C0	BuildBlotDmaHeader	524	screen-font/BuildBlotDmaHeader.cpp
 0X2132D0	FDrawBlotMovie	48	screen-font/FDrawBlotMovie.cpp
 0X2137F0	FBlotObscured	60	screen-font/FBlotObscured.cpp
 0X213830	PlayBlotLabel	100	screen-font/PlayBlotLabel.cpp
@@ -4554,6 +4563,7 @@ address	name	size	file
 0X2166B0	CMovieText_DrawAffine	156	font-break/CMovieText_DrawAffine.cpp
 0X216B40	PglyphFromFontCh	64	font-break/PglyphFromFontCh.cpp
 0X216B80	DxFromFontCh	68	font-break/DxFromFontCh.cpp
+0X217298	func_00217298	560	font-break/fun_00217298.cpp
 0X217BA0	PlayRootSpriteLabel	124	font-break/PlayRootSpriteLabel.cpp
 0X217C20	PlayRootSpriteLabelIndex	136	font-break/PlayRootSpriteLabelIndex.cpp
 0X217CA8	PlaceSpriteInstance	240	font-break/PlaceSpriteInstance.cpp

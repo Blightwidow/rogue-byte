@@ -1,103 +1,103 @@
 typedef int QW __attribute__((mode(TI)));
-struct CREF_1249A8 { int tag; int value; };
-struct PAIR_1249A8 { int refs; int pad4; CREF_1249A8 key; PAIR_1249A8 *next; };
-struct HANDLE_1249A8 { PAIR_1249A8 *ptr; } __attribute__((aligned(16)));
-struct ELEM_1249A8 { char pad0[0x10]; long flags; char pad18[0xB0 - 0x18]; };
-struct OBJ_1249A8 { char pad0[0xE0]; int count; ELEM_1249A8 *elems; };
-struct NODE_1249A8 { int pad0; int pad4; CREF_1249A8 key; NODE_1249A8 *next; };
-struct ARGS_1249A8 { int tag; NODE_1249A8 *head; CREF_1249A8 start; CREF_1249A8 end; };
+struct CRef { int tagk; union { int n; QW *pv; }; CRef &operator=(const CRef &); };
+struct CPair { int cref; int pad4; CRef ref; CPair *next; };
+struct PairHandle { CPair *p; int pad[3]; };
+struct SLOTHEAP;
+struct CLIP { QW pos; QW normal; QW rest[4]; };
+struct ELEM { char pad0[0x10]; long flags; char pad18[0xB0 - 0x18]; };
+struct OBJ { char pad0[0xE0]; int count; ELEM *elems; };
+struct CNode { int pad0; int pad4; CRef ref; CNode *next; };
+struct CRefList { int tagk; CNode *pnode; CRef start; CRef end; };
 extern "C" {
-void CPairPtr_Destructor(PAIR_1249A8 **, int);
-void CRef_CopyConstruct(CREF_1249A8 *, CREF_1249A8 *);
-void CRef_Destruct(CREF_1249A8 *);
-void CRef_SetBasic(CREF_1249A8 *, void *);
-void CRef_SetVectorPtr(CREF_1249A8 *, QW *);
-int ClsgClipEdgeToObject(ELEM_1249A8 *, QW, QW, int);
-void FreeSlotheapPv(void *, void *);
-void PairHandle_Assign(PAIR_1249A8 **, PAIR_1249A8 *);
-void PairHandle_Init(PAIR_1249A8 **, PAIR_1249A8 *);
-PAIR_1249A8 *PpairNew();
-void UnlinkPairNode(PAIR_1249A8 *);
-void __as__4CRefRC4CRef(CREF_1249A8 *, CREF_1249A8 *);
-void bevy_splice_value_list_ref(CREF_1249A8 *, PAIR_1249A8 *);
-extern char B_004520A8;
+CPair *PpairNew(void);
+void PairHandle_Init(PairHandle *, CPair *);
+void PairHandle_Assign(CPair **, CPair *);
+void CRef_Destruct(CRef *);
+void CPairPtr_Destructor(CPair **, int);
+void UnlinkPairNode(CPair *);
+void FreeSlotheapPv(SLOTHEAP *, void *);
+void CRef_CopyConstruct(CRef *, CRef *);
+void CRef_SetBasic(CRef *, void *);
+void CRef_SetVectorPtr(CRef *, QW *);
+void bevy_splice_value_list_ref(CRef *, CPair *);
+int ClsgClipEdgeToObject(ELEM *, QW, QW, int, CLIP *);
+extern SLOTHEAP B_004520A8;
 }
-#define RELEASE_PAIR(pair) \
-    if (pair != 0) { \
-        if (--pair->refs == 0) { \
-            CPairPtr_Destructor(&pair->next, 2); \
-            CRef_Destruct(&pair->key); \
-            UnlinkPairNode(pair); \
-            FreeSlotheapPv(&B_004520A8, pair); \
-        } \
+static inline void ReleasePair(CPair *held)
+{
+    if (held) {
+        if (--held->cref == 0) {
+            CPairPtr_Destructor(&held->next, 2);
+            CRef_Destruct(&held->ref);
+            UnlinkPairNode(held);
+            FreeSlotheapPv(&B_004520A8, held);
+        }
     }
-extern "C" CREF_1249A8 *RefOpHitTestObjectsImpl(CREF_1249A8 *pret, int op, int unused, ARGS_1249A8 *args) {
-    CREF_1249A8 result __attribute__((aligned(16)));
-    HANDLE_1249A8 first;
-    HANDLE_1249A8 last;
-    QW vecA;
-    QW vecB;
-    HANDLE_1249A8 pairA;
-    HANDLE_1249A8 pairB;
-    HANDLE_1249A8 pairC;
-    HANDLE_1249A8 pairD;
-    NODE_1249A8 *node;
-    OBJ_1249A8 *object;
-    ELEM_1249A8 *elem;
-    int index;
-    result.tag = -1;
-    if (args->tag == 0) {
-        __as__4CRefRC4CRef(&result, (CREF_1249A8 *)args);
+}
+extern "C" CRef *RefOpHitTestObjectsImpl(CRef *pret, int op, int unused, CRefList *aref)
+{
+    CRef result;
+    result.tagk = -1;
+    if (aref->tagk == 0) {
+        result = *(CRef *)aref;
     } else {
-        PairHandle_Init(&first.ptr, 0);
-        PairHandle_Init(&last.ptr, 0);
-        for (node = args->head; node != 0; node = node->next) {
-            object = (OBJ_1249A8 *)node->key.value;
-            if (object != 0 && object->count > 0) {
-                for (index = 0; index < object->count; index++) {
-                    elem = &object->elems[index];
-                    if (!(elem->flags & (0x8000L << 35)) &&
-                        ClsgClipEdgeToObject(elem, *(QW *)args->start.value, *(QW *)args->end.value, 1) > 0) {
-                        PairHandle_Init(&pairA.ptr, PpairNew());
-                        PairHandle_Init(&pairB.ptr, PpairNew());
-                        CRef_SetBasic(&pairA.ptr->key, object);
-                        PairHandle_Assign(&pairA.ptr->next, pairB.ptr);
-                        if (op != 0x7B) {
-                            CRef_SetVectorPtr(&pairB.ptr->key, &vecB);
-                            bevy_splice_value_list_ref(&result, pairA.ptr);
+        PairHandle first;
+        PairHandle last;
+        CLIP clip;
+        PairHandle pairA;
+        PairHandle pairB;
+        PairHandle pairC;
+        PairHandle pairD;
+        PairHandle_Init(&first, 0);
+        PairHandle_Init(&last, 0);
+        CRef *pstart = &aref->start;
+        CRef *pend = &aref->end;
+        for (CNode *node = aref->pnode; node != 0; node = node->next) {
+            OBJ *pobj = (OBJ *)node->ref.n;
+            if (pobj != 0 && pobj->count > 0) {
+                for (int index = 0; index < pobj->count; index++) {
+                    ELEM *pelem = &pobj->elems[index];
+                    if (!(pelem->flags & (0x8000L << 35)) &&
+                        ClsgClipEdgeToObject(pelem, *pstart->pv, *pend->pv, 1, &clip) > 0) {
+                        PairHandle_Init(&pairA, PpairNew());
+                        PairHandle_Init(&pairB, PpairNew());
+                        CRef_SetBasic(&pairA.p->ref, pobj);
+                        PairHandle_Assign(&pairA.p->next, pairB.p);
+                        if (op == 0x7B) {
+                            PairHandle_Init(&pairC, PpairNew());
+                            PairHandle_Init(&pairD, PpairNew());
+                            CRef_SetVectorPtr(&pairB.p->ref, &clip.pos);
+                            PairHandle_Assign(&pairB.p->next, pairC.p);
+                            CRef_SetVectorPtr(&pairC.p->ref, &clip.normal);
+                            bevy_splice_value_list_ref(&pairD.p->ref, pairA.p);
+                            if (first.p != 0)
+                                PairHandle_Assign(&last.p->next, pairD.p);
+                            else
+                                PairHandle_Assign(&first.p, pairD.p);
+                            PairHandle_Assign(&last.p, pairD.p);
+                            ReleasePair(pairD.p);
+                            ReleasePair(pairC.p);
+                        } else {
+                            CRef_SetVectorPtr(&pairB.p->ref, &clip.normal);
+                            bevy_splice_value_list_ref(&result, pairA.p);
                             CRef_CopyConstruct(pret, &result);
-                            RELEASE_PAIR(pairB.ptr);
-                            RELEASE_PAIR(pairA.ptr);
-                            RELEASE_PAIR(last.ptr);
-                            RELEASE_PAIR(first.ptr);
+                            ReleasePair(pairB.p);
+                            ReleasePair(pairA.p);
+                            ReleasePair(last.p);
+                            ReleasePair(first.p);
                             CRef_Destruct(&result);
                             return pret;
                         }
-                        PairHandle_Init(&pairC.ptr, PpairNew());
-                        PairHandle_Init(&pairD.ptr, PpairNew());
-                        CRef_SetVectorPtr(&pairB.ptr->key, &vecA);
-                        PairHandle_Assign(&pairB.ptr->next, pairC.ptr);
-                        CRef_SetVectorPtr(&pairC.ptr->key, &vecB);
-                        bevy_splice_value_list_ref(&pairD.ptr->key, pairA.ptr);
-                        if (first.ptr != 0) {
-                            PairHandle_Assign(&last.ptr->next, pairD.ptr);
-                        } else {
-                            PairHandle_Assign(&first.ptr, pairD.ptr);
-                        }
-                        PairHandle_Assign(&last.ptr, pairD.ptr);
-                        RELEASE_PAIR(pairD.ptr);
-                        RELEASE_PAIR(pairC.ptr);
-                        RELEASE_PAIR(pairB.ptr);
-                        RELEASE_PAIR(pairA.ptr);
+                        ReleasePair(pairB.p);
+                        ReleasePair(pairA.p);
                     }
                 }
             }
         }
-        if (first.ptr != 0) {
-            bevy_splice_value_list_ref(&result, first.ptr);
-        }
-        RELEASE_PAIR(last.ptr);
-        RELEASE_PAIR(first.ptr);
+        if (first.p != 0)
+            bevy_splice_value_list_ref(&result, first.p);
+        ReleasePair(last.p);
+        ReleasePair(first.p);
     }
     CRef_CopyConstruct(pret, &result);
     CRef_Destruct(&result);

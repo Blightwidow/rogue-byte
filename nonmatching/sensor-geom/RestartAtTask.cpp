@@ -1,135 +1,104 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct CRefX { int tagk; int n; int pad[2]; };
+struct TASK { char pad0[0x18]; int oid; char pad1c[0x7C - 0x1C]; TASK *pjob; char pad80[0xB8 - 0x80]; int fB8; int fBC; int fC0; char padC4[0xF0 - 0xC4]; int fF0; int fF4; int fF8; };
+struct SW { char pad[0x3B0C]; TASK *pcurjob; char pad3B10[0x3E38 - 0x3B10]; int level; };
+struct CTaskHold {
+    TASK *pother;
+    TASK *ptask;
+    int saveF4;
+    int saveF8;
+    CTaskHold(TASK *task, int value)
+    {
+        pother = 0;
+        ptask = task;
+        if (ptask != 0) {
+            saveF4 = ptask->fF4;
+            ptask->fF4 = value;
+            saveF8 = ptask->fF8;
+            ptask->fF8 = 0;
+        }
+    }
+    ~CTaskHold()
+    {
+        if (pother != 0) {
+            pother->fF0 = saveF4;
+            pother->fF4 = saveF8;
+        }
+        if (ptask != 0) {
+            ptask->fF4 = saveF4;
+            ptask->fF8 = saveF8;
+        }
+    }
+};
+struct CJobHold {
+    TASK *pjob;
+    TASK *pother;
+    int saveF0;
+    int saveF4;
+    CJobHold(TASK *job, int value)
+    {
+        pjob = job;
+        pother = 0;
+        if (pjob != 0) {
+            saveF0 = pjob->fF0;
+            pjob->fF0 = value;
+            saveF4 = pjob->fF4;
+            pjob->fF4 = 0;
+        }
+    }
+    ~CJobHold()
+    {
+        if (pjob != 0) {
+            pjob->fF0 = saveF0;
+            pjob->fF4 = saveF4;
+        }
+        if (pother != 0) {
+            pother->fF4 = saveF0;
+            pother->fF8 = saveF4;
+        }
+    }
+};
 extern "C" {
-struct _m2c_stack_RestartAtTask {
-    /* 0x00 */ s8 *sp0;                           /* inferred */
-    /* 0x04 */ s8 *sp4;                           /* inferred */
-    /* 0x08 */ s32 sp8;                             /* inferred */
-    /* 0x0C */ s32 spC;                             /* inferred */
-    /* 0x10 */ s8 *sp10;                          /* inferred */
-    /* 0x14 */ s8 *sp14;                          /* inferred */
-    /* 0x18 */ s32 sp18;                            /* inferred */
-    /* 0x1C */ s32 sp1C;                            /* inferred */
-    /* 0x20 */ s8 *sp20;                          /* inferred */
-    /* 0x24 */ s8 *sp24;                          /* inferred */
-    /* 0x28 */ s32 sp28;                            /* inferred */
-    /* 0x2C */ s32 sp2C;                            /* inferred */
-    /* 0x30 */ s8 *sp30;                          /* inferred */
-    /* 0x34 */ s32 sp34;                            /* inferred */
-    /* 0x38 */ char pad38[0x78];
-};                                                  /* size = 0xB0 */
-M2C_UNK CRef_Destruct(s8 **);                     /* extern */
-M2C_UNK EndJob(s8 *, M2C_UNK, M2C_UNK *);         /* extern */
-s32 IdCurrentLevel(s32);                            /* extern */
-s32 PdescFromLevelRow(s32);                         /* extern */
-M2C_UNK RequestTransition(M2C_UNK *, s32, s32, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK SetCurrentJob(s8 *);                      /* extern */
-M2C_UNK SetTaskState(s8 *, M2C_UNK);              /* extern */
-M2C_UNK SwitchCurrentTask(s8 *);                  /* extern */
-M2C_UNK func_001D8B20(s8 **, s8 **, M2C_UNK *, M2C_UNK); /* extern */
-extern M2C_UNK B_003DD490;
-extern M2C_UNK RO_002A5238;
-void RestartAtTask(s8 *arg0) {
-    s8 *sp0;
-    s8 *sp4;
-    s32 sp8;
-    s32 spC;
-    s8 *sp10;
-    s8 *sp14;
-    s32 sp18;
-    s32 sp1C;
-    s8 *sp20;
-    s8 *sp24;
-    s32 sp28;
-    s32 sp2C;
-    s8 *sp30;
-    s32 sp34;
-    M2C_UNK var_s3;
-    s32 temp_s1;
-    s32 temp_v0;
-    s32 temp_v1_2;
-    s32 temp_v1_3;
-    s8 *temp_a0;
-    s8 *temp_v1;
-    sp0 = NULL;
-    sp4 = arg0;
-    if (arg0 != NULL) {
-        sp8 = M2C_FIELD(arg0, s32 *, 0xF4);
-        spC = M2C_FIELD(arg0, s32 *, 0xF8);
-        M2C_FIELD(arg0, s32 *, 0xF4) = 2;
-        M2C_FIELD(arg0, s32 *, 0xF8) = 0;
-    }
-    temp_v1 = M2C_FIELD(arg0, s8 **, 0x7C);
-    sp14 = NULL;
-    sp10 = temp_v1;
-    if (temp_v1 != NULL) {
-        sp18 = M2C_FIELD(temp_v1, s32 *, 0xF0);
-        M2C_FIELD(temp_v1, s32 *, 0xF0) = 2;
-        sp1C = M2C_FIELD(sp10, s32 *, 0xF4);
-        M2C_FIELD(sp10, s32 *, 0xF4) = 0;
-    }
-    if (M2C_FIELD(arg0, s8 **, 0x7C) != M2C_FIELD(&B_003DD490, s8 **, 0x3B0C)) {
-        if (M2C_FIELD(&B_003DD490, s8 **, 0x3B0C) != NULL) {
-            sp20 = M2C_FIELD(&B_003DD490, s8 **, 0x3B0C);
-            sp24 = NULL;
-            temp_v0 = M2C_FIELD(M2C_FIELD(&B_003DD490, s8 **, 0x3B0C), s32 *, 0xF0);
-            sp28 = temp_v0;
-            M2C_FIELD(M2C_FIELD(&B_003DD490, s8 **, 0x3B0C), s32 *, 0xF0) = 2;
-            sp2C = M2C_FIELD(sp20, s32 *, 0xF4);
-            M2C_FIELD(sp20, s32 *, 0xF4) = 0;
-            EndJob(M2C_FIELD(&B_003DD490, s8 **, 0x3B0C), 2, &B_003DD490);
-            if (sp20 != NULL) {
-                M2C_FIELD(sp20, s32 *, 0xF0) = temp_v0;
-                M2C_FIELD(sp20, s32 *, 0xF4) = sp2C;
-            }
-            if (sp24 != NULL) {
-                M2C_FIELD(sp24, s32 *, 0xF4) = sp28;
-                M2C_FIELD(sp24, s32 *, 0xF8) = sp2C;
-            }
+extern SW B_003DD490;
+extern const char RO_002A5238[];
+void CRef_Destruct(CRefX *);
+void EndJob(TASK *, int, SW *);
+int IdCurrentLevel(int);
+int PdescFromLevelRow(int);
+void RequestTransition(SW *, int, int, int, int, int);
+void SetCurrentJob(TASK *);
+void SetTaskState(TASK *, int);
+void SwitchCurrentTask(TASK *);
+void func_001D8B20(CRefX *, CRefX *, const char *, int);
+void RestartAtTask(TASK *task)
+{
+    CTaskHold holdTask(task, 2);
+    CJobHold holdJob(task->pjob, 2);
+    if (task->pjob != B_003DD490.pcurjob) {
+        if (B_003DD490.pcurjob != 0) {
+            CJobHold holdCur(B_003DD490.pcurjob, 2);
+            EndJob(B_003DD490.pcurjob, 2, &B_003DD490);
         }
-        temp_a0 = M2C_FIELD(arg0, s8 **, 0x7C);
-        if (temp_a0 != NULL) {
-            SetCurrentJob(temp_a0);
-        }
+        if (task->pjob != 0)
+            SetCurrentJob(task->pjob);
     }
-    SetTaskState(arg0, 1);
-    SwitchCurrentTask(arg0);
-    temp_v1_2 = M2C_FIELD(arg0, s32 *, 0xC0);
-    if (temp_v1_2 != -1) {
-        sp30 = (s8 *)0x15;
-        sp34 = temp_v1_2;
-        func_001D8B20(&sp20, &sp30, &RO_002A5238, 0);
-        CRef_Destruct(&sp20);
-        CRef_Destruct(&sp30);
+    SetTaskState(task, 1);
+    SwitchCurrentTask(task);
+    int value = task->fC0;
+    if (value != -1) {
+        CRefX result;
+        CRefX arg;
+        arg.tagk = 0x15;
+        arg.n = value;
+        func_001D8B20(&result, &arg, RO_002A5238, 0);
+        CRef_Destruct(&result);
+        CRef_Destruct(&arg);
     }
-    temp_v1_3 = M2C_FIELD(arg0, s32 *, 0xB8);
-    var_s3 = 4;
-    temp_s1 = (~temp_v1_3 != 0) ? temp_v1_3 : 0x189;
-    if ((M2C_FIELD(&B_003DD490, s32 *, 0x3E38) != 0) && ((M2C_FIELD(arg0, s32 *, 0xBC) == -1) || (M2C_FIELD(arg0, s32 *, 0xBC) == IdCurrentLevel(M2C_FIELD(&B_003DD490, s32 *, 0x3E38))))) {
-        var_s3 = 0x24;
-    }
-    RequestTransition(&B_003DD490, PdescFromLevelRow(M2C_FIELD(arg0, s32 *, 0xBC)), temp_s1, -1, var_s3, 0x30A);
-    if (sp10 != NULL) {
-        M2C_FIELD(sp10, s32 *, 0xF0) = sp18;
-        M2C_FIELD(sp10, s32 *, 0xF4) = sp1C;
-    }
-    if (sp14 != NULL) {
-        M2C_FIELD(sp14, s32 *, 0xF4) = sp18;
-        M2C_FIELD(sp14, s32 *, 0xF8) = sp1C;
-    }
-    if (sp0 != NULL) {
-        M2C_FIELD(sp0, s32 *, 0xF0) = sp8;
-        M2C_FIELD(sp0, s32 *, 0xF4) = spC;
-    }
-    if (sp4 != NULL) {
-        M2C_FIELD(sp4, s32 *, 0xF4) = sp8;
-        M2C_FIELD(sp4, s32 *, 0xF8) = spC;
-    }
+    int id = task->fB8;
+    int mode = 4;
+    int row = ~id != 0 ? id : 0x189;
+    if (B_003DD490.level != 0 && (task->fBC == -1 || task->fBC == IdCurrentLevel(B_003DD490.level)))
+        mode = 0x24;
+    RequestTransition(&B_003DD490, PdescFromLevelRow(task->fBC), row, -1, mode, 0x30A);
 }
 }

@@ -1,153 +1,105 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct Node { int pad; unsigned low : 31; unsigned mark : 1; };
+struct Sub { int pad; unsigned low : 31; unsigned mark : 1; int pad8; int padC; int pad10; Sub *next; };
+struct Item { int pad; unsigned low : 31; unsigned mark : 1; Sub *subs; int padC; Item *unused; };
+struct Gc { int flag; int count0; Node **array0; int count1; Node **array1; int count2; Node **array2; };
+struct Link { int pad; Link *pad4; Node *node; int padC; Link *next; };
+struct Req { int size; int align; int p8; int pc; int p10; int p14; int p18; int p1c; };
+struct Frame { int a, b, c, d; };
 extern "C" {
-struct _m2c_stack_CGc_Collect {
-    /* 0x00 */ char pad0[0x10];
-    /* 0x10 */ s32 sp10;                            /* inferred */
-    /* 0x14 */ char pad14[0xAC];
-};                                                  /* size = 0xC0 */
-M2C_UNK CGc_MarkRef(s8 *, s8 *);                /* extern */
-M2C_UNK CStackFrame_Construct(s8 *);              /* extern */
-M2C_UNK CStackFrame_Destructor(s8 *, M2C_UNK);    /* extern */
-s32 PvAllocStackImpl__Fi(s32 *);                    /* extern */
-M2C_UNK SweepFrames();                              /* extern */
-M2C_UNK SweepPairs();                               /* extern */
-M2C_UNK SweepProcs();                               /* extern */
-M2C_UNK SweepSidebags();                            /* extern */
-M2C_UNK SweepVarbs();                               /* extern */
-M2C_UNK bevy_splice_eval_reset(s8 *);             /* extern */
-M2C_UNK func_002574E0();                            /* extern */
-M2C_UNK func_002574E8();                            /* extern */
-M2C_UNK func_002574F0();                            /* extern */
-M2C_UNK func_002574F8();                            /* extern */
-M2C_UNK func_00257500();                            /* extern */
-M2C_UNK func_00257508();                            /* extern */
-M2C_UNK func_00257C18();                            /* extern */
-extern s8 *B_002DD2AC;
-extern s8 *B_002DD2CC;
-extern s8 *B_003E0E80;
-extern s32 B_004520B8;
-extern M2C_UNK B_004520E8;
-extern s32 B_00452108;
-extern s32 B_00452130;
-extern M2C_UNK B_00452138;
-extern s32 g_2dd598;
-void CGc_Collect(s8 *arg0) {
-    s8 sp[0x30] __attribute__((aligned(16)));
-    s32 sp10;
-    s32 temp_a0_2;
-    s32 temp_a0_4;
-    s32 temp_v1;
-    s32 temp_v1_2;
-    s32 temp_v1_3;
-    s32 temp_v1_4;
-    s32 var_v0_2;
-    u32 temp_a0;
-    u32 temp_a0_3;
-    u32 temp_a0_5;
-    u32 temp_v0;
-    u32 temp_v0_2;
-    s8 *temp_a1;
-    s8 *var_a1;
-    s8 *var_a2;
-    s8 *var_s0;
-    s8 *var_s2;
-    s8 *var_v0;
-    s8 *var_v0_3;
-    M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg0, s32 *, 0) == 0);
-    func_002574E0();
-    func_002574E8();
-    func_002574F0();
-    func_002574F8();
-    func_00257500();
-    func_00257508();
-    CStackFrame_Construct(sp);
-    sp10 = B_00452108 * 4;
-    M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-    M2C_FIELD(arg0, s32 *, 8) = PvAllocStackImpl__Fi(&sp10);
-    M2C_FIELD(arg0, s32 *, 4) = 0;
-    sp10 = B_004520B8 * 4;
-    M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-    M2C_FIELD(arg0, s32 *, 0x10) = PvAllocStackImpl__Fi(&sp10);
-    M2C_FIELD(arg0, s32 *, 0xC) = 0;
-    sp10 = B_00452130 * 4;
-    M2C_FIELD(&sp10, s32 *, 4) = 0x10;
-    var_a1 = B_002DD2AC;
-    M2C_FIELD(arg0, s32 *, 0x18) = PvAllocStackImpl__Fi(&sp10);
-    M2C_FIELD(arg0, s32 *, 0x14) = 0;
-    if (var_a1 != NULL) {
-        do {
-            temp_a0 = M2C_FIELD(var_a1, u32 *, 4);
-            if ((temp_a0 >> 0x1F) != g_2dd598) {
-                M2C_FIELD(var_a1, u32 *, 4) = (u32) ((temp_a0 & 0x7FFFFFFF) | (g_2dd598 << 0x1F));
-                temp_v1 = M2C_FIELD(arg0, s32 *, 4);
-                *(s32 *)((temp_v1 * 4) + M2C_FIELD(arg0, s32 *, 8)) = (int)(var_a1);
-                M2C_FIELD(arg0, s32 *, 4) = (s32) (temp_v1 + 1);
-            }
-            temp_v0 = M2C_FIELD(var_a1, u32 *, 4);
-            temp_a0_2 = (temp_v0 >> 0x10) & 0x1FFF;
-            temp_v1_2 = (temp_v0 >> 0x1D) & 3;
-            if ((temp_a0_2 != 0) || (var_v0 = NULL, (temp_v1_2 != 0))) {
-                var_v0 = (s8 *)(*((temp_v1_2 * 4) + &B_004520E8) + (temp_a0_2 * 0x28));
-            }
-            var_a1 = var_v0;
-        } while (var_a1 != NULL);
-    }
-    var_s2 = B_002DD2CC;
-    if (var_s2 != NULL) {
-        do {
-            temp_a0_3 = M2C_FIELD(var_s2, u32 *, 4);
-            if ((temp_a0_3 >> 0x1F) != g_2dd598) {
-                M2C_FIELD(var_s2, u32 *, 4) = (u32) ((temp_a0_3 & 0x7FFFFFFF) | (g_2dd598 << 0x1F));
-            }
-            var_s0 = M2C_FIELD(var_s2, s8 **, 8);
-            if (var_s0 != NULL) {
-                var_v0_2 = M2C_FIELD(var_s0, s32 *, 4);
-loop_14:
-                M2C_FIELD(var_s0, s32 *, 4) = (s32) ((var_v0_2 & 0x7FFFFFFF) | (g_2dd598 << 0x1F));
-                CGc_MarkRef(arg0, var_s0 + 0xC);
-                var_s0 = M2C_FIELD(var_s0, s8 **, 0x14);
-                if (var_s0 != NULL) {
-                    var_v0_2 = M2C_FIELD(var_s0, s32 *, 4);
-                    goto loop_14;
-                }
-            }
-            temp_v0_2 = M2C_FIELD(var_s2, u32 *, 4);
-            temp_a0_4 = (temp_v0_2 >> 0x10) & 0x1FFF;
-            temp_v1_3 = (temp_v0_2 >> 0x1D) & 3;
-            if ((temp_a0_4 != 0) || (var_v0_3 = NULL, (temp_v1_3 != 0))) {
-                var_v0_3 = (s8 *)(*((temp_v1_3 * 4) + &B_00452138) + (temp_a0_4 * 0xC));
-            }
-            var_s2 = var_v0_3;
-        } while (var_s2 != NULL);
-    }
-    var_a2 = B_003E0E80;
-    if (var_a2 != NULL) {
-        do {
-            temp_a1 = M2C_FIELD(var_a2, s8 **, 8);
-            temp_a0_5 = M2C_FIELD(temp_a1, u32 *, 4);
-            if ((temp_a0_5 >> 0x1F) != g_2dd598) {
-                M2C_FIELD(temp_a1, u32 *, 4) = (u32) ((temp_a0_5 & 0x7FFFFFFF) | (g_2dd598 << 0x1F));
-                temp_v1_4 = M2C_FIELD(arg0, s32 *, 0xC);
-                *(s32 *)((temp_v1_4 * 4) + M2C_FIELD(arg0, s32 *, 0x10)) = (int)(temp_a1);
-                M2C_FIELD(arg0, s32 *, 0xC) = (s32) (temp_v1_4 + 1);
-            }
-            var_a2 = M2C_FIELD(var_a2, s8 **, 0x10);
-        } while (var_a2 != NULL);
-    }
-    bevy_splice_eval_reset(arg0);
-    SweepFrames();
-    SweepVarbs();
-    SweepPairs();
-    SweepProcs();
-    SweepSidebags();
-    func_00257C18();
-    CStackFrame_Destructor(sp, 2);
+void func_002574E0(); void func_002574E8(); void func_002574F0(); void func_002574F8(); void func_00257500(); void func_00257508();
+void CStackFrame_Construct(Frame *); void CStackFrame_Destructor(Frame *, int);
+void *PvAllocStackImpl__Fi(Req *);
+void CGc_MarkRef(Gc *, void *);
+void bevy_splice_eval_reset(Gc *);
+void SweepFrames(); void SweepVarbs(); void SweepPairs(); void SweepProcs(); void SweepSidebags(); void func_00257C18();
 }
+extern Node *B_002DD2AC;
+extern Item *B_002DD2CC;
+extern Link *B_003E0E80;
+extern int B_004520B8, B_00452108, B_00452130;
+extern char *B_004520E8[];
+extern char *B_00452138[];
+extern int g_2dd598;
+static inline Node *NextNode(Node *node)
+{
+    unsigned word = ((unsigned *)node)[1];
+    unsigned idx = (word >> 16) & 0x1FFF, pool = (word >> 29) & 3;
+    if (idx || pool) return (Node *)(B_004520E8[pool] + idx * 0x28);
+    return 0;
+}
+static inline Item *NextItem(Item *item)
+{
+    unsigned word = ((unsigned *)item)[1];
+    unsigned idx = (word >> 16) & 0x1FFF, pool = (word >> 29) & 3;
+    if (idx || pool) return (Item *)(B_00452138[pool] + idx * 0xC);
+    return 0;
+}
+extern "C" void CGc_Collect(Gc *gc)
+{
+    Frame frame;
+    int align = 16;
+    Req req;
+    gc->flag = gc->flag == 0;
+    func_002574E0(); func_002574E8(); func_002574F0(); func_002574F8(); func_00257500(); func_00257508();
+    CStackFrame_Construct(&frame);
+    Req *preq = &req;
+    req.size = B_00452108 * 4; preq->align = align;
+    gc->array0 = (Node **)PvAllocStackImpl__Fi(preq);
+    gc->count0 = 0;
+    req.size = B_004520B8 * 4; preq->align = align;
+    gc->array1 = (Node **)PvAllocStackImpl__Fi(preq);
+    gc->count1 = 0;
+    req.size = B_00452130 * 4; preq->align = align;
+    gc->array2 = (Node **)PvAllocStackImpl__Fi(preq);
+    gc->count2 = 0;
+    Node *next;
+    Item *nextItem;
+    Node *node = B_002DD2AC;
+    if (node) {
+        do {
+            if (node->mark != g_2dd598) {
+                node->mark = g_2dd598;
+                int count = gc->count0;
+                gc->array0[count] = node;
+                gc->count0 = count + 1;
+            }
+            unsigned word = ((unsigned *)node)[1];
+            unsigned idx = (word >> 16) & 0x1FFF, pool = (word >> 29) & 3;
+            if (idx != 0 || (next = 0, pool != 0)) next = (Node *)(B_004520E8[pool] + idx * 0x28);
+            node = next;
+        } while (node);
+    }
+    Item *item = B_002DD2CC;
+    if (item) {
+        do {
+            if (item->mark != g_2dd598) item->mark = g_2dd598;
+            Sub *sub = item->subs;
+            while (sub) {
+                sub->mark = g_2dd598;
+                CGc_MarkRef(gc, (char *)sub + 0xC);
+                sub = sub->next;
+            }
+            unsigned word = ((unsigned *)item)[1];
+            unsigned idx = (word >> 16) & 0x1FFF, pool = (word >> 29) & 3;
+            if (idx != 0 || (nextItem = 0, pool != 0)) nextItem = (Item *)(B_00452138[pool] + idx * 0xC);
+            item = nextItem;
+        } while (item);
+    }
+    Link *link = B_003E0E80;
+    if (link) {
+        do {
+            Node *target = link->node;
+            if (target->mark != g_2dd598) {
+                target->mark = g_2dd598;
+                int count = gc->count1;
+                gc->array1[count] = target;
+                gc->count1 = count + 1;
+            }
+            link = link->next;
+        } while (link);
+    }
+    bevy_splice_eval_reset(gc);
+    SweepFrames(); SweepVarbs(); SweepPairs(); SweepProcs(); SweepSidebags(); func_00257C18();
+    CStackFrame_Destructor(&frame, 2);
 }

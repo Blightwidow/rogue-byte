@@ -1,140 +1,108 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+struct CRef { int tagk; int n; int p2; int p3; CRef &operator=(const CRef &); };
+struct SHOP { char pad0[0x10]; void *dev; char pad14[0x1C]; int dialog; char pad34[0xC]; int mode; };
+struct GADGET { int pad0; int pad4; int price; char pad[0x14]; };
+struct COINBAG { int amount; int b; int c; };
 extern "C" {
-struct _m2c_stack_ShopMenu_Update {
-    /* 0x00 */ char pad0[4];
-    /* 0x04 */ s32 sp4;                             /* inferred */
-    /* 0x08 */ char pad8[8];                        /* maybe part of sp4[3]? */
-    /* 0x10 */ M2C_UNK sp10;                        /* inferred */
-    /* 0x10 */ char pad10[0x20];
-    /* 0x30 */ s32 sp30;                            /* inferred */
-    /* 0x34 */ char pad34[0xC];                     /* maybe part of sp30[4]? */
-    /* 0x40 */ s32 sp40;                            /* inferred */
-    /* 0x44 */ s32 sp44;                            /* inferred */
-    /* 0x48 */ char pad48[0x78];
-};                                                  /* size = 0xC0 */
-#define sp4 (*(s32 *)(sp + 0x04))
-M2C_UNK CRef_Destruct(s32 *);                       /* extern */
-s32 FJoyButtonPressed(s32, M2C_UNK);                /* extern */
-s32 GetGameCoins(M2C_UNK *);                        /* extern */
-M2C_UNK Menu_SetDialog(s8 *, M2C_UNK, M2C_UNK);   /* extern */
-M2C_UNK Menu_Update();                              /* extern */
-M2C_UNK Menu_UpdateStick(s8 *);                   /* extern */
-s32 NewEmitter(M2C_UNK);                            /* extern */
-M2C_UNK SetEmitterUnpositioned(s32, M2C_UNK);       /* extern */
-M2C_UNK SetGadgetAcquired(s32, M2C_UNK);            /* extern */
-M2C_UNK SetGameCoins(...);        /* extern */
-M2C_UNK ShopMenu_BuildList(s8 *);                 /* extern */
-M2C_UNK ShopMenu_SetPage(s8 *, s32);              /* extern */
-M2C_UNK ShopMenu_UpdateBlot(s8 *);                /* extern */
-M2C_UNK __as__4CRefRC4CRef(s32 *, s32 *);           /* extern */
-M2C_UNK func_0019F0A8(M2C_UNK *);                   /* extern */
-M2C_UNK func_001D8A38(s32 *, M2C_UNK *, M2C_UNK *, M2C_UNK *, M2C_UNK); /* extern */
-M2C_UNK func_001D8B20(s32 *, s32 *, M2C_UNK *, M2C_UNK *, M2C_UNK *, M2C_UNK); /* extern */
-M2C_UNK sprintf(M2C_UNK *, M2C_UNK *, s32, s32);    /* extern */
-extern M2C_UNK B_002DEB30;
-extern M2C_UNK B_003DD490;
-extern M2C_UNK D_002BCD00;
-extern M2C_UNK D_002C3288;
-extern M2C_UNK RO_002A79A0;
-extern M2C_UNK RO_002A79D0;
-extern M2C_UNK RO_002A79D8;
-void ShopMenu_Update(s8 *arg0) {
-    s8 sp[0x40] __attribute__((aligned(16)));
-    M2C_UNK sp10;
-    s32 sp30;
-    s32 sp40;
-    s32 sp44;
-    s32 *temp_a2_2;
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_a2;
-    s32 temp_s0;
-    s32 temp_s2;
+void CRef_Destruct(CRef *);
+int FJoyButtonPressed(void *, int);
+int GetGameCoins(void *);
+void Menu_SetDialog(void *, int, int);
+void Menu_Update(void);
+void Menu_UpdateStick(void *);
+void *NewEmitter(int);
+void SetEmitterUnpositioned(void *, void *);
+void SetGadgetAcquired(int, int);
+void SetGameCoins(void *, int, ...);
+void ShopMenu_BuildList(void *);
+void ShopMenu_SetPage(void *, int);
+void ShopMenu_UpdateBlot(void *);
+void func_0019F0A8(void *);
+void func_001D8A38(CRef *, const char *, const char *, char *, int);
+void func_001D8B20(CRef *, CRef *, const char *, const char *, char *, int);
+int sprintf(char *, const char *, ...);
+extern char B_002DEB30[];
+extern char B_003DD490[];
+extern GADGET D_002BCD00[];
+extern COINBAG D_002C3288[];
+extern const char RO_002A79A0[];
+extern const char RO_002A79D0[];
+extern const char RO_002A79D8[];
+void ShopMenu_Update(SHOP *menu)
+{
     Menu_Update();
-    if (M2C_FIELD(arg0, s32 *, 0x40) != -1) {
-        temp_a0 = M2C_FIELD(arg0, s32 *, 0x10);
-        if (temp_a0 != 0) {
-            if (M2C_FIELD(arg0, s32 *, 0x30) != 0) {
-                if (FJoyButtonPressed(temp_a0, 0x10) != 0) {
-                    ShopMenu_SetPage(arg0, -1);
-                } else {
-                    goto block_6;
-                }
+    if (menu->mode == -1)
+        return;
+    void *dev = menu->dev;
+    if (dev == 0)
+        return;
+    if (menu->dialog != 0 && FJoyButtonPressed(dev, 0x10)) {
+        ShopMenu_SetPage(menu, -1);
+        return;
+    }
+    switch (menu->mode) {
+    case 0:
+        if (FJoyButtonPressed(menu->dev, 0x40)) {
+            int selected = *(int *)((char *)menu + 0x254);
+            if (selected == -1) {
+                SetEmitterUnpositioned(NewEmitter(0x36), 0);
             } else {
-block_6:
-                switch (M2C_FIELD(arg0, s32 *, 0x40)) { /* irregular */
-                case 1:
-                    if (FJoyButtonPressed(M2C_FIELD(arg0, s32 *, 0x10), 0x40) != 0) {
-                        temp_a2 = M2C_FIELD(arg0, s32 *, 0x258);
-                        if (temp_a2 == -1) {
-block_20:
-                            SetEmitterUnpositioned(NewEmitter(0x36), 0);
-                        } else {
-                            sprintf(&sp10, &RO_002A79A0, temp_a2, -1);
-                            func_001D8A38(&sp30, &RO_002A79D0, &RO_002A79D8, &sp10, 0);
-                            __as__4CRefRC4CRef((s32 *)(sp), &sp30);
-                            CRef_Destruct(&sp30);
-                            if (sp4 > 0) {
-                                sp44 = sp4 - 1;
-                                sp40 = 0x15;
-                                func_001D8B20(&sp30, &sp40, &RO_002A79D0, &RO_002A79D8, &sp10, 0);
-                                CRef_Destruct(&sp30);
-                                CRef_Destruct(&sp40);
-                                temp_a2_2 = (M2C_FIELD(arg0, s32 *, 0x258) * 0xC) + &D_002C3288;
-                                SetGameCoins(&B_002DEB30, GetGameCoins(&B_002DEB30) + *temp_a2_2, temp_a2_2);
-                                ShopMenu_BuildList(arg0);
-                                SetEmitterUnpositioned(NewEmitter(0x29), 0);
-                            }
-                            CRef_Destruct((s32 *)(sp));
-                        }
-                    }
-                    break;
-                case 0:
-                    if (FJoyButtonPressed(M2C_FIELD(arg0, s32 *, 0x10), 0x40) != 0) {
-                        temp_a0_2 = M2C_FIELD(arg0, s32 *, 0x254);
-                        if (temp_a0_2 != -1) {
-                            temp_s2 = M2C_FIELD((&D_002BCD00 + (temp_a0_2 << 5)), s32 *, 8);
-                            temp_s0 = GetGameCoins(&B_002DEB30);
-                            if (M2C_FIELD(arg0, s32 *, 0x30) == 0) {
-                                Menu_SetDialog(arg0, -1, -1);
-                                SetGameCoins(&B_002DEB30, temp_s0 - temp_s2);
-                                SetGadgetAcquired(M2C_FIELD(arg0, s32 *, 0x254), 1);
-                                ShopMenu_BuildList(arg0);
-                                SetEmitterUnpositioned(NewEmitter(0x29), 0);
-                                func_0019F0A8(&B_003DD490);
-                            } else if (temp_s0 >= temp_s2) {
-                                Menu_SetDialog(arg0, 0, 0x34);
-                            } else {
-                                Menu_SetDialog(arg0, 1, 0x35);
-                            }
-                        } else {
-                            goto block_20;
-                        }
-                    }
-                    break;
+                int price = D_002BCD00[selected].price;
+                int coins = GetGameCoins(B_002DEB30);
+                if (menu->dialog == 0) {
+                    Menu_SetDialog(menu, -1, -1);
+                    SetGameCoins(B_002DEB30, coins - price);
+                    SetGadgetAcquired(*(int *)((char *)menu + 0x254), 1);
+                    ShopMenu_BuildList(menu);
+                    SetEmitterUnpositioned(NewEmitter(0x29), 0);
+                    func_0019F0A8(B_003DD490);
+                } else if (coins >= price) {
+                    Menu_SetDialog(menu, 0, 0x34);
+                } else {
+                    Menu_SetDialog(menu, 1, 0x35);
                 }
-                if (M2C_FIELD(arg0, s32 *, 0x30) == 0) {
-                    if (FJoyButtonPressed(M2C_FIELD(arg0, s32 *, 0x10), 0x10) != 0) {
-                        Menu_SetDialog(arg0, -1, -1);
-                    }
-                }
-                if (FJoyButtonPressed(M2C_FIELD(arg0, s32 *, 0x10), 0x80) != 0) {
-                    Menu_SetDialog(arg0, -1, -1);
-                    ShopMenu_SetPage(arg0, M2C_FIELD(arg0, s32 *, 0x40) == 0);
-                }
-                if (M2C_FIELD(arg0, s32 *, 0x30) != 0) {
-                    Menu_UpdateStick(arg0);
-                }
-                ShopMenu_UpdateBlot(arg0);
             }
         }
+        break;
+    case 1:
+        if (FJoyButtonPressed(menu->dev, 0x40)) {
+            int slot = *(int *)((char *)menu + 0x258);
+            if (slot == -1) {
+                SetEmitterUnpositioned(NewEmitter(0x36), 0);
+            } else {
+                CRef ref;
+                char name[0x20];
+                CRef temp;
+                ref.tagk = -1;
+                sprintf(name, RO_002A79A0, slot);
+                func_001D8A38(&temp, RO_002A79D0, RO_002A79D8, name, 0);
+                ref = temp;
+                CRef_Destruct(&temp);
+                if (ref.n > 0) {
+                    CRef count;
+                    count.n = ref.n - 1;
+                    count.tagk = 0x15;
+                    func_001D8B20(&temp, &count, RO_002A79D0, RO_002A79D8, name, 0);
+                    CRef_Destruct(&temp);
+                    CRef_Destruct(&count);
+                    SetGameCoins(B_002DEB30, GetGameCoins(B_002DEB30) + D_002C3288[*(int *)((char *)menu + 0x258)].amount, &D_002C3288[*(int *)((char *)menu + 0x258)]);
+                    ShopMenu_BuildList(menu);
+                    SetEmitterUnpositioned(NewEmitter(0x29), 0);
+                }
+                CRef_Destruct(&ref);
+            }
+        }
+        break;
     }
+    if (menu->dialog == 0) {
+        if (FJoyButtonPressed(menu->dev, 0x10))
+            Menu_SetDialog(menu, -1, -1);
+    }
+    if (FJoyButtonPressed(menu->dev, 0x80)) {
+        Menu_SetDialog(menu, -1, -1);
+        ShopMenu_SetPage(menu, menu->mode == 0);
+    }
+    if (menu->dialog != 0)
+        Menu_UpdateStick(menu);
+    ShopMenu_UpdateBlot(menu);
 }
 }

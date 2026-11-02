@@ -1,142 +1,102 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct XFN { char pad0[0x40]; MATRIX4 mat; char pad80[0x20]; XFN *next; };
+struct PARENT { char pad0[0x50]; int count; int base; char pad58[0xF0]; unsigned long grf; };
+struct SO;
+struct VE8 { char pad[0xE8]; short d; short i; void (*f)(void *, QW); };
+struct VF0 { char pad[0xF0]; short d; short i; void (*f)(void *, MATRIX4 *); };
+struct V108 { char pad[0x108]; short d; short i; QW (*f)(void *); };
+struct V110 { char pad[0x110]; short d; short i; QW (*f)(void *); };
+struct V118 { char pad[0x118]; short d; short i; void (*f)(void *, QW); };
+struct V120 { char pad[0x120]; short d; short i; void (*f)(void *, QW); };
+struct SO { char pad0[0xC]; char *vt; PARENT *owner; char pad14[0x14]; unsigned long grf; char pad30[0x20]; int count; char *items; char pad58[8]; XFN *xf; };
 extern "C" {
-struct _m2c_stack_SetSoParent {
-    /* 0x000 */ char pad0[0x30];
-    /* 0x030 */ s128 sp30;                          /* inferred */
-    /* 0x040 */ s128 sp40;                          /* inferred */
-    /* 0x050 */ s128 sp50;                          /* inferred */
-    /* 0x060 */ s128 sp60;                          /* inferred */
-    /* 0x070 */ s128 sp70;                          /* inferred */
-    /* 0x080 */ s128 sp80;                          /* inferred */
-    /* 0x090 */ char pad90[0xA0];
-};                                                  /* size = 0x130 */
-#define sp50 (*(s128 *)(sp + 0x050))
-#define sp60 (*(s128 *)(sp + 0x060))
-#define sp70 (*(s128 *)(sp + 0x070))
-void SetLoParent(s8 *, s8 *, s32, s32, s32);
-void UpdateAloXfWorld(s8 *);
-s32 __ml__FRC7MATRIX4T0(s128 *, s8 *, s8 *);
-void func_001F2468(s8 *);
-void func_001F26A8(s8 *);
-void func_001F8668(s8 *, M2C_UNK);
-s32 memset(s8 *, M2C_UNK, M2C_UNK);
-void SetSoParent(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) {
-    s32 unksp3C;
-    f32 saved_reg_fp;
-    s8 sp[0x70] __attribute__((aligned(16)));
-    s128 sp30;
-    s128 sp40;
-    s128 sp80;
-    M2C_UNK temp_a1;
-    M2C_UNK var_fp;
-    s32 temp_s6;
-    s32 temp_v0_2;
-    s32 var_a1_2;
-    s32 var_a2;
-    s32 var_a3;
-    s32 var_a4;
-    s32 var_s7;
-    s8 *temp_a0;
-    s8 *temp_v0;
-    s8 *temp_v0_3;
-    s8 *temp_v0_4;
-    s8 *temp_v0_5;
-    s8 *temp_v0_6;
-    s8 *temp_v0_7;
-    s8 *temp_v1;
-    s8 *temp_v1_2;
-    s8 *var_a1;
-    s8 *var_s0;
-    var_fp = saved_reg_fp;
+void SetLoParent(SO *, SO *, int, int);
+void UpdateAloXfWorld(SO *);
+void __ml__FRC7MATRIX4T0(MATRIX4 *, void *, MATRIX4 *);
+void func_001F2468(SO *);
+void func_001F26A8(SO *);
+void func_001F8668(SO *, int);
+void SetSoParent(SO *self, SO *newParent, int arg2, int arg3)
+{
+    MATRIX4 mat;
+    QW pos;
+    QW vel;
+    QW pos2;
     if (arg3 & 3) {
-        if ((int)((u64) M2C_FIELD(arg0, u64 *, 0x28) >> 0x3C) & 1) {
-            sp30 = M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x60), s128 *, 0x70);
+        if ((int)(self->grf >> 60) & 1) {
+            mat = *(MATRIX4 *)((char *)self->xf + 0x40);
         } else {
-            memset(sp, 0, 0x40);
-            var_s0 = M2C_FIELD(arg0, s8 **, 0x60);
-            unksp3C = 1.0f;
-            if (var_s0 != NULL) {
-                var_a1 = var_s0;
+            memset(&mat, 0, 0x40);
+            XFN *node = self->xf;
+            mat.mat[3][3] = 1.0f; //P
+            mat.mat[2][2] = 1.0f; //P
+            mat.mat[1][1] = 1.0f; //P
+            mat.mat[0][0] = 1.0f; //P
+            if (node != 0) {
                 do {
-                    __ml__FRC7MATRIX4T0(&sp40, var_a1, sp);
-                    sp30 = sp70;
-                    var_s0 = M2C_FIELD(var_s0, s8 **, 0xA0);
-                    var_a1 = var_s0;
-                } while (var_s0 != NULL);
+                    MATRIX4 product;
+                    __ml__FRC7MATRIX4T0(&product, node, &mat);
+                    mat = product;
+                    node = node->next;
+                } while (node != 0);
             }
         }
     }
-    temp_s6 = arg3 & 4;
-    var_s7 = arg3 & 8;
-    if (temp_s6 != 0) {
-        temp_v1 = M2C_FIELD(arg0, s8 **, 0xC);
-        s64 vu_1;
-        asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(M2C_FIELD(temp_v1, s32 (**)(s8 *), 0x10C)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x108))));
-        var_fp = vu_1;
-        var_s7 = arg3 & 8;
+    int flag4 = arg3 & 4;
+    int flag8 = arg3 & 8;
+    if (flag4 != 0) {
+        V108 *vtable = (V108 *)self->vt;
+        pos = vtable->f((char *)self + vtable->d);
+        flag8 = arg3 & 8;
     }
-    if (var_s7 != 0) {
-        temp_v1_2 = M2C_FIELD(arg0, s8 **, 0xC);
-        sp80 = M2C_FIELD(temp_v1_2, s128 (**)(s8 *), 0x114)(arg0 + M2C_FIELD(temp_v1_2, s16 *, 0x110));
+    if (flag8 != 0) {
+        V110 *vtable = (V110 *)self->vt;
+        vel = vtable->f((char *)self + vtable->d);
     }
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0x10);
-    var_a3 = 1;
-    if (temp_v0 != NULL) {
-        var_a4 = M2C_FIELD(temp_v0, s32 *, 0x54);
-        var_a3 = M2C_FIELD(temp_v0, s32 *, 0x50);
+    PARENT *owner = self->owner;
+    int rangeCount = 1;
+    int rangeBase;
+    if (owner != 0) {
+        rangeBase = owner->base;
+        rangeCount = owner->count;
     } else {
-        var_a4 = 0;
+        rangeBase = 0;
     }
-    var_a2 = arg2;
-    if ((arg2 == 0) && (arg1 != NULL)) {
-        var_a2 = M2C_FIELD(arg1, s32 *, 0x60);
+    int value = arg2;
+    if (arg2 == 0 && newParent != 0)
+        value = *(int *)((char *)newParent + 0x60);
+    int index = 0;
+    if (self->count > 0) {
+        do {
+            int *slot = (int *)(self->items + (index << 8) + 0xA0);
+            int rel = (*slot - rangeBase) >> 8;
+            if (rel >= 0 && rel < rangeCount)
+                *slot = value;
+            index++;
+        } while (index < self->count);
     }
-    var_a1_2 = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x50) > 0) {
-loop_18:
-        temp_a0 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x54) + (var_a1_2 << 8));
-        temp_v0_2 = (s32) (M2C_FIELD(temp_a0, s32 *, 0xA0) - var_a4) >> 8;
-        if ((temp_v0_2 >= 0) && (temp_v0_2 < var_a3)) {
-            M2C_FIELD(temp_a0, s32 *, 0xA0) = var_a2;
-        }
-        var_a1_2 += 1;
-        if (var_a1_2 < M2C_FIELD(arg0, s32 *, 0x50)) {
-            goto loop_18;
-        }
-    }
-    SetLoParent(arg0, arg1, arg2, arg3, var_a4);
-    UpdateAloXfWorld(arg0);
+    SetLoParent(self, newParent, arg2, arg3);
+    UpdateAloXfWorld(self);
     if (arg3 & 1) {
-        temp_v0_3 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, s128), 0xEC)(arg0 + M2C_FIELD(temp_v0_3, s16 *, 0xE8), sp30);
+        VE8 *vtable = (VE8 *)self->vt;
+        vtable->f((char *)self + vtable->d, *(QW *)&mat.mat[3][0]);
     }
     if (arg3 & 2) {
-        temp_v0_4 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0_4, M2C_UNK (**)(s8 *, s8 *), 0xF4)(arg0 + M2C_FIELD(temp_v0_4, s16 *, 0xF0), sp);
+        VF0 *vtable = (VF0 *)self->vt;
+        vtable->f((char *)self + vtable->d, &mat);
     }
-    s64 vu_2;
-    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(var_fp));
-    temp_a1 = vu_2;
-    if (temp_s6 != 0) {
-        temp_v0_5 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0_5, M2C_UNK (**)(s8 *, M2C_UNK), 0x11C)(arg0 + M2C_FIELD(temp_v0_5, s16 *, 0x118), temp_a1);
+    if (flag4 != 0) {
+        V118 *vtable = (V118 *)self->vt;
+        vtable->f((char *)self + vtable->d, pos);
     }
-    if (var_s7 != 0) {
-        temp_v0_6 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0_6, M2C_UNK (**)(s8 *, s128), 0x124)(arg0 + M2C_FIELD(temp_v0_6, s16 *, 0x120), sp80);
+    if (flag8 != 0) {
+        V120 *vtable = (V120 *)self->vt;
+        vtable->f((char *)self + vtable->d, vel);
     }
-    func_001F2468(arg0);
-    func_001F26A8(arg0);
-    temp_v0_7 = M2C_FIELD(arg0, s8 **, 0x10);
-    if ((temp_v0_7 != NULL) && !(M2C_FIELD(temp_v0_7, s64 *, 0x148) & (0x8000 << 0x14))) {
-        func_001F8668(arg0, 0);
-    }
+    func_001F2468(self);
+    func_001F26A8(self);
+    PARENT *owner2 = self->owner;
+    if (owner2 != 0 && !(owner2->grf & (0x8000UL << 20)))
+        func_001F8668(self, 0);
 }
 }

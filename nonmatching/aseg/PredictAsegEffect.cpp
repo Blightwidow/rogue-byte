@@ -16,6 +16,19 @@ MATRIX4 BuildXfLinearRateMatrix(XF *, QW);
 }
 MATRIX4 operator*(const MATRIX4 &, const MATRIX4 &);
 
+static inline void AddMatrix(MATRIX4 &sum, const MATRIX4 &first, const MATRIX4 &second)
+{
+    QW *psum = (QW *)&sum;
+    const QW *pfirst = (const QW *)&first;
+    const QW *psecond = (const QW *)&second;
+    for (int irow = 0; irow < 4; irow++, psum++, pfirst++, psecond++) {
+        asm("lqc2 vf1, %0" : : "m" (*pfirst));
+        asm("lqc2 vf2, %0" : : "m" (*psecond));
+        asm("vadd.xyzw vf1, vf1, vf2");
+        asm("sqc2 vf1, %0" : "=m" (*psum));
+    }
+}
+
 extern "C" void PredictAsegEffect(ASEG *paseg, void *paloRoot, float t, float svt, XF *pxfLeaf, XF *pxfBasis, MATRIX4 *pmat, MATRIX4 *pmatRate)
 {
     MATRIX4 matLocal;
@@ -30,10 +43,12 @@ extern "C" void PredictAsegEffect(ASEG *paseg, void *paloRoot, float t, float sv
     memset(&matAccum, 0, sizeof(matAccum));
     ((float *)&matAccum)[0] = ((float *)&matAccum)[5] = ((float *)&matAccum)[10] = ((float *)&matAccum)[15] = 1.0f;
     {
+        int align = 0x10;
         ALLOCREQ allocreq;
+        ALLOCREQ *preq = &allocreq;
         allocreq.cb = paseg->cchn * 4;
-        allocreq.cbAlign = 0x10;
-        apxfChn = (XF **)PvAllocStackImpl__Fi(&allocreq);
+        preq->cbAlign = align;
+        apxfChn = (XF **)PvAllocStackImpl__Fi(preq);
     }
     for (int ichn = 0; ichn < paseg->cchn; ichn++) {
         CHN *pchn = &paseg->achn[ichn];
@@ -66,20 +81,8 @@ extern "C" void PredictAsegEffect(ASEG *paseg, void *paloRoot, float t, float sv
         matLocal = pxf->matLocal;
         memset(&matLocalRate, 0, sizeof(matLocalRate));
     accumulate:
-        MATRIX4 localTimesRate = matLocal * matAccumRate;
-        MATRIX4 rateTimesAccum = matLocalRate * matAccum;
         MATRIX4 sum;
-        {
-            QW *psum = (QW *)&sum;
-            QW *pfirst = (QW *)&localTimesRate;
-            QW *psecond = (QW *)&rateTimesAccum;
-            for (int irow = 0; irow < 4; irow++, psum++, pfirst++, psecond++) {
-                asm("lqc2 vf1, %0" : : "m" (*pfirst));
-                asm("lqc2 vf2, %0" : : "m" (*psecond));
-                asm("vadd.xyzw vf1, vf1, vf2");
-                asm("sqc2 vf1, %0" : "=m" (*psum));
-            }
-        }
+        AddMatrix(sum, matLocal * matAccumRate, matLocalRate * matAccum);
         matAccumRate = sum;
         matAccum = matLocal * matAccum;
     }

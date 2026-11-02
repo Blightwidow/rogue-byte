@@ -1,186 +1,175 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct REQ { int size; int align; };
+struct OBJ { char pad0[0x20]; unsigned flags; char pad24[0x44 - 0x24]; int count44; void **ptr48; };
+struct BITS { unsigned lo : 13; unsigned start : 9; unsigned end : 9; unsigned hi : 1; };
+struct DST { int f0; int f4; int f8; BITS bits; void *p10; int f14; void *p18; int f1c; OBJ *pobj; int f24; };
+struct SRC { char b0; signed char count; unsigned char flags; char pad3[5]; int f8; int fC; int f10; };
+struct ENT { char pad[0xC]; };
+struct SLE { int f0; int f4; int f8; OBJ *pobj; int f10; };
+struct P12 { char pad[0xC]; };
+struct VOBJ : P12 {
+    virtual void f0();
+    virtual void f1();
+    virtual void f2();
+    virtual void f3();
+    virtual void f4();
+    virtual void f5();
+    virtual void f6();
+    virtual void f7();
+    virtual void f8();
+    virtual void f9();
+    virtual void f10();
+    virtual void f11();
+    virtual void f12();
+    virtual void f13();
+    virtual void f14();
+    virtual void f15();
+    virtual void f16();
+    virtual void f17();
+    virtual void f18();
+    virtual void f19();
+    virtual void f20();
+    virtual void f21();
+    virtual void f22();
+    virtual void f23();
+    virtual void f24();
+    virtual void f25();
+    virtual void f26();
+    virtual void f27();
+    virtual void f28();
+    virtual void f29();
+    virtual void f30();
+    virtual void f31();
+    virtual void f32();
+    virtual void f33();
+    virtual void f34();
+    virtual void f35();
+    virtual void f36();
+    virtual void f37();
+    virtual void f38();
+    virtual void f39();
+    virtual void f40();
+    virtual void f41();
+    virtual void f42();
+    virtual void f43();
+    virtual void f44();
+    virtual void f45();
+    virtual void f46();
+    virtual void f47();
+    virtual void f48();
+    virtual void f49();
+    virtual void f50();
+    virtual void emit(int, void *);
+};
+struct GS {
+    VOBJ *pparent; char pad4[0x24 - 4]; int cobj; void **pobj; char pad2C[0x38 - 0x2C];
+    int cdst; SRC *psrc; DST *pdst; char pad44[0x58 - 0x44]; int f58;
+};
 extern "C" {
-struct _m2c_stack_CloneGlobset {
-    /* 0x00 */ char pad0[0x10];
-    /* 0x10 */ s32 sp10;                            /* inferred */
-    /* 0x14 */ s32 sp14;                            /* inferred */
-    /* 0x18 */ s32 sp18;                            /* inferred */
-    /* 0x1C */ char pad1C[0xA4];
-};                                                  /* size = 0xC0 */
-M2C_UNK ClearSle(s8 *);                           /* extern */
-M2C_UNK CopyAb__FPvT0Ui(s8 *, s8 *, s32);       /* extern */
-M2C_UNK CopyGlobDmaChain(s8 *, s8 *, s32, s8 **); /* extern */
-M2C_UNK PrependSlEntry(s8 *, s8 *);             /* extern */
-s8 **PvAllocSwCopyImpl__FiPv(...); /* extern */
-M2C_UNK func_001EC740(s32, s32, s32, s8 **);      /* extern */
-s8 *func_001ED850(s8 *);                        /* extern */
-extern s32 B_003DA790;
-extern M2C_UNK B_003DA798;
-void CloneGlobset(s8 *arg0, s8 *arg1, s32 arg2) {
-    s8 sp[0x10] __attribute__((aligned(16)));
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    s32 temp_a2_2;
-    s32 temp_s0_2;
-    s32 temp_v0_4;
-    s32 temp_v0_6;
-    s32 var_a0;
-    s32 var_a2;
-    s32 var_fp;
-    s32 var_s0;
-    s32 var_s0_2;
-    s32 var_s1;
-    s32 var_s1_2;
-    u32 temp_a0_3;
-    u32 temp_a1_2;
-    u32 temp_s0;
-    u32 temp_v0_5;
-    u32 var_s1_3;
-    s8 **temp_s5;
-    s8 **temp_v0_2;
-    s8 **temp_v1;
-    s8 **var_s6;
-    s8 *temp_a0;
-    s8 *temp_a0_2;
-    s8 *temp_a1;
-    s8 *temp_a1_3;
-    s8 *temp_a2;
-    s8 *temp_a3;
-    s8 *temp_s2;
-    s8 *temp_s3;
-    s8 *temp_t2;
-    s8 *temp_v0;
-    s8 *temp_v0_3;
-    s8 *var_s0_3;
-    s8 *var_s2;
-    M2C_FIELD(arg0, s8 **, 0) = arg1;
-    sp10 = arg2;
-    var_a2 = 0;
-    M2C_FIELD(arg0, s8 ***, 0x40) = PvAllocSwCopyImpl__FiPv(sp, M2C_FIELD(arg0, s8 ***, 0x40), M2C_FIELD(arg0, s32 *, 0x38) * 0x28, 0x10);
-    M2C_FIELD(arg0, s32 *, 0x58) = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x24) > 0) {
-loop_2:
-        if (M2C_FIELD(*((var_a2 * 4) + M2C_FIELD(arg0, s8 ***, 0x28)), s32 *, 0x20) & 4) {
-            M2C_FIELD(arg0, s8 ***, 0x28) = PvAllocSwCopyImpl__FiPv(sp, M2C_FIELD(arg0, s8 ***, 0x28), var_a2, M2C_FIELD(arg0, s32 *, 0x24), M2C_FIELD(arg0, s32 *, 0x24) * 4, 0x10);
+extern int B_003DA790;
+extern char B_003DA798[];
+void ClearSle(void *);
+void CopyAb__FPvT0Ui(void *, void *, unsigned);
+void CopyGlobDmaChain(SRC *, DST *, int, void *, int, void *, void *);
+void PrependSlEntry(void *, void *);
+void *PvAllocSwCopyImpl__FiPv(REQ *, void *);
+void func_001EC740(int, int, int, void *, void *);
+OBJ *func_001ED850(OBJ *);
+}
+
+extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
+{
+    REQ req;
+    int align = 0x10;
+    self->pparent = parent;
+    req.size = self->cdst * 0x28;
+    req.align = align;
+    self->pdst = (DST *)PvAllocSwCopyImpl__FiPv(&req, self->pdst);
+    self->f58 = 0;
+    int index = 0;
+    if (self->cobj > 0) {
+    again:
+        if (((OBJ *)self->pobj[index])->flags & 4) {
+            req.size = self->cobj * 4;
+            req.align = align;
+            self->pobj = (void **)PvAllocSwCopyImpl__FiPv(&req, self->pobj);
         } else {
-            var_a2 += 1;
-            if (var_a2 < M2C_FIELD(arg0, s32 *, 0x24)) {
-                goto loop_2;
+            index += 1;
+            if (index < self->cobj)
+                goto again;
+        }
+    }
+    for (int index = 0; index < self->cdst; index++) {
+        DST *pdst = &self->pdst[index];
+        SRC *psrc = (SRC *)((char *)self->psrc + index * 0x14);
+        parent->emit(arg, &pdst->f4);
+        req.size = psrc->count * 0x50;
+        req.align = align;
+        pdst->p18 = PvAllocSwCopyImpl__FiPv(&req, pdst->p18);
+        for (int ient = 0; ient < psrc->count; ient++)
+            parent->emit(arg, (char *)pdst->p18 + ient * 0x50 + 0xC);
+        OBJ *pobj = pdst->pobj;
+        int fresh = 0;
+        if (pobj != 0)
+            fresh = (pobj->flags & 4) != 0;
+        if (fresh != 0) {
+            OBJ *pnew = func_001ED850(pobj);
+            for (int iobj = 0; iobj < self->cobj; iobj++) {
+                if (self->pobj[iobj] == pdst->pobj) {
+                    self->pobj[iobj] = pnew;
+                    break;
+                }
+            }
+            pdst->pobj = pnew;
+        }
+        if (psrc->f8 != 0 || fresh != 0) {
+            int cdma = 0;
+            void *pold = 0;
+            void *pnew = 0;
+            if (psrc->flags & 1) {
+                cdma = psrc->f10;
+                pold = pdst->p10;
+                req.size = cdma * 0x10;
+                req.align = align;
+                pnew = PvAllocSwCopyImpl__FiPv(&req, pold);
+                pdst->p10 = pnew;
+            } else {
+                if (pdst->pobj != 0) {
+                    pnew = pdst->pobj->ptr48;
+                    cdma = pdst->pobj->count44;
+                    if (fresh != 0) {
+                        pold = pnew;
+                        req.size = cdma * 0x10;
+                        req.align = align;
+                        pdst->pobj->ptr48 = (void **)PvAllocSwCopyImpl__FiPv(&req, pold);
+                        pnew = pdst->pobj->ptr48;
+                    }
+                }
+                CopyGlobDmaChain(psrc, pdst, psrc->f10, pdst->p10, cdma, pnew, pold);
+            }
+            if (pdst->pobj != 0) {
+                unsigned start = pdst->bits.start;
+                unsigned count = pdst->bits.end - start;
+                int dmaBytes = cdma * 0x10;
+                CopyAb__FPvT0Ui(B_003DA798 + B_003DA790 * 0x14, B_003DA798 + start * 0x14, count * 0x14);
+                pdst->bits.start = B_003DA790;
+                B_003DA790 += count;
+                pdst->bits.end = B_003DA790;
+                unsigned ientry = pdst->bits.start;
+                if (ientry < pdst->bits.end) {
+                    do {
+                        char *pentry = B_003DA798 + ientry * 0x14;
+                        if (fresh != 0) {
+                            *(int *)(pentry + 4) = (int)pdst->pobj + 0x24;
+                            *(OBJ **)(pentry + 0xC) = pdst->pobj;
+                        }
+                        ClearSle(B_003DA798 + ientry * 0x14 + 0x10);
+                        ientry += 1;
+                        PrependSlEntry(*(char **)(pentry + 0xC) + 0x34, pentry);
+                    } while (ientry < pdst->bits.end);
+                }
+                func_001EC740(pdst->bits.start, pdst->bits.end, dmaBytes, pold, pnew);
             }
         }
     }
-    var_s0 = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x38) > 0) {
-        do {
-            temp_t2 = M2C_FIELD(arg1, s8 **, 0xC);
-            var_s1 = 0;
-            sp18 = var_s0 + 1;
-            temp_s3 = (s8 *)(M2C_FIELD(arg0, s8 ***, 0x40) + (var_s0 * 0x28));
-            temp_s2 = (s8 *)(M2C_FIELD(arg0, s32 *, 0x3C) + (var_s0 * 0x14));
-            M2C_FIELD(temp_t2, M2C_UNK (**)(s8 *, s32, s8 *), 0x1A4)(arg1 + M2C_FIELD(temp_t2, s16 *, 0x1A0), sp10, temp_s3 + 4);
-            M2C_FIELD(temp_s3, s8 ***, 0x18) = PvAllocSwCopyImpl__FiPv(sp, M2C_FIELD(temp_s3, s8 ***, 0x18), M2C_FIELD(temp_s2, s8 *, 1) * 0x50, 0x10);
-            if (M2C_FIELD(temp_s2, s8 *, 1) > 0) {
-                var_s0_2 = 0;
-                do {
-                    temp_v0 = M2C_FIELD(arg1, s8 **, 0xC);
-                    var_s1 += 1;
-                    temp_a2 = (s8 *)(M2C_FIELD(temp_s3, s8 ***, 0x18) + var_s0_2 + 0xC);
-                    var_s0_2 += 0x50;
-                    M2C_FIELD(temp_v0, M2C_UNK (**)(s8 *, s32, s8 *), 0x1A4)(arg1 + M2C_FIELD(temp_v0, s16 *, 0x1A0), sp10, temp_a2);
-                } while (var_s1 < M2C_FIELD(temp_s2, s8 *, 1));
-            }
-            temp_a0 = M2C_FIELD(temp_s3, s8 **, 0x20);
-            var_fp = 0;
-            if (temp_a0 != NULL) {
-                var_fp = (M2C_FIELD(temp_a0, s32 *, 0x20) & 4) != 0;
-            }
-            if (var_fp != 0) {
-                temp_a1 = func_001ED850(temp_a0);
-                var_a0 = 0;
-                if (M2C_FIELD(arg0, s32 *, 0x24) > 0) {
-                    temp_v1 = M2C_FIELD(arg0, s8 ***, 0x28);
-                    temp_a3 = M2C_FIELD(temp_s3, s8 **, 0x20);
-                    if (*temp_v1 == temp_a3) {
-                        *temp_v1 = temp_a1;
-                    } else {
-loop_19:
-                        var_a0 += 1;
-                        if (var_a0 < M2C_FIELD(arg0, s32 *, 0x24)) {
-                            temp_v0_2 = &temp_v1[var_a0];
-                            if (*temp_v0_2 == temp_a3) {
-                                *temp_v0_2 = temp_a1;
-                            } else {
-                                goto loop_19;
-                            }
-                        }
-                    }
-                }
-                M2C_FIELD(temp_s3, s8 **, 0x20) = temp_a1;
-            }
-            if ((M2C_FIELD(temp_s2, s32 *, 8) != 0) || (var_fp != 0)) {
-                var_s1_2 = 0;
-                var_s6 = NULL;
-                if (M2C_FIELD(temp_s2, s8 *, 2) & 1) {
-                    var_s1_2 = M2C_FIELD(temp_s2, s32 *, 0x10);
-                    var_s6 = M2C_FIELD(temp_s3, s8 ***, 0x10);
-                    M2C_FIELD(temp_s3, s8 ***, 0x10) = PvAllocSwCopyImpl__FiPv(sp, var_s6, var_s1_2 * 0x10, 0x10);
-                } else {
-                    temp_v0_3 = M2C_FIELD(temp_s3, s8 **, 0x20);
-                    if (temp_v0_3 != NULL) {
-                        temp_s5 = M2C_FIELD(temp_v0_3, s8 ***, 0x48);
-                        var_s1_2 = M2C_FIELD(temp_v0_3, s32 *, 0x44);
-                        var_s6 = temp_s5;
-                        if (var_fp != 0) {
-                            M2C_FIELD(M2C_FIELD(temp_s3, s8 **, 0x20), s8 ***, 0x48) = PvAllocSwCopyImpl__FiPv(sp, temp_s5, var_s1_2 * 0x10, 0x10);
-                        }
-                    }
-                    CopyGlobDmaChain(temp_s2, temp_s3, M2C_FIELD(temp_s2, s32 *, 0x10), M2C_FIELD(temp_s3, s8 ***, 0x10));
-                }
-                if (M2C_FIELD(temp_s3, s8 **, 0x20) != NULL) {
-                    temp_s0 = M2C_FIELD(temp_s3, u32 *, 0xC);
-                    temp_v0_4 = (temp_s0 >> 0xD) & 0x1FF;
-                    temp_s0_2 = ((temp_s0 >> 0x16) & 0x1FF) - temp_v0_4;
-                    sp14 = var_s1_2 * 0x10;
-                    CopyAb__FPvT0Ui((s8 *)(&B_003DA798 + (B_003DA790 * 0x14)), (s8 *)(&B_003DA798 + (temp_v0_4 * 0x14)), temp_s0_2 * 0x14);
-                    temp_a2_2 = B_003DA790 + temp_s0_2;
-                    temp_a1_2 = (M2C_FIELD(temp_s3, u32 *, 0xC) & 0xFFC01FFF) | ((B_003DA790 & 0x1FF) << 0xD);
-                    M2C_FIELD(temp_s3, u32 *, 0xC) = temp_a1_2;
-                    temp_v0_5 = (temp_a1_2 & 0x803FFFFF) | ((temp_a2_2 & 0x1FF) << 0x16);
-                    B_003DA790 = temp_a2_2;
-                    var_s1_3 = (temp_v0_5 >> 0xD) & 0x1FF;
-                    M2C_FIELD(temp_s3, u32 *, 0xC) = temp_v0_5;
-                    if (var_s1_3 < (u32) ((temp_v0_5 >> 0x16) & 0x1FF)) {
-                        temp_v0_6 = var_s1_3 * 0x14;
-                        var_s0_3 = (s8 *)(temp_v0_6 + &B_003DA798);
-                        var_s2 = (s8 *)(temp_v0_6 + 0x10 + &B_003DA798);
-                        do {
-                            if (var_fp != 0) {
-                                M2C_FIELD(var_s0_3, s8 **, 4) = (s8 *) (M2C_FIELD(temp_s3, s8 **, 0x20) + 0x24);
-                                M2C_FIELD(var_s0_3, s8 **, 0xC) = (s8 *) M2C_FIELD(temp_s3, s8 **, 0x20);
-                            }
-                            var_s1_3 += 1;
-                            ClearSle(var_s2);
-                            var_s2 += 0x14;
-                            temp_a0_2 = M2C_FIELD(var_s0_3, s8 **, 0xC);
-                            temp_a1_3 = var_s0_3;
-                            var_s0_3 += 0x14;
-                            PrependSlEntry(temp_a0_2 + 0x34, temp_a1_3);
-                        } while (var_s1_3 < (u32) (((u32) M2C_FIELD(temp_s3, u32 *, 0xC) >> 0x16) & 0x1FF));
-                    }
-                    temp_a0_3 = M2C_FIELD(temp_s3, u32 *, 0xC);
-                    func_001EC740((temp_a0_3 >> 0xD) & 0x1FF, (temp_a0_3 >> 0x16) & 0x1FF, sp14, var_s6);
-                }
-            }
-            var_s0 = sp18;
-        } while (var_s0 < M2C_FIELD(arg0, s32 *, 0x38));
-    }
-}
 }

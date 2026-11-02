@@ -1696,6 +1696,7 @@ us_address	name	other_address	pair	score	addresses
 0x148C08	LoadButtonFromBrx	0X148C48	same	0	ok
 0x148C38	PostButtonLoad	0X148C78	same	0	ok
 0x148C70	CloneButton	0X148CB0	same	0	ok
+0x148C98	UpdateButton	0X148CD8	gap	0	ok
 0x148F20	FAbsorbButtonWkr	0X148F60	same	0	ok
 0x149010	func_00149010	0X149050	same	0	ok
 0x1490A0	SetButtonButtons	0X1490E0	same	0	ok
@@ -2019,6 +2020,7 @@ us_address	name	other_address	pair	score	addresses
 0x15DC60	func_0015DC60	0X15DC88	same	0	ok
 0x15DC80	InitFade	0X15DCA8	same	0	ok
 0x15DCD8	UpdateFade	0X15DD00	same	0	ok
+0x15DD48	DrawFade	0X15DD70	same	0	ok
 0x15E1D8	StartFade	0X15E200	same	0	ok
 0x15E228	fade__static_initialization_and_destruction_0	0X15E250	same	0	ok
 0x15E360	func_0015E360	0X15E388	same	0	ok
@@ -2604,6 +2606,7 @@ us_address	name	other_address	pair	score	addresses
 0x188468	func_00188468	0X1883F0	same	0	ok
 0x188488	InitSly	0X188410	same	0	ok
 0x1885B8	LoadSlyFromBrx	0X188540	same	0	ok
+0x188608	PostSlyLoad	0X188590	same	0	ok
 0x189458	FFaceSlyAimTarget	0X1893E0	same	0	ok
 0x189488	GetSlyExposeMode	0X189410	same	0	ok
 0x1894F8	FAllowBinocSly	0X189480	same	2	ok
@@ -3091,8 +3094,10 @@ us_address	name	other_address	pair	score	addresses
 0x1B8450	func_001B8450	0X1B86B8	same	0	ok
 0x1B84E0	FMurrayAttackCanChain	0X1B8748	identical	0	ok
 0x1B8938	EndMurrayAttack	0X1B8BA0	same	0	ok
+0x1B8EC0	func_001B8EC0	0X1B9128	same	0	ok
 0x1B9130	AdjustMurrayNewXp	0X1B9398	same	0	ok
 0x1B92F8	UpdateMurrayLift	0X1B9560	same	0	ok
+0x1B93E8	SetMurrayLiftState	0X1B9650	same	0	ok
 0x1B9880	func_001B9880	0X1B9AE8	same	0	ok
 0x1B9A08	UseMurrayGadget	0X1B9C70	same	0	ok
 0x1B9B60	GetMurraySaveRoot	0X1B9DC8	gap	0	ok
@@ -3301,6 +3306,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C8D20	Begin__5CProg	0X1C8F90	identical	0	ok
 0x1C8D40	SetRemain__5CProgi	0X1C8FB0	same	0	ok
 0x1C8DB8	End__5CProg	0X1C9028	identical	0	ok
+0x1C8DD8	Draw__5CProg	0X1C9048	same	12	ok
 0x1C9090	func_001C9090	0X1C9300	gap	0	ok
 0x1C9098	StopLoadingLogo	0X1C9308	same	0	ok
 0x1C90D0	InitLoadingLogoThread	0X1C9340	same	0	ok
@@ -4132,6 +4138,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FDA48	func_001FDA48	0X1FE208	same	0	ok
 0x1FDBA8	func_001FDBA8	0X1FE368	same	0	ok
 0x1FDEC0	func_001FDEC0	0X1FE680	gap	0	ok
+0x1FDEC8	UpdateStreamCues	0X1FE688	same	0	ok
 0x1FE0E8	RunStreamCue	0X1FE8A8	same	0	ok
 0x1FE310	DequeueStream	0X1FEAD0	same	0	ok
 0x1FE3F8	MarkClockTickRealOnly__FP5CLOCK	0X1FEBB8	same	0	ok
@@ -4150,6 +4157,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FEEA0	func_001FEEA0	0X1FF660	gap	0	ok
 0x1FEEB0	IncrementCounterB_1feeb0	0X1FF670	gap	0	ok
 0x1FEEC0	DecrementCounterB_1feec0	0X1FF680	gap	0	ok
+0x1FEED0	func_001FEED0	0X1FF690	same	0	ok
 0x1FF108	func_001FF108	0X1FF8C8	same	0	ok
 0x1FF378	StaticInitDestroySndbank_thunk	0X1FFB38	same	0	ok
 0x1FF398	StaticInitDestroySndbank_thunk2	0X1FFB58	same	0	ok
@@ -4519,6 +4527,7 @@ us_address	name	other_address	pair	score	addresses
 0x212A30	func_00212A30	0X213200	same	0	ok
 0x212A50	SetTimerTimers__FP5TIMER6TIMERS	0X213220	same	0	ok
 0x212C50	UpdateBlotMovie	0X213420	same	0	ok
+0x2130C0	BuildBlotDmaHeader	0X213890	same	0	ok
 0x2132D0	FDrawBlotMovie	0X213AA0	same	0	ok
 0x2137F0	FBlotObscured	0X213FC0	same	0	ok
 0x213830	PlayBlotLabel	0X214000	same	0	ok
@@ -4554,6 +4563,7 @@ us_address	name	other_address	pair	score	addresses
 0x2166B0	CMovieText_DrawAffine	0X216ED0	same	0	ok
 0x216B40	PglyphFromFontCh	0X217360	same	0	ok
 0x216B80	DxFromFontCh	0X2173A0	same	0	ok
+0x217298	func_00217298	0X217AB8	same	0	ok
 0x217BA0	PlayRootSpriteLabel	0X2183C0	same	0	ok
 0x217C20	PlayRootSpriteLabelIndex	0X218440	same	0	ok
 0x217CA8	PlaceSpriteInstance	0X2184C8	same	0	ok

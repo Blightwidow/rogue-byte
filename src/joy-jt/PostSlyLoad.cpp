@@ -53,9 +53,8 @@ void PostSlyLoad(s8 *arg0) {
     M2C_FIELD(arg0, s32 *, 0x19E8) = CreateXfActadj(arg0, M2C_FIELD(arg0, s32 *, 0x19C8), 5);
     M2C_FIELD(arg0, s32 *, 0x19EC) = CreateXfActadj(arg0, M2C_FIELD(arg0, s32 *, 0x19C4), 5);
     M2C_FIELD(arg0, s32 *, 0x19F0) = CreateXfActadj(arg0, M2C_FIELD(arg0, s32 *, 0x19D8), 7);
-    temp_a0 = M2C_FIELD(arg0, s8 **, 0x19A0);
     M2C_FIELD(arg0, s32 *, 0x19F4) = CreateXfActadj(arg0, M2C_FIELD(arg0, s32 *, 0x19D4), 7);
-    M2C_FIELD(arg0, s32 *, 0x19FC) = CreateXfActadj(temp_a0, M2C_FIELD(temp_a0, s32 *, 0x58), 5);
+    M2C_FIELD(arg0, s32 *, 0x19FC) = CreateXfActadj(M2C_FIELD(arg0, s8 **, 0x19A0), M2C_FIELD(M2C_FIELD(arg0, s8 **, 0x19A0), s32 *, 0x58), 5);
     M2C_FIELD(arg0, s32 *, 0x19F8) = CreateXfActadj(arg0, M2C_FIELD(arg0, s32 *, 0x19C0), 5);
     temp_v0 = func_0012DC18(arg0, M2C_FIELD(arg0, s32 *, 0x19C0), 5, 5, 2, g_2a2dd0);
     M2C_FIELD(arg0, s32 *, 0x1A00) = temp_v0;
