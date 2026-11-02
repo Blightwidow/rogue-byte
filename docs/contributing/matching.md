@@ -67,6 +67,24 @@ Reported by other PS2 decompilations with the same compiler family (Ratchet & Cl
 - `long` is 64 bits and `long long` 128 bits; a `dsll32`/`dsra32` pair is a 64-bit value narrowed to `int`.
 - Compiler diagnostics: `-da`, `-dL`, `-dS`, `-dG` dump the RTL passes.
 
+Reported by OpenThievius (Sly 1, same SN 2.95.3 family, [sly1-decomp](https://github.com/OpenThievius/sly1-decomp) `docs/AGENT_WORKFLOW.md`).
+Each one below was re-checked here on a small control compiled with `compile_unit.py` (2026-11-02); the ones that did not reproduce are listed after:
+
+- **`Pair p = { a, b };` calls `memset`** (and saves two more s-registers around the call); assigning the members one by one does not. Write retail's form: a
+  `jal memset` with `li a2,8` at the top of a function is an aggregate initialiser, and a function without it assigns the members.
+- **`i * a` against `a * i`** gives `mult v0,a0,a1` against `mult v0,a1,a0`: the operand order of the source is the operand order of the `mult`.
+- **`switch` on 0, 1, 2 against an `if` chain** compile differently: the `switch` makes a compare tree (`beq`, `slti`, `b` + `nop` to a shared return), the chain
+  gives `bnez`, `beq` and a `movn` for the last arm. Below five cases there is no jump table, so which one retail has is told by that shape, not by a table.
+- **`(unsigned char)*p++` passed straight to an `s8` parameter** keeps the `lb` test and the `lbu` load apart and makes a `bnez`-over-body loop; a `u8 c = *p++`
+  local folds them into one and gives a `beqzl`/`bnezl` loop. Try the local when retail has one load, the cast when it has two.
+- **`extern int T[][2]` read as `T[i][1]`** gives `lui`, `sll`, `addiu`, `addu`, `lw 4(v1)`; `U[i * 2 + 1]` gives `ori a0,a0,4` and a different add order. For a stride-8 table
+  of pairs, try the 2-D declaration (or a pair struct) before the flat one.
+
+Not reproduced here (no change in the control): `__builtin_fabsf(x)` against `x < 0 ? -x : x` (both give `abs.s` with `-ffast-math`), and a store through
+`*(int *)((char *)o + 0x708)` against a member store (same code for three stores). They may matter in a larger function; don't start with them.
+Already covered above or in the rounds below: the `[a..z]` to `[b..z, a]` store rotation, `sp[N]` sizing from the frame, the hidden leading argument, the dead local for a frame
+with no stores, callee return type, and Sonnet on a near miss with the diff in hand (theirs: 40 of 92 matched, 43%, against 28 of 420 when Haiku retried).
+
 ## Walls
 
 Patterns the source cannot reach (record them in the file and move on):

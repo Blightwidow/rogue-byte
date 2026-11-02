@@ -53,6 +53,7 @@ tooling, not the game's own logic. The `.c` files started as output of [m2c](htt
 | [lombyte-project/Lombyte](https://github.com/lombyte-project/Lombyte) (Ratchet & Clank decompilation) | GPL-3.0 | Repository layout, dotfiles and contribution docs. Structure only. |
 | [decomp.wtf](https://decomp.wtf/) | not stated | The compile-and-diff workflow of `scripts/matching/try.py` follows its design; no code was taken. |
 | [OpenRAC/rac1-decomp](https://github.com/OpenRAC/rac1-decomp) (Ratchet & Clank 1 decompilation) | GPL-3.0 | What SN's assembler does that GNU `as` does not, and a list of compiler levers (`docs/build/assembler.md`, `docs/contributing/matching.md`). Read for its findings; nothing was copied. |
+| [OpenThievius/sly1-decomp](https://github.com/OpenThievius/sly1-decomp) (Sly 1 PS2 decompilation) | AGPL-3.0-or-later | Its `docs/AGENT_WORKFLOW.md` list of compiler levers, read as ideas; each one used in `docs/contributing/matching.md` was re-measured here first. Its worker tiers by function size also follow its method. No code, names or data copied. |
 | [morluto/rea](https://github.com/morluto/rea) | MIT | Evaluated as a reverse-engineering tool, not adopted. |
 
 ## The game
