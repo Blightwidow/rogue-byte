@@ -1,6 +1,7 @@
 typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
 typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
 typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
+typedef int QW __attribute__((mode(TI)));
 typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
 #define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
 #define M2C_BITWISE(type, expr) ((type)(expr))
@@ -11,24 +12,24 @@ struct _m2c_stack_HandleMurrayMessage {
     /* 0x00 */ char pad0[0x40];
 };                                                  /* size = 0x40 */
 void CarryThrow_Launch(s8 *);
-void HandleJtMessage();
-s32 PosLoWorld(s8 *);
+void HandleJtMessage(s8 *, s32, s8 *);
+QW PosLoWorld(s8 *);
 void SetMurrayLiftState(s8 *, M2C_UNK);
 void SetMurrayState(s8 *, M2C_UNK);
-s32 SpawnSwHitFx(M2C_UNK *, M2C_UNK, M2C_UNK, s8 *);
+s32 SpawnSwHitFx(M2C_UNK *, M2C_UNK, QW, s8 *);
 void ThrowMurrayObject(s8 *);
 void func_001B6DA8(s8 *, M2C_UNK);
 void func_001B7AE8(s8 *);
 extern M2C_UNK B_003DD490;
-extern M2C_UNK D_FLT_002C0990;
-extern f32 D_FLT_002C099C;
+extern f32 RO_002C0990[];
+extern f32 RO_002C099C;
 void HandleMurrayMessage(s8 *arg0, s32 arg1, s8 *arg2) {
     f32 temp_f0;
     s32 temp_v1;
     s32 temp_v1_2;
     s32 temp_v1_3;
     s32 temp_v1_4;
-    HandleJtMessage();
+    HandleJtMessage(arg0, arg1, arg2);
     switch (arg1) {                                 /* switch 1; irregular */
     case 9:                                         /* switch 1 */
         temp_v1 = M2C_FIELD(arg2, s32 *, 0);
@@ -39,9 +40,7 @@ void HandleMurrayMessage(s8 *arg0, s32 arg1, s8 *arg2) {
                 func_001B6DA8(arg0, 1);
                 break;
             case 0x1A5:                             /* switch 2 */
-                s64 vu_1;
-                asm volatile("por %0, %1, %2" : "=r"(vu_1) : "r"(0), "r"(PosLoWorld(arg0)));
-                SpawnSwHitFx(&B_003DD490, 0, vu_1, arg0);
+                SpawnSwHitFx(&B_003DD490, 0, PosLoWorld(arg0), arg0);
                 break;
             case 0x1EB:                             /* switch 2 */
                 temp_v1_3 = M2C_FIELD(arg0, s32 *, 0x13D0);
@@ -62,9 +61,7 @@ void HandleMurrayMessage(s8 *arg0, s32 arg1, s8 *arg2) {
                 break;
             case 0x1C8:                             /* switch 2 */
                 if (M2C_FIELD(arg0, s32 *, 0x1450) == 0) {
-                    s64 vu_2;
-                    asm volatile("por %0, %1, %2" : "=r"(vu_2) : "r"(0), "r"(PosLoWorld(arg0)));
-                    SpawnSwHitFx(&B_003DD490, 0, vu_2, arg0);
+                    SpawnSwHitFx(&B_003DD490, 0, PosLoWorld(arg0), arg0);
                     SetMurrayLiftState(arg0, 1);
                 }
                 break;
@@ -92,16 +89,16 @@ void HandleMurrayMessage(s8 *arg0, s32 arg1, s8 *arg2) {
             temp_v1_4 = M2C_FIELD(arg2, s32 *, 8);
             if (temp_v1_4 != M2C_FIELD(arg2, s32 *, 4)) {
                 switch (temp_v1_4) {                /* switch 4; irregular */
-                case 0x1D0:                         /* switch 4 */
-                    /* fallthrough */
+                case 0x1D0:
                 case 0x1CA:                         /* switch 4 */
                     SetMurrayState(arg0, 0);
                     break;
-                default:                            /* switch 4 */
-                    temp_f0 = *((M2C_FIELD(arg0, s32 *, 0x1534) * 4) + &D_FLT_002C0990);
+                case 0x1CB: case 0x1CC: case 0x1CD: case 0x1CE: case 0x1CF:
+                    f32 scale = RO_002C099C;
+                    temp_f0 = RO_002C0990[M2C_FIELD(arg0, s32 *, 0x1534)];
                     M2C_FIELD(arg0, f32 *, 0x1528) = temp_f0;
                     M2C_FIELD(arg0, f32 *, 0x1524) = temp_f0;
-                    M2C_FIELD(arg0, s32 *, 0x152C) = (s32) (D_FLT_002C099C * temp_f0);
+                    M2C_FIELD(arg0, s32 *, 0x152C) = (s32) (scale * temp_f0);
                     break;
                 }
             }

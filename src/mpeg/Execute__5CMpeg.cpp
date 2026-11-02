@@ -34,17 +34,10 @@ extern char g_2dded0[];
 #define F(type, base, off) (*(type *)((char *)(base) + (off)))
 static inline int SameMovie(MOVIE_1B3BD0 *left, MOVIE_1B3BD0 *right)
 {
-    int result;
-    if (left == right) {
-        result = 1;
-    } else if (left == 0) {
-        result = 0;
-    } else if (right != 0) {
-        result = (left->a8 ^ left->c38) == (right->a8 ^ right->c38);
-    } else {
-        result = 0;
-    }
-    return result;
+    if (left == right) return 1;
+    if (left == 0) return 0;
+    if (right == 0) return 0;
+    return (left->a8 ^ left->c38) == (right->a8 ^ right->c38);
 }
 
 extern "C" void Execute__5CMpeg(void *self, MOVIE_1B3BD0 *movie)
@@ -53,26 +46,27 @@ extern "C" void Execute__5CMpeg(void *self, MOVIE_1B3BD0 *movie)
     REQ_1B3BD0 req;
     STREAM_1B3BD0 stream;
     FLOC_1B3BD0 location;
-    REQ_1B3BD0 *preq = &req;
 
     CStackFrame_Construct(frame);
+    REQ_1B3BD0 *preq = &req;
     req.size = 0x41FC00;
     preq->align = 0x40;
     void *buffer = PvAllocStackClearImpl__Fi(preq);
     F(void *, self, 0x110) = buffer;
     __18CBinaryAsyncStreamPv(&stream, 0x80000, buffer);
-    location.kind = 2;
-    Clear__13CFileLocation(&location);
+    FLOC_1B3BD0 *ploc = &location;
+    ploc->kind = 2;
+    Clear__13CFileLocation(ploc);
     int valid;
-    if (movie != 0) {
+    if (movie == 0) {
+        valid = 0;
+    } else {
         int slot = movie->a4;
         int other = movie->c3C;
-        location.kind = 2;
+        ploc->kind = 2;
         location.hash = (movie->a0 ^ movie->c34) + 0xCA0;
         location.slot = slot ^ other;
         valid = slot != other;
-    } else {
-        valid = 0;
     }
     if (valid != 0 && CBinaryAsyncStream_FOpenLocation(&stream, &location) != 0) {
         CMpeg_Start(self, &stream);
@@ -84,9 +78,14 @@ extern "C" void Execute__5CMpeg(void *self, MOVIE_1B3BD0 *movie)
             int skippable = 0;
             if (SameMovie(movie, &RO_002A3968) != 0 || SameMovie(movie, &RO_002A39A8) != 0)
                 skippable = B_002F68F8 != 0;
-            int allowed = (D_002C0268 != 0) ? 1 : skippable;
+            if (D_002C0268 != 0)
+                skippable = 1;
+            int allowed = skippable;
             if (allowed != 0) {
-                if ((FJoyButtonPressed(B_002DFC00, 0x91F, allowed) != 0 ? 1 : 0) != 0) {
+                int pressed = 0;
+                if (FJoyButtonPressed(B_002DFC00, 0x91F, allowed) != 0)
+                    pressed = 1;
+                if (pressed != 0) {
                     F(int, self, 0x108) = 0;
                     break;
                 }

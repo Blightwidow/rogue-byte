@@ -917,6 +917,7 @@ address	name	size	file
 0X11A530	func_0011A530	32	dl-dzg/fun_0011a530.c
 0X11A550	func_0011A550	360	dl-dzg/fun_0011a550.cpp
 0X11A6B8	ClearDzgSolution__FP3DZG	184	dzg/ClearDzgSolution__FP3DZG.cpp
+0X11A770	EnforceDzgDz__FP3DZGP2DZ	1160	dzg/EnforceDzgDz__FP3DZGP2DZ.cpp
 0X11AE88	StaticInitSlotheaps_11ae88	308	dzg-jsg/StaticInitSlotheaps_11ae88.c
 0X11AFC0	func_0011AFC0	32	dzg-jsg/fun_0011afc0.c
 0X11AFE0	HashSz	96	dzg-jsg/HashSz.cpp
@@ -2583,12 +2584,15 @@ address	name	size	file
 0X1870A0	RemoveGrfusr__Fi	44	joy/RemoveGrfusr__Fi.cpp
 0X1870D0	UpdateGrfjoytFromGrfusr__Fv	128	joy/UpdateGrfjoytFromGrfusr__Fv.cpp
 0X187150	InitJoy	112	joy/InitJoy.cpp
+0X1871C0	UpdateJoy__FP3JOY	1016	joy/UpdateJoy__FP3JOY.cpp
 0X187D80	FJoyButtonPressed	76	joy/FJoyButtonPressed.c
 0X187DD0	FJoyButtonPeek	12	joy/FJoyButtonPeek.c
 0X187DE0	ConsumeJoyButton	40	joy/ConsumeJoyButton.c
 0X187E08	func_00187E08	32	joy/fun_00187e08.c
 0X187E28	TriggerJoyRumbleRumk__FP3JOY4RUMKf	68	joy/TriggerJoyRumbleRumk__FP3JOY4RUMKf.c
 0X187E78	func_00187E78	12	joy-jt/fun_00187e78.cpp
+0X187E88	UpdateJoyNavX	588	joy-jt/UpdateJoyNavX.cpp
+0X1880D8	UpdateJoyNavY	588	joy-jt/UpdateJoyNavY.cpp
 0X188330	func_00188330	308	joy-jt/fun_00188330.c
 0X188468	func_00188468	32	joy-jt/fun_00188468.c
 0X188488	InitSly	300	joy-jt/InitSly.cpp
@@ -2876,6 +2880,7 @@ address	name	size	file
 0X1AB418	SetSaveState	536	memcard/SetSaveState.cpp
 0X1AB630	func_001AB630	140	memcard/fun_001ab630.c
 0X1AB6C0	FormatMemcard	132	memcard/FormatMemcard.c
+0X1AB750	FUN_0018c1e8	128	memcard/FUN_0018c1e8.cpp
 0X1AB7D0	CreateSaveDirectory	148	memcard/CreateSaveDirectory.cpp
 0X1ABA10	ScanSaveDirectory	252	memcard/ScanSaveDirectory.cpp
 0X1ABB10	BuildSlotFilePath	80	memcard/BuildSlotFilePath.cpp
@@ -3037,6 +3042,7 @@ address	name	size	file
 0X1B3508	func_001B3508	8	unsorted/fun_001b3508.c
 0X1B3A48	QueueMovie	188	mpeg/QueueMovie.cpp
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp
+0X1B3BD0	Execute__5CMpeg	748	mpeg/Execute__5CMpeg.cpp
 0X1B3EC0	CMpeg_Start	404	mpeg/CMpeg_Start.cpp
 0X1B4058	Update__5CMpeg	228	mpeg/Update__5CMpeg.cpp
 0X1B4140	Finish__5CMpeg	144	mpeg/Finish__5CMpeg.cpp
@@ -3058,6 +3064,7 @@ address	name	size	file
 0X1B5E98	ChooseMurrayThrowTarget	476	mpeg-memcard/ChooseMurrayThrowTarget.cpp
 0X1B6728	GetMurrayCpdefi	204	mpeg-memcard/GetMurrayCpdefi.cpp
 0X1B67F8	PresetMurrayAccel	188	mpeg-memcard/PresetMurrayAccel.cpp
+0X1B68B8	HandleMurrayMessage	752	mpeg-memcard/HandleMurrayMessage.cpp
 0X1B6BA8	func_001B6BA8	276	mpeg-memcard/fun_001b6ba8.cpp
 0X1B7000	StartMurrayLift	76	mpeg-memcard/StartMurrayLift.cpp
 0X1B7050	StartMurrayLiftGuard	76	mpeg-memcard/StartMurrayLiftGuard.cpp
@@ -3355,6 +3362,7 @@ address	name	size	file
 0X1CDCD0	PripgNew	248	new_1cd9e0/PripgNew.cpp
 0X1CDDC8	Pripg_InitSo	168	new_1cd9e0/Pripg_InitSo.cpp
 0X1CDE70	SetRipgEmitb__FP4RIPGP5EMITB	12	rip/SetRipgEmitb__FP4RIPGP5EMITB.c
+0X1CDE80	OnRipgRemove	264	rip/OnRipgRemove.cpp
 0X1CE170	func_001CE170	88	rip/fun_001ce170.cpp
 0X1CE1C8	UpdateRipg	288	rip/UpdateRipg.cpp
 0X1CE608	RenderRipgSelf__FP4RIPGP2CMP2RO	180	rip/RenderRipgSelf__FP4RIPGP2CMP2RO.cpp
@@ -3755,6 +3763,7 @@ address	name	size	file
 0X1EB098	LoadBitmapsFromBrx	272	font-shd/LoadBitmapsFromBrx.cpp
 0X1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	328	shd/LoadTexFromBrx__FP18CBinaryInputStreamP3TEX.cpp
 0X1EB678	func_001EB678	204	shd/fun_001eb678.cpp
+0X1EB960	FillShaders__Fi	3364	shd/FillShaders__Fi.cpp
 0X1EC688	func_001EC688	68	shd/fun_001ec688.cpp
 0X1EC6D0	func_001EC6D0	72	shd/fun_001ec6d0.cpp
 0X1EC718	func_001EC718	40	shd/fun_001ec718.c
@@ -3771,6 +3780,7 @@ address	name	size	file
 0X1ECAB0	BuildClutGifs__FP4CLUTiP4GIFS	104	gs/BuildClutGifs__FP4CLUTiP4GIFS.cpp
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp
+0X1ECC28	FBuildUploadBitmapGifs__FiP3GSBP4GIFS	556	gs/FBuildUploadBitmapGifs__FiP3GSBP4GIFS.cpp
 0X1ED3A8	InitIdHashTables_1ed3a8	156	new_1ed1a8/InitIdHashTables_1ed3a8.cpp
 0X1ED4E0	PidFindInIdTableA_1ed4e0	124	new_1ed1a8/PidFindInIdTableA_1ed4e0.cpp
 0X1ED5D0	PidFindInIdTableB_1ed5d0	124	new_1ed1a8/PidFindInIdTableB_1ed5d0.cpp

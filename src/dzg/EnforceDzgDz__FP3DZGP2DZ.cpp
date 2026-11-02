@@ -38,52 +38,55 @@ void CroutDecomp__FiPfT1(int, float *, float *);
 void CroutSolve__FiPfN21(int, float *, float *, float *);
 void EnforceDzgDz__FP3DZGP2DZ(DZG_11A770 *dzg, DZ_11A770 *pdz) {
     int iterations;
-    int index;
-    unsigned code;
-    float step;
-    float candidate;
-    float delta;
-    float sum;
-    float *cursor;
     DZ_11A770 *outer;
     DZ_11A770 *inner;
-    DZ_11A770 *hit;
+    float *cursor;
+    int index;
     if (pdz != 0) {
         RemoveDlEntry(&dzg->listFree, pdz);
         AppendDlEntry(&dzg->listActive, pdz);
         dzg->activeCount++;
     }
     iterations = 0;
-    for (;;) {
-        cursor = dzg->matrix;
-        for (outer = dzg->listActive.head; outer != 0; outer = outer->next) {
-            for (inner = dzg->listActive.head; inner != 0; inner = inner->next) {
-                *cursor++ = outer->row[inner - dzg->dzs];
+    do {
+        {
+            float *out = dzg->matrix;
+            for (outer = dzg->listActive.head; outer; outer = outer->next) {
+                for (inner = dzg->listActive.head; inner; inner = inner->next) {
+                    *out = outer->row[inner - dzg->dzs];
+                    out++;
+                }
             }
         }
         CroutDecomp__FiPfT1(dzg->activeCount, dzg->matrix, dzg->lu);
-        cursor = dzg->rhs;
-        for (outer = dzg->listActive.head; outer != 0; outer = outer->next) {
-            *cursor++ = -outer->b;
+        {
+            float *out = dzg->rhs;
+            for (outer = dzg->listActive.head; outer; outer = outer->next) {
+                *out = -outer->b;
+                out++;
+            }
         }
         CroutSolve__FiPfN21(dzg->activeCount, dzg->lu, dzg->rhs, dzg->solution);
         for (index = 0; index < dzg->count; index++) {
-            sum = 0.0f;
-            cursor = dzg->solution;
-            for (outer = dzg->listActive.head; outer != 0; outer = outer->next) {
-                sum += *cursor++ * outer->row[index];
+            float sum = 0.0f;
+            float *w = dzg->solution;
+            for (outer = dzg->listActive.head; outer; outer = outer->next) {
+                sum += *w * outer->row[index];
+                w++;
             }
             dzg->dzs[index].db = sum;
         }
-        hit = 0;
-        step = 1.0f;
-        code = 0;
+
+        DZ_11A770 *hit = 0;
+        float step = 1.0f;
+        int code = 0;
         cursor = dzg->solution;
-        for (outer = dzg->listActive.head; outer != 0; outer = outer->next) {
-            delta = *cursor++;
-            if (delta > 0.0001f) {
-                if (outer->hi != RO_002A4120) {
-                    candidate = (outer->hi - outer->value) / delta;
+        for (outer = dzg->listActive.head; outer; outer = outer->next) {
+            float delta = *cursor;
+            cursor++;
+            if (0.0001f < delta) {
+                if (outer->hi != 3.4028235e38f) {
+                    float candidate = (outer->hi - outer->value) / delta;
                     if (candidate < step) {
                         step = candidate;
                         hit = outer;
@@ -91,8 +94,8 @@ void EnforceDzgDz__FP3DZGP2DZ(DZG_11A770 *dzg, DZ_11A770 *pdz) {
                     }
                 }
             } else if (delta < -0.0001f) {
-                if (outer->lo != RO_002A4124) {
-                    candidate = (outer->lo - outer->value) / delta;
+                if (outer->lo != -3.4028235e38f) {
+                    float candidate = (outer->lo - outer->value) / delta;
                     if (candidate < step) {
                         step = candidate;
                         hit = outer;
@@ -101,34 +104,40 @@ void EnforceDzgDz__FP3DZGP2DZ(DZG_11A770 *dzg, DZ_11A770 *pdz) {
                 }
             }
         }
-        for (outer = dzg->listLower.head; outer != 0; outer = outer->next) {
-            if (outer->db > -0.0001f) {
+        for (DZ_11A770 *dz = dzg->listLower.head; dz; dz = dz->next) {
+            float db = dz->db;
+            if (-0.0001f < db) {
             } else {
-                candidate = -outer->b / outer->db;
+                float candidate = -dz->b / db;
                 if (candidate < step) {
                     step = candidate;
-                    hit = outer;
+                    hit = dz;
                     code = 1;
                 }
             }
         }
-        for (outer = dzg->listUpper.head; outer != 0; outer = outer->next) {
-            if (outer->db < 0.0001f) {
+        for (DZ_11A770 *dz = dzg->listUpper.head; dz; dz = dz->next) {
+            float db = dz->db;
+            if (db < 0.0001f) {
             } else {
-                candidate = -outer->b / outer->db;
+                float candidate = -dz->b / db;
                 if (candidate < step) {
                     step = candidate;
-                    hit = outer;
+                    hit = dz;
                     code = 3;
                 }
             }
         }
         for (index = 0; index < dzg->count; index++) {
-            dzg->dzs[index].b += step * dzg->dzs[index].db;
+            DZ_11A770 *dz = dzg->dzs + index;
+            dz->b += step * dz->db;
         }
-        cursor = dzg->solution;
-        for (outer = dzg->listActive.head; outer != 0; outer = outer->next) {
-            outer->value += step * *cursor++;
+        {
+            cursor = dzg->solution;
+            for (outer = dzg->listActive.head; outer; outer = outer->next) {
+                outer->value += step * *cursor;
+                cursor++;
+            }
         }
         switch (code) {
         case 0:
@@ -137,39 +146,26 @@ void EnforceDzgDz__FP3DZGP2DZ(DZG_11A770 *dzg, DZ_11A770 *pdz) {
             dzg->activeCount--;
             RemoveDlEntry(&dzg->listActive, hit);
             AppendDlEntry(&dzg->listLower, hit);
-            iterations++;
-            if (hit == pdz) {
-                return;
-            }
-            break;
-        case 4:
-            dzg->activeCount--;
-            RemoveDlEntry(&dzg->listActive, hit);
-            AppendDlEntry(&dzg->listUpper, hit);
-            iterations++;
-            if (hit == pdz) {
-                return;
-            }
+            if (hit == pdz) return;
             break;
         case 1:
             dzg->activeCount++;
             RemoveDlEntry(&dzg->listLower, hit);
             AppendDlEntry(&dzg->listActive, hit);
-            iterations++;
+            break;
+        case 4:
+            dzg->activeCount--;
+            RemoveDlEntry(&dzg->listActive, hit);
+            AppendDlEntry(&dzg->listUpper, hit);
+            if (hit == pdz) return;
             break;
         case 3:
             dzg->activeCount++;
             RemoveDlEntry(&dzg->listUpper, hit);
             AppendDlEntry(&dzg->listActive, hit);
-            iterations++;
-            break;
-        default:
-            iterations++;
             break;
         }
-        if (iterations >= 10) {
-            return;
-        }
-    }
+        iterations++;
+    } while (iterations < 10);
 }
 }

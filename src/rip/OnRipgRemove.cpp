@@ -42,9 +42,9 @@ void OnRipgRemove(RIPG *ripg)
     DLI iterator;
     PushDli(&iterator, &ripg->rips);
     char *item;
-    for (item = PvFirst(&iterator); item != 0; item = PvStep(&iterator))
+    for (item = PvStep(&iterator); item != 0; item = PvStep(&iterator))
         RemoveRip(item);
-    if (B_003DD490.group == ripg)
+    if (ripg == B_003DD490.group)
         B_003DD490.group = 0;
     RemoveSoLoHierarchy(ripg);
     if (ripg->poxa != 0) {

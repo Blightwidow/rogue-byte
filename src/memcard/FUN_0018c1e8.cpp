@@ -5,7 +5,17 @@ struct S { int f0; int f4; char pad[0x2C]; int f34; int f38; int f3C; };
 
 extern "C" int FUN_0018c1e8(S *source) {
  L location;
- int valid;
- if (source == 0) { valid = 0; } else { location.word0 = (source->f34 ^ source->f0) + 0xCA0; location.word1 = source->f4 ^ source->f3C; location.mode = 2; valid = location.word1 != 0; }
- int result = 0; if (valid) result = CFileLocation_Cb(&location); return result;
+ int flag;
+ if (source == 0) {
+  flag = 0;
+ } else {
+  int x = source->f4 ^ source->f3C;
+  location.word0 = source->f0 ^ source->f34;
+  location.word0 += 0xCA0;
+  location.word1 = x;
+  location.mode = 2;
+  flag = x != 0;
+ }
+ if (flag != 0) return CFileLocation_Cb(&location);
+ return 0;
 }

@@ -16,7 +16,6 @@ address	name	size	file	score
 0X119308	BuildPlane	136	bsp-crout/BuildPlane.cpp	2
 0X1193D8	TransformPlane	176	bsp-crout/TransformPlane.cpp	7
 0X1195E0	CroutDecomp__FiPfT1	792	crout/CroutDecomp__FiPfT1.cpp	304
-0X11A770	EnforceDzgDz__FP3DZGP2DZ	1160	dzg/EnforceDzgDz__FP3DZGP2DZ.cpp	98
 0X11ABF8	SolveDzgPrefilled	312	dzg-jsg/SolveDzgPrefilled.c	48
 0X11AD30	SolveInequalities	344	dzg-jsg/SolveInequalities.cpp	21
 0X11B480	LoadRotateMatrixSinCos	128	mat/LoadRotateMatrixSinCos.cpp	7
@@ -381,11 +380,8 @@ address	name	size	file	score
 0X186820	RefreshAloIkLimbLengths	272	binoc-joy/RefreshAloIkLimbLengths.cpp	26
 0X186930	InitIkLimb	288	binoc-joy/InitIkLimb.c	52
 0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.cpp	133
-0X1871C0	UpdateJoy__FP3JOY	1016	joy_187030/UpdateJoy__FP3JOY.c	167
 0X1875B8	SetJoyJoys__FP3JOY4JOYS4JOYK	432	joy_187030/SetJoyJoys__FP3JOY4JOYS4JOYK.cpp	6
 0X187998	FReadJoy__FP3JOY	1000	joy_187030/FReadJoy__FP3JOY.c	154
-0X187E88	UpdateJoyNavX	592	joy-jt/UpdateJoyNavX.cpp	45
-0X1880D8	UpdateJoyNavY	600	joy-jt/UpdateJoyNavY.cpp	45
 0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.cpp	126
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
 0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.cpp	20
@@ -488,7 +484,6 @@ address	name	size	file	score
 0X1A9C40	MarkSoContactsSphereSphere	248	mark-memcard/MarkSoContactsSphereSphere.cpp	24
 0X1A9D38	MarkSoContactsSweptPoints	680	mark-memcard/MarkSoContactsSweptPoints.cpp	80
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.cpp	320
-0X1AB750	FUN_0018c1e8	128	memcard/FUN_0018c1e8.cpp	7
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	40
 0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	10
 0X1AC260	load_file_from_disc	448	memcard/load_file_from_disc.cpp	26
@@ -518,14 +513,12 @@ address	name	size	file	score
 0X1B2DB8	CQueueOutputIop_SendToIop	256	mpeg/CQueueOutputIop_SendToIop.cpp	18
 0X1B3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	496	mpeg/BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii.cpp	50
 0X1B3700	DrawMpegFrame	840	mpeg/DrawMpegFrame.c	101
-0X1B3BD0	Execute__5CMpeg	752	mpeg/Execute__5CMpeg.cpp	78
 0X1B44D8	func_001B44D8	248	mpeg-memcard/fun_001b44d8.c	52
 0X1B4728	InitMurray	352	mpeg-memcard/InitMurray.cpp	7
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.cpp	85
 0X1B5380	UpdateMurrayCarry	728	mpeg-memcard/UpdateMurrayCarry.cpp	101
 0X1B5990	func_001B5990	928	mpeg-memcard/fun_001b5990.cpp	96
 0X1B6078	SetMurrayState	1712	mpeg-memcard/SetMurrayState.cpp	356
-0X1B68B8	HandleMurrayMessage	752	mpeg-memcard/HandleMurrayMessage.cpp	83
 0X1B6CC0	func_001B6CC0	232	mpeg-memcard/fun_001b6cc0.cpp	7
 0X1B6DA8	func_001B6DA8	600	mpeg-memcard/fun_001b6da8.cpp	116
 0X1B70A0	FMurrayTryGrabGuard	528	mpeg-memcard/FMurrayTryGrabGuard.cpp	67
@@ -632,7 +625,6 @@ address	name	size	file	score
 0X1CD098	Carry_Attach	552	new_1c90d0/Carry_Attach.cpp	12
 0X1CD5F0	FillScreenRect__FiiiiffffP4GIFS	400	render/FillScreenRect__FiiiiffffP4GIFS.cpp	29
 0X1CD780	bevy_camera_cm_screen_px_ps2	536	new_1cd780/bevy_camera_cm_screen_px_ps2.c	125
-0X1CDE80	OnRipgRemove	264	rip_1cde70/OnRipgRemove.cpp	16
 0X1CDF88	ProjectRipgTransform	488	rip_1cde70/ProjectRipgTransform.cpp	61
 0X1CE2E8	BounceRipgRips__FP4RIPG	800	rip_1cde70/BounceRipgRips__FP4RIPG.cpp	160
 0X1CE6D0	ConstructRipOfType	440	rip_1cde70/ConstructRipOfType.cpp	84
@@ -724,8 +716,6 @@ address	name	size	file	score
 0X1EA9F0	func_001EA9F0	936	new_1e7a28/fun_001ea9f0.c	168
 0X1EB2F0	LoadShdFromBrx	904	shd_1eb1a8/LoadShdFromBrx.cpp	26
 0X1EB748	LoadShadersFromBrx	536	shd_1eb1a8/LoadShadersFromBrx.cpp	77
-0X1EB960	FillShaders__Fi	3368	shd_1eb1a8/FillShaders__Fi.c	658
-0X1ECC28	FBuildUploadBitmapGifs__FiP3GSBP4GIFS	560	gs_1ec9d0/FBuildUploadBitmapGifs__FiP3GSBP4GIFS.cpp	73
 0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs_1ec9d0/PqwVifsBitmapUpload__Fi.cpp	85
 0X1ED1A8	FilterColorRgba5551_1ed1a8	208	new_1ed1a8/FilterColorRgba5551_1ed1a8.cpp	42
 0X1ED278	FilterColorRgba8_1ed278	96	new_1ed1a8/FilterColorRgba8_1ed278.c	16
