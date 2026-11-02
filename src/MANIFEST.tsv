@@ -986,6 +986,8 @@ address	name	size	file
 0X11EF08	DecomposeCylind	164	cm/DecomposeCylind.cpp
 0X11EFB0	DecomposeSphere	216	cm/DecomposeSphere.cpp
 0X11F198	GCosAngle	224	util-splice-bif/GCosAngle.cpp
+0X11F288	VecMinOfVerts	48	util-splice-bif/VecMinOfVerts.cpp
+0X11F2B8	VecMaxOfVerts	48	util-splice-bif/VecMaxOfVerts.cpp
 0X11F2E8	bif__static_initialization_and_destruction_0	308	util-splice-bif/bif__static_initialization_and_destruction_0.c
 0X11F420	bif__GLOBAL__I_slotheaps	32	util-splice-bif/bif__GLOBAL__I_slotheaps.c
 0X1202D0	RefOpPrint	44	util-splice-bif/RefOpPrint.cpp
@@ -2366,6 +2368,7 @@ address	name	size	file
 0X178E98	GoalFollowCrvAnim_Init	68	hide/GoalFollowCrvAnim_Init.c
 0X1791C8	GoalFollowCrvAnim_SetState	284	hide-puffer/GoalFollowCrvAnim_SetState.cpp
 0X1792E8	func_001792E8	64	hide-puffer/fun_001792e8.cpp
+0X179328	GoalHit_Activate	624	hide-puffer/GoalHit_Activate.cpp
 0X179598	GoalHit_Deactivate	76	hide-puffer/GoalHit_Deactivate.cpp
 0X1795E8	GoalHit_Update	180	hide-puffer/GoalHit_Update.cpp
 0X1796A0	func_001796A0	44	hide-puffer/fun_001796a0.cpp

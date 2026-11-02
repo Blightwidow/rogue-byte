@@ -2645,7 +2645,7 @@
 <rect x="658.6" y="281.3" width="27.1" height="33.7" fill="#4a45a8"><title>func_0017B9C0 0X17B9C0 952 bytes (draft)</title></rect>
 <rect x="570.4" y="315.4" width="26.1" height="27.2" fill="#4a45a8"><title>GoalFollowCrvAnim_Update 0X178EE0 744 bytes (draft)</title></rect>
 <rect x="570.4" y="343.0" width="26.1" height="24.5" fill="#4a45a8"><title>GoalAnimLeap_Update 0X17AC90 672 bytes (draft)</title></rect>
-<rect x="570.4" y="368.0" width="26.1" height="22.8" fill="#4a45a8"><title>GoalHit_Activate 0X179328 624 bytes (draft)</title></rect>
+<rect x="570.4" y="368.0" width="26.1" height="22.8" fill="#2f7af4"><title>GoalHit_Activate 0X179328 624 bytes (c)</title></rect>
 <rect x="570.4" y="391.1" width="26.1" height="21.9" fill="#4a45a8"><title>func_0017C6D0 0X17C6D0 600 bytes (draft)</title></rect>
 <rect x="596.9" y="315.4" width="28.6" height="19.4" fill="#2f7af4"><title>GoalAnimLeap_FHandleMessage 0X17AF30 584 bytes (c)</title></rect>
 <rect x="626.0" y="315.4" width="20.3" height="19.4" fill="#2f7af4"><title>func_0017C928 0X17C928 416 bytes (c)</title></rect>
@@ -4988,8 +4988,8 @@
 <rect x="1518.4" y="296.5" width="13.3" height="16.4" fill="#2f7af4"><title>RefCmp 0X120398 240 bytes (c)</title></rect>
 <rect x="1500.6" y="313.3" width="10.2" height="19.8" fill="#2f7af4"><title>GCosAngle 0X11F198 224 bytes (c)</title></rect>
 <rect x="1511.2" y="313.3" width="7.2" height="7.7" fill="#2f7af4"><title>RefOpPrintSidebag 0X120330 64 bytes (c)</title></rect>
-<rect x="1511.2" y="321.4" width="7.2" height="5.7" fill="#4a45a8"><title>VecMinOfVerts 0X11F288 48 bytes (draft)</title></rect>
-<rect x="1511.2" y="327.5" width="7.2" height="5.7" fill="#4a45a8"><title>VecMaxOfVerts 0X11F2B8 48 bytes (draft)</title></rect>
+<rect x="1511.2" y="321.4" width="7.2" height="5.7" fill="#2f7af4"><title>VecMinOfVerts 0X11F288 48 bytes (c)</title></rect>
+<rect x="1511.2" y="327.5" width="7.2" height="5.7" fill="#2f7af4"><title>VecMaxOfVerts 0X11F2B8 48 bytes (c)</title></rect>
 <rect x="1518.8" y="313.3" width="6.3" height="6.5" fill="#2f7af4"><title>RefOpPrint 0X1202D0 48 bytes (c)</title></rect>
 <rect x="1525.5" y="313.3" width="6.3" height="6.5" fill="#2f7af4"><title>RefOpPrintFrame 0X120300 48 bytes (c)</title></rect>
 <rect x="1518.8" y="320.3" width="6.5" height="6.2" fill="#2f7af4"><title>RefOpL 0X120488 48 bytes (c)</title></rect>

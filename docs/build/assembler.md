@@ -42,6 +42,22 @@ Found by checking `ps2eeas`'s output on synthetic loops (the padding is the same
 threshold by patching each `6` of the executable in turn until a loop's offset changed. The Ratchet & Clank decompilation measured
 retail loops at exactly six instructions; here the count is the same six with the delay slot included.
 
+## VU0 instruction in a delay slot: `fill_vu_delay_slots`
+
+GCC leaves the delay slot of a branch or jump to the assembler (`.set reorder`) when an inline-asm block comes right before it, and
+retail's assembler moved the block's last instruction into the slot, VU0 ones included (`blez $a0,L ; lqc2 vf2,0($v0)`,
+`jr $ra ; qmfc2.ni $v0,vf2`). `ps2eeas` 3.01 will not put a COP2 instruction in a delay slot (it pads with `nop`s), and GNU `as`
+does, but GNU lacks the hazard `nop`s and the loop padding: no assembler had both, which made every such function a wall (about 40
+near misses). `compile_unit.fill_vu_delay_slots` does the move on the compiler's assembly before `ps2eeas` runs, and writes the
+instruction after the branch between `.set noreorder` and `.set reorder`, so `ps2eeas` leaves it alone and still adds its hazard
+`nop`s and pads loops. It moves only a COP2 instruction (`lqc2 sqc2 qmfc2 qmtc2 cfc2 ctc2 v*`) that ends an asm block directly before a
+branch GCC did not fill, and not one that writes a register the branch reads. It models what retail's assembler did (BUILD_FIDELITY
+rule 1 of OpenRAC's, ours the same: a tool may only do what retail's assembler did); the evidence is the 94 sources that scored lower
+(scan of the 537 VU sources, none worse, 3 new matches `11F288`, `11F2B8`, `179328`) and the 91 matched ones that still match.
+
+The scan also moved functions between the lists: 43 that were GNU `as` only because the old rule chose it for them are now listed in
+`gnu_as.txt` explicitly, 29 went to `ps2eeas_loop5.txt`, 2 went back to the default.
+
 ## `config/us/gnu_as.txt`
 
 Not every retail function came out of `ps2eeas`: 53 of the 3,526 functions matched before the switch only match with GNU `as` (a loop
@@ -51,10 +67,7 @@ rules explain most of it (measured on the matched sources: each rule has no `ps2
 
 - **A five-instruction loop in retail** (a backward branch with offset -5). `ps2eeas` pads such loops to six, so none of its functions
   has one; 31 matched GNU functions do. `scripts/matching/gnu_as_rule.py --write` adds every function of the split that has one.
-- **An inline-asm block that ends with a VU0 instruction** (`qmfc2`, `qmtc2`, `sqc2`, `lqc2`, `v*`) right before a branch. GCC leaves
-  that branch's delay slot to the assembler, retail's assembler moved the VU0 instruction into it and `ps2eeas` does not.
-  `compile_unit.fills_delay_slot_from_asm` finds it in the compiler's output and picks GNU `as` for such a source by itself. (A block that
-  ends in `mtc1` or `nop` is no sign: `ps2eeas` handles those.)
+- ~~An inline-asm block that ends with a VU0 instruction before a branch~~ (solved 2026-11-02, see below: no longer a reason for GNU `as`).
 
 Together they cover about two thirds of the sources in the list; the rest (17 matched, 34 tried) was derived by scoring every source both
 ways, and a few more functions were added when their rodata (a string or float literal, a jump table) linked differently out of

@@ -42,19 +42,44 @@ BRANCH = re.compile(r'\s*(b|j|jal|jr|jalr|beq|bne|beqz|bnez|bgez|bgtz|blez|bltz|
 COPROCESSOR_2 = re.compile(r'(qmtc2|qmfc2|lqc2|sqc2|ctc2|cfc2|v[a-z0-9]+)(\.\w+)?\s')
 
 
-def fills_delay_slot_from_asm(assembly):
-    """True when an inline-asm block ends with a VU0 instruction (qmfc2, qmtc2, sqc2, lqc2, v*) and a branch or jump follows it right away.
-    GCC leaves such a branch's delay slot for the assembler to fill, and retail's assembler moved the VU0 instruction into it; `ps2eeas`
-    does not. Of the 3,500 matched sources none that has this shape assembles with `ps2eeas`; an inline-asm block ending in `mtc1` or `nop` does."""
+GPR_WRITER = re.compile(r'(qmfc2|cfc2)(\.\w+)?\s+(\$\w+)')
+
+
+def fill_vu_delay_slots(assembly):
+    """Moves the VU0 instruction that ends an inline-asm block into the delay slot of the branch or jump that follows it, the way retail's
+    assembler did (GCC leaves that slot to the assembler: `.set reorder`); `ps2eeas` 3.01 refuses a COP2 instruction there and puts
+    `nop`s instead. The instruction is written after the branch between `.set noreorder` and `.set reorder`, so ps2eeas leaves it alone.
+    Skipped when the instruction writes a register the branch reads, when a label sits between them, and for a branch GCC filled itself."""
     lines = assembly.split('\n')
-    for index, line in enumerate(lines):
-        if line.strip() == '#NO_APP' and index + 1 < len(lines) and BRANCH.match(lines[index + 1]):
-            back = index - 1
-            while back >= 0 and (not lines[back].strip() or lines[back].lstrip().startswith(('#', '.'))):
+    reorder = True
+    out = []
+    index = 0
+    moved = 0
+    while index < len(lines):
+        line = lines[index]
+        stripped = line.strip()
+        if stripped.startswith('.set') and 'noreorder' in stripped:
+            reorder = False
+        elif stripped.startswith('.set') and re.search(r'\breorder\b', stripped):
+            reorder = True
+        if reorder and stripped == '#NO_APP' and index + 1 < len(lines) and BRANCH.match(lines[index + 1]):
+            back = len(out) - 1
+            while back >= 0 and (not out[back].strip() or out[back].lstrip().startswith(('#', '.'))) and not out[back].strip().endswith(':'):
                 back -= 1
-            if back >= 0 and COPROCESSOR_2.match(lines[back].strip() + ' '):
-                return True
-    return False
+            candidate = out[back].strip() if back >= 0 else ''
+            if candidate and not candidate.endswith(':') and COPROCESSOR_2.match(candidate + ' '):
+                branch = lines[index + 1]
+                written = GPR_WRITER.match(candidate)
+                if not (written and re.search(re.escape(written.group(3)) + r'(?!\w)', branch)):
+                    del out[back]
+                    out.append(line)
+                    out.extend(['\t.set\tnoreorder', branch, '\t' + candidate, '\t.set\treorder'])
+                    index += 2
+                    moved += 1
+                    continue
+        out.append(line)
+        index += 1
+    return '\n'.join(out)
 
 
 @functools.lru_cache(maxsize=None)
@@ -144,20 +169,16 @@ def compile_object(language, source, output, assembler=None, include=None, local
         if result.returncode:
             return False, result.stderr or result.stdout
         text = open(assembly).read()
-        if assembler is None and fills_delay_slot_from_asm(text):
-            use_ps2eeas = False
-            os.remove(assembly)
-        else:
-            open(assembly, 'w').write(hoist_externs(text))
-            for attempt in range(3):  # under a parallel build ps2eeas (under wibo) now and then never returns; a rerun takes a fraction of a second
-                try:
-                    result = subprocess.run([WIBO, executable, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=20)
-                    break
-                except subprocess.TimeoutExpired:
-                    if attempt == 2:
-                        os.remove(assembly)
-                        return False, 'ps2eeas timed out'
-            os.remove(assembly)
+        open(assembly, 'w').write(hoist_externs(fill_vu_delay_slots(text)))
+        for attempt in range(3):  # under a parallel build ps2eeas (under wibo) now and then never returns; a rerun takes a fraction of a second
+            try:
+                result = subprocess.run([WIBO, executable, '-G0', '-o', temporary, assembly], capture_output=True, text=True, timeout=20)
+                break
+            except subprocess.TimeoutExpired:
+                if attempt == 2:
+                    os.remove(assembly)
+                    return False, 'ps2eeas timed out'
+        os.remove(assembly)
     if not use_ps2eeas:
         result = subprocess.run([*common, '-c', os.path.abspath(source), '-o', temporary], capture_output=True, text=True)
     if result.returncode or not os.path.exists(temporary):

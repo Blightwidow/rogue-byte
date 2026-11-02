@@ -986,6 +986,8 @@ us_address	name	other_address	pair	score	addresses
 0x11EF08	DecomposeCylind	0X11EF08	same	0	ok
 0x11EFB0	DecomposeSphere	0X11EFB0	same	0	ok
 0x11F198	GCosAngle	0X11F198	identical	0	ok
+0x11F288	VecMinOfVerts	0X11F288	same	0	ok
+0x11F2B8	VecMaxOfVerts	0X11F2B8	same	0	ok
 0x11F2E8	bif__static_initialization_and_destruction_0	0X11F2E8	same	0	ok
 0x11F420	bif__GLOBAL__I_slotheaps	0X11F420	identical	0	ok
 0x1202D0	RefOpPrint	0X1202D0	identical	0	ok
@@ -2366,6 +2368,7 @@ us_address	name	other_address	pair	score	addresses
 0x178E98	GoalFollowCrvAnim_Init	0X178E20	same	0	ok
 0x1791C8	GoalFollowCrvAnim_SetState	0X179150	same	0	ok
 0x1792E8	func_001792E8	0X179270	identical	0	ok
+0x179328	GoalHit_Activate	0X1792B0	same	0	ok
 0x179598	GoalHit_Deactivate	0X179520	same	0	ok
 0x1795E8	GoalHit_Update	0X179570	same	0	ok
 0x1796A0	func_001796A0	0X179628	same	0	ok
