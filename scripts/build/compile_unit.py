@@ -62,19 +62,23 @@ def fill_vu_delay_slots(assembly):
             reorder = False
         elif stripped.startswith('.set') and re.search(r'\breorder\b', stripped):
             reorder = True
-        if reorder and stripped == '#NO_APP' and index + 1 < len(lines) and BRANCH.match(lines[index + 1]):
+        gap = 1  # GCC prints a `#nop` comment after an asm block that sits between a load or a compare and the branch that uses it: no instruction
+        while index + gap < len(lines) and lines[index + gap].strip() == '#nop':
+            gap += 1
+        if reorder and stripped == '#NO_APP' and index + gap < len(lines) and BRANCH.match(lines[index + gap]):
             back = len(out) - 1
             while back >= 0 and (not out[back].strip() or out[back].lstrip().startswith(('#', '.'))) and not out[back].strip().endswith(':'):
                 back -= 1
             candidate = out[back].strip() if back >= 0 else ''
             if candidate and not candidate.endswith(':') and COPROCESSOR_2.match(candidate + ' '):
-                branch = lines[index + 1]
+                branch = lines[index + gap]
                 written = GPR_WRITER.match(candidate)
                 if not (written and re.search(re.escape(written.group(3)) + r'(?!\w)', branch)):
                     del out[back]
                     out.append(line)
+                    out.extend(lines[index + 1:index + gap])
                     out.extend(['\t.set\tnoreorder', branch, '\t' + candidate, '\t.set\treorder'])
-                    index += 2
+                    index += gap + 1
                     moved += 1
                     continue
         out.append(line)

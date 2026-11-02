@@ -29,11 +29,11 @@ extern "C" void ClosestPointOnSegment(QW pos, QW posA, QW posB, QW *pclosest, fl
     if (pclosest != 0 || pdist != 0) {
         QW uBits = Word(u);
         asm("qmtc2.ni %1, vf1" : "=r" (f1) : "r" (uBits));
-        asm("vadda.xyzw ACC, vf0, vf6\n\tvmaddx.xyzw vf2, vf5, vf1x" : "=r" (f2) : "r" (f1));
-        asm("sqc2 vf1, %0" : "=m" (junk) : "r" (f2));
+        asm("vadda.xyzw ACC, vf6, vf0\n\tvmaddx.xyzw vf2, vf5, vf1x" : "=r" (f2) : "r" (f1));
+        asm("sqc2 vf1, %1" : "=r" (f3), "=m" (junk) : "r" (f2));
+        QW closest;
+        asm("qmfc2.ni %0, vf2" : "=r" (closest) : "r" (f3));
         if (pclosest != 0) {
-            QW closest;
-            asm("qmfc2.ni %0, vf2" : "=r" (closest) : "r" (f2));
             *pclosest = closest;
         }
         if (pdist != 0) {

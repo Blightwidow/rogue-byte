@@ -4751,6 +4751,7 @@ us_address	name	other_address	pair	score	addresses
 0x225AA8	PostTankLoad	0X2262C8	same	0	ok
 0x225AE8	OnTankActive	0X226308	same	0	ok
 0x225B60	UpdateTank	0X226380	same	0	ok
+0x225BA0	UpdateTankAim	0X2263C0	same	0	ok
 0x226250	UpdateTankFire	0X226A70	same	0	ok
 0x226310	FIgnoreTankIntersection	0X226B30	same	0	ok
 0x2263F8	StaticInitSlotheaps_2263f8	0X226C18	same	0	ok

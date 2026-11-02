@@ -12,19 +12,19 @@ QW PredictLoLead(LO *plo, char *plead, float dt)
     QW *gp = &g_2a2dc0;
     int fence;
     asm("qmtc2.ni %1, vf3" : "=r" (fence) : "r" (velocity));
-    asm("lqc2 vf1, 0(%0)\n\tvmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z\n\t"
-        "vmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2" : : "r" (gp), "r" (fence));
-    asm("sqc2 vf3, %0" : "=m" (l.horizontal));
+    asm("lqc2 vf1, 0(%1)\n\tvmul.xyz vf2, vf3, vf1\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf4, vf2z\n\t"
+        "vmulx.xyzw vf2, vf1, vf2x\n\tvsub.xyzw vf3, vf3, vf2" : "=r" (fence) : "r" (gp), "r" (fence));
+    asm("sqc2 vf3, %0" : "=m" (l.horizontal) : "r" (fence));
     QW  pos;
     pos = PosLoWorld(plo);
     asm("lqc2 vf3, %0" : : "m" (l.horizontal));
     asm volatile("qmtc2.ni %0, vf4\n\tqmtc2.ni %1, vf2" : : "r" (pos), "r" (dt));
     float radiusA = 150.0f;
     float radiusB = 75.0f;
-    asm("vadda.xyzw ACC, vf0, vf4\n\tvmaddx.xyzw vf1, vf3, vf2x\n\tsqc2 vf3, 0x20(%0)" : : "r" (plead) : "memory");
+    asm volatile("vadda.xyzw ACC, vf0, vf4\n\tvmaddx.xyzw vf1, vf3, vf2x\n\tsqc2 vf3, %0" : "=m" (*(QW *)(plead + 0x20)));
     *(float *)(plead + 4) = radiusA;
     *(float *)(plead + 8) = radiusB;
-    asm volatile("sqc2 vf1, 0x10(%0)" : : "r" (plead) : "memory");
+    asm volatile("sqc2 vf1, %0" : "=m" (*(QW *)(plead + 0x10)));
     asm volatile("sqc2 vf2, %0" : "=m" (l.dtSlot));
     *(int *)plead = 0;
     return pos;

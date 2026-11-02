@@ -56,9 +56,9 @@ extern "C" void SetSoAngularVelocityVec(Obj_1F46D8 *self, QW angular)
             NormalizeRotateMatrix3__FP7MATRIX3(&frame.rotation);
             InvertMatrix3(&frame.inverse, &frame.rotation);
             QW delta;
-            asm("lqc2 vf1, %7
+            asm("lqc2 vf1, %8
 "
-                "lqc2 vf2, %8
+                "lqc2 vf2, %7
 "
                 "vsub.xyzw vf7, vf1, vf2
 "
@@ -108,7 +108,7 @@ extern "C" void SetSoAngularVelocityVec(Obj_1F46D8 *self, QW angular)
 "
                 "qmfc2.ni %0, vf2"
                 : "=r"(delta), "=m"(frame.other), "=m"(frame.spare[0])
-                : "r"(SP), "r"(bodyMatrix), "r"(body), "m"(frame.inverse), "m"(angular), "m"(current));
+                : "r"(SP), "r"(bodyMatrix), "r"(body), "m"(frame.inverse), "m"(current), "m"(angular));
             int xfId = body->xfId;
             asm("sqc2 vf4, %0
 "

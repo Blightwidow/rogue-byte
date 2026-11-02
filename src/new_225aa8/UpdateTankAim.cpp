@@ -11,7 +11,7 @@ struct Tank_225BA0 {
 /* A QW (x, y, z) from three floats: mfc1 x and y, pextlw into lanes 0 and 1, mfc1 z, pcpyld into the upper doubleword.
    The leading nop is the mtc1 hazard nop retail's assembler put after the mtc1 of x; this source assembles with GNU as
    (the VU asm before LoadLookAtMatrix's jal), which does not insert it. */
-static inline QW Vec3(float x, float y, float z) { QW r; int t; asm("nop\n\tmfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0\n\tmfc1 %1, %4\n\tpcpyld %0, %1, %0" : "=&r" (r), "=&r" (t) : "f" (x), "f" (y), "f" (z)); return r; }
+static inline QW Vec3(float x, float y, float z) { QW r; int t; asm("mfc1 %0, %2\n\tmfc1 %1, %3\n\tpextlw %0, %1, %0\n\tmfc1 %1, %4\n\tpcpyld %0, %1, %0" : "=&r" (r), "=&r" (t) : "f" (x), "f" (y), "f" (z)); return r; }
 extern "C" {
 extern char B_003D4A60[];
 extern int B_003E0FE0;
@@ -31,11 +31,10 @@ void UpdateTankAim(Tank_225BA0 *self) {
         Locals_225BA0 l;
         Rows3_225BA0 *plookAt = &l.lookAt;
         l.targetPosition = PosLoWorld(self->target);
-        asm("qmtc2.ni %0, vf2" : : "r"(PosLoWorld(self)));
-        asm("lqc2 vf1, %0" : : "m"(l.targetPosition));
-        asm("vsub.xyzw vf1, vf1, vf2");
+        int fence; // fence token: vf2 written here, read by the vsub below
+        asm("qmtc2.ni %1, vf2" : "=r"(fence) : "r"(PosLoWorld(self)));
         QW direction;
-        asm("qmfc2.ni %0, vf1" : "=r"(direction));
+        asm("lqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r"(direction) : "r"(fence), "m"(l.targetPosition));
         LoadLookAtMatrix(plookAt, direction);
         l.rotation = l.lookAt;
         DecomposeRotateMatrixPanTilt__FP7MATRIX3PfT1(&l.rotation, &l.pan, &l.tilt);

@@ -6,7 +6,7 @@ struct LO1CFD30 { char pad[0xC]; VT1CFD30 *vt; };
 struct XFO1CFD30 { char pad[0x60]; int xf; };
 struct MATCH1CFD30 {
     char pad0[0x18]; float t; XFO1CFD30 *pxfo; char pad1[0x40 - 0x20];
-    M3_1CFD30 mat; QW pos; char pad2[0xA0 - 0x80]; QW rel; char pad3[0xF0 - 0xB0];
+    M3_1CFD30 mat; QW pos; QW pad80; QW vel; QW rel; char pad3[0xF0 - 0xB0];
     QW normal; float rad; LO1CFD30 *plo;
 };
 extern "C" {
@@ -27,8 +27,9 @@ void LaunchMatch__FP5MATCH(MATCH1CFD30 *match)
     void *pproduct = &stack.product;
     void *pframe = stack.frame;
     void *pmatrix = &match->mat;
-    asm volatile("lqc2 vf1, 0x70(%0)" : : "r"(match));
-    asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(stack.frame));
+    int fence; // fence token: vf1 loaded here is read by the vsub below
+    asm("lqc2 vf1, %1" : "=r"(fence) : "m"(match->pos));
+    asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(stack.frame), "r"(fence));
     asm volatile("vsub.xyzw vf2, vf2, vf1");
     asm volatile("lqc2 vf1, 0xa0(%0)" : : "r"(match));
     asm volatile("qmtc2.ni %0, vf3" : : "r"(inverse));

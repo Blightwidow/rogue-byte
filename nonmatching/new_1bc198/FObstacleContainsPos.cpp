@@ -13,13 +13,12 @@ extern "C" int FObstacleContainsPos(OBSTACLE *pobstacle, QW pos)
     l.pos = pos;
     Obstacle_UpdatePlanes(pobstacle);
     for (int iedge = 0; iedge < pobstacle->cpos - 1; iedge++) {
-        QW *pplane = pobstacle->aplane + iedge;
-        asm("lqc2 vf1, %1
-	sqc2 vf1, %0" : "=m" (l.plane) : "m" (*pplane));
+        asm("lqc2 vf1, %1\n\tsqc2 vf1, %0" : "=m" (l.plane) : "m" (pobstacle->aplane[iedge]));
         func_002564B8(&l.a);
         func_002564B8(&l.b);
+        QW bits; /* lane 0 of the distance, moved to an FP register */
         float dist;
-        asm("lqc2 vf1, %1\n\tlqc2 vf3, %2\n\tvmul.xyz vf1, vf1, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddaz.x ACC, vf2, vf1z\n\tvmsubw.x vf1, vf2, vf1w\n\tqmfc2.ni $2, vf1\n\tmtc1 $2, %0" : "=f" (dist) : "m" (l.plane), "m" (l.pos) : "$2");
+        asm("lqc2 vf1, %2\n\tlqc2 vf3, %3\n\tvmul.xyz vf1, vf1, vf3\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddaz.x ACC, vf2, vf1z\n\tvmsubw.x vf1, vf2, vf1w\n\tqmfc2.ni %1, vf1\n\tmtc1 %1, %0" : "=f" (dist), "=r" (bits) : "m" (l.plane), "m" (l.pos));
         asm("sqc2 vf2, %0" : "=m" (l.b));
         asm("sqc2 vf1, %0" : "=m" (l.a));
         if (0.0f < dist)

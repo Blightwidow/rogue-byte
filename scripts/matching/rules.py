@@ -32,6 +32,12 @@ Rules:
   scalar_buffer  `T buf[16 / sizeof(T)] __attribute__((aligned(16)));` read as `buf[0]` and passed as `buf` as `T buf;` read as `buf` and passed as `&buf`
   chained_store  two stores of the same constant a few statements apart as one chain `a = b = k;` (either order): the scheduler emits the outer store
                  early and the inner late, and the constant stays in one register
+  global_struct  `extern float g;` as a one-member struct read as `g.v` (nf1, 2026-11-02: the clock `g_2dded0` as `struct { float t; }` kept a store
+                 ahead of the load; GCC treats a struct member as possibly aliasing the store)
+  callee_return  a callee prototype's return type tried as `int`, `void *` and `void` (a callee that sets $v0 before `jr ra` returns it; the wrong one
+                 changes the argument setup order: `WriteMemcardFile`, `SpawnSwHitFx`)
+  own_float_position  a float parameter of the function itself moved to another position (floats arrive in $f12.. whatever the position; it only
+                 changes the order of the prologue copies and so the allocation: `1E0D38`)
   vcall_raw      m2c's untouched `M2C_FIELD(vt, R (**)(A, B, O), 0x18C)(obj + delta, x, obj)` without its trailing `obj`
 """
 import re
@@ -765,8 +771,69 @@ def chained_store(text):
                     yield (f'chained_store {order}{"1" if place == first else "2"}', '\n'.join(changed))
 
 
+# ---- global_struct ----
+
+SCALAR_GLOBAL = re.compile(r'^(?P<head>[ \t]*extern\s+(?:"C"\s+)?)(?P<type>(?:const\s+)?(?:float|int|short|unsigned(?: int| short)?|char|long))\s+(?P<name>[A-Za-z_]\w*)\s*;', re.M)
+
+
+def global_struct(text):
+    for declaration in list(SCALAR_GLOBAL.finditer(text))[:4]:
+        name, kind = declaration['name'], declaration['type']
+        if text.count(name) < 2:
+            continue
+        tag = f'{name}_T'
+        replacement = f'struct {tag} {{ {kind} v; }};\n{declaration["head"]}{tag} {name};'
+        head = text[:declaration.start()] + replacement
+        rest = text[declaration.end():]
+        yield f'global_struct {name}', head + re.sub(rf'(?<![\w.>]){re.escape(name)}\b(?!\s*\.v)', f'{name}.v', rest)
+
+
+# ---- callee_return ----
+
+PROTOTYPE = re.compile(r'^([ \t]*(?:extern\s+"C"\s+)?(?:extern\s+)?)(void \*|void|int)(\s*\**\s*)(\w+)\s*\(([^;{}()]*)\)\s*;', re.M)
+
+
+def callee_return(text):
+    caller = caller_of(text)
+    if not caller:
+        return
+    body_start = caller[1]
+    for declaration in [m for m in PROTOTYPE.finditer(text[:body_start]) if m.group(4) not in KEYWORDS][:6]:
+        old = declaration.group(2)
+        for new in ('int', 'void *', 'void'):
+            if new == old:
+                continue
+            spacing = ' ' if new == 'void *' else declaration.group(3)
+            yield (f'callee_return {declaration.group(4)} {old}->{new}',
+                   text[:declaration.start(2)] + new + (spacing if not spacing.strip() else spacing) + text[declaration.end(3):])
+
+
+# ---- own_float_position ----
+
+DEFINITION = re.compile(r'\b(\w+)\s*\(([^;{}()]*)\)\s*\{')
+
+
+def own_float_position(text):
+    definitions = [m for m in DEFINITION.finditer(text) if m.group(1) not in KEYWORDS]
+    if not definitions:
+        return
+    match = definitions[-1]
+    parameters = split_parameters(match.group(2))
+    floats = [index for index, kind in enumerate(parameters) if re.match(r'\s*(const\s+)?float\b', kind)]
+    if not floats or len(floats) == len(parameters) or len(parameters) > 8:
+        return
+    for source in floats[:2]:
+        for target in range(len(parameters)):
+            if target == source:
+                continue
+            moved = list(parameters)
+            moved.insert(target, moved.pop(source))
+            yield (f'own_float_position {match.group(1)} {source}->{target}',
+                   text[:match.start(2)] + ', '.join(moved) + text[match.end(2):])
+
+
 RULES = (index_loop, index_first, constify, return_result, missing_parameter, vcall_object, global_array, call_arguments, float_position, long_long, by_value,
-         inline_local, vcall_raw, hoist_field, result_local, condition_split, for_to_while, early_return_split, scalar_buffer, chained_store)
+         inline_local, vcall_raw, hoist_field, result_local, condition_split, for_to_while, early_return_split, scalar_buffer, chained_store, global_struct, callee_return, own_float_position)
 
 
 def edits(text):

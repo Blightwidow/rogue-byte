@@ -40,7 +40,8 @@ void RenderVehicleSelf(VEHICLE *pv)
     char buf[0x110] __attribute__((aligned(16)));
     VTB *vt = pv->vptr;
     VEL = bevy_camera_follow_track_heading_weight(0, pv, vt->fn((char *)pv + vt->delta));
-    for (int iwheel = 0; iwheel < pv->cwheel; iwheel++) {
+    int iwheel = 0;
+    while (iwheel < pv->cwheel) {
         WHEEL *pwheel = &pv->awheel[iwheel];
         POSW = ConvertXfPos(0, pv->pxfRoot, pwheel->pxf->posWorld);
         ((float *)&POSW)[0] = pwheel->posRestX;
@@ -77,6 +78,7 @@ void RenderVehicleSelf(VEHICLE *pv)
             SMP *psmp = (__builtin_fabsf(pwheel->dradSpin) < __builtin_fabsf(dradGoal)) ? &D_002C21B0 : &D_002C21C0;
             pwheel->dradSpin = GSmooth__FfffP3SMPPf(pwheel->dradSpin, dradGoal, dt, psmp, 0);
         }
+        iwheel++;
         float dtFrame = g_2dded0.dt;
         pwheel->radSpin = RadNormalize__Ff(pwheel->radSpin + pwheel->dradSpin * dtFrame);
         LoadRotateMatrixRad(STEER, pwheel->radSteer, g_2a2dc0);

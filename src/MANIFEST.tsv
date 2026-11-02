@@ -4751,6 +4751,7 @@ address	name	size	file
 0X225AA8	PostTankLoad	60	new_225aa8/PostTankLoad.cpp
 0X225AE8	OnTankActive	116	new_225aa8/OnTankActive.cpp
 0X225B60	UpdateTank	60	new_225aa8/UpdateTank.c
+0X225BA0	UpdateTankAim	756	new_225aa8/UpdateTankAim.cpp
 0X226250	UpdateTankFire	192	new_225aa8/UpdateTankFire.cpp
 0X226310	FIgnoreTankIntersection	92	new_225aa8/FIgnoreTankIntersection.c
 0X2263F8	StaticInitSlotheaps_2263f8	308	new_225aa8/StaticInitSlotheaps_2263f8.c
