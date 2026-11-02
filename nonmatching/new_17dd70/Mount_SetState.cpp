@@ -135,8 +135,8 @@ struct MBASE : P12 {
 struct MOUNT : MBASE {
     char pad10[0x54 - 0x10];
     XF *pxfA; XF *pxfB; XF *pxfC;
-    char pad60[0x1C0 - 0x60];
     int state;
+    char pad60[0x1C0 - 0x60];
     float timer;
     char pad1C8[0x230 - 0x1C8];
     int csma;

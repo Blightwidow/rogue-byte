@@ -62,7 +62,7 @@ void StepStgSwitch(SW *sw, int id)
         } else if (target < cur) {
             do {
                 sw->cur = cur - 1;
-                NODE *node = &sw->nodes[cur - 1];
+                NODE *node = (__typeof__(&(sw->nodes)[0]))((cur - 1) * sizeof((sw->nodes)[0]) + (unsigned)(sw->nodes));
                 int index = node->count;
                 while (index-- > 0) {
                     ENT *ent = &node->ents[index];

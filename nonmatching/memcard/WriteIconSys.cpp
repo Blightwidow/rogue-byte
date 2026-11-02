@@ -69,5 +69,5 @@ int WriteIconSys(SAVE *psave, const char *pchzDir, const char *pchzTitle)
     icon.copy = RO_002A6CA0;
     icon.del = RO_002A6CA0;
     sprintf(path, RO_002A6CB8, pchzDir, RO_002A6CC0);
-    return WriteMemcardFile(psave, path, &icon, 0x3C4);
+    WriteMemcardFile(psave, path, &icon, 0x3C4);
 }

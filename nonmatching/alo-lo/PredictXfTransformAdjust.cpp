@@ -40,9 +40,8 @@ void PredictXfTransformAdjust(XFN *begin, XFN *end, M4 *parent, M4 *adjust, floa
     } else {
         memset(&l.pm, 0, 0x40);
         float *pf = (float *)&l.pm;
-        pf[5] = 1.0f;
         pf[15] = 1.0f;
-        pf[10] = 1.0f;
+        pf[5] = pf[10] = 1.0f;
         pf[0] = 1.0f;
     }
     M4 *pworld = &l.world;

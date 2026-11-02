@@ -5,15 +5,15 @@ struct ALLOCREQ { int cb; int cbAlign; };
 struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[0x100]; void Clear(); int Set(const unsigned *record)
     {
         if (record == 0) return 0;
-        a = (record[0] ^ record[0xD]) + 0xCA0;
         c = 2;
         b = record[1] ^ record[0xF];
+        a = (record[0] ^ record[0xD]) + 0xCA0;
         return b != 0;
     }
 };
 struct STREAM { char pad[0x70]; };
 extern "C" {
-void CStackFrame_Construct(void *);
+void CStackFrame_Construct(SAVE *);
 void CStackFrame_Destructor(void *, int);
 int sprintf(char *, const char *, ...);
 int McOpenFile(SAVE *, const char *, int, int *);
@@ -31,7 +31,7 @@ extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned 
 {
     char frame[0x10];
     char path[0x50];
-    CStackFrame_Construct(frame);
+    CStackFrame_Construct(psave);
     sprintf(path, RO_002A6CB8, dir, file);
     int fd = -1;
     int error = McOpenFile(psave, path, 0x202, &fd);

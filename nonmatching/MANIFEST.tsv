@@ -280,7 +280,7 @@ address	name	size	file	score
 0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	10
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.cpp	73
 0X171468	FGuardScriptWaiting	336	jsg-jt/FGuardScriptWaiting.cpp	9
-0X1715F0	ExecuteGuardScriptCmd	1288	new_1715f0/ExecuteGuardScriptCmd.cpp	8
+0X1715F0	ExecuteGuardScriptCmd	1288	new_1715f0/ExecuteGuardScriptCmd.cpp	4
 0X172018	UpdateSearchBeh	776	new_1715f0/UpdateSearchBeh.cpp	96
 0X172658	func_00172658	264	new_1715f0/fun_00172658.cpp	7
 0X172798	FAddSearchCand	240	new_1715f0/FAddSearchCand.c	36
@@ -326,7 +326,7 @@ address	name	size	file	score
 0X17E9B0	func_0017E9B0	312	new_17dd70/fun_0017e9b0.cpp	3
 0X17F1D0	func_0017F1D0	528	new_17dd70/fun_0017f1d0.cpp	86
 0X17F930	Mount_Update	544	new_17dd70/Mount_Update.cpp	42
-0X17FD08	Mount_SetState	920	new_17dd70/Mount_SetState.cpp	16
+0X17FD08	Mount_SetState	920	new_17dd70/Mount_SetState.cpp	15
 0X1801B8	func_001801B8	496	new_1800d8/fun_001801b8.cpp	67
 0X180668	Chaser_Update	2176	new_1803e0/Chaser_Update.cpp	374
 0X180EE8	Chaser_AccelToward	264	new_1803e0/Chaser_AccelToward.c	39
@@ -466,8 +466,8 @@ address	name	size	file	score
 0X1A9D38	MarkSoContactsSweptPoints	680	mark-memcard/MarkSoContactsSweptPoints.cpp	80
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.cpp	320
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	40
-0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	9
-0X1AC260	load_file_from_disc	448	memcard/load_file_from_disc.cpp	14
+0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	6
+0X1AC260	load_file_from_disc	448	memcard/load_file_from_disc.cpp	9
 0X1ACCC8	MemcardMenu_Update	792	memcard-memory/MemcardMenu_Update.cpp	66
 0X1ACFE0	func_001ACFE0	392	memcard-memory/fun_001acfe0.cpp	16
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
@@ -518,7 +518,7 @@ address	name	size	file	score
 0X1BA128	func_001BA128	736	mpeg-memcard/fun_001ba128.cpp	135
 0X1BA608	UpdateZoneScriptBeh	544	mpeg-memcard/UpdateZoneScriptBeh.c	94
 0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	49
-0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp	20
+0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp	16
 0X1BB250	func_001BB250	432	mpeg-memcard/fun_001bb250.cpp	82
 0X1BB400	RunStgSwitch	584	mpeg-memcard/RunStgSwitch.cpp	39
 0X1BB648	RunStgSwitchStage	720	mpeg-memcard/RunStgSwitchStage.cpp	73
@@ -566,7 +566,7 @@ address	name	size	file	score
 0X1C3A08	func_001C3A08	128	new_1c3958/fun_001c3a08.cpp	2
 0X1C3A88	func_001C3A88	296	new_1c3958/fun_001c3a88.cpp	24
 0X1C41B8	func_001C41B8	112	new_1c3df8/fun_001c41b8.cpp	5
-0X1C4228	func_001C4228	88	new_1c3df8/fun_001c4228.cpp	12
+0X1C4228	func_001C4228	88	new_1c3df8/fun_001c4228.cpp	11
 0X1C4330	UpdateVjoyStick	312	new_1c3df8/UpdateVjoyStick.cpp	11
 0X1C4768	bevy_player_p14_1c4768	216	new_1c3df8/bevy_player_p14_1c4768.c	53
 0X1C4AF8	func_001C4AF8	224	new_1c3df8/fun_001c4af8.cpp	4
@@ -880,7 +880,7 @@ address	name	size	file	score
 0X22FF40	ConvertXfMatrix4	216	alo-lo/ConvertXfMatrix4.cpp	9
 0X2303A0	SetXfKind	504	alo-lo/SetXfKind.cpp	24
 0X230710	PredictXfLocal	728	alo-lo/PredictXfLocal.cpp	112
-0X230A98	PredictXfTransformAdjust	568	alo-lo/PredictXfTransformAdjust.cpp	15
+0X230A98	PredictXfTransformAdjust	568	alo-lo/PredictXfTransformAdjust.cpp	13
 0X230CF0	SnapAsega	696	alo-lo/SnapAsega.cpp	12
 0X231300	RotateXfmToMat	104	lo-sdk/RotateXfmToMat.cpp	5
 0X231468	GetXfmVelocity	104	lo-sdk/GetXfmVelocity.cpp	10

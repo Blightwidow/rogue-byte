@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct VT {
-    char pad0[0x18];
     short delta18; short unused18; void (*fn1C)(void *, int, int, int, void *, int);
+    char pad0[0x18];
     char pad1[0x40 - 0x20];
     short delta40; short unused40; void (*fn44)(void *);
 };
