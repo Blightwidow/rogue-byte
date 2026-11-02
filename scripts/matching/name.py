@@ -19,7 +19,7 @@ def main():
     if len(sys.argv) != 3:
         sys.exit(__doc__)
     address, name = int(sys.argv[1], 16), sys.argv[2]
-    if not re.match(r'^[A-Za-z_]\w*$', name):
+    if not re.match(r'^[A-Za-z_][\w$]*$', name):
         sys.exit(f'not a symbol name: {name}')
     generated = re.fullmatch(r'(?:D|B|func|jtbl|L|RO)_([0-9A-Fa-f]{8})', name)
     if generated:  # spimdisasm's names stand for the address they carry; they need no entry and can't mean another
@@ -30,7 +30,7 @@ def main():
         return 0
     known = {}
     for line in open(SYMBOLS, encoding='utf-8'):
-        match = re.match(r'(\w+) = 0x([0-9A-Fa-f]+);', line)
+        match = re.match(r'([\w$]+) = 0x([0-9A-Fa-f]+);', line)
         if match:
             known.setdefault(match.group(1), int(match.group(2), 16))
     if name in known:

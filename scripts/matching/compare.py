@@ -137,7 +137,7 @@ def read_symbol_addresses(path):
     import re
     addresses = {}
     for line in open(path, encoding="utf-8"):
-        match = re.match(r"\s*(\w+)\s*=\s*0x([0-9A-Fa-f]+);", line)
+        match = re.match(r"\s*([\w$]+)\s*=\s*0x([0-9A-Fa-f]+);", line)
         if match:
             addresses.setdefault(match.group(1), int(match.group(2), 16))
             addresses.setdefault(match.group(1).split("__")[0], int(match.group(2), 16))
