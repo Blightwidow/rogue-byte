@@ -14,8 +14,10 @@ void InitEyes__FP4EYESP4SAAF(s8 *arg0, s8 *arg1) {
     InitSaa();
     M2C_FIELD(arg0, s32 *, 0x60) = (s32) M2C_FIELD(arg1, s32 *, 0x1C);
     M2C_FIELD(arg0, f32 *, 0x50) = (f32) M2C_FIELD(arg1, f32 *, 0xC);
-    M2C_FIELD(arg0, f32 *, 0x54) = (f32) M2C_FIELD(arg1, f32 *, 0x10);
-    M2C_FIELD(arg0, f32 *, 0x58) = (f32) M2C_FIELD(arg1, f32 *, 0x14);
+    f32 y = M2C_FIELD(arg1, f32 *, 0x10);
+    f32 z = M2C_FIELD(arg1, f32 *, 0x14);
+    M2C_FIELD(arg0, f32 *, 0x54) = y;
+    M2C_FIELD(arg0, f32 *, 0x58) = z;
     M2C_FIELD(arg0, f32 *, 0x5C) = (f32) M2C_FIELD(arg1, f32 *, 0x18);
     M2C_FIELD(arg0, s32 *, 0x64) = -1;
     SetEyesEyess__FP4EYES5EYESS(arg0, 0);

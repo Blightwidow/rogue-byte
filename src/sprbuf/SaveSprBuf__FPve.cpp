@@ -15,17 +15,13 @@ void SaveSprBuf__FPve(void *pvDest, ...)
     SPRBUF *psprbuf = &B_003DD2C0[g_2c3c5c];
     psprbuf->sprbs = 3;
     func_002417F0(g_2de59c, 0, 0);
-    int *pdest = apvDest;
     int pv = (int)pvDest;
-    if (pv != 0) {
-        char *argp = (char *)__builtin_next_arg(pvDest) - 56;
-        do {
-            *pdest = pv;
-            pdest++;
-            argp += 8;
-            pv = *(int *)(argp - 8);
-            ientry++;
-        } while (pv != 0);
+    char *argp = (char *)__builtin_next_arg(pvDest) - 56;
+    while (pv != 0) {
+        apvDest[ientry] = pv;
+        argp += 8;
+        pv = *(int *)(argp - 8);
+        ientry++;
     }
     ientry = psprbuf->centry - ientry;
     int ipvDest = 0;

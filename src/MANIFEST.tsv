@@ -843,8 +843,10 @@ address	name	size	file
 0X117988	Align__18CBinaryInputStreami	44	bis/Align__18CBinaryInputStreami.cpp
 0X1179B8	CBinaryInputStream_Skip	28	bis/CBinaryInputStream_Skip.cpp
 0X1179D8	func_001179D8	24	bis/fun_001179d8.c
+0X117BD0	U8Read__18CBinaryInputStream	80	bis/U8Read__18CBinaryInputStream.cpp
 0X117C20	U16Read__18CBinaryInputStream	96	bis/U16Read__18CBinaryInputStream.cpp
 0X117C80	U32Read__18CBinaryInputStream	116	bis/U32Read__18CBinaryInputStream.cpp
+0X117D00	S8Read__18CBinaryInputStream	80	bis/S8Read__18CBinaryInputStream.cpp
 0X117D50	S16Read__18CBinaryInputStream	100	bis/S16Read__18CBinaryInputStream.cpp
 0X117DB8	S32Read__18CBinaryInputStream	116	bis/S32Read__18CBinaryInputStream.cpp
 0X117E38	F32Read__18CBinaryInputStream	120	bis/F32Read__18CBinaryInputStream.cpp
@@ -1153,6 +1155,7 @@ address	name	size	file
 0X127C00	CFrame_RefAddBinding	236	splice-eval-splice-frame/CFrame_RefAddBinding.cpp
 0X127CF0	RefSetBinding__6CFrameUiP4CRef	132	splice-frame/RefSetBinding__6CFrameUiP4CRef.cpp
 0X127D78	FFindBinding__6CFrameUiiP4CRef	64	splice-frame/FFindBinding__6CFrameUiiP4CRef.cpp
+0X127DB8	PrefFindBinding__6CFrameUii	212	splice-frame/PrefFindBinding__6CFrameUii.cpp
 0X127E90	PframeClone	336	new_127e90/PframeClone.cpp
 0X127FE0	frame__static_initialization_and_destruction_0	308	new_127e90/frame__static_initialization_and_destruction_0.c
 0X128118	frame__static_initialization_and_destruction_0_thunk	32	new_127e90/frame__static_initialization_and_destruction_0_thunk.c
@@ -1427,6 +1430,7 @@ address	name	size	file
 0X136A90	UseBentleyGadget	444	bbmark-blend/UseBentleyGadget.cpp
 0X136C50	UpdateBentleyGadgetGlob	96	bbmark-blend/UpdateBentleyGadgetGlob.c
 0X136CB0	GetBentleySaveRoot	12	bbmark-blend/GetBentleySaveRoot.cpp
+0X136CC0	NBentleyActionCategory	100	bbmark-blend/NBentleyActionCategory.cpp
 0X136D28	InitLookRig	148	bbmark-blend/InitLookRig.cpp
 0X136DC0	UpdateLookRig	272	bbmark-blend/UpdateLookRig.cpp
 0X136ED0	HandleLookRigMessage	116	bbmark-blend/HandleLookRigMessage.cpp
@@ -1759,6 +1763,7 @@ address	name	size	file
 0X14C680	func_0014C680	32	new_14bff8/fun_0014c680.c
 0X14C6A0	ClsgClipEdgeToObject	56	new_14bff8/ClsgClipEdgeToObject.cpp
 0X14C6D8	ClsgClipEdgeToObjectPruned	112	clip/ClsgClipEdgeToObjectPruned.cpp
+0X14CC58	PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG	340	clip/PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG.cpp
 0X14CDB0	ClsgClipEdgeToObjects	216	new_14cdb0/ClsgClipEdgeToObjects.cpp
 0X14CE88	func_0014CE88	308	new_14cdb0/fun_0014ce88.c
 0X14CFC0	StaticInitSharedSlotheaps_thunk	32	new_14cdb0/StaticInitSharedSlotheaps_thunk.c
@@ -1767,6 +1772,7 @@ address	name	size	file
 0X14D0B8	MarkClockTick__FP5CLOCK	280	clock/MarkClockTick__FP5CLOCK.cpp
 0X14D1D0	SetClockRate	36	new_14d1d0/SetClockRate.cpp
 0X14D1F8	RecalcClockRate	68	new_14d1d0/RecalcClockRate.c
+0X14D240	TickReadCount	64	new_14d1d0/TickReadCount.cpp
 0X14D280	StaticInitSlotheaps_14d280	308	new_14d1d0/StaticInitSlotheaps_14d280.c
 0X14D3B8	GlobalCtorSlotheaps_14d3b8	32	new_14d1d0/GlobalCtorSlotheaps_14d3b8.c
 0X14D3D8	CM_Construct	152	new_14d1d0/CM_Construct.c
@@ -2128,6 +2134,7 @@ address	name	size	file
 0X1660F8	RestartBootQueue	32	sensor-geom/RestartBootQueue.c
 0X166118	StaticInitSlotheaps_166118	308	sensor-geom/StaticInitSlotheaps_166118.c
 0X166250	func_00166250	32	sensor-geom/fun_00166250.c
+0X1665F0	CedgeFindAtPos	468	geom/CedgeFindAtPos.cpp
 0X1667C8	StaticInitSlotheaps_1667c8	308	new_1667c8/StaticInitSlotheaps_1667c8.c
 0X166900	func_00166900	32	new_1667c8/fun_00166900.c
 0X166920	__4GIFS	72	gifs/__4GIFS.c
@@ -2844,6 +2851,7 @@ address	name	size	file
 0X1AA9B8	ConvertMcDirEntry	400	memcard/ConvertMcDirEntry.c
 0X1AAB48	ClassifyMcStart	32	memcard/ClassifyMcStart.cpp
 0X1AAB68	ClassifyMcSync	84	memcard/ClassifyMcSync.cpp
+0X1AABC0	McErrorFromResult	788	memcard/McErrorFromResult.cpp
 0X1AAED8	InitMemcard__FP7MEMCARD	64	memcard/InitMemcard__FP7MEMCARD.c
 0X1AAF18	MemcardThreadMain	116	memcard/MemcardThreadMain.cpp
 0X1AAF90	CreateMemcardThread__FP7MEMCARDii	176	memcard/CreateMemcardThread__FP7MEMCARDii.cpp
@@ -2927,6 +2935,7 @@ address	name	size	file
 0X1AE4F8	__builtin_new	40	memory/__builtin_new.cpp
 0X1AE520	__builtin_delete	8	memory/__builtin_delete.c
 0X1AE528	CopyAqw__FPvT0i	116	memory/CopyAqw__FPvT0i.cpp
+0X1AE5A0	CopyAb__FPvT0Ui	216	memory/CopyAb__FPvT0Ui.cpp
 0X1AE678	StaticInitSlotheaps_1ae678	308	new_1ae678/StaticInitSlotheaps_1ae678.c
 0X1AE7B0	GlobalCtorSlotheaps_1ae7b0	32	new_1ae678/GlobalCtorSlotheaps_1ae7b0.c
 0X1AE7D0	StaticInitSlotheaps_1ae7d0	308	new_1ae678/StaticInitSlotheaps_1ae7d0.c
@@ -3084,6 +3093,7 @@ address	name	size	file
 0X1BAD80	func_001BAD80	52	mpeg-memcard/fun_001bad80.c
 0X1BADB8	func_001BADB8	52	mpeg-memcard/fun_001badb8.c
 0X1BADF0	func_001BADF0	232	mpeg-memcard/fun_001badf0.cpp
+0X1BAED8	SetStgSwitchHitter	64	mpeg-memcard/SetStgSwitchHitter.cpp
 0X1BB918	AddStgSwitchClass	52	mpeg-memcard/AddStgSwitchClass.cpp
 0X1BB950	AddStgSwitchStage	104	mpeg-memcard/AddStgSwitchStage.cpp
 0X1BB9B8	InitStgSwitchPreStage	96	mpeg-memcard/InitStgSwitchPreStage.cpp
@@ -3287,6 +3297,7 @@ address	name	size	file
 0X1CB2E0	PloLeased	72	new_1c90d0/PloLeased.cpp
 0X1CB328	EnsureLeasedObject	56	new_1c90d0/EnsureLeasedObject.c
 0X1CB360	func_001CB360	172	new_1c90d0/fun_001cb360.cpp
+0X1CB410	PleaseFromPlo	120	new_1c90d0/PleaseFromPlo.cpp
 0X1CB488	LockLeaseOfPlo	44	new_1c90d0/LockLeaseOfPlo.cpp
 0X1CB4B8	UnlockLeaseOfPlo	36	new_1c90d0/UnlockLeaseOfPlo.cpp
 0X1CB4E0	func_001CB4E0	56	new_1c90d0/fun_001cb4e0.cpp
@@ -3744,6 +3755,7 @@ address	name	size	file
 0X1EC8F8	PshdFromIndex	24	shd-glob/PshdFromIndex.c
 0X1EC918	PsaaFromOid	76	shd-glob/PsaaFromOid.cpp
 0X1EC968	UpdateSaas	100	glob/UpdateSaas.cpp
+0X1EC9D0	BuildClutTex2__FP4CLUTi	220	gs/BuildClutTex2__FP4CLUTi.cpp
 0X1ECAB0	BuildClutGifs__FP4CLUTiP4GIFS	104	gs/BuildClutGifs__FP4CLUTiP4GIFS.cpp
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp
@@ -3770,6 +3782,8 @@ address	name	size	file
 0X1EDF28	UCompletePingpong__FP8PINGPONG	116	shdanim/UCompletePingpong__FP8PINGPONG.cpp
 0X1EDFA0	CloneActseg__FP6ACTSEGT0	64	actseg/CloneActseg__FP6ACTSEGT0.cpp
 0X1EDFE0	UpdateShuffle__FP7SHUFFLEf	172	shdanim/UpdateShuffle__FP7SHUFFLEf.cpp
+0X1EE090	InitEyes__FP4EYESP4SAAF	108	eyes/InitEyes__FP4EYESP4SAAF.cpp
+0X1EE100	SetEyesEyess__FP4EYES5EYESS	296	eyes/SetEyesEyess__FP4EYES5EYESS.cpp
 0X1EE228	UpdateEyes__FP4EYESf	388	eyes/UpdateEyes__FP4EYESf.cpp
 0X1EE3B0	SetEyesClosed__FP4EYESf	108	eyes/SetEyesClosed__FP4EYESf.cpp
 0X1EE420	PsaiFromEyesShd__FP4EYESP3SHD	92	eyes/PsaiFromEyesShd__FP4EYESP3SHD.cpp
@@ -4134,6 +4148,7 @@ address	name	size	file
 0X2013D8	func_002013D8	240	new_2013d8/fun_002013d8.cpp
 0X2014C8	func_002014C8	308	new_2013d8/fun_002014c8.c
 0X201600	func_00201600	32	new_2013d8/fun_00201600.c
+0X2017A0	SaveSprBuf__FPve	500	sprbuf/SaveSprBuf__FPve.cpp
 0X201998	func_00201998	88	sprbuf/fun_00201998.cpp
 0X201D58	func_00201D58	32	sprbuf/fun_00201d58.c
 0X201D78	func_00201D78	80	sprbuf-stepguard/fun_00201d78.cpp
@@ -4173,6 +4188,7 @@ address	name	size	file
 0X204248	CgeomExtraStep	8	stepguard/CgeomExtraStep.c
 0X204660	SetStepRadTarget	80	new_204250/SetStepRadTarget.cpp
 0X2046B0	SetStepRadTargetDir	60	new_204250/SetStepRadTargetDir.cpp
+0X2046F0	func_002046F0	76	new_204250/fun_002046f0.cpp
 0X204740	RadYawSo	36	new_204250/RadYawSo.c
 0X204C60	func_00204C60	72	new_204250/fun_00204c60.c
 0X204CA8	FixStepAngularVelocity__FP4STEP	156	step/FixStepAngularVelocity__FP4STEP.cpp
@@ -4372,6 +4388,7 @@ address	name	size	file
 0X20D5D0	__5OSTRMi	32	stream/__5OSTRMi.c
 0X20D5F0	__5OSTRMPvi	36	stream/__5OSTRMPvi.c
 0X20D618	func_0020D618	68	stream/fun_0020d618.cpp
+0X20D798	Flush__5OSTRM	224	stream/Flush__5OSTRM.cpp
 0X20D878	StaticInitSlotheaps_20d878	308	stream-chkpnt/StaticInitSlotheaps_20d878.c
 0X20D9B0	StaticInitSlotheaps_20d878_thunk	32	stream-chkpnt/StaticInitSlotheaps_20d878_thunk.c
 0X20DF80	SetSwLoadRequest	188	chkpnt/SetSwLoadRequest.cpp
@@ -4547,12 +4564,16 @@ address	name	size	file
 0X21D4E0	func_0021D4E0	308	break-text/fun_0021d4e0.c
 0X21D618	func_0021D618	32	break-text/fun_0021d618.c
 0X21D638	CchParsePchzInt__FPcPi	120	text/CchParsePchzInt__FPcPi.cpp
+0X21D6B0	CchParsePchzTft__FPcP3TFTPPc	832	text/CchParsePchzTft__FPcP3TFTPPc.cpp
 0X21D9F0	WriteTftPchz__FP3TFTP5OSTRMPc	324	text/WriteTftPchz__FP3TFTP5OSTRMPc.cpp
 0X21DB38	FNegTftUl__FP3TFTP2UL	224	text/FNegTftUl__FP3TFTP2UL.cpp
 0X21DC18	UnRadixFromChConversion__Fc	84	text/UnRadixFromChConversion__Fc.cpp
 0X21DC70	CchAchFromUl__FPciUlUi	208	text/CchAchFromUl__FPciUlUi.cpp
+0X21DD40	WriteTftUl__FP3TFTP5OSTRMUl	772	text/WriteTftUl__FP3TFTP5OSTRMUl.cpp
 0X21E048	ExpFirstFromG__Fd	144	text/ExpFirstFromG__Fd.cpp
 0X21E0D8	ChDigitFromG__Fdii	216	text/ChDigitFromG__Fdii.cpp
+0X21E4B8	WriteTftDouble__FP3TFTP5OSTRMd	604	text/WriteTftDouble__FP3TFTP5OSTRMd.cpp
+0X21E718	WriteTft__FP3TFTP5OSTRMPPcPci	940	text/WriteTft__FP3TFTP5OSTRMPPcPci.cpp
 0X21EAC8	CchOstrmPrintf__FP5OSTRMPcT1	240	text/CchOstrmPrintf__FP5OSTRMPcT1.cpp
 0X21EBB8	vprintf	92	text/vprintf.cpp
 0X21EC18	printf	72	text/printf.cpp
@@ -4643,6 +4664,7 @@ address	name	size	file
 0X226DD0	AddVifStmask__4VIFSUi	56	vifs/AddVifStmask__4VIFSUi.cpp
 0X226E10	VIFS_AddUnpackCommand	120	vifs/VIFS_AddUnpackCommand.cpp
 0X226E88	UnpackHelper__4VIFS3UPKiiPiPPUi	156	vifs/UnpackHelper__4VIFS3UPKiiPiPPUi.cpp
+0X226F28	AddVifUnpack__4VIFS3UPKiPvi	164	vifs/AddVifUnpack__4VIFS3UPKiPvi.cpp
 0X226FD0	VIFS_AddVifUnpackFromStream	64	vifs/VIFS_AddVifUnpackFromStream.cpp
 0X227010	AddVifUnpackRefs__4VIFS3UPKiPviPPPv	180	vifs/AddVifUnpackRefs__4VIFS3UPKiPviPPPv.cpp
 0X2270C8	AddVifDirect__4VIFSiP2QWi	124	vifs/AddVifDirect__4VIFSiP2QWi.cpp
