@@ -33,6 +33,10 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 - **The test for a trick.** A construct is allowed when it could plausibly be in the original source and changes no behaviour: casts, types,
   statement order, and a dead local that retail's frame shows (a stack area with no stores). It is not allowed when its only purpose is to steer
   the compiler: `volatile` on ordinary data, an empty `asm` with clobbers, register pins, or a variable that exists only to move a register.
+  Also not allowed, for the same reason: a callee declared with a return type it does not have (`void memcpy` for a function that returns its
+  destination), an early-clobber (`=&r`, `=&f`) that no correctness argument needs, a dummy `"+m"`/`"=m"` operand or a `"memory"` clobber that only
+  orders blocks, a local that only holds a global's address so a constant does not fold, and source that defines game data read out of retail
+  (reference it with an `extern` at retail's address). The rulings and what is still allowed are in docs/contributing/matching.md ("Rulings").
   A function that matches only with such a construct stays in `nonmatching/` at the score it reaches without it.
 - **One flag set per source file** (and one assembler per function listed in `config/us/`), never ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
