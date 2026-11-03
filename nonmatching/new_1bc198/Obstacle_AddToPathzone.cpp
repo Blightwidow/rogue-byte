@@ -16,7 +16,7 @@ struct OBSTACLE {
 extern "C" {
 void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
-void *PvAllocStackImpl__Fi(void);
+void *PvAllocStackImpl__Fi(ALLOCREQ *);
 QW PosLoWorld(OBSTACLE *);
 void *PpathzoneFindPos(QW, int);
 void AddPathzoneObstacle(void *, OBSTACLE *);
@@ -31,9 +31,10 @@ void Obstacle_AddToPathzone(OBSTACLE *pobstacle)
         ROW16 mat[4];
     } locals;
     CStackFrame_Construct(locals.frame);
-    locals.req.align = 0x10;
-    locals.req.size = pobstacle->cposObstacle * 0x10 - 1;
-    VECTOR *aposWorld = (VECTOR *)PvAllocStackImpl__Fi();
+    ALLOCREQ *preq = &locals.req;
+    preq->size = pobstacle->cposObstacle * 0x10 - 1;
+    preq->align = 0x10;
+    VECTOR *aposWorld = (VECTOR *)PvAllocStackImpl__Fi(preq);
     VEntry *entry = &pobstacle->vptr[31];
     MATRIX4 *pmatWorld = (MATRIX4 *)entry->fn((char *)pobstacle + entry->delta);
     asm("lqc2 vf2, 0x0(%0)" : : "r"(pmatWorld));
@@ -75,8 +76,10 @@ void Obstacle_AddToPathzone(OBSTACLE *pobstacle)
     pobstacle->posMax.z = RO_002A76D4;
     QW posWorld = PosLoWorld(pobstacle);
     void *ppathzone = PpathzoneFindPos(posWorld, 0);
-    if (ppathzone != 0) {
-        AddPathzoneObstacle(ppathzone, pobstacle);
+    if (ppathzone == 0) {
+        CStackFrame_Destructor(locals.frame, 2);
+        return;
     }
+    AddPathzoneObstacle(ppathzone, pobstacle);
     CStackFrame_Destructor(locals.frame, 2);
 }

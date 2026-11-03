@@ -57,7 +57,9 @@ extern "C" void UpdateSwCallbacks(SWX *psw)
         }
     }
     TIMED *ptimed = psw->ptimed;
-    if (ptimed != 0 && !(g_2dded0 < ptimed->time)) {
+    if (ptimed == 0 || g_2dded0 < ptimed->time)
+        return;
+    {
         do {
             CFrame **pobject = ptimed->pobject;
             ptimed->state = -1;

@@ -43,9 +43,9 @@ extern "C" void UploadRelightLights(void *vifs)
         if (*(int *)(light + 0x160) != 0)
             continue;
         if (chunkEnd <= written) {
-            int chunk = 0x20;
             int rest = staticCount - written;
-            if (rest < chunk)
+            int chunk = 0x20;
+            if (!(0x1F < rest))
                 chunk = rest;
             chunkEnd = written + chunk;
             UnpackHelper__4VIFS3UPKiiPiPPUi(vifs, 0xC, (chunkEnd - written) * 3, address, 0, &dest);

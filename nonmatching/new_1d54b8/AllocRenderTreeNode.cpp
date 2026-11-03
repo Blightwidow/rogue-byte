@@ -9,9 +9,13 @@ RTN *AllocRenderTreeNode()
     req.cb = 0x80;
     req.cbAlign = 0x10;
     RTN *node = (RTN *)PvAllocSwClearImpl__Fi(&req);
-    node->arte[2].grf = (node->arte[2].grf & ~0xF00000000UL) | 0xF00000000UL;
-    node->arte[1].grf = (node->arte[1].grf & ~0xF00000000UL) | 0xF00000000UL;
-    node->arte[0].grf = (node->arte[0].grf & ~0xF00000000UL) | 0xF00000000UL;
-    node->arte[3].grf = (node->arte[3].grf & ~0xF00000000UL) | 0xF00000000UL;
+    unsigned long a = node->arte[2].grf;
+    unsigned long b = node->arte[1].grf;
+    unsigned long c = node->arte[0].grf;
+    unsigned long d = node->arte[3].grf;
+    node->arte[3].grf = (d & ~0xF00000000UL) | 0xF00000000UL;
+    node->arte[2].grf = (a & ~0xF00000000UL) | 0xF00000000UL;
+    node->arte[1].grf = (b & ~0xF00000000UL) | 0xF00000000UL;
+    node->arte[0].grf = (c & ~0xF00000000UL) | 0xF00000000UL;
     return node;
 }

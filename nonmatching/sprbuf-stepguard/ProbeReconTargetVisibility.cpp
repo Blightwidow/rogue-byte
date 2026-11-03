@@ -24,10 +24,7 @@ extern M2C_UNK B_003DD490;
 extern M2C_UNK func_00202350;
 extern M2C_UNK g_2ddfa0;
 void ProbeReconTargetVisibility(s8 *arg0, s8 *arg1) {
-    s8 sp[0x60] __attribute__((aligned(16)));
-    s128 sp10;
-    s32 sp60;
-    s32 sp64;
+    s8 sp[0x80] __attribute__((aligned(16)));
     f32 temp_f20;
     s128 *var_s0;
     s128 temp_a2;
@@ -42,7 +39,7 @@ void ProbeReconTargetVisibility(s8 *arg0, s8 *arg1) {
     asm volatile("sqc2 vf6, 0x70(%0)" : : "r"(sp));
     s32 vu_1;
     asm volatile("qmfc2.ni %0, vf6" : "=r"(vu_1));
-    bevy_camera_follow_push_out(&B_003DD490, arg1, M2C_FIELD(arg0, s128 *, 0x20), &func_00202350, 0, &sp60, &sp64);
+    bevy_camera_follow_push_out(&B_003DD490, arg1, M2C_FIELD(arg0, s128 *, 0x20), &func_00202350, 0, (s32 *)(sp + 0x60), (s32 *)(sp + 0x64));
     asm volatile("lqc2 vf1, 0x20(%0)" : : "r"(arg0));
     asm volatile("lqc2 vf6, 0x70(%0)" : : "r"(sp));
     asm volatile("vsub.xyzw vf1, vf1, vf6");
@@ -61,7 +58,7 @@ void ProbeReconTargetVisibility(s8 *arg0, s8 *arg1) {
     asm volatile("sqc2 vf5, 0x50(%0)" : : "r"(sp));
     asm volatile("vopmula.xyz ACC, vf4, vf2");
     asm volatile("vopmsub.xyz vf3, vf2, vf4");
-    var_s0 = &sp10;
+    var_s0 = (s128 *)(sp + 0x10);
     asm volatile("vmul.xyz vf1, vf3, vf3");
     asm volatile("vaddw.x vf7, vf0, vf0w");
     asm volatile("vadday.x ACC, vf1, vf1y");
@@ -86,8 +83,8 @@ void ProbeReconTargetVisibility(s8 *arg0, s8 *arg1) {
     do {
         temp_a2 = *var_s0;
         var_s4 += 1;
-        var_s0 += 0x10;
-        var_s1 = (PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, M2C_FIELD(arg0, s128 *, 0x20), temp_a2, sp60, sp64, 0) != 0) ? (var_s1 + 1) : var_s1;
+        var_s0 += 1;
+        var_s1 = (PsoHitTestLineObjects__FiP6VECTORT1iPP2SOP3LSG(0, M2C_FIELD(arg0, s128 *, 0x20), temp_a2, *(s32 *)(sp + 0x60), *(s32 *)(sp + 0x64), 0) != 0) ? (var_s1 + 1) : var_s1;
     } while (var_s4 < 4U);
     if (var_s1 < 4) {
         var_v0 = 3;

@@ -5,7 +5,8 @@ struct JTO { char pad0[0xC]; VT *vt; char pad1[0xD0 - 0x10]; float alpha; char p
 struct ZAP { JTO *jt; int state; float tstate; char pad[0x90 - 0xC]; int flash; float tstart; float tflash; float dur; };
 struct SMP;
 extern "C" {
-extern float g_2dded0;
+struct CLOCK { float t; float dt; };
+extern CLOCK g_2dded0;
 extern float g_2bbb60[2];
 extern float D_002BFAA0[3];
 extern float D_002BFAB0[3];
@@ -25,7 +26,7 @@ void UpdateZapPost(ZAP *zap)
         float fade;
         state = zap->state;
         if (state == -1) {
-            float dt = g_2dded0 - zap->tflash;
+            float dt = g_2dded0.t - zap->tflash;
             float dur = zap->dur;
             if (dur < dt) {
                 zap->flash = state;
@@ -37,7 +38,7 @@ void UpdateZapPost(ZAP *zap)
         } else {
             fade = 0.0f;
         }
-        float cosine = cosf((g_2dded0 - zap->tstart) * 10.0f);
+        float cosine = cosf((g_2dded0.t - zap->tstart) * 10.0f);
         float alpha = D_002BFAA0[0] + fade * (D_002BFAA0[1] + fade * D_002BFAA0[2]);
         float low = g_2bbb60[0];
         float high = g_2bbb60[1];
@@ -66,9 +67,9 @@ after:
     QW vel = zap->jt->vt->fn((unsigned long *)zap->jt + zap->jt->vt->delta);
     float *v = (float *)&vel;
     float heading = atan2f(v[1], v[0]);
-    float turn = RadSmooth(zap->jt->rad, heading + 3.1415927f, g_2dded0, (SMP *)D_002BFAC0, 0);
+    float turn = RadSmooth(zap->jt->rad, heading + 3.1415927f, g_2dded0.dt, (SMP *)D_002BFAC0, 0);
     SetStepRadTarget(zap->jt, turn);
-    if (0.25f < g_2dded0 - zap->tstate) {
+    if (0.25f < g_2dded0.t - zap->tstate) {
         if (zap->jt->landed != 0) {
             ZapContinue();
             return;

@@ -19,32 +19,32 @@ extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);
 
 void func_0012BF30(ACRAXIS *pacr, CBinaryInputStream *pbis)
 {
+    int ikey;
     pbis->ReadVector((VECTOR *)pacr->vecDefault);
+    int ckey = pbis->U16Read();
     ALLOCREQ allocreq;
-    pacr->ckey = pbis->U16Read();
-    allocreq.cb = pacr->ckey << 2;
+    allocreq.cb = ckey << 2;
     allocreq.cbAlign = 0x10;
+    pacr->ckey = ckey;
     pacr->at = (float *)PvAllocSwImpl__Fi(&allocreq);
-    int ikey = 0;
-    if (pacr->ckey > 0) {
-        for (ikey = 0; ikey < pacr->ckey; ikey++)
-            pacr->at[ikey] = (float)pbis->U16Read() * 0.016666668f;
+    for (ikey = 0; ikey < pacr->ckey; ikey++) {
+        int frame = pbis->U16Read();
+        pacr->at[ikey] = (float)frame * 0.016666668f;
     }
-    unsigned int maskAxes = pbis->U8Read();
-    for (int iaxis = 0; iaxis < 3; iaxis++) {
-        if (maskAxes & (1 << iaxis)) {
-            allocreq.cbAlign = 0x10;
-            allocreq.cb = pacr->ckey * 12;
-            float *apg = (float *)PvAllocSwImpl__Fi(&allocreq);
-            pacr->apg[iaxis] = apg;
-            if (pacr->ckey > 0) {
-                for (int ikey = 0; ikey < pacr->ckey; ikey++) {
-                    apg[0] = pbis->F32Read();
-                    apg[1] = pbis->F32Read();
-                    apg[2] = pbis->F32Read();
-                    apg += 3;
-                }
-            }
+    int maskAxes = pbis->U8Read();
+    int bit = 1;
+    for (int iaxis = 0; iaxis < 3; iaxis++, bit <<= 1) {
+        if ((bit & maskAxes) == 0)
+            continue;
+        allocreq.cb = pacr->ckey * 12;
+        allocreq.cbAlign = 0x10;
+        float *apg = (float *)PvAllocSwImpl__Fi(&allocreq);
+        pacr->apg[iaxis] = apg;
+        for (ikey = 0; ikey < pacr->ckey; ikey++) {
+            apg[0] = pbis->F32Read();
+            apg[1] = pbis->F32Read();
+            apg[2] = pbis->F32Read();
+            apg += 3;
         }
     }
 }

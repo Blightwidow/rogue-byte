@@ -1,5 +1,5 @@
 #include "sly2.h"
-static inline float SqrtHazard(float value) { return __builtin_sqrtf(value); }
+static inline float SqrtHazard(float x) { float r; asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x)); return r; }
 extern "C" {
 float acosf(float);
 float fabsf(float);
@@ -17,7 +17,7 @@ extern "C" void DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(MATRIX3 *pmat, fl
     float *normal = &pnormal->x;
     float remaining = 1.0f;
     for (int axis = 0; axis < 2; axis++) {
-        float square = fabsf((ag[5 * axis] - cosine) / (remaining - cosine));
+        float square = fabsf((ag[5 * axis] - cosine) / (1.0f - cosine));
         if (remaining < square)
             square = remaining;
         else if (square < 0.0f)
@@ -31,17 +31,22 @@ extern "C" void DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR(MATRIX3 *pmat, fl
         float x = pnormal->x;
         float y = pnormal->y;
         float z = pnormal->z;
-        if (y < x && z < x) {
-            if (ag[1] < 0.0f)
-                pnormal->y = -y;
-            if (ag[2] < 0.0f)
-                pnormal->z = -pnormal->z;
-        } else if (x <= y && z < y) {
+        if (y < x) {
+            if (z < x) {
+                if (ag[1] < 0.0f)
+                    pnormal->y = -y;
+                if (ag[2] < 0.0f)
+                    pnormal->z = -pnormal->z;
+            } else {
+                goto thirdAxis;
+            }
+        } else if (z < y) {
             if (ag[4] < 0.0f)
                 pnormal->x = -x;
             if (ag[6] < 0.0f)
                 pnormal->z = -pnormal->z;
         } else {
+        thirdAxis:
             if (ag[8] < 0.0f)
                 pnormal->x = -x;
             if (ag[9] < 0.0f)

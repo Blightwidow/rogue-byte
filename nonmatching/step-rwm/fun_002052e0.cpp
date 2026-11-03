@@ -1,70 +1,55 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "sly2.h"
+struct OBJ {
+    int pad0[3]; virtual void p0(); virtual void p1(); virtual void p2(); virtual void p3(); virtual void p4(); virtual void p5(); virtual void p6(); virtual void p7(); virtual void p8(); virtual void p9(); virtual void p10(); virtual void p11(); virtual void p12(); virtual void p13(); virtual void p14(); virtual void p15(); virtual void p16(); virtual void p17(); virtual void p18(); virtual void p19(); virtual void p20(); virtual void p21(); virtual void p22(); virtual void p23(); virtual void p24(); virtual void p25(); virtual void p26(); virtual void p27(); virtual void V28(QW); virtual void V29(void *); virtual QW *V30(); virtual void p31(); virtual void p32(); virtual void p33(); virtual void V34(QW); virtual void V35(QW);
+};
 extern "C" {
-struct _m2c_stack_func_002052E0 {
-    /* 0x00 */ char pad0[0x80];
-};                                                  /* size = 0x80 */
-s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
-M2C_UNK MatchSoOtherObject(s8 *);         /* extern */
-extern M2C_UNK g_2a2dc0;
-extern s128 g_2a2dd0;
-void func_002052E0(s8 *arg0, s8 *arg1) {
-    s8 sp[0x50] __attribute__((aligned(16)));
-    s32 temp_v0;
-    s8 *temp_a2;
-    s8 *temp_v0_2;
-    s8 *temp_v0_3;
-    s8 *temp_v0_4;
-    s8 *temp_v1;
-    if (arg1 != NULL) {
-        if (FIsBasicDerivedFrom(arg1, 3) == 0) {
-            MatchSoOtherObject(arg0);
-        } else {
-            temp_v1 = M2C_FIELD(arg1, s8 **, 0xC);
-            temp_v0 = M2C_FIELD(temp_v1, s32 (**)(s8 *), 0xFC)(arg1 + M2C_FIELD(temp_v1, s16 *, 0xF8));
-            asm volatile("lqc2 vf5, (%0)" : : "r"(temp_v0));
-            temp_a2 = M2C_FIELD(arg0, s8 **, 0xC);
-            asm volatile("sqc2 vf5, (%0)" : : "r"(sp));
-            asm volatile("qmtc2.ni %0, vf6" : : "r"(0xBF800000));
-            asm volatile("lqc2 vf4, 0x10(%0)" : : "r"(temp_v0));
-            asm volatile("lqc2 vf2, 0x240(%0)" : : "r"(arg0));
-            asm volatile("vmulx.xyzw vf2, vf2, vf6x");
-            asm volatile("sqc2 vf4, 0x10(%0)" : : "r"(sp));
-            asm volatile("lqc2 vf3, 0x20(%0)" : : "r"(temp_v0));
-            asm volatile("sqc2 vf3, 0x20(%0)" : : "r"(sp));
-            asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(temp_v0));
-            asm volatile("vmulax.xyz ACC, vf5, vf2x");
-            asm volatile("vmadday.xyz ACC, vf4, vf2y");
-            asm volatile("vmaddaz.xyz ACC, vf3, vf2z");
-            asm volatile("vmaddw.xyz vf7, vf1, vf0w");
-            asm volatile("sqc2 vf1, 0x30(%0)" : : "r"(sp));
-            asm volatile("sqc2 vf6, 0x40(%0)" : : "r"(sp));
-            s32 vu_1;
-            asm volatile("qmfc2.ni %0, vf7" : "=r"(vu_1));
-            temp_v0_2 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_a2, M2C_UNK (**)(s8 *, M2C_UNK), 0xEC)(arg0 + M2C_FIELD(temp_a2, s16 *, 0xE8), vu_1);
-            M2C_FIELD(temp_v0_2, M2C_UNK (**)(s8 *, s8 *), 0xF4)(arg0 + M2C_FIELD(temp_v0_2, s16 *, 0xF0), sp);
-            if (FIsBasicDerivedFrom(arg0, 0x34) != 0) {
-                asm volatile("qmtc2.ni %0, vf3" : : "r"(M2C_FIELD(arg0, s32 *, 0x1048)));
-                asm volatile("lqc2 vf2, (%0)" : : "r"(&g_2a2dc0));
-                asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(sp));
-                asm volatile("vadda.xyzw ACC, vf0, vf1");
-                asm volatile("vmaddx.xyzw vf1, vf2, vf3x");
-                asm volatile("sqc2 vf3, 0x40(%0)" : : "r"(sp));
-                asm volatile("sqc2 vf1, 0x1060(%0)" : : "r"(arg0));
-            }
-            temp_v0_3 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_v0_3, M2C_UNK (**)(s8 *, s128), 0x11C)(arg0 + M2C_FIELD(temp_v0_3, s16 *, 0x118), g_2a2dd0);
-            temp_v0_4 = M2C_FIELD(arg0, s8 **, 0xC);
-            M2C_FIELD(temp_v0_4, M2C_UNK (**)(s8 *, s128), 0x124)(arg0 + M2C_FIELD(temp_v0_4, s16 *, 0x120), g_2a2dd0);
-            M2C_FIELD(arg0, s32 *, 0x208) = 0;
-        }
-    }
+int FIsBasicDerivedFrom(void *, int);
+void MatchSoOtherObject(void *, void *);
+extern QW g_2a2dc0;
+extern QW g_2a2dd0;
 }
+static inline QW Word(float f) { QW r; asm volatile("mfc1 %0, %1" : "=r" (r) : "f" (f)); return r; }
+extern "C" void func_002052E0(OBJ *a, OBJ *b)
+{
+    QW sp[5];
+    if (b == 0)
+        return;
+    if (FIsBasicDerivedFrom(b, 3)) {
+    QW *pm = b->V30();
+    asm volatile("lqc2 vf5, 0(%0)" : : "r"(pm));
+    asm volatile("sqc2 vf5, %0" : "=m"(sp[0]));
+    QW minusOne = Word(-1.0f);
+    asm volatile("qmtc2.ni %0, vf6" : : "r"(minusOne));
+    asm volatile("lqc2 vf4, 0x10(%0)" : : "r"(pm));
+    asm volatile("lqc2 vf2, 0x240(%0)" : : "r"(a));
+    asm volatile("vmulx.xyzw vf2, vf2, vf6x");
+    asm volatile("sqc2 vf4, %0" : "=m"(sp[1]));
+    asm volatile("lqc2 vf3, 0x20(%0)" : : "r"(pm));
+    asm volatile("sqc2 vf3, %0" : "=m"(sp[2]));
+    asm volatile("lqc2 vf1, 0x30(%0)" : : "r"(pm));
+    asm volatile("vmulax.xyz ACC, vf5, vf2x");
+    asm volatile("vmadday.xyz ACC, vf4, vf2y");
+    asm volatile("vmaddaz.xyz ACC, vf3, vf2z");
+    asm volatile("vmaddw.xyz vf7, vf1, vf0w");
+    QW pos;
+    asm volatile("qmfc2.ni %0, vf7" : "=r"(pos));
+    asm volatile("sqc2 vf1, %0" : "=m"(sp[3]));
+    asm volatile("sqc2 vf6, %0" : "=m"(sp[4]));
+    a->V28(pos);
+    a->V29(sp);
+    if (FIsBasicDerivedFrom(a, 0x34)) {
+        asm volatile("qmtc2.ni %0, vf3" : : "r"(*(int *)((char *)a + 0x1048)));
+        asm volatile("lqc2 vf2, 0(%0)" : : "r"(&g_2a2dc0));
+        asm volatile("lqc2 vf1, %0" : : "m"(sp[3]));
+        asm volatile("vadda.xyzw ACC, vf0, vf1");
+        asm volatile("vmaddx.xyzw vf1, vf2, vf3x");
+        asm volatile("sqc2 vf3, %0" : "=m"(sp[4]));
+        asm volatile("sqc2 vf1, 0x1060(%0)" : : "r"(a));
+    }
+    a->V34(g_2a2dd0);
+    a->V35(g_2a2dd0);
+    *(int *)((char *)a + 0x208) = 0;
+    } else {
+        MatchSoOtherObject(a, b);
+    }
 }

@@ -13,21 +13,13 @@ extern const char RO_002A79D0[];
 extern const char RO_002A79D8[];
 void ShopMenu_BuildList(SHOP *menu)
 {
-    int clear = 0;
-    if (menu->count > 0) {
-        ITEM *item = menu->items;
-        do {
-            item->index = -1;
-            clear++;
-            item++;
-        } while (clear < menu->count);
-    }
+    for (int clear = 0; clear < menu->count; clear++)
+        menu->items[clear].index = -1;
     int mode = menu->mode;
-    int index;
     menu->count = 0;
     switch (mode) {
     case 0: {
-        index = 7;
+        int index = 7;
         while (index < 0x2B) {
             if (FGadgetOnSale(index) != 0 && FGadgetAcquired(index) == 0) {
                 unsigned int count = menu->count;
@@ -41,8 +33,7 @@ void ShopMenu_BuildList(SHOP *menu)
         break;
     }
     case 1: {
-        index = 0;
-        do {
+        for (int index = 0; index < 0x40; index++) {
             CRef ref;
             char name[0x20];
             CRef temp;
@@ -53,19 +44,17 @@ void ShopMenu_BuildList(SHOP *menu)
             CRef_Destruct(&temp);
             if (ref.n == 0) {
                 CRef_Destruct(&ref);
-                index++;
-            } else {
-                unsigned int count = menu->count;
-                if (count >= 0x41) {
-                    CRef_Destruct(&ref);
-                    break;
-                }
-                menu->items[count].index = index;
-                menu->count = count + 1;
-                CRef_Destruct(&ref);
-                index++;
+                continue;
             }
-        } while (index < 0x40);
+            unsigned int count = menu->count;
+            if (count >= 0x41) {
+                CRef_Destruct(&ref);
+                break;
+            }
+            menu->items[count].index = index;
+            menu->count = count + 1;
+            CRef_Destruct(&ref);
+        }
         break;
     }
     }

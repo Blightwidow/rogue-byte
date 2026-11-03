@@ -8,6 +8,7 @@ struct DPRIZE1C5E48 {
     float timer; char pad3[0x1C4 - 0x18C];
     int flag;
 };
+static inline float Lane(QW q) { float f; asm("mtc1 %1, %0" : "=f"(f) : "r"(q)); return f; }
 extern "C" {
 void UpdateSo(DPRIZE1C5E48 *);
 void func_001C6308(DPRIZE1C5E48 *);
@@ -22,13 +23,12 @@ void UpdateDprize(DPRIZE1C5E48 *dprize)
     int arg;
     switch (dprize->state) {
     case 0: {
-        float lengthSquared;
-        asm volatile("lqc2 vf1, 0x180(%0)" : : "r"(dprize));
-        asm volatile("vmul.xyz vf1, vf1, vf1");
-        asm volatile("vaddw.x vf2, vf0, vf0w");
-        asm volatile("vadday.x ACC, vf1, vf1y");
-        asm volatile("vmaddz.x vf1, vf2, vf1z");
-        asm volatile("qmfc2.ni $2, vf1\n\tmtc1 $2, %0" : "=f"(lengthSquared) : : "$2");
+        int fenceLoad, fenceMath;
+        asm("lqc2 vf1, 0x180(%1)" : "=r"(fenceLoad) : "r"(dprize));
+        asm volatile("vmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z" : "=r"(fenceMath) : "r"(fenceLoad));
+        QW lane;
+        asm("qmfc2.ni %0, vf1" : "=r"(lane) : "r"(fenceMath));
+        float lengthSquared = Lane(lane);
         if (10000.0f < lengthSquared)
             CheckDprizeBounce(dprize);
     }
@@ -51,16 +51,17 @@ void UpdateDprize(DPRIZE1C5E48 *dprize)
             arg = 0;
             goto call;
         }
-        arg = 2;
-        if (D_FLT_002C0D50 < g_2dded0 - dprize->startTime)
-            goto call;
-        CheckDprizeCollect(dprize);
+        if (D_FLT_002C0D50 < g_2dded0 - dprize->startTime) {
+            arg = 2;
+        call:
+            dprize->vt->fn((char *)dprize + dprize->vt->delta, arg);
+            return;
+        }
         CheckDprizeBounce(dprize);
+        CheckDprizeCollect(dprize);
         return;
     default:
         return;
     }
-call:
-    dprize->vt->fn((char *)dprize + dprize->vt->delta, arg);
 }
 }

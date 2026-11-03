@@ -24,7 +24,7 @@ int ClsgClipSoBspEdges(int unused, Ctx *ctx, Bsp *bsp, int count, Entry *entries
             node->flags = flags | 2;
             if (edge != 0) {
                 do {
-                    if (!((faces[edge->face].flags ^ 1) & 1)) {
+                    if (((faces[edge->face].flags ^ 1) & 1) == 0) {
                         total += ClsgClipEdgeToBsp(ctx->tree, 0x7FFFFFFF, verts[edge->v0], verts[edge->v1], limit - total, out + total);
                         for (; marked < total; marked++)
                             out[marked].edge = edge;

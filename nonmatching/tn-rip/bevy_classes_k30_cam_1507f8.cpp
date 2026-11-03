@@ -1,89 +1,40 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-typedef s128 QW;
-// lane 0 of a QW (VU result) to an FP register
-static inline f32 LaneZero(QW q) { f32 f; asm("mtc1 %1, %0" : "=f"(f) : "r"(q)); return f; }
-// an FP value into lane 0 of a QW
-static inline QW WordOf(f32 f) { QW q; asm("mfc1 %0, %1" : "=r"(q) : "f"(f)); return q; }
+typedef int QW __attribute__((mode(TI)));
+struct M3 { QW row[3]; };
+struct CAM { char pad0[0x14]; void *ptarget; char pad18[0xA4 - 0x18]; float pan; float tilt; };
+union Lanes { QW whole; float lane[4]; };
+struct L { Lanes dir; QW junk; M3 mat; QW offset; QW spill; };
 extern "C" {
-struct _m2c_stack_bevy_classes_k30_cam_1507f8 {
-    /* 0x00 */ f32 sp0;                             /* inferred */
-    /* 0x04 */ f32 sp4;                             /* inferred */
-    /* 0x08 */ char pad8[0x18];                     /* maybe part of sp4[7]? */
-    /* 0x20 */ M2C_UNK sp20;                        /* inferred */
-    /* 0x20 */ char pad20[0x30];
-    /* 0x50 */ s128 sp50;                           /* inferred */
-    /* 0x60 */ char pad60[0x30];
-};                                                  /* size = 0x90 */
-#define sp0 (*(f32 *)(sp + 0x00))
-#define sp4 (*(f32 *)(sp + 0x04))
-M2C_UNK LoadRotateMatrixPanTilt(M2C_UNK *, f32, f32); /* extern */
-s32 PosLoWorld(s32);                                /* extern */
-f32 atan2f(f32, f32);                               /* extern */
-s32 bevy_classes_k30_cam_150780(void);            /* extern */
-extern s128 RO_002A5000;
-s32 bevy_classes_k30_cam_1507f8(s8 *arg0) {
-    s8 sp[0x60] __attribute__((aligned(16)));
-    M2C_UNK sp20;
-    s128 sp50;
-    s32 temp_a0;
-    temp_a0 = M2C_FIELD(arg0, s32 *, 0x14);
-    if (temp_a0 != 0) {
-        asm volatile("qmtc2.ni %0, vf1" : : "r"(PosLoWorld(temp_a0)));
-        asm volatile("sqc2 vf1, 0x60(%0)" : : "r"(sp));
-        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780()));
-        asm volatile("lqc2 vf1, 0x60(%0)" : : "r"(sp));
-        asm volatile("vsub.xyzw vf1, vf1, vf2");
-        asm volatile("vmul.xyz vf2, vf1, vf1");
-        asm volatile("vaddw.x vf3, vf0, vf0w");
-        asm volatile("vadday.x ACC, vf2, vf2y");
-        asm volatile("vmaddz.x vf2, vf3, vf2z");
-        asm volatile("vsqrt Q, vf2x");
-        asm volatile("vwaitq");
-        asm volatile("vaddq.x vf2, vf0, Q");
-        asm volatile("vdiv Q, vf0w, vf2x");
-        asm volatile("vwaitq");
-        asm volatile("vmulq.xyzw vf2, vf1, Q");
-        asm volatile("sqc2 vf2, (%0)" : : "r"(sp));
-        M2C_FIELD(arg0, f32 *, 0xA4) = atan2f(sp4, sp0);
-        asm volatile("lqc2 vf2, (%0)" : : "r"(sp));
-        asm volatile("lqc2 vf1, (%0)" : : "r"(&RO_002A5000));
-        asm volatile("vmul.xyz vf1, vf1, vf1");
-        asm volatile("vaddw.x vf3, vf0, vf0w");
-        asm volatile("vadday.x ACC, vf1, vf1y");
-        asm volatile("vmaddz.x vf1, vf3, vf1z");
-        asm volatile("vsqrt Q, vf1x");
-        asm volatile("vwaitq");
-        asm volatile("vaddq.x vf1, vf0, Q");
-        asm volatile("qmtc2.ni %0, vf3" : : "r"(bevy_classes_k30_cam_150780()));
-        s128 vu_1;
-        asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-        s128 negatedBits = WordOf(-LaneZero(vu_1));
-        asm volatile("qmtc2.ni %0, vf1" : : "r"(negatedBits));
-        asm volatile("vmulx.xyzw vf2, vf2, vf1x");
-        asm volatile("sqc2 vf1, 0x10(%0)" : : "r"(sp));
-        asm volatile("vadd.xyzw vf1, vf3, vf2");
+QW PosLoWorld(void *);
+QW bevy_classes_k30_cam_150780(CAM *);
+float atan2f(float, float);
+M3 *LoadRotateMatrixPanTilt(M3 *, float, float);
+extern QW RO_002A5000;
+// float to lane 0 of a QW, and back
+static inline float LaneZero(QW q) { float f; asm("mtc1 %1, %0" : "=f"(f) : "r"(q)); return f; }
+static inline QW WordOf(float f) { QW q; asm("mfc1 %0, %1" : "=r"(q) : "f"(f)); return q; }
+QW bevy_classes_k30_cam_1507f8(CAM *pcam)
+{
+    L l;
+    void *ptarget = pcam->ptarget;
+    if (ptarget != 0) {
+        QW posTarget = PosLoWorld(ptarget);
+        asm volatile("qmtc2.ni %1, vf1\n\tsqc2 vf1, %0" : "=m"(l.spill) : "r"(posTarget));
+        QW posCam = bevy_classes_k30_cam_150780(pcam);
+        asm volatile("qmtc2.ni %1, vf2\n\tlqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tvmul.xyz vf2, vf1, vf1\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf2, vf2y\n\tvmaddz.x vf2, vf3, vf2z\n\tvsqrt Q, vf2x\n\tvwaitq\n\tvaddq.x vf2, vf0, Q\n\tvdiv Q, vf0w, vf2x\n\tvwaitq\n\tvmulq.xyzw vf2, vf1, Q\n\tsqc2 vf2, %0" : "=m"(l.dir) : "r"(posCam), "m"(l.spill));
+        pcam->pan = atan2f(l.dir.lane[1], l.dir.lane[0]);
+        QW posCam2 = bevy_classes_k30_cam_150780(pcam);
+        QW lengthBits;
+        asm volatile("lqc2 vf2, %1\n\tlqc2 vf1, 0(%2)\n\tvmul.xyz vf1, vf1, vf1\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf3, vf1z\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmtc2.ni %3, vf3\n\tqmfc2.ni %0, vf1" : "=r"(lengthBits) : "m"(l.dir), "r"(&RO_002A5000), "r"(posCam2));
+        QW negatedBits = WordOf(-LaneZero(lengthBits));
+        asm volatile("qmtc2.ni %1, vf1\n\tvmulx.xyzw vf2, vf2, vf1x\n\tsqc2 vf1, %0\n\tvadd.xyzw vf1, vf3, vf2" : "=m"(l.junk) : "r"(negatedBits));
     } else {
-        sp50 = RO_002A5000;
-        LoadRotateMatrixPanTilt(&sp20, M2C_FIELD(arg0, f32 *, 0xA4), M2C_FIELD(arg0, f32 *, 0xA8));
-        asm volatile("lqc2 vf2, 0x30(%0)" : : "r"(sp));
-        asm volatile("lqc2 vf3, 0x20(%0)" : : "r"(sp));
-        asm volatile("lqc2 vf1, 0x40(%0)" : : "r"(sp));
-        asm volatile("lqc2 vf4, 0x50(%0)" : : "r"(sp));
-        asm volatile("vmulax.xyz ACC, vf3, vf4x");
-        asm volatile("vmadday.xyz ACC, vf2, vf4y");
-        asm volatile("vmaddz.xyz vf1, vf1, vf4z");
-        asm volatile("qmtc2.ni %0, vf2" : : "r"(bevy_classes_k30_cam_150780()));
-        asm volatile("vadd.xyzw vf1, vf2, vf1");
+        l.offset = RO_002A5000;
+        LoadRotateMatrixPanTilt(&l.mat, pcam->pan, pcam->tilt);
+        QW posCam = bevy_classes_k30_cam_150780(pcam);
+        asm volatile("lqc2 vf2, %1\n\tlqc2 vf3, %2\n\tlqc2 vf1, %3\n\tlqc2 vf4, %4\n\tvmulax.xyz ACC, vf3, vf4x\n\tvmadday.xyz ACC, vf2, vf4y\n\tvmaddz.xyz vf1, vf1, vf4z\n\tqmtc2.ni %0, vf2\n\tvadd.xyzw vf1, vf2, vf1" : : "r"(posCam), "m"(l.mat.row[1]), "m"(l.mat.row[0]), "m"(l.mat.row[2]), "m"(l.offset));
     }
-    s32 vu_2;
-    asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_2));
-    return vu_2;
+    QW result;
+    asm volatile("qmfc2.ni %0, vf1" : "=r"(result));
+    return result;
 }
 }

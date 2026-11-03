@@ -1,40 +1,12 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-struct Vt206820 {
-    char pad0[0x18];
-    short d18;
-    short i18;
-    int (*f18)(void *, int, int, int, void *, int);
-    char pad1[0xD0 - 0x20];
-    short dD0;
-    short iD0;
-    void (*fD4)(void *, int);
-    short dD8;
-    short iD8;
-    void (*fDC)(void *, int);
-};
-struct Obj206820 {
-    char pad[0xC];
-    Vt206820 *vptr;
-};
-struct Locals206820 {
-    int zero;
-    int *self;
-};
-extern "C" void func_00206820(Obj206820 *object)
+struct OBJ { int pad0[3]; virtual void p0(); virtual void p1(); virtual void Call(int, int, int, void *, int); virtual void p3(); virtual void p4(); virtual void p5(); virtual void p6(); virtual void p7(); virtual void p8(); virtual void p9(); virtual void p10(); virtual void p11(); virtual void p12(); virtual void p13(); virtual void p14(); virtual void p15(); virtual void p16(); virtual void p17(); virtual void p18(); virtual void p19(); virtual void p20(); virtual void p21(); virtual void p22(); virtual void p23(); virtual void p24(); virtual void StopB(int); virtual int StopA(int); };
+struct LOC { int zero; int *self; };
+extern "C" void func_00206820(OBJ *object)
 {
-    Locals206820 l;
+    LOC l;
     l.self = &l.zero;
-    Vt206820 *vt = object->vptr;
-    void (*stopA)(void *, int) = vt->fDC;
     l.zero = 0;
-    stopA((char *)object + vt->dD8, 0);
-    vt = object->vptr;
-    int (*callA)(void *, int, int, int, void *, int) = vt->f18;
-    callA((char *)object + vt->d18, 0xF, 0, 1, &l.self, 0);
-    vt = object->vptr;
-    void (*stopB)(void *, int) = vt->fD4;
-    stopB((char *)object + vt->dD0, 0);
-    vt = object->vptr;
-    int (*callB)(void *, int, int, int, void *, int) = vt->f18;
-    callB((char *)object + vt->d18, 0xE, 0, 1, &l.self, 0);
+    object->StopA(0);
+    object->Call(0xF, 0, 1, &l.self, 0);
+    object->StopB(0);
+    object->Call(0xE, 0, 1, &l.self, 0);
 }

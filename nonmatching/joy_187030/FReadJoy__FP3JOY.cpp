@@ -18,7 +18,7 @@ extern char D_002DDEC0[];
 extern float D_002DEB30;
 extern char D_003DD490[];
 extern float g_2ddf0c;
-float sqrtf(float);
+static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x)); return r; }
 #define F(type, off) (*(type *)(self + (off)))
 s32 FReadJoy__FP3JOY(char *self)
 {
@@ -61,9 +61,9 @@ s32 FReadJoy__FP3JOY(char *self)
         if (D_002DDF40.f30C == 0 || D_002DDF40.f314 != (char *)&D_002DDF40 + 0x3A0) {
             if ((F(s32, 0x10B4) & 0xF000) != 0) {
                 float zero = 0.0f;
-                F(float, 0x103C) = zero;
                 F(float, 0x1044) = zero;
                 F(float, 0x1040) = zero;
+                F(float, 0x103C) = zero;
                 if ((F(s32, 0x10B4) & 0x8000) != 0) {
                     F(float, 0x103C) = -F(float, 0x10EC);
                 } else if ((F(s32, 0x10B4) & 0x2000) != 0) {
@@ -75,8 +75,8 @@ s32 FReadJoy__FP3JOY(char *self)
                     F(float, 0x1040) = -F(float, 0x10EC);
                 }
                 if (F(float, 0x103C) * F(float, 0x1040) != 0.0f) {
-                    F(float, 0x103C) = F(float, 0x103C) * sqrtf(0.5f);
-                    F(float, 0x1040) = F(float, 0x1040) * sqrtf(0.5f);
+                    F(float, 0x103C) = F(float, 0x103C) * Sqrt(0.5f);
+                    F(float, 0x1040) = F(float, 0x1040) * Sqrt(0.5f);
                 }
                 F(float, 0x1044) = 1.0f;
             }
@@ -88,8 +88,8 @@ s32 FReadJoy__FP3JOY(char *self)
         _MatchCodes__FP3JOYUs(D_002DDEC0, self, old & 0xFFFF);
         F(float, 0x1018) = g_2dded0.f3C;
         if (F(s32, 0x10B4) != 0 || F(float, 0x1044) != 0.0f || F(float, 0x1078) != 0.0f) {
-            F(s32, 0x1020) = 0;
             F(float, 0x101C) = g_2dded0.f3C;
+            F(s32, 0x1020) = 0;
             if (g_2dded0.f3C - D_002DEB30 > 15.0f) {
                 bevy_camera_follow_activity(&D_002DEB30, 0xE, PpoSwFocusBase(D_003DD490));
                 D_002DEB30 = g_2dded0.f3C;

@@ -14,20 +14,19 @@ extern char B_002DEB30[];
 extern "C" {
 void *PloFindSwObject_thunk(void *, int, int, void *);
 void PasegaEnsureAseg__FP4ASEGP3ALO4SEEKffi(Aseg *, void *, SEEK, float, float, int);
-void TriggerRsmg(void *, int, void *, void *);
+void TriggerRsmg(void *, int, void *, void *, int);
 void StartJsg(Btn *, int);
 void ApplyTaskStateRequests(void *, int, void *, void *);
 }
 extern "C" void RunBtnAsegs(Btn *pbtn, int iash)
 {
-    Ash *pash = pbtn->aash + iash;
     int i;
-    for (i = 0; i < pash->caseg; i++) {
-        Aseg *paseg = pash->aaseg[i].paseg;
+    for (i = 0; i < pbtn->aash[iash].caseg; i++) {
+        Aseg *paseg = pbtn->aash[iash].aaseg[i].paseg;
         if (paseg != 0) {
             Lo *owner = pbtn->owner;
             int oid = paseg->rec->plo->oid;
-            int grf = pash->aaseg[i].grfapl;
+            int grf = pbtn->aash[iash].aaseg[i].grfapl;
             Lo *target = owner;
             if (owner->oid != oid) {
                 if (oid != -1)
@@ -45,7 +44,7 @@ extern "C" void RunBtnAsegs(Btn *pbtn, int iash)
             }
         }
     }
-    TriggerRsmg(B_003DD490, pbtn->crsmg, pbtn->arsmg, pbtn->owner);
+    TriggerRsmg(B_003DD490, pbtn->crsmg, pbtn->arsmg, pbtn->owner, iash == 0);
     if (iash == 0) {
         if (pbtn->pjsg != 0)
             StartJsg(pbtn, pbtn->pjsgSubject);

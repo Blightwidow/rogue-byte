@@ -1,5 +1,6 @@
 #include "sly2.h"
 struct LM;
+typedef int QW __attribute__((mode(TI)));
 extern "C" int B_003E12C8;
 extern "C" LM g_2bbb60;
 extern "C" float D_FLT_002C3690, D_FLT_002C3694, D_FLT_002C3698;
@@ -13,12 +14,15 @@ void GreyColor_1ed2d8(VECTOR *prgb)
     float weights[4] __attribute__((aligned(16)));
     if (B_003E12C8) {
         int bits;
+        float *wp = weights;
         weights[0] = 0.3f;
-        weights[1] = 0.6f;
-        weights[2] = 0.1f;
+        wp[1] = 0.6f;
+        wp[2] = 0.1f;
         float h0 = D_FLT_002C3690;
         float h1 = D_FLT_002C3694;
-        asm("lqc2 vf1, 0(%1)\n\tlqc2 vf2, 0(%2)\n\tvmul.xyz vf1, vf1, vf2\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf3, vf1z\n\tqmfc2.ni %0, vf1" : "=r"(bits) : "r"(prgb), "r"(weights) : "memory");
+        int fence;
+        asm("lqc2 vf1, 0(%1)\n\tlqc2 vf2, %2" : "=r"(fence) : "r"(prgb), "m"(*(QW *)weights));
+        asm("vmul.xyz vf1, vf1, vf2\n\tvaddw.x vf3, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf3, vf1z\n\tqmfc2.ni %0, vf1" : "=r"(bits) : "r"(fence));
         float lum = *(float *)&bits;
         hsv[0] = h0;
         hsv[1] = h1;

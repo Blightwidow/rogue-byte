@@ -12,9 +12,10 @@ extern "C" void func_001A5FB8(void *plo, QW posA, QW posB, float width, float g)
 {
     L l;
     QW bits;
-    asm volatile("qmtc2.ni %0, vf8" : : "r" (posA));
-    asm volatile("qmtc2.ni %0, vf1" : : "r" (posB));
-    asm volatile("vsub.xyzw vf7, vf1, vf8");
+    int fenceA, fenceB;
+    asm("qmtc2.ni %1, vf8" : "=r" (fenceA) : "r" (posA));
+    asm("qmtc2.ni %1, vf1" : "=r" (fenceB) : "r" (posB), "r" (fenceA));
+    asm volatile("vsub.xyzw vf7, vf1, vf8" : : "r" (fenceB));
     float eps = 0.01f;
     asm volatile("lqc2 vf1, 0x90(%0)" : : "r" (B_002DDF40));
     asm volatile("vsub.xyzw vf1, vf8, vf1\n\tvopmula.xyz ACC, vf1, vf7\n\tvopmsub.xyz vf6, vf7, vf1\n\tvmul.xyz vf1, vf6, vf6\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z");
@@ -30,8 +31,9 @@ extern "C" void func_001A5FB8(void *plo, QW posA, QW posB, float width, float g)
         asm volatile("sqc2 vf2, %0" : "=m" (l.side));
         QW sbits;
         asm volatile("mfc1 %0, %1\n qmtc2.ni %0, vf3" : "=r" (sbits) : "f" (scale));
+        asm volatile("mfc1 %0, %1" : "=r" (sbits) : "f" (eps));
         asm volatile("vmulx.xyzw vf4, vf6, vf3x");
-        asm volatile("mfc1 %0, %1\n qmtc2.ni %0, vf5" : "=r" (sbits) : "f" (eps));
+        asm volatile("qmtc2.ni %0, vf5" : : "r" (sbits));
         asm volatile("sqc2 vf3, %0" : "=m" (l.junk));
         asm volatile("vmulx.xyzw vf1, vf7, vf5x");
         asm volatile("sqc2 vf4, %0" : "=m" (l.normal));

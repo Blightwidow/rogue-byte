@@ -11,6 +11,20 @@ extern float g_2ddf10;
 extern float g_2dded4;
 extern DLI *g_2dd2fc;
 
+inline void PushDli(DLI *it, DL *list)
+{
+    it->pdl = list;
+    it->ppv = (char *)list;
+    it->ibDle = list->ibDle;
+    it->pdliNext = g_2dd2fc;
+    g_2dd2fc = it;
+}
+inline char *PvStep(DLI *it)
+{
+    char *item = *(char **)it->ppv;
+    it->ppv = item + it->ibDle;
+    return item;
+}
 void UpdateJsg(JSG *pjsg, float dt)
 {
     UpdateLo(pjsg);
@@ -23,18 +37,9 @@ void UpdateJsg(JSG *pjsg, float dt)
 
     DLI dli;
     DL *pdl = &pjsg->dlSeqnode;
-    dli.ppv = (char *)pdl;
-    dli.pdl = pdl;
-    dli.ibDle = pdl->ibDle;
-    dli.pdliNext = g_2dd2fc;
-    g_2dd2fc = &dli;
-    char *pseqnode = (char *)pdl->pfirst;
-    dli.ppv = pseqnode + dli.ibDle;
-    while (pseqnode != 0) {
+    PushDli(&dli, pdl);
+    for (char *pseqnode = PvStep(&dli); pseqnode != 0; pseqnode = PvStep(&dli))
         RunSeqnode(pseqnode);
-        pseqnode = *(char **)dli.ppv;
-        dli.ppv = pseqnode + dli.ibDle;
-    }
     if (FIsDlEmpty__FP2DL(pdl) != 0)
         StopJsg(pjsg);
     g_2dd2fc = dli.pdliNext;

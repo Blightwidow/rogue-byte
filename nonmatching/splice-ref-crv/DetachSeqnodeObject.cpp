@@ -9,10 +9,12 @@ extern "C" void DetachSeqnodeObject(SEQNODE *pseqnode, SO *pso, int n1, int n2)
 {
     if (FIsBasicDerivedFrom(pso, 0x33) == 0)
         return;
+    int iattach;
+    for (iattach = 0; iattach < pseqnode->cattach; iattach++) {
+        if (pseqnode->aso[iattach] == pso)
+            break;
+    }
     int cattach = pseqnode->cattach;
-    int iattach = 0;
-    while (iattach < cattach && pseqnode->aso[iattach] != pso)
-        iattach++;
     if (iattach < cattach) {
         char *pbase = (char *)pseqnode + iattach * 4;
         memmove(pseqnode, pbase + 0xAC, (cattach - iattach) * 4 - 4);

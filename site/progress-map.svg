@@ -2172,7 +2172,7 @@
 <rect x="457.5" y="198.7" width="25.4" height="22.3" fill="#2f7af4"><title>ShopMenu_SetPage 0X1DC260 592 bytes (c)</title></rect>
 <rect x="483.3" y="198.7" width="21.6" height="22.3" fill="#2f7af4"><title>GetGadgetMenuText 0X1DC598 504 bytes (c)</title></rect>
 <rect x="505.3" y="198.7" width="20.9" height="22.3" fill="#2f7af4"><title>TitleMenu_Update 0X1DD920 488 bytes (c)</title></rect>
-<rect x="526.5" y="198.7" width="20.5" height="22.3" fill="#4a45a8"><title>ShopMenu_BuildList 0X1DBD10 480 bytes (draft)</title></rect>
+<rect x="526.5" y="198.7" width="20.5" height="22.3" fill="#2f7af4"><title>ShopMenu_BuildList 0X1DBD10 480 bytes (c)</title></rect>
 <rect x="547.5" y="198.7" width="20.5" height="22.3" fill="#4a45a8"><title>AdvanceLaserBeams 0X1DF3D0 480 bytes (draft)</title></rect>
 <rect x="457.5" y="221.4" width="20.2" height="21.5" fill="#2f7af4"><title>GadgetMenu_Update 0X1DAA90 456 bytes (c)</title></rect>
 <rect x="457.5" y="243.3" width="20.2" height="21.5" fill="#4a45a8"><title>GadgetMenu_DrawSlotLabels 0X1DAC58 456 bytes (draft)</title></rect>
@@ -3017,7 +3017,7 @@
 <rect x="688.0" y="444.9" width="18.8" height="16.8" fill="#4a45a8"><title>RefOpVectorNormalize 0X1229B8 336 bytes (draft)</title></rect>
 <rect x="707.2" y="375.5" width="16.3" height="18.0" fill="#4a45a8"><title>RefOpMatrixInterpolateRotate 0X122F00 312 bytes (draft)</title></rect>
 <rect x="707.2" y="393.8" width="16.3" height="17.0" fill="#2f7af4"><title>RefOpVector 0X121DD8 296 bytes (c)</title></rect>
-<rect x="707.2" y="411.2" width="16.3" height="17.0" fill="#4a45a8"><title>RefOpMaximum 0X123788 296 bytes (draft)</title></rect>
+<rect x="707.2" y="411.2" width="16.3" height="17.0" fill="#2f7af4"><title>RefOpMaximum 0X123788 296 bytes (c)</title></rect>
 <rect x="707.2" y="428.7" width="16.3" height="17.0" fill="#4a45a8"><title>RefOpMinimum 0X1238B0 296 bytes (draft)</title></rect>
 <rect x="707.2" y="446.1" width="16.3" height="15.6" fill="#2f7af4"><title>RefOpClqFit 0X123498 272 bytes (c)</title></rect>
 <rect x="723.9" y="375.5" width="14.5" height="16.9" fill="#2f7af4"><title>RefOpObjectOption__FiP4CRefP6CFrame4BIFK 0X123EB0 264 bytes (c)</title></rect>
@@ -3121,7 +3121,7 @@
 <g><title>sensor-geom: 12280 bytes</title>
 <rect x="688.0" y="577.8" width="31.0" height="24.8" fill="#4a45a8"><title>SetTaskState 0X164DF0 808 bytes (draft)</title></rect>
 <rect x="719.5" y="577.8" width="26.7" height="24.8" fill="#2f7af4"><title>func_00165280 0X165280 696 bytes (c)</title></rect>
-<rect x="746.5" y="577.8" width="25.1" height="24.8" fill="#4a45a8"><title>ApplyTaskState 0X1657D0 656 bytes (draft)</title></rect>
+<rect x="746.5" y="577.8" width="25.1" height="24.8" fill="#2f7af4"><title>ApplyTaskState 0X1657D0 656 bytes (c)</title></rect>
 <rect x="772.0" y="577.8" width="23.9" height="24.8" fill="#4a45a8"><title>RestartAtTask 0X165538 624 bytes (draft)</title></rect>
 <rect x="688.0" y="603.0" width="24.3" height="23.1" fill="#2f7af4"><title>PostLoadTask 0X1638F8 592 bytes (c)</title></rect>
 <rect x="688.0" y="626.5" width="24.3" height="21.2" fill="#4a45a8"><title>SaveTaskVariables 0X1643B0 544 bytes (draft)</title></rect>
@@ -3244,7 +3244,7 @@
 <rect x="714.7" y="800.9" width="22.1" height="20.5" fill="#4a45a8"><title>BuildPzgraphAdjacency 0X1C1260 480 bytes (draft)</title></rect>
 <rect x="737.1" y="800.9" width="20.2" height="20.5" fill="#4a45a8"><title>CobstacleFindPathzoneBox 0X1C1700 440 bytes (draft)</title></rect>
 <rect x="757.7" y="800.9" width="19.1" height="20.5" fill="#4a45a8"><title>GrowPathzoneSlots 0X1C1D20 416 bytes (draft)</title></rect>
-<rect x="777.2" y="800.9" width="18.7" height="20.5" fill="#4a45a8"><title>LoadPzgraphFromBrx 0X1C0F30 408 bytes (draft)</title></rect>
+<rect x="777.2" y="800.9" width="18.7" height="20.5" fill="#2f7af4"><title>LoadPzgraphFromBrx 0X1C0F30 408 bytes (c)</title></rect>
 <rect x="714.7" y="821.8" width="17.5" height="20.5" fill="#2f7af4"><title>AddPathzoneObstacle 0X1C1BA0 384 bytes (c)</title></rect>
 <rect x="714.7" y="842.7" width="17.5" height="19.2" fill="#4a45a8"><title>InsertPathzoneEndpoints 0X1C1A38 360 bytes (draft)</title></rect>
 <rect x="714.7" y="862.3" width="17.5" height="17.9" fill="#4a45a8"><title>PpathzoneFindPos 0X1C0D70 336 bytes (draft)</title></rect>
@@ -3295,7 +3295,7 @@
 <rect x="798.3" y="59.0" width="23.7" height="20.7" fill="#4a45a8"><title>Swarm_Render 0X1821C0 520 bytes (draft)</title></rect>
 <rect x="798.3" y="80.0" width="23.7" height="16.4" fill="#4a45a8"><title>Swarm_PostLoad 0X181840 416 bytes (draft)</title></rect>
 <rect x="822.4" y="1.0" width="16.9" height="19.5" fill="#4a45a8"><title>SwarmGroup_UpdateTargets 0X181CB0 352 bytes (draft)</title></rect>
-<rect x="839.8" y="1.0" width="16.5" height="19.5" fill="#4a45a8"><title>Chaser_HandleMessage 0X181060 344 bytes (draft)</title></rect>
+<rect x="839.8" y="1.0" width="16.5" height="19.5" fill="#2f7af4"><title>Chaser_HandleMessage 0X181060 344 bytes (c)</title></rect>
 <rect x="856.7" y="1.0" width="16.1" height="19.5" fill="#4a45a8"><title>SwarmGroup_LayoutBands 0X181B60 336 bytes (draft)</title></rect>
 <rect x="873.2" y="1.0" width="15.3" height="19.5" fill="#4a45a8"><title>AttachCrv_GetPosFromParam 0X1830D8 320 bytes (draft)</title></rect>
 <rect x="889.0" y="1.0" width="14.9" height="19.5" fill="#2f7af4"><title>StaticInitSlotheapsSwarm_182b18 0X182B18 312 bytes (c)</title></rect>
@@ -4528,7 +4528,7 @@
 <rect x="1294.2" y="180.7" width="77.0" height="79.5" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>new_2271f8: 5984 bytes</title>
-<rect x="1372.3" y="181.7" width="22.9" height="19.8" fill="#4a45a8"><title>UpdateWarp 0X228538 488 bytes (draft)</title></rect>
+<rect x="1372.3" y="181.7" width="22.9" height="19.8" fill="#2f7af4"><title>UpdateWarp 0X228538 488 bytes (c)</title></rect>
 <rect x="1395.6" y="181.7" width="18.3" height="19.8" fill="#2f7af4"><title>ActivateSpawn 0X228750 392 bytes (c)</title></rect>
 <rect x="1414.3" y="181.7" width="17.2" height="19.8" fill="#4a45a8"><title>func_002275B8 0X2275B8 368 bytes (draft)</title></rect>
 <rect x="1431.9" y="181.7" width="14.5" height="19.8" fill="#2f7af4"><title>StaticInitSlotheaps_2271f8 0X2271F8 312 bytes (c)</title></rect>
@@ -4816,7 +4816,7 @@
 </g>
 <g><title>cnvo-steppipe: 5512 bytes</title>
 <rect x="968.1" y="261.2" width="29.8" height="48.2" fill="#4a45a8"><title>SetBinocState 0X19CD38 1528 bytes (draft)</title></rect>
-<rect x="968.1" y="309.8" width="29.8" height="23.3" fill="#4a45a8"><title>SetBinocHudState 0X19D660 744 bytes (draft)</title></rect>
+<rect x="968.1" y="309.8" width="29.8" height="23.3" fill="#2f7af4"><title>SetBinocHudState 0X19D660 744 bytes (c)</title></rect>
 <rect x="998.4" y="261.2" width="24.2" height="21.2" fill="#2f7af4"><title>UpdateBinocHud 0X19DA78 552 bytes (c)</title></rect>
 <rect x="1023.0" y="261.2" width="18.1" height="21.2" fill="#4a45a8"><title>UpdateBinoc 0X19D330 416 bytes (draft)</title></rect>
 <rect x="998.4" y="282.8" width="14.1" height="20.3" fill="#2f7af4"><title>StaticInitSlotheaps_Cnvo 0X19CAA0 312 bytes (c)</title></rect>
@@ -4840,7 +4840,7 @@
 </g>
 <g><title>mat: 5400 bytes</title>
 <rect x="1043.5" y="261.2" width="32.1" height="29.2" fill="#4a45a8"><title>FInvertMatrix__FiPfT1 0X11C500 1000 bytes (draft)</title></rect>
-<rect x="1076.0" y="261.2" width="22.5" height="29.2" fill="#4a45a8"><title>DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR 0X11BCF8 704 bytes (draft)</title></rect>
+<rect x="1076.0" y="261.2" width="22.5" height="29.2" fill="#2f7af4"><title>DecomposeRotateMatrixRad__FP7MATRIX3PfP6VECTOR 0X11BCF8 704 bytes (c)</title></rect>
 <rect x="1098.9" y="261.2" width="16.0" height="29.2" fill="#4a45a8"><title>BuildRotateVectorsMatrix 0X11BA08 504 bytes (draft)</title></rect>
 <rect x="1043.5" y="290.8" width="18.1" height="15.8" fill="#4a45a8"><title>DecomposeRotateMatrixEuler 0X11BFF0 312 bytes (draft)</title></rect>
 <rect x="1043.5" y="307.0" width="18.1" height="13.3" fill="#4a45a8"><title>BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3 0X11B830 264 bytes (draft)</title></rect>
@@ -4926,7 +4926,7 @@
 <rect x="1260.0" y="261.2" width="43.7" height="27.5" fill="#4a45a8"><title>LoadSndFromBrx 0X1FD0E8 1280 bytes (draft)</title></rect>
 <rect x="1304.1" y="261.2" width="23.6" height="27.5" fill="#2f7af4"><title>UpdateSndMix 0X1FDC08 696 bytes (c)</title></rect>
 <rect x="1260.0" y="289.1" width="23.0" height="22.0" fill="#2f7af4"><title>UpdateStreamCues 0X1FDEC8 544 bytes (c)</title></rect>
-<rect x="1260.0" y="311.5" width="23.0" height="21.6" fill="#4a45a8"><title>UpdateSnd 0X1FD830 536 bytes (draft)</title></rect>
+<rect x="1260.0" y="311.5" width="23.0" height="21.6" fill="#2f7af4"><title>UpdateSnd 0X1FD830 536 bytes (c)</title></rect>
 <rect x="1283.4" y="289.1" width="16.9" height="24.5" fill="#4a45a8"><title>QueueStream 0X1FE150 448 bytes (draft)</title></rect>
 <rect x="1283.4" y="314.0" width="16.9" height="19.1" fill="#2f7af4"><title>func_001FDA48 0X1FDA48 352 bytes (c)</title></rect>
 <rect x="1300.7" y="289.1" width="13.8" height="20.1" fill="#2f7af4"><title>ResetSnd 0X1FD700 304 bytes (c)</title></rect>
@@ -6027,7 +6027,7 @@
 <rect x="1153.8" y="794.0" width="18.6" height="12.7" fill="#2f7af4"><title>__eq__4CRefRC4CRef 0X129AC0 264 bytes (c)</title></rect>
 <rect x="1172.8" y="794.0" width="9.4" height="12.7" fill="#2f7af4"><title>CRef_SetMatrixPtr 0X129780 136 bytes (c)</title></rect>
 <rect x="1182.6" y="794.0" width="8.8" height="12.7" fill="#2f7af4"><title>CRef_ConstructMatrix 0X1292B0 128 bytes (c)</title></rect>
-<rect x="1191.8" y="794.0" width="8.8" height="12.7" fill="#4a45a8"><title>CRef_SetSmpPtr 0X1298F0 128 bytes (draft)</title></rect>
+<rect x="1191.8" y="794.0" width="8.8" height="12.7" fill="#2f7af4"><title>CRef_SetSmpPtr 0X1298F0 128 bytes (c)</title></rect>
 <rect x="1153.8" y="807.1" width="10.9" height="9.6" fill="#2f7af4"><title>CRef_ConstructSmp 0X129408 120 bytes (c)</title></rect>
 <rect x="1153.8" y="817.1" width="10.9" height="9.6" fill="#2f7af4"><title>CRef_SetLmPtr 0X129878 120 bytes (c)</title></rect>
 <rect x="1153.8" y="827.0" width="10.9" height="8.9" fill="#2f7af4"><title>CRef_ConstructLm 0X129398 112 bytes (c)</title></rect>
@@ -6176,7 +6176,7 @@
 <rect x="1522.0" y="490.2" width="13.0" height="10.7" fill="#4a45a8"><title>CalculateVectorPanTilt__FP6VECTORPfT1 0X11E958 160 bytes (draft)</title></rect>
 <rect x="1535.4" y="477.3" width="8.8" height="13.4" fill="#2f7af4"><title>SetVectorSphere__FP6VECTORfff 0X11E208 136 bytes (c)</title></rect>
 <rect x="1544.6" y="477.3" width="6.6" height="13.4" fill="#2f7af4"><title>SetVectorCylind__FP6VECTORfff 0X11E1A0 104 bytes (c)</title></rect>
-<rect x="1535.4" y="491.2" width="9.2" height="9.7" fill="#4a45a8"><title>LimitVectorLength__FP6VECTORfT0 0X11E9F8 104 bytes (draft)</title></rect>
+<rect x="1535.4" y="491.2" width="9.2" height="9.7" fill="#2f7af4"><title>LimitVectorLength__FP6VECTORfT0 0X11E9F8 104 bytes (c)</title></rect>
 <rect x="1544.9" y="491.2" width="6.2" height="9.7" fill="#4a45a8"><title>SProjectVector__FP6VECTORT0 0X11E290 72 bytes (draft)</title></rect>
 <rect x="1504.3" y="455.2" width="48.3" height="47.1" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
@@ -6404,7 +6404,7 @@
 <rect x="1472.7" y="502.3" width="43.4" height="44.0" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>dzg-jsg: 1824 bytes</title>
-<rect x="1517.1" y="503.3" width="20.6" height="14.7" fill="#4a45a8"><title>SolveInequalities 0X11AD30 344 bytes (draft)</title></rect>
+<rect x="1517.1" y="503.3" width="20.6" height="14.7" fill="#2f7af4"><title>SolveInequalities 0X11AD30 344 bytes (c)</title></rect>
 <rect x="1538.2" y="503.3" width="18.7" height="14.7" fill="#4a45a8"><title>SolveDzgPrefilled 0X11ABF8 312 bytes (draft)</title></rect>
 <rect x="1517.1" y="518.4" width="21.0" height="13.1" fill="#2f7af4"><title>StaticInitSlotheaps_11ae88 0X11AE88 312 bytes (c)</title></rect>
 <rect x="1517.1" y="531.9" width="21.0" height="13.1" fill="#2f7af4"><title>StaticInitSlotheaps_11b050 0X11B050 312 bytes (c)</title></rect>

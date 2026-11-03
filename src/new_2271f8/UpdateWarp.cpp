@@ -1,7 +1,7 @@
 typedef int QW __attribute__((mode(TI)));
 extern "C" {
 QW ConvertAloPos(void *, void *, QW);
-int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int);
+int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int, QW);
 QW PosLoWorld(void *);
 void *PpoSwFocusBase(void *);
 void QueueMovie(void *, int);
@@ -21,14 +21,8 @@ void UpdateWarp(char *self) {
         float timer = *(float *)(self + 0x158);
         if (timer > 0.0f) {
             if (timer <= g_2dded0) {
-                index = 0;
-                if (*(int *)(self + 0x148) > 0) {
-                    do {
-                        int offset = index * 4;
-                        index += 1;
-                        QueueMovie(B_002F66B0, *(int *)(offset + *(int *)(self + 0x14C)));
-                    } while (index < *(int *)(self + 0x148));
-                }
+                for (index = 0; index < *(int *)(self + 0x148); index++)
+                    QueueMovie(B_002F66B0, ((int *)*(int *)(self + 0x14C))[index]);
                 RequestTransition(B_003DD490, *(int *)(self + 0x144), *(int *)(self + 0x150), -1, *(int *)(self + 0x138) != 0 ? 0x20 : 0, *(int *)(self + 0x154));
                 *(float *)(self + 0x158) = 0.0f;
             }
@@ -41,9 +35,9 @@ void UpdateWarp(char *self) {
         void *focus = PpoSwFocusBase(B_003DD490);
         if (focus != 0) {
             QW world = PosLoWorld(focus);
-            int inside = PcgtPointInCbspQuick__FP4CBSPP6VECTOR(*(void **)(self + 0xEC), 0x7FFFFFFF) != 0;
             pos.q = ConvertAloPos(0, self, world);
-            switch (*(char *)(self + 0x13C)) {
+            int inside = PcgtPointInCbspQuick__FP4CBSPP6VECTOR(*(void **)(self + 0xEC), 0x7FFFFFFF, pos.q) != 0;
+            switch (*(int *)(self + 0x13C)) {
             case 3:
                 if (inside != 0) Warp_Start(self);
                 break;

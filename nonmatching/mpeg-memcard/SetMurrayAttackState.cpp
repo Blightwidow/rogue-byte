@@ -4,7 +4,7 @@ void ApplyAsegToHandle(float, float, int, void *, int, void *);
 void FixStepAngularVelocity__FP4STEP(void *);
 void *PchnFindAseg(void *, void *, int, int);
 int *PeaFindAsegLabel(int, int);
-QW PosLoWorld(void *, ...);
+QW PosLoWorld(void *);
 float RadNormalize__Ff(float);
 void RetractAsegaHandle(void *);
 void RetractSmaRef(void *);
@@ -17,8 +17,9 @@ extern QW g_2a2dd0;
 }
 struct Clock { float time; float dt; };
 extern Clock g_2dded0;
-struct VT_1B86B0 { char pad[0x18]; short delta; short pad1A; void (*fn)(void *, void *, int, void *, float, float); };
+struct VT_1B86B0 { char pad[0x18]; short delta; short pad1A; void (*fn)(void *, void *, int, float, float); };
 struct OBJ_1B86B0 { VT_1B86B0 *vt; };
+struct MurrayAseg { char pad[0x17FC]; int asegs[4]; };
 #define F(type, base, off) (*(type *)((char *)(base) + (off)))
 
 extern "C" void SetMurrayAttackState(void *m, int attack)
@@ -35,11 +36,11 @@ extern "C" void SetMurrayAttackState(void *m, int attack)
     F(int, m, 0x181C) = 0;
     if (F(int, m, 0x190C) != 0)
         RetractAsegaHandle((char *)m + 0x190C);
-    int paseg = F(int, (char *)m + attack * 4, 0x17FC);
+    int paseg = ((MurrayAseg *)m)->asegs[attack];
     void *target = F(void *, m, 0x10DC);
     F(QW, m, 0x190) = g_2a2dd0;
     if (target != 0 && F(int, m, 0x10E4) >= 2 && !(F(int, F(void *, m, 0x150), 0x30) & 8)) {
-        *(QW *)(sp + 0x20) = PosLoWorld(target, target);
+        *(QW *)(sp + 0x20) = PosLoWorld(target);
         QW pos = PosLoWorld(m);
         QW diff;
         float fx, fy;
@@ -72,9 +73,9 @@ extern "C" void SetMurrayAttackState(void *m, int attack)
         void *pchn = PchnFindAseg(F(void *, pah2, 0x14), m, 1, 1);
         if (pchn != 0) {
             OBJ_1B86B0 *obj = F(OBJ_1B86B0 *, pchn, 4);
-            obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, obj, 0.0f, 0.0f);
+            obj->vt->fn((char *)obj + obj->vt->delta, sp, 0, 0.0f, 0.0f);
             OBJ_1B86B0 *obj2 = F(OBJ_1B86B0 *, pchn, 4);
-            obj2->vt->fn((short *)obj2 + obj2->vt->delta, sp + 0x10, 0, obj2, F(float, F(void *, F(void *, m, 0x1030), 0x14), 0x74), 0.0f);
+            obj2->vt->fn((char *)obj2 + obj2->vt->delta, sp + 0x10, 0, F(float, F(void *, F(void *, m, 0x1030), 0x14), 0x74), 0.0f);
             QW worldPos = PosLoWorld(m);
             char *frame = (char *)m + 0x1B0;
             asm volatile("lqc2 vf1, (%0)" : : "r"(sp));
@@ -90,7 +91,7 @@ extern "C" void SetMurrayAttackState(void *m, int attack)
             asm volatile("vadd.xyzw vf2, vf1, vf3");
             asm volatile("sqc2 vf2, 0x1830(%0)" : : "r"(m));
         } else {
-            F(QW, m, 0x1830) = PosLoWorld(m, sp);
+            F(QW, m, 0x1830) = PosLoWorld(m);
         }
     }
     func_001431D0(m);

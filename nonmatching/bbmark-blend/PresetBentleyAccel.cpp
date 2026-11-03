@@ -4,6 +4,16 @@ struct Bentley {
     char pad0[0xC]; VT *vtable;
     char pad1[0x13D0 - 0x10]; int state;
 };
+struct VU_FLOAT {
+    QW value;
+    VU_FLOAT(float f) { asm("mfc1 %0, %1" : "=r" (value) : "f" (f)); }
+};
+static inline QW Scale(const VU_FLOAT &scale, QW vec)
+{
+    QW result;
+    asm("lqc2 vf1, %1\n\tqmtc2.ni %2, vf2\n\tvmulx.xyzw vf1, vf2, vf1x\n\tqmfc2.ni %0, vf1" : "=r" (result) : "m" (scale.value), "r" (vec));
+    return result;
+}
 extern "C" {
 void AddSoGravityAcceleration(void *);
 void PresetStepAccel(void *);
@@ -39,19 +49,10 @@ extern "C" void PresetBentleyAccel(Bentley *self, float dt)
             VT *vt = self->vtable;
             void *thisarg = base + vt->delta;
             QW (*fn)(void *) = vt->fn;
-            float neg = -D_FLT_002BC990;
-            QW spare;
-            QW scale;
-            asm("mfc1 %0, %1" : "=r" (spare) : "f" (neg));
-            scale = spare;
+            VU_FLOAT scale(-D_FLT_002BC990);
+            VU_FLOAT scaleCopy = scale;
             QW velocity = fn(thisarg);
-            QW result;
-
-            asm("lqc2 vf1, %0" : : "m" (scale));
-            asm("qmtc2.ni %0, vf2" : : "r" (velocity));
-            asm("vmulx.xyzw vf1, vf2, vf1x");
-            asm("qmfc2.ni %0, vf1" : "=r" (result));
-            AddSoAcceleration(self, result);
+            AddSoAcceleration(self, Scale(scale, velocity));
         }
         break;
     }

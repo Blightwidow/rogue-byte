@@ -5,15 +5,15 @@ struct VT {
     short delta20; short unused20; void (*fn24)(void *, int, void *);
 };
 struct TASK {
-    char pad0[0xC]; VT *vt; int id;
-    char pad1[0x54 - 0x14]; int state; float timer;
+    char pad0[0xC]; VT *vt; char padid[8]; int id;
+    char pad1[0x54 - 0x1C]; int state; float timer;
     char pad2[0x64 - 0x5C]; TASK *link64; int count68;
     int field6C; int field70; int field74; int field78; TASK *owner7C;
     char pad3[0xA8 - 0x80]; int a8; void *ac; int b0; void *b4;
     char pad4[0xF4 - 0xB8]; unsigned kind;
 };
 extern "C" {
-void AppendDlEntry(void);
+void AppendDlEntry(void *, TASK *);
 void ApplyTaskAnims(TASK *, int, int, void *, int);
 void ApplyTaskToggles(TASK *, int, int, void *);
 int FTaskRunning(TASK *);
@@ -25,7 +25,8 @@ void bevy_camera_follow_activity(void *, int, TASK *);
 extern char B_002DEB30[];
 extern int B_002DEB44;
 extern char B_003E0F90[];
-extern float g_2dded0;
+struct GFLOAT { float v; };
+extern GFLOAT g_2dded0;
 void ApplyTaskState(TASK *task, int newState) {
     if (task->state != newState) {
         if (FTaskRunning(task) != 0) {
@@ -49,16 +50,16 @@ void ApplyTaskState(TASK *task, int newState) {
                 }
             }
             break;
+        case 1:
+            AppendDlEntry(B_003E0F90, task);
+            break;
         case 2:
             if (task->kind == 0) task->count68 = task->count68 + 1;
             break;
-        case 1:
-            AppendDlEntry();
-            break;
         }
         task->state = newState;
+        task->timer = g_2dded0.v;
         SaveTaskVariables(task);
-        task->timer = g_2dded0;
         if (FTaskRunning(task) != 0) {
             bevy_camera_follow_activity(B_002DEB30, 0x25, task);
             VT *vt1 = task->vt;

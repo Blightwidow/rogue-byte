@@ -26,21 +26,22 @@ static inline int AttackStateToStart(MURRAY *pmurray, int first)
         return first;
     }
     void *ploTarget = pmurray->ploTarget;
-    if (ploTarget == 0)
-        return first + 1;
+    if (ploTarget != 0) {
     QW posTarget = PosLoWorld(ploTarget);
     QW posSelf = PosLoWorld(pmurray);
-    asm("lqc2 vf1, %0" : : "m" (posTarget));
-    asm("qmtc2.ni %0, vf2" : : "r" (posSelf));
-    asm("vsub.xyzw vf1, vf1, vf2");
+    int fence1, fence2;
+    asm("lqc2 vf1, %1" : "=r" (fence1) : "m" (posTarget));
+    asm("qmtc2.ni %1, vf2" : "=r" (fence2) : "r" (posSelf), "0" (fence1));
     QW dir;
-    asm("qmfc2.ni %0, vf1" : "=r" (dir));
+    asm("vsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r" (dir) : "r" (fence2));
     QW local = bevy_camera_follow_track_heading_weight(0, pmurray, dir);
-    int yBits;
-    asm("prot3w %0, %1" : "=r" (yBits) : "r" (local));
-    float y = *(float *)&yBits;
+    QW rotated = __builtin_prot3w(local);
+    float y;
+    asm("mtc1 %1, %0" : "=f" (y) : "r" (rotated));
     if (0.0f < y)
         return first;
+    return first + 1;
+    }
     return first + 1;
 }
 
