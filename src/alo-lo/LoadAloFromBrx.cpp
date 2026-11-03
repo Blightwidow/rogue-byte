@@ -6,7 +6,7 @@ struct XFREC {
     float m[16]; char pad40[0x54];
     int kind; int unused98; int word9C; void *pxf; int unusedA4; XFREC *pxfMirror; short limitLo; short limitHi; char padB0[0x10]; QW vecC0; char padD0[0x10]; QW vecE0; char padF0[0x10];
 };
-struct ALO { char pad0[0xC]; char *vt; char pad10[0x30]; unsigned *pflags; char pad44[0xC]; int count; XFREC *recs; void *p58; void *p5C; void *p60; };
+struct ALO { char pad0[0xC]; char *vt; char pad10[0x30]; int *pflags; char pad44[0xC]; int count; XFREC *recs; void *p58; void *p5C; void *p60; };
 struct ACT { int type; ALO *owner; XFREC *xf; int link; char pad10[4]; int arg14; void *vtable; int field1C; QW vec20; };
 struct ACTS { ACT base; };
 extern "C" {
@@ -45,15 +45,15 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
     req.cbAlign = 0x10;
     palo->count = count;
     palo->recs = (XFREC *)PvAllocSwClearImpl__Fi(&req);
-    if (palo->count > 0) {
+    {
         ACT *actB;
         ACT *actC;
         ACT *actA;
         ACT *actD;
-        int hasC;
-        int hasB;
         int hasA;
-        do {
+        int hasB;
+        int hasC;
+        for (; index < palo->count; index++) {
             XFREC *rec = &palo->recs[index];
             rec->pxf = ReadXf(palo, pbis);
             rec->kind = S16Read__18CBinaryInputStream(pbis);
@@ -67,24 +67,24 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
                 rec->limitLo = (int)(F32Read__18CBinaryInputStream(pbis) * 1000.0f);
                 rec->limitHi = (int)(F32Read__18CBinaryInputStream(pbis) * 1000.0f);
             } else {
-                rec->limitHi = 1000;
                 rec->limitLo = 1000;
+                rec->limitHi = 1000;
             }
             hasA = flags & 4;
             if (hasA) {
                 ACT *fresh = (ACT *)PvAllocAct(0x30);
-                actA = fresh;
                 fresh->vtable = D_002CA820;
                 fresh->type = 1;
                 fresh->field1C = 2;
+                actA = fresh;
                 actA->arg14 = S8Read__18CBinaryInputStream(pbis);
             }
             hasB = flags & 8;
             if (hasB) {
                 ACT *fresh = (ACT *)PvAllocAct(0x80);
                 fresh->type = 2;
-                actB = fresh;
                 fresh->vtable = D_002CA7E0;
+                actB = fresh;
                 actB->arg14 = S8Read__18CBinaryInputStream(pbis);
                 *(float *)((char *)actB + 0x60) = F32Read__18CBinaryInputStream(pbis);
                 func_00117F90(pbis, (char *)actB + 0x30);
@@ -99,8 +99,8 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
             if (hasC) {
                 ACT *fresh = (ACT *)PvAllocAct(0x28);
                 fresh->type = 4;
-                actC = fresh;
                 fresh->vtable = D_002CA7A0;
+                actC = fresh;
                 actC->arg14 = S8Read__18CBinaryInputStream(pbis);
                 *(float *)((char *)actC + 0x1C) = F32Read__18CBinaryInputStream(pbis);
                 *(float *)((char *)actC + 0x20) = F32Read__18CBinaryInputStream(pbis);
@@ -108,10 +108,10 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
             int hasD = flags & 0x20;
             if (hasD) {
                 ACT *fresh = (ACT *)PvAllocAct(0x30);
-                actD = fresh;
-                fresh->type = 9;
                 fresh->vtable = D_002CA6A0;
+                fresh->type = 9;
                 fresh->arg14 = 0x14;
+                actD = fresh;
                 ReadVector__18CBinaryInputStreamP6VECTOR(pbis, (char *)actD + 0x20);
             }
             switch (rec->kind) {
@@ -123,10 +123,10 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
             case 8:
             case 14:
                 memset(rec, 0, 0x40);
-                rec->m[0] = 1.0f;
                 rec->m[15] = 1.0f;
                 rec->m[10] = 1.0f;
                 rec->m[5] = 1.0f;
+                rec->m[0] = 1.0f;
                 rec->pxfMirror = (XFREC *)ReadXf(palo, pbis);
                 rec->m[12] = -rec->pxfMirror->m[12];
                 rec->m[13] = -rec->pxfMirror->m[13];
@@ -134,8 +134,9 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
                 break;
             default:
                 CBinaryInputStream_ReadMatrix4(pbis, rec);
-                rec->vecC0 = GetXfDofValue(rec, rec);
-                rec->vecE0 = rec->vecC0;
+                QW dof = GetXfDofValue(rec, rec);
+                rec->vecE0 = dof;
+                rec->vecC0 = dof;
                 break;
             }
             func_0022C818(palo, rec);
@@ -165,8 +166,7 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
                 actD->link = -1;
                 InsertXfAct(palo, rec, actD);
             }
-            index++;
-        } while (index < palo->count);
+        }
     }
     UpdateAloXfWorld(palo);
     LoadAloIkLimbs(palo, pbis);
@@ -176,11 +176,11 @@ extern "C" void LoadAloFromBrx(ALO *palo, Bis *pbis)
     palo->p5C = ReadXf(palo, pbis);
     palo->p60 = ReadXf(palo, pbis);
     if (palo->count > 0) {
-        unsigned *pword = palo->pflags;
-        if (((unsigned)pword ^ 1) & 1) {
-            *pword &= ~0x20u;
+        int *pword = palo->pflags;
+        if (((int)pword ^ 1) & 1) {
+            *pword &= ~0x20;
             return;
         }
-        palo->pflags = (unsigned *)((unsigned)pword & ~0x20u);
+        palo->pflags = (int *)((int)pword & ~0x20);
     }
 }

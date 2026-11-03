@@ -39,12 +39,18 @@ void PostVehicleLoad(VEHICLE *pv)
 #define posMax fr.posMax.q
 #define posMin fr.posMin.q
     QW posMinReg;
-    asm("vsub.xyzw vf1, vf0, vf0\n\tqmfc2.ni %0, vf1\n\tsqc2 vf1, %1" : "=r"(posMinReg), "=m"(posMax));
-    posMin = posMinReg;
-    PostSoLoad(pv);
+    int fence;
+    WHEEL *pwheel;
     int iwheel = 0;
+    // fence: the zero vector in vf1 feeds both stores
+    asm("vsub.xyzw vf1, vf0, vf0" : "=r"(fence));
+    int fenceStore;
+    asm("qmfc2.ni %0, vf1" : "=r"(posMinReg), "=r"(fenceStore) : "r"(fence));
+    posMin = posMinReg;
+    asm("sqc2 vf1, %0" : "=m"(posMax) : "r"(fenceStore));
+    PostSoLoad(pv);
     for (iwheel = 0; iwheel < pv->cwheel; iwheel++) {
-        WHEEL *pwheel = &WHEELS(pv)[iwheel];
+        pwheel = &WHEELS(pv)[iwheel];
         pwheel->pxf = func_001F4C58(pv, pwheel->oid, 0xD);
         if (pwheel->pxf == 0) {
             memmove(pwheel, pwheel + 1, (pv->cwheel - iwheel) * 0x60 - 0x60);
@@ -54,8 +60,9 @@ void PostVehicleLoad(VEHICLE *pv)
             QW pos = ConvertAloPos(0, pv, *(QW *)(pwheel->pxf + 0x70));
             asm("qmtc2.ni %0, vf2\n\tsqc2 vf2, %1" : : "r"(pos), "m"(pwheel->posRest));
             int travelMax = pwheel->sTravelMax;
-            asm("qmtc2.ni %0, vf3\n\tsqc2 vf3, %1" : : "r"(travelMax), "m"(junk));
+            asm("qmtc2.ni %0, vf3" : : "r"(travelMax));
             int travelMin = pwheel->sTravelMin;
+            asm("sqc2 vf3, %0" : "=m"(junk));
             asm("qmtc2.ni %0, vf4" : : "r"(travelMin));
             asm("lqc2 vf1, %1\n\tvmini.xyz vf1, vf2, vf1\n\tlqc2 vf5, %2\n\tsqc2 vf1, %0" : "=m"(posMin) : "m"(posMin), "m"(posMax));
             asm("vmax.xyz vf5, vf2, vf5\n\tlqc2 vf1, %1\n\tsqc2 vf5, %0" : "=m"(posMax) : "m"(g_2a2dc0));
@@ -66,7 +73,7 @@ void PostVehicleLoad(VEHICLE *pv)
     }
     F32(pv, 0x4A0) = Lane0(posMax) - Lane0(posMin);
     for (iwheel = 0; iwheel < pv->cwheel; iwheel++) {
-        WHEEL *pwheel = &WHEELS(pv)[iwheel];
+        pwheel = &WHEELS(pv)[iwheel];
         pwheel->uSteer = ((float *)&pwheel->posRest)[0] / GMax(Lane0(posMax), -Lane0(posMin));
         pwheel->uSteerSide = ((float *)&pwheel->posRest)[1] / GMax(Lane1(posMax), -Lane1(posMin));
     }

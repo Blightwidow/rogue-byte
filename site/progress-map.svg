@@ -1577,7 +1577,7 @@
 <rect x="267.2" y="128.1" width="44.6" height="39.9" fill="#4a45a8"><title>LoadGlobIndexedFromBrx 0X16CF78 1824 bytes (draft)</title></rect>
 <rect x="267.2" y="168.4" width="44.6" height="33.0" fill="#4a45a8"><title>LoadGlobSkinnedFromBrx 0X16E438 1512 bytes (draft)</title></rect>
 <rect x="312.1" y="83.2" width="42.0" height="31.5" fill="#4a45a8"><title>LoadGlobsetFromBrx 0X167320 1360 bytes (draft)</title></rect>
-<rect x="354.5" y="83.2" width="38.2" height="31.5" fill="#4a45a8"><title>LoadGlobStreamedFromBrx 0X16CAA0 1240 bytes (draft)</title></rect>
+<rect x="354.5" y="83.2" width="38.2" height="31.5" fill="#2f7af4"><title>LoadGlobStreamedFromBrx 0X16CAA0 1240 bytes (c)</title></rect>
 <rect x="393.1" y="83.2" width="35.5" height="31.5" fill="#4a45a8"><title>CloneGlobset 0X16EA80 1152 bytes (draft)</title></rect>
 <rect x="312.1" y="115.1" width="34.1" height="31.4" fill="#2f7af4"><title>func_0016DD58 0X16DD58 1104 bytes (c)</title></rect>
 <rect x="312.1" y="146.9" width="34.1" height="28.7" fill="#2f7af4"><title>func_00169AC8 0X169AC8 1008 bytes (c)</title></rect>
@@ -1855,7 +1855,7 @@
 <g><title>splice-ref-crv: 25304 bytes</title>
 <rect x="267.2" y="596.8" width="63.4" height="104.4" fill="#4a45a8"><title>StartNextSeqnodeRecord 0X1E1E30 6752 bytes (draft)</title></rect>
 <rect x="267.2" y="701.6" width="63.4" height="49.8" fill="#4a45a8"><title>FSeqnodeRecordDone 0X1E3890 3232 bytes (draft)</title></rect>
-<rect x="331.0" y="596.8" width="49.1" height="33.6" fill="#2a2d6e"><title>UpdateSeqnodeVjoy 0X1E46A0 1696 bytes (asm)</title></rect>
+<rect x="331.0" y="596.8" width="49.1" height="33.6" fill="#4a45a8"><title>UpdateSeqnodeVjoy 0X1E46A0 1696 bytes (draft)</title></rect>
 <rect x="380.5" y="596.8" width="26.0" height="33.6" fill="#4a45a8"><title>FindCrvlClosestPointFromU 0X1E6A30 904 bytes (draft)</title></rect>
 <rect x="406.8" y="596.8" width="21.8" height="33.6" fill="#4a45a8"><title>StartSeqnodeCameraMove 0X1E57A0 760 bytes (draft)</title></rect>
 <rect x="331.0" y="630.8" width="21.3" height="21.9" fill="#4a45a8"><title>EvaluateCrvFromU 0X1E67B8 488 bytes (draft)</title></rect>
@@ -2717,7 +2717,7 @@
 </g>
 <g><title>alo-lo: 14840 bytes</title>
 <rect x="570.4" y="415.4" width="115.2" height="59.7" fill="#2a2d6e"><title>bevy_physics_driven_22de88 0X22DE88 7064 bytes (asm)</title></rect>
-<rect x="570.4" y="475.5" width="30.9" height="42.9" fill="#4a45a8"><title>LoadAloFromBrx 0X22D7A0 1376 bytes (draft)</title></rect>
+<rect x="570.4" y="475.5" width="30.9" height="42.9" fill="#2f7af4"><title>LoadAloFromBrx 0X22D7A0 1376 bytes (c)</title></rect>
 <rect x="570.4" y="518.8" width="30.9" height="22.5" fill="#4a45a8"><title>PredictXfLocal 0X230710 728 bytes (draft)</title></rect>
 <rect x="601.7" y="475.5" width="26.1" height="25.4" fill="#4a45a8"><title>SnapAsega 0X230CF0 696 bytes (draft)</title></rect>
 <rect x="601.7" y="501.3" width="26.1" height="20.7" fill="#4a45a8"><title>PredictXfTransformAdjust 0X230A98 568 bytes (draft)</title></rect>
@@ -2852,7 +2852,7 @@
 </g>
 <g><title>screen-font: 13328 bytes</title>
 <rect x="570.4" y="785.8" width="49.2" height="60.0" fill="#4a45a8"><title>LoadMovieCharacter 0X2149D8 3048 bytes (draft)</title></rect>
-<rect x="570.4" y="846.2" width="49.2" height="27.3" fill="#2a2d6e"><title>LoadMovieSprites 0X214460 1400 bytes (asm)</title></rect>
+<rect x="570.4" y="846.2" width="49.2" height="27.3" fill="#2f7af4"><title>LoadMovieSprites 0X214460 1400 bytes (c)</title></rect>
 <rect x="570.4" y="874.0" width="49.2" height="24.6" fill="#2f7af4"><title>DrawBlotMovie 0X213300 1264 bytes (c)</title></rect>
 <rect x="620.0" y="785.8" width="22.8" height="22.0" fill="#2f7af4"><title>BuildBlotDmaHeader 0X2130C0 528 bytes (c)</title></rect>
 <rect x="643.2" y="785.8" width="21.4" height="22.0" fill="#2f7af4"><title>UpdateBlotMovie 0X212C50 496 bytes (c)</title></rect>
@@ -3365,7 +3365,7 @@
 </g>
 <g><title>smartguard-ac: 9928 bytes</title>
 <rect x="906.3" y="1.0" width="33.2" height="34.3" fill="#4a45a8"><title>PauseMenu_Update 0X1AEEE0 1192 bytes (draft)</title></rect>
-<rect x="906.3" y="35.7" width="33.2" height="31.0" fill="#4a45a8"><title>PauseMenu_SetState 0X1AEAA8 1080 bytes (draft)</title></rect>
+<rect x="906.3" y="35.7" width="33.2" height="31.0" fill="#2f7af4"><title>PauseMenu_SetState 0X1AEAA8 1080 bytes (c)</title></rect>
 <rect x="906.3" y="67.1" width="33.2" height="29.4" fill="#4a45a8"><title>PauseMenu_ApplyOption 0X1AFB88 1024 bytes (draft)</title></rect>
 <rect x="939.9" y="1.0" width="28.1" height="25.6" fill="#4a45a8"><title>PauseMenu_AdjustOption 0X1AF6D0 760 bytes (draft)</title></rect>
 <rect x="968.4" y="1.0" width="21.8" height="25.6" fill="#4a45a8"><title>OpenPauseMenu 0X1B0290 592 bytes (draft)</title></rect>
@@ -3447,7 +3447,7 @@
 <rect x="1008.4" y="0.0" width="102.6" height="97.9" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>splice-bif-splice-eval: 9784 bytes</title>
-<rect x="1112.0" y="1.0" width="25.6" height="51.0" fill="#4a45a8"><title>RefOpHitTestObjectsImpl 0X1249A8 1368 bytes (draft)</title></rect>
+<rect x="1112.0" y="1.0" width="25.6" height="51.0" fill="#2f7af4"><title>RefOpHitTestObjectsImpl 0X1249A8 1368 bytes (c)</title></rect>
 <rect x="1112.0" y="52.4" width="25.6" height="20.6" fill="#4a45a8"><title>func_001242B8 0X1242B8 560 bytes (draft)</title></rect>
 <rect x="1112.0" y="73.4" width="25.6" height="11.3" fill="#2f7af4"><title>__static_initialization_and_destruction_0 0X125798 312 bytes (c)</title></rect>
 <rect x="1112.0" y="85.2" width="25.6" height="11.3" fill="#2f7af4"><title>StaticInitSpliceSlotheaps_126030 0X126030 312 bytes (c)</title></rect>
@@ -4899,7 +4899,7 @@
 <rect x="1116.3" y="260.2" width="72.0" height="74.3" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>new_19e110: 5168 bytes</title>
-<rect x="1189.3" y="261.2" width="43.3" height="41.5" fill="#2a2d6e"><title>UpdateJtActivePipe 0X19E1E0 1904 bytes (asm)</title></rect>
+<rect x="1189.3" y="261.2" width="43.3" height="41.5" fill="#4a45a8"><title>UpdateJtActivePipe 0X19E1E0 1904 bytes (draft)</title></rect>
 <rect x="1233.0" y="261.2" width="24.6" height="41.5" fill="#4a45a8"><title>SetJtPipeState 0X19EAB0 1088 bytes (draft)</title></rect>
 <rect x="1189.3" y="303.1" width="19.8" height="15.2" fill="#2f7af4"><title>func_0019F3F8 0X19F3F8 328 bytes (c)</title></rect>
 <rect x="1189.3" y="318.7" width="19.8" height="14.4" fill="#2f7af4"><title>func_0019EF50 0X19EF50 312 bytes (c)</title></rect>

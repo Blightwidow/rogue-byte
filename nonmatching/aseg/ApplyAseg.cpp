@@ -109,31 +109,37 @@ extern "C" void ApplyAseg(ASEG_12F9B8 *paseg, ALO_12F9B8 *paloRoot, float tLocal
     CFramePtr_Assign(pasega, paseg->frame);
     if (ppasega)
         *ppasega = pasega;
-    for (int ichn = 0; ichn < paseg->cchn; ichn++) {
-        ASEGCHN_12F9B8 *pchn = &paseg->achn[ichn];
-        if (pchn->packed & 0x40000000)
-            continue;
-        ALO_12F9B8 *palo;
-        XF_12F9B8 *pxf;
-        BindAsegChn(paseg, paloRoot, pchn, &palo, &pxf);
-        if (pxf) {
-            func_001F8668(palo, 0);
-            ACT_12F9B8 *pact = PvAllocAct(0x2C);
-            pact->vt = &D_002CAF08;
-            pact->field0 = 0;
-            if (pchn->packed & 0x80000000)
-                pact->target20 = pchn->value;
-            else
-                pact->target1C = pchn->value;
-            pact->palo = palo;
-            pact->pxf = pxf;
-            pact->grf = paseg->grfAct;
-            pact->kind = (grfapl & 1) ? 7 : 5;
-            pact->pasega = pasega;
-            pact->pactNext = pasega->pact;
-            pasega->pact = pact;
-            InsertXfAct(palo, pxf, pact);
-        }
+    int ichn = 0;
+    if (ichn < paseg->cchn) {
+        ACTVT_12F9B8 *pvt = &D_002CAF08;
+        int kind = (grfapl & 1) ? 7 : 5;
+        do {
+            ASEGCHN_12F9B8 *pchn = &paseg->achn[ichn];
+            if (pchn->packed & 0x40000000)
+                goto next;
+            ALO_12F9B8 *palo;
+            XF_12F9B8 *pxf;
+            BindAsegChn(paseg, paloRoot, pchn, &palo, &pxf);
+            if (pxf) {
+                func_001F8668(palo, 0);
+                ACT_12F9B8 *pact = PvAllocAct(0x2C);
+                pact->vt = pvt;
+                pact->field0 = 0;
+                if (pchn->packed & 0x80000000)
+                    pact->target20 = pchn->value;
+                else
+                    pact->target1C = pchn->value;
+                pact->palo = palo;
+                pact->pxf = pxf;
+                pact->grf = paseg->grfAct;
+                pact->kind = kind;
+                pact->pasega = pasega;
+                pact->pactNext = pasega->pact;
+                pasega->pact = pact;
+                InsertXfAct(palo, pxf, pact);
+            }
+        next:;
+        } while (++ichn < paseg->cchn);
     }
     for (int ipart = 0; ipart < paseg->cpart; ipart++) {
         CHNPART_12F9B8 *ppart = &paseg->apart[ipart];

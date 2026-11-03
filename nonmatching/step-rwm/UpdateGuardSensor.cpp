@@ -22,9 +22,7 @@ int func_002068D8(const void *, const void *);
 extern long B_003DD480;
 extern int B_003DD488;
 extern char B_003DD490;
-extern float RO_002C3D04;
-extern float RO_002C3D08;
-extern float RO_002C3D0C;
+extern float RO_002C3D04[3];
 }
 extern "C" void UpdateGuardSensor(Guard_206900 *guard)
 {
@@ -61,7 +59,7 @@ extern "C" void UpdateGuardSensor(Guard_206900 *guard)
                 float distance;
                 int bits;
                 asm("lqc2 vf1, %2\n\tvsub.xyzw vf1, vf1, vf2\n\tvmul.xy vf1, vf1, vf1\n\tvaddy.x vf1, vf1, vf1y\n\tvsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q\n\tqmfc2.ni %1, vf1\n\tmtc1 %1, %0\n\tnop" : "=f"(distance), "=r"(bits) : "m"(frame.posSelf), "r"(fenceA));
-                if (distance < RO_002C3D04 && (unsigned)count < 0x40) {
+                if (distance < RO_002C3D04[0] && (unsigned)count < 0x40) {
                     Cand_206900 *cand = &frame.acand[count];
                     Sensor_206900 *sensor = guard->psensor;
                     cand->dist = distance;
@@ -122,14 +120,14 @@ extern "C" void UpdateGuardSensor(Guard_206900 *guard)
         float distance;
         int bits;
         asm("qmfc2.ni %1, vf1\n\tmtc1 %1, %0\n\tnop" : "=f"(distance), "=r"(bits) : "r"(fenceA));
-        if (distance < RO_002C3D08) {
+        if (distance < RO_002C3D04[1]) {
             QW dpos;
             asm("qmfc2.ni %0, vf2" : "=r"(dpos) : "r"(fenceA));
             float zBits;
             asm("pextuw %0, $0, %1" : "=r"(zBits) : "r"(dpos));
             float dz;
             asm("mtc1 %1, %0\n\tnop" : "=f"(dz) : "r"(zBits));
-            if (__builtin_fabsf(dz) < RO_002C3D0C)
+            if (__builtin_fabsf(dz) < RO_002C3D04[2])
                 near = 1;
         }
         if (near != 0)

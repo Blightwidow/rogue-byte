@@ -1099,6 +1099,7 @@ address	name	size	file
 0X124730	RefOpFindClassObjects	168	splice-bif-splice-eval/RefOpFindClassObjects.cpp
 0X1247D8	RefOpFindObjectsInBoundingBox	212	splice-bif-splice-eval/RefOpFindObjectsInBoundingBox.cpp
 0X1248B0	RefOpFindObjectsInBoundingSphere	248	splice-bif-splice-eval/RefOpFindObjectsInBoundingSphere.cpp
+0X1249A8	RefOpHitTestObjectsImpl	1368	splice-bif-splice-eval/RefOpHitTestObjectsImpl.cpp
 0X124F00	RefOpHitTestObjects	124	splice-bif-splice-eval/RefOpHitTestObjects.cpp
 0X124F80	RefOpHitTestObjectsFirst	124	splice-bif-splice-eval/RefOpHitTestObjectsFirst.cpp
 0X125000	RefOpConvertObjectPosition	92	splice-bif-splice-eval/RefOpConvertObjectPosition.cpp
@@ -2212,6 +2213,7 @@ address	name	size	file
 0X1699E8	func_001699E8	220	new_167320/fun_001699e8.cpp
 0X169AC8	func_00169AC8	1004	new_167320/fun_00169ac8.cpp
 0X169EB8	CopyGlobDmaChain	324	new_167320/CopyGlobDmaChain.cpp
+0X16CAA0	LoadGlobStreamedFromBrx	1240	new_167320/LoadGlobStreamedFromBrx.cpp
 0X16D698	func_0016D698	48	new_167320/fun_0016d698.cpp
 0X16DD58	func_0016DD58	1100	new_167320/fun_0016dd58.cpp
 0X16E1A8	func_0016E1A8	128	new_167320/fun_0016e1a8.cpp
@@ -3007,6 +3009,7 @@ address	name	size	file
 0X1AE9A8	PauseMenu_Freeze	64	smartguard/PauseMenu_Freeze.c
 0X1AE9E8	PauseMenu_Show	84	smartguard-ac/PauseMenu_Show.cpp
 0X1AEA40	PauseMenu_Hide	100	smartguard-ac/PauseMenu_Hide.cpp
+0X1AEAA8	PauseMenu_SetState	1080	smartguard-ac/PauseMenu_SetState.cpp
 0X1AF388	func_001AF388	8	smartguard-ac/fun_001af388.c
 0X1AF390	func_001AF390	256	smartguard-ac/fun_001af390.cpp
 0X1AF490	func_001AF490	68	smartguard-ac/fun_001af490.cpp
@@ -4605,6 +4608,7 @@ address	name	size	file
 0X2142B0	FSpriteHasLabel	80	screen-font/FSpriteHasLabel.cpp
 0X214300	SetBlotModal	152	screen-font/SetBlotModal.c
 0X214398	LoadMovieDictionary	200	screen-font/LoadMovieDictionary.cpp
+0X214460	LoadMovieSprites	1396	screen-font/LoadMovieSprites.cpp
 0X2155C0	func_002155C0	248	screen-font/fun_002155c0.cpp
 0X2156B8	InitDepthSlot	120	screen-font/InitDepthSlot.cpp
 0X215730	func_00215730	284	screen-font/fun_00215730.cpp
@@ -4875,6 +4879,7 @@ address	name	size	file
 0X22D6B0	PxfFromRef	156	vec-alo/PxfFromRef.cpp
 0X22D750	FUN_0012a860	40	alo/FUN_0012a860.c
 0X22D778	PxfFromAloRef	40	alo-lo/PxfFromAloRef.c
+0X22D7A0	LoadAloFromBrx	1372	alo-lo/LoadAloFromBrx.cpp
 0X22DD00	RefreshXfActSegment	392	alo-lo/RefreshXfActSegment.cpp
 0X22FA20	func_0022FA20	124	alo-lo/fun_0022fa20.cpp
 0X22FAA0	UpdateAloXfWorld	312	alo-lo/UpdateAloXfWorld.cpp

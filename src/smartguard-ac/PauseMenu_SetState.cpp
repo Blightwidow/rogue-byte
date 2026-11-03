@@ -110,8 +110,7 @@ extern "C" void PauseMenu_SetState(Menu *menu, unsigned state)
                 case 0x3F:
                     func_00213B00(entry->blot, 0x335);
                     B_002F6468 = (float)(unsigned)(RegLow(B_002DEB80) & 0xFFF);
-                    int shifted = (int)((RegWide(B_002DEB80) << 20) >> 32);
-                    B_002F646C = (float)(unsigned)(shifted & 0x7FF);
+                    B_002F646C = (float)(unsigned)((int)(RegWide(B_002DEB80) >> 12) & 0x7FF);
                     break;
                 }
             }

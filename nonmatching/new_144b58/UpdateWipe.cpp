@@ -78,19 +78,23 @@ void UpdateWipe(char *wipe)
                 continue;
             break;
         }
-        AddPrimPack__4GIFSiiUl(&B_002DEA00, 0x14, 3, 0x512);
         int which = quad & 1;
+        AddPrimPack__4GIFSiiUl(&B_002DEA00, 0x14, 3, 0x512);
         float *offsets0 = D_002BD398 + which * 2;
         float *offsets1 = D_002BD39C + which * 2;
         for (unsigned corner = 0; corner < 4; corner++) {
-            QW clipValue = __ml__FRC7MATRIX4G10VU_VECTOR4(&D_002BD410, __ml__FRC7MATRIX4G10VU_VECTOR4(&matrices[which], D_002BD3B0[corner]));
+            unsigned off = corner * sizeof(QW);
+            QW posLocal = __ml__FRC7MATRIX4G10VU_VECTOR4(&matrices[which], *(QW *)((char *)D_002BD3B0 + off));
+            QW clipValue = __ml__FRC7MATRIX4G10VU_VECTOR4(&D_002BD410, posLocal);
             union { QW q; float f[4]; } clip;
             clip.q = clipValue;
             Force__FPv(&clip);
+            int fence0, fence1; /* fences: order the VU0 blocks (vf2, vf1) */
+            asm("lqc2 vf2, %1" : "=r" (fence0) : "m" (clip.q));
             float invW = 1.0f / clip.f[3];
-            QW dummy;
             union { QW q; float f[4]; } inv;
-            asm("qmtc2.ni %2, vf1\n\tlqc2 vf2, %3\n\tvmulx.xyzw vf2, vf2, vf1x\n\tsqc2 vf1, %0\n\tsqc2 vf2, %1" : "=m" (inv.q), "=m" (clip.q) : "r" (invW), "m" (clip.q));
+            asm("qmtc2.ni %1, vf1" : "=r" (fence1) : "r" (invW), "r" (fence0));
+            asm("vmulx.xyzw vf2, vf2, vf1x\n\tsqc2 vf1, %0\n\tsqc2 vf2, %1" : "=m" (inv.q), "=m" (clip.q) : "r" (fence1));
             Force__FPv(&invW);
             Force__FPv(&clip);
             float screenX = (clip.f[0] + 0.5f) * 512.0f + 0.5f;

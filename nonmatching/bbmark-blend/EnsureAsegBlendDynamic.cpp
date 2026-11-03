@@ -117,12 +117,16 @@ static inline ACR_137A30 *PacpEnsure(ASEG_137A30 *paseg, ENT_137A30 *pent, int c
 static inline BL_137A30 *Pbl(BL_137A30 *abl, int cb, int i) { return (BL_137A30 *)((char *)abl + i * cb); }
 extern "C" void EnsureAsegBlendDynamic(ALO *paloRoot, int cb, int cbl, BL_137A30 *abl, int cdof, int *an0, int *an4, ASEG_137A30 **ppaseg)
 {
+    BL_137A30 *pbl;
+    ASEG_137A30 *pasegFirst;
+    ASEG_137A30 *pasegFrame;
     ASEG_137A30 *pasegSrc = 0;
-    ASEG_137A30 *pasegFrame = 0;
-    ASEG_137A30 *pasegFirst = 0;
+    int ichn;
     int i;
+    pasegFrame = 0;
+    pasegFirst = 0;
     for (i = 0; i < cbl; i++) {
-        BL_137A30 *pbl = Pbl(abl, cb, i);
+        pbl = Pbl(abl, cb, i);
         ASEG_137A30 *paseg = pbl->paseg;
         if (paseg) {
             if (!pasegFirst)
@@ -163,17 +167,17 @@ extern "C" void EnsureAsegBlendDynamic(ALO *paloRoot, int cb, int cbl, BL_137A30
     }
     int cent = 0;
     for (i = 0; i < cbl; i++) {
-        BL_137A30 *pbl = Pbl(abl, cb, i);
+        pbl = Pbl(abl, cb, i);
         if (pbl->paseg)
             cent += pbl->paseg->cent;
     }
     paseg->aent = (ENT_137A30 *)PvAllocStackClear(cent * sizeof(ENT_137A30));
     paseg->cent = 0;
     for (i = 0; i < cbl; i++) {
-        BL_137A30 *pbl = Pbl(abl, cb, i);
+        pbl = Pbl(abl, cb, i);
         if (!pbl->paseg)
             continue;
-        for (int ichn = 0; ichn < pbl->paseg->cent; ichn++) {
+        for (ichn = 0; ichn < pbl->paseg->cent; ichn++) {
             ASEGCHN_137A30 *pchn = (ASEGCHN_137A30 *)&pbl->paseg->aent[ichn];
             if (pchn->chn.bits.fSkip)
                 continue;
@@ -203,7 +207,7 @@ extern "C" void EnsureAsegBlendDynamic(ALO *paloRoot, int cb, int cbl, BL_137A30
     if (pasegFrame)
         CFramePtr_Assign(paseg, pasegFrame->pframe);
     for (i = 0; i < cbl; i++) {
-        BL_137A30 *pbl = Pbl(abl, cb, i);
+        pbl = Pbl(abl, cb, i);
         pbl->w = pbl->paseg == pasegFirst ? 1.0f : 0.0f;
     }
     ReblendAsegbl(paseg);

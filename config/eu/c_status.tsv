@@ -1099,6 +1099,7 @@ us_address	name	other_address	pair	score	addresses
 0x124730	RefOpFindClassObjects	0X124730	same	0	ok
 0x1247D8	RefOpFindObjectsInBoundingBox	0X1247D8	same	0	ok
 0x1248B0	RefOpFindObjectsInBoundingSphere	0X1248B0	same	0	ok
+0x1249A8	RefOpHitTestObjectsImpl	0X1249A8	same	0	ok
 0x124F00	RefOpHitTestObjects	0X124F00	identical	0	ok
 0x124F80	RefOpHitTestObjectsFirst	0X124F80	identical	0	ok
 0x125000	RefOpConvertObjectPosition	0X125000	same	0	ok
@@ -2212,6 +2213,7 @@ us_address	name	other_address	pair	score	addresses
 0x1699E8	func_001699E8	0X169970	same	0	ok
 0x169AC8	func_00169AC8	0X169A50	same	0	ok
 0x169EB8	CopyGlobDmaChain	0X169E40	same	0	ok
+0x16CAA0	LoadGlobStreamedFromBrx	0X16CA28	same	0	ok
 0x16D698	func_0016D698	0X16D620	identical	0	ok
 0x16DD58	func_0016DD58	0X16DCE0	same	5	ok
 0x16E1A8	func_0016E1A8	0X16E130	same	0	ok
@@ -3007,6 +3009,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AE9A8	PauseMenu_Freeze	0X1AEB20	same	0	ok
 0x1AE9E8	PauseMenu_Show	0X1AEB60	same	0	ok
 0x1AEA40	PauseMenu_Hide	0X1AEBB8	same	0	ok
+0x1AEAA8	PauseMenu_SetState	0X1AEC20	same	0	ok
 0x1AF388	func_001AF388	0X1AF500	gap	0	ok
 0x1AF390	func_001AF390	0X1AF508	same	0	ok
 0x1AF490	func_001AF490	0X1AF608	same	0	ok
@@ -4605,6 +4608,7 @@ us_address	name	other_address	pair	score	addresses
 0x2142B0	FSpriteHasLabel	0X214A80	identical	0	ok
 0x214300	SetBlotModal	0X214AD0	same	0	ok
 0x214398	LoadMovieDictionary	0X214B68	same	0	ok
+0x214460	LoadMovieSprites	0X214C30	same	0	ok
 0x2155C0	func_002155C0	0X215D90	same	0	ok
 0x2156B8	InitDepthSlot	0X215E88	same	0	ok
 0x215730	func_00215730	0X215F00	same	0	ok
@@ -4875,6 +4879,7 @@ us_address	name	other_address	pair	score	addresses
 0x22D6B0	PxfFromRef	0X22DED0	same	0	ok
 0x22D750	FUN_0012a860	0X22DF70	same	0	ok
 0x22D778	PxfFromAloRef	0X22DF98	same	0	ok
+0x22D7A0	LoadAloFromBrx	0X22DFC0	same	0	ok
 0x22DD00	RefreshXfActSegment	0X22E520	same	0	ok
 0x22FA20	func_0022FA20	0X230240	same	0	ok
 0x22FAA0	UpdateAloXfWorld	0X2302C0	same	0	ok

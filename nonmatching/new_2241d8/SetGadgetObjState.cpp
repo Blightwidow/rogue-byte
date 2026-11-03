@@ -12,7 +12,7 @@ void BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(M3_224EC8 *, QW, QW);
 QW ConvertXfVec(int, void *, QW);
 int CploFindSwObjectsByClass(void *, int, int, void *, int, void **);
 QW DecomposeRotateMatrixEuler(M3_224EC8 *);
-int FGadgetObjIsKindB(Gadget_224EC8 *, XF_224EC8 *);
+int FGadgetObjIsKindB(Gadget_224EC8 *);
 void FadeAloOut(Gadget_224EC8 *, float);
 QW PosLoWorld(void *);
 void RecalcSwOxfFilterForObject(void *, void *);
@@ -25,7 +25,7 @@ void func_001A58D0(Gadget_224EC8 *, int, int);
 extern char B_003DD490;
 extern int D_002C4398[];
 extern QW g_2a2dc0;
-extern float g_2dded0;
+extern struct CLOCK_224EC8 { float t; float dt; } g_2dded0;
 extern void *g_2e1e40;
 }
 static inline void ClearVel(XF_224EC8 *pxf)
@@ -42,8 +42,8 @@ extern "C" void SetGadgetObjState(Gadget_224EC8 *gadget, int stateNew)
     if (stateNew == statePrev)
         return;
     gadget->state = stateNew;
+    gadget->tState = g_2dded0.t;
     gadget->stateNext = -1;
-    gadget->tState = g_2dded0;
     func_0012E460(&gadget->pactA);
     func_0012E460(&gadget->pactB);
     if (statePrev == 0 || statePrev == 4)
@@ -64,27 +64,27 @@ extern "C" void SetGadgetObjState(Gadget_224EC8 *gadget, int stateNew)
     case 2: {
         SetSoCnstrForce(gadget, 1);
         SetSoCnstrTorque(gadget, 1);
-        XF_224EC8 *pxfA = gadget->pxfA;
-        ClearVel(pxfA);
+        ClearVel(gadget->pxfA);
         ClearVel(gadget->pxfB);
-        if (FGadgetObjIsKindB(gadget, pxfA) != 0 && gadget->pxfB != 0) {
+        if (FGadgetObjIsKindB(gadget) != 0 && gadget->pxfB != 0) {
             int fenceA, fenceB;
             QW dirA = ConvertXfVec(0, gadget->pxfB->pxfParent, gadget->dirLocal);
             asm("qmtc2.ni %1, vf1" : "=r"(fenceA) : "r"(dirA));
+            void *pxfParent = gadget->pxfB->pxfParent;
             asm("vmul.xyz vf3, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf3, vf3y\n\tvmaddz.x vf3, vf2, vf3z" : "=r"(fenceB) : "r"(fenceA));
             asm("vsqrt Q, vf3x\n\tvwaitq\n\tvaddq.x vf3, vf0, Q" : "=r"(fenceA) : "r"(fenceB));
             asm("vdiv Q, vf0w, vf3x\n\tvwaitq\n\tvmulq.xyzw vf3, vf1, Q" : "=r"(fenceB) : "r"(fenceA));
             asm("sqc2 vf3, %0" : "=m"(frame.dirA) : "r"(fenceB));
-            QW dirB = ConvertXfVec(0, gadget->pxfB->pxfParent, g_2a2dc0);
+            QW dirB = ConvertXfVec(0, pxfParent, g_2a2dc0);
             asm("lqc2 vf3, %1" : "=r"(fenceA) : "m"(frame.dirA));
             asm("qmtc2.ni %1, vf2" : "=r"(fenceB) : "r"(dirB), "r"(fenceA));
             asm("vmul.xyz vf1, vf2, vf2\n\tvaddw.x vf4, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf4, vf1z" : "=r"(fenceA) : "r"(fenceB));
             QW a;
-            asm("qmfc2.ni %0, vf3" : "=r"(a) : "r"(fenceA));
-            asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "=r"(fenceB) : "r"(fenceA));
-            asm("vdiv Q, vf0w, vf1x\n\tvwaitq\n\tvmulq.xyzw vf3, vf2, Q" : "=r"(fenceA) : "r"(fenceB));
+            asm("qmfc2.ni %0, vf3" : "=r"(a), "=r"(fenceB) : "r"(fenceA));
+            asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "=r"(fenceA) : "r"(fenceB));
+            asm("vdiv Q, vf0w, vf1x\n\tvwaitq\n\tvmulq.xyzw vf3, vf2, Q" : "=r"(fenceB) : "r"(fenceA));
             QW b;
-            asm("qmfc2.ni %0, vf3" : "=r"(b) : "r"(fenceA));
+            asm("qmfc2.ni %0, vf3" : "=r"(b) : "r"(fenceB));
             BuildOrthonormalMatrixY__FP6VECTORT0P7MATRIX3(&frame.mat, a, b);
             frame.matCopy = frame.mat;
             QW euler = DecomposeRotateMatrixEuler(&frame.matCopy);

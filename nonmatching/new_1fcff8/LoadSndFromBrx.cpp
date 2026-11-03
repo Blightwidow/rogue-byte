@@ -82,34 +82,34 @@ void LoadSndFromBrx(SNDOBJ *snd, BIS *stream)
             snd->bank = 0;
         }
     }
-    int index;
     snd->nbank = S16Read__18CBinaryInputStream(stream);
     snd->banks = (int *)AllocClear(&req, snd->nbank * 4);
-    for (index = 0; index < snd->nbank; index++) {
-        int *slot = snd->banks + index;
+    for (int ibank = 0; ibank < snd->nbank; ibank++) {
+        int *slot = snd->banks + ibank;
         *slot = S8Read__18CBinaryInputStream(stream);
     }
     snd->nmap = S16Read__18CBinaryInputStream(stream);
     snd->map = (int *)AllocPlain(&req, snd->nmap * 4);
     memset(snd->map, -1, snd->nmap * 4);
-    for (index = 0; index < snd->nbank; index++) {
-        snd->map[S16Read__18CBinaryInputStream(stream)] = index;
+    for (int imap = 0; imap < snd->nbank; imap++) {
+        snd->map[S16Read__18CBinaryInputStream(stream)] = imap;
     }
     snd->nstream = S16Read__18CBinaryInputStream(stream);
     if (snd->nstream > 0) {
         void *header = AllocClear(&req, 0x40);
         snd->amb = header;
         func_00118458(stream, header);
-        func_00259B48(snd->ambTarget, NewStreamAmb(snd->amb, 4));
+        void *amb = NewStreamAmb(snd->amb, 4);
+        func_00259B48(snd->ambTarget, amb);
     }
     memset(snd->streams, -1, 0x18);
-    for (index = 0; index < snd->nstream; index++) {
-        snd->streams[index] = S16Read__18CBinaryInputStream(stream);
+    for (int istream = 0; istream < snd->nstream; istream++) {
+        snd->streams[istream] = S16Read__18CBinaryInputStream(stream);
     }
     int ntrack = U8Read__18CBinaryInputStream(stream);
     int pick = 0;
-    for (index = 0; index < ntrack; index++) {
-        pick = (U8Read__18CBinaryInputStream(stream) ^ B_002E1E54) == 0 ? index : pick;
+    for (int itrack = 0; itrack < ntrack; itrack++) {
+        pick = (U8Read__18CBinaryInputStream(stream) ^ B_002E1E54) == 0 ? itrack : pick;
     }
     struct { int count; ENT *items; } list;
     list.count = S32Read__18CBinaryInputStream(stream);
@@ -119,11 +119,11 @@ void LoadSndFromBrx(SNDOBJ *snd, BIS *stream)
         ENT *ent = list.items + entIndex;
         ent->ref40 = S16Read__18CBinaryInputStream(stream);
         ent->ref48 = S16Read__18CBinaryInputStream(stream);
-        for (index = 0; index < ntrack;) {
+        for (int index = 0; index < ntrack; index++) {
             func_00118458(stream, &tmp);
             int a = S8Read__18CBinaryInputStream(stream);
             float f = F32Read__18CBinaryInputStream(stream);
-            if (index++ == pick) {
+            if (index == pick) {
                 ent->oid = tmp;
                 ent->f4C = a;
                 ent->f50 = f;

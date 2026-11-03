@@ -12,65 +12,77 @@ struct BLIPG {
     int nSamples; char pad6[0x3B0 - 0x1A4]; int count; unsigned char bytes[0x80]; int c8; char pad7[0x43C - 0x438]; int mode; float scale;
 };
 extern "C" int FFloatsNear__Ffff(float, float, float);
-static inline int FNear(float a, float b) { return FFloatsNear__Ffff(a, b, 1e-4f); }
-static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f" (f) : "r" (q)); return f; }
-static inline float Lane1(QW q) { float f; int t; asm("prot3w %1, %2\n\tmtc1 %1, %0" : "=f" (f), "=r" (t) : "r" (q)); return f; }
-static inline float Lane2(QW q) { float f; asm("pextuw %0, $zero, %1" : "=r" (f) : "r" (q)); return f; }
+// lane 0 of a QW into a float (mtc1)
+static inline float Lane0(QW q) { float f; asm("mtc1 %1, %0" : "=f"(f) : "r"(q)); return f; }
+// lane 1 rotated to lane 0 (prot3w)
+static inline QW Rot1(QW q) { QW r; asm("prot3w %0, %1" : "=r"(r) : "r"(q)); return r; }
+// lane 2 moved to lane 0 (pextuw)
+static inline QW Rot2(QW q) { QW r; asm("pextuw %0, $zero, %1" : "=r"(r) : "r"(q)); return r; }
+static inline QW Rot1Into(QW q, QW prev) { QW t; asm("prot3w %0, %1" : "=r"(t) : "r"(q), "0"(prev)); return t; }
+static inline QW Rot2Into(QW q, QW prev) { QW t; asm("pextuw %0, $zero, %1" : "=r"(t) : "r"(q), "0"(prev)); return t; }
+static inline float EvalClq(CLQ *pclq, float c0, float t) { return c0 + t * (pclq->c1 + t * pclq->c2); }
+static inline int Near(float a, float b) { return FFloatsNear__Ffff(a, b, 0.0001f); }
 extern "C" {
 extern QW g_2a2dd0;
 void PrescaleClq__FP3CLQffT0(CLQ *, float, float, CLQ *);
 void PropagateBlipgShader__FP5BLIPG(BLIPG *, int);
 void SetEmitdvEmitb__FP6EMITDVP5EMITB(EMITDV *, EMITB *);
-void SetBlipgEmitb__FP5BLIPGP5EMITB(BLIPG *self, EMITB *pemitb)
+void SetBlipgEmitb__FP5BLIPGP5EMITB(BLIPG *pblipg, EMITB *pemitb)
 {
-    CLQ *pclqA = &self->clqA;
-    CLQ *pclqD = &self->clqD;
-    EMITDV *pdv = pdv;
+    float scale = 1.0f;
     int mode = pemitb->mode;
-    self->mode = mode;
-    self->scale = mode == 1 ? pemitb->fF0 : 1.0f;
+    pblipg->mode = mode;
+    if (mode == 1)
+        scale = pemitb->fF0;
+    pblipg->scale = scale;
+    float *pzero = pblipg->zero;
+    CLQ *pclqB = &pemitb->clqB;
+    CLQ *pclqC = &pblipg->clqC;
+    CLQ *pclqE = &pemitb->clqE;
+    CLQ *pclqA = &pblipg->clqA;
+    CLQ *pclqD = &pblipg->clqD;
+    EMITDV *pdv = &pblipg->dv;
     int *pdata = pemitb->pdata;
     if (pdata != 0) {
-        int count = *pdata;
-        self->count = count;
-        unsigned char *srcBase = (unsigned char *)(pdata + 1);
-        unsigned char *dstBase = self->bytes;
-        for (int index = 0; index < self->count; index++) {
-            unsigned char *src = index * 4 + srcBase;
-            unsigned char *dst = (self->count - index - 1) * 4 + dstBase;
-            for (int lane = 0; lane < 4; lane++)
+        pblipg->count = *pdata;
+        for (int index = 0; index < pblipg->count; index++) {
+            unsigned char *srcBase = (unsigned char *)(pdata + 1);
+            unsigned char *dstBase = pblipg->bytes;
+            unsigned char *src = srcBase + index * 4;
+            unsigned char *dst = dstBase + (pblipg->count - index - 1) * 4;
+            for (int lane = 3; lane >= 0; lane--)
                 *dst++ = (*src++ + 1) >> 1;
         }
-        self->c8 = pemitb->c8;
+        pblipg->c8 = pemitb->c8;
     }
-    PropagateBlipgShader__FP5BLIPG(self, pemitb->shader);
-    memset(self->zero, 0, 0x10);
-    if (self->nSamples >= 2) {
-        float dtScale = pemitb->fD8;
-        float fCount;
-        if (dtScale != 0.0f) {
-            fCount = (float)self->nSamples;
+    PropagateBlipgShader__FP5BLIPG(pblipg, pemitb->shader);
+    memset(pzero, 0, 0x10);
+    if (pblipg->nSamples >= 2) {
+        float dtSample = pemitb->fD8;
+        float cSamples;
+        if (dtSample != 0.0f) {
+            cSamples = (float)pblipg->nSamples;
         } else {
-            dtScale = pemitb->dt;
-            fCount = (float)self->nSamples;
+            dtSample = pemitb->dt;
+            cSamples = (float)pblipg->nSamples;
         }
-        self->zero[1] = fCount / dtScale;
+        pblipg->zero[1] = cSamples / dtSample;
     }
-    PrescaleClq__FP3CLQffT0(&pemitb->clqB, 1.0f / pemitb->dt, 0.0f, &self->clqC);
-    PrescaleClq__FP3CLQffT0(&pemitb->clqE, 1.0f / pemitb->dt, 0.0f, pclqA);
+    PrescaleClq__FP3CLQffT0(pclqB, 1.0f / pemitb->dt, 0.0f, pclqC);
+    PrescaleClq__FP3CLQffT0(pclqE, 1.0f / pemitb->dt, 0.0f, pclqA);
     float peak;
-    if (self->clqA.c1 == 0.0f && self->clqA.c2 == 0.0f) {
-        peak = __builtin_fabsf(self->clqA.c0);
+    if (pblipg->clqA.c1 == 0.0f && pblipg->clqA.c2 == 0.0f) {
+        peak = __builtin_fabsf(pblipg->clqA.c0);
     } else {
         float dt = pemitb->dt;
         float vals[3];
         vals[1] = 0.0f;
-        vals[0] = self->clqA.c0;
-        vals[2] = vals[0] + dt * (pclqA->c1 + dt * pclqA->c2);
-        if (self->clqA.c2 != vals[1]) {
-            float t = -self->clqA.c1 / (2.0f * self->clqA.c2);
+        vals[0] = pblipg->clqA.c0;
+        vals[2] = EvalClq(pclqA, vals[0], dt);
+        if (pblipg->clqA.c2 != vals[1]) {
+            float t = -pblipg->clqA.c1 / (2.0f * pblipg->clqA.c2);
             if (vals[1] < t && t < dt)
-                vals[1] = vals[0] + t * (pclqA->c1 + t * pclqA->c2);
+                vals[1] = EvalClq(pclqA, vals[0], t);
         }
         float a = __builtin_fabsf(vals[0]);
         float b = __builtin_fabsf(vals[1]);
@@ -80,26 +92,34 @@ void SetBlipgEmitb__FP5BLIPGP5EMITB(BLIPG *self, EMITB *pemitb)
         else if (peak < b)
             peak = b;
     }
-    self->peak = peak;
+    pblipg->peak = peak;
+    float dtD = pemitb->dt;
     int fIdentity = 0;
-    self->clqD.c0 = 0.0f;
+    pblipg->clqD.c0 = 0.0f;
     pclqD->c2 = 0.0f;
-    pclqD->c1 = 1.0f / pemitb->dt;
+    pclqD->c1 = 1.0f / dtD;
     int fStatic = pemitb->fStatic;
-    self->fStatic = fStatic;
+    pblipg->fStatic = fStatic;
     if (fStatic == 0) {
-        QW qa = pemitb->dir;
-        QW qb = g_2a2dd0;
+        QW dir = pemitb->dir;
+        QW origin = g_2a2dd0;
         int fNear = 0;
-        if (FNear(Lane0(qb), Lane0(qa)) != 0 && FNear(Lane1(qb), Lane1(qa)) != 0)
-            fNear = FNear(Lane2(qb), Lane2(qa)) != 0;
+        if (Near(Lane0(origin), Lane0(dir))) {
+            QW ty = Rot1(origin);
+            float oy = Lane0(ty);
+            if (Near(oy, Lane0(Rot1Into(dir, ty)))) {
+                QW tz = Rot2(origin);
+                float oz = Lane0(tz);
+                fNear = Near(oz, Lane0(Rot2Into(dir, tz))) != 0;
+            }
+        }
         if (fNear != 0 && pemitb->f58 == 0.0f && pemitb->f80 == 0.0f)
             fIdentity = 1;
     }
     if (fIdentity != 0)
-        self->fStatic = 1;
+        pblipg->fStatic = 1;
     memset(pdv, 0, 0x30);
-    if (self->fStatic == 0)
+    if (pblipg->fStatic == 0)
         SetEmitdvEmitb__FP6EMITDVP5EMITB(pdv, pemitb);
 }
 }
