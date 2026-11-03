@@ -120,7 +120,7 @@ def compile_and_compare(address, text, lang, quiet):
     with open(source, 'w') as handle:
         handle.write(text)
     try:
-        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False)
+        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
         if not ok:
             return None
         return compare_object(address, path, quiet)

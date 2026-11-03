@@ -9,7 +9,7 @@ extern "C" {
 void StopSpriteInstance(SPRITE *);
 void ClearSle(void *);
 int IinstFindFreeSprite(SPRITE *);
-void StartSpriteInstance(float, SPRITE *, int, int, void *);
+void StartSpriteInstance(float, SPRITE *, int, int, void *, unsigned *, unsigned *);
 int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth, int cslot, SLOT *aslot)
 {
     if (aslot == 0) {
@@ -33,7 +33,7 @@ int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth,
                 unsigned mul[4];
                 add[0] = addv;
                 mul[0] = mulv;
-                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos);
+                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos, add, mul);
                 return 1;
             }
         } else {

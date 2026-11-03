@@ -96,6 +96,19 @@ def listed_functions(name):
         return {int(line.split()[0], 16) for line in listing if line.strip() and not line.startswith('#')}
 
 
+VU0_FLAG = '-mvu0-use-vf0-15'  # lets the register allocator use vf0..vf15 for the `"j"` (VU0 register) operands of inline asm: the moves to and from them become ordinary insns
+
+
+def vu0_functions():
+    """Addresses of the functions compiled with VU0_FLAG (config/us/vu0_regs.txt): retail's VU0 moves around an asm block are compiler insns that
+    GCC schedules and puts in delay slots itself, which only `"j"` operands under this option reproduce (docs/contributing/matching.md)."""
+    return listed_functions('vu0_regs.txt')
+
+
+def vu0_for(address):
+    return os.environ.get('TRY_VU0') == '1' or address in vu0_functions()
+
+
 def gnu_functions():
     """Addresses of the functions assembled with GNU as (config/us/gnu_as.txt)."""
     return listed_functions('gnu_as.txt')
@@ -156,14 +169,14 @@ def compile_sony(language, source, output, include=None, localize=True):
     return True, ''
 
 
-def compile_object(language, source, output, assembler=None, include=None, localize=True):
+def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False):
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
     if assembler == 'sony29':
         return compile_sony(language, source, output, include, localize)
     directory = compiler_directory()
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
-              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS]
+              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else [])]
     executable = loop5_executable() if assembler == 'ps2eeas-loop5' else PS2EEAS
     use_ps2eeas = assembler != 'gnu' and executable is not None and os.path.isfile(executable)
     temporary = output + '.tmp'
@@ -200,9 +213,10 @@ def main():
     parser.add_argument('language', choices=['c', 'c++'])
     parser.add_argument('source')
     parser.add_argument('output')
+    parser.add_argument('--vu0', action='store_true', help='compile with ' + VU0_FLAG)
     parser.add_argument('--assembler', choices=['ps2eeas', 'ps2eeas-loop5', 'gnu', 'sony29'])
     arguments = parser.parse_args()
-    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler)
+    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0)
     if not ok:
         sys.stderr.write(message)
         sys.exit(1)

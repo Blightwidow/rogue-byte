@@ -1,23 +1,30 @@
-#include "sly2.h"
-struct SW { char pad[0x3B20]; void *ppath; };
-struct CRef { int tagk; int n; int pad[2]; };
-extern "C" void CRef_CopyConstruct(void);
-extern "C" int CRef_Destruct(CRef *);
-extern "C" void RefSetGameSaveValue(CRef *, void *, CRef *);
-extern "C" void ShowCoinBlot(SW *);
-extern "C" SW B_003DD490;
-extern "C" char B_003D4A60[];
-
+struct CRef;
+extern "C" int CRef_CopyConstruct(CRef *, const CRef *);
+extern "C" void CRef_Destruct(CRef *);
+struct CRef {
+    int tagk;
+    int n;
+    CRef(int tag, int value) { tagk = tag; n = value; }
+    CRef() { tagk = -1; }
+    CRef(const CRef &other) { CRef_CopyConstruct(this, &other); }
+    ~CRef() { CRef_Destruct(this); }
+    CRef &operator=(const CRef &);
+};
+struct SW { char pad[0x3B20]; int ppath; };
+extern "C" {
+CRef RefSetGameSaveValue(int, const CRef &, void *);
+void ShowCoinBlot(SW *);
+extern SW B_003DD490;
+extern char B_003D4A60[];
+}
+static inline void SetSaveInt(int path, int number, void *key)
+{
+    CRef value(0x15, number);
+    CRef copy(value);
+    RefSetGameSaveValue(path, copy, key);
+}
 void SetGameCoins(void *pvUnused, int ccoin)
 {
-    CRef refs[3];
-    void *ppath = B_003DD490.ppath;
-    refs[0].tagk = 0x15;
-    refs[0].n = ccoin;
-    CRef_CopyConstruct();
-    RefSetGameSaveValue(&refs[2], ppath, &refs[1]);
-    CRef_Destruct(&refs[1]);
-    CRef_Destruct(&refs[2]);
-    CRef_Destruct(&refs[0]);
-    return ShowCoinBlot(&B_003DD490);
+    SetSaveInt(B_003DD490.ppath, ccoin, B_003D4A60);
+    ShowCoinBlot(&B_003DD490);
 }

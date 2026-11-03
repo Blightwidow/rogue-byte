@@ -23,7 +23,7 @@ void PairHandle_Init(PairHandle *, CPair *);
 void PairHandle_Assign(CPair **, CPair *);
 PairHandle *func_00121578(PairHandle *, CRef **, CRef **);
 CRef *bevy_splice_value_list_ref(CRef *, CPair *);
-CRef *RefEval(CRef *, CPair *, CFrame *);
+CRef RefEval(CPair *, CFrame *);
 void CRef_ConstructPair(CRef *, CPair *);
 void CPairPtr_Destructor(CPair **, int);
 void UnlinkPairNode(CPair *);
@@ -61,18 +61,19 @@ extern "C" CRef RefOpMap(int carg, CRef *aref, CFrame *pframe) return result
     PairHandle call;
     func_00121578(&call, &prefCallee, &prefArg);
     *prefCallee = aref[0];
-    for (CPair *element = (CPair *)aref[1].pv; element != 0; element = element->next) {
+    CPair *element = (CPair *)aref[1].pv;
+    while (element != 0) {
         *prefArg = element->ref;
         PairHandle value(PpairNew());
         CRef *pvalueRef = &value.p->ref;
-        CRef temp;
-        RefEval(&temp, call.p, pframe);
-        *pvalueRef = temp;
+        *pvalueRef = RefEval(call.p, pframe);
         if (holder.p->ref.tagk != 0x1F)
             bevy_splice_value_list_ref(&holder.p->ref, value.p);
         else
             PairHandle_Assign(&tail->next, value.p);
-        tail = value.p;
+        CPair *t = value.p;
+        element = element->next;
+        tail = t;
     }
     CRef_ConstructPair(&result, holder.p->ref.pv);
     return;

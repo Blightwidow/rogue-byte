@@ -128,3 +128,15 @@ make land FORCE=1    # the same, without the scan of the new matches for banned 
 
 
 Started through make, the long tools print a progress line to stderr (`[permute-stores] 12/70 17%  elapsed 41m02s  eta 3h20m  running 1FC270, 1B9CA0  last 1E64C8: 6 -> 5`: a line when a function finishes, at most one every five seconds, a heartbeat line every 15 seconds while none does, so a slow function does not leave the screen blank, and a `done` line; the workers report in whatever order they finish): `make` exports `PROGRESS=1`, `make rules PROGRESS=0` silences it. A tool run directly, by an agent or a script, prints exactly what it printed before (`scripts/matching/progress.py`): set `PROGRESS=1` yourself to get the lines there too. The tools with progress lines: `record.py`, `adopt.py`, `permute_stores.py`, `fix_stack.py`, `export_nonmatching.py`, `mutate.py --batch`, `neighborhood.py --batch` (its own per-function line gains the elapsed time and the estimate) and `harvest.py`.
+
+
+## frame_diff.py: the stack frame next to retail's
+
+`python3 scripts/matching/frame_diff.py 0xADDR source.cpp [--search N]` prints retail's frame and ours one row per stack offset: the frame size, the saved
+registers, the stack addresses handed out (`addiu rX, sp, N`, an address-taken local) and the accesses at each offset, `!` where they differ, then a
+frame distance. A score hides which slot moved; this shows it (`13DA18`: retail has a 16-byte object at `sp+0x20` that ours lacks, so every later local sits
+`0x10` lower). `--search N` tries up to N orders of the local declarations and keeps the lowest (frame distance, score); the distance is flat-free where the
+score is not. A scan of 474 near misses (score 1 to 60, 2026-11-03): 363 have the identical frame, 90 have the same frame size with other slot offsets, 21 differ
+in frame size (mostly by one 16-byte slot: a dead `QW` local retail's frame shows). The frame wall is about a fifth of the near misses, not most of them.
+Fixes that moved a frame: a struct that groups locals with pad fields (`16CAA0`), declaring one local before another (`181060`), scoping each `GIFS`/`CRef` temporary
+to its own block so they share a slot, a dead `QW junk[N]` the frame shows, and an inline helper that takes the address as a parameter.

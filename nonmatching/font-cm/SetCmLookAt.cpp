@@ -7,17 +7,18 @@ void UpdateCmMat4(Cm *);
 void __as__6VECTORG9VU_VECTOR(void *, QW);
 void SetCmLookAt(Cm *pcm, float dradPan, float dradTilt, QW posEye, QW posTarget)
 {
-    struct { QW mat[3]; float radPan; float radTilt; QW eye; } l;
-    QW diff;
+    QW mat[3];
+    float radPan;
+    float radTilt;
     QW *prow = pcm->row;
-    l.eye = posEye;
-    asm("lqc2 vf2, %1\n\tqmtc2.ni %2, vf1\n\tvsub.xyzw vf1, vf1, vf2\n\tqmfc2.ni %0, vf1" : "=r" (diff) : "m" (l.eye), "r" (posTarget));
-    DecomposeSphere(diff, &l.radPan, &l.radTilt, 0);
-    LoadRotateMatrixPanTilt(l.mat, l.radPan + dradPan, l.radTilt + dradTilt);
-    __as__6VECTORG9VU_VECTOR(&pcm->pos, l.eye);
-    pcm->row[0] = l.mat[0];
-    prow[1] = l.mat[1];
-    prow[2] = l.mat[2];
+    QW diff;
+    asm("vsub.xyzw %0, %1, %2" : "=j" (diff) : "j" (posTarget), "j" (posEye));
+    DecomposeSphere(diff, &radPan, &radTilt, 0);
+    LoadRotateMatrixPanTilt(mat, radPan + dradPan, radTilt + dradTilt);
+    __as__6VECTORG9VU_VECTOR(&pcm->pos, posEye);
+    pcm->row[0] = mat[0];
+    prow[1] = mat[1];
+    prow[2] = mat[2];
     ((int *)&prow[1])[3] = 0;
     ((int *)&prow[2])[3] = 0;
     ((int *)&prow[0])[3] = 0;

@@ -524,7 +524,7 @@ def judge_with_repair(address, text, attempts=8):
         stem = os.path.join(scorer.BUILD, f'repair-{address:06X}-{os.getpid()}-{next(scorer._counter)}')
         with open(stem + '.cpp', 'w') as handle:
             handle.write(text)
-        ok, message = compile_unit.compile_object('c++', stem + '.cpp', stem + '.o', assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False)
+        ok, message = compile_unit.compile_object('c++', stem + '.cpp', stem + '.o', assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
         for leftover in (stem + '.cpp', stem + '.o', stem + '.o.tmp', stem + '.o.s'):
             if os.path.exists(leftover):
                 os.remove(leftover)

@@ -879,6 +879,7 @@ address	name	size	file
 0X118500	func_00118500	16	sce-libs-bsp/fun_00118500.cpp
 0X118510	CreateSharedSlotheaps_118510	308	sce-libs-bsp/CreateSharedSlotheaps_118510.c
 0X118648	func_00118648	32	sce-libs-bsp/fun_00118648.c
+0X118FB0	PcgtPointInCbspQuick__FP4CBSPP6VECTOR	220	path/PcgtPointInCbspQuick__FP4CBSPP6VECTOR.cpp
 0X1191E8	CloneBspc__FP4GEOMP4BSPCT0T1	284	bsp/CloneBspc__FP4GEOMP4BSPCT0T1.cpp
 0X119390	InitPlaneFromNormalPos	44	bsp-crout/InitPlaneFromNormalPos.cpp
 0X1193C0	SetPlane	12	bsp-crout/SetPlane.c
@@ -940,6 +941,7 @@ address	name	size	file
 0X11C128	__ml__FRC7MATRIX4G8VU_FLOAT	60	mat/__ml__FRC7MATRIX4G8VU_FLOAT.cpp
 0X11C1A8	__ml__FRC7MATRIX4G10VU_VECTOR4	44	mat/__ml__FRC7MATRIX4G10VU_VECTOR4.cpp
 0X11C1D8	TransposeMatrix4	56	mat/TransposeMatrix4.c
+0X11C288	func_0011C288	104	mat/fun_0011c288.cpp
 0X11C2F0	FInvertMatrix4__FP7MATRIX4T0	40	mat/FInvertMatrix4__FP7MATRIX4T0.c
 0X11C318	InvertMatrix4Affine	184	mat/InvertMatrix4Affine.cpp
 0X11C3D0	CalculateDmat4	116	mat/CalculateDmat4.cpp
@@ -1052,6 +1054,7 @@ address	name	size	file
 0X122680	RefOpRadNormalize__FiP4CRefP6CFrame	48	splice-bif/RefOpRadNormalize__FiP4CRefP6CFrame.cpp
 0X1226B0	RefOpAtan2	124	splice-bif/RefOpAtan2.cpp
 0X122770	RefOpVectorCrossProduct	92	splice-bif/RefOpVectorCrossProduct.cpp
+0X1229B8	RefOpVectorNormalize	336	splice-bif/RefOpVectorNormalize.cpp
 0X122B08	RefOpVectorProjectNormal	104	splice-bif/RefOpVectorProjectNormal.cpp
 0X122B70	RefOpVectorProjectTangent	108	splice-bif/RefOpVectorProjectTangent.cpp
 0X122BE0	RefOpVectorBallisticVelocity	256	splice-bif/RefOpVectorBallisticVelocity.cpp
@@ -1289,6 +1292,7 @@ address	name	size	file
 0X12D858	ActivateActadj	52	new_12d508/ActivateActadj.cpp
 0X12D890	DeactivateActadj	68	new_12d508/DeactivateActadj.cpp
 0X12D8D8	ReselectActadj	124	new_12d508/ReselectActadj.cpp
+0X12D958	GetActadjGoal	116	new_12d508/GetActadjGoal.cpp
 0X12D9D0	GetActadjPositionGoal	92	new_12d508/GetActadjPositionGoal.cpp
 0X12DB50	PactNewForXf	92	new_12d508/PactNewForXf.cpp
 0X12DBB0	CreateXfActadj	100	new_12d508/CreateXfActadj.cpp
@@ -1337,6 +1341,7 @@ address	name	size	file
 0X12F8F0	PostAsegLoad	72	aseg/PostAsegLoad.cpp
 0X12F938	PeaFindAsegLabel	84	aseg/PeaFindAsegLabel.cpp
 0X12F990	TFindAsegLabel__FP4ASEG3OID	40	aseg/TFindAsegLabel__FP4ASEG3OID.cpp
+0X12F9B8	ApplyAseg	1068	aseg/ApplyAseg.cpp
 0X12FDE8	func_0012FDE8	108	aseg/fun_0012fde8.cpp
 0X12FE58	BindAsegChn	180	aseg/BindAsegChn.cpp
 0X12FF10	PchnFindAseg	256	aseg/PchnFindAseg.cpp
@@ -1470,6 +1475,7 @@ address	name	size	file
 0X1371C8	bevy_player_p25_1371c8	76	bbmark-blend/bevy_player_p25_1371c8.cpp
 0X137218	bevy_player_p25_137218	44	bbmark-blend/bevy_player_p25_137218.c
 0X1374E0	func_001374E0	16	bbmark-blend/fun_001374e0.cpp
+0X1374F0	bevy_player_p25_1374f0	224	bbmark-blend/bevy_player_p25_1374f0.cpp
 0X137780	StaticInitSlotheaps_137780	308	bbmark-blend/StaticInitSlotheaps_137780.c
 0X1378B8	func_001378B8	32	bbmark-blend/fun_001378b8.c
 0X1378D8	StaticInitSlotheaps_1378d8	308	bbmark-blend/StaticInitSlotheaps_1378d8.c
@@ -1503,6 +1509,7 @@ address	name	size	file
 0X13ADE8	AddBombCustomXps	196	bomb/AddBombCustomXps.cpp
 0X13B1C8	func_0013B1C8	136	bomb/fun_0013b1c8.cpp
 0X13B250	func_0013B250	160	bomb/fun_0013b250.cpp
+0X13B2F0	FAbsorbBombWkr	308	bomb/FAbsorbBombWkr.cpp
 0X13B5C8	PrimeBomb__FP4BOMBf	28	bomb/PrimeBomb__FP4BOMBf.cpp
 0X13B5E8	GetBombVictims	440	bomb-crusher/GetBombVictims.cpp
 0X13B7A0	func_0013B7A0	24	unsorted/fun_0013b7a0.c
@@ -1534,6 +1541,7 @@ address	name	size	file
 0X13CF38	Crfodb_SpawnLoot	156	new_13cf38/Crfodb_SpawnLoot.cpp
 0X13CFD8	Crfodb_OnAdd	68	new_13cf38/Crfodb_OnAdd.cpp
 0X13D020	Crfodb_OnGrab	392	new_13cf38/Crfodb_OnGrab.cpp
+0X13D248	IdlootCrfodb	220	new_13cf38/IdlootCrfodb.cpp
 0X13D400	StaticInitSlotheaps_13d400	308	new_13cf38/StaticInitSlotheaps_13d400.c
 0X13D538	func_0013D538	32	new_13cf38/fun_0013d538.c
 0X13D558	Init__10CByteQueueiPv	36	bq/Init__10CByteQueueiPv.cpp
@@ -1646,6 +1654,7 @@ address	name	size	file
 0X1444E0	StaticInitSlotheaps_1444e0	308	new_13f888/StaticInitSlotheaps_1444e0.c
 0X144618	GlobalCtorSlotheaps_144618	32	new_13f888/GlobalCtorSlotheaps_144618.c
 0X144638	func_00144638	8	new_13f888/fun_00144638.c
+0X1448F0	func_001448F0	212	new_13f888/fun_001448f0.cpp
 0X1449C8	func_001449C8	8	new_13f888/fun_001449c8.c
 0X1449D0	StaticInitSlotheaps_1449d0	308	new_13f888/StaticInitSlotheaps_1449d0.c
 0X144B08	GlobalCtorSlotheaps_144b08	32	new_13f888/GlobalCtorSlotheaps_144b08.c
@@ -1929,6 +1938,7 @@ address	name	size	file
 0X154080	SetSensorEntryState	216	rip-game/SetSensorEntryState.cpp
 0X154158	NGetSensorLoState	40	game/NGetSensorLoState.cpp
 0X154180	PentryFindSensorLo	84	new_154180/PentryFindSensorLo.cpp
+0X1541D8	NNextSensorState	848	new_154180/NNextSensorState.cpp
 0X154528	FFilterSensorBasic	60	new_154180/FFilterSensorBasic.cpp
 0X154568	FFilterSensorSight	132	new_154180/FFilterSensorSight.cpp
 0X154908	StaticInitSensorSight	308	new_154180/StaticInitSensorSight.c
@@ -2087,6 +2097,7 @@ address	name	size	file
 0X160260	InitStaticSlotheaps_frm	308	new_160260/InitStaticSlotheaps_frm.c
 0X160398	InitStaticSlotheaps_frm_thunk	32	new_160260/InitStaticSlotheaps_frm_thunk.c
 0X1603B8	LoadXfMirrors	304	new_160260/LoadXfMirrors.cpp
+0X1604E8	UpdateXfMirror	348	new_160260/UpdateXfMirror.cpp
 0X160648	InitStaticSlotheaps_frm2	308	new_160260/InitStaticSlotheaps_frm2.c
 0X160780	InitStaticSlotheaps_frm2_thunk	32	new_160260/InitStaticSlotheaps_frm2_thunk.c
 0X1607A0	StartupFrame	136	new_160260/StartupFrame.cpp
@@ -2217,6 +2228,7 @@ address	name	size	file
 0X167310	__4CRef	16	splice-ref/__4CRef.cpp
 0X167320	LoadGlobsetFromBrx	1360	new_167320/LoadGlobsetFromBrx.cpp
 0X167870	LoadGlobsetBndTreeFromBrx	760	new_167320/LoadGlobsetBndTreeFromBrx.cpp
+0X167DA0	func_00167DA0	180	new_167320/fun_00167da0.cpp
 0X167F78	Vif1InterruptHandler	68	new_167320/Vif1InterruptHandler.cpp
 0X1681B0	func_001681B0	68	new_167320/fun_001681b0.c
 0X169988	func_00169988	92	unsorted/fun_00169988.c
@@ -2400,6 +2412,7 @@ address	name	size	file
 0X179FA0	GoalJump_Activate	1072	hide-puffer/GoalJump_Activate.cpp
 0X17A3D0	func_0017A3D0	44	hide-puffer/fun_0017a3d0.c
 0X17A400	func_0017A400	100	hide-puffer/fun_0017a400.cpp
+0X17A468	func_0017A468	68	hide-puffer/fun_0017a468.cpp
 0X17A4B0	func_0017A4B0	52	hide-puffer/fun_0017a4b0.cpp
 0X17A4E8	func_0017A4E8	108	hide-puffer/fun_0017a4e8.cpp
 0X17A558	func_0017A558	88	hide-puffer/fun_0017a558.cpp
@@ -2545,6 +2558,7 @@ address	name	size	file
 0X182700	Swarm_AdjustNewXp	116	pzo-hide/Swarm_AdjustNewXp.cpp
 0X182778	func_00182778	8	pzo-hide/fun_00182778.c
 0X182780	Swarm_UpdateBounds	140	pzo-hide/Swarm_UpdateBounds.cpp
+0X182810	Swarm_PriderNearest	152	pzo-hide/Swarm_PriderNearest.cpp
 0X1829D8	Swarm_AbsorbTouch	224	pzo-hide/Swarm_AbsorbTouch.cpp
 0X182AB8	Swarm_AddGroup	92	pzo-hide/Swarm_AddGroup.cpp
 0X182B18	StaticInitSlotheapsSwarm_182b18	308	pzo-hide/StaticInitSlotheapsSwarm_182b18.c
@@ -3081,6 +3095,7 @@ address	name	size	file
 0X1B2048	AddTrigBombCid	40	ac-rog/AddTrigBombCid.cpp
 0X1B2070	InitRov__FP3ROV	68	rog/InitRov__FP3ROV.c
 0X1B21F0	InitTarmiss	52	new_1b20b8/InitTarmiss.c
+0X1B2398	PosPredictMissileTarget	208	missile-mpeg/PosPredictMissileTarget.cpp
 0X1B26C8	StaticInitSlotheaps_1b26c8	308	missile-mpeg/StaticInitSlotheaps_1b26c8.c
 0X1B2800	GlobalCtorSlotheaps_1b2800	32	missile-mpeg/GlobalCtorSlotheaps_1b2800.c
 0X1B2820	func_001B2820	8	missile-mpeg/fun_001b2820.c
@@ -3088,6 +3103,7 @@ address	name	size	file
 0X1B2940	func_001B2940	144	unsorted/fun_001b2940.cpp
 0X1B29D0	CQueueOutputIop_FInit	176	missile-mpeg/CQueueOutputIop_FInit.cpp
 0X1B2A80	Reset__15CQueueOutputIop	28	mpeg/Reset__15CQueueOutputIop.cpp
+0X1B2AA0	CQueueOutputIop_Deinterleave	320	mpeg/CQueueOutputIop_Deinterleave.cpp
 0X1B2EB8	CQueueOutputIop_Update	280	mpeg/CQueueOutputIop_Update.cpp
 0X1B2FD0	FAsyncDrain__15CQueueOutputIop	8	mpeg/FAsyncDrain__15CQueueOutputIop.c
 0X1B2FD8	CbWrite__15CQueueOutputIpuiPv	92	mpeg/CbWrite__15CQueueOutputIpuiPv.cpp
@@ -3130,6 +3146,7 @@ address	name	size	file
 0X1B6BA8	func_001B6BA8	276	mpeg-memcard/fun_001b6ba8.cpp
 0X1B7000	StartMurrayLift	76	mpeg-memcard/StartMurrayLift.cpp
 0X1B7050	StartMurrayLiftGuard	76	mpeg-memcard/StartMurrayLiftGuard.cpp
+0X1B7970	ThrowMurrayObject	260	mpeg-memcard/ThrowMurrayObject.cpp
 0X1B7A78	StartMurrayThrow	108	mpeg-memcard/StartMurrayThrow.cpp
 0X1B7AE8	func_001B7AE8	192	mpeg-memcard/fun_001b7ae8.cpp
 0X1B7BA8	ReleaseMurrayObject	376	mpeg-memcard/ReleaseMurrayObject.cpp
@@ -3210,9 +3227,11 @@ address	name	size	file
 0X1BC208	CmpPosXy	112	new_1bc198/CmpPosXy.cpp
 0X1BC530	Obstacle_IposWrap	60	new_1bc198/Obstacle_IposWrap.cpp
 0X1BC570	Obstacle_PostLoad	276	new_1bc198/Obstacle_PostLoad.cpp
+0X1BC9F0	FObstacleContainsPos	204	new_1bc198/FObstacleContainsPos.cpp
 0X1BCF18	FFindCrvSInPathzone	292	new_1bc198/FFindCrvSInPathzone.cpp
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	new_1bc198/Obstacle_RemoveFromPathzone.c
 0X1BD310	PobstacleFindEdgeBlocker	240	new_1bc198/PobstacleFindEdgeBlocker.cpp
+0X1BD400	Obstacle_UpdatePlanes	352	new_1bc198/Obstacle_UpdatePlanes.cpp
 0X1BD560	func_001BD560	436	new_1bc198/fun_001bd560.cpp
 0X1BD718	func_001BD718	396	new_1bc198/fun_001bd718.cpp
 0X1BDBC8	func_001BDBC8	36	unsorted/fun_001bdbc8.cpp
@@ -3246,9 +3265,11 @@ address	name	size	file
 0X1C0980	FClipEdgeToPathzone	28	new_1c0920/FClipEdgeToPathzone.c
 0X1C09A0	FPosFreeInPathzone	160	new_1c0920/FPosFreeInPathzone.cpp
 0X1C0A40	ClsgClipEdgeToPathzoneObstacles	268	new_1c0920/ClsgClipEdgeToPathzoneObstacles.cpp
+0X1C0D70	PpathzoneFindPos	332	new_1c0920/PpathzoneFindPos.cpp
 0X1C0EC0	LoadSwPzgraphFromBrx	112	new_1c0920/LoadSwPzgraphFromBrx.cpp
 0X1C0F30	LoadPzgraphFromBrx	408	new_1c0920/LoadPzgraphFromBrx.cpp
 0X1C10C8	func_001C10C8	108	new_1c0920/fun_001c10c8.cpp
+0X1C1260	BuildPzgraphAdjacency	476	new_1c0920/BuildPzgraphAdjacency.cpp
 0X1C1440	ResetPathzoneQuery	100	new_1c0920/ResetPathzoneQuery.cpp
 0X1C15F8	SweepPathzoneAxis	260	new_1c0920/SweepPathzoneAxis.cpp
 0X1C18B8	RemovePathzoneEndpoints	176	new_1c0920/RemovePathzoneEndpoints.cpp
@@ -3408,6 +3429,7 @@ address	name	size	file
 0X1CBA20	func_001CBA20	72	new_1c90d0/fun_001cba20.cpp
 0X1CBA68	func_001CBA68	88	new_1c90d0/fun_001cba68.cpp
 0X1CBAC0	func_001CBAC0	152	new_1c90d0/fun_001cbac0.cpp
+0X1CBB58	func_001CBB58	76	new_1c90d0/fun_001cbb58.cpp
 0X1CBD58	func_001CBD58	308	new_1c90d0/fun_001cbd58.c
 0X1CBE90	StaticInitPipeFile_thunk	32	new_1c90d0/StaticInitPipeFile_thunk.c
 0X1CBEB0	func_001CBEB0	44	new_1c90d0/fun_001cbeb0.cpp
@@ -3452,16 +3474,19 @@ address	name	size	file
 0X1CF010	FIsZeroW__FP6VECTOR	72	alo/FIsZeroW__FP6VECTOR.cpp
 0X1CF058	FIsZeroDv__FP6VECTOR	68	alo/FIsZeroDv__FP6VECTOR.cpp
 0X1CF268	UpdateRip__FP3RIPf	204	rip/UpdateRip__FP3RIPf.cpp
+0X1CF338	FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3	476	rip/FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3.cpp
 0X1CF518	RenderRip	84	rip/RenderRip.cpp
 0X1CF570	OnRipRemoveNop	8	rip/OnRipRemoveNop.c
 0X1CF578	SubscribeRipObject	72	rip/SubscribeRipObject.c
 0X1CF5C8	func_001CF5C8	8	rip/fun_001cf5c8.c
 0X1CF5D0	PostFlyingEmit	68	rip/PostFlyingEmit.cpp
+0X1CF618	RenderFlying__FP6FLYINGP2CM	148	rip/RenderFlying__FP6FLYINGP2CM.cpp
 0X1CF968	FBounceFlying__FP6FLYINGP2SOP6VECTORT2	184	rip/FBounceFlying__FP6FLYINGP2SOP6VECTORT2.cpp
 0X1CFA20	UpdateStuck__FP5STUCKf	28	rip/UpdateStuck__FP5STUCKf.c
 0X1CFA40	RenderStuck__FP5STUCKP2CM	120	rip/RenderStuck__FP5STUCKP2CM.cpp
 0X1CFBE0	FBounceShrapnel	164	rip/FBounceShrapnel.cpp
 0X1CFCD8	InitMatch__FP5MATCHP6VECTORfP2SO	88	rip/InitMatch__FP5MATCHP6VECTORfP2SO.cpp
+0X1CFD30	LaunchMatch__FP5MATCH	340	rip/LaunchMatch__FP5MATCH.cpp
 0X1D0038	UpdateMatch__FP5MATCHf	152	rip/UpdateMatch__FP5MATCHf.cpp
 0X1D00D0	RenderMatch__FP5MATCHP2CM	56	rip/RenderMatch__FP5MATCHP2CM.cpp
 0X1D0108	InitGlint__FP5GLINTP6VECTORfP2SO	80	rip/InitGlint__FP5GLINTP6VECTORfP2SO.c
@@ -3495,6 +3520,7 @@ address	name	size	file
 0X1D3FF0	func_001D3FF0	96	rip-rumble/fun_001d3ff0.cpp
 0X1D4050	AdjustVehicleNewXp	292	rip-rumble/AdjustVehicleNewXp.cpp
 0X1D4178	UpdateVehicleBounds	124	rip-rumble/UpdateVehicleBounds.c
+0X1D41F8	func_001D41F8	876	rip-rumble/fun_001d41f8.cpp
 0X1D4940	SetVehicleState	484	rip-rumble/SetVehicleState.cpp
 0X1D4B28	SetVehicleAiState	32	rip-rumble/SetVehicleAiState.c
 0X1D4B48	AddVehicleWheel	68	rip-rumble/AddVehicleWheel.cpp
@@ -3529,6 +3555,7 @@ address	name	size	file
 0X1D57B8	PushRenderNode	40	new_1d54b8/PushRenderNode.cpp
 0X1D57E0	PopRenderNode	40	new_1d54b8/PopRenderNode.cpp
 0X1D6310	RemoveAloFromRenderTree	100	new_1d54b8/RemoveAloFromRenderTree.cpp
+0X1D6378	AddAloToRenderTree	264	new_1d54b8/AddAloToRenderTree.cpp
 0X1D66F0	StaticInitSlotheaps_1d66f0	308	new_1d54b8/StaticInitSlotheaps_1d66f0.c
 0X1D6828	func_001D6828	32	new_1d54b8/fun_001d6828.c
 0X1D6A90	InitLaunch	112	vec-coin/InitLaunch.cpp
@@ -3556,6 +3583,7 @@ address	name	size	file
 0X1D8720	SymidFindSymtab	160	new_1d7780/SymidFindSymtab.cpp
 0X1D88D0	PsavepathNew	216	new_1d7780/PsavepathNew.cpp
 0X1D89A8	PsavepathNewStack	144	new_1d7780/PsavepathNewStack.cpp
+0X1D8A38	func_001D8A38	228	new_1d7780/fun_001d8a38.cpp
 0X1D8C10	PvFindSaveVarPath	184	splice-pair/PvFindSaveVarPath.cpp
 0X1D8CC8	PpathConcatStack	184	splice-pair-jump/PpathConcatStack.cpp
 0X1D9280	StaticInitSlotheaps_1d9280	308	splice-pair-jump/StaticInitSlotheaps_1d9280.c
@@ -3774,7 +3802,9 @@ address	name	size	file
 0X1E1C40	RunSeqnode	260	splice-ref-crv/RunSeqnode.cpp
 0X1E1D48	UpdateSeqnodeDrive	108	splice-ref-crv/UpdateSeqnodeDrive.cpp
 0X1E1DB8	PloFindSeqnodeObject	116	splice-ref-crv/PloFindSeqnodeObject.cpp
+0X1E1E30	StartNextSeqnodeRecord	6748	splice-ref-crv/StartNextSeqnodeRecord.cpp
 0X1E4530	DtSeqnodeRecord	368	splice-ref-crv/DtSeqnodeRecord.cpp
+0X1E4D40	GetSeqnodeObjectPosRad	372	splice-ref-crv/GetSeqnodeObjectPosRad.cpp
 0X1E4EB8	SetSeqnodeDrive	104	splice-ref-crv/SetSeqnodeDrive.c
 0X1E4F20	func_001E4F20	224	splice-ref-crv/fun_001e4f20.cpp
 0X1E5000	func_001E5000	224	splice-ref-crv/fun_001e5000.cpp
@@ -4135,6 +4165,7 @@ address	name	size	file
 0X1F8E90	func_001F8E90	236	new_1f88d8/fun_001f8e90.cpp
 0X1F8F80	func_001F8F80	332	new_1f88d8/fun_001f8f80.cpp
 0X1F90D0	func_001F90D0	364	new_1f88d8/fun_001f90d0.cpp
+0X1FA970	ApplyConstr	140	new_1f88d8/ApplyConstr.cpp
 0X1FAA48	DwFromImpulseAtPos	80	new_1f88d8/DwFromImpulseAtPos.cpp
 0X1FAB48	VecVelocityAtPos	44	new_1f88d8/VecVelocityAtPos.cpp
 0X1FAC30	AddSoAcceleration	104	new_1f88d8/AddSoAcceleration.cpp
@@ -4257,6 +4288,7 @@ address	name	size	file
 0X200C28	RefSetOption__FP5BASICiP4CRef	124	spliceobj/RefSetOption__FP5BASICiP4CRef.cpp
 0X200CA8	RefAddOption__FP5BASICiP4CRef	100	spliceobj/RefAddOption__FP5BASICiP4CRef.c
 0X200D10	RefEnsureOption__FP5BASICiP4CRef	144	spliceobj/RefEnsureOption__FP5BASICiP4CRef.c
+0X200DA0	RefSetArgListFromPvs	440	spliceobj/RefSetArgListFromPvs.cpp
 0X201110	RefSetPvsFromSplice__FiP4CRefP4OTYPPPv	588	spliceobj/RefSetPvsFromSplice__FiP4CRefP4OTYPPPv.cpp
 0X201360	RefSetArgsFromSplice__FiP4CRefP4OTYPe	120	spliceobj/RefSetArgsFromSplice__FiP4CRefP4OTYPe.cpp
 0X2013D8	func_002013D8	240	new_2013d8/fun_002013d8.cpp
@@ -4527,6 +4559,7 @@ address	name	size	file
 0X20F198	IncrementSwBinocCount	16	sw-button/IncrementSwBinocCount.c
 0X20F1A8	DecrementSwBinocCount	16	sw-button/DecrementSwBinocCount.c
 0X20F1B8	FSwBinocActive	12	sw-button/FSwBinocActive.c
+0X20F1C8	UpdateSwFog	236	sw-button/UpdateSwFog.cpp
 0X20F2B8	SetSwFogHsv	28	sw-button/SetSwFogHsv.c
 0X20F2D8	func_0020F2D8	28	sw-button/fun_0020f2d8.c
 0X20F2F8	func_0020F2F8	28	sw-button/fun_0020f2f8.c
@@ -4740,6 +4773,7 @@ address	name	size	file
 0X221268	SetTnTnsOverride	44	tn/SetTnTnsOverride.cpp
 0X221388	UpdateTn__FP2TNf	76	tn/UpdateTn__FP2TNf.cpp
 0X2213D8	OnTnRemove	48	tn/OnTnRemove.c
+0X221818	func_00221818	296	tn/fun_00221818.cpp
 0X221940	func_00221940	8	tn/fun_00221940.c
 0X221948	func_00221948	12	unsorted/fun_00221948.c
 0X221958	func_00221958	8	unsorted/fun_00221958.c

@@ -14,6 +14,7 @@ handle) and `COUNT` (claimed at a time). Read this file, then the "Rulings" and 
    retail's block structure with real types and prototypes before fiddling with statement order.
 4. Run every attempt as the packet says: `TRY_ARM=$WAVE-$ID TRY_BUDGET=<n> python3 scripts/matching/try.py 0xADDR file`. The tool logs
    each run and refuses past the budget (`BUDGET`, exit 3): stop there. The log decides; nothing you write counts as a match.
+4b. VU0 asm: take the operands as `"=j"`/`"j"` on `QW` variables and run with `TRY_VU0=1` (it compiles with `-mvu0-use-vf0-15`); the compiler then emits the `lqc2`/`sqc2`/`qmtc2`/`qmfc2` moves itself and fills delay slots with them as retail does. Say in your report that the function needs it; the lead lists it in `config/us/vu0_regs.txt`. See docs/contributing/exceptions.md.
 5. Plain C++ only (AGENTS.md "Matching rules" and the Rulings): no volatile on ordinary data, no register pins (VU `register QW v asm("vf2")` variables too), no empty asm, no dummy
    operands, no wrong prototypes. Debug dumps (`-dL`) go to your scratch folder.
 6. Final message: one line per function, `0xADDR EXACT|NEAR <what still differs>|SKIP <why>`.

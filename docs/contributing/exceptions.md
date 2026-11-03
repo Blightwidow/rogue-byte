@@ -1,0 +1,55 @@
+# Exceptions: inline assembly, special constructs and why they are allowed
+
+AGENTS.md says "plain C++" and bans tricks whose only purpose is to steer the compiler. This file lists every construct that looks like a trick
+or like assembly and is **allowed**, with the reason and the evidence that drew us to accept it, and the ones that are **not**. Each entry
+names who decided it and when (the maintainer, Theo, unless stated) and where it is used. Add an entry here with every new ruling; the long
+discussion stays in docs/contributing/matching.md ("Rulings", "VU0 functions").
+
+The test behind all of them (AGENTS.md): a construct is allowed when it could plausibly be in the original source and changes no behaviour;
+it is not allowed when its only purpose is to steer the compiler. A function that matches only with a banned construct stays in `nonmatching/`
+at the score it reaches without it.
+
+## Allowed
+
+| Construct | Why it is allowed (evidence) | Decided | Seen in |
+| :--- | :--- | :--- | :--- |
+| **Inline `asm` for VU0 macro instructions and MMI** (`lqc2`, `sqc2`, `qmtc2`, `qmfc2`, `v*`, `pextuw`, `prot3w`, ...) | C cannot express them: the compiler has no VU0 arithmetic. Retail's code contains the instructions, so the original source had them in some form (inline asm). | 2026-10 | about 540 sources, `src/vec/`, `src/mat/`, ... |
+| **`"j"` operands on `QW` variables, compiled with `-mvu0-use-vf0-15`** (`asm("vsub.xyzw %0, %1, %2" : "=j"(r) : "j"(a), "j"(b))`) | `cc1plus` has a `VU_REGS` register class (constraint `j`), movti patterns that emit `lqc2`/`sqc2`/`qmtc2`/`qmfc2`, and the option `-mvu0-use-vf0-N` ("specify the range of vu0 registers to use"). With the option the allocator picks the `vf` registers and emits the moves as ordinary insns, which reorg then schedules and puts in delay slots and copies into `bnel`/`beql` slots, exactly the pattern retail has in about 25 functions that no asm block reaches (reorg experiment, `-dd` on `1CBB58`: GCC fills the slot from the branch target with its own insn; retail's slot holds the VU move). Without the option the same asm fails ("fixed or forbidden register vf17 was spilled"). `1CBB58` matches (score 0) this way with no pin, no fence token and no dummy operand. No register is named: the constraint only says what kind of operand the block needs. | 2026-11-03 | `config/us/vu0_regs.txt` lists the functions built with the flag |
+| **The flag `-mvu0-use-vf0-15` per function** (`config/us/vu0_regs.txt`) | It is part of the one flag set of a source file; retail built modules with it. It is not neutral (it changed 29 of 532 VU sources for the worse, e.g. `1477D8` 27 to 101), so it cannot be global; a function is listed when it matches or scores lower with it, like `gnu_as.txt`. | 2026-11-03 | `1CBB58`, `1D41F8` |
+| **Fence tokens between VU0 blocks** (`"=r"(token)` that the next block takes as `"r"`) | Model a real dependency between a load and its use so the scheduler can interleave argument setup between VU blocks. Each token is commented as never written. Superseded where `"j"` operands work. | 2026-11-02 | `LoadRotateMatrix`, `GCosAngle`, `11E9F8`, `179FA0`, ... |
+| **Lane moves and COP0 asm** (`mtc1`/`mfc1` for one lane of a 128-bit value, `mfc0 Count`) | No C expression of a single-lane move to an FP register; `mfc0` is the only way to read Count. | 2026-10 | `TickReadCount`, `14D240`, lane helpers |
+| **`"=m"` outputs for the real store of an asm block, and a dead local for a frame area retail stores into** (`QW junk[3]`, `struct { QW dead; QW result; }`) | The block really stores there (`sqc2`), retail's frame shows the stack area, and the object is never read: it only reproduces retail's frame. | 2026-11-02 | `11B480`, `14FE58`, `1B90B8` |
+| **One shared `Sqrt` helper** (`asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x))`, one per file, never `=&f`) | `__builtin_sqrtf` compiles to a call; the instruction needs asm. | 2026-11-02 | `14AA30`, `1FDC08`, `11BCF8`, `187998` |
+| **An early-clobber output (`=&r`) with a correctness argument** | Allowed only when the asm text writes the output before it has read all inputs, so sharing a register would give a wrong result. Commented in the source. | 2026-11-02 | `BuildXfLinearRateMatrix`, `14FE58`, `225BA0` |
+| **An asm label that gives a method its retail symbol** (`CRef(const CRef &) asm("CRef_CopyConstruct")`) | A rename only; a C declaration named like the mangled symbol is read as `operator=`. | 2026-11-02 | `RefEvalLet`, `1249A8`, `12A3D8` |
+| **A padding-virtual base class** to reach a vtable slot, and **a two-base class** for the factory family | Plain C++ that reproduces the layout (`134850`: 98 virtuals, `Query` at `0x31C`). | 2026-11-02 | `134850`, the twelve factory constructors |
+| **A struct that groups locals with pad fields to reproduce the frame** | Retail's frame offsets show the layout; separate locals move them. | 2026-11-02 | `16CAA0` |
+| **A scalar global as a one-member struct** (`struct { float t; } g_2dded0`, read as `g.t`) | A type choice on an `extern` declaration (not game data defined in source). GCC treats a struct member as possibly aliasing a store. | 2026-11-02 | `17A8C8`, `1F17F8`, `141C08`, `1657D0` |
+| **Two arms with the same body** (`if (k < 2) x = Read(); else x = Read();`) | Plausible original code; the late merge leaves a compare retail still has. | 2026-11-02 | `214460` |
+| **`goto` as plain control flow**; **a `union` only when retail's frame shows two locals sharing a slot** | Plain C++ the original could contain. | 2026-11-02 | `1EE100`, `127DB8`, `1B93E8` |
+| **A float broadcast into a `"j"` register through asm text** (`asm("qmtc2.ni %1, %0" : "=j"(q) : "r"(f))`) | The compiler cannot move an SF or SI value into a `"j"` register ("impossible register constraint") and a C conversion adds `daddu`/`por` copies, so the `qmtc2` has to be in the asm, like the lane moves. | 2026-11-03 | `1E1E30`, `1CFD30`, `20F1C8`, `11C288` |
+| **A tied operand `"0"(x)` on a `"j"` output** | `vmaddz.xyz` and friends keep the w lane of their destination, so the output must share the input's register: a real data dependency. | 2026-11-03 | `17A468`, `1D6378` |
+| **A dead scratch local the frame shows** (`QW scratch[1]; scratch[0] = v;`, `frame.junk = scale`) | Retail stores a vector to a slot it never reads; a plain local lets the compiler delete the store, an array or a struct member keeps it. | 2026-11-03 | `167DA0`, `1CF618`, `11C288` |
+| **A block-local copy of a vector** (`QW target = pos;` before a loop) | A real copy retail makes (its `qmtc2` sits inside the loop); without it the load is hoisted out. | 2026-11-03 | `182810` |
+| **An inline helper that takes an address as a parameter** | Code inside an inline helper gets each stack address computed fresh at each use (`addiu a0,sp,N`), as retail does; the same code in the function body keeps the address in a saved register. | 2026-11-03 | `1D8A38`, `1C1260`, `13D248` |
+| **An allocation-request pointer local** (`ALLOCREQ *preq = &req; preq->cbAlign = n; PvAllocStackImpl(preq);`) | The idiom of `LoadCoinFromBrx`; the only form that gives retail's store through the returned pointer. | 2026-11-03 | `1B2AA0`, `LoadCoinFromBrx` |
+| **A volatile access to a hardware register** (address from `0x10000000`) | Hardware registers are volatile in the original; `record.py` allows that range. | 2026-10 | `16F868`, `167F78` |
+
+## Not allowed (and why)
+
+| Construct | Why not |
+| :--- | :--- |
+| **A register pin** (`register int x asm("$14")`, `register QW v asm("vf2")`) | Steers the allocator by name; AGENTS.md. The `"j"` operands above reach the same code without naming a register. 2026-11-02, VU register variables included. |
+| **A wrong callee prototype** (`void` for a function that returns, a made-up argument list) | Changes allocation without matching retail's call; read the callee's own disassembly. |
+| **An early-clobber with no correctness argument; a dummy `"+m"`/`"=m"`/`"r"` operand; a `"memory"` clobber that only orders blocks** | Their only purpose is to order or steer. |
+| **`volatile` on ordinary data; an empty `asm` with clobbers** | Steering only. |
+| **A local that only holds a global's address so a constant does not fold** | Steering; allowed only when retail keeps the pointer in a saved register across calls (then it is a real local). |
+| **Game data defined in source** (a palette, a header read out of retail) | Reference it with an `extern` at retail's address. |
+
+## Landed before the rules and still to convert
+
+Eight matched functions use register pins (`register QW v asm("vf2")`) from before `record.py` scanned new matches: `TiltMatUpright`,
+`RecalcSwXpMovement`, `FIntersectRayTriangle`, `fun_0011ea60`, `MatchJtXmgRail`, `GetNormalVectors`, `RefOpMatrixLookAt`, `fun_0019f3f8`. With the
+`"j"` operands they can be rewritten without pins and keep matching; until then they are the known violations. Also to audit: `RefreshSpriteInstance`
+(an `ItoF` asm helper and an empty asm with an `"f"` input) and the matched sources with empty `asm("" : "+r"...)` (`PpathClueFlag`,
+`UpdateAloXfWorld`, `CQueueOutputIop_Update`).
