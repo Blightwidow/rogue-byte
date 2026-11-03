@@ -1,6 +1,5 @@
 address	name	size	file	score
 0X100008	func_00100008	528	new_100008/fun_00100008.c	132
-0X100220	ExitThreadStub	8	new_100008/ExitThreadStub.cpp	2
 0X112100	func_00112100	96	new_100008/fun_00112100.cpp	0
 0X1147D8	InitStaticBitmapA	744	puffer-slotheap/InitStaticBitmapA.cpp	79
 0X114AE0	InitStaticBitmapB	7704	puffer-slotheap/InitStaticBitmapB.c	4172
@@ -178,7 +177,6 @@ address	name	size	file	score
 0X14F040	SvSquishCmEyeConstraint	208	cm_14e270/SvSquishCmEyeConstraint.cpp	20
 0X14F110	ClipCmEye	344	cm_14e270/ClipCmEye.cpp	73
 0X14F268	ConvertCmScreenToWorld	160	cm_14e270/ConvertCmScreenToWorld.c	39
-0X14F3C0	func_0014F3C0	104	cm_14e270/fun_0014f3c0.cpp	15
 0X14F478	bevy_camera_cm_14f478	104	cm_14e270/bevy_camera_cm_14f478.cpp	2
 0X14F4E0	func_0014F4E0	192	cm_14e270/fun_0014f4e0.cpp	35
 0X14FEC8	PosCplookEye	112	tn-rip/PosCplookEye.cpp	2
@@ -230,7 +228,6 @@ address	name	size	file	score
 0X15CDA8	PostEpselLoad	392	emitter-font/PostEpselLoad.cpp	18
 0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	34
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	63
-0X15F058	func_0015F058	32	font_15f000/fun_0015f058.c	7
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
 0X1604E8	UpdateXfMirror	352	new_160260/UpdateXfMirror.cpp	14
@@ -776,7 +773,6 @@ address	name	size	file	score
 0X20F7E0	UpdateSwHudBlots	360	sw-button/UpdateSwHudBlots.cpp	27
 0X20FAA0	bevy_camera_follow_push_out	448	sw-button/bevy_camera_follow_push_out.cpp	72
 0X210740	StartSwAmbSfx	424	button-po/StartSwAmbSfx.cpp	15
-0X210ED0	func_00210ED0	128	po-screen/fun_00210ed0.cpp	2
 0X2124F0	PrepareBlotMovie	656	po-screen/PrepareBlotMovie.cpp	28
 0X212A70	SetBlotBlots	480	screen-font/SetBlotBlots.cpp	46
 0X212E40	SeekBlotLabel	312	screen-font/SeekBlotLabel.cpp	8
@@ -867,5 +863,3 @@ address	name	size	file	score
 0X257C18	func_00257C18	360	bis-memcard/fun_00257c18.cpp	32
 0X258008	func_00258008	56	bis-memcard/fun_00258008.c	15
 0X259AC8	func_00259AC8	48	suv-end/fun_00259ac8.c	12
-0X259B18	func_00259B18	48	suv-end/fun_00259b18.cpp	2
-0X259D58	func_00259D58	24	suv-end/fun_00259d58.cpp	2

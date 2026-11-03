@@ -1,4 +1,5 @@
 us_address	name	other_address	pair	score	addresses
+0x100228	func_00100228	0X100228	same	0	ok
 0x1002A8	RefCallEnsureOptionBool	0X1002A8	same	0	ok
 0x100350	RefCallEnsureOptionInt	0X100350	same	0	ok
 0x1003F8	RefCallEnsureOptionFloat	0X1003F8	same	0	ok
@@ -4570,6 +4571,7 @@ us_address	name	other_address	pair	score	addresses
 0x210E70	GlobalCtorSw	0X211640	same	0	ok
 0x210E90	GlobalDtorSw	0X211660	same	0	ok
 0x210EB0	func_00210EB0	0X211680	same	0	ok
+0x210ED8	func_00210ED8	0X2116A8	same	0	ok
 0x210F50	BindTextCounts	0X211720	same	0	ok
 0x210F80	func_00210F80	0X211750	same	0	ok
 0x210FE0	BindTextBinocReadout	0X2117B0	same	0	ok
@@ -5252,6 +5254,7 @@ us_address	name	other_address	pair	score	addresses
 0x259B00	func_00259B00	0X25A550	gap	0	ok
 0x259B08	func_00259B08	0X25A558	gap	0	ok
 0x259B10	func_00259B10	0X25A560	gap	0	ok
+0x259B20	func_00259B20	0X25A570	identical	0	ok
 0x259B48	func_00259B48	0X25A598	identical	0	ok
 0x259BB0	func_00259BB0	0X25A600	identical	0	ok
 0x259C08	func_00259C08	0X25A658	gap	0	ok
@@ -5261,6 +5264,7 @@ us_address	name	other_address	pair	score	addresses
 0x259D18	SetStepRadTarget_thunk	0X25A768	same	0	ok
 0x259D38	func_00259D38	0X25A788	gap	0	ok
 0x259D48	func_00259D48	0X25A798	gap	0	ok
+0x259D60	func_00259D60	0X25A7B0	gap	0	ok
 0x259D70	func_00259D70	0X25A7C0	gap	0	ok
 0x259D98	func_00259D98	0X25A7E8	gap	0	ok
 0x259DA8	Vec4_GetY	0X25A7F8	gap	0	ok

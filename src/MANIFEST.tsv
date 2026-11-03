@@ -1,4 +1,5 @@
 address	name	size	file
+0X100228	func_00100228	124	unsorted/fun_00100228.cpp
 0X1002A8	RefCallEnsureOptionBool	168	new_100008/RefCallEnsureOptionBool.cpp
 0X100350	RefCallEnsureOptionInt	168	new_100008/RefCallEnsureOptionInt.cpp
 0X1003F8	RefCallEnsureOptionFloat	168	new_100008/RefCallEnsureOptionFloat.cpp
@@ -4570,6 +4571,7 @@ address	name	size	file
 0X210E70	GlobalCtorSw	32	po-screen/GlobalCtorSw.c
 0X210E90	GlobalDtorSw	32	po-screen/GlobalDtorSw.c
 0X210EB0	func_00210EB0	28	po-screen/fun_00210eb0.cpp
+0X210ED8	func_00210ED8	116	unsorted/fun_00210ed8.cpp
 0X210F50	BindTextCounts	48	po-screen/BindTextCounts.cpp
 0X210F80	func_00210F80	96	unsorted/fun_00210f80.cpp
 0X210FE0	BindTextBinocReadout	356	po-screen/BindTextBinocReadout.cpp
@@ -5252,6 +5254,7 @@ address	name	size	file
 0X259B00	func_00259B00	8	unsorted/fun_00259b00.c
 0X259B08	func_00259B08	8	suv-end/fun_00259b08.c
 0X259B10	func_00259B10	8	unsorted/fun_00259b10.c
+0X259B20	func_00259B20	36	unsorted/fun_00259b20.cpp
 0X259B48	func_00259B48	104	suv-end/fun_00259b48.cpp
 0X259BB0	func_00259BB0	72	suv-end/fun_00259bb0.cpp
 0X259C08	func_00259C08	8	suv-end/fun_00259c08.c
@@ -5261,6 +5264,7 @@ address	name	size	file
 0X259D18	SetStepRadTarget_thunk	28	suv-end/SetStepRadTarget_thunk.c
 0X259D38	func_00259D38	12	unsorted/fun_00259d38.c
 0X259D48	func_00259D48	12	unsorted/fun_00259d48.c
+0X259D60	func_00259D60	12	unsorted/fun_00259d60.cpp
 0X259D70	func_00259D70	12	unsorted/fun_00259d70.c
 0X259D98	func_00259D98	16	suv-end/fun_00259d98.cpp
 0X259DA8	Vec4_GetY	20	suv-end/Vec4_GetY.cpp
