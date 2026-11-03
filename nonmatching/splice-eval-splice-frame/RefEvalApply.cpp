@@ -1,172 +1,149 @@
-struct CREF;
-struct PAIR;
+struct CPair;
+struct CRef {
+    int tagk;
+    int n;
+    CRef() { tagk = -1; }
+    CRef(const CRef &) asm("CRef_CopyConstruct");
+    inline ~CRef();
+    CRef &operator=(const CRef &);
+};
+struct CPair { int cref; int pad4; CRef ref; CPair *next; };
+struct SLOTHEAP;
+struct CFrame { int cref; };
 extern "C" {
-void CRef_Destruct(CREF *);
-void CPairPtr_Destructor(PAIR **, int);
-void UnlinkPairNode(PAIR *);
-void FreeSlotheapPv(void *, void *);
-extern char B_004520A8;
+void CRef_Destruct(CRef *);
+void CPairPtr_Destructor(CPair **, int);
+void UnlinkPairNode(CPair *);
+void FreeSlotheapPv(SLOTHEAP *, void *);
+extern SLOTHEAP B_004520A8;
+void CFrame_DeletingDestructor(CFrame *, int);
+CPair *PpairNew(void);
+void PairHandle_Assign(CPair **, CPair *);
+void SetTag__4CRef4TAGK(CRef *, int);
+CRef *bevy_splice_value_list_ref(CRef *, CPair *);
+CFrame *PframeNew(void);
+void bevy_splice_frame_set_parent(CFrame *, CFrame *);
 }
-struct CREF { int tag; int value; };
-struct CRefD { int tag; int value; ~CRefD() { CRef_Destruct((CREF *)this); } } __attribute__((aligned(16)));
-struct SLOT { CREF ref; } __attribute__((aligned(16)));
-struct CRefC { int tag; int value; CRefC() { tag = -1; } ~CRefC() { CRef_Destruct((CREF *)this); } };
-struct PAIR { int refs; int pad4; CREF key; PAIR *next; };
-struct HANDLE {
-    PAIR *ptr;
-    ~HANDLE() {
-        PAIR *pair = ptr;
-        if (pair != 0) {
-            if (--pair->refs == 0) {
-                CPairPtr_Destructor(&pair->next, 2);
-                CRef_Destruct(&pair->key);
-                UnlinkPairNode(pair);
-                FreeSlotheapPv(&B_004520A8, pair);
-            }
+CRef::~CRef() { CRef_Destruct(this); }
+
+static inline void ReleasePair_1272E0(CPair *held)
+{
+    if (held) {
+        if (--held->cref == 0) {
+            CPairPtr_Destructor(&held->next, 2);
+            CRef_Destruct(&held->ref);
+            UnlinkPairNode(held);
+            FreeSlotheapPv(&B_004520A8, held);
         }
     }
-} __attribute__((aligned(16)));
-struct ENTRY { void (*fn)(CREF *, int, CREF *, int); int count; int hasRest; };
-struct CALLEE { int pad0; int pad4; int field8; void (*fn)(CREF *, int, int, CREF *); int count; };
-struct FRAME { int refs; };
-struct PROC { char pad0[8]; FRAME *frame; int count; int rest; PAIR *params; };
+}
+struct PairHandle {
+    CPair *p;
+    int pad;
+    PairHandle() { p = 0; }
+    PairHandle(CPair *) asm("PairHandle_Init");
+    ~PairHandle() { ReleasePair_1272E0(p); }
+};
+struct FrameHandle {
+    CFrame *p;
+    int pad;
+    FrameHandle(CFrame *) asm("func_00257058");
+    ~FrameHandle()
+    {
+        CFrame *held = p;
+        if (held) {
+            if (--held->cref == 0)
+                CFrame_DeletingDestructor(held, 3);
+        }
+    }
+};
+struct ENTRY { CRef (*fn)(int, CRef *, CFrame *); int count; int hasRest; };
+struct CALLEE { int pad0; int pad4; int data; CRef (*fn)(int, int, CRef *); int count; };
+struct PROC { int pad0; int pad4; CFrame *frame; int count; int rest; CPair *params; };
 extern "C" {
-void CFrame_DeletingDestructor(FRAME *, int);
-void CFrame_RefAddBinding(CREF *, FRAME *, int, CREF *);
-void CRef_CopyConstruct(CREF *, CREF *);
-void PairHandle_Assign(PAIR **, PAIR *);
-void PairHandle_Init(PAIR **, PAIR *);
-FRAME *PframeNew();
-PAIR *PpairNew();
-void RefEval(CREF *, PAIR *, int);
-void RefEvalProcBody(CREF *, PROC *, FRAME *);
-void SetTag__4CRef4TAGK(CREF *, int);
-void __as__4CRefRC4CRef(void *, void *);
-void bevy_splice_value_list_ref(CREF *, PAIR *);
-void func_00257058(FRAME **, FRAME *);
-void bevy_splice_frame_set_parent(FRAME *, FRAME *);
+CRef RefEval(CPair *, CFrame *);
+CRef RefEvalProcBody(PROC *, CFrame *);
+CRef CFrame_RefAddBinding(CFrame *, int, CRef *);
 extern ENTRY D_002BBB90[];
 }
-extern "C" CREF *RefEvalApply(CREF *pret, PAIR *expr, int env) {
-    CRefC result;
+
+extern "C" CRef RefEvalApply(CPair *expr, CFrame *env)
+{
+    CRef result;
     ENTRY *entry = 0;
     PROC *proc = 0;
     CALLEE *callee = 0;
-    CRefD kind;
-    PAIR *callExpr = (PAIR *)expr->key.value;
+    CPair *call = (CPair *)expr->ref.n;
+    CRef kind = RefEval(call, env);
     int fixedCount;
     int hasRest;
-    RefEval((CREF *)&kind, callExpr, env);
-    if (kind.tag == 25) {
-        entry = &D_002BBB90[kind.value];
+    if (kind.tagk == 25) {
+        entry = &D_002BBB90[kind.n];
         fixedCount = entry->count;
         hasRest = entry->hasRest;
-    } else if (kind.tag == 34) {
+    } else if (kind.tagk == 34) {
+        callee = (CALLEE *)kind.n;
         hasRest = 0;
-        callee = (CALLEE *)kind.value;
         fixedCount = callee->count;
     } else {
-        proc = (PROC *)kind.value;
+        proc = (PROC *)kind.n;
         fixedCount = proc->count;
         hasRest = proc->rest;
     }
     int total = fixedCount + (hasRest != 0);
-    CRefC args[32];
-    PAIR *cursor = callExpr->next;
+    CRef args[32];
+    CPair *cursor = call->next;
     int count = fixedCount;
-    int index = 0;
-    if (count > 0) {
-        CRefC *slot = args;
-        do {
-            index++;
-            SLOT temp;
-            RefEval(&temp.ref, cursor, env);
-            __as__4CRefRC4CRef(&result, &temp.ref);
-            CRef_Destruct(&temp.ref);
-            __as__4CRefRC4CRef(slot, &result);
-            slot++;
-            cursor = cursor->next;
-        } while (index < fixedCount);
+    int index;
+    for (index = 0; index < fixedCount; index++) {
+        result = RefEval(cursor, env);
+        args[index] = result;
+        cursor = cursor->next;
     }
-    if (hasRest != 0) {
-        HANDLE handleA;
-        PairHandle_Init(&handleA.ptr, cursor);
-        HANDLE handleB;
-        handleB.ptr = 0;
-        HANDLE handleC;
-        handleC.ptr = 0;
-        if (handleA.ptr != 0) {
-            do {
-                HANDLE handleD;
-                PairHandle_Init(&handleD.ptr, PpairNew());
-                SLOT evaluated;
-                RefEval(&evaluated.ref, handleA.ptr, env);
-                __as__4CRefRC4CRef(&handleD.ptr->key, &evaluated.ref);
-                CRef_Destruct(&evaluated.ref);
-                if (handleB.ptr != 0) {
-                    PairHandle_Assign(&handleB.ptr->next, handleD.ptr);
-                    PairHandle_Assign(&handleB.ptr, handleD.ptr);
-                } else {
-                    PairHandle_Assign(&handleB.ptr, handleD.ptr);
-                    PairHandle_Assign(&handleC.ptr, handleB.ptr);
-                }
-                count++;
-                PairHandle_Assign(&handleA.ptr, handleA.ptr->next);
-            } while (handleA.ptr != 0);
-        }
-        if (handleC.ptr != 0) {
-            bevy_splice_value_list_ref((CREF *)&args[index], handleC.ptr);
-        } else {
-            CRef_Destruct((CREF *)&args[index]);
-            SetTag__4CRef4TAGK((CREF *)&args[index], 0);
-        }
-    }
-    switch (kind.tag) {
-    case 25: {
-        SLOT temp;
-        entry->fn(&temp.ref, count, (CREF *)args, env);
-        __as__4CRefRC4CRef(&result, &temp.ref);
-        CRef_Destruct(&temp.ref);
-        break;
-    }
-    case 32: {
-        SLOT evaluated;
-        FRAME *frame;
-        func_00257058(&frame, PframeNew());
-        bevy_splice_frame_set_parent(frame, proc->frame);
-        cursor = proc->params;
-        CRefC *slot = args;
-        if (total > 0) {
-            index = total;
-            do {
-                if (cursor->key.tag == 0x14) {
-                    cursor = cursor->next;
-                }
-                CFrame_RefAddBinding(&evaluated.ref, frame, cursor->key.value, (CREF *)slot);
-                slot++;
-                cursor = cursor->next;
-                CRef_Destruct(&evaluated.ref);
-                index--;
-            } while (index != 0);
-        }
-        RefEvalProcBody(&evaluated.ref, proc, frame);
-        __as__4CRefRC4CRef(&result, &evaluated.ref);
-        CRef_Destruct(&evaluated.ref);
-        if (frame != 0) {
-            if (--frame->refs == 0) {
-                CFrame_DeletingDestructor(frame, 3);
+    if (hasRest) {
+        PairHandle rest(cursor);
+        PairHandle tail;
+        PairHandle head;
+        while (rest.p) {
+            PairHandle item(PpairNew());
+            item.p->ref = RefEval(rest.p, env);
+            if (tail.p) {
+                PairHandle_Assign(&tail.p->next, item.p);
+                PairHandle_Assign(&tail.p, item.p);
+            } else {
+                PairHandle_Assign(&tail.p, item.p);
+                PairHandle_Assign(&head.p, tail.p);
             }
+            count++;
+            PairHandle_Assign(&rest.p, rest.p->next);
         }
+        if (head.p) {
+            bevy_splice_value_list_ref(&args[index], head.p);
+        } else {
+            CRef_Destruct(&args[index]);
+            SetTag__4CRef4TAGK(&args[index], 0);
+        }
+    }
+    switch (kind.tagk) {
+    case 25:
+        result = entry->fn(count, args, env);
+        break;
+    case 32: {
+        FrameHandle frame(PframeNew());
+        bevy_splice_frame_set_parent(frame.p, proc->frame);
+        cursor = proc->params;
+        for (int bound = 0; bound < total; bound++) {
+            if (cursor->ref.tagk == 0x14)
+                cursor = cursor->next;
+            CRef binding = CFrame_RefAddBinding(frame.p, cursor->ref.n, &args[bound]);
+            cursor = cursor->next;
+        }
+        result = RefEvalProcBody(proc, frame.p);
         break;
     }
-    case 34: {
-        SLOT temp;
-        callee->fn(&temp.ref, callee->field8, count, (CREF *)args);
-        __as__4CRefRC4CRef(&result, &temp.ref);
-        CRef_Destruct(&temp.ref);
+    case 34:
+        result = callee->fn(callee->data, count, args);
         break;
     }
-    }
-    CRef_CopyConstruct(pret, (CREF *)&result);
-    return pret;
+    return result;
 }

@@ -1,254 +1,133 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+typedef int QW __attribute__((mode(TI)));
+struct TGT { int pso; int f4; float g8; int iC; int pad[8]; };
+struct HUDOBJ { char pad[0x14]; int label; };
+struct POOL { char pad[0x18]; int kind; };
+struct SW {
+    char pad0[0x4678]; int fTarget; char pad467C[0x4684 - 0x467C]; HUDOBJ *phud; int pad4688[2]; void *ploClone; float t;
+    char pad4698[0x46A0 - 0x4698]; QW posTarget; char pad46B0[0x4740 - 0x46B0]; int label;
+};
+struct CRV { char pad[0x1B4]; CRV *pnext; };
+struct LO { char pad[0x104]; LO *pnext; };
+struct BRK { char pad[0x154]; BRK *pnext; };
+struct ALO { char pad[0xE0]; ALO *pnext; int pad2; int grf; };
 extern "C" {
-struct _m2c_stack_BuildJtTargetList {
-    /* 0x000 */ char pad0[0x90];
-    /* 0x090 */ s32 sp90;                           /* inferred */
-    /* 0x094 */ char pad94[0x2C];                   /* maybe part of sp90[0xC]? */
-    /* 0x0C0 */ s128 spC0;                          /* inferred */
-    /* 0x0D0 */ s32 spD0;                           /* inferred */
-    /* 0x0D4 */ s32 spD4;                           /* inferred */
-    /* 0x0D8 */ s32 spD8;                           /* inferred */
-    /* 0x0DC */ char padDC[0xA4];
-};                                                  /* size = 0x180 */
-M2C_UNK ClearHudLabel(M2C_UNK *, s32);              /* extern */
-M2C_UNK EmitTargetSparkles(M2C_UNK *, s32, s32, s8 *); /* extern */
-s32 FIsBasicDerivedFrom(s8 *, M2C_UNK);           /* extern */
-s32 FIsPoSwFocusBase(s32);                          /* extern */
-M2C_UNK InsertTargetCandidate(s32, s32, s128, s8 *, s8 *, M2C_UNK, s8 *); /* extern */
-s128 PosLoWorld(s32, M2C_UNK);                      /* extern */
-s8 *PpoolFromLoClone(s32);                        /* extern */
-M2C_UNK ShowHudLabel(M2C_UNK *, s32, M2C_UNK);      /* extern */
-M2C_UNK UpdateSwTargetList(M2C_UNK *, s32, s32, s8 *); /* extern */
-s32 func_001DA5B0(M2C_UNK *);                       /* extern */
-M2C_UNK memset(s8 *, M2C_UNK, M2C_UNK);           /* extern */
-extern M2C_UNK B_003DA0C0;
-extern M2C_UNK B_003DD490;
-extern s8 *B_003E13B4;
-extern s8 *B_003E13C0;
-extern s8 *B_003E13CC;
-extern s8 *B_003E13D8;
-extern s8 *B_003E13F0;
-extern s8 *B_003E13FC;
-extern s8 *B_003E1408;
-extern s8 *B_003E1414;
-extern s8 *B_003E1438;
-extern f32 D_FLT_002BF660;
-extern f32 D_FLT_002BF664;
-extern f32 D_FLT_002BF70C;
-void BuildJtTargetList(s32 arg0, s32 arg1, s32 arg2) {
-    s8 sp[0xc0] __attribute__((aligned(16)));
-    s32 sp90;
-    s128 spC0;
-    s32 spD0;
-    s32 spD4;
-    s32 spD8;
-    s32 *var_v1_2;
-    s32 temp_v0;
-    s32 var_s0_10;
-    s32 var_s0_11;
-    s32 var_v0;
-    s8 *var_a4;
-    s8 *var_a4_2;
-    s8 *var_a4_3;
-    s8 *var_a4_4;
-    s8 *var_a4_5;
-    s8 *var_a4_6;
-    s8 *var_a4_7;
-    s8 *var_a4_8;
-    s8 *var_s0;
-    s8 *var_s0_2;
-    s8 *var_s0_3;
-    s8 *var_s0_4;
-    s8 *var_s0_5;
-    s8 *var_s0_6;
-    s8 *var_s0_7;
-    s8 *var_s0_8;
-    s8 *var_s0_9;
-    s8 *var_v0_2;
-    s8 *var_v1;
-    if (FIsPoSwFocusBase(arg1) != 0) {
-        spD8 = arg2 & 0x20;
-        memset(sp, 0, 0xC0);
-        spD4 = arg2 & 2;
-        spD0 = arg2 & 1;
-        var_v1 = sp;
-        M2C_FIELD(sp, s32 *, 0xC) = -1;
-loop_2:
-        M2C_FIELD(var_v1, f32 *, 8) = (f32) D_FLT_002BF664;
-        var_v1 += 0x30;
-        if ((u32) var_v1 < (u32) &spC0) {
-            M2C_FIELD(var_v1, s32 *, 0xC) = -1;
-            goto loop_2;
-        }
-        spC0 = PosLoWorld(arg1, -1);
-        if (arg2 & 8) {
-            var_s0 = B_003E13F0;
-            var_a4 = var_s0 + 0x190;
-            if (var_s0 != NULL) {
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0, (var_s0 == NULL) ? NULL : var_a4, 4, sp);
-                    var_s0 = M2C_FIELD(var_s0, s8 **, 0x1B4);
-                    var_a4 = var_s0 + 0x190;
-                } while (var_s0 != NULL);
-            }
-        }
-        if (arg2 & 0x10) {
-            var_s0_2 = B_003E13FC;
-            var_a4_2 = var_s0_2 + 0xE0;
-            if (var_s0_2 != NULL) {
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_2, (var_s0_2 == NULL) ? NULL : var_a4_2, 4, sp);
-                    var_s0_2 = M2C_FIELD(var_s0_2, s8 **, 0x104);
-                    var_a4_2 = var_s0_2 + 0xE0;
-                } while (var_s0_2 != NULL);
-            }
-        }
-        if (arg2 & 0x80) {
-            var_s0_3 = B_003E1414;
-            var_a4_3 = var_s0_3 + 0xE0;
-            if (var_s0_3 != NULL) {
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_3, (var_s0_3 == NULL) ? NULL : var_a4_3, 4, sp);
-                    var_s0_3 = M2C_FIELD(var_s0_3, s8 **, 0x104);
-                    var_a4_3 = var_s0_3 + 0xE0;
-                } while (var_s0_3 != NULL);
-            }
-        }
-        if (arg2 & 4) {
-            var_s0_4 = B_003E1438;
-            var_a4_4 = var_s0_4 + 0x130;
-            if (var_s0_4 != NULL) {
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_4, (var_s0_4 == NULL) ? NULL : var_a4_4, 4, sp);
-                    var_s0_4 = M2C_FIELD(var_s0_4, s8 **, 0x154);
-                    var_a4_4 = var_s0_4 + 0x130;
-                } while (var_s0_4 != NULL);
-            }
-        }
-        if (arg2 & 0x400) {
-            var_s0_5 = B_003E13D8;
-            var_a4_5 = var_s0_5 + 0xE0;
-            if (var_s0_5 != NULL) {
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_5, (var_s0_5 == NULL) ? NULL : var_a4_5, 4, sp);
-                    var_s0_5 = M2C_FIELD(var_s0_5, s8 **, 0x104);
-                    var_a4_5 = var_s0_5 + 0xE0;
-                } while (var_s0_5 != NULL);
-            }
-        }
-        if (arg2 & 0x200) {
-            var_s0_6 = B_003E13CC;
-            if (var_s0_6 != NULL) {
-                var_a4_6 = var_s0_6 + 0x190;
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_6, (var_s0_6 == NULL) ? NULL : var_a4_6, 4, sp);
-                    var_s0_6 = M2C_FIELD(var_s0_6, s8 **, 0x1B4);
-                    var_a4_6 = var_s0_6 + 0x190;
-                } while (var_s0_6 != NULL);
-            }
-        }
-        if (spD4 != 0) {
-            var_s0_7 = B_003E13C0;
-            if (var_s0_7 != NULL) {
-                var_a4_7 = var_s0_7 + 0x190;
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_7, (var_s0_7 == NULL) ? NULL : var_a4_7, 4, sp);
-                    var_s0_7 = M2C_FIELD(var_s0_7, s8 **, 0x1B4);
-                    var_a4_7 = var_s0_7 + 0x190;
-                } while (var_s0_7 != NULL);
-            }
-        }
-        if (spD0 != 0) {
-            var_s0_8 = B_003E13B4;
-            if (var_s0_8 != NULL) {
-                do {
-                    if ((M2C_FIELD(var_s0_8, s32 *, 0xE8) & 1) && (FIsBasicDerivedFrom(var_s0_8, 0x13) != 0)) {
-                        InsertTargetCandidate(arg0, arg1, spC0, var_s0_8, (var_s0_8 == NULL) ? NULL : (var_s0_8 + 0x100), 4, sp);
-                    }
-                    var_s0_8 = M2C_FIELD(var_s0_8, s8 **, 0xE0);
-                } while (var_s0_8 != NULL);
-            }
-        }
-        if (spD8 != 0) {
-            var_s0_9 = B_003E1408;
-            if (var_s0_9 != NULL) {
-                var_a4_8 = var_s0_9 + 0xE0;
-                do {
-                    InsertTargetCandidate(arg0, arg1, spC0, var_s0_9, (var_s0_9 == NULL) ? NULL : var_a4_8, 4, sp);
-                    var_s0_9 = M2C_FIELD(var_s0_9, s8 **, 0x104);
-                    var_a4_8 = var_s0_9 + 0xE0;
-                } while (var_s0_9 != NULL);
-            }
-        }
-        var_s0_10 = 4;
-        if (sp90 == 0) {
-            var_v1_2 = &sp90;
-loop_44:
-            var_s0_10 -= 1;
-            var_v1_2 -= 0x30;
-            if (var_s0_10 > 0) {
-                if (*var_v1_2 == 0) {
-                    goto loop_44;
-                }
-            }
-        }
-        EmitTargetSparkles(&B_003DD490, arg1, var_s0_10, sp);
-        UpdateSwTargetList(&B_003DD490, arg1, var_s0_10, sp);
-        temp_v0 = func_001DA5B0(&B_003DA0C0);
-        if ((temp_v0 == -1) || (temp_v0 == M2C_FIELD(&B_003DD490, s32 *, 0x4740))) {
-            asm volatile("lqc2 vf2, 0xc0(%0)" : : "r"(sp));
-            if (M2C_FIELD(&B_003DD490, s32 *, 0x4678) != 0) {
-                asm volatile("lqc2 vf1, 0x46a0(%0)" : : "r"(&B_003DD490));
-                asm volatile("vsub.xyzw vf1, vf2, vf1");
-                asm volatile("vmul.xyz vf1, vf1, vf1");
-                asm volatile("vaddw.x vf2, vf0, vf0w");
-                asm volatile("vadday.x ACC, vf1, vf1y");
-                asm volatile("vmaddz.x vf1, vf2, vf1z");
-                var_v0 = 1;
-                asm volatile("vsqrt Q, vf1x");
-                asm volatile("vwaitq");
-                asm volatile("vaddq.x vf1, vf0, Q");
-                s32 vu_1;
-                asm volatile("qmfc2.ni %0, vf1" : "=r"(vu_1));
-                if (!(D_FLT_002BF660 < vu_1)) {
-                    var_v0 = 0;
-                }
-                if (var_v0 == 0) {
-                    var_v0_2 = NULL;
-                    if (M2C_FIELD(&B_003DD490, s32 *, 0x4690) != 0) {
-                        var_v0_2 = PpoolFromLoClone(M2C_FIELD(&B_003DD490, s32 *, 0x4690));
-                    }
-                    if (var_v0_2 != NULL) {
-                        if ((M2C_FIELD(var_v0_2, s32 *, 0x18) != 0x624) || (var_s0_11 = 0x125, !(D_FLT_002BF70C < M2C_FIELD(&B_003DD490, f32 *, 0x4694)))) {
-                            goto block_61;
-                        }
-                    } else {
-block_61:
-                        var_s0_11 = M2C_FIELD(M2C_FIELD(&B_003DD490, s8 **, 0x4684), s32 *, 0x14);
-                    }
-                } else {
-                    goto block_54;
-                }
-            } else {
-block_54:
-                var_s0_11 = -1;
-            }
-            if (var_s0_11 != temp_v0) {
-                if (var_s0_11 == -1) {
-                    ClearHudLabel(&B_003DA0C0, M2C_FIELD(&B_003DD490, s32 *, 0x4740));
-                } else {
-                    ShowHudLabel(&B_003DA0C0, var_s0_11, 0xBF800000);
-                }
-                M2C_FIELD(&B_003DD490, s32 *, 0x4740) = var_s0_11;
-            }
-        }
-    }
+int FIsPoSwFocusBase(void *);
+int FIsBasicDerivedFrom(void *, int);
+void InsertTargetCandidate(void *, void *, QW, void *, void *, int, TGT *);
+QW PosLoWorld(void *);
+void EmitTargetSparkles(SW *, void *, int, TGT *);
+void UpdateSwTargetList(SW *, void *, int, TGT *);
+int func_001DA5B0(void *);
+POOL *PpoolFromLoClone(void *);
+void ClearHudLabel(void *, int);
+void ShowHudLabel(void *, int, float);
+void *memset(void *, int, unsigned int);
+extern SW B_003DD490;
+extern char B_003DA0C0[];
+extern CRV *B_003E13F0;
+extern LO *B_003E13FC;
+extern LO *B_003E1414;
+extern BRK *B_003E1438;
+extern LO *B_003E13D8;
+extern CRV *B_003E13CC;
+extern CRV *B_003E13C0;
+extern ALO *B_003E13B4;
+extern LO *B_003E1408;
+extern float D_002BF660;
+extern float D_002BF664;
+extern float D_002BF70C;
 }
+
+extern "C" void BuildJtTargetList(void *pjt, void *pso, int grf)
+{
+    TGT atgt[4];
+    QW pos;
+    if (FIsPoSwFocusBase(pso) == 0)
+        return;
+    int fLo1408 = grf & 0x20;
+    memset(atgt, 0, sizeof(atgt));
+    int fCrv13F0 = grf & 8;
+    int fLo13FC = grf & 0x10;
+    int fCrv13C0 = grf & 2;
+    int fLo1414 = grf & 0x80;
+    int fBrk = grf & 4;
+    int fLo13D8 = grf & 0x400;
+    int fCrv13CC = grf & 0x200;
+    int fAlo = grf & 1;
+    for (TGT *ptgt = atgt; ptgt < &atgt[4]; ptgt++) {
+        ptgt->iC = -1;
+        ptgt->g8 = D_002BF664;
+    }
+    pos = PosLoWorld(pso);
+    if (fCrv13F0)
+        for (CRV *p = B_003E13F0; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0x190 : 0, 4, atgt);
+    if (fLo13FC)
+        for (LO *p = B_003E13FC; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0xE0 : 0, 4, atgt);
+    if (fLo1414)
+        for (LO *p = B_003E1414; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0xE0 : 0, 4, atgt);
+    if (fBrk)
+        for (BRK *p = B_003E1438; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0x130 : 0, 4, atgt);
+    if (fLo13D8)
+        for (LO *p = B_003E13D8; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0xE0 : 0, 4, atgt);
+    if (fCrv13CC)
+        for (CRV *p = B_003E13CC; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0x190 : 0, 4, atgt);
+    if (fCrv13C0)
+        for (CRV *p = B_003E13C0; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0x190 : 0, 4, atgt);
+    if (fAlo)
+        for (ALO *p = B_003E13B4; p != 0; p = p->pnext)
+            if ((p->grf & 1) && FIsBasicDerivedFrom(p, 0x13))
+                InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0x100 : 0, 4, atgt);
+    if (fLo1408)
+        for (LO *p = B_003E1408; p != 0; p = p->pnext)
+            InsertTargetCandidate(pjt, pso, pos, p, p ? (char *)p + 0xE0 : 0, 4, atgt);
+
+    int ctgt = 4;
+    while (ctgt > 0 && atgt[ctgt - 1].pso == 0)
+        ctgt--;
+    EmitTargetSparkles(&B_003DD490, pso, ctgt, atgt);
+    UpdateSwTargetList(&B_003DD490, pso, ctgt, atgt);
+    int label = func_001DA5B0(B_003DA0C0);
+    if (label != -1 && label != B_003DD490.label)
+        return;
+    int labelNew;
+    int fence;
+    // fence tokens: the subtraction reads vf2 that the first block loads
+    asm("lqc2 vf2, %1" : "=r"(fence) : "m"(pos));
+    if (B_003DD490.fTarget != 0) {
+        asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf2, vf1\n\tvmul.xyz vf1, vf1, vf1\n\tvaddw.x vf2, vf0, vf0w\n\tvadday.x ACC, vf1, vf1y\n\tvmaddz.x vf1, vf2, vf1z"
+            : "=r"(fence) : "m"(B_003DD490.posTarget), "r"(fence));
+        asm("vsqrt Q, vf1x\n\tvwaitq\n\tvaddq.x vf1, vf0, Q" : "=r"(fence) : "r"(fence));
+        int distanceBits;
+        asm("qmfc2.ni %0, vf1" : "=r"(distanceBits) : "r"(fence));
+        float distance;
+        asm("mtc1 %1, %0" : "=f"(distance) : "r"(distanceBits));
+        int fFar = D_002BF660 < distance;
+        if (!fFar) {
+            POOL *ppool = 0;
+            if (B_003DD490.ploClone != 0)
+                ppool = PpoolFromLoClone(B_003DD490.ploClone);
+            if (ppool != 0 && ppool->kind == 0x624 && D_002BF70C < B_003DD490.t)
+                labelNew = 0x125;
+            else
+                labelNew = B_003DD490.phud->label;
+        } else {
+            labelNew = -1;
+        }
+    } else {
+        labelNew = -1;
+    }
+    if (labelNew != label) {
+        if (labelNew == -1)
+            ClearHudLabel(B_003DA0C0, B_003DD490.label);
+        else
+            ShowHudLabel(B_003DA0C0, labelNew, -1.0f);
+        B_003DD490.label = labelNew;
+    }
 }

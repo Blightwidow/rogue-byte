@@ -1,9 +1,9 @@
 #include "sly2.h"
 struct REQ { int size; int align; };
-struct OBJ { char pad0[0x20]; unsigned flags; char pad24[0x44 - 0x24]; int count44; void **ptr48; };
+struct OBJ { char pad0[0x20]; int flags; char pad24[0x44 - 0x24]; int count44; void **ptr48; };
 struct BITS { unsigned lo : 13; unsigned start : 9; unsigned end : 9; unsigned hi : 1; };
 struct DST { int f0; int f4; int f8; BITS bits; void *p10; int f14; void *p18; int f1c; OBJ *pobj; int f24; };
-struct SRC { char b0; signed char count; unsigned char flags; char pad3[5]; int f8; int fC; int f10; };
+struct SRC { char b0; signed char count; signed char flags; char pad3[5]; int f8; int fC; int f10; };
 struct ENT { char pad[0xC]; };
 struct SLE { int f0; int f4; int f8; OBJ *pobj; int f10; };
 struct P12 { char pad[0xC]; };
@@ -65,9 +65,10 @@ struct GS {
     VOBJ *pparent; char pad4[0x24 - 4]; int cobj; void **pobj; char pad2C[0x38 - 0x2C];
     int cdst; SRC *psrc; DST *pdst; char pad44[0x58 - 0x44]; int f58;
 };
+struct SLENT { int f0; int f4; int f8; OBJ *pobj; int sle; };
 extern "C" {
 extern int B_003DA790;
-extern char B_003DA798[];
+extern SLENT B_003DA798[];
 void ClearSle(void *);
 void CopyAb__FPvT0Ui(void *, void *, unsigned);
 void CopyGlobDmaChain(SRC *, DST *, int, void *, int, void *, void *);
@@ -80,38 +81,34 @@ OBJ *func_001ED850(OBJ *);
 extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
 {
     REQ req;
-    int align = 0x10;
     self->pparent = parent;
     req.size = self->cdst * 0x28;
-    req.align = align;
+    req.align = 0x10;
     self->pdst = (DST *)PvAllocSwCopyImpl__FiPv(&req, self->pdst);
     self->f58 = 0;
     int index = 0;
     if (self->cobj > 0) {
-    again:
-        if (((OBJ *)self->pobj[index])->flags & 4) {
-            req.size = self->cobj * 4;
-            req.align = align;
-            self->pobj = (void **)PvAllocSwCopyImpl__FiPv(&req, self->pobj);
-        } else {
-            index += 1;
-            if (index < self->cobj)
-                goto again;
-        }
+        do {
+            if (((OBJ *)self->pobj[index])->flags & 4) {
+                req.size = self->cobj * 4;
+                req.align = 0x10;
+                self->pobj = (void **)PvAllocSwCopyImpl__FiPv(&req, self->pobj);
+                break;
+            }
+            index++;
+        } while (index < self->cobj);
     }
     for (int index = 0; index < self->cdst; index++) {
         DST *pdst = &self->pdst[index];
         SRC *psrc = (SRC *)((char *)self->psrc + index * 0x14);
         parent->emit(arg, &pdst->f4);
         req.size = psrc->count * 0x50;
-        req.align = align;
+        req.align = 0x10;
         pdst->p18 = PvAllocSwCopyImpl__FiPv(&req, pdst->p18);
         for (int ient = 0; ient < psrc->count; ient++)
             parent->emit(arg, (char *)pdst->p18 + ient * 0x50 + 0xC);
         OBJ *pobj = pdst->pobj;
-        int fresh = 0;
-        if (pobj != 0)
-            fresh = (pobj->flags & 4) != 0;
+        int fresh = pobj != 0 && (pobj->flags & 4);
         if (fresh != 0) {
             OBJ *pnew = func_001ED850(pobj);
             for (int iobj = 0; iobj < self->cobj; iobj++) {
@@ -130,7 +127,7 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                 cdma = psrc->f10;
                 pold = pdst->p10;
                 req.size = cdma * 0x10;
-                req.align = align;
+                req.align = 0x10;
                 pnew = PvAllocSwCopyImpl__FiPv(&req, pold);
                 pdst->p10 = pnew;
             } else {
@@ -140,7 +137,7 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                     if (fresh != 0) {
                         pold = pnew;
                         req.size = cdma * 0x10;
-                        req.align = align;
+                        req.align = 0x10;
                         pdst->pobj->ptr48 = (void **)PvAllocSwCopyImpl__FiPv(&req, pold);
                         pnew = pdst->pobj->ptr48;
                     }
@@ -151,22 +148,18 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                 unsigned start = pdst->bits.start;
                 unsigned count = pdst->bits.end - start;
                 int dmaBytes = cdma * 0x10;
-                CopyAb__FPvT0Ui(B_003DA798 + B_003DA790 * 0x14, B_003DA798 + start * 0x14, count * 0x14);
+                CopyAb__FPvT0Ui(&B_003DA798[B_003DA790], &B_003DA798[start], count * sizeof(SLENT));
                 pdst->bits.start = B_003DA790;
                 B_003DA790 += count;
                 pdst->bits.end = B_003DA790;
-                unsigned ientry = pdst->bits.start;
-                if (ientry < pdst->bits.end) {
-                    do {
-                        char *pentry = B_003DA798 + ientry * 0x14;
-                        if (fresh != 0) {
-                            *(int *)(pentry + 4) = (int)pdst->pobj + 0x24;
-                            *(OBJ **)(pentry + 0xC) = pdst->pobj;
-                        }
-                        ClearSle(B_003DA798 + ientry * 0x14 + 0x10);
-                        ientry += 1;
-                        PrependSlEntry(*(char **)(pentry + 0xC) + 0x34, pentry);
-                    } while (ientry < pdst->bits.end);
+                for (unsigned ientry = pdst->bits.start; ientry < pdst->bits.end; ientry++) {
+                    SLENT *pentry = &B_003DA798[ientry];
+                    if (fresh != 0) {
+                        pentry->f4 = (int)pdst->pobj + 0x24;
+                        pentry->pobj = pdst->pobj;
+                    }
+                    ClearSle(&B_003DA798[ientry].sle);
+                    PrependSlEntry((char *)pentry->pobj + 0x34, pentry);
                 }
                 func_001EC740(pdst->bits.start, pdst->bits.end, dmaBytes, pold, pnew);
             }

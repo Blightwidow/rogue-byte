@@ -66,11 +66,11 @@ address	name	size	file	score
 0X125168	RefOpNearClipCenter	128	splice-bif-splice-eval/RefOpNearClipCenter.cpp	24
 0X126A18	RefEvalCond__FP5CPairP6CFrame	392	splice-eval/RefEvalCond__FP5CPairP6CFrame.cpp	40
 0X126BA0	RefEvalCase__FP5CPairP6CFrame	536	splice-eval/RefEvalCase__FP5CPairP6CFrame.cpp	35
-0X1272E0	RefEvalApply	1368	splice-eval-splice-frame/RefEvalApply.cpp	131
+0X1272E0	RefEvalApply	1368	splice-eval-splice-frame/RefEvalApply.cpp	93
 0X127838	RefEval	392	splice-eval-splice-frame/RefEval.cpp	5
 0X1286E0	CGc_Collect	800	new_127e90/CGc_Collect.cpp	28
 0X1298F0	CRef_SetSmpPtr	128	splice-ref/CRef_SetSmpPtr.c	18
-0X12A3D8	PpairSerializeIn	1104	splice-ref-splice-sidebag/PpairSerializeIn.cpp	189
+0X12A3D8	PpairSerializeIn	1104	splice-ref-splice-sidebag/PpairSerializeIn.cpp	69
 0X12B738	func_0012B738	664	new_12ae28/fun_0012b738.cpp	41
 0X12BBD0	func_0012BBD0	664	new_12ae28/fun_0012bbd0.cpp	27
 0X12BF30	func_0012BF30	432	new_12ae28/fun_0012bf30.cpp	25
@@ -99,7 +99,6 @@ address	name	size	file	score
 0X133E80	UpdateSwAaox__FP2SW	448	bbmark/UpdateSwAaox__FP2SW.cpp	70
 0X134040	RecalcSwXpAll	720	bbmark-blend/RecalcSwXpAll.cpp	105
 0X134DA8	UpdateBentley	1184	bbmark-blend/UpdateBentley.c	242
-0X135248	SetBentleyState	1184	bbmark-blend/SetBentleyState.cpp	177
 0X135940	PresetBentleyAccel	264	bbmark-blend/PresetBentleyAccel.cpp	26
 0X136118	UpdateBentleyGadget	384	bbmark-blend/UpdateBentleyGadget.c	61
 0X136530	func_00136530	680	bbmark-blend/fun_00136530.c	87
@@ -140,7 +139,7 @@ address	name	size	file	score
 0X142AF8	UpdateJtLookRig	1432	new_13f888/UpdateJtLookRig.cpp	110
 0X143220	PredictLoLead	192	new_13f888/PredictLoLead.cpp	4
 0X143410	PpathFindBootyOid	616	new_13f888/PpathFindBootyOid.cpp	78
-0X143678	UpdateJtLootSave	1144	new_13f888/UpdateJtLootSave.cpp	117
+0X143678	UpdateJtLootSave	1144	new_13f888/UpdateJtLootSave.cpp	18
 0X143AF0	func_00143AF0	232	new_13f888/fun_00143af0.cpp	26
 0X143D20	FJtLandsWithin	200	new_13f888/FJtLandsWithin.cpp	2
 0X144640	func_00144640	688	new_13f888/fun_00144640.cpp	13
@@ -160,7 +159,7 @@ address	name	size	file	score
 0X149440	UpdateVolbtn	728	button-cd/UpdateVolbtn.c	101
 0X149C80	UpdateSwCallbacks	560	button-cd/UpdateSwCallbacks.cpp	29
 0X14A2A0	func_0014A2A0	472	button-cd/fun_0014a2a0.cpp	70
-0X14A4D0	func_0014A4D0	1376	button-cd/fun_0014a4d0.cpp	218
+0X14A4D0	func_0014A4D0	1376	button-cd/fun_0014a4d0.c	383
 0X14AE38	func_0014AE38	872	button-cd/fun_0014ae38.cpp	67
 0X14B290	func_0014B290	464	button-cd/fun_0014b290.cpp	23
 0X14B7F8	CpchzTokenizePath__FPc	448	cd/CpchzTokenizePath__FPc.cpp	62
@@ -189,7 +188,6 @@ address	name	size	file	score
 0X14F4E0	func_0014F4E0	192	cm_14e270/fun_0014f4e0.cpp	35
 0X14FEC8	PosCplookEye	112	tn-rip/PosCplookEye.cpp	2
 0X14FF38	ActivateCplook	552	tn-rip/ActivateCplook.cpp	80
-0X150160	UpdateCplook	1144	tn-rip/UpdateCplook.cpp	190
 0X1507F8	bevy_classes_k30_cam_1507f8	320	tn-rip/bevy_classes_k30_cam_1507f8.cpp	28
 0X150938	bevy_classes_k30_cam_activate_2	240	tn-rip/bevy_classes_k30_cam_activate_2.cpp	2
 0X150A28	bevy_classes_k30_cam_update	960	tn-rip/bevy_classes_k30_cam_update.cpp	34
@@ -256,7 +254,6 @@ address	name	size	file	score
 0X166270	CloneGeom	440	sensor-geom/CloneGeom.cpp	76
 0X166428	TransformPoints	120	sensor-geom/TransformPoints.cpp	7
 0X1664A0	TransformGeom	336	sensor-geom/TransformGeom.cpp	52
-0X167320	LoadGlobsetFromBrx	1360	new_167320/LoadGlobsetFromBrx.cpp	170
 0X167B68	BindGlobset	568	new_167320/BindGlobset.cpp	90
 0X167DA0	func_00167DA0	184	new_167320/fun_00167da0.cpp	7
 0X167E58	func_00167E58	288	new_167320/fun_00167e58.cpp	66
@@ -269,8 +266,8 @@ address	name	size	file	score
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	371
 0X16D6C8	func_0016D6C8	896	new_167320/fun_0016d6c8.cpp	63
 0X16DA48	func_0016DA48	784	new_167320/fun_0016da48.cpp	95
-0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	134
-0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	150
+0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	42
+0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	63
 0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
 0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	10
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.cpp	72
@@ -279,7 +276,7 @@ address	name	size	file	score
 0X172018	UpdateSearchBeh	776	new_1715f0/UpdateSearchBeh.cpp	96
 0X172658	func_00172658	264	new_1715f0/fun_00172658.cpp	7
 0X172798	FAddSearchCand	240	new_1715f0/FAddSearchCand.c	36
-0X1728B0	func_001728B0	1632	new_1715f0/fun_001728b0.cpp	200
+0X1728B0	func_001728B0	1632	new_1715f0/fun_001728b0.cpp	61
 0X1733C8	AddSpawnerOffset	48	new_1715f0/AddSpawnerOffset.cpp	6
 0X173588	FInScreenBox	136	new_1715f0/FInScreenBox.cpp	5
 0X173610	FFindSurfaceAlongUp	344	new_1715f0/FFindSurfaceAlongUp.cpp	13
@@ -299,7 +296,6 @@ address	name	size	file	score
 0X179898	GoalKnockDown_Activate	392	hide-puffer/GoalKnockDown_Activate.cpp	10
 0X179AA0	GoalIdle_Activate	192	hide-puffer/GoalIdle_Activate.c	12
 0X179BA0	GoalIdle_Update	400	hide-puffer/GoalIdle_Update.cpp	83
-0X179FA0	GoalJump_Activate	1072	hide-puffer/GoalJump_Activate.cpp	170
 0X17A468	func_0017A468	72	hide-puffer/fun_0017a468.cpp	2
 0X17AA78	func_0017AA78	336	hide-puffer/fun_0017aa78.c	80
 0X17AC90	GoalAnimLeap_Update	672	hide-puffer/GoalAnimLeap_Update.cpp	103
@@ -351,13 +347,12 @@ address	name	size	file	score
 0X185E40	UpdateJtSurfaceWalk	1656	binoc-joy/UpdateJtSurfaceWalk.cpp	274
 0X186820	RefreshAloIkLimbLengths	272	binoc-joy/RefreshAloIkLimbLengths.cpp	26
 0X186930	InitIkLimb	288	binoc-joy/InitIkLimb.c	52
-0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.cpp	133
+0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.cpp	75
 0X1875B8	SetJoyJoys__FP3JOY4JOYS4JOYK	432	joy_187030/SetJoyJoys__FP3JOY4JOYS4JOYK.cpp	6
 0X187998	FReadJoy__FP3JOY	1000	joy_187030/FReadJoy__FP3JOY.cpp	25
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
 0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.cpp	20
 0X188E78	AdjustSlyXpVelocity	168	joy-jt/AdjustSlyXpVelocity.c	28
-0X188F20	HandleSlyMessage	1336	joy-jt/HandleSlyMessage.cpp	170
 0X189618	UpdateJtBalance	1576	joy-jt/UpdateJtBalance.c	334
 0X189C40	RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG	648	jt_189c40/RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG.cpp	129
 0X189EC8	FMatchJtXmg	512	jt_189c40/FMatchJtXmg.cpp	100
@@ -390,7 +385,7 @@ address	name	size	file	score
 0X194170	PresetJtAccelHide__FP2JT	384	stephide/PresetJtAccelHide__FP2JT.cpp	19
 0X1942F0	func_001942F0	472	new_1942f0/fun_001942f0.cpp	103
 0X1944C8	PasegAttachBase	144	new_1942f0/PasegAttachBase.cpp	22
-0X194A40	BuildJtTargetList	1288	new_1942f0/BuildJtTargetList.cpp	221
+0X194A40	BuildJtTargetList	1288	new_1942f0/BuildJtTargetList.cpp	58
 0X194F70	UpdateSwTargetList	1016	new_1942f0/UpdateSwTargetList.cpp	82
 0X195368	EmitTargetSparkles	672	new_1942f0/EmitTargetSparkles.cpp	68
 0X195A00	SetJmpState	1464	new_1942f0/SetJmpState.cpp	259
@@ -418,7 +413,7 @@ address	name	size	file	score
 0X19DF70	PresetJtAccelPipe__FP2JT	416	steppipe/PresetJtAccelPipe__FP2JT.c	95
 0X19E1E0	UpdateJtActivePipe	1904	new_19e110/UpdateJtActivePipe.cpp	81
 0X19EA00	func_0019EA00	96	new_19e110/fun_0019ea00.cpp	2
-0X19EAB0	SetJtPipeState	1088	new_19e110/SetJtPipeState.c	173
+0X19EAB0	SetJtPipeState	1088	new_19e110/SetJtPipeState.cpp	16
 0X19F590	WarpJtToSafePoint	576	transition-jp/WarpJtToSafePoint.cpp	84
 0X19F7D0	ScoreSafePoint	808	jp/ScoreSafePoint.cpp	160
 0X19FC30	UpdateJtSafePoints	256	jp-stepzap/UpdateJtSafePoints.c	46
@@ -428,7 +423,7 @@ address	name	size	file	score
 0X1A0B40	SetJtZapState	1368	jp-stepzap/SetJtZapState.cpp	234
 0X1A1358	UpdateZapPost	600	new_1a1148/UpdateZapPost.cpp	29
 0X1A16C8	ZapKnockback	728	new_1a1148/ZapKnockback.c	177
-0X1A19A0	ZapTakeDamage	1480	new_1a1148/ZapTakeDamage.cpp	151
+0X1A19A0	ZapTakeDamage	1480	new_1a1148/ZapTakeDamage.cpp	4
 0X1A2788	FFindWaterSurface	296	ub-light/FFindWaterSurface.cpp	22
 0X1A28B0	func_001A28B0	456	ub-light/fun_001a28b0.c	131
 0X1A3968	RebuildLight	464	light-stepguard/RebuildLight.c	100
@@ -468,7 +463,7 @@ address	name	size	file	score
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
 0X1ADA20	func_001ADA20	408	memcard-memory/fun_001ada20.cpp	31
 0X1ADC40	func_001ADC40	432	memcard-memory/fun_001adc40.cpp	42
-0X1AEEE0	PauseMenu_Update	1192	smartguard-ac/PauseMenu_Update.cpp	163
+0X1AEEE0	PauseMenu_Update	1192	smartguard-ac/PauseMenu_Update.cpp	8
 0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.cpp	66
 0X1AF9C8	RefreshOptionItem	448	smartguard-ac/RefreshOptionItem.cpp	57
 0X1AFB88	PauseMenu_ApplyOption	1024	smartguard-ac/PauseMenu_ApplyOption.cpp	58
@@ -496,7 +491,7 @@ address	name	size	file	score
 0X1B6CC0	func_001B6CC0	232	mpeg-memcard/fun_001b6cc0.cpp	7
 0X1B6DA8	func_001B6DA8	600	mpeg-memcard/fun_001b6da8.cpp	115
 0X1B70A0	FMurrayTryGrabGuard	528	mpeg-memcard/FMurrayTryGrabGuard.cpp	67
-0X1B72B0	func_001B72B0	1104	mpeg-memcard/fun_001b72b0.cpp	176
+0X1B72B0	func_001B72B0	1104	mpeg-memcard/fun_001b72b0.cpp	161
 0X1B7700	CalcMurrayThrow	624	mpeg-memcard/CalcMurrayThrow.cpp	159
 0X1B7970	ThrowMurrayObject	264	mpeg-memcard/ThrowMurrayObject.cpp	2
 0X1B8100	GetMurrayExposeMode	128	mpeg-memcard/GetMurrayExposeMode.cpp	13
@@ -555,7 +550,7 @@ address	name	size	file	score
 0X1C26E0	FPzlinkUsable	232	new_1c0920/FPzlinkUsable.cpp	18
 0X1C2A78	func_001C2A78	304	new_1c0920/fun_001c2a78.cpp	11
 0X1C2EF0	SpewPrizes	840	new_1c0920/SpewPrizes.cpp	214
-0X1C3500	GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3	1112	steppipe_1c3500/GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3.cpp	164
+0X1C3500	GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3	1112	steppipe_1c3500/GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3.cpp	39
 0X1C3A08	func_001C3A08	128	new_1c3958/fun_001c3a08.cpp	2
 0X1C3A88	func_001C3A88	296	new_1c3958/fun_001c3a88.cpp	24
 0X1C41B8	func_001C41B8	112	new_1c3df8/fun_001c41b8.cpp	5
@@ -850,7 +845,7 @@ address	name	size	file	score
 0X227C90	func_00227C90	144	new_2271f8/fun_00227c90.cpp	4
 0X228538	UpdateWarp	488	new_2271f8/UpdateWarp.cpp	26
 0X228C18	LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4	264	mat_228c18/LoadScaleMatrixVector__FP6VECTORP7MATRIX3T0P7MATRIX4.cpp	24
-0X228E50	UpdateWater	1160	water-sw/UpdateWater.cpp	164
+0X228E50	UpdateWater	1160	water-sw/UpdateWater.cpp	21
 0X229468	UGetWaterSubmerged	536	water-sw/UGetWaterSubmerged.c	113
 0X2297F8	AddSoWaterAcceleration	1384	so-wr/AddSoWaterAcceleration.cpp	48
 0X22A060	func_0022A060	448	so-wr/fun_0022a060.cpp	40

@@ -39,13 +39,18 @@ extern "C" void func_001B72B0(Obj *obj, XF *xfEnd, M4 *mat, QW *outEuler, QW *ou
     }
     Bone *bone = obj->pjt->bone;
     InvertMatrix4Affine(&l.inv, mat);
+    int count = 0;
     int idxA = -1;
     int idxB = -1;
-    M4 *pcE = &l.mE;
-    M4 *pdQ = &l.mQ;
     M4 *paZ = &l.mZ;
     QW *pbPos = &l.mW.row[3];
-    int count = 0;
+    M4 *pcE = &l.mE;
+    M4 *pdQ = &l.mQ;
+    M4 *pmA = &l.mA;
+    M4 *pmW = &l.mW;
+    M4 *pmR = &l.mR;
+    M4 *pmI = &l.mI;
+    M4 *pmT = &l.mT;
     XF *cur = obj->pjt->chain->start;
     if (cur != xfEnd) {
         do {
@@ -56,18 +61,18 @@ extern "C" void func_001B72B0(Obj *obj, XF *xfEnd, M4 *mat, QW *outEuler, QW *ou
             count++;
         } while (cur != xfEnd);
     }
-    int last = count - 1;
+    count--;
     int idxAm1 = idxA - 1;
-    ConvertXfMatrix4(&l.mA, obj->pjt->chain->start, bone->xfB, &RO_002A2D30);
+    ConvertXfMatrix4(pmA, obj->pjt->chain->start, bone->xfB, &RO_002A2D30);
     ConvertXfMatrix4(pcE, bone->xfB->parent, xfEnd, &RO_002A2D30);
-    __ml__FRC7MATRIX4T0(&l.mW, &l.mA, &obj->pjt->chain->mat);
+    __ml__FRC7MATRIX4T0(pmW, pmA, &obj->pjt->chain->mat);
     l.mA = l.mW;
-    __ml__FRC7MATRIX4T0(&l.mI, &l.mA, &l.inv);
-    __ml__FRC7MATRIX4T0(&l.mR, &l.mI, pcE);
-    InvertMatrix4Affine(&l.mW, &l.mR);
-    QW euler = DecomposeRotateMatrixEuler(&l.mW);
+    __ml__FRC7MATRIX4T0(pmI, pmA, &l.inv);
+    __ml__FRC7MATRIX4T0(pmR, pmI, pcE);
+    InvertMatrix4Affine(pmW, pmR);
+    QW euler = DecomposeRotateMatrixEuler(pmW);
     l.rot[1] = euler;
-    LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(&l.mR, euler);
+    LoadRotateMatrixEuler__FP6VECTORP7MATRIX3(pmR, euler);
     __as__6VECTORG9VU_VECTOR(pbPos, l.xfs[idxB]->local.row[3]);
     l.mW.row[0] = l.mR.row[0];
     l.mW.row[1] = l.mR.row[1];
@@ -77,18 +82,18 @@ extern "C" void func_001B72B0(Obj *obj, XF *xfEnd, M4 *mat, QW *outEuler, QW *ou
     ((float *)&l.mW)[11] = 0;
     ((float *)&l.mW)[15] = 1.0f;
     l.mR = l.mI = RO_002A2D30;
-    for (int index = last; idxA < index; index--) {
-        M4 *step = index != idxB ? &l.xfs[index]->local : &l.mW;
-        MulStep(&l.mR, &l.mT, step);
+    for (; idxA < count; count--) {
+        M4 *step = count != idxB ? &l.xfs[count]->local : pmW;
+        MulStep(pmR, pmT, step);
     }
     for (int index = idxAm1; index >= 0; index--) {
-        M4 *step = index != idxB ? &l.xfs[index]->local : &l.mW;
-        MulStep(&l.mI, &l.mT, step);
+        M4 *step = index != idxB ? &l.xfs[index]->local : pmW;
+        MulStep(pmI, pmT, step);
     }
-    MulStep(&l.mI, &l.mT, &obj->pjt->chain->mat);
-    __ml__FRC7MATRIX4T0(paZ, &l.mI, &l.inv);
-    __ml__FRC7MATRIX4T0(pdQ, paZ, &l.mR);
-    InvertMatrix4Affine(&l.mT, pdQ);
+    MulStep(pmI, pmT, &obj->pjt->chain->mat);
+    __ml__FRC7MATRIX4T0(paZ, pmI, &l.inv);
+    __ml__FRC7MATRIX4T0(pdQ, paZ, pmR);
+    InvertMatrix4Affine(pmT, pdQ);
     l.rot[2] = l.mT.row[3];
     if (outEuler)
         *outEuler = l.rot[1];

@@ -25,6 +25,8 @@ struct SWX {
 };
 struct XL { char pad[0x64]; LNODE *plist; };
 struct EVT { int id; int pad4; float f8; int padC; QW q10; QW q20; QW q30; };
+static inline float GMin(float a, float b) { return a > b ? b : a; }
+struct VEC { float v[4]; } __attribute__((aligned(16)));
 struct OBJ170 { char pad[0xC]; void *vt; };
 struct MSG { SWX *psw; SOX *pso; };
 extern "C" {
@@ -49,89 +51,101 @@ extern char B_003DD490[];
 extern QW g_2a2dd0;
 extern QW g_2a2dc0;
 }
+static inline void *PvAllocStack(ALLOCREQ *preq, int cb)
+{
+    preq->cb = cb;
+    preq->cbAlign = 0x10;
+    return PvAllocStackImpl__Fi(preq);
+}
+
 extern "C" void UpdateWater(SWX *psw)
 {
     char frame[0x10];
     UpdateSo(psw);
     if (psw->cpart != 0) {
         union { ALLOCREQ req; MSG msg; QW vel; } sp10;
+        int cpart;
         XA **ppxa = &psw->pxaFirst;
-        for (XA *pxa = psw->pxaFirst; pxa; pxa = pxa->pxaNext)
+        XA *pxa;
+        for (pxa = psw->pxaFirst; pxa; pxa = pxa->pxaNext)
             ((SOX *)pxa->pso)->flags |= 0x80000000L;
         CStackFrame_Construct(frame);
-        sp10.req.cb = psw->cpart * 4;
-        sp10.req.cbAlign = 0x10;
-        PART **appart = (PART **)PvAllocStackImpl__Fi(&sp10.req);
-        int cpart = CpartCollectAlo(psw, func_00229D60, 0, appart);
+        PART **appart = (PART **)PvAllocStack(&sp10.req, psw->cpart * 4);
+        cpart = CpartCollectAlo(psw, func_00229D60, 0, appart);
         for (LNODE *pn = psw->pXL->plist; pn; pn = pn->pnext) {
             SOX *pso = (SOX *)pn->pso;
-            if (!pso->pE8) continue;
-            if (pso->pE8->f < 0.0001f) continue;
-            if (GetSoNoXpsAll(pso) != 0) continue;
-            if (FXfKindDynamic(pso->p58->kind) == 0) continue;
-            if (UGetWaterSubmerged(psw, pso, 0, 0) == 0.0f) continue;
-            {
-                long flags = pso->flags | 0x100000000L;
-                pso->flags = flags;
-                if (!(flags & 0x80000000L)) {
-                    XA *pxaNew = PxaAllocSw(B_003DD490);
-                    *(SWX **)pxaNew = psw;
-                    pxaNew->pso = (SO *)pso;
-                    pxaNew->pxaNext = psw->pxaFirst;
-                    psw->pxaFirst = pxaNew;
-                    if (psw->pobj170) {
-                        VT108 *vt = (VT108 *)pso->vt;
-                        sp10.vel = vt->fn((char *)pso + vt->delta);
-                        float velz = ((float *)&sp10.vel)[2];
-                        if (velz < -100.0f) {
-                            for (int i = 0; i < pso->cpart; i++) {
-                                PARTY *ppart = (PARTY *)(pso->apart + i * 0xB0);
-                                if (!(ppart->flags10 & (0xA000L << 35))) {
-                                    QW origin, rel0, rel1;
-                                    asm("lqc2 vf2, %1\n\tsqc2 vf2, %0" : "=m"(origin) : "m"(g_2a2dd0));
-                                    asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(rel0) : "m"(ppart->pos50));
-                                    asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(rel1) : "m"(((PARTX *)ppart->powner)->pos70));
-                                    float dz;
-                                    if (FIsBasicDerivedFrom(pso, 0x33) == 0)
-                                        dz = pso->pEC->f8 - ppart->powner->f78;
-                                    else
-                                        dz = pso->f248;
-                                    ((float *)&rel0)[2] += dz;
-                                    ((float *)&rel1)[2] += dz;
-                                    char alsg[0x600];
-                                    if (ClsgClipEdgeToObjects(rel0, rel1, cpart, appart, 0x10, alsg) > 0) {
-                                        float vol = -velz;
-                                        if (vol > 600.0f) vol = 600.0f;
-                                        vol = vol * 0.0016666667f;
-                                        SOEC *pec = pso->pEC;
-                                        float size = ((pec->f10 - pec->f0) + (pec->f14 - pec->f4)) * 0.5f;
-                                        int id = NewEmitter(0x13);
-                                        SetEmitterUnpositioned(id, pso);
-                                        SetAmbRange(id, 100.0f, 1000.0f);
-                                        SetAmbVolume(id, vol);
-                                        EVT evt;
-                                        memset(&evt, 0, 0x40);
-                                        QW sum;
-                                        asm("lqc2 vf1, %1\n\tlqc2 vf2, %2\n\tvadd.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(sum) : "m"(*(QW *)alsg), "m"(origin));
-                                        evt.q30 = sum;
-                                        evt.id = 0xE;
-                                        evt.f8 = size * vol;
-                                        evt.q10 = g_2a2dc0;
-                                        OBJ170 *pobj = (OBJ170 *)psw->pobj170;
-                                        VT198 *vt2 = (VT198 *)pobj->vt;
-                                        vt2->fn((char *)pobj + vt2->delta, &evt);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            if (!pso->pE8)
+                continue;
+            if (pso->pE8->f < 0.0001f)
+                continue;
+            if (GetSoNoXpsAll(pso) != 0)
+                continue;
+            if (FXfKindDynamic(pso->p58->kind) == 0)
+                continue;
+            if (UGetWaterSubmerged(psw, pso, 0, 0) == 0.0f)
+                continue;
+            long flags = pso->flags | 0x100000000L;
+            pso->flags = flags;
+            if (flags & 0x80000000L)
+                continue;
+            pxa = PxaAllocSw(B_003DD490);
+            *(SWX **)pxa = psw;
+            pxa->pso = (SO *)pso;
+            pxa->pxaNext = psw->pxaFirst;
+            psw->pxaFirst = pxa;
+            if (!psw->pobj170)
+                continue;
+            VT108 *vt = (VT108 *)pso->vt;
+            sp10.vel = vt->fn((char *)pso + vt->delta);
+            if (((float *)&sp10.vel)[2] < -100.0f) {
+            for (int i = 0; i < pso->cpart; i++) {
+                PARTY *ppart = (PARTY *)(pso->apart + i * 0xB0);
+                if (ppart->flags10 & (0xA000L << 35))
+                    continue;
+                VEC rel0;
+                VEC rel1;
+                char alsg[0x600];
+                VEC origin;
+                EVT evt;
+                int fence;
+                /* origin = g_2a2dd0; rel0 = pos50 - origin; rel1 = powner pos70 - origin */
+                asm("lqc2 vf2, %1" : "=r"(fence) : "m"(g_2a2dd0));
+                asm("sqc2 vf2, %0" : "=m"(origin) : "r"(fence));
+                asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(rel0) : "m"(ppart->pos50), "r"(fence));
+                asm("lqc2 vf1, %1\n\tvsub.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(rel1) : "m"(((PARTX *)ppart->powner)->pos70), "r"(fence));
+                float dz;
+                if (FIsBasicDerivedFrom(pso, 0x33))
+                    dz = pso->f248;
+                else
+                    dz = pso->pEC->f8 - ppart->powner->f78;
+                rel0.v[2] += dz;
+                rel1.v[2] += dz;
+                if (ClsgClipEdgeToObjects(*(QW *)&rel0, *(QW *)&rel1, cpart, appart, 0x10, alsg) <= 0)
+                    continue;
+                float vol = GMin(-((float *)&sp10.vel)[2], 600.0f) * 0.0016666667f;
+                SOEC *pec = pso->pEC;
+                float size = ((pec->f10 - pec->f0) + (pec->f14 - pec->f4)) * 0.5f;
+                int id = NewEmitter(0x13);
+                SetEmitterUnpositioned(id, pso);
+                SetAmbRange(id, 100.0f, 1000.0f);
+                SetAmbVolume(id, vol);
+                memset(&evt, 0, 0x40);
+                int fence2;
+                asm("lqc2 vf1, %1\n\tlqc2 vf2, %2" : "=r"(fence2) : "m"(*(QW *)alsg), "m"(origin));
+                asm("vadd.xyzw vf1, vf1, vf2\n\tsqc2 vf1, %0" : "=m"(evt.q20) : "r"(fence2));
+                evt.id = 0xE;
+                evt.f8 = size * vol;
+                evt.q10 = g_2a2dc0;
+                OBJ170 *pobj = (OBJ170 *)psw->pobj170;
+                VT198 *vt2 = (VT198 *)pobj->vt;
+                vt2->fn((char *)pobj + vt2->delta, &evt);
+            }
             }
         }
-        for (XA *pxa = psw->pxaFirst; pxa; pxa = pxa->pxaNext) {
+        for (pxa = psw->pxaFirst; pxa; pxa = pxa->pxaNext) {
             SOX *pso = (SOX *)pxa->pso;
             long flags = pso->flags;
-            if (((flags >> 31) & 1) != ((flags >> 32) & 1)) {
+            if (((int)(flags >> 31) & 1) != ((int)(flags >> 32) & 1)) {
                 sp10.msg.psw = psw;
                 sp10.msg.pso = pso;
                 VT *vt = (VT *)pso->vt;

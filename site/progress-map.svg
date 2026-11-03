@@ -1576,7 +1576,7 @@
 <rect x="267.2" y="83.2" width="44.6" height="44.5" fill="#4a45a8"><title>func_00169198 0X169198 2032 bytes (draft)</title></rect>
 <rect x="267.2" y="128.1" width="44.6" height="39.9" fill="#4a45a8"><title>LoadGlobIndexedFromBrx 0X16CF78 1824 bytes (draft)</title></rect>
 <rect x="267.2" y="168.4" width="44.6" height="33.0" fill="#4a45a8"><title>LoadGlobSkinnedFromBrx 0X16E438 1512 bytes (draft)</title></rect>
-<rect x="312.1" y="83.2" width="42.0" height="31.5" fill="#4a45a8"><title>LoadGlobsetFromBrx 0X167320 1360 bytes (draft)</title></rect>
+<rect x="312.1" y="83.2" width="42.0" height="31.5" fill="#2f7af4"><title>LoadGlobsetFromBrx 0X167320 1360 bytes (c)</title></rect>
 <rect x="354.5" y="83.2" width="38.2" height="31.5" fill="#2f7af4"><title>LoadGlobStreamedFromBrx 0X16CAA0 1240 bytes (c)</title></rect>
 <rect x="393.1" y="83.2" width="35.5" height="31.5" fill="#4a45a8"><title>CloneGlobset 0X16EA80 1152 bytes (draft)</title></rect>
 <rect x="312.1" y="115.1" width="34.1" height="31.4" fill="#2f7af4"><title>func_0016DD58 0X16DD58 1104 bytes (c)</title></rect>
@@ -2529,7 +2529,7 @@
 <rect x="570.4" y="1.0" width="42.1" height="32.4" fill="#4a45a8"><title>EnsureAsegBlendDynamic 0X137A30 1416 bytes (draft)</title></rect>
 <rect x="613.0" y="1.0" width="37.1" height="32.4" fill="#2f7af4"><title>UpdateBentleyActive 0X134850 1248 bytes (c)</title></rect>
 <rect x="650.4" y="1.0" width="35.2" height="32.4" fill="#4a45a8"><title>UpdateBentley 0X134DA8 1184 bytes (draft)</title></rect>
-<rect x="570.4" y="33.8" width="29.9" height="38.1" fill="#4a45a8"><title>SetBentleyState 0X135248 1184 bytes (draft)</title></rect>
+<rect x="570.4" y="33.8" width="29.9" height="38.1" fill="#2f7af4"><title>SetBentleyState 0X135248 1184 bytes (c)</title></rect>
 <rect x="570.4" y="72.3" width="29.9" height="23.0" fill="#4a45a8"><title>RecalcSwXpAll 0X134040 720 bytes (draft)</title></rect>
 <rect x="570.4" y="95.7" width="29.9" height="21.7" fill="#4a45a8"><title>func_00136530 0X136530 680 bytes (draft)</title></rect>
 <rect x="570.4" y="117.8" width="29.9" height="21.2" fill="#4a45a8"><title>PresetJtOrbitAccel 0X137248 664 bytes (draft)</title></rect>
@@ -2639,7 +2639,7 @@
 <text x="575.4" y="157.4" font-size="13" font-weight="600" fill="#ffffff" stroke="#05060f" stroke-width="3" paint-order="stroke">rip-rumble</text>
 </g>
 <g><title>hide-puffer: 15520 bytes</title>
-<rect x="570.4" y="281.3" width="30.5" height="33.7" fill="#4a45a8"><title>GoalJump_Activate 0X179FA0 1072 bytes (draft)</title></rect>
+<rect x="570.4" y="281.3" width="30.5" height="33.7" fill="#2f7af4"><title>GoalJump_Activate 0X179FA0 1072 bytes (c)</title></rect>
 <rect x="601.3" y="281.3" width="28.7" height="33.7" fill="#4a45a8"><title>func_0017BFF8 0X17BFF8 1008 bytes (draft)</title></rect>
 <rect x="630.4" y="281.3" width="27.8" height="33.7" fill="#4a45a8"><title>GoalAnimLeap_SetState 0X17B1A8 976 bytes (draft)</title></rect>
 <rect x="658.6" y="281.3" width="27.1" height="33.7" fill="#4a45a8"><title>func_0017B9C0 0X17B9C0 952 bytes (draft)</title></rect>
@@ -4068,7 +4068,7 @@
 </g>
 <g><title>joy-jt: 7624 bytes</title>
 <rect x="991.6" y="98.9" width="34.6" height="43.3" fill="#4a45a8"><title>UpdateJtBalance 0X189618 1576 bytes (draft)</title></rect>
-<rect x="991.6" y="142.6" width="34.6" height="36.7" fill="#4a45a8"><title>HandleSlyMessage 0X188F20 1336 bytes (draft)</title></rect>
+<rect x="991.6" y="142.6" width="34.6" height="36.7" fill="#2f7af4"><title>HandleSlyMessage 0X188F20 1336 bytes (c)</title></rect>
 <rect x="1026.5" y="98.9" width="28.3" height="29.1" fill="#4a45a8"><title>PresetSlyAccel 0X188960 872 bytes (draft)</title></rect>
 <rect x="1055.2" y="98.9" width="27.5" height="29.1" fill="#2f7af4"><title>PostSlyLoad 0X188608 848 bytes (c)</title></rect>
 <rect x="1026.5" y="128.4" width="22.0" height="25.3" fill="#2f7af4"><title>UpdateJoyNavX 0X187E88 592 bytes (c)</title></rect>
@@ -4120,7 +4120,7 @@
 <rect x="1084.1" y="97.9" width="92.5" height="82.8" fill="none" stroke="#05060f" stroke-width="2"/>
 </g>
 <g><title>tn-rip: 7184 bytes</title>
-<rect x="1177.6" y="98.9" width="33.5" height="32.3" fill="#4a45a8"><title>UpdateCplook 0X150160 1144 bytes (draft)</title></rect>
+<rect x="1177.6" y="98.9" width="33.5" height="32.3" fill="#2f7af4"><title>UpdateCplook 0X150160 1144 bytes (c)</title></rect>
 <rect x="1177.6" y="131.6" width="33.5" height="27.1" fill="#4a45a8"><title>bevy_classes_k30_cam_update 0X150A28 960 bytes (draft)</title></rect>
 <rect x="1177.6" y="159.1" width="33.5" height="20.2" fill="#4a45a8"><title>bevy_camera_looks_update 0X151340 720 bytes (draft)</title></rect>
 <rect x="1211.5" y="98.9" width="28.2" height="18.3" fill="#4a45a8"><title>ActivateCplook 0X14FF38 552 bytes (draft)</title></rect>

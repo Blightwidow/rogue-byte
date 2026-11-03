@@ -1432,6 +1432,7 @@ address	name	size	file
 0X1347A8	PostBentleyLoad	168	bbmark-blend/PostBentleyLoad.cpp
 0X134850	UpdateBentleyActive	1248	bbmark-blend/UpdateBentleyActive.cpp
 0X134D30	UpdateBentleyBinoc	120	bbmark-blend/UpdateBentleyBinoc.cpp
+0X135248	SetBentleyState	1184	bbmark-blend/SetBentleyState.cpp
 0X1356E8	CalcBentleyBombTarget	212	bbmark-blend/CalcBentleyBombTarget.cpp
 0X1357C0	ThrowBentleyBomb	232	bbmark-blend/ThrowBentleyBomb.cpp
 0X1358A8	GetBentleyCpdefi	152	bbmark-blend/GetBentleyCpdefi.c
@@ -1856,6 +1857,7 @@ address	name	size	file
 0X14FDE0	InitCplook	72	tn-rip/InitCplook.c
 0X14FE28	func_0014FE28	48	tn-rip/fun_0014fe28.c
 0X14FE58	PosCplookAnchor	112	tn-rip/PosCplookAnchor.cpp
+0X150160	UpdateCplook	1144	tn-rip/UpdateCplook.cpp
 0X1505D8	bevy_camera_looks_reset	56	tn-rip/bevy_camera_looks_reset.c
 0X150610	DeactivateCplook	276	tn-rip/DeactivateCplook.cpp
 0X150728	func_00150728	84	tn-rip/fun_00150728.c
@@ -2206,6 +2208,7 @@ address	name	size	file
 0X1671B8	glob__static_initialization_and_destruction_0	308	new_1671b8/glob__static_initialization_and_destruction_0.c
 0X1672F0	func_001672F0	32	new_1671b8/fun_001672f0.c
 0X167310	__4CRef	16	splice-ref/__4CRef.cpp
+0X167320	LoadGlobsetFromBrx	1360	new_167320/LoadGlobsetFromBrx.cpp
 0X167870	LoadGlobsetBndTreeFromBrx	760	new_167320/LoadGlobsetBndTreeFromBrx.cpp
 0X167F78	Vif1InterruptHandler	68	new_167320/Vif1InterruptHandler.cpp
 0X1681B0	func_001681B0	68	new_167320/fun_001681b0.c
@@ -2387,6 +2390,7 @@ address	name	size	file
 0X179E80	func_00179E80	120	hide-puffer/fun_00179e80.cpp
 0X179EF8	func_00179EF8	120	hide-puffer/fun_00179ef8.cpp
 0X179F70	func_00179F70	44	hide-puffer/fun_00179f70.cpp
+0X179FA0	GoalJump_Activate	1072	hide-puffer/GoalJump_Activate.cpp
 0X17A3D0	func_0017A3D0	44	hide-puffer/fun_0017a3d0.c
 0X17A400	func_0017A400	100	hide-puffer/fun_0017a400.cpp
 0X17A4B0	func_0017A4B0	52	hide-puffer/fun_0017a4b0.cpp
@@ -2643,6 +2647,7 @@ address	name	size	file
 0X188488	InitSly	300	joy-jt/InitSly.cpp
 0X1885B8	LoadSlyFromBrx	80	joy-jt/LoadSlyFromBrx.cpp
 0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.cpp
+0X188F20	HandleSlyMessage	1336	joy-jt/HandleSlyMessage.cpp
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp
 0X189488	GetSlyExposeMode	108	joy-jt/GetSlyExposeMode.cpp
 0X1894F8	FAllowBinocSly	48	joy-jt/FAllowBinocSly.cpp

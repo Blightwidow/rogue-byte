@@ -21,7 +21,7 @@ void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 CRef func_001D8B20(const CRef &, ...);
 CRef func_001D8A38(const char *, const char *, char *, int);
-CRef RefSetGameSaveValue(int, CRef, void *);
+CRef RefSetGameSaveValue(int, const CRef &, void *);
 int IdCurrentLevel();
 int LootId(void *);
 int PpathCrfodbLoot(void *);
@@ -37,7 +37,8 @@ extern char RO_002A4D50[], RO_002A4DB0[], RO_002A4DC0[], RO_002A4DC8[];
 static inline void SetSaveInt(int path, int number)
 {
     CRef value(0x15, number);
-    RefSetGameSaveValue(path, value, B_003D4A60);
+    CRef copy(value);
+    RefSetGameSaveValue(path, copy, B_003D4A60);
 }
 void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
 {
@@ -45,18 +46,16 @@ void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
     CStackFrame_Construct(frame);
     switch (mode) {
     case 0: {
-        int lootId = loot->pbooty != 0 ? LootId(loot->pbooty) : -1;
-        CRef ref = func_001D8B20(CRef(0x15, lootId), self->GetKey(), RO_002A4DB0, 0);
-        if (self->ploot == 0) {
-            int path = PpathCrfodbLoot(loot);
-            SetSaveInt(path, self->idSave);
-        } else {
+        CRef ref = func_001D8B20(CRef(0x15, loot->pbooty != 0 ? LootId(loot->pbooty) : -1), self->GetKey(), RO_002A4DB0, 0);
+        if (self->ploot != 0) {
             if (loot->pbooty == 0) {
                 int oid = PpathFindBootyOid(self->idSave);
                 SetSaveInt(oid, -1);
             }
             int path = PpathCrfodbLoot(loot);
             SetSaveInt(path, LootId(self->ploot));
+        } else {
+            SetSaveInt(PpathCrfodbLoot(loot), self->idSave);
         }
         break;
     }
