@@ -1304,7 +1304,6 @@ address	name	size	file
 0X12FF10	PchnFindAseg	256	aseg/PchnFindAseg.cpp
 0X130010	func_00130010	164	aseg/fun_00130010.cpp
 0X130488	PasegaApplyAseg	32	aseg/PasegaApplyAseg.cpp
-0X1304A8	PasegaFindAseg__FP4ASEGP3ALO	52	aseg/PasegaFindAseg__FP4ASEGP3ALO.cpp
 0X1304E0	EnsureAseg__FP4ASEGP3ALO4SEEKffiPP5ASEGA	180	aseg/EnsureAseg__FP4ASEGP3ALO4SEEKffiPP5ASEGA.cpp
 0X130598	PasegaEnsureAseg__FP4ASEGP3ALO4SEEKffi	32	aseg/PasegaEnsureAseg__FP4ASEGP3ALO4SEEKffi.cpp
 0X1305B8	ApplyAsegToHandle	156	aseg-asega/ApplyAsegToHandle.cpp
@@ -1439,7 +1438,6 @@ address	name	size	file
 0X1380F0	CalculateBlendAmrsg__FiiPviiP4MRSGPf	640	blend/CalculateBlendAmrsg__FiiPviiP4MRSGPf.cpp
 0X138370	ImrsgLookUp__FffiP4MRSGPf	128	blend/ImrsgLookUp__FffiP4MRSGPf.cpp
 0X1383F0	SetAsegblIpasegDominant	204	blend-ac/SetAsegblIpasegDominant.cpp
-0X1384C0	ReblendAsegbl	412	blend-ac/ReblendAsegbl.cpp
 0X138DB0	StaticInitSlotheaps_138db0	308	ac-blip/StaticInitSlotheaps_138db0.c
 0X138EE8	func_00138EE8	32	ac-blip/fun_00138ee8.c
 0X138F08	BuildBlipAqwGifs__FiPP2QW	184	blip/BuildBlipAqwGifs__FiPP2QW.cpp
@@ -1451,7 +1449,6 @@ address	name	size	file
 0X139318	DeleteBlipg	84	blip/DeleteBlipg.cpp
 0X1398E0	func_001398E0	28	blip/fun_001398e0.c
 0X139900	SubscribeBlipgObject__FP5BLIPGP2LO	80	blip/SubscribeBlipgObject__FP5BLIPGP2LO.c
-0X13A688	func_0013A688	420	blip-light/fun_0013a688.cpp
 0X13A830	EnsureBlipVu1Code	40	blip-light/EnsureBlipVu1Code.cpp
 0X13A858	func_0013A858	52	blip-light/fun_0013a858.c
 0X13A890	blip__static_initialization_and_destruction_0	308	blip-light/blip__static_initialization_and_destruction_0.c
@@ -1698,7 +1695,6 @@ address	name	size	file
 0X1498F8	StaticInitSlotheaps_1498f8	308	button-cd/StaticInitSlotheaps_1498f8.c
 0X149A30	StaticInitSlotheaps_1498f8_thunk	32	button-cd/StaticInitSlotheaps_1498f8_thunk.c
 0X149A50	QueueSwCallback	104	button-cd/QueueSwCallback.cpp
-0X149AB8	QueueSwCallbackOnce	156	button-cd/QueueSwCallbackOnce.cpp
 0X149B58	CancelSwCallbacks	292	button-cd/CancelSwCallbacks.cpp
 0X149EB0	StaticInitSlotheaps_149eb0	308	button-cd/StaticInitSlotheaps_149eb0.c
 0X149FE8	StaticInitSlotheaps_149eb0_thunk	32	button-cd/StaticInitSlotheaps_149eb0_thunk.c
@@ -2030,7 +2026,6 @@ address	name	size	file
 0X160A98	CloseFrame__Fv	212	frm/CloseFrame__Fv.cpp
 0X160B70	FrameRenderLoop__FPv	272	frm/FrameRenderLoop__FPv.cpp
 0X160C80	RenderFrame__FP3FRMi	92	frm/RenderFrame__FP3FRMi.cpp
-0X160E68	FlushFrames__Fi	304	frm/FlushFrames__Fi.cpp
 0X161238	func_00161238	332	frm-splice-frame/fun_00161238.c
 0X161388	func_00161388	32	frm-splice-frame/fun_00161388.c
 0X1613A8	func_001613A8	76	frm-splice-frame/fun_001613a8.c
@@ -2215,7 +2210,6 @@ address	name	size	file
 0X170E00	PcmdAllocScript	104	jsg-jt/PcmdAllocScript.c
 0X170E68	RunGuardScriptIfActor	40	jsg-jt/RunGuardScriptIfActor.c
 0X1710F8	GetScriptPose	244	jsg-jt/GetScriptPose.cpp
-0X1711F0	PcmdFindScriptLabel	56	jsg-jt/PcmdFindScriptLabel.cpp
 0X171228	InitGuardScriptBeh	48	jsg-jt/InitGuardScriptBeh.c
 0X171258	SetGuardScript	320	jsg-jt/SetGuardScript.cpp
 0X171398	ExitGuardScriptBeh	76	jsg-jt/ExitGuardScriptBeh.c
@@ -2274,7 +2268,6 @@ address	name	size	file
 0X1753D8	func_001753D8	56	new_1715f0/fun_001753d8.cpp
 0X175410	func_00175410	56	new_1715f0/fun_00175410.c
 0X175448	func_00175448	60	new_1715f0/fun_00175448.c
-0X175488	func_00175488	376	new_1715f0/fun_00175488.cpp
 0X175600	func_00175600	192	new_1715f0/fun_00175600.cpp
 0X1756C0	func_001756C0	132	new_1715f0/fun_001756c0.c
 0X175748	FGoalReactDone	16	new_1715f0/FGoalReactDone.c
@@ -2358,13 +2351,11 @@ address	name	size	file
 0X17CAC8	func_0017CAC8	68	hide-puffer/fun_0017cac8.cpp
 0X17CB10	func_0017CB10	48	hide-puffer/fun_0017cb10.c
 0X17CB40	func_0017CB40	60	hide-puffer/fun_0017cb40.c
-0X17CD00	func_0017CD00	184	new_17cd00/fun_0017cd00.cpp
 0X17CDB8	func_0017CDB8	120	new_17cd00/fun_0017cdb8.cpp
 0X17CE30	func_0017CE30	56	new_17cd00/fun_0017ce30.cpp
 0X17CE68	func_0017CE68	56	new_17cd00/fun_0017ce68.c
 0X17CEA0	func_0017CEA0	48	new_17cd00/fun_0017cea0.c
 0X17CED0	func_0017CED0	60	new_17cd00/fun_0017ced0.c
-0X17D058	func_0017D058	184	new_17cd00/fun_0017d058.cpp
 0X17D110	func_0017D110	120	new_17cd00/fun_0017d110.cpp
 0X17D188	func_0017D188	56	new_17cd00/fun_0017d188.cpp
 0X17D1C0	func_0017D1C0	48	new_17cd00/fun_0017d1c0.c
@@ -2969,7 +2960,6 @@ address	name	size	file
 0X1B26C8	StaticInitSlotheaps_1b26c8	308	missile-mpeg/StaticInitSlotheaps_1b26c8.c
 0X1B2800	GlobalCtorSlotheaps_1b2800	32	missile-mpeg/GlobalCtorSlotheaps_1b2800.c
 0X1B2820	func_001B2820	8	missile-mpeg/fun_001b2820.c
-0X1B2828	MpegDisplayThread	280	missile-mpeg/MpegDisplayThread.cpp
 0X1B2940	func_001B2940	144	unsorted/fun_001b2940.cpp
 0X1B29D0	CQueueOutputIop_FInit	176	missile-mpeg/CQueueOutputIop_FInit.cpp
 0X1B2A80	Reset__15CQueueOutputIop	28	mpeg/Reset__15CQueueOutputIop.cpp
@@ -3851,7 +3841,6 @@ address	name	size	file
 0X1F2BA8	RemoveSoGeomsFromOxa	136	sm-so/RemoveSoGeomsFromOxa.cpp
 0X1F2FE0	func_001F2FE0	148	sm-so/fun_001f2fe0.cpp
 0X1F3078	func_001F3078	156	sm-so/fun_001f3078.cpp
-0X1F3118	func_001F3118	196	sm-so/fun_001f3118.cpp
 0X1F3590	func_001F3590	56	sm-so/fun_001f3590.cpp
 0X1F35C8	SetSoMass__FP2SOf	44	so/SetSoMass__FP2SOf.c
 0X1F36A8	PostSoLoad	52	so-po/PostSoLoad.c

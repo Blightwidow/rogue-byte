@@ -1304,7 +1304,6 @@ us_address	name	other_address	pair	score	addresses
 0x12FF10	PchnFindAseg	0X12FF10	identical	0	ok
 0x130010	func_00130010	0X130010	same	0	ok
 0x130488	PasegaApplyAseg	0X130488	identical	0	ok
-0x1304A8	PasegaFindAseg__FP4ASEGP3ALO	0X1304A8	identical	0	ok
 0x1304E0	EnsureAseg__FP4ASEGP3ALO4SEEKffiPP5ASEGA	0X1304E0	identical	0	ok
 0x130598	PasegaEnsureAseg__FP4ASEGP3ALO4SEEKffi	0X130598	identical	0	ok
 0x1305B8	ApplyAsegToHandle	0X1305B8	identical	0	ok
@@ -1439,7 +1438,6 @@ us_address	name	other_address	pair	score	addresses
 0x1380F0	CalculateBlendAmrsg__FiiPviiP4MRSGPf	0X1380F0	identical	0	ok
 0x138370	ImrsgLookUp__FffiP4MRSGPf	0X138370	identical	0	ok
 0x1383F0	SetAsegblIpasegDominant	0X1383F0	same	0	ok
-0x1384C0	ReblendAsegbl	0X1384C0	identical	0	ok
 0x138DB0	StaticInitSlotheaps_138db0	0X138DB0	same	0	ok
 0x138EE8	func_00138EE8	0X138EE8	identical	0	ok
 0x138F08	BuildBlipAqwGifs__FiPP2QW	0X138F08	same	0	ok
@@ -1451,7 +1449,6 @@ us_address	name	other_address	pair	score	addresses
 0x139318	DeleteBlipg	0X139318	same	0	ok
 0x1398E0	func_001398E0	0X1398E0	same	0	ok
 0x139900	SubscribeBlipgObject__FP5BLIPGP2LO	0X139900	identical	0	ok
-0x13A688	func_0013A688	0X13A688	same	0	ok
 0x13A830	EnsureBlipVu1Code	0X13A830	same	0	ok
 0x13A858	func_0013A858	0X13A858	same	0	ok
 0x13A890	blip__static_initialization_and_destruction_0	0X13A890	same	0	ok
@@ -1698,7 +1695,6 @@ us_address	name	other_address	pair	score	addresses
 0x1498F8	StaticInitSlotheaps_1498f8	0X149938	same	0	ok
 0x149A30	StaticInitSlotheaps_1498f8_thunk	0X149A70	same	0	ok
 0x149A50	QueueSwCallback	0X149A90	identical	0	ok
-0x149AB8	QueueSwCallbackOnce	0X149AF8	same	0	ok
 0x149B58	CancelSwCallbacks	0X149B98	identical	0	ok
 0x149EB0	StaticInitSlotheaps_149eb0	0X149EF0	same	0	ok
 0x149FE8	StaticInitSlotheaps_149eb0_thunk	0X14A028	same	0	ok
@@ -2030,7 +2026,6 @@ us_address	name	other_address	pair	score	addresses
 0x160A98	CloseFrame__Fv	0X160AC0	same	0	ok
 0x160B70	FrameRenderLoop__FPv	0X160B98	same	0	ok
 0x160C80	RenderFrame__FP3FRMi	0X160CA8	same	0	ok
-0x160E68	FlushFrames__Fi	0X160E90	same	0	ok
 0x161238	func_00161238	0X161260	same	0	ok
 0x161388	func_00161388	0X1613B0	same	0	ok
 0x1613A8	func_001613A8	0X1613D0	gap	1	ok
@@ -2215,7 +2210,6 @@ us_address	name	other_address	pair	score	addresses
 0x170E00	PcmdAllocScript	0X170D88	same	0	ok
 0x170E68	RunGuardScriptIfActor	0X170DF0	same	0	ok
 0x1710F8	GetScriptPose	0X171080	same	0	ok
-0x1711F0	PcmdFindScriptLabel	0X171178	identical	0	ok
 0x171228	InitGuardScriptBeh	0X1711B0	same	0	ok
 0x171258	SetGuardScript	0X1711E0	same	0	ok
 0x171398	ExitGuardScriptBeh	0X171320	same	0	ok
@@ -2274,7 +2268,6 @@ us_address	name	other_address	pair	score	addresses
 0x1753D8	func_001753D8	0X175360	same	0	ok
 0x175410	func_00175410	0X175398	same	0	ok
 0x175448	func_00175448	0X1753D0	same	0	ok
-0x175488	func_00175488	0X175410	same	0	ok
 0x175600	func_00175600	0X175588	same	0	ok
 0x1756C0	func_001756C0	0X175648	same	0	ok
 0x175748	FGoalReactDone	0X1756D0	gap	0	ok
@@ -2358,13 +2351,11 @@ us_address	name	other_address	pair	score	addresses
 0x17CAC8	func_0017CAC8	0X17CA50	same	0	ok
 0x17CB10	func_0017CB10	0X17CA98	same	0	ok
 0x17CB40	func_0017CB40	0X17CAC8	same	0	ok
-0x17CD00	func_0017CD00	0X17CC88	same	0	ok
 0x17CDB8	func_0017CDB8	0X17CD40	same	0	ok
 0x17CE30	func_0017CE30	0X17CDB8	identical	0	ok
 0x17CE68	func_0017CE68	0X17CDF0	same	0	ok
 0x17CEA0	func_0017CEA0	0X17CE28	same	0	ok
 0x17CED0	func_0017CED0	0X17CE58	same	0	ok
-0x17D058	func_0017D058	0X17CFE0	same	0	ok
 0x17D110	func_0017D110	0X17D098	same	0	ok
 0x17D188	func_0017D188	0X17D110	identical	0	ok
 0x17D1C0	func_0017D1C0	0X17D148	same	0	ok
@@ -2969,7 +2960,6 @@ us_address	name	other_address	pair	score	addresses
 0x1B26C8	StaticInitSlotheaps_1b26c8	0X1B2888	same	0	ok
 0x1B2800	GlobalCtorSlotheaps_1b2800	0X1B29C0	same	0	ok
 0x1B2820	func_001B2820		none		
-0x1B2828	MpegDisplayThread		none		
 0x1B2940	func_001B2940	0X1B2BC8	same	0	ok
 0x1B29D0	CQueueOutputIop_FInit	0X1B2C58	same	0	ok
 0x1B2A80	Reset__15CQueueOutputIop	0X1B2D08	identical	0	ok
@@ -3851,7 +3841,6 @@ us_address	name	other_address	pair	score	addresses
 0x1F2BA8	RemoveSoGeomsFromOxa	0X1F3368	same	0	ok
 0x1F2FE0	func_001F2FE0	0X1F37A0	identical	0	ok
 0x1F3078	func_001F3078	0X1F3838	identical	0	ok
-0x1F3118	func_001F3118	0X1F38D8	same	0	ok
 0x1F3590	func_001F3590	0X1F3D50	identical	0	ok
 0x1F35C8	SetSoMass__FP2SOf	0X1F3D88	same	0	ok
 0x1F36A8	PostSoLoad	0X1F3E68	same	0	ok
