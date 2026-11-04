@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""make_assets.py: the logo, icon and favicon in assets/ and site/.
+"""make_assets.py: the logo, icon and favicon in assets/.
 
 The cap is the project's cap artwork (assets/source/cap-full.png), the colours are the logo's blues. The title is set in
 Racing Sans One (SIL OFL 1.1, downloaded to build/brand) and converted to paths, so the SVGs need no font. PNG

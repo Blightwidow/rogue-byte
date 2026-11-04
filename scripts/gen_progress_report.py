@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""gen_progress_report.py: site/data/report.json, the progress of the decompilation in bytes of code.
+"""gen_progress_report.py: work/report.json (git-ignored), the progress of the decompilation in bytes of code.
 
 Needs `make elf` first (build/splat, config/us/swapped.tsv, build/image/fallbacks.tsv). Per function: address, name, size,
 module and status. The file lists names, addresses, sizes and statuses only, never game bytes.
@@ -67,27 +67,9 @@ report = {
     'modules': [{'name': name, **totals(rows)} for name, rows in sorted(by_module.items(), key=lambda item: -sum(r['size'] for r in item[1]))],
     'functions': functions,
 }
-os.makedirs('site/data', exist_ok=True)
-with open('site/data/report.json', 'w') as handle:
+os.makedirs('work', exist_ok=True)
+with open('work/report.json', 'w') as handle:
     json.dump(report, handle, separators=(',', ':'))
-summary = {key: value for key, value in report.items() if key != 'functions'}
-if os.path.exists('site/data/objdiff-report.json'):  # make objdiff: objdiff's own measures of the same build
-    measures = json.load(open('site/data/objdiff-report.json'))['measures']
-    summary['objdiff'] = {key: float(measures[key]) for key in ('fuzzy_match_percent', 'matched_code_percent', 'total_code', 'matched_code', 'total_functions', 'matched_functions') if key in measures}
-with open('site/data/summary.json', 'w') as handle:
-    json.dump(summary, handle, separators=(',', ':'))
-# one point per commit, for the curve on the site
-history_path = 'site/data/history.json'
-history = json.load(open(history_path)) if os.path.exists(history_path) else []
-point = {'date': report['generated'], 'commit': report['commit'], 'c_bytes': report['game_code']['c_bytes'],
-         'matched_bytes': report['game_code']['matched_bytes'], 'bytes': report['game_code']['bytes'],
-         'named': report['game_code']['named'], 'functions': report['game_code']['functions']}
-if not history or history[-1]['commit'] != point['commit']:
-    history.append(point)
-else:
-    history[-1] = point
-with open(history_path, 'w') as handle:
-    json.dump(history, handle, indent=1)
 total = report['game_code']
 print(f"game code: {total['functions']} functions, {total['bytes']} bytes; C in image {total['c_bytes'] / total['bytes']:.1%}, "
       f"matched (not yet in image) {total['matched_bytes'] / total['bytes']:.1%}; named {total['named'] / total['functions']:.1%}")

@@ -70,7 +70,7 @@ def main():
     parser.add_argument('--jobs', type=int, default=8)
     arguments = parser.parse_args()
     os.chdir(ROOT)
-    report = json.load(open(os.path.join('site', 'data', 'report.json')))
+    report = json.load(open(os.path.join('work', 'report.json')))
     swept = {address: (path, 'c' if path.endswith('.c') else 'c++') for address, _, _, path in json.load(open(arguments.sweep)) if path}
     jobs, functions, banned_dropped = [], {}, []
     fragments = {int(row['address'], 16) for row in csv.DictReader(open(os.path.join('data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t')

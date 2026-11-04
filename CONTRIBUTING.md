@@ -9,12 +9,12 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 1. `./setup.sh --sly2 /path/to/SCUS_973.16 [--sly1 /path/to/SCUS_971.98]` checks the executables, installs the tools; `make elf` rebuilds the executable image and checks it byte for byte.
 2. Follow [docs/build/name-recovery.md](docs/build/name-recovery.md) to build the Ghidra project and recovered data.
 3. Change a script or data file. Run every tool from the repository root.
-4. `make check` before committing (ruff, compile, shellcheck, links, regression tests). After touching `src/` run `make elf`, then `make unit UNIT=<module>`: every matched function must still link from C. Then `make objdiff` and `make progress` and commit the regenerated `site/` files: ByteMatch reads `site/data/objdiff-report.json`, which CI cannot rebuild. Commit messages: [docs/contributing/commit-messages.md](docs/contributing/commit-messages.md); the added code follows [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md).
-5. Optional, PAL: with `work/elf/SCES_525.29` (`scripts/disc_extract.py`), `make pal` checks the matched functions against PAL; commit `config/eu/` and `site/data/objdiff-report-eu.json` with the change. Without the executable `make check` still verifies that the committed PAL data is current (`pal-check`).
+4. `make check` before committing (ruff, compile, shellcheck, links, regression tests). After touching `src/` run `make elf`, then `make unit UNIT=<module>`: every matched function must still link from C. Then `make objdiff` and `make readme` and commit `progress/` and the README table: ByteMatch reads `progress/us/report.json`, which CI cannot rebuild. Commit messages: [docs/contributing/commit-messages.md](docs/contributing/commit-messages.md); the added code follows [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md).
+5. Optional, PAL: with `work/elf/SCES_525.29` (`scripts/disc_extract.py`), `make pal` checks the matched functions against PAL; commit `config/eu/` and `progress/eu/report.json` with the change. Without the executable `make check` still verifies that the committed PAL data is current (`pal-check`).
 6. Optional: `pre-commit install --hook-type pre-commit --hook-type commit-msg` (or `prek install`) with `.pre-commit-config.yaml`.
 7. Judge and fix a function: [docs/contributing/matching.md](docs/contributing/matching.md) (what `score` counts, the usual fixes).
 8. Finish a draft: `nonmatching/` holds the best compiling source of every unmatched function ([nonmatching/README.md](nonmatching/README.md)).
-9. Name a function: the [Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) lists the ones that need a name, with callers and strings, and opens a prefilled issue. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size`.
+9. Pick the next function to match with `python3 scripts/list_functions.py --status asm --sort size` (after `make report`).
 
 ## Rules
 
@@ -44,6 +44,24 @@ attribution trailers for AI tools. Full rules: [docs/contributing/commit-message
 - Never include generated or disc-derived files.
 - Reserve what you will match in the pinned *Contributor coordination* issue first (at most 500 unfinished functions per contributor,
   [AGENTS.md](AGENTS.md#coordinating-work)).
+
+## Checks
+
+CI runs on every pull request and needs no game data and no compiler. Run the same locally before you push:
+
+```sh
+python3 -m unittest discover -s tests      # unit tests
+python3 tests/check_repository.py          # no game data or proprietary material, licence headers
+python3 -m compileall -q scripts tests     # the tools compile
+make check                                 # all of the above, plus ruff, shellcheck, links, PAL data, cleanup rules, commit messages
+```
+
+CI is two workflows, as in sly1-decomp: `checks` (unit tests, repository check, compile) and `progress` (validates the objdiff reports
+and uploads them for ByteMatch on a push to `main`). Builds need your own disc and the proprietary toolchain, so they run on
+contributors' machines. Two rules are checked locally only: commit messages ([docs/contributing/commit-messages.md](docs/contributing/commit-messages.md),
+the `commit-msg` hook of `.pre-commit-config.yaml`, or `make commits`) and the code you add to `src/`
+([docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md), `make cleanup`). Install the hooks:
+`pre-commit install --hook-type pre-commit --hook-type commit-msg`.
 
 ## Working with other people
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 """list_functions.py [--module M] [--status c|asm] [--unnamed] [--min-size N] [--max-size N] [--sort size|address] [--limit N]:
-the functions of site/data/report.json (written by `make progress`), to pick the next one to match. Smaller first with --sort size."""
+the functions of work/report.json (written by `make report`), to pick the next one to match. Smaller first with --sort size."""
 import argparse
 import json
 import os
@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--sort', choices=['size', 'address'], default='address')
     parser.add_argument('--limit', type=int, default=50)
     arguments = parser.parse_args()
-    report = json.load(open(os.path.join(ROOT, 'site', 'data', 'report.json')))
+    report = json.load(open(os.path.join(ROOT, 'work', 'report.json')))
     chosen = select(report['functions'], arguments.module, arguments.status, arguments.unnamed, arguments.min_size, arguments.max_size, arguments.sort)
     for function in chosen[:arguments.limit]:
         print(f"{function['address']:>9} {function['size']:>6} {function['status']:<7} {function['module']:<24} {function['name']}")

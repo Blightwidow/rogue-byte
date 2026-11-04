@@ -1,8 +1,10 @@
-# On a push to main it also uploads the committed objdiff reports as the artifacts `SCUS_973.16_report` and `SCES_525.29_report` (report.json), which
-# bytematch.dev reads. Validates the progress data a change commits (site/data/summary.json, written locally by `make progress`: measuring progress needs
-# your own copy of the game, so nothing here builds it) and, on pull requests, prepares the comparison with main for progress-comment.yml.
-# Nothing in this workflow has a write token and it never runs the pull request's own scripts on secrets.
-name: progress
+# ByteMatch progress reports (https://bytematch.dev/Blightwidow/rogue-byte), as in sly1-decomp.
+#
+# ByteMatch reads objdiff's report.json from an artifact named "<VERSION>_report", from successful push runs on the default branch.
+# This job does not build the game: the compiler and the retail executable cannot be redistributed. `make objdiff` and `make pal`
+# write the reports locally and they are committed as progress/<version>/report.json; this job checks the PAL one is current,
+# validates both with objdiff and uploads them. They hold names, addresses and sizes: no retail bytes.
+name: Progress report
 
 on:
   push:
@@ -19,42 +21,41 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
-      - name: Validate the committed progress data
+      - name: Check the committed PAL report is current
+        run: python3 scripts/pal_report.py --check
+      - name: Validate the reports with objdiff
+        run: |
+          curl --fail --location --retry 3 -o "$RUNNER_TEMP/objdiff-cli" \
+            https://github.com/encounter/objdiff/releases/download/v3.8.1/objdiff-cli-linux-x86_64
+          echo "c8290281e82114bcc1a06ff73061110d3902a177822e750337de2537188e358f  $RUNNER_TEMP/objdiff-cli" | sha256sum --check
+          chmod +x "$RUNNER_TEMP/objdiff-cli"
+          for report in progress/us/report.json progress/eu/report.json; do
+            "$RUNNER_TEMP/objdiff-cli" report changes "$report" "$report" -o "$RUNNER_TEMP/validation.json"
+          done
+      - name: Summarise
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          for version, path in (("SCUS_973.16", "progress/us/report.json"), ("SCES_525.29", "progress/eu/report.json")):
+              measures = json.load(open(path))["measures"]
+              print("%s: %.2f%% code, %s / %s functions  " % (version, float(measures["matched_code_percent"]),
+                                                            measures["matched_functions"], measures["total_functions"]))
+          PY
+      - name: Upload the NTSC-U report
         if: github.event_name != 'pull_request'
-        run: python3 scripts/progress_comment.py site/data/summary.json site/data/summary.json > /dev/null
-      - name: Prepare the objdiff report for bytematch.dev
-        if: github.event_name == 'push'
-        run: python3 scripts/prepare_report.py build/SCUS_973.16
-      - name: Publish the objdiff report
-        if: github.event_name == 'push'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: SCUS_973.16_report
-          path: build/SCUS_973.16/report.json
-      - name: Prepare the PAL objdiff report for bytematch.dev
-        if: github.event_name == 'push'
-        run: python3 scripts/prepare_report.py build/SCES_525.29 site/data/objdiff-report-eu.json
-      - name: Publish the PAL objdiff report
-        if: github.event_name == 'push'
+          path: progress/us/report.json
+          if-no-files-found: error
+      - name: Upload the PAL report
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: SCES_525.29_report
-          path: build/SCES_525.29/report.json
-      - name: Compare with the base branch
-        if: github.event_name == 'pull_request'
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          NUMBER: ${{ github.event.pull_request.number }}
-        run: |
-          git show "$BASE_SHA:site/data/summary.json" > "$RUNNER_TEMP/base-summary.json" || echo '{}' > "$RUNNER_TEMP/base-summary.json"
-          python3 scripts/progress_comment.py "$RUNNER_TEMP/base-summary.json" site/data/summary.json --number "$NUMBER" --output comment
-      - name: Hand the comment over
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: progress-comment
-          path: comment
+          path: progress/eu/report.json
+          if-no-files-found: error

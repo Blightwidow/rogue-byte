@@ -3,7 +3,7 @@
 AGENTS.md says "plain C++" and bans tricks whose only purpose is to steer the compiler. This file lists every construct that looks like a trick
 or like assembly and is **allowed**, with the reason and the evidence that drew us to accept it, and the ones that are **not**. Each entry
 names who decided it and when (the maintainer, Theo, unless stated) and where it is used. Add an entry here with every new ruling; the long
-discussion stays in docs/contributing/matching.md ("Rulings", "VU0 functions").
+discussion stays in docs/contributing/matching.md ("Rulings").
 
 The test behind all of them (AGENTS.md): a construct is allowed when it could plausibly be in the original source and changes no behaviour;
 it is not allowed when its only purpose is to steer the compiler. A function that matches only with a banned construct stays in `nonmatching/`
@@ -12,12 +12,14 @@ at the score it reaches without it.
 ## Policy change (2026-11-04)
 
 AGENTS.md now follows sly1-decomp: **no inline assembly in functions** (one shared `Sqrt` helper aside), no register pins, no
-artificial barriers. The "Allowed" table below records what was accepted before that date; none of it is a pattern for new work.
-A new function that needs VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/`. The matched sources that still use
-these constructs are the **Legacy** set: `grep -rlE '\b(asm|__asm__)\b' src` lists them (about 250 files). They keep matching
-until a plain-C form is found or the function moves back to `nonmatching/` (a maintainer decision, as it lowers the matched count).
+artificial barriers. The 236 matched functions that used these constructs (about 62 KB) went back to unmatched the same day: they
+are rebuilt from the original assembly again, and `scripts/matching/record.py` scans every new match for inline asm. Their sources
+are archived locally in `data/matching/asm-archive/` (git-ignored) and nothing here is a pattern for new work. A function that needs
+VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/` or in assembly until plain C reproduces it.
 
-## Allowed (legacy, before 2026-11-04)
+Still open: 11 matched sources use `volatile` on ordinary data (`record.py` flags it), to be rewritten or demoted next.
+
+## Allowed before 2026-11-04 (history; no longer in force)
 
 | Construct | Why it is allowed (evidence) | Decided | Seen in |
 | :--- | :--- | :--- | :--- |

@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src progress check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
+.PHONY: help elf objdiff config nonmatching src report readme repo-check cleanup commits check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -21,7 +21,7 @@ elf: ## Split the executable, rebuild it from asm and check it byte for byte (th
 	.venv/bin/python scripts/verify_image.py build/image/image.bin
 	.venv/bin/python scripts/vu/vuasm.py verify build/image/SCUS_973.16
 
-objdiff: ## After `make elf`: objdiff.json, the objects it compares (matched functions and the non-matching sources) and site/data/objdiff-report.json
+objdiff: ## After `make elf`: objdiff.json, the objects it compares (matched functions and the non-matching sources) and progress/us/report.json
 	.venv/bin/python configure.py
 	.venv/bin/ninja -k 0 nonmatching
 	.venv/bin/python scripts/build/make_objdiff.py
@@ -57,17 +57,17 @@ search: ## Everything in order: fix-stack, permute-stores, adopt, rules (MIN, MA
 	$(MAKE) adopt
 	$(MAKE) rules
 
-land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports (PAL too when its executable is there) and nonmatching/
+land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports (PAL too when its executable is there) and the README table and nonmatching/
 	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan)
 	$(MAKE) src
 	$(MAKE) elf
-	$(MAKE) progress
+	$(MAKE) report
 	$(MAKE) nonmatching
 	$(MAKE) objdiff
-	$(MAKE) progress
 	@if [ -f work/elf/SCES_525.29 ]; then $(MAKE) pal; else echo "no work/elf/SCES_525.29: PAL skipped"; fi
+	$(MAKE) readme
 
-pal: ## PAL (needs work/elf/SCES_525.29, see docs/build/building.md): pair the functions, check the matched ones, write site/data/objdiff-report-eu.json
+pal: ## PAL (needs work/elf/SCES_525.29, see docs/build/building.md): pair the functions, check the matched ones, write progress/eu/report.json
 	.venv/bin/python scripts/pair_versions.py
 	.venv/bin/python scripts/version_check.py --jobs $(JOBS)
 	.venv/bin/python scripts/pal_report.py
@@ -84,13 +84,22 @@ nonmatching: ## Publish the best compiling source of every unmatched function in
 src: ## Publish the matched functions from data/matching/src into src/
 	python3 -I scripts/matching/export_src.py
 
-progress: ## After `make elf`: the report, the Naming Desk data, the map and the site assets in site/
+report: ## After `make elf`: work/report.json (every function with its status, git-ignored), the input of `make nonmatching` and list_functions.py
 	.venv/bin/python scripts/gen_progress_report.py
-	.venv/bin/python scripts/gen_context.py
-	.venv/bin/python scripts/generate_treemap.py
-	.venv/bin/python scripts/build_site.py
 
-check: compile-scripts lint lint-shell links test pal-check ## The public CI checks, locally
+readme: ## Rewrite the progress table of README.md from progress/*/report.json
+	python3 -I scripts/readme_progress.py
+
+check: compile-scripts lint lint-shell links test repo-check pal-check cleanup commits ## The public CI checks, locally
+
+cleanup: ## The code-cleanup rules on what this branch adds to src/ and include/ (BASE=main): docs/contributing/code-cleanup.md
+	python3 -I scripts/check_cleanup.py --base $(or $(BASE),main)
+
+commits: ## The commit messages of this branch against docs/contributing/commit-messages.md (BASE=main)
+	python3 -I scripts/commit_msg.py --range $(or $(BASE),main)..HEAD
+
+repo-check: ## No game data or proprietary material, licence headers (tests/check_repository.py)
+	python3 -I tests/check_repository.py
 
 lint: ## ruff: syntax errors and undefined names in the scripts
 	.venv/bin/ruff check .
@@ -99,13 +108,13 @@ pal-check: ## The committed PAL data is current: every matched function has a PA
 	python3 -I scripts/pal_report.py --check
 
 test: ## Regression tests of the scripts
-	.venv/bin/python -I scripts/test_public_tools.py
+	.venv/bin/python -m unittest discover -s tests
 
 unit: ## After `make elf`: do the matched functions of UNIT (module, address or src file; default all) link from C?
 	.venv/bin/python scripts/check_unit.py $(UNIT)
 
 compile-scripts: ## Byte-compile every Python script
-	python3 -I -m compileall -q scripts
+	python3 -I -m compileall -q scripts tests
 
 lint-shell: ## shellcheck, errors only
 	shellcheck --severity=error setup.sh $$(git ls-files 'scripts/*.sh')

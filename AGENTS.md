@@ -19,7 +19,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 | :--- | :--- |
 | `src/` | matched C++, one unit per module, published by `scripts/matching/export_src.py` |
 | `nonmatching/` | best compiling source of every unmatched function, with `MANIFEST.tsv` scores |
-| `config/` | splat config, symbol addresses, compiler and assembler lists (`config/us/gnu_as.txt`, `ps2eeas_loop5.txt`, `sony_gcc29.txt`, `vu0_regs.txt`); `config/eu/` PAL pairing and status |
+| `config/` | splat config, symbol addresses, the SDK-range compiler list (`config/us/sony_gcc29.txt`) and `vu0_regs.txt`; `config/eu/` PAL pairing and status |
 | `include/` | headers for the matched code |
 | `scripts/` | tools: `matching/` (try, permute, scorer), `build/`, `names/`, `ghidra/` |
 | `docs/` | `build/`, `contributing/`, `game/`; start with docs/contributing/matching.md |
@@ -32,8 +32,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 - **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers. The one exception is the square root
   (`sqrt.s`): retail's bare instruction behaves as an inline-assembly helper that no C form reproduces; a function computes a bare
   square root through one shared `Sqrt` helper and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
-  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. Matched sources that predate
-  this rule are listed in docs/contributing/exceptions.md ("Legacy") and are converted or moved out, never copied as a pattern.
+  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. No matched source holds inline asm (the 236 that did went back to unmatched on 2026-11-04); `scripts/matching/record.py` scans every
+  new match for it.
   `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
   fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block, and data shared with hardware, an
   interrupt handler or another thread, where retail's code reads and writes it as volatile.
@@ -46,7 +46,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   does not have, a variable that exists only to move a register, a local that only holds a global's address so a constant does not
   fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
-- **One flag set per source file** (and one assembler per function listed in `config/us/`), never per function or ad hoc per attempt.
+- **One flag set per source file** and one assembler for all (`tools/ee-as/as.exe`), never per function or ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.
 - **Our own names and types.** Retail is stripped: every function, type, field and file name is chosen by us from what retail's
@@ -105,10 +105,10 @@ Details: docs/contributing/matching.md ("Teams of workers").
 - **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person
   watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
 - After matching or removing a matched function: `make pal` when `work/elf/SCES_525.29` exists (`make land` does it), and commit
-  `config/eu/` and `site/data/objdiff-report-eu.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A
+  `config/eu/` and `progress/eu/report.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A
   function that no longer reproduces PAL is a finding, not a blocker: say so in the commit body.
-- After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `site/data/objdiff-report.json`;
-  CI only uploads it, cannot rebuild it) and `make progress`; commit the regenerated `site/` files with the work.
+- After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `progress/us/report.json`;
+  CI only validates and uploads it, cannot rebuild it) and `make readme`; commit `progress/` and the README table with the work.
 
 ## Commits
 
