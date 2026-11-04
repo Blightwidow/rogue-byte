@@ -29,22 +29,3 @@ jobs:
         run: python3 tests/check_repository.py
       - name: Compile tools
         run: python3 -m compileall -q scripts tests
-
-  commits:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
-        with:
-          python-version: "3.12"
-      - name: Commit messages and pull request title
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          python3 scripts/commit_msg.py --range "$(git merge-base "$BASE_SHA" HEAD)..HEAD"
-          python3 scripts/commit_msg.py --title "$PR_TITLE"

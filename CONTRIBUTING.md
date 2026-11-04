@@ -53,12 +53,15 @@ CI runs on every pull request and needs no game data and no compiler. Run the sa
 python3 -m unittest discover -s tests      # unit tests
 python3 tests/check_repository.py          # no game data or proprietary material, licence headers
 python3 -m compileall -q scripts tests     # the tools compile
-make check                                 # all of the above, plus ruff, shellcheck, links, PAL data
+make check                                 # all of the above, plus ruff, shellcheck, links, PAL data, cleanup rules, commit messages
 ```
 
-The `checks` workflow also validates commit messages and the pull request title; `progress` validates the objdiff reports and uploads
-them for ByteMatch; `cleanup` applies [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md) to what a pull request adds.
-Builds need your own disc and the proprietary toolchain, so they run on contributors' machines.
+CI is two workflows, as in sly1-decomp: `checks` (unit tests, repository check, compile) and `progress` (validates the objdiff reports
+and uploads them for ByteMatch on a push to `main`). Builds need your own disc and the proprietary toolchain, so they run on
+contributors' machines. Two rules are checked locally only: commit messages ([docs/contributing/commit-messages.md](docs/contributing/commit-messages.md),
+the `commit-msg` hook of `.pre-commit-config.yaml`, or `make commits`) and the code you add to `src/`
+([docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md), `make cleanup`). Install the hooks:
+`pre-commit install --hook-type pre-commit --hook-type commit-msg`.
 
 ## Working with other people
 

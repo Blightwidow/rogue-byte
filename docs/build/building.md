@@ -51,9 +51,9 @@ elsewhere). Nothing proprietary is stored in the repository.
 | `make check` | Runs ruff (`pyproject.toml`: syntax errors and undefined names), byte-compiles the scripts, shellchecks, checks the links of the markdown files and runs `python3 -m unittest discover -s tests` and `tests/check_repository.py` |
 | `make unit UNIT=<module>` | After `make elf`: do the matched functions of a module (or an address, or a `src/` file) link from C? Says why not when they fall back |
 | `python3 scripts/list_functions.py` | Lists functions from `work/report.json` (filter by module, status, size) to choose the next one |
-| `checks` workflow | As in sly1-decomp: unit tests, `tests/check_repository.py` (no game data, licence headers), byte-compile; plus the commit messages and the pull request title |
-| `cleanup` workflow | [docs/contributing/code-cleanup.md](../contributing/code-cleanup.md) on the code a pull request adds |
-| `progress` workflow | Checks the committed PAL report is current, validates `progress/*/report.json` with objdiff and uploads them for bytematch.dev (push to `main`) |
+| `checks` workflow | As in sly1-decomp: unit tests (`python3 -m unittest discover -s tests`), `tests/check_repository.py` (no game data, licence headers) and byte-compile, on every push to `main` and pull request |
+| `progress` workflow | Checks the committed PAL report is current, validates `progress/*/report.json` with objdiff and uploads them for bytematch.dev (upload on push to `main`) |
+| `make cleanup`, `make commits` | Local only: [code-cleanup.md](../contributing/code-cleanup.md) on what the branch adds, and the commit messages ([commit-messages.md](../contributing/commit-messages.md)); also run by `make check` and the pre-commit hooks |
 | dependabot | Keeps the pinned actions and the pinned `requirements.txt` current (monthly) |
 
 None of the workflows builds the game: that needs your own executable and the compiler, so `make elf` stays a local gate.

@@ -1,6 +1,6 @@
 # Code cleanup rules
 
-`scripts/check_cleanup.py` (the `cleanup` workflow) applies these rules to what a pull request **adds**: the lines it adds to
+`scripts/check_cleanup.py` (`make cleanup`, part of `make check`) applies these rules to what a branch **adds**: the lines it adds to
 `src/` and `include/`, and the files it adds anywhere. Older problems on `main` do not fail a new change, so the tree can be
 cleaned up piece by piece. Run it locally with `python3 scripts/check_cleanup.py --base main`.
 

@@ -16,7 +16,7 @@ Then [CONTRIBUTING.md](../CONTRIBUTING.md).
 | [build/compiler-identification.md](build/compiler-identification.md) | working on matching decompilation (compiler setup) |
 | [contributing/commit-messages.md](contributing/commit-messages.md) | writing a commit message |
 | [contributing/matching.md](contributing/matching.md) | judging a function (what `score` counts) and fixing a near miss |
-| [contributing/code-cleanup.md](contributing/code-cleanup.md) | adding code to `src/` (the rules the `cleanup` check applies) |
+| [contributing/code-cleanup.md](contributing/code-cleanup.md) | adding code to `src/` (the rules `make cleanup` applies) |
 | [contributing/decompilation-tips.md](contributing/decompilation-tips.md) | before changing a heuristic or applying names |
 | [game/executable-layout.md](game/executable-layout.md) | looking for where something sits in `SCUS_973.16` |
 | [game/modules-and-units.md](game/modules-and-units.md) | what a module, a unit and a data piece are |

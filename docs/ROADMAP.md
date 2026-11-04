@@ -9,7 +9,8 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 - Matched C: 4,836 functions in `src/`; every other function is built from its original assembly, and the best compiling draft of
   each is in `nonmatching/`.
 - PAL is checked against the same C (`make pal`); US is the reference.
-- CI follows sly1-decomp: unit tests, repository check (no game data, licence headers), byte-compile, commit messages.
+- CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
+  (objdiff reports for ByteMatch). Commit messages and the cleanup rules are checked locally (`make commits`, `make cleanup`).
 
 ## Next
 

@@ -8,8 +8,8 @@ type(scope): short summary
 What changed and why, wrapped at 72 columns, and what you verified.
 ```
 
-`scripts/commit_msg.py` checks the subject and the body wrap (the `commit-msg` hook of `.pre-commit-config.yaml` and the `checks`
-workflow on pull requests).
+`scripts/commit_msg.py` checks the subject and the body wrap (the `commit-msg` hook of `.pre-commit-config.yaml`, or `make commits` over a
+branch). CI does not run it, as in sly1-decomp.
 
 - **Types**: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `chore` (regenerated files, imports), `style`
   (formatting only), `revert`.

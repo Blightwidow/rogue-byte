@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src report readme repo-check check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
+.PHONY: help elf objdiff config nonmatching src report readme repo-check cleanup commits check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -90,7 +90,13 @@ report: ## After `make elf`: work/report.json (every function with its status, g
 readme: ## Rewrite the progress table of README.md from progress/*/report.json
 	python3 -I scripts/readme_progress.py
 
-check: compile-scripts lint lint-shell links test repo-check pal-check ## The public CI checks, locally
+check: compile-scripts lint lint-shell links test repo-check pal-check cleanup commits ## The public CI checks, locally
+
+cleanup: ## The code-cleanup rules on what this branch adds to src/ and include/ (BASE=main): docs/contributing/code-cleanup.md
+	python3 -I scripts/check_cleanup.py --base $(or $(BASE),main)
+
+commits: ## The commit messages of this branch against docs/contributing/commit-messages.md (BASE=main)
+	python3 -I scripts/commit_msg.py --range $(or $(BASE),main)..HEAD
 
 repo-check: ## No game data or proprietary material, licence headers (tests/check_repository.py)
 	python3 -I tests/check_repository.py
