@@ -2,7 +2,7 @@
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 
-.PHONY: help elf objdiff config nonmatching src report readme repo-check cleanup commits check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
+ .PHONY: help elf objdiff blockers config nonmatching src report readme repo-check cleanup commits check test unit lint lint-shell compile-scripts links pal-check rules permute permute-stores fix-stack mutate adopt search land pal
 
 help: ## List the targets
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -61,6 +61,7 @@ land: ## After a search or a matching round: register the matches (stops on a ba
 	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan)
 	$(MAKE) src
 	$(MAKE) elf
+	$(MAKE) blockers
 	$(MAKE) report
 	$(MAKE) nonmatching
 	$(MAKE) objdiff
@@ -83,6 +84,9 @@ nonmatching: ## Publish the best compiling source of every unmatched function in
 
 src: ## Publish the matched functions from data/matching/src into src/
 	python3 -I scripts/matching/export_src.py
+
+blockers: ## After `make elf`: config/us/blockers.tsv, the permanent blockers (VU0, MMI, COP0, hand-written) that stay assembly (docs/build/vu0-mmi.md)
+	python3 -I scripts/classify_blockers.py
 
 report: ## After `make elf`: work/report.json (every function with its status, git-ignored), the input of `make nonmatching` and list_functions.py
 	.venv/bin/python scripts/gen_progress_report.py

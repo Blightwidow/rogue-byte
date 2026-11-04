@@ -111,11 +111,18 @@ def init(arguments):
         queue.sort(key=lambda address: (int(manifest()[address]['score']), -size.get(address, 0)))
     queue = [a for a in queue if a in open_now and a not in HELD and max(arguments.min_size, 16) <= size.get(a, 0) <= arguments.max_size]
     names = {int(row['address'], 16): row['name'] for row in rows}
+    sys.path.insert(0, os.path.join(LAB, 'scripts'))
+    import classify_blockers
+    blocker_names = classify_blockers.names()
     fragments = {a: fragment_reason(names[a]) for a in queue}
     for address, reason in sorted(fragments.items()):
         if reason:
             print(f'skipped 0x{address:06X} {names[address]}: {reason}')
     queue = [a for a in queue if not fragments[a]]
+    blocked = {a for a in queue if names[a] in blocker_names}
+    for address in sorted(blocked):
+        print(f'skipped 0x{address:06X} {names[address]}: permanent blocker (VU0, MMI, COP0 or hand-written: config/us/blockers.tsv)')
+    queue = [a for a in queue if a not in blocked]
     os.makedirs(os.path.join(WAVES, arguments.wave), exist_ok=True)
     json.dump({'queue': queue, 'claims': {}, 'budget': arguments.budget}, open(state_path(arguments.wave), 'w'), indent=1)
     print(f'{arguments.wave}: {len(queue)} functions queued, budget {arguments.budget} runs each')

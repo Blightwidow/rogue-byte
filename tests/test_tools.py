@@ -11,7 +11,9 @@ sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching'
 sys.path.insert(0, os.path.join(HERE, 'build'))
 
 import asm_units  # noqa: E402
+import blockers_report  # noqa: E402
 import check_cleanup  # noqa: E402
+import classify_blockers  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
 import boundaries  # noqa: E402
@@ -363,6 +365,47 @@ class RecordScanTests(unittest.TestCase):
     def test_an_asm_label_and_comments_are_not_flagged(self):
         self.assertEqual(record.scan('struct C { C(const C &) asm("C_Copy"); };\n'), [])
         self.assertEqual(record.scan('// a volatile flag would be wrong here\nint x;\n'), [])
+
+
+class BlockerTests(unittest.TestCase):
+    def test_vu_instructions_are_a_blocker(self):
+        self.assertEqual(classify_blockers.kind_of(['lw', 'lqc2', 'jr']), 'vu')
+        self.assertEqual(classify_blockers.kind_of(['vmulax.xyz', 'jr']), 'vu')
+
+    def test_mmi_and_system_instructions(self):
+        self.assertEqual(classify_blockers.kind_of(['pextuw', 'jr']), 'mmi')
+        self.assertEqual(classify_blockers.kind_of(['mfc0', 'jr']), 'system')
+
+    def test_plain_code_and_division_checks_are_not_blockers(self):
+        self.assertIsNone(classify_blockers.kind_of(['addiu', 'div', 'break', 'mflo', 'jr']))
+
+    def test_mnemonics_are_read_from_splat_lines(self):
+        lines = ['    /* 0 00100000 0C000000 */  jal        Callee\n', '    /* 4 00100004 2A00023C */  lqc2       $vf1, 0($a0)\n']
+        self.assertEqual(classify_blockers.mnemonics_of(lines), ['jal', 'lqc2'])
+
+    REPORT = {'measures': {}, 'categories': [{'id': 'game', 'name': 'Game', 'measures': {}}], 'units': [
+        {'name': 'a', 'metadata': {'progress_categories': ['game']}, 'sections': [], 'functions': [
+            {'name': 'f', 'size': '100', 'fuzzy_match_percent': 100.0}, {'name': 'g', 'size': '300'}, {'name': 'h', 'size': '100', 'fuzzy_match_percent': 40.0}]}]}
+
+    def test_a_blocker_counts_as_finished(self):
+        import copy
+        report = copy.deepcopy(self.REPORT)
+        counted = blockers_report.apply(report, {'g'})
+        self.assertEqual(counted, (1, 300))
+        self.assertEqual(report['measures']['matched_code'], '400')
+        self.assertEqual(report['measures']['matched_functions'], 2)
+        self.assertEqual(report['categories'][0]['measures']['matched_code'], '400')
+
+    def test_a_function_already_matched_is_not_counted_again(self):
+        import copy
+        report = copy.deepcopy(self.REPORT)
+        self.assertEqual(blockers_report.apply(report, {'f'}), (0, 0))
+
+    def test_recompute_without_blockers_keeps_the_totals(self):
+        import copy
+        report = copy.deepcopy(self.REPORT)
+        blockers_report.recompute(report)
+        self.assertEqual((report['measures']['total_code'], report['measures']['matched_code']), ('500', '100'))
 
 
 class ProgressTests(unittest.TestCase):
