@@ -19,7 +19,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 | :--- | :--- |
 | `src/` | matched C++, one unit per module, published by `scripts/matching/export_src.py` |
 | `nonmatching/` | best compiling source of every unmatched function, with `MANIFEST.tsv` scores |
-| `config/` | splat config, symbol addresses, compiler and assembler lists (`config/us/gnu_as.txt`, `ps2eeas_loop5.txt`, `sony_gcc29.txt`, `vu0_regs.txt`); `config/eu/` PAL pairing and status |
+| `config/` | splat config, symbol addresses, the SDK-range compiler list (`config/us/sony_gcc29.txt`) and `vu0_regs.txt`; `config/eu/` PAL pairing and status |
 | `include/` | headers for the matched code |
 | `scripts/` | tools: `matching/` (try, permute, scorer), `build/`, `names/`, `ghidra/` |
 | `docs/` | `build/`, `contributing/`, `game/`; start with docs/contributing/matching.md |
@@ -46,7 +46,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   does not have, a variable that exists only to move a register, a local that only holds a global's address so a constant does not
   fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
-- **One flag set per source file** (and one assembler per function listed in `config/us/`), never per function or ad hoc per attempt.
+- **One flag set per source file** and one assembler for all (`tools/ee-as/as.exe`), never per function or ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.
 - **Our own names and types.** Retail is stripped: every function, type, field and file name is chosen by us from what retail's
