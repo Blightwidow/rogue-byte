@@ -45,6 +45,21 @@ attribution trailers for AI tools. Full rules: [docs/contributing/commit-message
 - Reserve what you will match in the pinned *Contributor coordination* issue first (at most 500 unfinished functions per contributor,
   [AGENTS.md](AGENTS.md#coordinating-work)).
 
+## Checks
+
+CI runs on every pull request and needs no game data and no compiler. Run the same locally before you push:
+
+```sh
+python3 -m unittest discover -s tests      # unit tests
+python3 tests/check_repository.py          # no game data or proprietary material, licence headers
+python3 -m compileall -q scripts tests     # the tools compile
+make check                                 # all of the above, plus ruff, shellcheck, links, PAL data
+```
+
+The `checks` workflow also validates commit messages and the pull request title; `progress` validates the objdiff reports and uploads
+them for ByteMatch; `cleanup` applies [docs/contributing/code-cleanup.md](docs/contributing/code-cleanup.md) to what a pull request adds.
+Builds need your own disc and the proprietary toolchain, so they run on contributors' machines.
+
 ## Working with other people
 
 Nobody finishes a decompilation alone. Disagree kindly, argue about the code and not the person, share what you find, and be patient

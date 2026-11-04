@@ -32,7 +32,7 @@ patched ones go to `m2c-vu/`. Result on the 945 unsourced functions (with `--rep
 20 words of retail and 18 within 5 (none before). `s64`/`u64` in the draft prelude are `long`/`unsigned long`: with SN's compiler `long long` is
 128 bits, so m2c's 64-bit loads and stores became "unsupported wide integer operation" errors. The stack fields m2c names (`sp0`, `sp10`) become `#define`s into the local `sp` buffer, and a callee
 called with fewer arguments than its first declaration gets a `(...)` prototype in the repair loop. Multimedia (MMI) and unaligned (`ldl`/`ldr`) instructions are still refused. The drafts are a starting
-point: see matching.md ("VU0 functions") for how to bring them to a match, and keep register pins and barriers out.
+point: such functions stay unmatched (inline asm is not allowed, AGENTS.md).
 
 The repair loop also casts a dereferenced integer expression (`*(temp + var)` where m2c could not type the pointer) to `*(s32 *)` (`f32` on a
 line with floats), leaves alone any operand that mentions a pointer, and declares the callee-saved registers m2c reads first (`saved_reg_s1`)

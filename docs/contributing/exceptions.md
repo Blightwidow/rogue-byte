@@ -3,7 +3,7 @@
 AGENTS.md says "plain C++" and bans tricks whose only purpose is to steer the compiler. This file lists every construct that looks like a trick
 or like assembly and is **allowed**, with the reason and the evidence that drew us to accept it, and the ones that are **not**. Each entry
 names who decided it and when (the maintainer, Theo, unless stated) and where it is used. Add an entry here with every new ruling; the long
-discussion stays in docs/contributing/matching.md ("Rulings", "VU0 functions").
+discussion stays in docs/contributing/matching.md ("Rulings").
 
 The test behind all of them (AGENTS.md): a construct is allowed when it could plausibly be in the original source and changes no behaviour;
 it is not allowed when its only purpose is to steer the compiler. A function that matches only with a banned construct stays in `nonmatching/`

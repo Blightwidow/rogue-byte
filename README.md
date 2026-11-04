@@ -52,6 +52,8 @@ reproduces the retail image byte for byte; PAL when the same C also reproduces P
 4. Optional, PAL: `python3 scripts/disc_extract.py discs/<disc>.iso` puts `SCES_525.29` in `work/elf/`, then `make pal` pairs the functions and checks
    the matched C against it ([docs/build/building.md](docs/build/building.md#other-versions-pal)). The US build is the reference: PAL is verified, not rebuilt.
 
+More: [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) (compiler, assembler, flags), [docs/AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md) (the matching procedure, for people and AI agents), [docs/ROADMAP.md](docs/ROADMAP.md).
+
 Name recovery needs more (Ghidra 12.1.4 with the ghidra-emotionengine-reloaded extension, Java 21, your Sly 1 executable):
 [docs/build/name-recovery.md](docs/build/name-recovery.md) and [docs/build/decompilation.md](docs/build/decompilation.md).
 
