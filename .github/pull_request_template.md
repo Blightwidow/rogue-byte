@@ -1,13 +1,13 @@
-## Before
+## What changed
 
-<!-- What the tools, data or docs looked like before this change. -->
+<!-- What you matched or changed, and why. -->
 
-## After
+## What you verified
 
-<!-- What changed and what a reader sees now; list the affected scripts, or files. -->
-
-## Verification
+<!-- The commands you ran and what they printed: `make check`, `make elf`, `make unit`, `make pal`. -->
 
 - [ ] `make check` passes
-- [ ] New numbers (matched share, names recovered) are in the matching log in `docs/build/`
-- [ ] No game data, executable bytes or decompiler output added (see `.gitignore`)
+- [ ] `make elf` prints the byte-gate PASS (after touching `src/`)
+- [ ] New numbers (matched share, names recovered) are in the commit body
+- [ ] No game data, executable bytes, disassembly or decompiler output in the diff (see `.gitignore`)
+- [ ] No code, names or notes from other decompilations, ports or prototypes

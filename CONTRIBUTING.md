@@ -20,14 +20,38 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 
 - **No game data.** No executables, disc images, Ghidra projects, raw decompiler output or disassembly. `.gitignore`
   keeps them local. Matched functions go in `src/` (`python3 scripts/matching/export_src.py` publishes them). Recovered names, addresses and types are fine.
-- **No ProjectCane code.** It has no license; read it for reference only, never copy it. Names from the CC0 Sly 1
-  decomp are free to use. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-- New source files start with `SPDX-License-Identifier: GPL-3.0-or-later`.
+- **Derive everything yourself.** Work from the retail executable of your own disc and public hardware documentation. Nothing from
+  other decompilations or ports of this game, no third-party code, nothing from any prototype build, and never Sony's SDK source,
+  samples or headers, or leaked or NDA material ([AGENTS.md](AGENTS.md), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
+- **Plain C++.** No inline assembly in functions (one shared `Sqrt` helper aside), no register pins, no tricks whose only purpose is
+  to steer the compiler. A function that needs one stays in `nonmatching/`.
+- New source files start with `SPDX-License-Identifier: GPL-3.0-or-later`; by contributing you license your work under it.
+- **Keep docs short and plain.** Plain English, short sentences, lists and tables where they help. When you shorten a doc, keep every
+  number, path, command, decision and link.
 - Every recovered name keeps its source visible. Measure a new heuristic against a control before trusting it.
 - Tips: [docs/contributing/decompilation-tips.md](docs/contributing/decompilation-tips.md).
+
+## Commits
+
+[Conventional Commits](https://www.conventionalcommits.org/), as in sly1-decomp and OpenRAC: `type(scope): short summary`, then a body
+wrapped at 72 columns saying what changed, why and what you verified. One logical change per commit. No `Co-authored-by:` or other
+attribution trailers for AI tools. Full rules: [docs/contributing/commit-messages.md](docs/contributing/commit-messages.md).
+
+## Pull requests
+
+- One topic per pull request, titled like a commit summary.
+- Say what you verified and how: the commands and their results.
+- Never include generated or disc-derived files.
+- Reserve what you will match in the pinned *Contributor coordination* issue first (at most 500 unfinished functions per contributor,
+  [AGENTS.md](AGENTS.md#coordinating-work)).
+
+## Working with other people
+
+Nobody finishes a decompilation alone. Disagree kindly, argue about the code and not the person, share what you find, and be patient
+with people's work: a pull request is someone's evening.
 
 ## Working with an AI assistant
 
 Welcome; the rules above apply the same way. You are responsible for what you contribute, however it was written, and you have
 to be able to explain it. An assistant also follows [AGENTS.md](AGENTS.md): it reports what it checked as it is (failures
-included), adds no attribution trailers to commits, runs `make` with `PROGRESS=0` (the progress lines are for a person watching a terminal), and pushes, opens pull requests or publishes only when asked.
+included), adds no attribution trailers to commits, matches by model tier (Haiku, Sonnet, Opus), runs `make` with `PROGRESS=0` (the progress lines are for a person watching a terminal), and pushes, opens pull requests or publishes only when asked.

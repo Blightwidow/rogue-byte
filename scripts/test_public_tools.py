@@ -41,10 +41,25 @@ import vudis  # noqa: E402
 
 class CommitMessageTests(unittest.TestCase):
     def test_accepts_type_and_summary(self):
-        self.assertEqual(commit_msg.check('names: recover 40 names in step-rwm\n\nbody'), [])
+        self.assertEqual(commit_msg.check('docs: explain the build\n\nbody'), [])
+
+    def test_accepts_scope(self):
+        self.assertEqual(commit_msg.check('feat(us): 1CBB58 exact match'), [])
 
     def test_rejects_unknown_type(self):
-        self.assertTrue(commit_msg.check('feat: add a thing'))
+        self.assertTrue(commit_msg.check('decomp: add a thing'))
+
+    def test_rejects_uppercase_scope(self):
+        self.assertTrue(commit_msg.check('fix(Tools): a thing'))
+
+    def test_rejects_long_body_line(self):
+        self.assertTrue(commit_msg.check('docs: a thing\n\n' + 'word ' * 20))
+
+    def test_accepts_long_url_line(self):
+        self.assertEqual(commit_msg.check('docs: a thing\n\nhttps://example.com/' + 'x' * 100), [])
+
+    def test_rejects_attribution_trailer(self):
+        self.assertTrue(commit_msg.check('docs: a thing\n\nCo-Authored-By: Someone <a@b.c>'))
 
     def test_rejects_missing_type(self):
         self.assertTrue(commit_msg.check('Recover some names'))

@@ -1,7 +1,9 @@
 # Instructions for agents
 
-For AI agents working in this repository (any model or tool). Read this file, then README.md, CONTRIBUTING.md,
-docs/contributing/matching.md and docs/build/building.md. People follow the same rules.
+This file is for AI agents (Claude, Codex or others) working in this repository. Read it completely before changing anything,
+then README.md, CONTRIBUTING.md, docs/contributing/matching.md and docs/build/building.md. People follow the same rules.
+The rules follow the sister project [sly1-decomp](https://github.com/OpenThievius/sly1-decomp) (same maintainers' conventions):
+keep it that way.
 
 ## What this repository is
 
@@ -23,58 +25,99 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 | `docs/` | `build/`, `contributing/`, `game/`; start with docs/contributing/matching.md |
 | `work/`, `data/`, game-derived files | your executables, Ghidra projects, dumps: never committed |
 
-## Matching rules
+## Matching rules (from the first matched function on)
 
-- **A match is retail's bytes in a build that equals retail.** Not a compiled object alone, not a masked comparison, not a
-  model's say-so. Report the command you ran and what it printed, failures included.
-- **Plain C++.** Inline assembly only for what C cannot express (VU0 macro code and MMI: the matched sources in `src/` use `asm` blocks with
-  constraints for these, and the `mtc1`/`mfc1` that moves one lane of a 128-bit value to or from an FP register; unaligned 8-byte accesses are plain
-  struct copies, see docs/contributing/matching.md), no register pins (VU `register QW v asm("vf2")` variables included; use `"j"` operands, see docs/contributing/exceptions.md).
-- **The test for a trick.** A construct is allowed when it could plausibly be in the original source and changes no behaviour: casts, types,
-  statement order, and a dead local that retail's frame shows (a stack area with no stores). It is not allowed when its only purpose is to steer
-  the compiler: `volatile` on ordinary data, an empty `asm` with clobbers, register pins, or a variable that exists only to move a register.
-  Also not allowed, for the same reason: a callee declared with a return type it does not have (`void memcpy` for a function that returns its
-  destination), an early-clobber (`=&r`, `=&f`) that no correctness argument needs, a dummy `"+m"`/`"=m"` operand or a `"memory"` clobber that only
-  orders blocks, a local that only holds a global's address so a constant does not fold, and source that defines game data read out of retail
-  (reference it with an `extern` at retail's address). The rulings and what is still allowed are in docs/contributing/matching.md ("Rulings"); every allowed exception and the reason is listed in docs/contributing/exceptions.md. VU0 asm takes `"j"` operands (the register class) and the function is listed in `config/us/vu0_regs.txt`: that is allowed, a register pin is not.
-  A function that matches only with such a construct stays in `nonmatching/` at the score it reaches without it.
-- **One flag set per source file** (and one assembler per function listed in `config/us/`), never ad hoc per attempt.
+- **A match is retail's bytes in a build that equals retail.** Not a compiled object on its own, not a masked comparison, not a
+  model's claim. Report exactly what you ran and what it printed, failures included.
+- **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers. The one exception is the square root
+  (`sqrt.s`): retail's bare instruction behaves as an inline-assembly helper that no C form reproduces; a function computes a bare
+  square root through one shared `Sqrt` helper and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
+  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. Matched sources that predate
+  this rule are listed in docs/contributing/exceptions.md ("Legacy") and are converted or moved out, never copied as a pattern.
+  `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
+  fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block, and data shared with hardware, an
+  interrupt handler or another thread, where retail's code reads and writes it as volatile.
+  `do { } while (0)` is one too: in game code it is allowed only as the form C macros take (`#define NAME(...) do { ... } while (0)`)
+  that the original plausibly had and retail's code needs. Never a wrapper written only to move instructions.
+- **An unused local only as a type the original plausibly declared.** GCC 2.95 gives an unused struct local a stack slot, so retail's
+  frames show where the original declared one. A padding array (`s32 scratch[4];`), an invented type or a field that exists only to
+  size the frame is not allowed.
+- **Also not allowed**, because their only purpose is to steer the compiler: a callee declared with a return type or arguments it
+  does not have, a variable that exists only to move a register, a local that only holds a global's address so a constant does not
+  fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
+  docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
+- **One flag set per source file** (and one assembler per function listed in `config/us/`), never per function or ad hoc per attempt.
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.
-- Keep every recovered name's source visible (`source:...`); measure a new heuristic against a control before trusting it.
+- **Our own names and types.** Retail is stripped: every function, type, field and file name is chosen by us from what retail's
+  code does. Keep every recovered name's source visible (`source:...`); measure a new heuristic against a control before trusting it.
+- If you get close but not exact, keep the attempt in `nonmatching/` with what still differs, and move on. Stop on a function after
+  about ten compiles without getting closer.
+
+## Coordinating work
+
+Matching work is coordinated in a pinned *Contributor coordination* issue, after sly1-decomp and rac2-decomp (OpenRAC). It is a
+noticeboard, not a task queue or a record of finished work: `main` is authoritative.
+
+- **One comment per contributor.** Before you match anything, or hand work to agents, make sure your contributor has exactly one
+  comment there; create it if not. Edit it in place; never edit anyone else's.
+- **List only your own reservations**, scope first: a module (`src/vec/`) or a few, then individual functions where a scope would be
+  too big. Don't copy or describe other people's.
+- **At most 500 unfinished functions per contributor**, across every branch, worktree and agent. Functions on `main` don't count;
+  local matches and open pull requests do.
+- **Read the others first** and avoid overlap. Someone else's scope is theirs: ask in a comment.
+- **A reservation ends** when its functions reach `main` or you release them in your comment.
+- **Agents** check their contributor's comment and remaining allowance before starting or assigning work, never expand a reservation
+  past 500, and never touch another comment.
 
 ## Which model does what
 
-A starting point, sorted by function size (`python3 scripts/list_functions.py --status asm --sort size`):
+Sort by size with `python3 scripts/list_functions.py --status asm --sort size`:
 
-- **Small** (up to about 400 bytes): the smallest model, many workers at once.
-- **Medium** (about 400 to 1,000 bytes), and what small workers gave up on: a mid-size model.
-- **Large** (over 1,000 bytes), near misses in `nonmatching/`, and leading (landing, full build, reports): the largest model.
+- **Haiku**: up to 400 bytes, many workers at once.
+- **Sonnet**: 401 to 1,000 bytes, and what Haiku gave up on. Near misses are Sonnet's: one function per worker, with the earlier
+  attempt and its diff as the start.
+- **Opus**: over 1,000 bytes, complex ones, near misses in `nonmatching/`, and leading (landing, full build, reports).
 
 A worker stops at its bound (about ten compiles per function) and hands its best attempt up a tier. Workers write in their own
-scratch folder and never edit `src/`; only the lead lands code, after `make elf` and `make unit UNIT=<module>` pass. No two
-workers share a function, and contiguous functions go to one worker. Every worker brief states these rules and the bound.
+scratch folder and never edit `src/`; only the lead lands code, after `make elf` and `make unit UNIT=<module>` pass. No two workers
+share a function, and contiguous functions go to one worker. Every worker brief states these rules and the bound.
 Details: docs/contributing/matching.md ("Teams of workers").
 
 ## Rules
 
-- **No game data.** No executables, disc images, Ghidra projects, raw decompiler output, disassembly or other game-derived
-  files, in a commit or on a branch. `.gitignore` and `.git/info/exclude` keep them local; never weaken them to get a file in.
-- **No ProjectCane code** (no license: reference only). Names from the CC0 Sly 1 decomp are free to use
-  (THIRD_PARTY_NOTICES.md). Code or text taken from another project is credited there.
+- **Derive everything ourselves.** Work from the retail executable of your own disc and public hardware documentation. Take nothing
+  from anyone else: no code, symbol maps, splits, names or notes from other decompilations or ports of this game, and no
+  third-party code. Never Sony's SDK source, samples or headers, or leaked or NDA material, not even as a reference.
+  Material that landed before this rule is listed in THIRD_PARTY_NOTICES.md ("Legacy") until it is removed or re-derived.
+- **Nothing from the prototype.** No code, data, symbol names, signatures, types, field names or file lists from any prototype
+  build, and no tool that extracts them. Looking at one to understand a function is allowed only if what you then write is entirely
+  your own, reasoned from retail's bytes. When in doubt, treat it as copied and leave it out.
+- **No proprietary material ever touches the repository**: disc images, executables, Ghidra projects, raw decompiler output,
+  disassembly, dumps, build output, the compiler or any SDK binary, SDK headers, links to toolchains. Not in a commit, not on a
+  branch, not in a pull request. `.gitignore` and `.git/info/exclude` keep them local; never weaken them to get a file in.
 - **License.** GPL-3.0-or-later. New source files start with `SPDX-License-Identifier: GPL-3.0-or-later`.
 - **English** in everything that lands here.
 - **Never delete what you did not create**, and leave other people's uncommitted work alone.
+- **The branch is `main`.** Never rewrite its history and never force-push it.
 - Stage files by name (never `git add .` or `-A`); never skip hooks (`--no-verify`) without the maintainer's say-so.
 - Format, lint and compile before committing: `make check`. Don't commit what fails.
-- **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
-- After matching or removing a matched function: `make pal` when `work/elf/SCES_525.29` exists (`make land` does it), and commit `config/eu/` and `site/data/objdiff-report-eu.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A function that no longer reproduces PAL is a finding, not a blocker: say so in the commit body.
+- **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person
+  watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
+- After matching or removing a matched function: `make pal` when `work/elf/SCES_525.29` exists (`make land` does it), and commit
+  `config/eu/` and `site/data/objdiff-report-eu.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A
+  function that no longer reproduces PAL is a finding, not a blocker: say so in the commit body.
 - After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `site/data/objdiff-report.json`;
   CI only uploads it, cannot rebuild it) and `make progress`; commit the regenerated `site/` files with the work.
 
 ## Commits
 
-- Format: docs/contributing/commit-messages.md (`<type>: <summary>`).
-- **No attribution lines**: no `Co-authored-by:` or other trailers for AI tools.
-- One logical change per commit; new numbers (matched count, names recovered) in the body.
+As in sly1-decomp and OpenRAC (docs/contributing/commit-messages.md):
+
+- Conventional Commits with a scope: `feat(us): ...`, `fix(tools): ...`, `docs: ...`, `build: ...`, `chore: ...`. The summary says
+  what the change does or what is now true, in lower case, without a full stop.
+- A prose body wrapped at 72 columns: what changed, why, and what you verified (the commands and what they printed). New numbers
+  (matched count, names recovered) go in the body.
+- One logical change per commit, each leaving the tools and checks working.
+- No `Co-authored-by:` trailers or other attribution lines for AI tools.
 - Commit incrementally; push and open pull requests only when asked.

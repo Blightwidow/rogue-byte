@@ -9,7 +9,15 @@ The test behind all of them (AGENTS.md): a construct is allowed when it could pl
 it is not allowed when its only purpose is to steer the compiler. A function that matches only with a banned construct stays in `nonmatching/`
 at the score it reaches without it.
 
-## Allowed
+## Policy change (2026-11-04)
+
+AGENTS.md now follows sly1-decomp: **no inline assembly in functions** (one shared `Sqrt` helper aside), no register pins, no
+artificial barriers. The "Allowed" table below records what was accepted before that date; none of it is a pattern for new work.
+A new function that needs VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/`. The matched sources that still use
+these constructs are the **Legacy** set: `grep -rlE '\b(asm|__asm__)\b' src` lists them (about 250 files). They keep matching
+until a plain-C form is found or the function moves back to `nonmatching/` (a maintainer decision, as it lowers the matched count).
+
+## Allowed (legacy, before 2026-11-04)
 
 | Construct | Why it is allowed (evidence) | Decided | Seen in |
 | :--- | :--- | :--- | :--- |

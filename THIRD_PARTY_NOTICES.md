@@ -15,6 +15,10 @@ tooling, not the game's own logic. The `.c` files started as output of [m2c](htt
 
 ## Material included in this repository
 
+**Legacy.** AGENTS.md now says "derive everything ourselves": nothing from other decompilations or ports of this game. The rows
+below landed before that rule. They stay listed, with their terms, until each is removed or re-derived from retail; no new material
+of this kind is added.
+
 | Project | License | What is used here |
 | :--- | :--- | :--- |
 | [TheOnlyZac/sly1](https://github.com/TheOnlyZac/sly1) (Sly 1 decompilation) | CC0 1.0 | Symbols, class tree and field offsets in `config/sly1/`; Sly 2 names derived from them in `config/recovered/`. Names follow Sucker Punch's own. |
