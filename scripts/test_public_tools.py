@@ -362,10 +362,19 @@ class RecordScanTests(unittest.TestCase):
         pin = record.scan('void f(void) { register int x asm("$6"); }\n')
         empty = record.scan('void f(void) { asm volatile("" : "+r"(x)); }\n')
         self.assertEqual([what for _, what, _ in pin], ['register pin'])
-        self.assertEqual([what for _, what, _ in empty], ['empty asm'])
+        self.assertEqual([what for _, what, _ in empty], ['inline asm'])
 
-    def test_vu_asm_and_comments_are_not_flagged(self):
-        self.assertEqual(record.scan('void f(void) { asm volatile("lqc2 vf1, 0(%0)" : : "r"(p)); }\n'), [])
+    def test_vu_and_lane_move_asm_are_flagged(self):
+        vu = record.scan('void f(void) { asm volatile("lqc2 vf1, 0(%0)" : : "r"(p)); }\n')
+        lane = record.scan('void f(void) { asm("mfc1 %0, %1" : "=r"(r) : "f"(x)); }\n')
+        self.assertEqual([what for _, what, _ in vu], ['inline asm'])
+        self.assertEqual([what for _, what, _ in lane], ['inline asm'])
+
+    def test_the_shared_sqrt_helper_is_allowed(self):
+        self.assertEqual(record.scan('float Sqrt(float x) {\n    float r;\n    asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x));\n    return r;\n}\n'), [])
+
+    def test_an_asm_label_and_comments_are_not_flagged(self):
+        self.assertEqual(record.scan('struct C { C(const C &) asm("C_Copy"); };\n'), [])
         self.assertEqual(record.scan('// a volatile flag would be wrong here\nint x;\n'), [])
 
 

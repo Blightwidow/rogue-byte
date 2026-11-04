@@ -12,12 +12,14 @@ at the score it reaches without it.
 ## Policy change (2026-11-04)
 
 AGENTS.md now follows sly1-decomp: **no inline assembly in functions** (one shared `Sqrt` helper aside), no register pins, no
-artificial barriers. The "Allowed" table below records what was accepted before that date; none of it is a pattern for new work.
-A new function that needs VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/`. The matched sources that still use
-these constructs are the **Legacy** set: `grep -rlE '\b(asm|__asm__)\b' src` lists them (about 250 files). They keep matching
-until a plain-C form is found or the function moves back to `nonmatching/` (a maintainer decision, as it lowers the matched count).
+artificial barriers. The 236 matched functions that used these constructs (about 62 KB) went back to unmatched the same day: they
+are rebuilt from the original assembly again, and `scripts/matching/record.py` scans every new match for inline asm. Their sources
+are archived locally in `data/matching/asm-archive/` (git-ignored) and nothing here is a pattern for new work. A function that needs
+VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/` or in assembly until plain C reproduces it.
 
-## Allowed (legacy, before 2026-11-04)
+Still open: 11 matched sources use `volatile` on ordinary data (`record.py` flags it), to be rewritten or demoted next.
+
+## Allowed before 2026-11-04 (history; no longer in force)
 
 | Construct | Why it is allowed (evidence) | Decided | Seen in |
 | :--- | :--- | :--- | :--- |

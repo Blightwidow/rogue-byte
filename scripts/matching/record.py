@@ -9,8 +9,8 @@ address (config/us). The registry row (data/matching/functions.tsv) gets status 
 the best score so far and one more try (a near miss that holds a banned construct, see below, does not lower the best score; a match is scanned
 afterwards). A function of the SDK range (status `library`) is registered the same way.
 
-A new match is scanned for what AGENTS.md bans because it only steers the compiler: `volatile` on ordinary data (a pointer to a hardware
-register, an address from 0x10000000 up, is allowed), `register` pins, an empty `asm` with clobbers, and `mfc1` asm that moves a register.
+A new match is scanned for what AGENTS.md bans: `volatile` on ordinary data (a pointer to a hardware register, an address from
+0x10000000 up, is allowed), `register` pins, and inline asm in a function (only the shared `sqrt.s` helper is allowed).
 The scan prints every hit and the run exits 1 after recording: review them (`--no-scan` skips the scan). Prints the totals and the
 functions that matched this time."""
 import argparse
@@ -31,38 +31,28 @@ SOURCES = 'data/matching/src/fn'
 
 HARDWARE_ADDRESS = re.compile(r'0x1[0-9A-Fa-f]{7}\b')
 BANNED = [
-    ('volatile', re.compile(r'(?<!asm )(?<!asm\t)\bvolatile\b')),  # not the `asm volatile` of a statement: the asm checks cover those
+    ('volatile', re.compile(r'(?<!asm )(?<!asm\t)\bvolatile\b')),  # not the `asm volatile` of a statement: the inline asm check covers those
     ('register pin', re.compile(r'\bregister\b[^;]*\basm\b|\basm\s*\(\s*"\$')),
-    ('empty asm', re.compile(r'\basm\s*(?:volatile\s*)?\(\s*""')),
-    ('mfc1 asm', re.compile(r'\basm\b[^;]*\bmfc1\b')),
 ]
-VU_ASM = re.compile(r'asm\s+volatile\s*\(\s*"(?:lqc2|sqc2|qmtc2|qmfc2|v[a-z]|prot|pext|pcpy|ppac)')
-
-
-LANE_OPERATIONS = re.compile(r'\b(?:prot3w|pextuw|pextlw|pcpyld|pcpyud|pextub|pextlb|pextuh|pextlh|ppacw|qmfc2|qmtc2)\b')
-
-
-def lane_move(code, quadword_names):
-    """An `mtc1`/`mfc1` asm that moves one lane of a 128-bit value (a `QW` operand, or MMI lane instructions in the same asm) to or from an FP
-    register: C has no form for it (retail holds the vector in a general register and moves lane 0 with `mtc1`), so AGENTS.md allows it."""
-    if LANE_OPERATIONS.search(code):
-        return True
-    return any(re.search(rf'\(\s*\*?\s*{re.escape(name)}\s*\)', code) for name in quadword_names)
+# An inline asm statement: `asm` where a statement starts. An asm label on a declaration (`CRef(const CRef &) asm("Name");`) is a rename, not code.
+ASM_STATEMENT = re.compile(r'(?:^|[;{}])\s*(?:__)?asm(?:__)?\b(?:\s+volatile\b)?\s*\(', re.MULTILINE)
 
 
 def scan(text):
-    """[(line number, what, line)] of the constructs AGENTS.md bans in a source."""
+    """[(line number, what, line)] of the constructs AGENTS.md bans in a source: `volatile` on ordinary data, register pins, and inline asm
+    (the one shared `sqrt.s` helper is the only asm allowed)."""
     found = []
-    quadword_names = set(re.findall(r'\bQW\s*\*?\s*(\w+)', text))
-    for number, line in enumerate(text.split('\n'), 1):
+    lines = text.split('\n')
+    for number, line in enumerate(lines, 1):
         code = line.split('//')[0]
         for what, pattern in BANNED:
-            if pattern.search(code):
-                if what == 'volatile' and (HARDWARE_ADDRESS.search(code) or VU_ASM.search(code)):
-                    continue  # a hardware register, or the VU0 asm of a matched source
-                if what == 'mfc1 asm' and lane_move(code, quadword_names):
-                    continue  # a lane of a 128-bit value moved to or from an FP register: no C form
+            if pattern.search(code) and not (what == 'volatile' and HARDWARE_ADDRESS.search(code)):
                 found.append((number, what, line.strip()[:100]))
+    code = '\n'.join(line.split('//')[0] for line in lines)
+    for match in ASM_STATEMENT.finditer(code):
+        if 'sqrt.s' not in code[match.start():match.start() + 200]:
+            number = code.count('\n', 0, match.end()) + 1
+            found.append((number, 'inline asm', lines[number - 1].strip()[:100]))
     return found
 
 

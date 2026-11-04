@@ -32,8 +32,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
 - **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers. The one exception is the square root
   (`sqrt.s`): retail's bare instruction behaves as an inline-assembly helper that no C form reproduces; a function computes a bare
   square root through one shared `Sqrt` helper and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
-  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. Matched sources that predate
-  this rule are listed in docs/contributing/exceptions.md ("Legacy") and are converted or moved out, never copied as a pattern.
+  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. No matched source holds inline asm (the 236 that did went back to unmatched on 2026-11-04); `scripts/matching/record.py` scans every
+  new match for it.
   `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
   fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block, and data shared with hardware, an
   interrupt handler or another thread, where retail's code reads and writes it as volatile.
