@@ -246,6 +246,7 @@ with open('objdiff.json', 'w') as handle:
 print(f'objdiff.json: {len(units)} units, {len(data_units)} data units')
 os.makedirs(os.path.join('progress', 'us'), exist_ok=True)
 subprocess.run([OBJDIFF, 'report', 'generate', '-p', '.', '-o', os.path.join('progress', 'us', 'report.json')], check=True)
+subprocess.run([sys.executable, os.path.join('scripts', 'blockers_report.py'), os.path.join('progress', 'us', 'report.json')], check=True)  # permanent blockers count as finished, as in sly1-decomp (docs/build/vu0-mmi.md)
 report = json.load(open(os.path.join('progress', 'us', 'report.json')))
 measures = report['measures']
 print({key: measures[key] for key in ('fuzzy_match_percent', 'total_code', 'matched_code', 'matched_code_percent', 'total_functions', 'matched_functions', 'total_data', 'matched_data', 'matched_data_percent') if key in measures})

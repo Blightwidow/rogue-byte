@@ -12,6 +12,7 @@ Then [CONTRIBUTING.md](../CONTRIBUTING.md).
 | [build/assembler.md](build/assembler.md) | a function is one instruction off and it is a `nop` (SN's assembler) |
 | [build/progress.md](build/progress.md) | regenerating the progress page and its numbers |
 | [build/name-recovery.md](build/name-recovery.md) | rebuilding the Ghidra projects and recovered names |
+| [build/vu0-mmi.md](build/vu0-mmi.md) | why 646 functions (53% of the unmatched bytes) cannot match without inline asm, what was tried, the options |
 | [build/decompilation.md](build/decompilation.md) | the decompilation and matching workflow |
 | [build/compiler-identification.md](build/compiler-identification.md) | working on matching decompilation (compiler setup) |
 | [contributing/commit-messages.md](contributing/commit-messages.md) | writing a commit message |

@@ -39,8 +39,9 @@ elsewhere). Nothing proprietary is stored in the repository.
 | `make objdiff` | after `make elf`: `objdiff.json`, the objects it compares (retail assembly per unit against the unit's compiled functions) and `progress/us/report.json` |
 | `make config` | regenerate `config/us/sly2.us.yaml` (the per-module split) |
 | `make src` | publish the matched functions from `data/matching/src` into `src/` |
+| `make blockers` | after `make elf`: `config/us/blockers.tsv`, the permanent blockers (VU0, MMI, COP0, hand-written) that stay assembly ([vu0-mmi.md](vu0-mmi.md)) |
 | `make report` | after `make elf`: `work/report.json`, every function with its status (git-ignored; the input of `make nonmatching` and `list_functions.py`) |
-| `make readme` | rewrite the progress table of README.md from `progress/*/report.json` |
+| `make readme` | rewrite the progress table of README.md from `progress/*/report.json` and `progress/us/blockers.json` |
 | `make check` | script syntax, shellcheck, markdown links |
 
 ## Checks

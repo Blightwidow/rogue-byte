@@ -8,6 +8,7 @@ module and status. The file lists names, addresses, sizes and statuses only, nev
   c        compiled from src/ in the verified image (byte for byte)
   matched  matched by the judge, but the image still uses assembly for it (build/image/fallbacks.tsv says why)
   draft    not matched, but a source that compiles is published in nonmatching/
+  blocked  a permanent blocker (config/us/blockers.tsv): original assembly, never matched in C
   asm      not matched yet
 Functions of the Sony SDK range (module `sdk`) are not the game's own code: they are reported but left out of the
 game-code totals."""
@@ -37,10 +38,13 @@ matched = {int(line.split('\t')[0], 16) for line in list(open('src/MANIFEST.tsv'
 
 drafts = {int(line.split('\t')[0], 16) for line in list(open('nonmatching/MANIFEST.tsv'))[1:]} if os.path.exists('nonmatching/MANIFEST.tsv') else set()
 
+sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+import classify_blockers  # noqa: E402
+blockers = classify_blockers.names()
 functions = []
 for index, (address, name) in enumerate(addresses):
     end = addresses[index + 1][0] if index + 1 < len(addresses) else TEXT_END
-    status = 'c' if address in swapped else 'matched' if address in matched else 'draft' if address in drafts else 'asm'
+    status = 'c' if address in swapped else 'matched' if address in matched else 'blocked' if name in blockers else 'draft' if address in drafts else 'asm'
     functions.append({'address': f'{address:#X}', 'name': name, 'size': end - address,
                       'module': unit_of[address], 'status': status,
                       'named': not re.match(r'(func|fun)_[0-9A-Fa-f]{8}$', name)})
@@ -48,7 +52,7 @@ for index, (address, name) in enumerate(addresses):
 def totals(rows):
     result = {'functions': len(rows), 'bytes': sum(row['size'] for row in rows),
               'named': sum(1 for row in rows if row['named'])}
-    for status in ('c', 'matched', 'draft', 'asm'):
+    for status in ('c', 'matched', 'draft', 'blocked', 'asm'):
         selected = [row for row in rows if row['status'] == status]
         result[status + '_functions'] = len(selected)
         result[status + '_bytes'] = sum(row['size'] for row in selected)

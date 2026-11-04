@@ -39,6 +39,9 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   interrupt handler or another thread, where retail's code reads and writes it as volatile.
   `do { } while (0)` is one too: in game code it is allowed only as the form C macros take (`#define NAME(...) do { ... } while (0)`)
   that the original plausibly had and retail's code needs. Never a wrapper written only to move instructions.
+- **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, or hand-written assembly (`config/us/blockers.tsv`, from `make blockers`), stays
+  original assembly: it is left out of the work queues, counts as finished in the reports apart from the exact C, and is never matched with asm
+  (docs/build/vu0-mmi.md).
 - **An unused local only as a type the original plausibly declared.** GCC 2.95 gives an unused struct local a stack slot, so retail's
   frames show where the original declared one. A padding array (`s32 scratch[4];`), an invented type or a field that exists only to
   size the frame is not allowed.
