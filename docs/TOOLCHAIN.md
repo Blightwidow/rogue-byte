@@ -6,7 +6,7 @@ commits and SHA-256). Linux x86-64 and macOS arm64 only; on Windows use WSL or D
 | Step | Tool | Where |
 | :--- | :--- | :--- |
 | Compile | SN Systems EE-GCC 2.95.3 build 1.36 (`cc1plus`), `-O2 -G0 -ffast-math -fno-exceptions`, `-S` | `tools/compilers/ee-gcc2.95.3-136/` |
-| Assemble | Sony's EE GNU as 2.9-ee-991111b, `as.exe -G0 -O2` | `tools/ee-as/as.exe` |
+| Assemble | Sony's EE GNU as 2.9-ee-991111b (the `bin/ee-as.exe` build), `ee-as.exe -G0 -O2` | `tools/ee-as/ee-as.exe` |
 | Run the Windows tools | [wibo](https://github.com/decompals/wibo) (Linux and macOS) | `tools/wibo` |
 | Link, objcopy | decompals binutils for PS2 (R5900) | `tools/binutils-mips-ps2-decompals/` |
 | SDK range | Sony's own ee-gcc 2.9-ee-991111 and its driver, for the addresses in `config/us/sony_gcc29.txt` | `tools/compilers/ee-gcc2.9-991111b/` |
@@ -20,7 +20,7 @@ Why these, and how each was identified: [build/compiler-identification.md](build
 - **One flag set per source file** and one assembler for every function, never per function. The only per-address exception is the
   SDK range's compiler, which is a different Sony release.
 - `scripts/build/compile_unit.py` is the one path that compiles a source: `ee-gcc -S`, the compiler's `.extern` lines moved to the top,
-  `as.exe`, `objcopy -L` so each object's symbols are local. `try.py`, `configure.py` (ninja) and the search tools all use it.
+  `ee-as.exe`, `objcopy -L` so each object's symbols are local. `try.py`, `configure.py` (ninja) and the search tools all use it.
 - Nothing from the toolchain, no SDK header and no SDK source goes into the repository (AGENTS.md).
 
 ## Setup

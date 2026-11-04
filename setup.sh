@@ -73,13 +73,14 @@ install_compiler() {
 }
 
 install_assembler() {
-  # Sony's EE GNU as 2.9-ee-991111b (ee/bin/as.exe), the assembler the compiler driver runs: the one assembler of the build, as in
-  # sly1-decomp (scripts/build/compile_unit.py, docs/build/assembler.md). Pinned commit of a public mirror of Sony's SDK 2.4 tools.
-  [[ -f tools/ee-as/as.exe ]] && return
+  # Sony's EE GNU as 2.9-ee-991111b, the bin/ee-as.exe build of the SDK: the one assembler of the build. It puts the hazard nop between
+  # mtc1 and the instruction that reads the register, as Sly 2's retail does (scripts/build/compile_unit.py, docs/build/assembler.md).
+  # Pinned commit of a public mirror of Sony's SDK 2.4 tools.
+  [[ -f tools/ee-as/ee-as.exe ]] && return
   mkdir -p tools/ee-as
-  curl -fsSL -o tools/ee-as/as.exe "https://raw.githubusercontent.com/AngheloAlf/sce_ps2_sdk_24/5c8bdf31f6bdd82ba4456413594198b5bd469f43/local/sce/ee/gcc/ee/bin/as.exe"
-  echo "7f504e571215fead2a15a14520bd22dc13507a1f13b479ca8c06a165f4a886a4  tools/ee-as/as.exe" | shasum -a 256 -c - || { rm -f tools/ee-as/as.exe; exit 1; }
-  echo "ok: tools/ee-as/as.exe"
+  curl -fsSL -o tools/ee-as/ee-as.exe "https://raw.githubusercontent.com/AngheloAlf/sce_ps2_sdk_24/5c8bdf31f6bdd82ba4456413594198b5bd469f43/local/sce/ee/gcc/bin/ee-as.exe"
+  echo "5ae3c981bb4e105bd1edfc48c11f15a932dbbf4680be46edc46c55a869885f9e  tools/ee-as/ee-as.exe" | shasum -a 256 -c - || { rm -f tools/ee-as/ee-as.exe; exit 1; }
+  echo "ok: tools/ee-as/ee-as.exe"
 }
 
 install_objdiff() {

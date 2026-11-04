@@ -18,8 +18,8 @@
 <!-- progress:begin (scripts/readme_progress.py) -->
 | Version | Matched code | Functions | Data |
 | :--- | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 40.10% (562376 of 1402428 bytes) | 4850 of 6820 | 0.60% |
-| PAL `SCES_525.29` | 39.20% (549812 of 1402428 bytes) | 4782 of 6820 | 0.00% |
+| NTSC-U `SCUS_973.16` | 41.89% (587500 of 1402428 bytes) | 4922 of 6820 | 0.64% |
+| PAL `SCES_525.29` | 40.99% (574872 of 1402428 bytes) | 4850 of 6820 | 0.00% |
 
 <!-- progress:end -->
 
