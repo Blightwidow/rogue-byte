@@ -6,8 +6,9 @@ handle) and `COUNT` (claimed at a time). Read this file, then docs/AGENT_WORKFLO
 1. Claim: `python3 scripts/matching/claim.py take $WAVE $ID $COUNT`. It prints one packet per function: asm, best draft and its diff,
    nearest matched sources, your scratch folder, and the exact `try.py` command. Claim again until you have handled `N` functions or it
    prints `QUEUE EMPTY`. Do not stop after your first claim.
-2. Step 0, one minute: a function that needs VU0 macro code, MMI, a lane move to an FP register, COP0 or a hazard `nop` that no
-   wording of the C gives is a wall (inline asm is not allowed, AGENTS.md): say `SKIP wall` and take the next function.
+2. Step 0, one minute: a function that needs VU0 macro code, MMI, a lane move to an FP register, COP0, or a `nop` that no wording of the
+   C gives (the assembler adds the hazard `nop` after `mtc1` itself since 2026-11-04, docs/build/assembler.md) is a wall (inline asm is not
+   allowed, AGENTS.md): say `SKIP wall` and take the next function.
 3. Work in your scratch folder only. Never edit `src/`, `nonmatching/`, `config/` or `data/`. Start from the best draft; rewrite from
    retail's block structure with real types and prototypes before fiddling with statement order.
 4. Run every attempt as the packet says: `TRY_ARM=$WAVE-$ID TRY_BUDGET=<n> python3 scripts/matching/try.py 0xADDR file`. The tool logs
