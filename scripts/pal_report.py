@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""pal_report.py [--out site/data/objdiff-report-eu.json] [--check] - the objdiff report of the PAL build, from the US report and config/eu/c_status.tsv.
+"""pal_report.py [--out progress/eu/report.json] [--check] - the objdiff report of the PAL build, from the US report and config/eu/c_status.tsv.
 
   python3 scripts/pal_report.py        (after `make objdiff` and scripts/version_check.py; `make pal` runs the chain)
 
-The US report (site/data/objdiff-report.json) gives the units, their functions with sizes, and the categories. A function counts as matched
+The US report (progress/us/report.json) gives the units, their functions with sizes, and the categories. A function counts as matched
 for PAL (fuzzy 100) when scripts/version_check.py found that the same C reproduces the PAL code (score 0) and every address its relocation
 sites point at resolves to the paired PAL address (`addresses` ok); every other function is 0: a partial US match says nothing about PAL
 until it is checked. Sizes are the US sizes (the two `.text` sections differ by 0.2%); the data sections have the PAL sizes and none of
@@ -21,7 +21,7 @@ import os
 import sys
 
 LAB = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-DEFAULT_OUT = os.path.join(LAB, 'site', 'data', 'objdiff-report-eu.json')
+DEFAULT_OUT = os.path.join(LAB, 'progress', 'eu', 'report.json')
 
 
 def percent(part, whole):
@@ -129,7 +129,7 @@ def check(arguments):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--us-report', default=os.path.join(LAB, 'site', 'data', 'objdiff-report.json'))
+    parser.add_argument('--us-report', default=os.path.join(LAB, 'progress', 'us', 'report.json'))
     parser.add_argument('--status', default=os.path.join(LAB, 'config', 'eu', 'c_status.tsv'))
     parser.add_argument('--other', default=os.path.join(LAB, 'work', 'elf', 'SCES_525.29'))
     parser.add_argument('--out', default=DEFAULT_OUT)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""make_objdiff.py: objdiff.json and the objects it compares, then site/data/objdiff-report.json.
+"""make_objdiff.py: objdiff.json and the objects it compares, then progress/us/report.json.
 
 Per module unit (build/splat/asm/<unit>.s): the target object is that assembly assembled (the retail code); the base
 object links the unit's compiled functions from src/ (`ld -r`), with their symbols renamed to the names the assembly
@@ -244,8 +244,8 @@ configuration = {
 with open('objdiff.json', 'w') as handle:
     json.dump(configuration, handle, indent=2)
 print(f'objdiff.json: {len(units)} units, {len(data_units)} data units')
-os.makedirs(os.path.join('site', 'data'), exist_ok=True)
-subprocess.run([OBJDIFF, 'report', 'generate', '-p', '.', '-o', os.path.join('site', 'data', 'objdiff-report.json')], check=True)
-report = json.load(open(os.path.join('site', 'data', 'objdiff-report.json')))
+os.makedirs(os.path.join('progress', 'us'), exist_ok=True)
+subprocess.run([OBJDIFF, 'report', 'generate', '-p', '.', '-o', os.path.join('progress', 'us', 'report.json')], check=True)
+report = json.load(open(os.path.join('progress', 'us', 'report.json')))
 measures = report['measures']
 print({key: measures[key] for key in ('fuzzy_match_percent', 'total_code', 'matched_code', 'matched_code_percent', 'total_functions', 'matched_functions', 'total_data', 'matched_data', 'matched_data_percent') if key in measures})

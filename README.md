@@ -15,20 +15,16 @@
 > The **PAL** release (`SCES_52529`) is optional: with its executable the tools also check that the matched C reproduces the PAL code.<br>
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-<p align="center">
-  <a href="https://bytematch.dev/Blightwidow/rogue-byte">
-    <img src="site/progress-map.svg" alt="Progress map: one block per module, one cell per function, coloured by status" width="100%">
-  </a>
-  <br>
-  <sub>Progress map of the code (blue: rebuilt from C and verified byte for byte; dark: not matched yet; grey: Sony's SDK).
-  Live numbers on <a href="https://bytematch.dev/Blightwidow/rogue-byte">bytematch.dev</a>, details on the <a href="https://blightwidow.github.io/rogue-byte/">progress page</a>.</sub>
-</p>
+<!-- progress:begin (scripts/readme_progress.py) -->
+| Version | Matched code | Functions | Data |
+| :--- | ---: | ---: | ---: |
+| NTSC-U `SCUS_973.16` | 44.82% (628608 of 1402444 bytes) | 5051 of 6826 | 0.73% |
+| PAL `SCES_525.29` | 43.50% (610108 of 1402444 bytes) | 4977 of 6826 | 0.00% |
 
-<p align="center">
-  <a href="https://blightwidow.github.io/rogue-byte/naming.html">
-    <img src="assets/naming-desk-card.svg" alt="Open the Naming Desk" width="100%">
-  </a>
-</p>
+<!-- progress:end -->
+
+Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/rogue-byte). A function counts when `make elf` links its C and still
+reproduces the retail image byte for byte; PAL when the same C also reproduces PAL's code.
 
 ## Layout
 
@@ -42,7 +38,7 @@
 | `scripts/names/`, `scripts/ghidra/` | name recovery: the Sly 1 code matcher, headless Ghidra scripts |
 | `scripts/decompile/`, `scripts/matching/` | decompilation helpers, compile-and-compare tooling for matching |
 | `config/sly1/`, `config/recovered/` | inputs from the Sly 1 decompilation (CC0) and the recovered names, classes and modules |
-| `site/` | the [progress page](https://blightwidow.github.io/rogue-byte/) and its data |
+| `progress/` | the objdiff reports ByteMatch reads (`us/report.json`, `eu/report.json`) |
 | `docs/` | [build](docs/build/building.md), [contributing](CONTRIBUTING.md) and [game](docs/game/executable-layout.md) notes |
 | `tools/`, `work/` | git-ignored: the downloaded toolchain, your executables and local work |
 
@@ -52,7 +48,7 @@
    toolchain into `tools/`.
 2. `make elf` splits the executable with Splat, compiles `src/` with the original compiler, rebuilds the image and checks
    it byte for byte ([docs/build/building.md](docs/build/building.md)).
-3. `make progress` writes the numbers behind the [progress page](docs/build/progress.md).
+3. `make report`, `make objdiff` and `make readme` write the numbers ([docs/build/progress.md](docs/build/progress.md)).
 4. Optional, PAL: `python3 scripts/disc_extract.py discs/<disc>.iso` puts `SCES_525.29` in `work/elf/`, then `make pal` pairs the functions and checks
    the matched C against it ([docs/build/building.md](docs/build/building.md#other-versions-pal)). The US build is the reference: PAL is verified, not rebuilt.
 

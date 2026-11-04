@@ -36,10 +36,11 @@ elsewhere). Nothing proprietary is stored in the repository.
 | Command | What it does |
 | :--- | :--- |
 | `make elf` | split, compile, link and verify the executable image (the gate) |
-| `make objdiff` | after `make elf`: `objdiff.json`, the objects it compares (retail assembly per unit against the unit's compiled functions) and `site/data/objdiff-report.json` |
+| `make objdiff` | after `make elf`: `objdiff.json`, the objects it compares (retail assembly per unit against the unit's compiled functions) and `progress/us/report.json` |
 | `make config` | regenerate `config/us/sly2.us.yaml` (the per-module split) |
 | `make src` | publish the matched functions from `data/matching/src` into `src/` |
-| `make progress` | after `make elf`: `site/data/report.json`, `site/progress-map.svg` and the site assets (the progress page in `site/`, deployed by `.github/workflows/pages.yml`) |
+| `make report` | after `make elf`: `work/report.json`, every function with its status (git-ignored; the input of `make nonmatching` and `list_functions.py`) |
+| `make readme` | rewrite the progress table of README.md from `progress/*/report.json` |
 | `make check` | script syntax, shellcheck, markdown links |
 
 ## Checks
@@ -47,13 +48,12 @@ elsewhere). Nothing proprietary is stored in the repository.
 | Where | What |
 | :--- | :--- |
 | `make help` | Lists the targets |
-| `make check` | Runs ruff (`pyproject.toml`: syntax errors and undefined names), byte-compiles the scripts, shellchecks, checks the links of the markdown files and runs `scripts/test_public_tools.py` |
+| `make check` | Runs ruff (`pyproject.toml`: syntax errors and undefined names), byte-compiles the scripts, shellchecks, checks the links of the markdown files and runs `python3 -m unittest discover -s tests` and `tests/check_repository.py` |
 | `make unit UNIT=<module>` | After `make elf`: do the matched functions of a module (or an address, or a `src/` file) link from C? Says why not when they fall back |
-| `python3 scripts/list_functions.py` | Lists functions from `site/data/report.json` (filter by module, status, size) to choose the next one |
-| `checks` workflow | The `make check` steps, plus the commit messages and the pull request title |
+| `python3 scripts/list_functions.py` | Lists functions from `work/report.json` (filter by module, status, size) to choose the next one |
+| `checks` workflow | As in sly1-decomp: unit tests, `tests/check_repository.py` (no game data, licence headers), byte-compile; plus the commit messages and the pull request title |
 | `cleanup` workflow | [docs/contributing/code-cleanup.md](../contributing/code-cleanup.md) on the code a pull request adds |
-| `progress` + `progress-comment` workflows | Validate the committed `site/data/summary.json` and comment the change against `main` on a pull request |
-| `pages` workflow | Deploys `site/` |
+| `progress` workflow | Checks the committed PAL report is current, validates `progress/*/report.json` with objdiff and uploads them for bytematch.dev (push to `main`) |
 | dependabot | Keeps the pinned actions and the pinned `requirements.txt` current (monthly) |
 
 None of the workflows builds the game: that needs your own executable and the compiler, so `make elf` stays a local gate.
@@ -91,4 +91,4 @@ The compiler is run on Linux with wibo (32-bit), on macOS with wibo-macos.
 
 `make pal` runs the chain (`pair_versions.py`, `version_check.py`, `pal_report.py`) and `make land` ends with it when `work/elf/SCES_525.29` is there. `scripts/pal_report.py` writes `site/data/objdiff-report-eu.json`, an objdiff report built from the US report's units, categories and function sizes: a function is matched (fuzzy 100) when the same C reproduces the PAL code and every address of its relocation sites resolves to the paired PAL address (`addresses` ok in `c_status.tsv`), every other function is 0, the data sections have the PAL sizes and none counts as matched. The `progress` workflow uploads it as the artifact `SCES_525.29_report` next to `SCUS_973.16_report` (`scripts/prepare_report.py OUT REPORT` checks and copies either), and bytematch.dev reads a version by that artifact name: register the PAL version there once by hand. Against PAL v2.01: 4,761 of 6,821 functions, 37.66% of the code (the US build: 4,820 functions, 38.38%).
 
-`python3 scripts/pal_report.py --check` (the `pal-check` target, part of `make check`, and a step of the `checks` workflow) needs no executable: it fails when a matched function in `src/MANIFEST.tsv` has no row in `config/eu/c_status.tsv`, when a row belongs to a function that is no longer matched, and when `site/data/objdiff-report-eu.json` is not what the committed US report and the status table give. After adding or removing C, or regenerating the US report, run `make pal` (or `make land`, which ends with it) and commit `config/eu` and the PAL report with the rest.
+`python3 scripts/pal_report.py --check` (the `pal-check` target, part of `make check`, and a step of the `progress` workflow) needs no executable: it fails when a matched function in `src/MANIFEST.tsv` has no row in `config/eu/c_status.tsv`, when a row belongs to a function that is no longer matched, and when `site/data/objdiff-report-eu.json` is not what the committed US report and the status table give. After adding or removing C, or regenerating the US report, run `make pal` (or `make land`, which ends with it) and commit `config/eu` and the PAL report with the rest.

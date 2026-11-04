@@ -55,9 +55,14 @@ repos:
         language: system
         entry: python3 scripts/commit_msg.py
         stages: [commit-msg]
+      - id: repository-check
+        name: no game data, licence headers
+        language: system
+        entry: python3 tests/check_repository.py
+        pass_filenames: false
       - id: script-tests
         name: script regression tests
         language: system
-        entry: python3 scripts/test_public_tools.py
-        files: ^scripts/.+\.py$
+        entry: python3 -m unittest discover -s tests
+        files: ^(scripts|tests)/.+\.py$
         pass_filenames: false

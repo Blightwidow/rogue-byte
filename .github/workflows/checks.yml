@@ -10,28 +10,25 @@ permissions:
   contents: read
 
 jobs:
-  # Cheap checks: no game data, no Ghidra, no compiler.
-  scripts:
+  # Toolchain-free checks, as in sly1-decomp: they need no game data and no compiler. Builds need your own disc and the
+  # proprietary compiler, so they run on contributors' machines (`make check` runs these and more locally).
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
-      - name: Lint the scripts
-        run: |
-          python3 -m pip install -r requirements-dev.txt
-          ruff check .
-      - name: Regression tests of the scripts
-        run: python3 scripts/test_public_tools.py -v
-      - name: Byte-compile the scripts
-        run: python3 -m compileall -q scripts
-      - name: Shell scripts
-        run: shellcheck --severity=error $(git ls-files 'scripts/*.sh' 'scripts/**/*.sh' setup.sh)
-      - name: Links in the markdown files
-        run: python3 scripts/check_links.py
-      - name: The committed PAL data is current
-        run: python3 scripts/pal_report.py --check
+      - name: Install the test dependency
+        run: python3 -m pip install pyelftools==0.33
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: No game data, licence headers
+        run: python3 tests/check_repository.py
+      - name: Compile tools
+        run: python3 -m compileall -q scripts tests
 
   commits:
     if: github.event_name == 'pull_request'

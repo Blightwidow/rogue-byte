@@ -1,17 +1,17 @@
 {
  "measures": {
-  "fuzzy_match_percent": 43.67005,
+  "fuzzy_match_percent": 43.503199,
   "total_code": "1402444",
-  "matched_code": "612448",
-  "matched_code_percent": 43.67005,
+  "matched_code": "610108",
+  "matched_code_percent": 43.503199,
   "total_data": "1038916",
   "total_functions": 6826,
-  "matched_functions": 4987,
-  "matched_functions_percent": 73.058892,
-  "complete_code": "50168",
-  "complete_code_percent": 3.577184,
+  "matched_functions": 4977,
+  "matched_functions_percent": 72.912394,
+  "complete_code": "49552",
+  "complete_code_percent": 3.533261,
   "total_units": 434,
-  "complete_units": 168
+  "complete_units": 167
  },
  "units": [
   {
@@ -179,9 +179,9 @@
     {
      "name": "FSlotSoFacingHeading",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1944"
+     "address": "1944",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SenseSlotSoTargetState",
@@ -193,9 +193,9 @@
     {
      "name": "GSpeedSlotSoAseg",
      "size": "216",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2408"
+     "address": "2408",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001B1B10",
@@ -852,9 +852,9 @@
     {
      "name": "UpdateAloXfWorld",
      "size": "312",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9000"
+     "address": "9000",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0022FBD8",
@@ -873,16 +873,16 @@
     {
      "name": "ConvertXfPos",
      "size": "124",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9424"
+     "address": "9424",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConvertXfVec",
      "size": "108",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9552"
+     "address": "9552",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConvertXfMat",
@@ -971,9 +971,9 @@
     {
      "name": "PredictXfTransform",
      "size": "172",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "12912"
+     "address": "12912",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PredictXfTransformAdjust",
@@ -1241,29 +1241,29 @@
     {
      "name": "FIsZeroV__FP6VECTOR",
      "size": "68",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FIsZeroV(VECTOR*)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FIsZeroW__FP6VECTOR",
      "size": "72",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FIsZeroW(VECTOR*)"
      },
-     "address": "72"
+     "address": "72",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FIsZeroDv__FP6VECTOR",
      "size": "68",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FIsZeroDv(VECTOR*)"
      },
-     "address": "144"
+     "address": "144",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -1339,7 +1339,7 @@
     {
      "name": ".text",
      "size": "4940",
-     "fuzzy_match_percent": 43.643725,
+     "fuzzy_match_percent": 42.591093,
      "metadata": {}
     }
    ],
@@ -1449,7 +1449,7 @@
     {
      "name": "PasegaFindAseg__FP4ASEGP3ALO",
      "size": "52",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "PasegaFindAseg(ASEG*, ALO*)"
      },
@@ -1483,14 +1483,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 43.643725,
+    "fuzzy_match_percent": 42.591093,
     "total_code": "4940",
-    "matched_code": "2156",
-    "matched_code_percent": 43.643725,
+    "matched_code": "2104",
+    "matched_code_percent": 42.591093,
     "matched_data_percent": 100.0,
     "total_functions": 17,
-    "matched_functions": 14,
-    "matched_functions_percent": 82.352941,
+    "matched_functions": 13,
+    "matched_functions_percent": 76.470588,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -2342,9 +2342,9 @@
     {
      "name": "func_00135EB0",
      "size": "196",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7792"
+     "address": "7792",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FInvulnerableBentley",
@@ -2517,9 +2517,9 @@
     {
      "name": "bevy_player_p25_1374f0",
      "size": "224",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "13488"
+     "address": "13488",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "bevy_player_p25_1375d0",
@@ -3620,7 +3620,7 @@
     {
      "name": ".text",
      "size": "616",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 33.116883,
      "metadata": {}
     }
    ],
@@ -3635,13 +3635,13 @@
     {
      "name": "ReblendAsegbl",
      "size": "412",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "208"
     }
    ],
    "metadata": {
-    "complete": true,
+    "complete": false,
     "progress_categories": [
      "game",
      "sly1",
@@ -3649,19 +3649,19 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 100.0,
+    "fuzzy_match_percent": 33.116883,
     "total_code": "616",
-    "matched_code": "616",
-    "matched_code_percent": 100.0,
+    "matched_code": "204",
+    "matched_code_percent": 33.116883,
     "matched_data_percent": 100.0,
     "total_functions": 2,
-    "matched_functions": 2,
-    "matched_functions_percent": 100.0,
-    "complete_code": "616",
-    "complete_code_percent": 100.0,
+    "matched_functions": 1,
+    "matched_functions_percent": 50.0,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
     "total_units": 1,
-    "complete_units": 1
+    "complete_units": 0
    }
   },
   {
@@ -3833,7 +3833,7 @@
     {
      "name": ".text",
      "size": "2172",
-     "fuzzy_match_percent": 45.488029,
+     "fuzzy_match_percent": 26.151013,
      "metadata": {}
     }
    ],
@@ -3848,7 +3848,7 @@
     {
      "name": "func_0013A688",
      "size": "420",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "1184"
     },
@@ -3897,14 +3897,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 45.488029,
+    "fuzzy_match_percent": 26.151013,
     "total_code": "2172",
-    "matched_code": "988",
-    "matched_code_percent": 45.488029,
+    "matched_code": "568",
+    "matched_code_percent": 26.151013,
     "matched_data_percent": 100.0,
     "total_functions": 7,
-    "matched_functions": 6,
-    "matched_functions_percent": 85.714286,
+    "matched_functions": 5,
+    "matched_functions_percent": 71.428571,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -3935,11 +3935,11 @@
     {
      "name": "UpdateBomb__FP4BOMBf",
      "size": "192",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "UpdateBomb(BOMB*, float)"
      },
-     "address": "112"
+     "address": "112",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateBombCustomXps",
@@ -3979,9 +3979,9 @@
     {
      "name": "FAbsorbBombWkr",
      "size": "308",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2056"
+     "address": "2056",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PrepareBombDetonation",
@@ -4136,9 +4136,9 @@
     {
      "name": "RenderLoot",
      "size": "436",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2584"
+     "address": "2584",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "HandleLootMessage",
@@ -4563,9 +4563,9 @@
     {
      "name": "func_0021C0D8",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1288"
+     "address": "1288",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0021C1C8",
@@ -4902,9 +4902,9 @@
     {
      "name": "InitPlaneFromNormalPos",
      "size": "44",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "136"
+     "address": "136",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetPlane",
@@ -5112,7 +5112,7 @@
     {
      "name": ".text",
      "size": "9040",
-     "fuzzy_match_percent": 49.955752,
+     "fuzzy_match_percent": 48.230088,
      "metadata": {}
     }
    ],
@@ -5225,7 +5225,7 @@
     {
      "name": "QueueSwCallbackOnce",
      "size": "156",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "1656"
     },
@@ -5449,14 +5449,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 49.955752,
+    "fuzzy_match_percent": 48.230088,
     "total_code": "9040",
-    "matched_code": "4516",
-    "matched_code_percent": 49.955752,
+    "matched_code": "4360",
+    "matched_code_percent": 48.230088,
     "matched_data_percent": 100.0,
     "total_functions": 46,
-    "matched_functions": 37,
-    "matched_functions_percent": 80.434783,
+    "matched_functions": 36,
+    "matched_functions_percent": 78.26087,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -5534,9 +5534,9 @@
     {
      "name": "ShowHideLo",
      "size": "204",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "968"
+     "address": "968",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ShowHideLoGlob",
@@ -5555,9 +5555,9 @@
     {
      "name": "func_00210538",
      "size": "316",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1480"
+     "address": "1480",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetEyesClosedByOid",
@@ -5717,9 +5717,9 @@
     {
      "name": "func_001FF4F0",
      "size": "72",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "264"
+     "address": "264",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "button__static_initialization_and_destruction_0",
@@ -6522,16 +6522,16 @@
     {
      "name": "DecomposeCylind",
      "size": "164",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "DecomposeSphere",
      "size": "216",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "168"
+     "address": "168",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -6923,9 +6923,9 @@
     {
      "name": "ConvertCmWorldToScreen",
      "size": "180",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4248"
+     "address": "4248",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0014F3C0",
@@ -7037,23 +7037,23 @@
     {
      "name": "bevy_camera_cm_14f768",
      "size": "228",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5368"
+     "address": "5368",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FInsideCmFrustrum",
      "size": "72",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5600"
+     "address": "5600",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FInsideCmMrd",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5672"
+     "address": "5672",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -7279,9 +7279,9 @@
     {
      "name": "PostJtLoadPipe",
      "size": "280",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5232"
+     "address": "5232",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -7849,9 +7849,9 @@
     {
      "name": "func_00155AE0",
      "size": "688",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2120"
+     "address": "2120",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00155D90",
@@ -7926,9 +7926,9 @@
     {
      "name": "HitFx_Remove",
      "size": "240",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5352"
+     "address": "5352",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FHitFxGone",
@@ -8800,9 +8800,9 @@
     {
      "name": "ApplyDzg",
      "size": "412",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "dzg__static_initialization_and_destruction_0",
@@ -8977,11 +8977,11 @@
     {
      "name": "AppendDzgDz__FP3DZGP2DZ",
      "size": "188",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "AppendDzgDz(DZG*, DZ*)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FillDzgDz",
@@ -9077,9 +9077,9 @@
     {
      "name": "LoadAcgbFromBrx",
      "size": "228",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "88"
+     "address": "88",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -9782,11 +9782,11 @@
     {
      "name": "ConvertEmitoPosVec__FP5EMITOP6VECTORT1",
      "size": "240",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "ConvertEmitoPosVec(EMITO *, VECTOR *, VECTOR *)"
      },
-     "address": "7064"
+     "address": "7064",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "CalculateEmitvx__FiP2LMiP6EMITVX",
@@ -10372,9 +10372,9 @@
     {
      "name": "SeekSpriteInstanceFraction",
      "size": "88",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8456"
+     "address": "8456",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00218038",
@@ -10386,9 +10386,9 @@
     {
      "name": "SeekSpriteInstanceTime",
      "size": "448",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8584"
+     "address": "8584",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateRootSprite",
@@ -10463,9 +10463,9 @@
     {
      "name": "RefreshSpriteInstance",
      "size": "2120",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "10712"
+     "address": "10712",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_002190F8",
@@ -10605,9 +10605,9 @@
     {
      "name": "CopyBmpHeader",
      "size": "72",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "LoadBitmapsFromBrx",
@@ -10823,11 +10823,11 @@
     {
      "name": "DxMaxLine__9CRichText",
      "size": "140",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CRichText::DxMaxLine"
      },
-     "address": "3904"
+     "address": "3904",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Draw__9CRichTextP8CTextBoxT1P4GIFS",
@@ -10955,7 +10955,7 @@
     {
      "name": ".text",
      "size": "2556",
-     "fuzzy_match_percent": 58.528951,
+     "fuzzy_match_percent": 46.635368,
      "metadata": {}
     }
    ],
@@ -11035,7 +11035,7 @@
     {
      "name": "FlushFrames__Fi",
      "size": "304",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FlushFrames(int)"
      },
@@ -11060,14 +11060,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 58.528951,
+    "fuzzy_match_percent": 46.635368,
     "total_code": "2556",
-    "matched_code": "1496",
-    "matched_code_percent": 58.528951,
+    "matched_code": "1192",
+    "matched_code_percent": 46.635368,
     "matched_data_percent": 100.0,
     "total_functions": 10,
-    "matched_functions": 8,
-    "matched_functions_percent": 80.0,
+    "matched_functions": 7,
+    "matched_functions_percent": 70.0,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -11560,9 +11560,9 @@
     {
      "name": "GetTitlePromptText",
      "size": "336",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "12712"
+     "address": "12712",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SidEpisodeName",
@@ -11728,9 +11728,9 @@
     {
      "name": "GetLaserBeamPoints",
      "size": "260",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "17744"
+     "address": "17744",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AddLaserCustomXps",
@@ -11963,9 +11963,9 @@
     {
      "name": "Menu_UpdateStick",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "232"
+     "address": "232",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Menu_SetDialog",
@@ -12192,9 +12192,9 @@
     {
      "name": "GIFS_AddPrimTag",
      "size": "176",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "320"
+     "address": "320",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AddPrimBulk__4GIFSiiiUlPP2QW",
@@ -12439,11 +12439,11 @@
     {
      "name": "VBlankS_Interrupt__Fi",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "VBlankS_Interrupt(int)"
      },
-     "address": "408"
+     "address": "408",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SyncVBlank__Fv",
@@ -12484,11 +12484,11 @@
     {
      "name": "ResetGs__Fv",
      "size": "80",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "ResetGs()"
      },
-     "address": "1432"
+     "address": "1432",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SendDmaSyncGsFinish__FP10sceDmaChanP2QW",
@@ -12967,9 +12967,9 @@
     {
      "name": "GoalHit_Activate",
      "size": "624",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1096"
+     "address": "1096",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GoalHit_Deactivate",
@@ -13072,9 +13072,9 @@
     {
      "name": "GoalIdle_SetState",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3664"
+     "address": "3664",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00179E80",
@@ -13100,9 +13100,9 @@
     {
      "name": "GoalJump_Activate",
      "size": "1072",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4288"
+     "address": "4288",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0017A3D0",
@@ -13121,9 +13121,9 @@
     {
      "name": "func_0017A468",
      "size": "68",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5512"
+     "address": "5512",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0017A4B0",
@@ -13149,9 +13149,9 @@
     {
      "name": "GoalFlinch_SetState",
      "size": "188",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5840"
+     "address": "5840",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0017A670",
@@ -13240,9 +13240,9 @@
     {
      "name": "GoalAnimLeap_FHandleMessage",
      "size": "580",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8272"
+     "address": "8272",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GoalAnimLeap_Deactivate",
@@ -13626,9 +13626,9 @@
     {
      "name": "func_001843F0",
      "size": "172",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2160"
+     "address": "2160",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AttachZone_OnAdd",
@@ -14284,9 +14284,9 @@
     {
      "name": "FindBestSafePoint",
      "size": "308",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateJtSafePoints",
@@ -14340,9 +14340,9 @@
     {
      "name": "BuildPlainBlend",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2056"
+     "address": "2056",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SolvePlainBlendWeights",
@@ -14462,7 +14462,7 @@
     {
      "name": ".text",
      "size": "2268",
-     "fuzzy_match_percent": 58.024691,
+     "fuzzy_match_percent": 55.555556,
      "metadata": {}
     }
    ],
@@ -14554,7 +14554,7 @@
     {
      "name": "PcmdFindScriptLabel",
      "size": "56",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "1312"
     },
@@ -14610,14 +14610,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 58.024691,
+    "fuzzy_match_percent": 55.555556,
     "total_code": "2268",
-    "matched_code": "1316",
-    "matched_code_percent": 58.024691,
+    "matched_code": "1260",
+    "matched_code_percent": 55.555556,
     "matched_data_percent": 100.0,
     "total_functions": 19,
-    "matched_functions": 17,
-    "matched_functions_percent": 89.473684,
+    "matched_functions": 16,
+    "matched_functions_percent": 84.210526,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -14944,9 +14944,9 @@
     {
      "name": "func_0018A350",
      "size": "212",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "280"
+     "address": "280",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0018A428",
@@ -14979,9 +14979,9 @@
     {
      "name": "func_0018B348",
      "size": "280",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4368"
+     "address": "4368",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0018B460",
@@ -15983,9 +15983,9 @@
     {
      "name": "RemoveLoHierarchy",
      "size": "136",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7904"
+     "address": "7904",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001A58D0",
@@ -16090,11 +16090,11 @@
     {
      "name": "FitLinearFunction__FffffPfT4",
      "size": "160",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FitLinearFunction(float, float, float, float, float *, float *)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FitRecipFunction__FffffPfT4",
@@ -16926,11 +16926,11 @@
     {
      "name": "NormalizeRotateMatrix3__FP7MATRIX3",
      "size": "160",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "NormalizeRotateMatrix3(MATRIX3*)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0011B470",
@@ -16942,9 +16942,9 @@
     {
      "name": "LoadRotateMatrixSinCos",
      "size": "124",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "176"
+     "address": "176",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "LoadRotateMatrixRad",
@@ -16956,9 +16956,9 @@
     {
      "name": "LoadRotateMatrix",
      "size": "180",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "416"
+     "address": "416",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "LoadRotateMatrixEuler__FP6VECTORP7MATRIX3",
@@ -16972,9 +16972,9 @@
     {
      "name": "LoadRotateMatrixPanTilt",
      "size": "192",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "848"
+     "address": "848",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "LoadLookAtMatrix",
@@ -17002,11 +17002,11 @@
     {
      "name": "TiltMatUpright__FP7MATRIX3N20",
      "size": "196",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "TiltMatUpright(MATRIX3 *, MATRIX3 *, MATRIX3 *)"
      },
-     "address": "1384"
+     "address": "1384",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0011BA00",
@@ -17050,9 +17050,9 @@
     {
      "name": "DecomposeRotateMatrix",
      "size": "56",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3048"
+     "address": "3048",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "DecomposeRotateMatrixEuler",
@@ -17064,11 +17064,11 @@
     {
      "name": "__ml__FRC7MATRIX4G8VU_FLOAT",
      "size": "60",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "operator*(MATRIX4 const &, VU_FLOAT)"
      },
-     "address": "3416"
+     "address": "3416",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "__ml__FRC7MATRIX4T0",
@@ -17082,11 +17082,11 @@
     {
      "name": "__ml__FRC7MATRIX4G10VU_VECTOR4",
      "size": "44",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "operator*(MATRIX4 const &, VU_VECTOR4)"
      },
-     "address": "3544"
+     "address": "3544",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "TransposeMatrix4",
@@ -17105,9 +17105,9 @@
     {
      "name": "func_0011C288",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3768"
+     "address": "3768",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FInvertMatrix4__FP7MATRIX4T0",
@@ -17121,9 +17121,9 @@
     {
      "name": "InvertMatrix4Affine",
      "size": "184",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3912"
+     "address": "3912",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "CalculateDmat4",
@@ -17569,9 +17569,9 @@
     {
      "name": "CheckCardStatus",
      "size": "264",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7136"
+     "address": "7136",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GetCardFreeBytes",
@@ -17802,9 +17802,9 @@
     {
      "name": "func_001AD250",
      "size": "208",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2224"
+     "address": "2224",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SlotItem_Load",
@@ -18379,9 +18379,9 @@
     {
      "name": "EvaluateBezierFloat",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1336"
+     "address": "1336",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -18709,9 +18709,9 @@
     {
      "name": "PosPredictMissileTarget",
      "size": "208",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PresetTarmissAccel",
@@ -19010,9 +19010,9 @@
     {
      "name": "CQueueOutputIop_Update",
      "size": "280",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1080"
+     "address": "1080",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FAsyncDrain__15CQueueOutputIop",
@@ -19026,11 +19026,11 @@
     {
      "name": "CbWrite__15CQueueOutputIpuiPv",
      "size": "92",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CQueueOutputIpu::CbWrite(int, void *)"
      },
-     "address": "1368"
+     "address": "1368",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FAsyncDrain__15CQueueOutputIpu",
@@ -19044,11 +19044,11 @@
     {
      "name": "Init__10CMpegAudio",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CMpegAudio::Init"
      },
-     "address": "1472"
+     "address": "1472",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Reset__10CMpegAudio",
@@ -19169,27 +19169,27 @@
     {
      "name": "CMpeg_Start",
      "size": "404",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5184"
+     "address": "5184",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Update__5CMpeg",
      "size": "228",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CMpeg::Update"
      },
-     "address": "5592"
+     "address": "5592",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Finish__5CMpeg",
      "size": "144",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CMpeg::Finish"
      },
-     "address": "5824"
+     "address": "5824",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -19370,9 +19370,9 @@
     {
      "name": "ChooseMurrayThrowTarget",
      "size": "476",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7368"
+     "address": "7368",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetMurrayState",
@@ -19461,16 +19461,16 @@
     {
      "name": "ThrowMurrayObject",
      "size": "260",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "14240"
+     "address": "14240",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "StartMurrayThrow",
      "size": "108",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "14504"
+     "address": "14504",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001B7AE8",
@@ -19559,9 +19559,9 @@
     {
      "name": "UpdateMurrayStandOn",
      "size": "196",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "16592"
+     "address": "16592",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "NMurrayActionCategory",
@@ -19657,9 +19657,9 @@
     {
      "name": "AdjustMurrayNewXp",
      "size": "456",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "20320"
+     "address": "20320",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateMurrayLift",
@@ -19832,9 +19832,9 @@
     {
      "name": "SetZoneScriptState",
      "size": "340",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "26200"
+     "address": "26200",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001BA980",
@@ -26068,9 +26068,9 @@
     {
      "name": "InvertMatrix3",
      "size": "144",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -26268,9 +26268,9 @@
     {
      "name": "func_0011EA60",
      "size": "316",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0011EBA0",
@@ -26282,9 +26282,9 @@
     {
      "name": "FIntersectRayTriangle",
      "size": "392",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "336"
+     "address": "336",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0011ED38",
@@ -26410,9 +26410,9 @@
     {
      "name": "PframeClone",
      "size": "336",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "frame__static_initialization_and_destruction_0",
@@ -26706,9 +26706,9 @@
     {
      "name": "LoadAcrbFromBrx",
      "size": "248",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1976"
+     "address": "1976",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "IkeyFindAcrb",
@@ -26734,9 +26734,9 @@
     {
      "name": "func_0012BA98",
      "size": "216",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3184"
+     "address": "3184",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0012BB70",
@@ -26783,9 +26783,9 @@
     {
      "name": "func_0012C440",
      "size": "304",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5656"
+     "address": "5656",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0012C570",
@@ -26811,9 +26811,9 @@
     {
      "name": "func_0012CA68",
      "size": "304",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7232"
+     "address": "7232",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -26882,16 +26882,16 @@
     {
      "name": "GetActadjGoal",
      "size": "116",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1104"
+     "address": "1104",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GetActadjPositionGoal",
      "size": "92",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1224"
+     "address": "1224",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetActadjOffset",
@@ -27573,23 +27573,23 @@
     {
      "name": "func_001409E8",
      "size": "272",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4448"
+     "address": "4448",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FJtInFocusRange",
      "size": "308",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4720"
+     "address": "4720",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00140C30",
      "size": "84",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5032"
+     "address": "5032",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00140C88",
@@ -27678,9 +27678,9 @@
     {
      "name": "func_00141968",
      "size": "228",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8416"
+     "address": "8416",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateJtGadgets",
@@ -27825,9 +27825,9 @@
     {
      "name": "func_001423A0",
      "size": "284",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "11032"
+     "address": "11032",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001424C0",
@@ -27867,16 +27867,16 @@
     {
      "name": "RenderJt",
      "size": "312",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "11560"
+     "address": "11560",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "InitJtLookRig",
      "size": "224",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "11872"
+     "address": "11872",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetJtLookTarget",
@@ -27937,9 +27937,9 @@
     {
      "name": "func_001430C8",
      "size": "260",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "14400"
+     "address": "14400",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001431D0",
@@ -28203,9 +28203,9 @@
     {
      "name": "func_001448F0",
      "size": "212",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "20584"
+     "address": "20584",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001449C8",
@@ -28421,9 +28421,9 @@
     {
      "name": "func_00146068",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5392"
+     "address": "5392",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00146158",
@@ -28470,9 +28470,9 @@
     {
      "name": "func_00146560",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6664"
+     "address": "6664",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00146650",
@@ -28547,9 +28547,9 @@
     {
      "name": "GoalMurrayAi_Update",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9152"
+     "address": "9152",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "StaticInitSwSlotheaps",
@@ -29034,9 +29034,9 @@
     {
      "name": "StaticInitClock",
      "size": "136",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "560"
+     "address": "560",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "InitClock",
@@ -29098,9 +29098,9 @@
     {
      "name": "TickReadCount",
      "size": "64",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "112"
+     "address": "112",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "StaticInitSlotheaps_14d280",
@@ -29226,9 +29226,9 @@
     {
      "name": "NNextSensorState",
      "size": "848",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "88"
+     "address": "88",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FFilterSensorBasic",
@@ -29516,9 +29516,9 @@
     {
      "name": "UpdateXfMirror",
      "size": "348",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "648"
+     "address": "648",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "InitStaticSlotheaps_frm2",
@@ -30087,9 +30087,9 @@
     {
      "name": "func_00167DA0",
      "size": "180",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2688"
+     "address": "2688",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00167E58",
@@ -30101,9 +30101,9 @@
     {
      "name": "Vif1InterruptHandler",
      "size": "68",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3160"
+     "address": "3160",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UploadRelightLights",
@@ -30438,7 +30438,7 @@
     {
      "name": ".text",
      "size": "30692",
-     "fuzzy_match_percent": 39.801903,
+     "fuzzy_match_percent": 38.576828,
      "metadata": {}
     }
    ],
@@ -30460,9 +30460,9 @@
     {
      "name": "TeleportGuardScript",
      "size": "180",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1392"
+     "address": "1392",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00171C18",
@@ -30544,9 +30544,9 @@
     {
      "name": "SetSearchState",
      "size": "560",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3376"
+     "address": "3376",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00172550",
@@ -30607,9 +30607,9 @@
     {
      "name": "func_00172F10",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6432"
+     "address": "6432",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "StaticInitGuardPools_173000",
@@ -30831,9 +30831,9 @@
     {
      "name": "func_00174F08",
      "size": "172",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "14616"
+     "address": "14616",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FGoalAnimDone",
@@ -30929,7 +30929,7 @@
     {
      "name": "func_00175488",
      "size": "376",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "16024"
     },
@@ -31181,14 +31181,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 39.801903,
+    "fuzzy_match_percent": 38.576828,
     "total_code": "30692",
-    "matched_code": "12216",
-    "matched_code_percent": 39.801903,
+    "matched_code": "11840",
+    "matched_code_percent": 38.576828,
     "matched_data_percent": 100.0,
     "total_functions": 104,
-    "matched_functions": 78,
-    "matched_functions_percent": 75.0,
+    "matched_functions": 77,
+    "matched_functions_percent": 74.038462,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -31202,7 +31202,7 @@
     {
      "name": ".text",
      "size": "4120",
-     "fuzzy_match_percent": 49.320388,
+     "fuzzy_match_percent": 40.38835,
      "metadata": {}
     }
    ],
@@ -31210,7 +31210,7 @@
     {
      "name": "func_0017CD00",
      "size": "184",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "0"
     },
@@ -31259,7 +31259,7 @@
     {
      "name": "func_0017D058",
      "size": "184",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "856"
     },
@@ -31399,14 +31399,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 49.320388,
+    "fuzzy_match_percent": 40.38835,
     "total_code": "4120",
-    "matched_code": "2032",
-    "matched_code_percent": 49.320388,
+    "matched_code": "1664",
+    "matched_code_percent": 40.38835,
     "matched_data_percent": 100.0,
     "total_functions": 26,
-    "matched_functions": 21,
-    "matched_functions_percent": 80.769231,
+    "matched_functions": 19,
+    "matched_functions_percent": 73.076923,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -31589,9 +31589,9 @@
     {
      "name": "func_0017EB88",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3608"
+     "address": "3608",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0017EC80",
@@ -31906,16 +31906,16 @@
     {
      "name": "func_001803E0",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00180478",
      "size": "132",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "152"
+     "address": "152",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Chaser_Init",
@@ -32492,9 +32492,9 @@
     {
      "name": "StartJmpDirectionAseg",
      "size": "344",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "12416"
+     "address": "12416",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PmqFirstOxaContact",
@@ -32684,9 +32684,9 @@
     {
      "name": "bevy_player_p14_19e110",
      "size": "204",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateJtActivePipe",
@@ -32824,9 +32824,9 @@
     {
      "name": "func_0019F3F8",
      "size": "324",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4840"
+     "address": "4840",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -32867,9 +32867,9 @@
     {
      "name": "PresetJtAccelZap",
      "size": "424",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateZap",
@@ -33235,9 +33235,9 @@
     {
      "name": "CmpPosXy",
      "size": "112",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "112"
+     "address": "112",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "OrientXy",
@@ -33277,9 +33277,9 @@
     {
      "name": "FObstacleContainsPos",
      "size": "204",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2136"
+     "address": "2136",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001BCAC0",
@@ -33333,9 +33333,9 @@
     {
      "name": "Obstacle_UpdatePlanes",
      "size": "352",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4712"
+     "address": "4712",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001BD560",
@@ -33481,9 +33481,9 @@
     {
      "name": "PpathzoneFindPos",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1104"
+     "address": "1104",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "LoadSwPzgraphFromBrx",
@@ -34008,16 +34008,16 @@
     {
      "name": "UpdateVjoy",
      "size": "320",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1648"
+     "address": "1648",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateVjoyPressTimes",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1968"
+     "address": "1968",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetVjoyMode",
@@ -34218,9 +34218,9 @@
     {
      "name": "RenderDprizeAll",
      "size": "276",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8616"
+     "address": "8616",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetDprizeDprizes",
@@ -34450,9 +34450,9 @@
     {
      "name": "PpathClueFlag",
      "size": "156",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1096"
+     "address": "1096",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FClueFound",
@@ -34983,9 +34983,9 @@
     {
      "name": "func_001CBB58",
      "size": "76",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "10888"
+     "address": "10888",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001CBBA8",
@@ -35385,9 +35385,9 @@
     {
      "name": "AddAloToRenderTree",
      "size": "264",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3776"
+     "address": "3776",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AllocRenderTreeNode",
@@ -36435,9 +36435,9 @@
     {
      "name": "ApplyConstr",
      "size": "140",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8344"
+     "address": "8344",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "DvFromImpulse",
@@ -36449,9 +36449,9 @@
     {
      "name": "DwFromImpulseAtPos",
      "size": "80",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8560"
+     "address": "8560",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "DwFromTorque",
@@ -36463,9 +36463,9 @@
     {
      "name": "VecVelocityAtPos",
      "size": "44",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8816"
+     "address": "8816",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AddSoImpulseAtPos",
@@ -36477,16 +36477,16 @@
     {
      "name": "AddSoAcceleration",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9048"
+     "address": "9048",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AddSoAngularAcceleration",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9152"
+     "address": "9152",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AdjustSoXpVelocity",
@@ -36702,9 +36702,9 @@
     {
      "name": "UpdateStreamAmbPositional",
      "size": "504",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2704"
+     "address": "2704",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "OnStreamAmbStarted",
@@ -36871,9 +36871,9 @@
     {
      "name": "ResetSnd",
      "size": "300",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1800"
+     "address": "1800",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateSnd",
@@ -36885,9 +36885,9 @@
     {
      "name": "func_001FDA48",
      "size": "352",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2640"
+     "address": "2640",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001FDBA8",
@@ -37246,9 +37246,9 @@
     {
      "name": "func_00203D00",
      "size": "260",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1392"
+     "address": "1392",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -37289,9 +37289,9 @@
     {
      "name": "UpdateStep",
      "size": "308",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_002040F8",
@@ -37381,16 +37381,16 @@
     {
      "name": "SetStepRadTargetDir",
      "size": "60",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1120"
+     "address": "1120",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_002046F0",
      "size": "76",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1184"
+     "address": "1184",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RadYawSo",
@@ -37918,9 +37918,9 @@
     {
      "name": "func_002255C8",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "712"
+     "address": "712",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetDyshState",
@@ -38010,9 +38010,9 @@
     {
      "name": "UpdateTankAim",
      "size": "756",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "248"
+     "address": "248",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateTankFov",
@@ -38221,9 +38221,9 @@
     {
      "name": "func_00227820",
      "size": "284",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1576"
+     "address": "1576",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00227940",
@@ -38249,9 +38249,9 @@
     {
      "name": "LoadVolumeFromBrx",
      "size": "212",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2496"
+     "address": "2496",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00227C90",
@@ -38821,11 +38821,11 @@
     {
      "name": "PcgtPointInCbspQuick__FP4CBSPP6VECTOR",
      "size": "220",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "PcgtPointInCbspQuick(CBSP*, VECTOR*)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -39393,9 +39393,9 @@
     {
      "name": "PostBlotLoad",
      "size": "296",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6192"
+     "address": "6192",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PrepareBlotMovie",
@@ -39506,9 +39506,9 @@
     {
      "name": "ExtendSoBounds",
      "size": "140",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1032"
+     "address": "1032",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConstrFromCnstr",
@@ -40268,9 +40268,9 @@
     {
      "name": "Chaser_HandleMessage",
      "size": "344",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Chaser_FTakeHit",
@@ -40499,9 +40499,9 @@
     {
      "name": "Swarm_PriderNearest",
      "size": "152",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6064"
+     "address": "6064",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Swarm_FTakeHit",
@@ -40513,9 +40513,9 @@
     {
      "name": "Swarm_AbsorbTouch",
      "size": "224",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6520"
+     "address": "6520",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Swarm_AddGroup",
@@ -40709,9 +40709,9 @@
     {
      "name": "AttachCyl_GetPosFromParam",
      "size": "192",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9440"
+     "address": "9440",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "AttachCyl_GetRandomPos",
@@ -40758,9 +40758,9 @@
     {
      "name": "AttachFlat_GetPosFromParam",
      "size": "232",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "10168"
+     "address": "10168",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -40931,16 +40931,16 @@
     {
      "name": "UpdateDancer",
      "size": "264",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1368"
+     "address": "1368",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "HandleDancerMessage",
      "size": "256",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1632"
+     "address": "1632",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GetDancerCpdefi",
@@ -41190,9 +41190,9 @@
     {
      "name": "func_00153E60",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8816"
+     "address": "8816",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00153EF8",
@@ -41352,16 +41352,16 @@
     {
      "name": "func_001D22D0",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4280"
+     "address": "4280",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001D2420",
      "size": "108",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4616"
+     "address": "4616",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001D2490",
@@ -41429,9 +41429,9 @@
     {
      "name": "AdjustVehicleNewXp",
      "size": "292",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "11832"
+     "address": "11832",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateVehicleBounds",
@@ -41443,9 +41443,9 @@
     {
      "name": "func_001D41F8",
      "size": "876",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "12256"
+     "address": "12256",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FAbsorbVehicleWkr",
@@ -41851,11 +41851,11 @@
     {
      "name": "FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3",
      "size": "476",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "FRenderRipPosMat(RIP*, CM*, VECTOR*, MATRIX3*)"
      },
-     "address": "664"
+     "address": "664",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RenderRip",
@@ -41902,11 +41902,11 @@
     {
      "name": "RenderFlying__FP6FLYINGP2CM",
      "size": "148",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "RenderFlying(FLYING*, CM*)"
      },
-     "address": "1400"
+     "address": "1400",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "CreateStuck__FP3RIPP3ALOP2SOP6VECTORT3PP5STUCK",
@@ -41981,11 +41981,11 @@
     {
      "name": "LaunchMatch__FP5MATCH",
      "size": "340",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "LaunchMatch(MATCH*)"
      },
-     "address": "3216"
+     "address": "3216",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ProjectMatchTransform__FP5MATCHf",
@@ -42501,11 +42501,11 @@
     {
      "name": "UpdateRumble__FP6RUMBLE",
      "size": "344",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "UpdateRumble(RUMBLE*)"
      },
-     "address": "104"
+     "address": "104",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "TriggerRumbleRumk__FP6RUMBLE4RUMKf",
@@ -42718,9 +42718,9 @@
     {
      "name": "func_0020ACC0",
      "size": "116",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1424"
+     "address": "1424",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0020AD38",
@@ -43131,9 +43131,9 @@
     {
      "name": "UpdateBlotMovie",
      "size": "492",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "480"
+     "address": "480",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SeekBlotLabel",
@@ -46601,9 +46601,9 @@
     {
      "name": "sceGsSyncPath",
      "size": "136",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "59888"
+     "address": "59888",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "sceGsResetGraph",
@@ -49033,16 +49033,16 @@
     {
      "name": "PostLoadTask",
      "size": "592",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "768"
+     "address": "768",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateTask",
      "size": "220",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1360"
+     "address": "1360",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SwitchCurrentTask",
@@ -49774,11 +49774,11 @@
     {
      "name": "InitLoop__FP4LOOPP4SAAF",
      "size": "164",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "InitLoop(LOOP*, SAAF*)"
      },
-     "address": "376"
+     "address": "376",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateLoop__FP4LOOPf",
@@ -49801,11 +49801,11 @@
     {
      "name": "InitPingpong__FP8PINGPONGP4SAAF",
      "size": "176",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "InitPingpong(PINGPONG*, SAAF*)"
      },
-     "address": "832"
+     "address": "832",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdatePingpong__FP8PINGPONGf",
@@ -50060,9 +50060,9 @@
     {
      "name": "bevy_gfx_screen_C2d9500_v15",
      "size": "108",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3520"
+     "address": "3520",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "StaticInitSmSlotheaps",
@@ -50124,11 +50124,11 @@
     {
      "name": "UpdateShuffle__FP7SHUFFLEf",
      "size": "172",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "UpdateShuffle(SHUFFLE*, float)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -50517,7 +50517,7 @@
     {
      "name": ".text",
      "size": "11800",
-     "fuzzy_match_percent": 59.932203,
+     "fuzzy_match_percent": 58.271186,
      "metadata": {}
     }
    ],
@@ -50721,9 +50721,9 @@
     {
      "name": "func_001F1900",
      "size": "316",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4560"
+     "address": "4560",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001F1A40",
@@ -50861,9 +50861,9 @@
     {
      "name": "AddSoGeomToOxa",
      "size": "192",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8512"
+     "address": "8512",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RemoveSoGeomFromOxa",
@@ -50903,9 +50903,9 @@
     {
      "name": "AddSoLoHierarchy",
      "size": "276",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9472"
+     "address": "9472",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RemoveSoLoHierarchy",
@@ -50938,7 +50938,7 @@
     {
      "name": "func_001F3118",
      "size": "196",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "10728"
     },
@@ -50966,14 +50966,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 59.932203,
+    "fuzzy_match_percent": 58.271186,
     "total_code": "11800",
-    "matched_code": "7072",
-    "matched_code_percent": 59.932203,
+    "matched_code": "6876",
+    "matched_code_percent": 58.271186,
     "matched_data_percent": 100.0,
     "total_functions": 62,
-    "matched_functions": 50,
-    "matched_functions_percent": 80.645161,
+    "matched_functions": 49,
+    "matched_functions_percent": 79.032258,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -51528,9 +51528,9 @@
     {
      "name": "UpdateSo",
      "size": "228",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "56"
+     "address": "56",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001F37C8",
@@ -51591,23 +51591,23 @@
     {
      "name": "func_001F3CC8",
      "size": "308",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1568"
+     "address": "1568",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001F3E00",
      "size": "168",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1880"
+     "address": "1880",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001F3EA8",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2048"
+     "address": "2048",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PmatWorldSo",
@@ -51654,9 +51654,9 @@
     {
      "name": "SetSoVelocityVec",
      "size": "208",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3552"
+     "address": "3552",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GetSoAngularVelocityVec",
@@ -51998,9 +51998,9 @@
     {
      "name": "FadeAloIn",
      "size": "168",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3440"
+     "address": "3440",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetAloAlpha",
@@ -52805,16 +52805,16 @@
     {
      "name": "SetEmitterUnpositioned",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "904"
+     "address": "904",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetAmbPos",
      "size": "256",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1152"
+     "address": "1152",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetAmbRange",
@@ -52999,11 +52999,11 @@
     {
      "name": "CloneSpire__FP5SPIRET0",
      "size": "72",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "CloneSpire(SPIRE *, SPIRE *)"
      },
-     "address": "160"
+     "address": "160",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -53996,9 +53996,9 @@
     {
      "name": "RefOpVectorCrossProduct",
      "size": "92",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6128"
+     "address": "6128",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001227D0",
@@ -54024,23 +54024,23 @@
     {
      "name": "RefOpVectorNormalize",
      "size": "336",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6712"
+     "address": "6712",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpVectorProjectNormal",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7048"
+     "address": "7048",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpVectorProjectTangent",
      "size": "108",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "7152"
+     "address": "7152",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpVectorBallisticVelocity",
@@ -54115,16 +54115,16 @@
     {
      "name": "RefOpMatrixLookAt",
      "size": "196",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "8840"
+     "address": "8840",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpMatrixTiltUpright",
      "size": "176",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "9040"
+     "address": "9040",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpClqEvaluate",
@@ -54192,9 +54192,9 @@
     {
      "name": "RefOpAbs",
      "size": "140",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "10104"
+     "address": "10104",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefOpMaximum",
@@ -54349,11 +54349,11 @@
     {
      "name": "__8VU_FLOATf",
      "size": "28",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "VU_FLOAT::VU_FLOAT(float)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "__9VU_VECTORRC6VECTOR",
@@ -54376,11 +54376,11 @@
     {
      "name": "__ml__FG8VU_FLOATG9VU_VECTOR",
      "size": "20",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "operator*(VU_FLOAT, VU_VECTOR)"
      },
-     "address": "64"
+     "address": "64",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -54430,9 +54430,9 @@
     {
      "name": "func_001266C8",
      "size": "144",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "216"
+     "address": "216",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "RefEvalIf__FP5CPairP6CFrame",
@@ -55787,9 +55787,9 @@
     {
      "name": "StartNextSeqnodeRecord",
      "size": "6748",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4944"
+     "address": "4944",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FSeqnodeRecordDone",
@@ -55815,9 +55815,9 @@
     {
      "name": "GetSeqnodeObjectPosRad",
      "size": "372",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "16992"
+     "address": "16992",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetSeqnodeDrive",
@@ -55836,9 +55836,9 @@
     {
      "name": "func_001E5000",
      "size": "224",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "17696"
+     "address": "17696",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetSeqnodeHandsOff",
@@ -55913,9 +55913,9 @@
     {
      "name": "StopSeqnode",
      "size": "336",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "19272"
+     "address": "19272",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FSeqnodeStopped",
@@ -56875,9 +56875,9 @@
     {
      "name": "UpdateReconLinkFades",
      "size": "300",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "848"
+     "address": "848",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "bevy_ui_binoc_recon_2021f8",
@@ -56959,9 +56959,9 @@
     {
      "name": "func_002035A8",
      "size": "140",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6192"
+     "address": "6192",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -57208,9 +57208,9 @@
     {
      "name": "func_00206380",
      "size": "212",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5448"
+     "address": "5448",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00206458",
@@ -57978,9 +57978,9 @@
     {
      "name": "NCompareHitfxForGuard",
      "size": "300",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "21296"
+     "address": "21296",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0020A298",
@@ -57999,9 +57999,9 @@
     {
      "name": "PhitfxChooseForGuard",
      "size": "272",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "21968"
+     "address": "21968",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0020A518",
@@ -58196,11 +58196,11 @@
     {
      "name": "ChooseJtRushTarget__FP2JT",
      "size": "184",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "ChooseJtRushTarget(JT*)"
      },
-     "address": "984"
+     "address": "984",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ChooseJtSmashTarget__FP2JT",
@@ -58662,23 +58662,23 @@
     {
      "name": "ConvertAloPos",
      "size": "188",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "16"
+     "address": "16",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "bevy_camera_follow_track_heading_weight",
      "size": "144",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "208"
+     "address": "208",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConvertLoMat",
      "size": "348",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "352"
+     "address": "352",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConvertAloMat",
@@ -58690,16 +58690,16 @@
     {
      "name": "ConvertMatPos",
      "size": "120",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "992"
+     "address": "992",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ConvertAloVec",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1112"
+     "address": "1112",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_001A73B0",
@@ -59210,11 +59210,11 @@
     {
      "name": "MatchJtXmgRail__FP2JTP3XMGP6ACTADJ",
      "size": "332",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "MatchJtXmgRail(JT*, XMG*, ACTADJ*)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00193DE8",
@@ -59772,9 +59772,9 @@
     {
      "name": "UpdateFallCheck",
      "size": "336",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "5016"
+     "address": "5016",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0020CFC0",
@@ -60654,23 +60654,23 @@
     {
      "name": "func_00259D98",
      "size": "16",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3240"
+     "address": "3240",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Vec4_GetY",
      "size": "20",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3256"
+     "address": "3256",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "Vec4_GetZ",
      "size": "20",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3280"
+     "address": "3280",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_00259DD8",
@@ -60718,11 +60718,11 @@
     {
      "name": "VecCombo__FG8VU_FLOATG9VU_VECTORT0T1",
      "size": "32",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "VecCombo(VU_FLOAT, VU_VECTOR, VU_FLOAT, VU_VECTOR)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_002584A0",
@@ -60898,9 +60898,9 @@
     {
      "name": "UpdateSwFog",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "160"
+     "address": "160",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetSwFogHsv",
@@ -60989,9 +60989,9 @@
     {
      "name": "IntersectSwBoundingSphere",
      "size": "356",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2872"
+     "address": "2872",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ExtractUniqueSosFromGeoms",
@@ -61046,9 +61046,9 @@
     {
      "name": "RecalcSwXpMovement",
      "size": "276",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "352"
+     "address": "352",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "ClsgClipSoAllEdges",
@@ -61511,9 +61511,9 @@
     {
      "name": "strchr",
      "size": "48",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "6080"
+     "address": "6080",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0021EE28",
@@ -61755,9 +61755,9 @@
     {
      "name": "PosCplookAnchor",
      "size": "112",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "280"
+     "address": "280",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "PosCplookEye",
@@ -62266,9 +62266,9 @@
     {
      "name": "UpdateCptnClosestPoint",
      "size": "236",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "3856"
+     "address": "3856",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "UpdateCptn__FP4CPTNP6CPDEFIP3JOYf",
@@ -62701,9 +62701,9 @@
     {
      "name": "func_001A3260",
      "size": "256",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "4792"
+     "address": "4792",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "InitLight",
@@ -62856,9 +62856,9 @@
     {
      "name": "SmoothMatrix",
      "size": "348",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -62991,9 +62991,9 @@
     {
      "name": "GCosAngle",
      "size": "224",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "func_0011F278",
@@ -63005,16 +63005,16 @@
     {
      "name": "VecMinOfVerts",
      "size": "48",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "240"
+     "address": "240",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "VecMaxOfVerts",
      "size": "48",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "288"
+     "address": "288",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "bif__static_initialization_and_destruction_0",
@@ -63221,9 +63221,9 @@
     {
      "name": "GRandInRange",
      "size": "136",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1256"
+     "address": "1256",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "FFloatsNear__Ffff",
@@ -63436,20 +63436,20 @@
     {
      "name": "SetVectorCylind__FP6VECTORfff",
      "size": "100",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "SetVectorCylind(VECTOR*, float, float, float)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SetVectorSphere__FP6VECTORfff",
      "size": "136",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "SetVectorSphere(VECTOR*, float, float, float)"
      },
-     "address": "104"
+     "address": "104",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "SProjectVector__FP6VECTORT0",
@@ -63463,11 +63463,11 @@
     {
      "name": "GetNormalVectors__FP6VECTORN30",
      "size": "184",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "GetNormalVectors(VECTOR *, VECTOR *, VECTOR *, VECTOR *)"
      },
-     "address": "312"
+     "address": "312",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "GetPerpendicularVector",
@@ -63515,11 +63515,11 @@
     {
      "name": "LimitVectorLength__FP6VECTORfT0",
      "size": "104",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "LimitVectorLength(VECTOR *, float, VECTOR *)"
      },
-     "address": "2136"
+     "address": "2136",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -63567,9 +63567,9 @@
     {
      "name": "BuildXfLinearRateMatrix",
      "size": "204",
-     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "112"
+     "address": "112",
+     "fuzzy_match_percent": 0.0
     },
     {
      "name": "BuildXfSpinRateMatrix",
@@ -64012,11 +64012,11 @@
     {
      "name": "UpdateSwXaList__FP2SWPP2XA",
      "size": "300",
-     "fuzzy_match_percent": 0.0,
      "metadata": {
       "demangled_name": "UpdateSwXaList(SW*, XA**)"
      },
-     "address": "0"
+     "address": "0",
+     "fuzzy_match_percent": 0.0
     }
    ],
    "metadata": {
@@ -64567,19 +64567,19 @@
    "id": "game",
    "name": "Game code",
    "measures": {
-    "fuzzy_match_percent": 46.983485,
+    "fuzzy_match_percent": 46.796501,
     "total_code": "1251444",
-    "matched_code": "587972",
-    "matched_code_percent": 46.983485,
+    "matched_code": "585632",
+    "matched_code_percent": 46.796501,
     "matched_data_percent": 100.0,
     "total_functions": 6071,
-    "matched_functions": 4785,
-    "matched_functions_percent": 78.817328,
-    "complete_code": "50168",
-    "complete_code_percent": 4.008809,
+    "matched_functions": 4775,
+    "matched_functions_percent": 78.652611,
+    "complete_code": "49552",
+    "complete_code_percent": 3.959586,
     "complete_data_percent": 100.0,
     "total_units": 429,
-    "complete_units": 168
+    "complete_units": 167
    }
   },
   {
@@ -64605,33 +64605,33 @@
    "id": "sly1",
    "name": "Sly 1 engine code",
    "measures": {
-    "fuzzy_match_percent": 45.686186,
+    "fuzzy_match_percent": 45.48719,
     "total_code": "802028",
-    "matched_code": "366416",
-    "matched_code_percent": 45.686186,
+    "matched_code": "364820",
+    "matched_code_percent": 45.48719,
     "matched_data_percent": 100.0,
     "total_functions": 3855,
-    "matched_functions": 2945,
-    "matched_functions_percent": 76.394293,
-    "complete_code": "36968",
-    "complete_code_percent": 4.609315,
+    "matched_functions": 2938,
+    "matched_functions_percent": 76.212711,
+    "complete_code": "36352",
+    "complete_code_percent": 4.53251,
     "complete_data_percent": 100.0,
     "total_units": 341,
-    "complete_units": 146
+    "complete_units": 145
    }
   },
   {
    "id": "new",
    "name": "Sly 2-only code",
    "measures": {
-    "fuzzy_match_percent": 49.298645,
+    "fuzzy_match_percent": 49.133097,
     "total_code": "449416",
-    "matched_code": "221556",
-    "matched_code_percent": 49.298645,
+    "matched_code": "220812",
+    "matched_code_percent": 49.133097,
     "matched_data_percent": 100.0,
     "total_functions": 2216,
-    "matched_functions": 1840,
-    "matched_functions_percent": 83.032491,
+    "matched_functions": 1837,
+    "matched_functions_percent": 82.897112,
     "complete_code": "13200",
     "complete_code_percent": 2.937145,
     "complete_data_percent": 100.0,
@@ -64643,14 +64643,14 @@
    "id": "core",
    "name": "Core and memory",
    "measures": {
-    "fuzzy_match_percent": 39.488057,
+    "fuzzy_match_percent": 39.153073,
     "total_code": "109856",
-    "matched_code": "43380",
-    "matched_code_percent": 39.488057,
+    "matched_code": "43012",
+    "matched_code_percent": 39.153073,
     "matched_data_percent": 100.0,
     "total_functions": 566,
-    "matched_functions": 394,
-    "matched_functions_percent": 69.611307,
+    "matched_functions": 392,
+    "matched_functions_percent": 69.257951,
     "complete_code": "8492",
     "complete_code_percent": 7.730119,
     "complete_data_percent": 100.0,
@@ -64662,19 +64662,19 @@
    "id": "graphics",
    "name": "Graphics and effects",
    "measures": {
-    "fuzzy_match_percent": 49.267169,
+    "fuzzy_match_percent": 48.592536,
     "total_code": "168388",
-    "matched_code": "82960",
-    "matched_code_percent": 49.267169,
+    "matched_code": "81824",
+    "matched_code_percent": 48.592536,
     "matched_data_percent": 100.0,
     "total_functions": 758,
-    "matched_functions": 586,
-    "matched_functions_percent": 77.308707,
-    "complete_code": "7832",
-    "complete_code_percent": 4.651163,
+    "matched_functions": 583,
+    "matched_functions_percent": 76.912929,
+    "complete_code": "7216",
+    "complete_code_percent": 4.285341,
     "complete_data_percent": 100.0,
     "total_units": 64,
-    "complete_units": 18
+    "complete_units": 17
    }
   },
   {
@@ -64700,14 +64700,14 @@
    "id": "script",
    "name": "Script",
    "measures": {
-    "fuzzy_match_percent": 65.576995,
+    "fuzzy_match_percent": 65.553257,
     "total_code": "235912",
-    "matched_code": "154704",
-    "matched_code_percent": 65.576995,
+    "matched_code": "154648",
+    "matched_code_percent": 65.553257,
     "matched_data_percent": 100.0,
     "total_functions": 1470,
-    "matched_functions": 1354,
-    "matched_functions_percent": 92.108844,
+    "matched_functions": 1353,
+    "matched_functions_percent": 92.040816,
     "complete_code": "9532",
     "complete_code_percent": 4.04049,
     "complete_data_percent": 100.0,
@@ -64719,14 +64719,14 @@
    "id": "player",
    "name": "Sly and guards",
    "measures": {
-    "fuzzy_match_percent": 31.875383,
+    "fuzzy_match_percent": 31.70591,
     "total_code": "221864",
-    "matched_code": "70720",
-    "matched_code_percent": 31.875383,
+    "matched_code": "70344",
+    "matched_code_percent": 31.70591,
     "matched_data_percent": 100.0,
     "total_functions": 850,
-    "matched_functions": 625,
-    "matched_functions_percent": 73.529412,
+    "matched_functions": 624,
+    "matched_functions_percent": 73.411765,
     "complete_code": "3212",
     "complete_code_percent": 1.447734,
     "complete_data_percent": 100.0,
@@ -64738,14 +64738,14 @@
    "id": "objects",
    "name": "World objects and physics",
    "measures": {
-    "fuzzy_match_percent": 47.522132,
+    "fuzzy_match_percent": 47.388479,
     "total_code": "302276",
-    "matched_code": "143648",
-    "matched_code_percent": 47.522132,
+    "matched_code": "143244",
+    "matched_code_percent": 47.388479,
     "matched_data_percent": 100.0,
     "total_functions": 1539,
-    "matched_functions": 1188,
-    "matched_functions_percent": 77.192982,
+    "matched_functions": 1185,
+    "matched_functions_percent": 76.998051,
     "complete_code": "14200",
     "complete_code_percent": 4.697693,
     "complete_data_percent": 100.0,

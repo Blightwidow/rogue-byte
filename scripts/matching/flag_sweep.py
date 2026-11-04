@@ -66,7 +66,7 @@ def main():
     parser.add_argument('--out', default=os.path.join(ROOT, 'work', 'matching', 'flagsweep.tsv'))
     arguments = parser.parse_args()
     rows = {int(row['address'], 16): row for row in csv.DictReader(open(os.path.join(ROOT, 'data', 'matching', 'functions.tsv')), delimiter='\t')}
-    modules = {int(function['address'], 16): function['module'] for function in json.load(open(os.path.join(ROOT, 'site', 'data', 'report.json')))['functions']}
+    modules = {int(function['address'], 16): function['module'] for function in json.load(open(os.path.join(ROOT, 'work', 'report.json')))['functions']}
     tried = sorted(address for address, row in rows.items() if row['status'] == 'tried' and source_of(address, row))
     matched = sorted(address for address, row in rows.items() if row['status'] == 'matched' and source_of(address, row))
     random.Random(1).shuffle(matched)

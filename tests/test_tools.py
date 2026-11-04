@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""test_public_tools.py: regression tests for the scripts that need neither the game nor the compiler: `python3 scripts/test_public_tools.py -v`."""
+"""Regression tests for the scripts that need neither the game nor the compiler: `python3 -m unittest discover -s tests -v`."""
 import os
 import sys
 import struct
 import unittest
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts')
 sys.path[:0] = [HERE, os.path.join(HERE, 'build'), os.path.join(HERE, 'matching'), os.path.join(HERE, 'vu')]
 sys.path.insert(0, os.path.join(HERE, 'build'))
 
@@ -17,7 +17,6 @@ import commit_msg  # noqa: E402
 import boundaries  # noqa: E402
 import compile_unit  # noqa: E402
 import credit_audit  # noqa: E402
-import gen_context  # noqa: E402
 import harvest  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
@@ -33,8 +32,6 @@ import version_check  # noqa: E402
 import pal_report  # noqa: E402
 import disc_extract  # noqa: E402
 import prologue_profile  # noqa: E402
-import prepare_report  # noqa: E402
-import progress_comment  # noqa: E402
 import vuasm  # noqa: E402
 import vudis  # noqa: E402
 
@@ -644,75 +641,6 @@ class ListingTests(unittest.TestCase):
         entry = ['0X1002A8', 'Foo', '168', 'mat/Foo.cpp']
         self.assertTrue(all(check_unit.matches(entry, selector) for selector in (None, 'mat', '0X1002A8', 'Foo', 'src/mat/Foo.cpp')))
         self.assertFalse(check_unit.matches(entry, 'other'))
-
-
-class ProgressCommentTests(unittest.TestCase):
-    GAME = {'functions': 10, 'bytes': 1000, 'named': 4, 'c_functions': 2, 'c_bytes': 200}
-
-    def test_valid_summary_has_no_problems(self):
-        self.assertEqual(progress_comment.validate({'game_code': self.GAME}), [])
-
-    def test_missing_field_is_reported(self):
-        self.assertEqual(len(progress_comment.validate({'game_code': {**self.GAME, 'c_bytes': None}})), 1)
-
-    def test_comment_shows_the_change(self):
-        head = {'game_code': {**self.GAME, 'c_functions': 5, 'c_bytes': 500}}
-        comment = progress_comment.render({'game_code': self.GAME}, head)
-        self.assertIn('20.00% | 50.00%', comment)
-        self.assertIn('5 (+3)', comment)
-        self.assertTrue(comment.startswith(progress_comment.MARKER))
-
-
-class ContextTests(unittest.TestCase):
-    LINES = ['    /* 0 00100000 0C000000 */  jal        Callee\n',
-             '    /* 4 00100004 2A00023C */  lui        $v0, %hi(D_00200010)\n',
-             '    /* 8 00100008 10004224 */  addiu      $v0, $v0, %lo(D_00200010 + 0x4)\n',
-             '    /* C 0010000C 0800E003 */  jr         $ra\n']
-
-    def test_parse_finds_calls_and_data_references(self):
-        calls, references = gen_context.parse_function(self.LINES)
-        self.assertEqual(calls, ['Callee'])
-        self.assertEqual(references, [('D_00200010', 0), ('D_00200010', 4)])
-
-    def test_prose_and_numbers_are_not_published(self):
-        self.assertIsNone(gen_context.readable('Press START to continue'))
-        self.assertIsNone(gen_context.readable('12345'))
-        self.assertEqual(gen_context.readable('episodeBest'), 'episodeBest')
-
-    def test_string_reader_reads_text_only(self):
-        image = b'\0' * 0x80 + b'loot\0\xff\xfe\0'
-        read = gen_context.string_reader(image)
-        self.assertEqual(read(0x100000), 'loot')
-        self.assertIsNone(read(0x100005))
-        self.assertIsNone(read(0x90000000))
-
-    def test_context_links_callers_callees_and_strings(self):
-        functions = [{'address': 0x100000, 'name': 'Caller', 'lines': self.LINES},
-                     {'address': 0x100100, 'name': 'Callee', 'lines': ['    /* 0 00100100 0800E003 */  jr         $ra\n']}]
-        image = b'\0' * 0x100094 + b'hero\0'  # the string sits at address 0x200014 = D_00200010 + 4
-        context = gen_context.build_context(functions, gen_context.string_reader(image), {}, {0x100000: 'sly1'})
-        self.assertEqual(context['0X100000']['callees'], ['0X100100'])
-        self.assertEqual(context['0X100100']['callers'], ['0X100000'])
-        self.assertEqual(context['0X100000']['origin'], 'sly1')
-        self.assertEqual(context['0X100000']['strings'], ['hero'])
-
-
-class PrepareReportTests(unittest.TestCase):
-    GOOD = {'measures': {'total_code': '100', 'matched_code': '40', 'total_functions': 10, 'matched_functions': 4}, 'units': [{'name': 'a'}]}
-
-    def test_good_report_has_no_problems(self):
-        self.assertEqual(prepare_report.problems(self.GOOD), [])
-
-    def test_missing_measure_is_reported(self):
-        bad = {**self.GOOD, 'measures': {'total_code': '100'}}
-        self.assertEqual(len(prepare_report.problems(bad)), 3)
-
-    def test_matched_over_total_is_reported(self):
-        bad = {**self.GOOD, 'measures': {**self.GOOD['measures'], 'matched_code': '400'}}
-        self.assertTrue(prepare_report.problems(bad))
-
-    def test_no_units_is_reported(self):
-        self.assertEqual(prepare_report.problems({**self.GOOD, 'units': []}), ['no units'])
 
 
 SAMPLE_SOURCE = '''extern "C" void func_00100010(int);

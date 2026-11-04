@@ -105,10 +105,10 @@ Details: docs/contributing/matching.md ("Teams of workers").
 - **Run `make` with `PROGRESS=0`** (`make rules PROGRESS=0`, `make search PROGRESS=0`): `make` turns progress lines on for a person
   watching a terminal, and they only fill an agent's context. A tool you run directly prints no progress lines.
 - After matching or removing a matched function: `make pal` when `work/elf/SCES_525.29` exists (`make land` does it), and commit
-  `config/eu/` and `site/data/objdiff-report-eu.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A
+  `config/eu/` and `progress/eu/report.json`: `make check` (`pal-check`) fails on a missing row or a stale PAL report. A
   function that no longer reproduces PAL is a finding, not a blocker: say so in the commit body.
-- After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `site/data/objdiff-report.json`;
-  CI only uploads it, cannot rebuild it) and `make progress`; commit the regenerated `site/` files with the work.
+- After matching work, before committing: `make elf` (byte gate), `make objdiff` (ByteMatch reads `progress/us/report.json`;
+  CI only validates and uploads it, cannot rebuild it) and `make readme`; commit `progress/` and the README table with the work.
 
 ## Commits
 

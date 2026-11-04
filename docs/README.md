@@ -9,7 +9,6 @@ Then [CONTRIBUTING.md](../CONTRIBUTING.md).
 | Page | Read it when |
 | :--- | :--- |
 | [build/building.md](build/building.md) | setting up, `make elf` |
-| [site Naming Desk](https://blightwidow.github.io/rogue-byte/naming.html) | finding a function to name, with its callers and strings |
 | [build/assembler.md](build/assembler.md) | a function is one instruction off and it is a `nop` (SN's assembler) |
 | [build/progress.md](build/progress.md) | regenerating the progress page and its numbers |
 | [build/name-recovery.md](build/name-recovery.md) | rebuilding the Ghidra projects and recovered names |

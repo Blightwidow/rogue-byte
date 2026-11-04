@@ -120,7 +120,7 @@ Every search tool has a target; `MIN`, `MAX` (the near-miss score range, default
 None of them registers anything. `make land` does, and everything after it:
 
 ```
-make land            # record.py, make src, make elf (the byte gate), make progress, make nonmatching, make objdiff, make progress
+make land            # record.py, make src, make elf (the byte gate), make report, make nonmatching, make objdiff, make pal, make readme
 make land FORCE=1    # the same, without the scan of the new matches for banned constructs
 ```
 
