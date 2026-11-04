@@ -51,7 +51,7 @@ def main():
     elif arguments.title:
         messages = [('title', arguments.title)]
     elif arguments.message_file:
-        messages = [('commit', open(arguments.message_file).read())]
+        messages = [('commit', open(arguments.message_file, encoding='utf-8').read())]
     else:
         parser.error('give a message file, --range or --title')
     failed = False
