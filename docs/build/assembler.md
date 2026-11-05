@@ -120,7 +120,7 @@ functions:
 | `ps2eeas` 1.8.19.316 | 41 | 2 of 500 |
 | **1.9.25.758 with the constant at 5** | **91** | **0 of 300** |
 
-Of the 84 drafts in the probe that stopped at one extra `nop` before a backward branch (`scripts/matching/loop_pad.py` finds them), 1.8.19.316
+Of the 84 drafts in the probe that stopped at one extra `nop` before a backward branch (found from their `try.py` diffs), 1.8.19.316
 fixed 35 (loops retail leaves unpadded because they are already long enough) and the patched constant fixed all 84. Re-judging all 4,937
 matched functions of the day with the patched copy: 0 no longer score 0. The landing that followed registered 103 new matches (22,008 bytes) and parked 16 more that score 0 but break the cleanup rules (14 raw `M2C_UNK` offsets, 2 padding locals).
 
