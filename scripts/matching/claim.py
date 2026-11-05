@@ -184,6 +184,12 @@ def packet(wave, worker, address, budget):
                                capture_output=True, text=True, env=environment).stdout.splitlines()[:40]
         if shown:
             lines.append('```\n' + '\n'.join(shown) + '\n```')
+    for folder, why in (('cleanup-pending', 'scored 0 but breaks the cleanup rules (raw M2C offsets, a padding local): rewrite it clean and keep score 0'),
+                        ('asm-archive', 'scored 0 only with a construct AGENTS.md bans (inline asm, a register pin): find the plain C')):
+        parked = [name for name in os.listdir(os.path.join(LAB, 'data', 'matching', folder)) if name.upper().startswith(f'{address:06X}.')] \
+            if os.path.isdir(os.path.join(LAB, 'data', 'matching', folder)) else []
+        if parked:
+            lines.append(f'- parked source `data/matching/{folder}/{parked[0]}` ({why})')
     index_rows, gold = similar.index()
     examples = [f'`data/matching/src/fn/{other:06X}.cpp` ({example["name"]}, {score:.2f})'
                 for score, other, example, _ in similar.similar(address, 3, index_rows, gold) if score >= 0.25]

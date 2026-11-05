@@ -10,17 +10,22 @@ ends early leaves free functions in the queue.
 
 1. Claim: `python3 scripts/matching/claim.py take $WAVE $ID $COUNT --of $N`. It prints one packet per function: asm, best draft and its diff,
    nearest matched sources, your scratch folder, and the exact `try.py` command. Claim again until `done` says `DONE`. `QUEUE EMPTY` also
-   counts as done.
+   counts as done. `take` claims: to look at the queue without claiming, use `claim.py status WAVE`.
 2. Step 0, one minute: a function that needs VU0 macro code, MMI, a lane move to an FP register or COP0 is a wall (inline asm is not
    allowed, AGENTS.md): say `SKIP wall` and take the next function. A `nop` that no wording of the C gives is not a wall by itself: the
    build's assembler pads short loops like retail (docs/build/assembler.md), so look for the real cause first.
-3. Work in your scratch folder only. Never edit `src/`, `nonmatching/`, `config/` or `data/`. Start from the best draft; rewrite from
+3. A packet line `parked source` (`data/matching/cleanup-pending/` or `asm-archive/`) is a source that once scored 0: copy it to your scratch folder
+   and start there. A cleanup-pending one only needs its raw `M2C_UNK`/`M2C_FIELD` offsets turned into named struct fields (or its padding local
+   removed) with the score still 0; an asm-archive one needs the plain C its inline asm or register pin stood in for.
+   Work in your scratch folder only. Never edit `src/`, `nonmatching/`, `config/` or `data/`. Start from the best draft; rewrite from
    retail's block structure with real types and prototypes before fiddling with statement order.
 4. Run every attempt as the packet says: `TRY_ARM=$WAVE-$ID TRY_BUDGET=<n> python3 scripts/matching/try.py 0xADDR file`. The tool logs
    each run and refuses past the budget (`BUDGET`, exit 3): stop there. The log decides; nothing you write counts as a match. A source
    that does not compile also costs a run: check the syntax first.
 5. Plain C++ only (AGENTS.md "Matching rules" and the Rulings): no volatile on ordinary data, no register pins, no inline asm at all, no dummy
-   operands, no wrong prototypes. Debug dumps (`-dL`) go to your scratch folder.
+   operands, no wrong prototypes. `check_source.py` flags every local that nothing uses when it is an array or a scalar, whatever its name (`int dead[2]`):
+   a frame slot retail shows is a typed local the original plausibly declared (a struct), never a filler array; say so in your report when you keep one.
+   Debug dumps (`-dL`) go to your scratch folder.
 6. A function that scores 0 only with `TRY_ASSEMBLER=sony29` (an SDK-range function: `sd`/`ld` saves, tail calls) is `NEAR needs sony29`: the
    lead adds its address to `config/us/sony_gcc29.txt`. Never edit that file yourself: it changes the scorer fingerprint and the log of every
    worker's runs stops counting.

@@ -532,6 +532,23 @@ class CheckSourceTests(unittest.TestCase):
         found = self.kinds('int f(int a)\n{\n    int scratch[4];\n    (void)scratch;\n    return a;\n}\n')
         self.assertEqual(found, [('cleanup', 'padding local')])
 
+    def test_an_unused_array_is_a_padding_local_whatever_its_name(self):
+        found = self.kinds('int f(int a)\n{\n    int reserved[2];\n    (void)reserved;\n    return a;\n}\n')
+        self.assertEqual(found, [('cleanup', 'padding local')])
+
+    def test_an_unused_scalar_is_a_padding_local_whatever_its_name(self):
+        self.assertEqual(self.kinds('int f(int a)\n{\n    int dead;\n    return a;\n}\n'), [('cleanup', 'padding local')])
+
+    def test_an_unused_local_of_a_named_struct_type_is_allowed(self):
+        self.assertEqual(check_source.problems('struct VECTOR { float x, y, z, w; };\nint f(int a)\n{\n    VECTOR hitPosition;\n    return a;\n}\n'), [])
+
+    def test_a_scalar_set_from_a_call_is_not_padding(self):
+        self.assertEqual(check_source.problems('int g();\nint f()\n{\n    int ignored = g();\n    return 0;\n}\n'), [])
+
+    def test_struct_members_after_a_define_with_parentheses_are_not_locals(self):
+        text = '#define FIELD(expr, offset) ((expr) + (offset))\nstruct Slot {\n    int buffer;\n    int pad[3];\n};\nint f(Slot *slot)\n{\n    return slot->buffer;\n}\n'
+        self.assertEqual(check_source.problems(text), [])
+
     def test_a_scratch_buffer_a_callee_fills_is_not_padding(self):
         self.assertEqual(check_source.problems('void g(int *);\nint f()\n{\n    int scratch[3];\n    g(scratch);\n    return scratch[0];\n}\n'), [])
 
