@@ -51,7 +51,13 @@ The game is C++ built by SN Systems' GCC 2.95.3 and assembled by SN's `ps2eeas` 
 
 Only the lead lands code (workers never edit `src/`):
 
-1. `python3 scripts/matching/record.py` registers the sources that score 0. A source that breaks a rule (`check_source.py`: inline asm,
+0. `claim.py verify WAVE` (a wave's lead): a fresh compile and `check_source.py` of every function's best logged run, one row each (`LAND`,
+   `PARK` with the reason, `NEAR n`, `MISMATCH`). Worker reports are not the evidence; the log and this table are. `claim.py land WAVE` stages
+   and adopts them, prints `will be parked` for a source that scores 0 but breaks a rule, and refuses when logged runs were made under another
+   toolchain (an edit of the assembler, `config/us/sony_gcc29.txt` or `config/matching/symbol_addrs.txt` since the workers ran).
+1. `python3 scripts/matching/record.py` registers the sources that score 0 (`--only 0xADDR ...`, or `make land ONLY="0xADDR ..."`, judges just
+   those: the registry step takes seconds instead of minutes after a toolchain change; the byte gate that follows is the long part, about 12 minutes).
+   Run one landing at a time: two at once rewrite `src/` under each other's build. A source that breaks a rule (`check_source.py`: inline asm,
    cleanup rules, padding local) is parked in `data/matching/asm-archive` or `cleanup-pending`, not matched.
 2. `make src` publishes them to `src/`, then `make elf` must print `PASS`, and `make unit UNIT=<module>` must say every function links.
 3. `make pal`, `make objdiff` and `make readme`, and commit `src/`, `config/eu/`, `progress/` and the README together

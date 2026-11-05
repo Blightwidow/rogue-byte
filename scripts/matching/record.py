@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""record.py [--jobs N] [--dry-run] [--no-scan] - judges every source in data/matching/src/fn and records it in the registry.
+"""record.py [--jobs N] [--dry-run] [--no-scan] [--only ADDRESS...] - judges every source in data/matching/src/fn and records it in the registry.
 
   python3 scripts/matching/record.py       (from the repository root; `make land` runs it first)
 
@@ -14,7 +14,8 @@ A new match is scanned for what AGENTS.md bans: `volatile` on ordinary data (a p
 A source that scores 0 but breaks a rule (scripts/matching/check_source.py: the scan above, the cleanup rules, a padding local) is not
 registered: it is parked (scripts/matching/park.py) in data/matching/asm-archive or cleanup-pending and the run lists it (`--no-scan` skips
 the check). Prints the totals and the
-functions that matched this time."""
+functions that matched this time. `--only` judges just those addresses (hex, as `claim.py land` prints them) and leaves the rest of the
+registry and the try counter alone: a wave lands in seconds, a toolchain change still needs the full run."""
 import argparse
 import concurrent.futures
 import csv
@@ -76,15 +77,24 @@ def judge(path):
     return int(address, 16), score, path
 
 
+def only_sources(sources, addresses):
+    """The sources whose file name (a hex address) is one of `addresses` (hex strings, any case, with or without 0x)."""
+    wanted = {int(address, 16) for address in addresses}
+    return [path for path in sources if int(os.path.splitext(os.path.basename(path))[0], 16) in wanted]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--jobs', type=int, default=8)
+    parser.add_argument('--only', nargs='+', metavar='ADDRESS', help='judge only these addresses')
     parser.add_argument('--dry-run', action='store_true', help='judge and report, change nothing')
     parser.add_argument('--no-scan', action='store_true', help='do not scan the new matches for banned constructs')
     arguments = parser.parse_args()
     rows = list(csv.DictReader(open(REGISTRY, encoding='utf-8'), delimiter='\t'))
     by_address = {int(row['address'], 16): row for row in rows}
     sources = sorted(glob.glob(f'{SOURCES}/*.cpp') + glob.glob(f'{SOURCES}/*.c'))
+    if arguments.only:
+        sources = only_sources(sources, arguments.only)
     progress = Progress(len(sources), 'record')
     TRACKER.append(progress)
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
@@ -118,14 +128,15 @@ def main():
         else:
             row['status'] = 'tried'
             tried += 1
-    for note in glob.glob('data/matching/notes/*.md'):
+    for note in ([] if arguments.only else glob.glob('data/matching/notes/*.md')):
         row = by_address.get(int(os.path.splitext(os.path.basename(note))[0], 16))
         if row and row['status'] == 'todo':
             row['status'], row['tries'] = 'tried', str(int(row['tries'] or 0) + 1)
             tried += 1
     if not arguments.dry_run:
-        os.makedirs(os.path.dirname(STAMP), exist_ok=True)
-        open(STAMP, 'w').close()
+        if not arguments.only:  # the stamp says which sources the last full run saw: a partial run must not mark the others as seen
+            os.makedirs(os.path.dirname(STAMP), exist_ok=True)
+            open(STAMP, 'w').close()
         with open(REGISTRY, 'w', encoding='utf-8', newline='') as out:
             writer = csv.DictWriter(out, list(rows[0].keys()), delimiter='\t', lineterminator='\n')
             writer.writeheader()
