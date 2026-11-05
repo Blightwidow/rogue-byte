@@ -126,7 +126,7 @@ What AGENTS.md allows and bans, in one place (the full list with reasons and dat
 - **A dead local** only as a type the original plausibly declared (retail's frame shows it); never a padding array or an invented field.
 - **A callee prototype** is read from the callee's own disassembly: no return type or argument it does not have.
 - **Game data** (a palette, a header read out of retail) is referenced with an `extern` at retail's address, never defined in source.
-- **One assembler** (`tools/ps2eeas/Ps2EeAs.exe`, unpatched) and one flag set per source file; a function that only matches with something else stays in
+- **One assembler** (`tools/ps2eeas/Ps2EeAs-loop5.exe`: `ps2eeas` with its short-loop constant changed from 6 to 5, docs/build/assembler.md) and one flag set per source file; a function that only matches with something else stays in
   `nonmatching/`.
 - Plain C++ that the original plausibly had is fine: casts, types, statement order, `goto`, a `union` when retail's frame shows two
   locals sharing a slot, a padding-virtual base class to reach a vtable slot.

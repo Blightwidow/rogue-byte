@@ -5,8 +5,8 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 ## Done
 
 - The executable splits and rebuilds byte for byte from assembly plus the matched C (`make elf`).
-- The assembler is SN's `ps2eeas`, unpatched, one for every function (2026-11-05); no inline asm in matched code, no per-function lists.
-- Matched C: 4,912 functions in `src/`; every other function is built from its original assembly, and the best compiling draft of
+- The assembler is SN's `ps2eeas` with its short-loop constant changed from 6 to 5, one for all game code (2026-11-05, [build/assembler.md](build/assembler.md) "Short loops"); no inline asm in matched code, no per-function lists.
+- Matched C: 5,040 functions in `src/`; every other function is built from its original assembly, and the best compiling draft of
   each is in `nonmatching/`.
 - VU0, MMI, COP0 and hand-written functions are flagged as permanent blockers (`config/us/blockers.tsv`) and counted as finished apart from the exact C, as in sly1 ([build/vu0-mmi.md](build/vu0-mmi.md)).
 - PAL is checked against the same C (`make pal`); US is the reference.

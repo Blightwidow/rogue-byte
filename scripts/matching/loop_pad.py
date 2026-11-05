@@ -2,9 +2,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """loop_pad.py classify|scan : find the near misses that stop at ps2eeas's short-loop padding, before a worker spends compiles on them.
 
-Retail pads a short backward-branch loop to five words and the one assembler (unpatched ps2eeas) pads it to six, so a function whose C is
-right differs from retail by one extra `nop` and branch offsets that moved by one. No C wording changes that (docs/build/assembler.md,
-the removed `Ps2EeAs-loop5.exe`). Wave N2 (2026-11-05) lost most of its score 3 workers to it.
+Before 2026-11-05 the build's assembler padded a short backward-branch loop to six instructions and retail pads to five, so a function whose
+C is right differed from retail by one extra `nop` and branch offsets that moved by one; no C wording changes that. Wave N2 lost most of
+its score 3 workers to it. The build's assembler now pads to five (docs/build/assembler.md, "Short loops"), so what this tool finds is
+what is left: padding that cascades from another difference, or a build that runs the unpatched assembler (assembler_probe.py).
 
 A draft is the wall when its try.py diff has the same instructions as retail once `nop`s are dropped and immediates, branch offsets and
 relocation notes are masked (registers stay: a register swap is real work), and the `nop` counts differ.

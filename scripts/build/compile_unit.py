@@ -2,16 +2,22 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """compile_unit.py <c|c++> <source> <output.o> [--assembler sony29]: compiles one source the way the retail build did.
 
-SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly with `-S`, and `tools/ps2eeas/Ps2EeAs.exe` (SN Systems' own assembler, the one SN's ProDG
-driver runs; `setup.sh --assembler` downloads it, pinned, unpatched) assembles the result under wibo, with `-G` from the compile flags. It
+SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly with `-S`, and SN Systems' own assembler `ps2eeas` 1.9.25.758 (the one SN's ProDG
+driver runs; `setup.sh --assembler` downloads it, pinned) assembles the result under wibo, with `-G` from the compile flags. It
 expands `move` to `daddu`, puts the hazard `nop` between `mtc1` and the instruction that reads the register only when the next instruction
-reads it, and pads short loops, as Sly 2's retail code has it (docs/build/assembler.md). The one assembler serves every function: there is no per-function choice of assembler. It assembles in one pass
-and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's `.extern SYM,SIZE` lines, written at
-the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own ee-gcc 2.9-ee-991111 and its driver
-(config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together.
+reads it, and pads short loops (the R5900 short-loop erratum). The one assembler serves every game function: there is no per-function choice
+of assembler. Its short-loop padding is the one change: the build's copy, `tools/ps2eeas/Ps2EeAs-loop5.exe`, is the pinned binary with one
+byte changed (offset 0x4DEB, the 6 of "pad a backward-branch loop up to six instructions", becomes 5), because retail pads to five
+instructions (target through branch) in all 240 short loops of its game code and none below; no unpatched assembler release we could
+run pads that way (docs/build/assembler.md, "Short loops"). The copy is made from the pinned download on first use, never committed.
+It assembles in one pass and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's
+`.extern SYM,SIZE` lines, written at the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own
+ee-gcc 2.9-ee-991111 and its driver (config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of
+several functions can be linked together.
 
 EE_AS_EXE and EE_AS_ARGS in the environment replace the assembler and its arguments for one run: scripts/matching/assembler_probe.py sets
-them to measure a candidate, and a build never does (docs/build/assembler.md, "Before changing the assembler")."""
+them to measure a candidate, and a build never does (docs/build/assembler.md, "Before changing the assembler").
+`compile_unit.py --make-assembler` makes the patched copy and exits (setup.sh runs it)."""
 import argparse
 import functools
 import os
@@ -26,7 +32,10 @@ SONY_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111b')
 LEGACY_SONY_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111b')
 SONY_FLAGS = ['-O2', '-G0']
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
-EE_AS = os.environ.get('EE_AS_EXE') or os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')  # EE_AS_EXE: only for scripts/matching/assembler_probe.py
+EE_AS_PINNED = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')  # SN's binary exactly as downloaded (setup.sh checks its sha256)
+EE_AS_BUILD = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs-loop5.exe')  # the same binary with its short-loop padding one nop shorter
+SHORT_LOOP_OFFSET = 0x4DEB  # in Ps2EeAs.exe 1.9.25.758: the 6 of "pad a backward-branch loop up to six instructions"
+EE_AS = os.environ.get('EE_AS_EXE') or EE_AS_BUILD  # EE_AS_EXE: only for scripts/matching/assembler_probe.py
 OBJCOPY = os.path.join(ROOT, 'tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals-objcopy')
 FLAGS = os.environ['COMPILE_FLAGS'].split() if os.environ.get('COMPILE_FLAGS') else ['-O2', '-G0', '-ffast-math', '-fno-exceptions']  # the variable is for flag sweeps
 
@@ -82,6 +91,21 @@ def compiler_directory():
     return COMPILER if os.path.isdir(os.path.join(COMPILER, 'bin')) else LEGACY_COMPILER
 
 
+def make_assembler():
+    """tools/ps2eeas/Ps2EeAs-loop5.exe: the pinned Ps2EeAs.exe with one byte changed (made when missing or older than the pinned binary)."""
+    if not os.path.isfile(EE_AS_PINNED):
+        return False
+    if not os.path.isfile(EE_AS_BUILD) or os.path.getmtime(EE_AS_BUILD) < os.path.getmtime(EE_AS_PINNED):
+        data = bytearray(open(EE_AS_PINNED, 'rb').read())
+        if data[SHORT_LOOP_OFFSET] != 6:
+            raise SystemExit(f'{EE_AS_PINNED}: not the pinned 1.9.25.758 build (byte {SHORT_LOOP_OFFSET:#x} is {data[SHORT_LOOP_OFFSET]}, not 6)')
+        data[SHORT_LOOP_OFFSET] = 5
+        temporary = f'{EE_AS_BUILD}.{os.getpid()}'
+        open(temporary, 'wb').write(data)
+        os.replace(temporary, EE_AS_BUILD)
+    return True
+
+
 def compile_sony(language, source, output, include=None, localize=True):
     """The SDK range: Sony's ee-gcc 2.9-ee-991111 and the `ee/bin/as.exe` its driver runs (SN's compiler and ps2eeas give other saves and slots there)."""
     directory = SONY_COMPILER if os.path.isdir(os.path.join(SONY_COMPILER, 'bin')) else LEGACY_SONY_COMPILER
@@ -107,6 +131,8 @@ def compile_object(language, source, output, assembler=None, include=None, local
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
               f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else [])]
+    if EE_AS == EE_AS_BUILD:
+        make_assembler()
     if not os.path.isfile(EE_AS):
         return False, f'{EE_AS} is missing: run ./setup.sh --assembler'
     temporary = output + '.tmp'
@@ -137,6 +163,10 @@ def compile_object(language, source, output, assembler=None, include=None, local
 
 
 def main():
+    if sys.argv[1:] == ['--make-assembler']:
+        if not make_assembler():
+            sys.exit(f'{EE_AS_PINNED} is missing: run ./setup.sh --assembler')
+        return
     parser = argparse.ArgumentParser()
     parser.add_argument('language', choices=['c', 'c++'])
     parser.add_argument('source')
