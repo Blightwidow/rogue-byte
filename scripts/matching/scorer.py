@@ -57,8 +57,19 @@ def registry():
         return _rows
 
 
+def content_digest(path):
+    """The sha1 of a file's bytes, or 0 when it is missing. A fingerprint made of contents survives a `git checkout` of an unchanged file;
+    one made of modification times did not, and discarded every logged run of a wave."""
+    try:
+        with open(path, 'rb') as handle:
+            return hashlib.sha1(handle.read()).hexdigest()
+    except OSError:
+        return '0'
+
+
 def fingerprint():
-    """A short hash of what a score depends on besides the source."""
+    """A short hash of what a score depends on besides the source: the compile flags, the assembler and its arguments, the SDK-range list,
+    the symbol file and every file of include/, by content."""
     global _fingerprint
     with _lock:
         if _fingerprint is None:
@@ -66,10 +77,10 @@ def fingerprint():
             digest.update(' '.join(compile_unit.FLAGS).encode())
             digest.update(os.environ.get('EE_AS_ARGS', '').encode())
             for path in (compile_unit.EE_AS, os.path.join(LAB, 'config', 'us', 'sony_gcc29.txt'), SYMBOLS):
-                digest.update(f'{path}:{os.path.getmtime(path) if os.path.exists(path) else 0}'.encode())
-            for directory, _, names in os.walk(INCLUDE):
+                digest.update(f'{path}:{content_digest(path)}'.encode())
+            for directory, _, names in sorted(os.walk(INCLUDE)):
                 for name in sorted(names):
-                    digest.update(f'{name}:{os.path.getmtime(os.path.join(directory, name))}'.encode())
+                    digest.update(f'{name}:{content_digest(os.path.join(directory, name))}'.encode())
             _fingerprint = digest.hexdigest()[:12]
         return _fingerprint
 

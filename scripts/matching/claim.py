@@ -4,7 +4,8 @@
 
   python3 scripts/matching/claim.py init W1 --addresses file.txt [--budget 12]   a queue of function addresses (hex, one per line)
   python3 scripts/matching/claim.py init W1 --near 4 [--min-size B --max-size B]  every open function whose best draft scores MIN..4 (--min-score, default 1), from the registry
-  python3 scripts/matching/claim.py take W1 k01 2     claim the next 2 free functions for worker k01: prints one packet each
+  python3 scripts/matching/claim.py take W1 k01 2 [--of 12]   claim the next 2 free functions for worker k01: prints one packet each (--of: the worker's N, shows how many are left)
+  python3 scripts/matching/claim.py done W1 k01 12     DONE when worker k01 has claimed 12 functions or the queue is empty, else NOT DONE (exit 1): a worker's last check before its final message
   python3 scripts/matching/claim.py status W1         per function: claimed by, runs, best score (from work/matching/runs.log)
   python3 scripts/matching/claim.py land W1 [--reject ADDR ...]   stage the best logged source of every function of the wave and adopt it
 
@@ -94,18 +95,33 @@ def fingerprint():
     return scorer.fingerprint()
 
 
+IGNORED = {}  # wave -> number of its logged runs the last runs() call skipped because they were made under another toolchain
+
+
 def runs(wave):
     """address -> list of (arm, score or None, kept path) of this wave's arms, from runs made with the current toolchain: a run logged
     under another assembler or flag set (another fingerprint, or none) says nothing about what the sources score now."""
     found = {}
+    IGNORED[wave] = 0
     if os.path.exists(RUNS_LOG):
         current = fingerprint()
         for line in open(RUNS_LOG, encoding='utf-8'):
             fields = line.rstrip('\n').split('\t')
-            if len(fields) == 7 and fields[6] == current and fields[1].startswith(wave + '-'):
-                score = int(fields[3]) if fields[3].lstrip('-').isdigit() else None
-                found.setdefault(int(fields[2], 16), []).append((fields[1], score, fields[5]))
+            if len(fields) >= 2 and fields[1].startswith(wave + '-'):
+                if len(fields) == 7 and fields[6] == current:
+                    score = int(fields[3]) if fields[3].lstrip('-').isdigit() else None
+                    found.setdefault(int(fields[2], 16), []).append((fields[1], score, fields[5]))
+                else:
+                    IGNORED[wave] += 1
     return found
+
+
+def warn_ignored(wave):
+    """Says on stderr how many logged runs of the wave do not count: the assembler, the flags, config/us/sony_gcc29.txt, the symbol file or include/
+    changed since they were made (run the sources again with try.py, or put the change back)."""
+    if IGNORED.get(wave):
+        print(f'warning: {IGNORED[wave]} logged run(s) of wave {wave} were made under another toolchain and are ignored '
+              '(the assembler, the flags, config/us/sony_gcc29.txt, the symbol file or include/ changed since)', file=sys.stderr)
 
 
 def draft_source(address):
@@ -192,7 +208,30 @@ def take(arguments):
         budget = state['budget']
     for address in free:
         print(packet(arguments.wave, arguments.worker, address, budget))
-    print(f'Claimed {len(free)}. Hand in per function one line: EXACT, NEAR (what still differs) or SKIP (why). Then `take` again until QUEUE EMPTY.')
+    claimed = claimed_by(arguments.wave, arguments.worker)
+    if arguments.of:
+        print(f'Claimed {len(free)}; you have {claimed} of {arguments.of}. Handle them (EXACT, NEAR or SKIP per function), then `take` again until '
+              f'`claim.py done {arguments.wave} {arguments.worker} {arguments.of}` prints DONE.')
+    else:
+        print(f'Claimed {len(free)}. Hand in per function one line: EXACT, NEAR (what still differs) or SKIP (why). Then `take` again until QUEUE EMPTY.')
+
+
+def claimed_by(wave, worker):
+    """How many functions of the wave the worker has claimed."""
+    state = json.load(open(state_path(wave)))
+    return sum(1 for owner in state['claims'].values() if owner == worker)
+
+
+def done(arguments):
+    """DONE (exit 0) when the worker has claimed N functions or no free one is left, else NOT DONE (exit 1)."""
+    state = json.load(open(state_path(arguments.wave)))
+    claimed = claimed_by(arguments.wave, arguments.worker)
+    free = sum(1 for a in state['queue'] if f'{a:06X}' not in state['claims'])
+    if claimed >= arguments.count or free == 0:
+        print(f'DONE: {arguments.worker} has claimed {claimed} of {arguments.count}' + ('' if claimed >= arguments.count else '; the queue is empty'))
+        return 0
+    print(f'NOT DONE: {arguments.worker} has claimed {claimed} of {arguments.count} and {free} functions are free: `take` again')
+    return 1
 
 
 def best_runs(wave):
@@ -207,6 +246,7 @@ def best_runs(wave):
 def status(arguments):
     state = json.load(open(state_path(arguments.wave)))
     found, best = runs(arguments.wave), best_runs(arguments.wave)
+    warn_ignored(arguments.wave)
     exact = 0
     for address in state['queue']:
         key = f'{address:06X}'
@@ -223,7 +263,9 @@ def land(arguments):
     for name in os.listdir(stage):
         os.remove(os.path.join(stage, name))
     count = 0
-    for address, (_, _, kept) in best_runs(arguments.wave).items():
+    best = best_runs(arguments.wave)
+    warn_ignored(arguments.wave)
+    for address, (_, _, kept) in best.items():
         if address in rejected:
             continue
         extension = os.path.splitext(kept)[1]
@@ -250,13 +292,18 @@ def main():
     sub.add_argument('wave')
     sub.add_argument('worker')
     sub.add_argument('count', type=int, nargs='?', default=1)
+    sub.add_argument('--of', type=int, help="the worker's N: the footer says how many are left")
+    sub = commands.add_parser('done')
+    sub.add_argument('wave')
+    sub.add_argument('worker')
+    sub.add_argument('count', type=int, help="the worker's N")
     for name in ('status', 'land'):
         sub = commands.add_parser(name)
         sub.add_argument('wave')
         if name == 'land':
             sub.add_argument('--reject', nargs='*', default=[], help='addresses (hex) not to stage: a score that rests on a banned construct or a wrong prototype')
     arguments = parser.parse_args()
-    {'init': init, 'take': take, 'status': status, 'land': land}[arguments.command](arguments)
+    sys.exit({'init': init, 'take': take, 'status': status, 'land': land, 'done': done}[arguments.command](arguments) or 0)
 
 
 if __name__ == '__main__':

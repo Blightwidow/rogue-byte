@@ -105,14 +105,17 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
 
 1. The lead picks the functions (`python3 scripts/list_functions.py --status asm --sort size`) and splits them: no two workers
    share a function, contiguous functions go to one worker (they often belong to one class).
-2. Each worker keeps its sources in its own scratch folder, runs `try.py` until `score 0` or about ten compiles without progress,
+2. **Pilot first.** Start two workers on twelve functions each and read both reports before launching the rest. If a third of the lines name
+   the same difference (the 2026-11-05 wave N2 sent 40 of 57 claims into one assembler padding difference no source change fixes), stop the
+   wave and find the cause; a toolchain question costs a pilot, not a wave.
+3. Each worker keeps its sources in its own scratch folder, runs `try.py` until `score 0` or about ten compiles without progress,
    and reports one line per function: `EXACT`, `NEAR` (what still differs) or `SKIP` (why). A worker that runs a make target passes
    `PROGRESS=0` (every worker brief says so).
-3. A worker's `EXACT` is not a match. The lead puts each source in place, runs `make elf` and `make unit UNIT=<module>`, and sends a
+4. A worker's `EXACT` is not a match. The lead puts each source in place, runs `make elf` and `make unit UNIT=<module>`, and sends a
    function that breaks the build back to `nonmatching/`.
-4. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),
+5. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),
    is hand-written, needs an instruction C cannot ask for, or three different wordings give the same wrong bytes.
-5. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames
+6. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames
    them when it lands related functions together.
 
 ## Rulings
@@ -162,6 +165,18 @@ More fixes from the second round (22 of 29 matched):
   over a typed `extern T **table`. A search loop: `while ((node = node->next) != NULL) { if (match) { ...; break; } link = &node->next; }`.
 - **Still open** after this round: `this`/flags kept in a different register than retail's (`$a0` against `$a3`, `$a1` against `$a2`) and a
   delay slot that retail fills with `sd $ra` where ours picks another instruction.
+
+From waves N2 to N4 (2026-11-05, Sonnet workers, many matches in the SDK range):
+
+- **Sibling call: `.c` or `.cpp` decides it.** Retail's `j callee` after the frame restore (a tail call) only comes out of a C source; a C++
+  source keeps `jal` plus the epilogue. Look at retail's last instruction first (`253C80` needed `.c`; `23EA30` needed `.cpp` because C turned its
+  `memcpy` into a tail call retail lacks). In a `.c` file leave out `extern "C"`.
+- **The element type of an extern table.** An m2c `sll 4` or a wrong scalar for a table is the element type: `extern int B_0044EF80[]`,
+  `int *D_002C4660[]` (`23AAC8`, `241440`, `232BB8`).
+- **A missing store or argument.** A stack buffer whose slot 0 holds an argument (`int buf[4]; buf[0] = arg0;`), a callee that takes 4, 5 or 8
+  arguments with constants appended (`func(a0, a1, a2, 0, -1)`), a second parameter the draft never named (`func_0014F3C8(char *, QW pos)`).
+- **A callee that never writes `$v0` is `void`**, not `int` (`ReadVector__18CBinaryInputStreamP6VECTOR`, two matches).
+- **Modify the parameter in place** (`address &= 0x0FFFFFFF; address |= 0x80000000; return address;`) where a draft used a second local.
 
 From the third round (59 of 71 matched; most drafts held an `ldl`/`ldr`/`sdl`/`sdr` pair lifted to `asm`, which plain C replaces):
 

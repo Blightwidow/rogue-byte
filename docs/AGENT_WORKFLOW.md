@@ -27,7 +27,7 @@ contributor, all agents included.
 ## 2. Pick
 
 A wave of near misses: `python3 scripts/matching/claim.py init W1 --near 2` queues every open function whose best draft scores 1 to 2 (from the
-registry, blockers left out); `take` hands a worker the draft with its diff under the current toolchain. A run logged under another toolchain
+registry, blockers left out); `take` hands a worker the draft with its diff under the current toolchain. A worker sends its final message only after `claim.py done WAVE ID N` prints `DONE` (N functions claimed or the queue empty); `status` and `land` warn when logged runs were made under another toolchain. A run logged under another toolchain
 is ignored, so a switch of assembler never leaves stale results behind.
 
 Sort by size and match by tier (Haiku up to 400 bytes, Sonnet 401 to 1,000 and what Haiku gave up on, Opus above that and near misses).
