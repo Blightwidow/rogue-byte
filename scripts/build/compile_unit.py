@@ -8,7 +8,10 @@ expands `move` to `daddu`, puts the hazard `nop` between `mtc1` and the instruct
 reads it, and pads short loops, as Sly 2's retail code has it (docs/build/assembler.md). The one assembler serves every function: there is no per-function choice of assembler. It assembles in one pass
 and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's `.extern SYM,SIZE` lines, written at
 the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own ee-gcc 2.9-ee-991111 and its driver
-(config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together."""
+(config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together.
+
+EE_AS_EXE and EE_AS_ARGS in the environment replace the assembler and its arguments for one run: scripts/matching/assembler_probe.py sets
+them to measure a candidate, and a build never does (docs/build/assembler.md, "Before changing the assembler")."""
 import argparse
 import functools
 import os
@@ -23,7 +26,7 @@ SONY_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111b')
 LEGACY_SONY_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111b')
 SONY_FLAGS = ['-O2', '-G0']
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
-EE_AS = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')
+EE_AS = os.environ.get('EE_AS_EXE') or os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')  # EE_AS_EXE: only for scripts/matching/assembler_probe.py
 OBJCOPY = os.path.join(ROOT, 'tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals-objcopy')
 FLAGS = os.environ['COMPILE_FLAGS'].split() if os.environ.get('COMPILE_FLAGS') else ['-O2', '-G0', '-ffast-math', '-fno-exceptions']  # the variable is for flag sweeps
 
@@ -113,7 +116,7 @@ def compile_object(language, source, output, assembler=None, include=None, local
         return False, result.stderr or result.stdout
     text = open(assembly).read()
     open(assembly, 'w').write(hoist_externs(text))
-    assembler_flags = [flag for flag in FLAGS if flag.startswith('-G')]
+    assembler_flags = os.environ['EE_AS_ARGS'].split() if os.environ.get('EE_AS_ARGS') else [flag for flag in FLAGS if flag.startswith('-G')]
     for attempt in range(3):  # under a parallel build the assembler (under wibo) now and then never returns; a rerun takes a fraction of a second
         try:
             result = subprocess.run([WIBO, EE_AS, *assembler_flags, '-o', temporary, assembly], capture_output=True, text=True, timeout=20)

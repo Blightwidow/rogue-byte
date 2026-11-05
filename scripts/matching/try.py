@@ -14,7 +14,8 @@ registry's name for the address, else the only function in the object.
 --record: counts the try in data/matching/functions.tsv (tries, best score; status `tried`, or `matched` with the
 source path at score 0).
 
-Every run is also appended to work/matching/runs.log (time, TRY_ARM, address, score, sha1, kept copy under work/matching/kept/);
+Every run is also appended to work/matching/runs.log (time, TRY_ARM, address, score, sha1, kept copy under work/matching/kept/, fingerprint of the
+toolchain: claim.py ignores a run made under another one);
 the lead lands from that log (claim.py). TRY_ARM=<name> TRY_BUDGET=<n> in the environment limits the arm to n runs per function:
 the n+1th prints BUDGET and exits 3 without compiling. The size compared is the split's (work/matching/split: spimdisasm, jump tables included).
 """
@@ -42,16 +43,25 @@ def registry():
     return list(csv.DictReader(open(REGISTRY, encoding='utf-8'), delimiter='\t'))
 
 
+def toolchain_fingerprint():
+    """The scorer's fingerprint of what a score depends on besides the source (compiler flags, assembler, include/): runs.log and judged/
+    carry it, so a result from another toolchain is never mistaken for one from this."""
+    import scorer
+    return scorer.fingerprint()
+
+
 def note_repeat(address, source, score):
     """Remembers every source judged (not --quiet: the permuter judges thousands) in
-    work/matching/judged/<ADDRESS>.tsv and says so when this exact source was judged before: the same source is easy to
-    resubmit by accident."""
+    work/matching/judged/<ADDRESS>.tsv and says so when this exact source was judged before under the same toolchain: the same source is
+    easy to resubmit by accident, but a score from another assembler or flag set says nothing about this one."""
     digest = hashlib.sha1(open(source, 'rb').read()).hexdigest()
+    fingerprint = toolchain_fingerprint()
     path = os.path.join(LAB, 'work', 'matching', 'judged', f'{address:06X}.tsv')
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    earlier = [line.split('\t')[1] for line in open(path, encoding='utf-8').read().splitlines() if line.split('\t')[0] == digest] if os.path.exists(path) else []
+    earlier = [fields[1] for fields in (line.split('\t') for line in open(path, encoding='utf-8').read().splitlines())
+               if fields[0] == digest and len(fields) > 2 and fields[2] == fingerprint] if os.path.exists(path) else []
     with open(path, 'a', encoding='utf-8') as handle:
-        handle.write(f'{digest}\t{"error" if score is None else score}\n')
+        handle.write(f'{digest}\t{"error" if score is None else score}\t{fingerprint}\n')
     if earlier:
         return f'NOTE: this exact source was judged {len(earlier)} time(s) before (score {", ".join(earlier)}): the result will not change, change the code.'
     return ''
@@ -88,7 +98,8 @@ def log_run(arm, address, score, source, lang, quiet):
     os.makedirs(os.path.dirname(RUNS_LOG), exist_ok=True)
     with open(RUNS_LOG, 'a', encoding='utf-8') as handle:
         fcntl.flock(handle, fcntl.LOCK_EX)
-        handle.write(f'{int(time.time())}\t{arm}\t{address:06X}\t{"error" if score is None else score}\t{digest}\t{os.path.relpath(kept, LAB)}\n')
+        handle.write(f'{int(time.time())}\t{arm}\t{address:06X}\t{"error" if score is None else score}\t{digest}\t{os.path.relpath(kept, LAB)}'
+                     f'\t{toolchain_fingerprint()}\n')
 
 
 def main():

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Regression tests for the scripts that need neither the game nor the compiler: `python3 -m unittest discover -s tests -v`."""
+import json
 import os
 import sys
 import struct
@@ -13,6 +14,8 @@ sys.path.insert(0, os.path.join(HERE, 'build'))
 import asm_units  # noqa: E402
 import blockers_report  # noqa: E402
 import check_cleanup  # noqa: E402
+import claim  # noqa: E402
+import check_source  # noqa: E402
 import classify_blockers  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
@@ -27,6 +30,7 @@ import mutate  # noqa: E402
 import neighborhood  # noqa: E402
 import permute  # noqa: E402
 import rules  # noqa: E402
+import park  # noqa: E402
 import record  # noqa: E402
 import progress  # noqa: E402
 import pair_versions  # noqa: E402
@@ -365,6 +369,164 @@ class RecordScanTests(unittest.TestCase):
     def test_an_asm_label_and_comments_are_not_flagged(self):
         self.assertEqual(record.scan('struct C { C(const C &) asm("C_Copy"); };\n'), [])
         self.assertEqual(record.scan('// a volatile flag would be wrong here\nint x;\n'), [])
+
+
+class ClaimTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.directory = tempfile.mkdtemp()
+        self.saved = (claim.LAB, claim.WAVES, claim.RUNS_LOG, claim.fingerprint, claim.fragment_reason, classify_blockers.TABLE)
+        claim.LAB = self.directory
+        claim.WAVES = os.path.join(self.directory, 'waves')
+        claim.RUNS_LOG = os.path.join(self.directory, 'runs.log')
+        claim.fingerprint = lambda: 'now'
+        claim.fragment_reason = lambda name: None
+        classify_blockers.TABLE = os.path.join(self.directory, 'blockers.tsv')
+
+    def tearDown(self):
+        import shutil
+        claim.LAB, claim.WAVES, claim.RUNS_LOG, claim.fingerprint, claim.fragment_reason, classify_blockers.TABLE = self.saved
+        shutil.rmtree(self.directory)
+
+    def write(self, name, text):
+        path = os.path.join(self.directory, name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w') as handle:
+            handle.write(text)
+
+    def test_a_run_from_another_toolchain_is_ignored(self):
+        self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\told\n2\tW1-a\t100000\t5\tdigest\tkept/b.cpp\tnow\n')
+        self.assertEqual(claim.runs('W1'), {0x100000: [('W1-a', 5, 'kept/b.cpp')]})
+
+    def test_a_run_with_no_fingerprint_is_ignored(self):
+        self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\n')
+        self.assertEqual(claim.runs('W1'), {})
+
+    def test_the_queue_comes_from_the_registry_and_skips_blockers(self):
+        header = 'address\tname\tsize\tstatus\tbest\ttries\tsource\tname_source\toption_name\n'
+        rows = ['0x100000\tnear_miss\t64\ttried\t2\t1\t\t\t\n', '0x100100\tno_source\t64\ttried\t1\t1\t\t\t\n',
+                '0x100200\tblocked\t64\ttried\t1\t1\t\t\t\n', '0x100300\tfar\t64\ttried\t9\t1\t\t\t\n', '0x100400\tdone\t64\tmatched\t0\t1\t\t\t\n']
+        self.write('data/matching/functions.tsv', header + ''.join(rows))
+        for address in ('100000', '100200', '100300', '100400'):
+            self.write(f'data/matching/src/fn/{address}.cpp', 'int f();\n')
+        self.write('blockers.tsv', 'address\tname\tsize\tkind\n0X100200\tblocked\t64\tvu\n')
+        import argparse
+        claim.init(argparse.Namespace(wave='T', addresses=None, near=2, min_score=1, min_size=0, max_size=1 << 30, budget=10))
+        with open(os.path.join(claim.WAVES, 'T', 'wave.json')) as handle:
+            self.assertEqual(json.load(handle)['queue'], [0x100000])
+
+
+class RepeatNoteTests(unittest.TestCase):
+    def setUp(self):
+        import importlib
+        import tempfile
+        self.module = importlib.import_module('try')
+        self.directory = tempfile.mkdtemp()
+        self.saved = (self.module.LAB, self.module.toolchain_fingerprint)
+        self.module.LAB = self.directory
+        self.source = os.path.join(self.directory, 'a.cpp')
+        with open(self.source, 'w') as handle:
+            handle.write('int f();\n')
+
+    def tearDown(self):
+        import shutil
+        self.module.LAB, self.module.toolchain_fingerprint = self.saved
+        shutil.rmtree(self.directory)
+
+    def test_the_same_source_under_the_same_toolchain_is_a_repeat(self):
+        self.module.toolchain_fingerprint = lambda: 'one'
+        self.module.note_repeat(0x100000, self.source, 3)
+        self.assertIn('judged 1 time', self.module.note_repeat(0x100000, self.source, 3))
+
+    def test_the_same_source_under_another_toolchain_is_not(self):
+        self.module.toolchain_fingerprint = lambda: 'one'
+        self.module.note_repeat(0x100000, self.source, 3)
+        self.module.toolchain_fingerprint = lambda: 'two'
+        self.assertEqual(self.module.note_repeat(0x100000, self.source, 3), '')
+
+
+class ScriptEntryPointTests(unittest.TestCase):
+    def test_every_script_that_defines_main_calls_it(self):
+        """A script that defines `main()` and never calls it exits 0 and prints nothing (record.py did, once, after an edit cut its last lines)."""
+        import glob
+        import re
+        root = os.path.dirname(HERE)
+        missing = []
+        for path in sorted(glob.glob(os.path.join(HERE, '**', '*.py'), recursive=True)):
+            with open(path, encoding='utf-8') as handle:
+                text = handle.read()
+            if re.search(r'^def main\(', text, re.M) and not re.search(r"^if __name__ == ['\"]__main__['\"]:", text, re.M):
+                missing.append(os.path.relpath(path, root))
+        self.assertEqual(missing, [])
+
+
+class CheckSourceTests(unittest.TestCase):
+    def kinds(self, text):
+        return [(kind, message.split(':')[0]) for _, kind, message in check_source.problems(text)]
+
+    def test_a_clean_source_has_no_problems(self):
+        self.assertEqual(check_source.problems('struct A { int x; };\nint f(A *a)\n{\n    return a->x;\n}\n'), [])
+
+    def test_inline_asm_is_banned(self):
+        self.assertEqual(self.kinds('void f() { asm volatile("nop"); }\n')[0][0], 'banned')
+
+    def test_the_shared_sqrt_helper_is_not_banned(self):
+        self.assertEqual(check_source.problems('float Sqrt(float x)\n{\n    float r;\n    asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x));\n    return r;\n}\n'), [])
+
+    def test_raw_m2c_offsets_are_a_cleanup_problem(self):
+        self.assertEqual(self.kinds('int f(char *p) { return M2C_FIELD(p, int *, 4); }\n'), [('cleanup', 'M2C_UNK / M2C_FIELD')])
+
+    def test_tabs_and_trailing_whitespace_are_a_cleanup_problem(self):
+        self.assertEqual(sorted(message for _, message in self.kinds('int x;\t\nint y; \n')), ['a tab', 'trailing whitespace', 'trailing whitespace'])
+
+    def test_a_scratch_array_nothing_uses_is_a_padding_local(self):
+        found = self.kinds('int f(int a)\n{\n    int scratch[4];\n    (void)scratch;\n    return a;\n}\n')
+        self.assertEqual(found, [('cleanup', 'padding local')])
+
+    def test_a_scratch_buffer_a_callee_fills_is_not_padding(self):
+        self.assertEqual(check_source.problems('void g(int *);\nint f()\n{\n    int scratch[3];\n    g(scratch);\n    return scratch[0];\n}\n'), [])
+
+    def test_a_struct_member_named_unused_is_not_a_local(self):
+        self.assertEqual(check_source.problems('struct A {\n    int unused;\n    int x;\n};\n'), [])
+
+    def test_a_banned_source_goes_to_the_asm_archive_and_the_rest_to_cleanup_pending(self):
+        banned = check_source.problems('void f() { asm("nop"); }\n')
+        unclean = check_source.problems('int f(char *p) { return M2C_FIELD(p, int *, 4); }\n')
+        self.assertEqual((check_source.destination(banned), check_source.destination(unclean)), ('asm-archive', 'cleanup-pending'))
+
+
+class ParkTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.previous = os.getcwd()
+        self.directory = tempfile.mkdtemp()
+        os.chdir(self.directory)
+        os.makedirs('data/matching/src/fn')
+        with open('data/matching/src/fn/100000.cpp', 'w') as handle:
+            handle.write('int f();\n')
+
+    def tearDown(self):
+        import shutil
+        os.chdir(self.previous)
+        shutil.rmtree(self.directory)
+
+    def row(self):
+        return {'address': '0x100000', 'status': 'matched', 'best': '0', 'source': 'data/matching/src/fn/100000.cpp'}
+
+    def test_an_asm_source_moves_to_the_archive_and_the_row_is_tried(self):
+        row = self.row()
+        destination = park.park(row, 'asm')
+        self.assertEqual((row['status'], row['source'], os.path.exists(destination)), ('tried', '', True))
+        self.assertTrue(destination.startswith(os.path.join('data', 'matching', 'asm-archive')))
+
+    def test_an_unclean_source_moves_to_cleanup_pending(self):
+        destination = park.park(self.row(), 'cleanup')
+        self.assertTrue(destination.startswith(os.path.join('data', 'matching', 'cleanup-pending')))
+
+    def test_a_regression_keeps_its_source_and_takes_the_new_score(self):
+        row = self.row()
+        self.assertEqual(park.park(row, 'regression', 3), '')
+        self.assertEqual((row['status'], row['best'], os.path.exists('data/matching/src/fn/100000.cpp')), ('tried', '3', True))
 
 
 class BlockerTests(unittest.TestCase):
