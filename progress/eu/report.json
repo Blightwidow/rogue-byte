@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 73.85471,
+  "fuzzy_match_percent": 73.965945,
   "total_code": "1402440",
-  "matched_code": "1035768",
-  "matched_code_percent": 73.85471,
+  "matched_code": "1037328",
+  "matched_code_percent": 73.965945,
   "total_data": "1038916",
   "total_functions": 6822,
-  "matched_functions": 5820,
-  "matched_functions_percent": 85.312225,
+  "matched_functions": 5842,
+  "matched_functions_percent": 85.634711,
   "complete_code": "152684",
   "complete_code_percent": 10.887025,
   "total_units": 434,
@@ -809,7 +809,7 @@
     {
      "name": ".text",
      "size": "14784",
-     "fuzzy_match_percent": 89.312771,
+     "fuzzy_match_percent": 90.47619,
      "metadata": {}
     }
    ],
@@ -971,7 +971,7 @@
     {
      "name": "PredictXfTransform",
      "size": "172",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
      "address": "12912"
     },
@@ -1027,14 +1027,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 89.312771,
+    "fuzzy_match_percent": 90.47619,
     "total_code": "14784",
-    "matched_code": "13204",
-    "matched_code_percent": 89.312771,
+    "matched_code": "13376",
+    "matched_code_percent": 90.47619,
     "matched_data_percent": 100.0,
     "total_functions": 29,
-    "matched_functions": 25,
-    "matched_functions_percent": 86.206897,
+    "matched_functions": 26,
+    "matched_functions_percent": 89.655172,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151000",
-     "fuzzy_match_percent": 25.470199,
+     "fuzzy_match_percent": 26.389404,
      "metadata": {}
     }
    ],
@@ -43646,9 +43646,9 @@
     {
      "name": "snd_SoundIsStillPlaying_CB",
      "size": "48",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "2736",
-     "fuzzy_match_percent": 0.0
+     "address": "2736"
     },
     {
      "name": "func_002324C8",
@@ -43660,9 +43660,9 @@
     {
      "name": "func_00232500",
      "size": "32",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "2840",
-     "fuzzy_match_percent": 0.0
+     "address": "2840"
     },
     {
      "name": "func_00232520",
@@ -43704,11 +43704,11 @@
     {
      "name": "snd_PostMessage__Fv",
      "size": "64",
+     "fuzzy_match_percent": 100.0,
      "metadata": {
       "demangled_name": "snd_PostMessage()"
      },
-     "address": "4560",
-     "fuzzy_match_percent": 0.0
+     "address": "4560"
     },
     {
      "name": "snd_SendCurrentBatch__Fv",
@@ -43890,9 +43890,9 @@
     {
      "name": "AtoiPchz",
      "size": "40",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "7704",
-     "fuzzy_match_percent": 0.0
+     "address": "7704"
     },
     {
      "name": "func_00233828",
@@ -45241,9 +45241,9 @@
     {
      "name": "sceSifCheckStatRpc",
      "size": "60",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "23200",
-     "fuzzy_match_percent": 0.0
+     "address": "23200"
     },
     {
      "name": "func_002374C8",
@@ -45458,9 +45458,9 @@
     {
      "name": "sceSifLoadModule",
      "size": "28",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "30552",
-     "fuzzy_match_percent": 0.0
+     "address": "30552"
     },
     {
      "name": "func_00239160",
@@ -45598,9 +45598,9 @@
     {
      "name": "InitExecPS2",
      "size": "172",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "32256",
-     "fuzzy_match_percent": 0.0
+     "address": "32256"
     },
     {
      "name": "func_00239898",
@@ -45906,9 +45906,9 @@
     {
      "name": "func_0023AA40",
      "size": "36",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "36952",
-     "fuzzy_match_percent": 0.0
+     "address": "36952"
     },
     {
      "name": "func_0023AA68",
@@ -45927,9 +45927,9 @@
     {
      "name": "func_0023AAC8",
      "size": "24",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "37088",
-     "fuzzy_match_percent": 0.0
+     "address": "37088"
     },
     {
      "name": "func_0023AAE0",
@@ -46300,16 +46300,16 @@
     {
      "name": "__terminate",
      "size": "36",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "51448",
-     "fuzzy_match_percent": 0.0
+     "address": "51448"
     },
     {
      "name": "__throw_type_match",
      "size": "44",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "51488",
-     "fuzzy_match_percent": 0.0
+     "address": "51488"
     },
     {
      "name": "__empty",
@@ -46342,9 +46342,9 @@
     {
      "name": "eh_context_initialize",
      "size": "40",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "51712",
-     "fuzzy_match_percent": 0.0
+     "address": "51712"
     },
     {
      "name": "eh_context_static",
@@ -46405,9 +46405,9 @@
     {
      "name": "copy_reg",
      "size": "124",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "53320",
-     "fuzzy_match_percent": 0.0
+     "address": "53320"
     },
     {
      "name": "next_stack_level",
@@ -46517,9 +46517,9 @@
     {
      "name": "RegisterGlobalObject",
      "size": "40",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "58352",
-     "fuzzy_match_percent": 0.0
+     "address": "58352"
     },
     {
      "name": "func_0023FE00",
@@ -46699,9 +46699,9 @@
     {
      "name": "func_002413E0",
      "size": "40",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "63992",
-     "fuzzy_match_percent": 0.0
+     "address": "63992"
     },
     {
      "name": "memclr",
@@ -46713,9 +46713,9 @@
     {
      "name": "sceDmaGetChan",
      "size": "40",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "64088",
-     "fuzzy_match_percent": 0.0
+     "address": "64088"
     },
     {
      "name": "sceDmaReset",
@@ -47154,9 +47154,9 @@
     {
      "name": "sceMcMkdir",
      "size": "52",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "75312",
-     "fuzzy_match_percent": 0.0
+     "address": "75312"
     },
     {
      "name": "sceMcClose",
@@ -47189,9 +47189,9 @@
     {
      "name": "sceMcSync",
      "size": "196",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "76392",
-     "fuzzy_match_percent": 0.0
+     "address": "76392"
     },
     {
      "name": "func_00244518",
@@ -47721,9 +47721,9 @@
     {
      "name": "func_0024B8F8",
      "size": "20",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "106256",
-     "fuzzy_match_percent": 0.0
+     "address": "106256"
     },
     {
      "name": "func_0024B910",
@@ -47861,9 +47861,9 @@
     {
      "name": "SceMpegDemuxPss",
      "size": "32",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "122248",
-     "fuzzy_match_percent": 0.0
+     "address": "122248"
     },
     {
      "name": "sceMpegAddStrCallback",
@@ -47896,9 +47896,9 @@
     {
      "name": "func_0024FA38",
      "size": "84",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "122960",
-     "fuzzy_match_percent": 0.0
+     "address": "122960"
     },
     {
      "name": "func_0024FA90",
@@ -48204,9 +48204,9 @@
     {
      "name": "func_00253C80",
      "size": "160",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "139928",
-     "fuzzy_match_percent": 0.0
+     "address": "139928"
     },
     {
      "name": "func_00253D20",
@@ -48762,14 +48762,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 25.470199,
+    "fuzzy_match_percent": 26.389404,
     "total_code": "151000",
-    "matched_code": "38460",
-    "matched_code_percent": 25.470199,
+    "matched_code": "39848",
+    "matched_code_percent": 26.389404,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 408,
-    "matched_functions_percent": 54.039735,
+    "matched_functions": 429,
+    "matched_functions_percent": 56.821192,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64539,14 +64539,14 @@
    "id": "game",
    "name": "Game code",
    "measures": {
-    "fuzzy_match_percent": 79.692834,
+    "fuzzy_match_percent": 79.706578,
     "total_code": "1251440",
-    "matched_code": "997308",
-    "matched_code_percent": 79.692834,
+    "matched_code": "997480",
+    "matched_code_percent": 79.706578,
     "matched_data_percent": 100.0,
     "total_functions": 6067,
-    "matched_functions": 5412,
-    "matched_functions_percent": 89.20389,
+    "matched_functions": 5413,
+    "matched_functions_percent": 89.220373,
     "complete_code": "152684",
     "complete_code_percent": 12.200665,
     "complete_data_percent": 100.0,
@@ -64558,14 +64558,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 25.470199,
+    "fuzzy_match_percent": 26.389404,
     "total_code": "151000",
-    "matched_code": "38460",
-    "matched_code_percent": 25.470199,
+    "matched_code": "39848",
+    "matched_code_percent": 26.389404,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 408,
-    "matched_functions_percent": 54.039735,
+    "matched_functions": 429,
+    "matched_functions_percent": 56.821192,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64577,14 +64577,14 @@
    "id": "sly1",
    "name": "Sly 1 engine code",
    "measures": {
-    "fuzzy_match_percent": 77.452658,
+    "fuzzy_match_percent": 77.474103,
     "total_code": "802028",
-    "matched_code": "621192",
-    "matched_code_percent": 77.452658,
+    "matched_code": "621364",
+    "matched_code_percent": 77.474103,
     "matched_data_percent": 100.0,
     "total_functions": 3852,
-    "matched_functions": 3352,
-    "matched_functions_percent": 87.01973,
+    "matched_functions": 3353,
+    "matched_functions_percent": 87.045691,
     "complete_code": "94392",
     "complete_code_percent": 11.769165,
     "complete_data_percent": 100.0,
@@ -64710,14 +64710,14 @@
    "id": "objects",
    "name": "World objects and physics",
    "measures": {
-    "fuzzy_match_percent": 81.320136,
+    "fuzzy_match_percent": 81.377038,
     "total_code": "302272",
-    "matched_code": "245808",
-    "matched_code_percent": 81.320136,
+    "matched_code": "245980",
+    "matched_code_percent": 81.377038,
     "matched_data_percent": 100.0,
     "total_functions": 1537,
-    "matched_functions": 1359,
-    "matched_functions_percent": 88.418998,
+    "matched_functions": 1360,
+    "matched_functions_percent": 88.48406,
     "complete_code": "41268",
     "complete_code_percent": 13.652604,
     "complete_data_percent": 100.0,

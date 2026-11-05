@@ -4,11 +4,10 @@ extern "C" void PredictXfTransform(void *pa0, void *pa1, float t, float *pm0, fl
 {
     if (pm0 != 0) {
         memset(pm0, 0, 0x40);
-        float one = 1.0f;
-        pm0[0] = one;
-        pm0[15] = one;
-        pm0[10] = one;
-        pm0[5] = one;
+        pm0[15] = 1.0f;
+        pm0[10] = 1.0f;
+        pm0[5] = 1.0f;
+        pm0[0] = 1.0f;
     }
     if (pm1 != 0) {
         memset(pm1, 0, 0x40);
