@@ -32,7 +32,7 @@ them out, and they stay assembly ([build/vu0-mmi.md](build/vu0-mmi.md)). A worke
 
 ## 3. Write C++ until the score is 0
 
-The game is C++ built by SN Systems' GCC 2.95.3 and assembled by Sony's `ee-as.exe` ([TOOLCHAIN.md](TOOLCHAIN.md)). For each function:
+The game is C++ built by SN Systems' GCC 2.95.3 and assembled by SN's `ps2eeas` ([TOOLCHAIN.md](TOOLCHAIN.md)). For each function:
 
 1. Read its disassembly (`build/splat/asm/`, git-ignored). Work out the arguments (`$a0`-`$a3`, then `$t0`-`$t3`; floats in `$f12`...),
    the return value (`$v0`, `$f0`), the fields it reads (`lw $v0, 0x708($a0)` is a 32-bit field at offset 0x708), the calls it makes

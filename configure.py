@@ -41,7 +41,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     ninja.build('pieces', 'phony', pieces)
 
     # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
-    # SN's compiler, then Sony's bin/ee-as.exe, the one assembler)
+    # SN's compiler, then SN's ps2eeas, the one assembler)
     sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
     import compile_unit
     assembler_for = compile_unit.assembler_for

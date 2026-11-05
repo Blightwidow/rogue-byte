@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """compile_unit.py <c|c++> <source> <output.o> [--assembler sony29]: compiles one source the way the retail build did.
 
-SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly with `-S`, and `tools/ee-as/ee-as.exe` (GNU as 2.9-ee-991111b, the `bin/ee-as.exe`
-build of Sony's SDK; `setup.sh --assembler` downloads it, pinned) assembles the result under wibo, with `-G` and `-O` from the compile
-flags. It expands `move` to `daddu` and puts the hazard `nop` between `mtc1` and the instruction that reads the register, as Sly 2's
-retail code has it (docs/build/assembler.md). The one assembler serves every function: there is no per-function choice of assembler. It assembles in one pass
+SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly with `-S`, and `tools/ps2eeas/Ps2EeAs.exe` (SN Systems' own assembler, the one SN's ProDG
+driver runs; `setup.sh --assembler` downloads it, pinned, unpatched) assembles the result under wibo, with `-G` from the compile flags. It
+expands `move` to `daddu`, puts the hazard `nop` between `mtc1` and the instruction that reads the register only when the next instruction
+reads it, and pads short loops, as Sly 2's retail code has it (docs/build/assembler.md). The one assembler serves every function: there is no per-function choice of assembler. It assembles in one pass
 and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's `.extern SYM,SIZE` lines, written at
 the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own ee-gcc 2.9-ee-991111 and its driver
 (config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of several functions can be linked together."""
@@ -23,7 +23,7 @@ SONY_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111b')
 LEGACY_SONY_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111b')
 SONY_FLAGS = ['-O2', '-G0']
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
-EE_AS = os.path.join(ROOT, 'tools', 'ee-as', 'ee-as.exe')
+EE_AS = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')
 OBJCOPY = os.path.join(ROOT, 'tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals-objcopy')
 FLAGS = os.environ['COMPILE_FLAGS'].split() if os.environ.get('COMPILE_FLAGS') else ['-O2', '-G0', '-ffast-math', '-fno-exceptions']  # the variable is for flag sweeps
 
@@ -113,7 +113,7 @@ def compile_object(language, source, output, assembler=None, include=None, local
         return False, result.stderr or result.stdout
     text = open(assembly).read()
     open(assembly, 'w').write(hoist_externs(text))
-    assembler_flags = [flag for flag in FLAGS if flag.startswith(('-G', '-O'))]
+    assembler_flags = [flag for flag in FLAGS if flag.startswith('-G')]
     for attempt in range(3):  # under a parallel build the assembler (under wibo) now and then never returns; a rerun takes a fraction of a second
         try:
             result = subprocess.run([WIBO, EE_AS, *assembler_flags, '-o', temporary, assembly], capture_output=True, text=True, timeout=20)

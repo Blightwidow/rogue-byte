@@ -7285,3 +7285,4 @@ func_0014F3C8 = 0x0014F3C8; // type:func size:0x60
 func_00259B20 = 0x00259B20; // type:func size:0x24
 func_00259D60 = 0x00259D60; // type:func size:0xC
 func_00100228 = 0x00100228; // type:func size:0x7C
+RO_FLT_002A53D4 = 0x002A53D4; // source:provisional
