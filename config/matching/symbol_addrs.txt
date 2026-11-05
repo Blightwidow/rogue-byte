@@ -7256,6 +7256,7 @@ dptofp = 0x0023DFA0; // type:func (__truncdfsf2)
 copysign = 0x0024A738; // type:func
 VU1_START_0 = 0x00000000; // source:matching
 _vt$13CObject110CD0 = 0x002D56F8; // source:matching
+_vt$13CObject1110D8 = 0x002CB5D8; // source:matching
 _vt$13CObject110CD0$16CSecondary110CD0 = 0x002D56B8; // source:matching
 _vt$13CObject110D18 = 0x002D2738; // source:matching
 _vt$13CObject110D18$16CSecondary110D18 = 0x002D26F8; // source:matching

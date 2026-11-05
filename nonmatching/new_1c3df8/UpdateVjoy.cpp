@@ -19,8 +19,8 @@ extern "C" void UpdateVjoy(s8 *pvjoy)
 {
     VjoyFrame l;
     float zeroAngle = 0.0f;
-    l.pitch = zeroAngle;
     l.tilt = zeroAngle;
+    l.pitch = zeroAngle;
     s32 mode = M2C_FIELD(pvjoy, s32 *, 0x80);
     switch (mode) {
     case 0:

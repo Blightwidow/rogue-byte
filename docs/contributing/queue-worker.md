@@ -27,8 +27,8 @@ ends early leaves free functions in the queue.
    a frame slot retail shows is a typed local the original plausibly declared (a struct), never a filler array; say so in your report when you keep one.
    Debug dumps (`-dL`) go to your scratch folder.
 6. A function that scores 0 only with `TRY_ASSEMBLER=sony29` (an SDK-range function: `sd`/`ld` saves, tail calls) is `NEAR needs sony29`: the
-   lead adds its address to `config/us/sony_gcc29.txt`. Never edit that file yourself: it changes the scorer fingerprint and the log of every
-   worker's runs stops counting.
+   lead adds its address to `config/us/sony_gcc29.txt`. Never edit that file or `config/matching/symbol_addrs.txt` yourself: either changes the scorer fingerprint and the log of every
+   worker's runs stops counting (the lead edits them only after `claim.py land` has staged the wave).
 7. Before you write EXACT, run `python3 scripts/matching/check_source.py <your final file>`: it must print `ok`. It checks what a matched
    source may not hold (inline asm, register pins, `volatile` on plain data, raw `M2C_UNK` offsets, m2c temp names, tabs, a padding
    local); a source that scores 0 and fails it is parked, not matched. Then re-run `try.py` on that exact file: only its `score 0`

@@ -13,6 +13,7 @@ import shutil
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import check_source  # noqa: E402
 import scorer  # noqa: E402
 from progress import Progress  # noqa: E402
 
@@ -42,7 +43,10 @@ def consider(folder, name, dry_run):
         return 0, 0, 0
     old_score = scorer.judge(address, read(current), language(current)) if current else None
     if current is not None and old_score is not None and new_score >= old_score:
-        return 1, 0, 0
+        # a tie is still a win when the new source is clean and the current one breaks a rule (raw M2C offsets, a padding local, a banned
+        # construct): record.py would park the current one, so the match is lost unless the clean source takes its place
+        if not (new_score == old_score and check_source.problems(read(current)) and not check_source.problems(read(candidate))):
+            return 1, 0, 0
     destination = os.path.join(SOURCES, f'{address:06X}{os.path.splitext(name)[1]}')
     print(f'{address:#X}: {old_score} -> {new_score} ({os.path.relpath(candidate, LAB)})')
     if not dry_run:

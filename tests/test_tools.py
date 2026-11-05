@@ -16,6 +16,7 @@ import blockers_report  # noqa: E402
 import check_cleanup  # noqa: E402
 import claim  # noqa: E402
 import check_source  # noqa: E402
+import adopt  # noqa: E402
 import classify_blockers  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
@@ -463,6 +464,38 @@ class FingerprintTests(unittest.TestCase):
             again.write('0x23E308\n')
         self.assertNotEqual(scorer.content_digest(handle.name), before)
         os.remove(handle.name)
+
+
+class AdoptTieTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.directory = tempfile.mkdtemp()
+        self.sources = os.path.join(self.directory, 'fn')
+        self.stage = os.path.join(self.directory, 'stage')
+        os.makedirs(self.sources)
+        os.makedirs(self.stage)
+        self.saved = (adopt.SOURCES, adopt.scorer.judge)
+        adopt.SOURCES = self.sources
+        adopt.scorer.judge = lambda address, text, lang='c++': 0
+
+    def tearDown(self):
+        import shutil
+        adopt.SOURCES, adopt.scorer.judge = self.saved
+        shutil.rmtree(self.directory)
+
+    def put(self, folder, name, text):
+        with open(os.path.join(folder, name), 'w') as handle:
+            handle.write(text)
+
+    def test_a_clean_source_replaces_a_tied_one_that_breaks_a_rule(self):
+        self.put(self.sources, '100000.cpp', 'int f(char *p) { return M2C_FIELD(p, int *, 4); }\n')
+        self.put(self.stage, '100000.cpp', 'struct A { int x; int y; };\nint f(A *p) { return p->y; }\n')
+        self.assertEqual(adopt.consider(self.stage, '100000.cpp', False), (1, 1, 1))
+
+    def test_a_tied_source_does_not_replace_a_clean_one(self):
+        self.put(self.sources, '100000.cpp', 'struct A { int x; int y; };\nint f(A *p) { return p->y; }\n')
+        self.put(self.stage, '100000.cpp', 'struct B { int a; int y; };\nint f(B *p) { return p->y; }\n')
+        self.assertEqual(adopt.consider(self.stage, '100000.cpp', False), (1, 0, 0))
 
 
 class RepeatNoteTests(unittest.TestCase):
