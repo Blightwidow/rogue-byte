@@ -821,7 +821,6 @@ address	name	size	file	score
 0X22FF40	ConvertXfMatrix4	216	alo-lo/ConvertXfMatrix4.cpp	9
 0X2303A0	SetXfKind	504	alo-lo/SetXfKind.cpp	24
 0X230710	PredictXfLocal	728	alo-lo/PredictXfLocal.c	238
-0X2309E8	PredictXfTransform	176	alo-lo/PredictXfTransform.cpp	2
 0X230A98	PredictXfTransformAdjust	568	alo-lo/PredictXfTransformAdjust.c	169
 0X230CF0	SnapAsega	696	alo-lo/SnapAsega.cpp	12
 0X231300	RotateXfmToMat	104	lo-sdk/RotateXfmToMat.cpp	5

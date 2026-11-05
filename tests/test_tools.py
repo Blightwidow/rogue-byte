@@ -416,6 +416,55 @@ class ClaimTests(unittest.TestCase):
             self.assertEqual(json.load(handle)['queue'], [0x100000])
 
 
+    def wave(self, queue, claims):
+        os.makedirs(os.path.join(claim.WAVES, 'T'), exist_ok=True)
+        with open(claim.state_path('T'), 'w') as handle:
+            json.dump({'queue': queue, 'claims': claims, 'budget': 10}, handle)
+
+    def test_done_refuses_a_worker_that_claimed_less_than_n_while_functions_are_free(self):
+        import argparse
+        self.wave([1, 2, 3], {'000001': 'k01'})
+        self.assertEqual(claim.done(argparse.Namespace(wave='T', worker='k01', count=3)), 1)
+
+    def test_done_accepts_a_worker_that_claimed_n(self):
+        import argparse
+        self.wave([1, 2, 3], {'000001': 'k01', '000002': 'k01', '000003': 'k02'})
+        self.assertEqual(claim.done(argparse.Namespace(wave='T', worker='k01', count=2)), 0)
+
+    def test_done_accepts_a_worker_when_the_queue_is_empty(self):
+        import argparse
+        self.wave([1, 2], {'000001': 'k01', '000002': 'k02'})
+        self.assertEqual(claim.done(argparse.Namespace(wave='T', worker='k01', count=5)), 0)
+
+    def test_runs_counts_the_runs_it_ignores(self):
+        self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\told\n2\tW1-a\t100000\t5\tdigest\tkept/b.cpp\tnow\n3\tW2-a\t100000\t0\td\tk\told\n')
+        claim.runs('W1')
+        self.assertEqual(claim.IGNORED['W1'], 1)
+
+
+class FingerprintTests(unittest.TestCase):
+    def test_a_touched_file_with_the_same_content_keeps_its_digest(self):
+        import scorer
+        import tempfile
+        with tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False) as handle:
+            handle.write('0x2396C0\n')
+        before = scorer.content_digest(handle.name)
+        os.utime(handle.name, (1, 1))
+        self.assertEqual(scorer.content_digest(handle.name), before)
+        os.remove(handle.name)
+
+    def test_a_changed_file_changes_its_digest(self):
+        import scorer
+        import tempfile
+        with tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False) as handle:
+            handle.write('0x2396C0\n')
+        before = scorer.content_digest(handle.name)
+        with open(handle.name, 'a') as again:
+            again.write('0x23E308\n')
+        self.assertNotEqual(scorer.content_digest(handle.name), before)
+        os.remove(handle.name)
+
+
 class RepeatNoteTests(unittest.TestCase):
     def setUp(self):
         import importlib

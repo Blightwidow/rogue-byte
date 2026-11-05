@@ -4688,6 +4688,7 @@ us_address	name	other_address	pair	score	addresses
 0x230380	FXfKindDynamic	0X230BA0	identical	0	ok
 0x230598	WakeXf	0X230DB8	same	0	ok
 0x230630	SleepXf	0X230E50	same	0	ok
+0x2309E8	PredictXfTransform	0X231208	same	0	ok
 0x230CD0	func_00230CD0	0X2314F0	same	0	ok
 0x230FA8	alo__static_initialization_and_destruction_0	0X2317C8	same	0	ok
 0x2310E0	func_002310E0	0X231900	same	0	ok
@@ -4722,7 +4723,10 @@ us_address	name	other_address	pair	score	addresses
 0x232408	snd_StopAllStreams	0X232C50	same	0	ok
 0x232438	snd_PauseAllSoundsInGroup	0X232C80	same	0	ok
 0x232468	snd_ContinueAllSoundsInGroup	0X232CB0	same	0	ok
+0x232498	snd_SoundIsStillPlaying_CB	0X232CE0	same	0	ok
+0x232500	func_00232500	0X232D48	same	0	ok
 0x232568	snd_AutoVol	0X232DB0	same	0	ok
+0x232BB8	snd_PostMessage__Fv	0X233400	same	0	ok
 0x232D80	snd_StreamSafeCheckCDIdle	0X2335C8	same	0	ok
 0x232DA8	snd_StreamSafeCdSync	0X2335F0	same	0	ok
 0x232F28	snd_ResetMovieSound	0X233770	same	0	ok
@@ -4730,6 +4734,7 @@ us_address	name	other_address	pair	score	addresses
 0x232FC0	func_00232FC0	0X233808	same	0	ok
 0x232FE8	func_00232FE8	0X233830	same	0	ok
 0x233018	func_00233018	0X233860	same	0	ok
+0x233800	AtoiPchz	0X234048	same	0	ok
 0x2342A0	rand	0X234AE8	same	0	ok
 0x234580	func_00234580	0X234DC8	same	0	ok
 0x235388	func_00235388	0X235BC8	same	0	ok
@@ -4741,6 +4746,7 @@ us_address	name	other_address	pair	score	addresses
 0x236F48	func_00236F48	0X237F10	identical	0	ok
 0x236F98	func_00236F98	0X237F60	same	0	ok
 0x2370A8	sceSifBindRpc	0X238070	same	0	ok
+0x237488	sceSifCheckStatRpc	0X238450	identical	0	ok
 0x2374E0	func_002374E0	0X2384A8	same	0	ok
 0x237AF8	func_00237AF8	0X238AC0	same	0	ok
 0x237B50	func_00237B50	0X238B18	same	0	ok
@@ -4749,10 +4755,12 @@ us_address	name	other_address	pair	score	addresses
 0x238CC8	func_00238CC8	0X239C90	same	0	ok
 0x238D40	func_00238D40	0X239D08	same	0	ok
 0x238F00	sceSifLoadFileReset	0X239EC8	same	0	ok
+0x239140	sceSifLoadModule	0X23A108	same	0	ok
 0x239198	func_00239198	0X23A160	same	0	ok
 0x2395B0	func_002395B0	0X23A578	same	0	ok
 0x2396C0	func_002396C0	0X23A688	same	0	ok
 0x239738	func_00239738	0X23A700	identical	0	ok
+0x2397E8	InitExecPS2	0X23A7B0	same	0	ok
 0x239898	func_00239898	0X23A870	identical	0	ok
 0x239920	func_00239920	0X23AA68	identical	0	ok
 0x239AA8	func_00239AA8	0X23ABF0	gap	0	ok
@@ -4764,6 +4772,8 @@ us_address	name	other_address	pair	score	addresses
 0x23A518	func_0023A518	0X23B660	same	0	ok
 0x23A618	func_0023A618	0X23B760	same	0	ok
 0x23A9C8	func_0023A9C8	0X23BB10	gap	0	ok
+0x23AA40	func_0023AA40	0X23BB88	same	0	ok
+0x23AAC8	func_0023AAC8		none		
 0x23AD70	func_0023AD70		none		
 0x23B238	func_0023B238	0X23BBF8	identical	0	ok
 0x23B290	func_0023B290	0X23BC50	same	0	ok
@@ -4783,17 +4793,22 @@ us_address	name	other_address	pair	score	addresses
 0x23E1C8	func_0023E1C8	0X23EB88	same	0	ok
 0x23E260	func_0023E260	0X23EC20	same	0	ok
 0x23E290	fptodp	0X23EC50	same	0	ok
+0x23E2E0	__terminate	0X23ECA0	same	0	ok
+0x23E308	__throw_type_match	0X23ECC8	same	0	ok
 0x23E338	__empty	0X23ECF8	gap	0	ok
 0x23E340	new_eh_context	0X23ED00	same	0	ok
 0x23E398	__get_eh_context	0X23ED58	same	0	ok
 0x23E3C0	__get_eh_info	0X23ED80	same	0	ok
+0x23E3E8	eh_context_initialize	0X23EDA8	same	0	ok
 0x23E410	eh_context_static	0X23EDD0	same	0	ok
 0x23E478	__get_dynamic_handler_chain	0X23EE38	same	0	ok
+0x23EA30	copy_reg	0X23F3F0	same	0	ok
 0x23EB40	__unwinding_cleanup	0X23F500	gap	0	ok
 0x23F240	func_0023F240	0X23FC00	identical	0	ok
 0x23F288	func_0023F288	0X23FC48	identical	0	ok
 0x23F688	func_0023F688	0X240048	identical	0	ok
 0x23F710	func_0023F710	0X2400D0	same	0	ok
+0x23FDD8	RegisterGlobalObject	0X240798	same	0	ok
 0x23FE00	func_0023FE00	0X2407C0	same	0	ok
 0x2401C8	func_002401C8	0X240B88	gap	0	ok
 0x240600	sceGsPutDispEnv	0X240FC0	same	0	ok
@@ -4802,7 +4817,9 @@ us_address	name	other_address	pair	score	addresses
 0x240AA0	sceGsPutIMR	0X241460	same	0	ok
 0x240B68	sceGsGetIMR	0X241528	same	0	ok
 0x240B88	checkModelVersion	0X241548	same	0	ok
+0x2413E0	func_002413E0	0X241DA0	identical	0	ok
 0x241408	memclr	0X241DC8	identical	0	ok
+0x241440	sceDmaGetChan	0X241E00	same	0	ok
 0x241728	func_00241728	0X2420E8	same	0	ok
 0x2417A0	func_002417A0	0X242160	same	0	ok
 0x2417F0	func_002417F0	0X2421B0	same	0	ok
@@ -4824,8 +4841,10 @@ us_address	name	other_address	pair	score	addresses
 0x243BD0	scePadEnterPressMode	0X244618	same	0	ok
 0x243C40	func_00243C40	0X244688	same	0	ok
 0x243EF0	sceMcOpen	0X244938	same	0	ok
+0x244018	sceMcMkdir	0X244A60	same	0	ok
 0x244050	sceMcClose	0X244A98	same	0	ok
 0x2441C0	sceMcRead	0X244C08	same	0	ok
+0x244450	sceMcSync	0X244E98	same	0	ok
 0x244848	sceMcFormat	0X245290	same	0	ok
 0x244918	sceMcDelete	0X245360	same	0	ok
 0x244A58	sceMcGetEntSpace	0X2454A0	same	0	ok
@@ -4850,18 +4869,22 @@ us_address	name	other_address	pair	score	addresses
 0x24B610	sceMpegIsEnd	0X24C058	gap	0	ok
 0x24B7A8	func_0024B7A8	0X24C1F0	identical	0	ok
 0x24B828	func_0024B828	0X24C270	same	0	ok
+0x24B8F8	func_0024B8F8	0X24C340	gap	0	ok
 0x24B910	func_0024B910	0X24C358	gap	0	ok
 0x24B920	func_0024B920	0X24C368	gap	0	ok
 0x24B930	func_0024B930	0X24C378	same	0	ok
 0x24B9A0	func_0024B9A0	0X24C3E8	same	0	ok
 0x24B9C8	func_0024B9C8	0X24C410	same	0	ok
 0x24C420	func_0024C420	0X24CE68	same	0	ok
+0x24F770	SceMpegDemuxPss	0X2501B8	same	0	ok
 0x24F8D0	func_0024F8D0	0X250318	same	0	ok
+0x24FA38	func_0024FA38	0X250480	same	0	ok
 0x24FA90	func_0024FA90	0X2504D8	same	0	ok
 0x251E60	func_00251E60	0X2528B0	same	0	ok
 0x251FC8	func_00251FC8	0X252A18	same	0	ok
 0x252230	func_00252230	0X252C80	same	0	ok
 0x253478	func_00253478	0X253EC8	same	0	ok
+0x253C80	func_00253C80	0X2546D0	same	0	ok
 0x253D20	func_00253D20	0X254770	same	0	ok
 0x253FA8	func_00253FA8	0X2549F8	same	0	ok
 0x2544C8	func_002544C8	0X254F18	same	0	ok
