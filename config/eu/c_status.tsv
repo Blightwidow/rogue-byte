@@ -2300,6 +2300,7 @@ us_address	name	other_address	pair	score	addresses
 0x176458	GoalNotice_SetState	0X1763E0	same	0	ok
 0x1766D8	GoalBrain_Init	0X176660	same	0	ok
 0x176708	GoalBrain_Activate	0X176690	same	0	ok
+0x176750	GoalBrain_SetCommand	0X1766D8	same	0	ok
 0x176B80	GoalBrain_AbsorbDamage	0X176B08	same	0	ok
 0x177618	GoalBrain_Update	0X1775A0	same	0	ok
 0x177BA0	GoalBrain_ChooseNextCommand	0X177B28	same	0	ok
@@ -2581,6 +2582,7 @@ us_address	name	other_address	pair	score	addresses
 0x188468	func_00188468	0X1883F0	same	0	ok
 0x188488	InitSly	0X188410	same	0	ok
 0x1885B8	LoadSlyFromBrx	0X188540	same	0	ok
+0x188608	PostSlyLoad	0X188590	same	0	ok
 0x188F20	HandleSlyMessage	0X188EA8	same	0	ok
 0x189458	FFaceSlyAimTarget	0X1893E0	same	0	ok
 0x189488	GetSlyExposeMode	0X189410	same	0	ok
@@ -3678,6 +3680,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E6330	InvalidateCrvCache	0X1E6AF0	gap	0	ok
 0x1E6340	func_001E6340	0X1E6B00	same	0	ok
 0x1E63C0	SFromCrvU	0X1E6B80	same	0	ok
+0x1E64C8	UFromCrvS	0X1E6C88	same	0	ok
 0x1E6610	UMinCrv	0X1E6DD0	gap	0	ok
 0x1E6620	SMinCrv	0X1E6DE0	gap	0	ok
 0x1E6630	UMaxCrv	0X1E6DF0	identical	0	ok
@@ -3721,6 +3724,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	0X1EB968	same	0	ok
 0x1EB2F0	LoadShdFromBrx	0X1EBAB0	same	0	ok
 0x1EB678	func_001EB678	0X1EBE38	same	0	ok
+0x1EB960	FillShaders__Fi	0X1EC120	gap	0	ok
 0x1EC688	func_001EC688	0X1ECE48	same	0	ok
 0x1EC6D0	func_001EC6D0	0X1ECE90	same	0	ok
 0x1EC718	func_001EC718	0X1ECED8	same	0	ok
@@ -3937,6 +3941,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F7530	PaloFindWkrAbsorber	0X1F7CF0	same	0	ok
 0x1F7588	FAbsorbSoWkr	0X1F7D48	gap	0	ok
 0x1F78A0	func_001F78A0	0X1F8060	identical	0	ok
+0x1F78D8	GrficFromAlo	0X1F8098	identical	0	ok
 0x1F7918	SetAloInteract	0X1F80D8	identical	0	ok
 0x1F7950	func_001F7950	0X1F8110	same	0	ok
 0x1F7A68	func_001F7A68	0X1F8228	identical	0	ok
@@ -4134,6 +4139,7 @@ us_address	name	other_address	pair	score	addresses
 0x202350	func_00202350	0X202B10	identical	0	ok
 0x2026F8	func_002026F8	0X202EB8	same	0	ok
 0x202730	func_00202730	0X202EF0	same	0	ok
+0x202768	bevy_ui_binoc_recon_202768	0X202F28	same	0	ok
 0x203568	func_00203568	0X203D28	same	0	ok
 0x2035A8	func_002035A8	0X203D68	same	0	ok
 0x203638	OnStepguardAdd__FP9STEPGUARD	0X203DF8	same	0	ok
@@ -4533,6 +4539,7 @@ us_address	name	other_address	pair	score	addresses
 0x21D498	func_0021D498	0X21DCB8	same	0	ok
 0x21D4E0	func_0021D4E0	0X21DD00	same	0	ok
 0x21D618	func_0021D618	0X21DE38	same	0	ok
+0x21D638	CchParsePchzInt__FPcPi	0X21DE58	identical	0	ok
 0x21D6B0	CchParsePchzTft__FPcP3TFTPPc	0X21DED0	same	0	ok
 0x21D9F0	WriteTftPchz__FP3TFTP5OSTRMPc	0X21E210	same	0	ok
 0x21DB38	FNegTftUl__FP3TFTP2UL	0X21E358	identical	0	ok
@@ -4714,6 +4721,7 @@ us_address	name	other_address	pair	score	addresses
 0x22BF40	UBias__Fff	0X22C760	identical	0	ok
 0x22BF70	GFromOnz__FP3ONZ	0X22C790	same	0	ok
 0x22C3B0	AddWrCircleWarp__FP2WR	0X22CBD0	same	0	ok
+0x22C430	AddWrBendWarp__FP2WR	0X22CC50	same	0	ok
 0x22C4A0	PwreGetWrCur__FP2WR4ENSK4WREK	0X22CCC0	identical	0	ok
 0x22C4D8	PwreGetWrCircle__FP2WR4ENSK	0X22CCF8	same	0	ok
 0x22C4F8	PwreGetWrBend__FP2WR4ENSK	0X22CD18	same	0	ok

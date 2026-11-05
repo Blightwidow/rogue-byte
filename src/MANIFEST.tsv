@@ -2300,6 +2300,7 @@ address	name	size	file
 0X176458	GoalNotice_SetState	636	new_1715f0/GoalNotice_SetState.cpp
 0X1766D8	GoalBrain_Init	44	new_1715f0/GoalBrain_Init.cpp
 0X176708	GoalBrain_Activate	68	new_1715f0/GoalBrain_Activate.cpp
+0X176750	GoalBrain_SetCommand	1072	new_1715f0/GoalBrain_SetCommand.cpp
 0X176B80	GoalBrain_AbsorbDamage	104	new_1715f0/GoalBrain_AbsorbDamage.cpp
 0X177618	GoalBrain_Update	1416	new_1715f0/GoalBrain_Update.cpp
 0X177BA0	GoalBrain_ChooseNextCommand	384	new_1715f0/GoalBrain_ChooseNextCommand.cpp
@@ -2581,6 +2582,7 @@ address	name	size	file
 0X188468	func_00188468	32	joy-jt/fun_00188468.c
 0X188488	InitSly	300	joy-jt/InitSly.cpp
 0X1885B8	LoadSlyFromBrx	80	joy-jt/LoadSlyFromBrx.cpp
+0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.cpp
 0X188F20	HandleSlyMessage	1336	joy-jt/HandleSlyMessage.cpp
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp
 0X189488	GetSlyExposeMode	108	joy-jt/GetSlyExposeMode.cpp
@@ -3678,6 +3680,7 @@ address	name	size	file
 0X1E6330	InvalidateCrvCache	16	splice-ref-crv/InvalidateCrvCache.c
 0X1E6340	func_001E6340	124	splice-ref-crv/fun_001e6340.cpp
 0X1E63C0	SFromCrvU	260	splice-ref-crv/SFromCrvU.cpp
+0X1E64C8	UFromCrvS	328	splice-ref-crv/UFromCrvS.cpp
 0X1E6610	UMinCrv	12	splice-ref-crv/UMinCrv.c
 0X1E6620	SMinCrv	12	splice-ref-crv/SMinCrv.c
 0X1E6630	UMaxCrv	24	splice-ref-crv/UMaxCrv.c
@@ -3721,6 +3724,7 @@ address	name	size	file
 0X1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	328	shd/LoadTexFromBrx__FP18CBinaryInputStreamP3TEX.cpp
 0X1EB2F0	LoadShdFromBrx	904	shd/LoadShdFromBrx.cpp
 0X1EB678	func_001EB678	204	shd/fun_001eb678.cpp
+0X1EB960	FillShaders__Fi	3364	shd/FillShaders__Fi.cpp
 0X1EC688	func_001EC688	68	shd/fun_001ec688.cpp
 0X1EC6D0	func_001EC6D0	72	shd/fun_001ec6d0.cpp
 0X1EC718	func_001EC718	40	shd/fun_001ec718.c
@@ -3937,6 +3941,7 @@ address	name	size	file
 0X1F7530	PaloFindWkrAbsorber	84	so-sm/PaloFindWkrAbsorber.cpp
 0X1F7588	FAbsorbSoWkr	12	so-sm/FAbsorbSoWkr.cpp
 0X1F78A0	func_001F78A0	56	so-sm/fun_001f78a0.cpp
+0X1F78D8	GrficFromAlo	60	so-sm/GrficFromAlo.cpp
 0X1F7918	SetAloInteract	56	so-sm/SetAloInteract.cpp
 0X1F7950	func_001F7950	276	so-sm/fun_001f7950.cpp
 0X1F7A68	func_001F7A68	212	so-sm/fun_001f7a68.cpp
@@ -4134,6 +4139,7 @@ address	name	size	file
 0X202350	func_00202350	40	unsorted/fun_00202350.cpp
 0X2026F8	func_002026F8	56	sprbuf-stepguard/fun_002026f8.cpp
 0X202730	func_00202730	56	sprbuf-stepguard/fun_00202730.cpp
+0X202768	bevy_ui_binoc_recon_202768	1488	sprbuf-stepguard/bevy_ui_binoc_recon_202768.cpp
 0X203568	func_00203568	60	sprbuf-stepguard/fun_00203568.c
 0X2035A8	func_002035A8	140	sprbuf-stepguard/fun_002035a8.cpp
 0X203638	OnStepguardAdd__FP9STEPGUARD	56	stepguard/OnStepguardAdd__FP9STEPGUARD.c
@@ -4533,6 +4539,7 @@ address	name	size	file
 0X21D498	func_0021D498	72	break-text/fun_0021d498.cpp
 0X21D4E0	func_0021D4E0	308	break-text/fun_0021d4e0.c
 0X21D618	func_0021D618	32	break-text/fun_0021d618.c
+0X21D638	CchParsePchzInt__FPcPi	120	text/CchParsePchzInt__FPcPi.cpp
 0X21D6B0	CchParsePchzTft__FPcP3TFTPPc	832	text/CchParsePchzTft__FPcP3TFTPPc.cpp
 0X21D9F0	WriteTftPchz__FP3TFTP5OSTRMPc	324	text/WriteTftPchz__FP3TFTP5OSTRMPc.cpp
 0X21DB38	FNegTftUl__FP3TFTP2UL	224	text/FNegTftUl__FP3TFTP2UL.cpp
@@ -4714,6 +4721,7 @@ address	name	size	file
 0X22BF40	UBias__Fff	48	wr/UBias__Fff.c
 0X22BF70	GFromOnz__FP3ONZ	180	wr/GFromOnz__FP3ONZ.cpp
 0X22C3B0	AddWrCircleWarp__FP2WR	128	wr/AddWrCircleWarp__FP2WR.cpp
+0X22C430	AddWrBendWarp__FP2WR	112	wr/AddWrBendWarp__FP2WR.cpp
 0X22C4A0	PwreGetWrCur__FP2WR4ENSK4WREK	52	wr/PwreGetWrCur__FP2WR4ENSK4WREK.cpp
 0X22C4D8	PwreGetWrCircle__FP2WR4ENSK	28	wr/PwreGetWrCircle__FP2WR4ENSK.cpp
 0X22C4F8	PwreGetWrBend__FP2WR4ENSK	28	wr/PwreGetWrBend__FP2WR4ENSK.cpp

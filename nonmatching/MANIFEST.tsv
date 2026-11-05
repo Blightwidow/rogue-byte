@@ -211,7 +211,7 @@ address	name	size	file	score
 0X161478	UpdatePlayTime	488	new_161458/UpdatePlayTime.cpp	65
 0X1617E0	SetGameCoins	136	new_161458/SetGameCoins.cpp	9
 0X163460	SaveJobVariables	320	new_161458/SaveJobVariables.cpp	23
-0X1635F8	LoadTaskFromBrx	496	sensor-geom/LoadTaskFromBrx.c	63
+0X1635F8	LoadTaskFromBrx	496	sensor-geom/LoadTaskFromBrx.cpp	31
 0X1643B0	SaveTaskVariables	544	sensor-geom/SaveTaskVariables.cpp	84
 0X1645D0	FTaskPrerequisitesDone	112	sensor-geom/FTaskPrerequisitesDone.cpp	8
 0X164DF0	SetTaskState	808	sensor-geom/SetTaskState.cpp	106
@@ -251,7 +251,6 @@ address	name	size	file	score
 0X175FF0	func_00175FF0	112	new_1715f0/fun_00175ff0.c	1
 0X176098	GoalNotice_Update	960	new_1715f0/GoalNotice_Update.c	133
 0X176458	GoalNotice_SetState	640	new_1715f0/GoalNotice_SetState.cpp	0
-0X176750	GoalBrain_SetCommand	1072	new_1715f0/GoalBrain_SetCommand.c	233
 0X177F78	GoalFollowCrv_Steer	2688	new_1715f0/GoalFollowCrv_Steer.c	657
 0X1789F8	GoalFollowCrv_Update	736	new_1715f0/GoalFollowCrv_Update.c	144
 0X178D00	GoalFollowCrv_FAtEnd	128	new_1715f0/GoalFollowCrv_FAtEnd.c	20
@@ -311,7 +310,6 @@ address	name	size	file	score
 0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.c	274
 0X1875B8	SetJoyJoys__FP3JOY4JOYS4JOYK	432	joy_187030/SetJoyJoys__FP3JOY4JOYS4JOYK.cpp	6
 0X187998	FReadJoy__FP3JOY	1000	joy_187030/FReadJoy__FP3JOY.cpp	7
-0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.c	157
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
 0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.c	45
 0X188E78	AdjustSlyXpVelocity	168	joy-jt/AdjustSlyXpVelocity.c	28
@@ -604,7 +602,6 @@ address	name	size	file	score
 0X1EA000	UpdateCrvExcludedRanges	944	new_1e7a28/UpdateCrvExcludedRanges.cpp	153
 0X1EA9F0	func_001EA9F0	936	new_1e7a28/fun_001ea9f0.cpp	49
 0X1EB748	LoadShadersFromBrx	536	shd_1eb1a8/LoadShadersFromBrx.cpp	77
-0X1EB960	FillShaders__Fi	3368	shd_1eb1a8/FillShaders__Fi.c	658
 0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs_1ec9d0/PqwVifsBitmapUpload__Fi.cpp	85
 0X1ED1A8	FilterColorRgba5551_1ed1a8	208	new_1ed1a8/FilterColorRgba5551_1ed1a8.cpp	42
 0X1ED2D8	GreyColor_1ed2d8	208	new_1ed1a8/GreyColor_1ed2d8.c	43
@@ -745,7 +742,6 @@ address	name	size	file	score
 0X21C1C8	func_0021C1C8	376	break-text/fun_0021c1c8.c	39
 0X21C340	func_0021C340	696	break-text/fun_0021c340.c	211
 0X21C888	func_0021C888	656	break-text/fun_0021c888.cpp	57
-0X21D638	CchParsePchzInt__FPcPi	120	text/CchParsePchzInt__FPcPi.c	6
 0X21E1B0	CchAchFromDouble__FPciP3TFTd	776	text/CchAchFromDouble__FPciP3TFTd.cpp	87
 0X21F418	CarryThrow_Update	1792	new_21f188/CarryThrow_Update.c	535
 0X21FB70	CarryThrow_UpdateArc	2072	new_21f188/CarryThrow_UpdateArc.c	457
@@ -779,7 +775,6 @@ address	name	size	file	score
 0X22A908	func_0022A908	1504	so-wr/fun_0022a908.c	437
 0X22B220	ActivateWipe	512	so-wr/ActivateWipe.cpp	42
 0X22BE60	UNoise__Ffff	224	wr/UNoise__Ffff.cpp	9
-0X22C430	AddWrBendWarp__FP2WR	112	wr/AddWrBendWarp__FP2WR.c	9
 0X22C8C0	BuildXfLocalMatrix	344	wr-vec/BuildXfLocalMatrix.c	77
 0X22CAD0	ConvertDeulToW__FP6VECTORN20	192	vec_22cad0/ConvertDeulToW__FP6VECTORN20.c	45
 0X22CB90	BuildXfAngularRateMatrix	112	vec-alo/BuildXfAngularRateMatrix.cpp	2
