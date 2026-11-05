@@ -6,7 +6,7 @@ commits and SHA-256). Linux x86-64 and macOS arm64 only; on Windows use WSL or D
 | Step | Tool | Where |
 | :--- | :--- | :--- |
 | Compile | SN Systems EE-GCC 2.95.3 build 1.36 (`cc1plus`), `-O2 -G0 -ffast-math -fno-exceptions`, `-S` | `tools/compilers/ee-gcc2.95.3-136/` |
-| Assemble | SN Systems' `ps2eeas` (1.9.25.758, from SN ProDG 3.01), unpatched, `Ps2EeAs.exe -G0` | `tools/ps2eeas/Ps2EeAs.exe` |
+| Assemble | SN Systems' `ps2eeas` (1.9.25.758, from SN ProDG 3.01) with its short-loop constant changed from 6 to 5 (one byte), `Ps2EeAs-loop5.exe -G0` | `tools/ps2eeas/Ps2EeAs-loop5.exe`, made from `Ps2EeAs.exe` by `setup.sh` |
 | Run the Windows tools | [wibo](https://github.com/decompals/wibo) (Linux and macOS) | `tools/wibo` |
 | Link, objcopy | decompals binutils for PS2 (R5900) | `tools/binutils-mips-ps2-decompals/` |
 | SDK range | Sony's own ee-gcc 2.9-ee-991111 and its driver, for the addresses in `config/us/sony_gcc29.txt` | `tools/compilers/ee-gcc2.9-991111b/` |

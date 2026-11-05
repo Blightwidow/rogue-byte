@@ -49,7 +49,10 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   does not have, a variable that exists only to move a register, a local that only holds a global's address so a constant does not
   fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
-- **One flag set per source file** and one assembler for all (`tools/ps2eeas/Ps2EeAs.exe`, unpatched), never per function or ad hoc per attempt.
+- **One flag set per source file** and one assembler for all game code, never per function or ad hoc per attempt: SN's `ps2eeas` 1.9.25.758 with its one short-loop constant
+  changed from 6 to 5 (`tools/ps2eeas/Ps2EeAs-loop5.exe`, made by `setup.sh` from the pinned download, never committed; retail pads every short
+  loop to five and no assembler release we could run does, docs/build/assembler.md "Short loops"). The SDK range builds with Sony's own
+  toolchain (`config/us/sony_gcc29.txt`).
 - Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md (measure with
   `scripts/matching/assembler_probe.py` before changing the assembler). SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.

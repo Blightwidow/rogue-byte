@@ -73,14 +73,17 @@ install_compiler() {
 }
 
 install_assembler() {
-  # SN Systems' own assembler (ps2eeas), the one SN's ProDG driver runs: the one assembler of the build, unpatched. It puts the hazard nop after
-  # mtc1 only where the next instruction reads the register, and pads short loops, as Sly 2's retail does (scripts/build/compile_unit.py,
-  # docs/build/assembler.md). Pinned commit of a public mirror of the SN ProDG 3.01 tools; never committed.
-  [[ -f tools/ps2eeas/Ps2EeAs.exe ]] && return
+  # SN Systems' own assembler (ps2eeas 1.9.25.758), the one SN's ProDG driver runs. It puts the hazard nop after mtc1 only where the next
+  # instruction reads the register, and pads short loops, as Sly 2's retail does. Retail pads them one nop less than this build does, so the
+  # build uses a copy with one byte changed (tools/ps2eeas/Ps2EeAs-loop5.exe, made here from the pinned download, never committed;
+  # scripts/build/compile_unit.py, docs/build/assembler.md "Short loops"). Pinned commit of a public mirror of the SN ProDG 3.01 tools.
   mkdir -p tools/ps2eeas
-  curl -fsSL -o tools/ps2eeas/Ps2EeAs.exe "https://raw.githubusercontent.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01/d74f6fe08d24e7cf0df48cb570d85ad04db167c5/usr/local/sce/ee/gcc/ee/bin/Ps2EeAs.exe"
-  echo "cb5adda955e64626564212ef7e0c1434708c4e1ef423344a92ec8033306ed3aa  tools/ps2eeas/Ps2EeAs.exe" | shasum -a 256 -c - || { rm -f tools/ps2eeas/Ps2EeAs.exe; exit 1; }
-  echo "ok: tools/ps2eeas/Ps2EeAs.exe"
+  if [[ ! -f tools/ps2eeas/Ps2EeAs.exe ]]; then
+    curl -fsSL -o tools/ps2eeas/Ps2EeAs.exe "https://raw.githubusercontent.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01/d74f6fe08d24e7cf0df48cb570d85ad04db167c5/usr/local/sce/ee/gcc/ee/bin/Ps2EeAs.exe"
+    echo "cb5adda955e64626564212ef7e0c1434708c4e1ef423344a92ec8033306ed3aa  tools/ps2eeas/Ps2EeAs.exe" | shasum -a 256 -c - || { rm -f tools/ps2eeas/Ps2EeAs.exe; exit 1; }
+  fi
+  python3 scripts/build/compile_unit.py --make-assembler
+  echo "ok: tools/ps2eeas/Ps2EeAs.exe, tools/ps2eeas/Ps2EeAs-loop5.exe"
 }
 
 install_objdiff() {

@@ -3,11 +3,12 @@ struct SLOTHEAP;
 struct PAIR { int cref; };
 struct TIMEDCALL { float tFire; void *powner; PAIR *ppair; int idCall; TIMEDCALL *pnext; };
 struct SWW { char pad[0x39FC]; int slotheap; };
-extern TIMEDCALL *B_003E0E80;
+struct TCLIST { TIMEDCALL *phead; };
+extern TCLIST B_003E0E80;
 struct SWG { char pad[0x3D6C]; int cTimed; };
 extern SWG B_003DD490;
 extern "C" void *PvAllocSlotheapImpl(void *);
-extern "C" void InsertSlEntryAfter(TIMEDCALL **, TIMEDCALL *, TIMEDCALL *);
+extern "C" void InsertSlEntryAfter(TCLIST *, TIMEDCALL *, TIMEDCALL *);
 
 TIMEDCALL *AddSwTimedCall(SWW *psw, void *powner, PAIR *ppair, float tFire)
 {
@@ -22,10 +23,10 @@ TIMEDCALL *AddSwTimedCall(SWW *psw, void *powner, PAIR *ppair, float tFire)
     pcall->tFire = tFire;
     pcall->pnext = 0;
     TIMEDCALL *pprev = 0;
-    if (B_003E0E80 != 0) {
-        if (tFire < B_003E0E80->tFire) {
+    if (B_003E0E80.phead != 0) {
+        if (tFire < B_003E0E80.phead->tFire) {
         } else {
-            pprev = B_003E0E80;
+            pprev = B_003E0E80.phead;
         loop:
             TIMEDCALL *pnext = pprev->pnext;
             if (pnext != 0) {
