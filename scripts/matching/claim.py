@@ -3,7 +3,7 @@
 """claim.py init|take|status|land - queue waves for matching workers (OpenRAC/rac1-decomp's `wave.py`, our scale).
 
   python3 scripts/matching/claim.py init W1 --addresses file.txt [--budget 12]   a queue of function addresses (hex, one per line)
-  python3 scripts/matching/claim.py init W1 --near 4 [--min-size B --max-size B]  every nonmatching/ draft scoring MIN..4 (--min-score, default 1)
+  python3 scripts/matching/claim.py init W1 --near 4 [--min-size B --max-size B]  every open function whose best draft scores MIN..4 (--min-score, default 1), from the registry
   python3 scripts/matching/claim.py take W1 k01 2     claim the next 2 free functions for worker k01: prints one packet each
   python3 scripts/matching/claim.py status W1         per function: claimed by, runs, best score (from work/matching/runs.log)
   python3 scripts/matching/claim.py land W1 [--reject ADDR ...]   stage the best logged source of every function of the wave and adopt it
@@ -88,16 +88,33 @@ def manifest():
     return rows
 
 
+def fingerprint():
+    """The scorer's fingerprint of the current toolchain (compiler flags, assembler, include/): try.py writes it on every runs.log line."""
+    import scorer
+    return scorer.fingerprint()
+
+
 def runs(wave):
-    """address -> list of (arm, score or None, kept path) of this wave's arms."""
+    """address -> list of (arm, score or None, kept path) of this wave's arms, from runs made with the current toolchain: a run logged
+    under another assembler or flag set (another fingerprint, or none) says nothing about what the sources score now."""
     found = {}
     if os.path.exists(RUNS_LOG):
+        current = fingerprint()
         for line in open(RUNS_LOG, encoding='utf-8'):
             fields = line.rstrip('\n').split('\t')
-            if len(fields) == 6 and fields[1].startswith(wave + '-'):
+            if len(fields) == 7 and fields[6] == current and fields[1].startswith(wave + '-'):
                 score = int(fields[3]) if fields[3].lstrip('-').isdigit() else None
                 found.setdefault(int(fields[2], 16), []).append((fields[1], score, fields[5]))
     return found
+
+
+def draft_source(address):
+    """The source in data/matching/src/fn for a registry address (`0x1234`), or None."""
+    stem = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(address, 16):06X}')
+    for extension in ('.cpp', '.c'):
+        if os.path.exists(stem + extension):
+            return stem + extension
+    return None
 
 
 def init(arguments):
@@ -107,8 +124,11 @@ def init(arguments):
     if arguments.addresses:
         queue = [int(line.split()[0], 16) for line in open(arguments.addresses, encoding='utf-8') if line.strip()]
     else:
-        queue = [address for address, row in manifest().items() if row['score'].isdigit() and arguments.min_score <= int(row['score']) <= arguments.near]
-        queue.sort(key=lambda address: (int(manifest()[address]['score']), -size.get(address, 0)))
+        # the registry, not nonmatching/MANIFEST.tsv: the manifest lists only drafts published for objdiff, and misses the functions a toolchain
+        # change demoted (they keep a source in data/matching/src/fn and a best score, but no published draft)
+        best = {int(row['address'], 16): int(row['best']) for row in rows if row['status'] in ('tried', 'todo') and row['best'].isdigit()
+                and arguments.min_score <= int(row['best']) <= arguments.near and draft_source(row['address'])}
+        queue = sorted(best, key=lambda address: (best[address], -size.get(address, 0)))
     queue = [a for a in queue if a in open_now and a not in HELD and max(arguments.min_size, 16) <= size.get(a, 0) <= arguments.max_size]
     names = {int(row['address'], 16): row['name'] for row in rows}
     sys.path.insert(0, os.path.join(LAB, 'scripts'))
@@ -139,8 +159,15 @@ def packet(wave, worker, address, budget):
              f'- scratch folder (write every attempt here, never in src/ or nonmatching/): `{os.path.relpath(scratch, LAB)}`',
              f'- run: `TRY_ARM={wave}-{worker} TRY_BUDGET={budget} python3 scripts/matching/try.py 0x{address:X} <file>`']
     entry = manifest().get(address)
-    if entry:
-        lines.append(f'- best draft so far: `nonmatching/{entry["file"]}` (score {entry["score"]}); its last diff: `work/matching/diffs/{address:06X}.txt`')
+    draft = draft_source(f'{address:X}') or (os.path.join(LAB, 'nonmatching', entry['file']) if entry else None)
+    if draft:
+        score = row['best'] if row['best'].isdigit() else (entry['score'] if entry else '?')
+        lines.append(f'- best draft so far: `{os.path.relpath(draft, LAB)}` (best score {score}); its diff with the current toolchain is below')
+        environment = {key: value for key, value in os.environ.items() if key not in ('TRY_ARM', 'TRY_BUDGET')}  # the packet's own run is no worker's try
+        shown = subprocess.run([sys.executable, os.path.join(LAB, 'scripts', 'matching', 'try.py'), f'0x{address:X}', draft],
+                               capture_output=True, text=True, env=environment).stdout.splitlines()[:40]
+        if shown:
+            lines.append('```\n' + '\n'.join(shown) + '\n```')
     index_rows, gold = similar.index()
     examples = [f'`data/matching/src/fn/{other:06X}.cpp` ({example["name"]}, {score:.2f})'
                 for score, other, example, _ in similar.similar(address, 3, index_rows, gold) if score >= 0.25]

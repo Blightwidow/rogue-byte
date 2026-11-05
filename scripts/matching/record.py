@@ -11,7 +11,9 @@ afterwards). A function of the SDK range (status `library`) is registered the sa
 
 A new match is scanned for what AGENTS.md bans: `volatile` on ordinary data (a pointer to a hardware register, an address from
 0x10000000 up, is allowed), `register` pins, and inline asm in a function (only the shared `sqrt.s` helper is allowed).
-The scan prints every hit and the run exits 1 after recording: review them (`--no-scan` skips the scan). Prints the totals and the
+A source that scores 0 but breaks a rule (scripts/matching/check_source.py: the scan above, the cleanup rules, a padding local) is not
+registered: it is parked (scripts/matching/park.py) in data/matching/asm-archive or cleanup-pending and the run lists it (`--no-scan` skips
+the check). Prints the totals and the
 functions that matched this time."""
 import argparse
 import concurrent.futures
@@ -24,6 +26,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from progress import Progress  # noqa: E402
+import check_source  # noqa: E402
+import park  # noqa: E402
 
 REGISTRY = 'data/matching/functions.tsv'
 STAMP = 'work/matching/last_record'  # sources older than the last record were counted already
@@ -86,7 +90,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         results = list(pool.map(judge, sources))
     progress.done()
-    new_matches, tried = [], 0
+    new_matches, tried, parked = [], 0, []
     since = os.path.getmtime(STAMP) if os.path.exists(STAMP) else 0
     for address, score, path in results:
         row = by_address.get(address)
@@ -97,6 +101,18 @@ def main():
         if score is not None and (row['best'] == '' or score < int(row['best'])) and (score == 0 or not scan(open(path, encoding='utf-8').read())):
             row['best'] = str(score)  # a near miss that leans on a banned construct does not lower `best` (export_nonmatching.py sets it from the honest source)
         if score == 0:
+            found = [] if arguments.no_scan else check_source.problems(open(path, encoding='utf-8').read())
+            if found:  # a source that scores 0 but breaks a rule is not a match: park it (check_source.py says why), so no later step meets it
+                row['source'] = path
+                reason = 'asm' if check_source.destination(found) == 'asm-archive' else 'cleanup'
+                parked.append((row['address'], row['name'], reason, found[0], path))
+                if not arguments.dry_run:
+                    park.park(row, reason)
+                else:
+                    row['source'] = ''
+                row['status'] = 'tried'
+                tried += 1
+                continue
             row['status'], row['source'] = 'matched', path
             new_matches.append(row)
         else:
@@ -117,16 +133,11 @@ def main():
     matched = [row for row in rows if row['status'] == 'matched']
     print(f'{len(sources)} sources judged{" (dry run)" if arguments.dry_run else ""}: {len(new_matches)} new matches '
           f'({sum(int(row["size"]) for row in new_matches)} bytes), {tried} tried; registry: {len(matched)} of {len(rows)} matched')
-    flagged = 0
-    if not arguments.no_scan:
-        for row in new_matches:
-            hits = scan(open(row['source'], encoding='utf-8').read())
-            for number, what, line in hits:
-                print(f'review: {row["source"]}:{number}: {what}: {line}')
-            flagged += bool(hits)
-        if flagged:
-            print(f'{flagged} new match(es) contain a construct AGENTS.md bans: review them, or run again with --no-scan')
-    return 1 if flagged else 0
+    for address, name, reason, (number, kind, what), path in parked:
+        print(f'parked: {address} {name}: {reason} ({path}:{number}: {what})')
+    if parked:
+        print(f'{len(parked)} source(s) score 0 but break a rule (check_source.py): parked in data/matching/asm-archive or cleanup-pending, not matched')
+    return 0
 
 
 if __name__ == '__main__':

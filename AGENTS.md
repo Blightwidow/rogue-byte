@@ -50,7 +50,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
 - **One flag set per source file** and one assembler for all (`tools/ps2eeas/Ps2EeAs.exe`, unpatched), never per function or ad hoc per attempt.
-- Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md. SDK-range functions list their
+- Compiler and assembler: see docs/build/compiler-identification.md and docs/build/assembler.md (measure with
+  `scripts/matching/assembler_probe.py` before changing the assembler). SDK-range functions list their
   address in `config/us/sony_gcc29.txt`.
 - **Our own names and types.** Retail is stripped: every function, type, field and file name is chosen by us from what retail's
   code does. Keep every recovered name's source visible (`source:...`); measure a new heuristic against a control before trusting it.

@@ -15,4 +15,8 @@ handle) and `COUNT` (claimed at a time). Read this file, then docs/AGENT_WORKFLO
    each run and refuses past the budget (`BUDGET`, exit 3): stop there. The log decides; nothing you write counts as a match.
 5. Plain C++ only (AGENTS.md "Matching rules" and the Rulings): no volatile on ordinary data, no register pins, no inline asm at all, no dummy
    operands, no wrong prototypes. Debug dumps (`-dL`) go to your scratch folder.
-6. Final message: one line per function, `0xADDR EXACT|NEAR <what still differs>|SKIP <why>`.
+6. Before you write EXACT, run `python3 scripts/matching/check_source.py <your final file>`: it must print `ok`. It checks what a matched
+   source may not hold (inline asm, register pins, `volatile` on plain data, raw `M2C_UNK` offsets, m2c temp names, tabs, a padding
+   local); a source that scores 0 and fails it is parked, not matched. Then re-run `try.py` on that exact file: only its `score 0`
+   in the log counts.
+7. Final message: one line per function, `0xADDR EXACT|NEAR <what still differs>|SKIP <why>`.

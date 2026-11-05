@@ -58,6 +58,17 @@ follows its own binary, not sly1's choice. If a later measurement shows `ee/bin/
 **What `ps2eeas` is not.** It is not proven to be the original assembler: that is inferred from the SN ProDG driver and from the matches.
 The measurements above are the evidence; a build whose bytes differ from retail would show it.
 
+## Before changing the assembler
+
+The assembler changed three times in one day on opinion and was measured only afterwards. Measure first:
+
+1. `python3 scripts/matching/assembler_probe.py --assembler PATH [--args "-G0"]` scores the same sources with the build's assembler and
+   the candidate (through `EE_AS_EXE`/`EE_AS_ARGS`, which `compile_unit.py` reads; no file changes): the near misses (best score 1 to 5) a
+   better assembler could win, and a seeded sample of matched functions it must not lose.
+2. If it wins the near misses and loses next to nothing, change `compile_unit.py` and `setup.sh`, then
+   `python3 scripts/matching/rejudge.py --write` (every matched function, regressions parked) and `make land`.
+3. Put the probe's numbers in the decision table above, and say what the change cost.
+
 ## Things the old setups did that are gone
 
 - **`Ps2EeAs-loop5.exe` and the lists** `gnu_as.txt` and `ps2eeas_loop5.txt`, and their scan scripts.

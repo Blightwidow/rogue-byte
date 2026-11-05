@@ -26,6 +26,10 @@ contributor, all agents included.
 
 ## 2. Pick
 
+A wave of near misses: `python3 scripts/matching/claim.py init W1 --near 2` queues every open function whose best draft scores 1 to 2 (from the
+registry, blockers left out); `take` hands a worker the draft with its diff under the current toolchain. A run logged under another toolchain
+is ignored, so a switch of assembler never leaves stale results behind.
+
 Sort by size and match by tier (Haiku up to 400 bytes, Sonnet 401 to 1,000 and what Haiku gave up on, Opus above that and near misses).
 The functions that need VU0, MMI, a lane move or COP0 are permanent blockers (`config/us/blockers.tsv`): the list and the queues already leave
 them out, and they stay assembly ([build/vu0-mmi.md](build/vu0-mmi.md)). A worker stops at its bound (about ten compiles) and hands its best attempt up a tier.
@@ -47,7 +51,8 @@ The game is C++ built by SN Systems' GCC 2.95.3 and assembled by SN's `ps2eeas` 
 
 Only the lead lands code (workers never edit `src/`):
 
-1. `python3 scripts/matching/record.py` registers the sources that score 0 and scans them for what AGENTS.md bans.
+1. `python3 scripts/matching/record.py` registers the sources that score 0. A source that breaks a rule (`check_source.py`: inline asm,
+   cleanup rules, padding local) is parked in `data/matching/asm-archive` or `cleanup-pending`, not matched.
 2. `make src` publishes them to `src/`, then `make elf` must print `PASS`, and `make unit UNIT=<module>` must say every function links.
 3. `make pal`, `make objdiff` and `make readme`, and commit `src/`, `config/eu/`, `progress/` and the README together
    (`make land` runs the whole chain). The commit body carries the new numbers and the commands that printed `PASS`.

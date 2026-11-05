@@ -64,6 +64,7 @@ def fingerprint():
         if _fingerprint is None:
             digest = hashlib.sha1()
             digest.update(' '.join(compile_unit.FLAGS).encode())
+            digest.update(os.environ.get('EE_AS_ARGS', '').encode())
             for path in (compile_unit.EE_AS, os.path.join(LAB, 'config', 'us', 'sony_gcc29.txt'), SYMBOLS):
                 digest.update(f'{path}:{os.path.getmtime(path) if os.path.exists(path) else 0}'.encode())
             for directory, _, names in os.walk(INCLUDE):
