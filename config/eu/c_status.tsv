@@ -3686,6 +3686,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EAF50	LoadBmpFromBrx	0X1EB710	same	0	ok
 0x1EB098	LoadBitmapsFromBrx	0X1EB858	same	0	ok
 0x1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	0X1EB968	same	0	ok
+0x1EB2F0	LoadShdFromBrx	0X1EBAB0	same	0	ok
 0x1EB678	func_001EB678	0X1EBE38	same	0	ok
 0x1EB960	FillShaders__Fi	0X1EC120	gap	0	ok
 0x1EC688	func_001EC688	0X1ECE48	same	0	ok

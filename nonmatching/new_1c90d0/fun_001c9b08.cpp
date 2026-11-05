@@ -140,9 +140,9 @@ void func_001C9B08(SW_1C9B08 *psw, void *paloParent, int cid, int oid, int ispli
             SetLoGrfzon(plo, grfzon);
     }
     int pcnode = PcnodeFindOrAddClonePath(psw->pcnodeRoot, 1, &cloneid);
-    int count = U8Read__18CBinaryInputStream(pbis);
-    if (count > 0) {
-        do {
+    int cpatch = U8Read__18CBinaryInputStream(pbis);
+    {
+        for (int ipatch = 0; ipatch < cpatch; ipatch++) {
             LO_1C9B08 *ploTarget = 0;
             int oidTarget = S32Read__18CBinaryInputStream(pbis);
             int cidTarget = S16Read__18CBinaryInputStream(pbis);
@@ -166,7 +166,7 @@ void func_001C9B08(SW_1C9B08 *psw, void *paloParent, int cid, int oid, int ispli
                 LoadOptionsFromBrx__FPvP18CBinaryInputStream(ploTarget, pbis);
             else
                 CBinaryInputStream_Skip(pbis, cb);
-        } while (--count != 0);
+        }
     }
     InitPloarray(&ploarrayLoaded);
     S32Read__18CBinaryInputStream(pbis);

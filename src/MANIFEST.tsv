@@ -3686,6 +3686,7 @@ address	name	size	file
 0X1EAF50	LoadBmpFromBrx	252	font/LoadBmpFromBrx.cpp
 0X1EB098	LoadBitmapsFromBrx	272	font-shd/LoadBitmapsFromBrx.cpp
 0X1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	328	shd/LoadTexFromBrx__FP18CBinaryInputStreamP3TEX.cpp
+0X1EB2F0	LoadShdFromBrx	904	shd/LoadShdFromBrx.cpp
 0X1EB678	func_001EB678	204	shd/fun_001eb678.cpp
 0X1EB960	FillShaders__Fi	3364	shd/FillShaders__Fi.cpp
 0X1EC688	func_001EC688	68	shd/fun_001ec688.cpp

@@ -23,19 +23,13 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
     if (textureIndex >= 0) {
         shd->texture28 = B_003DD004[textureIndex];
     }
-    int index = 0;
     request.align = 0x10;
-    request.size = shd->texCount * 0x14;
+    request.size = shd->texCount * sizeof(Tex_1EB2F0);
     shd->textures = (Tex_1EB2F0 *)PvAllocSwClearImpl__Fi(&request);
-    if (shd->texCount != 0) {
-        int offset = 0;
-        do {
-            index += 1;
-            Tex_1EB2F0 *texture = (Tex_1EB2F0 *)((char *)shd->textures + offset);
-            offset += 0x14;
-            LoadTexFromBrx__FP18CBinaryInputStreamP3TEX(stream, texture);
-            texture->owner = shd;
-        } while (index < shd->texCount);
+    for (int index = 0; index < shd->texCount; index++) {
+        Tex_1EB2F0 *texture = &shd->textures[index];
+        LoadTexFromBrx__FP18CBinaryInputStreamP3TEX(stream, texture);
+        texture->owner = shd;
     }
     shd->tag24 = shd->textures->tag;
     switch (shd->kind) {
@@ -75,10 +69,10 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
     }
     case 3: {
         int extra;
-        if (!(shd->flags & 2)) {
-            extra = 0;
-        } else {
+        if (shd->flags & 2) {
             extra = shd->textures->owner->tag24 + 2;
+        } else {
+            extra = 0;
         }
         int vertices = extra + 6;
         cursor = &parts[1];
@@ -99,7 +93,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         cursor = &parts[3];
         request.size = 0x40;
         request.align = 0x10;
-        goto allocateLast;
+        cursor->memory = PvAllocSwClearImpl__Fi(&request);
+        return;
     }
     case 2:
         parts[0].count = 5;
@@ -110,7 +105,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         parts[1].count = 5;
         request.size = 0x50;
         request.align = 0x10;
-        goto allocateLast;
+        cursor->memory = PvAllocSwClearImpl__Fi(&request);
+        return;
     case 1: {
         cursor = &parts[1];
         int vertices = shd->textures->owner->tag24 + 8;
@@ -121,7 +117,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         parts[1].count = vertices;
         request.size = vertices * 0x10;
         request.align = 0x10;
-        goto allocateLast;
+        cursor->memory = PvAllocSwClearImpl__Fi(&request);
+        return;
     }
     case 7: {
         cursor = &parts[1];
@@ -140,13 +137,12 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
             parts[2].count = vertices;
             request.size = bytes;
             request.align = 0x10;
-            goto allocateLast;
+            cursor->memory = PvAllocSwClearImpl__Fi(&request);
+        return;
         }
         return;
     }
     default:
         return;
     }
-allocateLast:
-    cursor->memory = PvAllocSwClearImpl__Fi(&request);
 }

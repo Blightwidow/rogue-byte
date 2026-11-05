@@ -240,7 +240,7 @@ address	name	size	file	score
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	375
 0X16D6C8	func_0016D6C8	896	new_167320/fun_0016d6c8.cpp	63
 0X16DA48	func_0016DA48	784	new_167320/fun_0016da48.cpp	95
-0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	42
+0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	4
 0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	63
 0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
 0X16F868	ResetGs__Fv	80	gs/ResetGs__Fv.c	11
@@ -534,7 +534,7 @@ address	name	size	file	score
 0X1C9190	LoadingLogoThread	592	new_1c90d0/LoadingLogoThread.cpp	23
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	65
 0X1C99D8	PcnodeFindOrAddClonePath	304	new_1c90d0/PcnodeFindOrAddClonePath.cpp	8
-0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	50
+0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	48
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	21
 0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	66
 0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	100
@@ -623,7 +623,6 @@ address	name	size	file	score
 0X1EA000	UpdateCrvExcludedRanges	944	new_1e7a28/UpdateCrvExcludedRanges.cpp	153
 0X1EA9F0	func_001EA9F0	936	new_1e7a28/fun_001ea9f0.cpp	49
 0X1EB050	CopyBmpHeader	72	font-shd/CopyBmpHeader.c	12
-0X1EB2F0	LoadShdFromBrx	904	shd_1eb1a8/LoadShdFromBrx.cpp	26
 0X1EB748	LoadShadersFromBrx	536	shd_1eb1a8/LoadShadersFromBrx.cpp	77
 0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs_1ec9d0/PqwVifsBitmapUpload__Fi.cpp	85
 0X1ED1A8	FilterColorRgba5551_1ed1a8	208	new_1ed1a8/FilterColorRgba5551_1ed1a8.cpp	42
@@ -768,6 +767,7 @@ address	name	size	file	score
 0X218748	PauseSpriteInstance	72	font-break/PauseSpriteInstance.cpp	7
 0X218790	CombineColorTransforms	288	font-break/CombineColorTransforms.cpp	17
 0X219190	ApplySpriteKeySounds	440	font-break/ApplySpriteKeySounds.cpp	23
+0X219FE0	AdvanceSpriteInstance	2488	font-break/AdvanceSpriteInstance.cpp	4
 0X21AA60	InitDynamicTextStatics	4360	font-break/InitDynamicTextStatics.c	1379
 0X21BB88	InitFragile__FP7FRAGILE	72	break/InitFragile__FP7FRAGILE.c	2
 0X21BC08	func_0021BC08	272	break-text/fun_0021bc08.cpp	17
