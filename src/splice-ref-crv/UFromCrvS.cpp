@@ -7,7 +7,6 @@ extern "C" float UFromCrvS(CRV *pcrv, float s)
 {
     float ds;
     float dsSeg;
-    float result;
     float t;
     int icv = IcvFindCrvS(pcrv, s, &ds, &dsSeg);
     if (pcrv->crvk == 0) {

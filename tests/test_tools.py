@@ -16,6 +16,7 @@ import blockers_report  # noqa: E402
 import check_cleanup  # noqa: E402
 import claim  # noqa: E402
 import check_source  # noqa: E402
+import adopt  # noqa: E402
 import classify_blockers  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
@@ -436,10 +437,69 @@ class ClaimTests(unittest.TestCase):
         self.wave([1, 2], {'000001': 'k01', '000002': 'k02'})
         self.assertEqual(claim.done(argparse.Namespace(wave='T', worker='k01', count=5)), 0)
 
+    def test_among_equal_scores_the_best_run_is_the_clean_and_latest_one(self):
+        self.write('kept/first.cpp', 'int f(char *p) { return M2C_FIELD(p, int *, 4); }\n')
+        self.write('kept/second.cpp', 'struct A { int x; int y; };\nint f(A *p) { return p->y; }\n')
+        self.write('kept/third.cpp', 'int f(char *p) { return M2C_FIELD(p, int *, 8); }\n')
+        self.write('runs.log', '1\tW1-a\t100000\t0\td1\tkept/first.cpp\tnow\n2\tW1-a\t100000\t0\td2\tkept/second.cpp\tnow\n3\tW1-a\t100000\t0\td3\tkept/third.cpp\tnow\n')
+        self.assertEqual(claim.best_runs('W1')[0x100000][2], 'kept/second.cpp')
+
+    def test_among_equal_clean_scores_the_latest_run_wins(self):
+        self.write('kept/first.cpp', 'int f(int *p) { return p[1]; }\n')
+        self.write('kept/second.cpp', 'int f(int *p) { return *(p + 1); }\n')
+        self.write('runs.log', '1\tW1-a\t100000\t0\td1\tkept/first.cpp\tnow\n2\tW1-a\t100000\t0\td2\tkept/second.cpp\tnow\n')
+        self.assertEqual(claim.best_runs('W1')[0x100000][2], 'kept/second.cpp')
+
+    def kept(self, name, text):
+        self.write(name, text)
+        return name
+
+    def test_verify_marks_a_clean_zero_as_land_a_dirty_zero_as_park_and_a_changed_score_as_a_mismatch(self):
+        import io
+        import contextlib
+        import scorer
+        self.write('data/matching/functions.tsv', 'address\tname\tsize\tstatus\tbest\ttries\tsource\tname_source\toption_name\n'
+                   '0x100000\tclean\t64\ttried\t3\t1\t\t\t\n0x100100\tdirty\t64\ttried\t3\t1\t\t\t\n0x100200\tdrift\t64\ttried\t3\t1\t\t\t\n0x100300\tnear\t64\ttried\t3\t1\t\t\t\n')
+        clean = self.kept('kept/a.cpp', 'struct A { int x; };\nint f(A *p) { return p->x; }\n')
+        dirty = self.kept('kept/b.cpp', 'int f(char *p) { return M2C_FIELD(p, int *, 4); }\n')
+        drift = self.kept('kept/c.cpp', 'int f() { return 1; }\n')
+        near = self.kept('kept/d.cpp', 'int f() { return 2; }\n')
+        self.write('runs.log', f'1\tW1-a\t100000\t0\td1\t{clean}\tnow\n2\tW1-a\t100100\t0\td2\t{dirty}\tnow\n'
+                   f'3\tW1-a\t100200\t0\td3\t{drift}\tnow\n4\tW1-a\t100300\t4\td4\t{near}\tnow\n')
+        fresh = {'return 1;': 'score 5  (x)', 'return 2;': 'score 4  (x)'}
+        saved = (scorer.report, scorer.registry)
+        scorer.registry = lambda: None
+        scorer.report = lambda address, text, lang='c++': next((v for k, v in fresh.items() if k in text), 'score 0  (x)')
+        out, err = io.StringIO(), io.StringIO()
+        try:
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                status = claim.verify(__import__('argparse').Namespace(wave='W1'))
+        finally:
+            scorer.report, scorer.registry = saved
+        rows = {line.split('\t')[0]: line.split('\t')[3] for line in out.getvalue().strip().split('\n')}
+        self.assertEqual((rows['0x100000'], rows['0x100200'], rows['0x100300'], status), ('LAND', 'MISMATCH logged 0, fresh 5', 'NEAR 4', 1))
+        self.assertTrue(rows['0x100100'].startswith('PARK'))
+
+    def test_land_refuses_when_logged_runs_are_ignored(self):
+        import argparse
+        import io
+        import contextlib
+        self.write('runs.log', '1\tW1-a\t100000\t0\td1\tkept/a.cpp\told\n')
+        os.makedirs(os.path.join(claim.WAVES, 'W1'), exist_ok=True)
+        with contextlib.redirect_stderr(io.StringIO()):
+            status = claim.land(argparse.Namespace(wave='W1', reject=[], allow_ignored=False))
+        self.assertEqual(status, 2)
+
     def test_runs_counts_the_runs_it_ignores(self):
         self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\told\n2\tW1-a\t100000\t5\tdigest\tkept/b.cpp\tnow\n3\tW2-a\t100000\t0\td\tk\told\n')
         claim.runs('W1')
         self.assertEqual(claim.IGNORED['W1'], 1)
+
+
+class RecordOnlyTests(unittest.TestCase):
+    def test_only_keeps_the_sources_of_the_listed_addresses(self):
+        sources = ['d/1EB960.cpp', 'd/1F78D8.cpp', 'd/202768.c', 'd/158988.cpp']
+        self.assertEqual(record.only_sources(sources, ['0x1eb960', '202768']), ['d/1EB960.cpp', 'd/202768.c'])
 
 
 class FingerprintTests(unittest.TestCase):
@@ -463,6 +523,38 @@ class FingerprintTests(unittest.TestCase):
             again.write('0x23E308\n')
         self.assertNotEqual(scorer.content_digest(handle.name), before)
         os.remove(handle.name)
+
+
+class AdoptTieTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.directory = tempfile.mkdtemp()
+        self.sources = os.path.join(self.directory, 'fn')
+        self.stage = os.path.join(self.directory, 'stage')
+        os.makedirs(self.sources)
+        os.makedirs(self.stage)
+        self.saved = (adopt.SOURCES, adopt.scorer.judge)
+        adopt.SOURCES = self.sources
+        adopt.scorer.judge = lambda address, text, lang='c++': 0
+
+    def tearDown(self):
+        import shutil
+        adopt.SOURCES, adopt.scorer.judge = self.saved
+        shutil.rmtree(self.directory)
+
+    def put(self, folder, name, text):
+        with open(os.path.join(folder, name), 'w') as handle:
+            handle.write(text)
+
+    def test_a_clean_source_replaces_a_tied_one_that_breaks_a_rule(self):
+        self.put(self.sources, '100000.cpp', 'int f(char *p) { return M2C_FIELD(p, int *, 4); }\n')
+        self.put(self.stage, '100000.cpp', 'struct A { int x; int y; };\nint f(A *p) { return p->y; }\n')
+        self.assertEqual(adopt.consider(self.stage, '100000.cpp', False), (1, 1, 1))
+
+    def test_a_tied_source_does_not_replace_a_clean_one(self):
+        self.put(self.sources, '100000.cpp', 'struct A { int x; int y; };\nint f(A *p) { return p->y; }\n')
+        self.put(self.stage, '100000.cpp', 'struct B { int a; int y; };\nint f(B *p) { return p->y; }\n')
+        self.assertEqual(adopt.consider(self.stage, '100000.cpp', False), (1, 0, 0))
 
 
 class RepeatNoteTests(unittest.TestCase):
@@ -531,6 +623,23 @@ class CheckSourceTests(unittest.TestCase):
     def test_a_scratch_array_nothing_uses_is_a_padding_local(self):
         found = self.kinds('int f(int a)\n{\n    int scratch[4];\n    (void)scratch;\n    return a;\n}\n')
         self.assertEqual(found, [('cleanup', 'padding local')])
+
+    def test_an_unused_array_is_a_padding_local_whatever_its_name(self):
+        found = self.kinds('int f(int a)\n{\n    int reserved[2];\n    (void)reserved;\n    return a;\n}\n')
+        self.assertEqual(found, [('cleanup', 'padding local')])
+
+    def test_an_unused_scalar_is_a_padding_local_whatever_its_name(self):
+        self.assertEqual(self.kinds('int f(int a)\n{\n    int dead;\n    return a;\n}\n'), [('cleanup', 'padding local')])
+
+    def test_an_unused_local_of_a_named_struct_type_is_allowed(self):
+        self.assertEqual(check_source.problems('struct VECTOR { float x, y, z, w; };\nint f(int a)\n{\n    VECTOR hitPosition;\n    return a;\n}\n'), [])
+
+    def test_a_scalar_set_from_a_call_is_not_padding(self):
+        self.assertEqual(check_source.problems('int g();\nint f()\n{\n    int ignored = g();\n    return 0;\n}\n'), [])
+
+    def test_struct_members_after_a_define_with_parentheses_are_not_locals(self):
+        text = '#define FIELD(expr, offset) ((expr) + (offset))\nstruct Slot {\n    int buffer;\n    int pad[3];\n};\nint f(Slot *slot)\n{\n    return slot->buffer;\n}\n'
+        self.assertEqual(check_source.problems(text), [])
 
     def test_a_scratch_buffer_a_callee_fills_is_not_padding(self):
         self.assertEqual(check_source.problems('void g(int *);\nint f()\n{\n    int scratch[3];\n    g(scratch);\n    return scratch[0];\n}\n'), [])

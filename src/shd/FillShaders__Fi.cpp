@@ -1,12 +1,5 @@
 struct QW;
 
-#define GS_TEST(ate, atst, aref, afail, date, datm, zte, ztst)                                                          \
-    ((unsigned long)(ate) | ((unsigned long)(atst) << 1) | ((unsigned long)(aref) << 4) |                                \
-     ((unsigned long)(afail) << 12) | ((unsigned long)(date) << 14) | ((unsigned long)(datm) << 15) |                    \
-     ((unsigned long)(zte) << 16) | ((unsigned long)(ztst) << 17))
-#define GS_ALPHA(a, b, c, d, fix)                                                                                         \
-    ((unsigned long)(a) | ((unsigned long)(b) << 2) | ((unsigned long)(c) << 4) | ((unsigned long)(d) << 6) |             \
-     ((unsigned long)(fix) << 32))
 
 
 class DMAS {
@@ -27,6 +20,14 @@ public:
     void PackSTQ(float, float, float);
     void EndPrim(int);
 };
+
+#define GS_TEST(ate, atst, aref, afail, date, datm, zte, ztst)                                                          \
+    ((unsigned long)(ate) | ((unsigned long)(atst) << 1) | ((unsigned long)(aref) << 4) |                                \
+     ((unsigned long)(afail) << 12) | ((unsigned long)(date) << 14) | ((unsigned long)(datm) << 15) |                    \
+     ((unsigned long)(zte) << 16) | ((unsigned long)(ztst) << 17))
+#define GS_ALPHA(a, b, c, d, fix)                                                                                         \
+    ((unsigned long)(a) | ((unsigned long)(b) << 2) | ((unsigned long)(c) << 4) | ((unsigned long)(d) << 6) |             \
+     ((unsigned long)(fix) << 32))
 
 struct DMAREF_1EB960 {
     int cqw;

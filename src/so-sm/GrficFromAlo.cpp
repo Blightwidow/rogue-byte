@@ -1,25 +1,15 @@
 int GrficFromAlo(int palo, int grftak)
 {
+    const unsigned char *table = (const unsigned char *)(palo + 0x110);
     int grfic = 0;
-    int a0 = palo + 0x110;
-    int t0 = 0;
-    int a2 = 0;
-    int a3 = 1;
-    while (1)
-    {
-        int v0 = a3 & grftak;
-        if (v0 != 0)
-        {
-            int v1 = *(const unsigned char *)(a0 + a2);
-            t0 = t0 | v1;
+    int index = 0;
+    int bit = 1;
+    do {
+        if (bit & grftak) {
+            grfic |= table[index];
         }
-        a2 = a2 + 1;
-        v0 = a2 < 0x1A;
-        if (v0 == 0)
-        {
-            break;
-        }
-        a3 = a3 << 1;
-    }
-    return t0;
+        index++;
+        bit <<= 1;
+    } while (index < 0x1A);
+    return grfic;
 }

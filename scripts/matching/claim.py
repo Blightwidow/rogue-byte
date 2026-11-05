@@ -7,7 +7,8 @@
   python3 scripts/matching/claim.py take W1 k01 2 [--of 12]   claim the next 2 free functions for worker k01: prints one packet each (--of: the worker's N, shows how many are left)
   python3 scripts/matching/claim.py done W1 k01 12     DONE when worker k01 has claimed 12 functions or the queue is empty, else NOT DONE (exit 1): a worker's last check before its final message
   python3 scripts/matching/claim.py status W1         per function: claimed by, runs, best score (from work/matching/runs.log)
-  python3 scripts/matching/claim.py land W1 [--reject ADDR ...]   stage the best logged source of every function of the wave and adopt it
+  python3 scripts/matching/claim.py verify W1          re-run the best logged source of every function with try.py's scorer and check_source.py: LAND, PARK (why), NEAR or MISMATCH
+  python3 scripts/matching/claim.py land W1 [--reject ADDR ...] [--allow-ignored]   stage the best logged source of every function of the wave and adopt it
 
 `take` is locked, so any number of workers can claim at once; it says QUEUE EMPTY when nothing is left. A packet gives the asm, the
 current best draft and its last diff, the nearest matched functions and the worker's scratch folder, and the TRY_ARM/TRY_BUDGET
@@ -184,6 +185,12 @@ def packet(wave, worker, address, budget):
                                capture_output=True, text=True, env=environment).stdout.splitlines()[:40]
         if shown:
             lines.append('```\n' + '\n'.join(shown) + '\n```')
+    for folder, why in (('cleanup-pending', 'scored 0 but breaks the cleanup rules (raw M2C offsets, a padding local): rewrite it clean and keep score 0'),
+                        ('asm-archive', 'scored 0 only with a construct AGENTS.md bans (inline asm, a register pin): find the plain C')):
+        parked = [name for name in os.listdir(os.path.join(LAB, 'data', 'matching', folder)) if name.upper().startswith(f'{address:06X}.')] \
+            if os.path.isdir(os.path.join(LAB, 'data', 'matching', folder)) else []
+        if parked:
+            lines.append(f'- parked source `data/matching/{folder}/{parked[0]}` ({why})')
     index_rows, gold = similar.index()
     examples = [f'`data/matching/src/fn/{other:06X}.cpp` ({example["name"]}, {score:.2f})'
                 for score, other, example, _ in similar.similar(address, 3, index_rows, gold) if score >= 0.25]
@@ -235,11 +242,22 @@ def done(arguments):
 
 
 def best_runs(wave):
+    """address -> the run to land: the lowest score; among equal scores a source that passes check_source.py (a worker's first run is often the
+    untouched draft, which ties at 0 and breaks a rule), then the latest run, as workers end on their cleanest file."""
+    import check_source
     best = {}
     for address, entries in runs(wave).items():
-        scored = [e for e in entries if e[1] is not None]
-        if scored:
-            best[address] = min(scored, key=lambda e: e[1])
+        scored = [(index, entry) for index, entry in enumerate(entries) if entry[1] is not None]
+        if not scored:
+            continue
+
+        def clean(entry):
+            try:
+                with open(os.path.join(LAB, entry[2]), encoding='utf-8') as handle:
+                    return not check_source.problems(handle.read())
+            except OSError:
+                return False
+        best[address] = min(scored, key=lambda item: (item[1][1], not clean(item[1]), -item[0]))[1]
     return best
 
 
@@ -256,25 +274,74 @@ def status(arguments):
     print(f'{len(state["queue"])} queued, {len(state["claims"])} claimed, {exact} at score 0')
 
 
+def verify(arguments):
+    """One row per function with a logged run: the logged score, the score of a fresh compile of that source, and what landing would do with it.
+    The log can be wrong (a worker's report often is); this is the lead's check, from the log and not from report text."""
+    import scorer
+    best = best_runs(arguments.wave)
+    warn_ignored(arguments.wave)
+    scorer.registry()
+    names = {int(row['address'], 16): row['name'] for row in csv.DictReader(open(os.path.join(LAB, 'data/matching/functions.tsv'), encoding='utf-8'), delimiter='\t')}
+    counts = {'LAND': 0, 'PARK': 0, 'NEAR': 0, 'MISMATCH': 0}
+    for address in sorted(best):
+        _, logged, kept = best[address]
+        with open(os.path.join(LAB, kept), encoding='utf-8') as handle:
+            text = handle.read()
+        fresh = scorer.score_of(scorer.report(address, text, 'c' if kept.endswith('.c') else 'c++'))
+        found = check_source_problems(text)
+        if fresh != logged:
+            verdict = f'MISMATCH logged {logged}, fresh {fresh}'
+            counts['MISMATCH'] += 1
+        elif fresh == 0 and found:
+            verdict = f'PARK {found}'
+            counts['PARK'] += 1
+        elif fresh == 0:
+            verdict = 'LAND'
+            counts['LAND'] += 1
+        else:
+            verdict = f'NEAR {fresh}'
+            counts['NEAR'] += 1
+        print(f'0x{address:06X}\t{names.get(address, "?")}\t{kept}\t{verdict}')
+    print(' '.join(f'{count} {name}' for name, count in counts.items()), file=sys.stderr)
+    return 1 if counts['MISMATCH'] else 0
+
+
+def check_source_problems(text):
+    """The first thing check_source.py finds in a source ("line N: what"), or '' for a clean one."""
+    import check_source
+    found = check_source.problems(text)
+    return f'line {found[0][0]}: {found[0][2]}' if found else ''
+
+
 def land(arguments):
+    best = best_runs(arguments.wave)
+    warn_ignored(arguments.wave)
+    if IGNORED.get(arguments.wave) and not arguments.allow_ignored:
+        print(f'refusing to land: {IGNORED[arguments.wave]} logged run(s) of wave {arguments.wave} do not count under this toolchain, so the staged set would be '
+              'incomplete (run the sources again with try.py, put the change back, or pass --allow-ignored)', file=sys.stderr)
+        return 2
     rejected = {int(a, 16) for a in arguments.reject}
     stage = os.path.join(WAVES, arguments.wave, 'stage')
     os.makedirs(stage, exist_ok=True)
     for name in os.listdir(stage):
         os.remove(os.path.join(stage, name))
     count = 0
-    best = best_runs(arguments.wave)
-    warn_ignored(arguments.wave)
-    for address, (_, _, kept) in best.items():
+    staged = []
+    for address, (_, score, kept) in best.items():
         if address in rejected:
             continue
         extension = os.path.splitext(kept)[1]
         data = open(os.path.join(LAB, kept), 'rb').read()
         open(os.path.join(stage, f'{address:06X}{extension}'), 'wb').write(data)
         count += 1
+        staged.append(address)
+        if score == 0 and check_source_problems(data.decode('utf-8', 'replace')):
+            print(f'will be parked: 0x{address:06X} scores 0 but {check_source_problems(data.decode("utf-8", "replace"))}')
     print(f'{count} sources staged in {os.path.relpath(stage, LAB)}')
     subprocess.run([os.path.join(LAB, '.venv', 'bin', 'python'), os.path.join(LAB, 'scripts/matching/adopt.py'), stage], cwd=LAB)
-    print('Next: make land PROGRESS=0')
+    print('Next, the whole registry: make land PROGRESS=0')
+    print('Next, only this wave (seconds in place of minutes): make land PROGRESS=0 ONLY="' + ' '.join(f'0x{address:06X}' for address in staged) + '"')
+    return 0
 
 
 def main():
@@ -297,13 +364,14 @@ def main():
     sub.add_argument('wave')
     sub.add_argument('worker')
     sub.add_argument('count', type=int, help="the worker's N")
-    for name in ('status', 'land'):
+    for name in ('status', 'verify', 'land'):
         sub = commands.add_parser(name)
         sub.add_argument('wave')
         if name == 'land':
+            sub.add_argument('--allow-ignored', action='store_true', help='stage the runs that count even though others were made under another toolchain')
             sub.add_argument('--reject', nargs='*', default=[], help='addresses (hex) not to stage: a score that rests on a banned construct or a wrong prototype')
     arguments = parser.parse_args()
-    sys.exit({'init': init, 'take': take, 'status': status, 'land': land, 'done': done}[arguments.command](arguments) or 0)
+    sys.exit({'init': init, 'take': take, 'status': status, 'verify': verify, 'land': land, 'done': done}[arguments.command](arguments) or 0)
 
 
 if __name__ == '__main__':

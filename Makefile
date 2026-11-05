@@ -57,8 +57,8 @@ search: ## Everything in order: fix-stack, permute-stores, adopt, rules (MIN, MA
 	$(MAKE) adopt
 	$(MAKE) rules
 
-land: ## After a search or a matching round: register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports (PAL too when its executable is there) and the README table and nonmatching/
-	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan)
+land: ## After a search or a matching round (ONLY="0xADDR ..." registers just those, as claim.py land prints): register the matches (stops on a banned construct: FORCE=1 skips that), publish src/, the byte gate, then the reports (PAL too when its executable is there) and the README table and nonmatching/
+	.venv/bin/python scripts/matching/record.py --jobs $(JOBS) $(if $(FORCE),--no-scan) $(if $(ONLY),--only $(ONLY))
 	$(MAKE) src
 	$(MAKE) elf
 	$(MAKE) blockers
@@ -96,11 +96,15 @@ readme: ## Rewrite the progress table of README.md from progress/*/report.json
 
 check: compile-scripts lint lint-shell links test repo-check pal-check cleanup commits ## The public CI checks, locally
 
-cleanup: ## The code-cleanup rules on what this branch adds to src/ and include/ (BASE=main): docs/contributing/code-cleanup.md
-	python3 -I scripts/check_cleanup.py --base $(or $(BASE),main)
+# The base of the branch checks: origin/main when it exists, else main. A local main left behind by a squash merge would list the merged commits
+# (and GitHub's Co-authored-by trailer on the squash commit) as this branch's own.
+CHECK_BASE := $(or $(BASE),$(shell git rev-parse --verify -q origin/main >/dev/null 2>&1 && echo origin/main || echo main))
 
-commits: ## The commit messages of this branch against docs/contributing/commit-messages.md (BASE=main)
-	python3 -I scripts/commit_msg.py --range $(or $(BASE),main)..HEAD
+cleanup: ## The code-cleanup rules on what this branch adds to src/ and include/ (BASE=origin/main): docs/contributing/code-cleanup.md
+	python3 -I scripts/check_cleanup.py --base $(CHECK_BASE)
+
+commits: ## The commit messages of this branch against docs/contributing/commit-messages.md (BASE=origin/main)
+	python3 -I scripts/commit_msg.py --range $(CHECK_BASE)..HEAD
 
 repo-check: ## No game data or proprietary material, licence headers (tests/check_repository.py)
 	python3 -I tests/check_repository.py

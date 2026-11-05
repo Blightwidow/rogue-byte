@@ -124,7 +124,6 @@ void bevy_ui_binoc_recon_202768(char *arg0, int arg1) {
         }
         int previous = *(int *)arg0;
         *(int *)arg0 = arg1;
-        int label;
         switch (arg1) {
         case 0:
             *(int *)(arg0 + 0xBC) = -1;

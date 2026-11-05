@@ -20,7 +20,9 @@ import check_cleanup  # noqa: E402
 import record  # noqa: E402
 
 PADDING_NAME = re.compile(r'\b(?:scratch|junk|dummy|unused|spill)\w*\s*(?:\[|;|=)')
+SCALAR_TYPES = re.compile(r'\s*(?:(?:unsigned|signed|const|volatile)\s+)*(?:int|char|short|long|float|double|bool|[su](?:8|16|32|64)|f(?:32|64))\b')
 TYPE_HEAD = re.compile(r'\b(?:struct|union|class|enum)\b')
+LINKAGE = re.compile(r'extern\s*"C(?:\+\+)?"\s*$')
 
 
 def strip_comments(text):
@@ -33,20 +35,24 @@ DECLARATION = re.compile(r'\s*(?:(?:unsigned|signed|const|static|struct)\s+)*\w[
 
 
 def padding_locals(text):
-    """[(line number, line)] of locals named scratch/junk/dummy/unused/spill inside a function body that nothing uses (not in a struct, union
-    or class): a declaration whose name appears nowhere else, or only in a `(void)name;` cast, is a frame filler."""
+    """[(line number, line)] of locals inside a function body that nothing uses (not in a struct, union or class): a declaration whose name
+    appears nowhere else, or only in a `(void)name;` cast, is a frame filler when its name says so (scratch, junk, dummy, unused, spill) or
+    when it is an array or a scalar, whatever its name (`int dead[2];`, `int reserved[2]; (void)reserved;`). A local of a named struct type that
+    nothing uses is allowed: AGENTS.md accepts an unused local only as a type the original plausibly declared, which retail's frame shows."""
     clean = strip_comments(text)
     found, stack, head = [], [], ''
     for number, line in enumerate(clean.split('\n'), 1):
+        if line.lstrip().startswith('#'):  # a preprocessor line is not part of the next declaration's head
+            continue
         match = DECLARATION.match(line)
-        if 'block' in stack and match and PADDING_NAME.search(line):
+        if stack and stack[-1] == 'block' and match and '(' not in line.split('=', 1)[-1] and (PADDING_NAME.search(line) or '[' in line or SCALAR_TYPES.match(line)):
             name = match.group(1)
             uses = len(re.findall(r'\b%s\b' % re.escape(name), clean)) - len(re.findall(r'\(void\)\s*%s\b' % re.escape(name), clean))
             if uses <= 1:
                 found.append((number, line.strip()[:100]))
         for character in line:
             if character == '{':
-                stack.append('type' if TYPE_HEAD.search(head) and '(' not in head else 'block')
+                stack.append('linkage' if LINKAGE.search(head) else 'type' if TYPE_HEAD.search(head) and '(' not in head else 'block')
                 head = ''
             elif character == '}':
                 if stack:

@@ -21,7 +21,6 @@ void GoalBrain_SetCommand(BRAIN *self, CMD *cmd) {
         self->cmd = *cmd;
         self->since = g_2dded0;
         int notify = 0;
-        int id;
         switch (cmd->type) {
         case 5: {
             notify = 1;
