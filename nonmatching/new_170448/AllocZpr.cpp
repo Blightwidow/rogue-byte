@@ -10,8 +10,9 @@ extern "C" int AllocZpr(ZPR *zpr, int count)
     goto test;
 loop:
     {
+        int offset = iclass * 4;
         CHUNK **afree = zpr->free;
-        CHUNK **head = &afree[iclass];
+        CHUNK **head = (CHUNK **)((char *)afree + offset);
         CHUNK *chunk = *head;
         if (chunk != 0) {
             alloc = chunk->start;
@@ -22,9 +23,9 @@ loop:
                 int rest = ICeilLog2(chunk->end - chunk->start);
                 CHUNK **prest = &afree[rest];
                 if (rest != iclass) {
-                    *prest = chunk;
                     *head = chunk->next;
                     chunk->next = *prest;
+                    *prest = chunk;
                 }
             }
             goto done;

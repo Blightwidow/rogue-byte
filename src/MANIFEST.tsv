@@ -1136,6 +1136,7 @@ address	name	size	file
 0X127C00	CFrame_RefAddBinding	236	splice-eval-splice-frame/CFrame_RefAddBinding.cpp
 0X127CF0	RefSetBinding__6CFrameUiP4CRef	132	splice-frame/RefSetBinding__6CFrameUiP4CRef.cpp
 0X127D78	FFindBinding__6CFrameUiiP4CRef	64	splice-frame/FFindBinding__6CFrameUiiP4CRef.cpp
+0X127E90	PframeClone	336	new_127e90/PframeClone.cpp
 0X127FE0	frame__static_initialization_and_destruction_0	308	new_127e90/frame__static_initialization_and_destruction_0.c
 0X128118	frame__static_initialization_and_destruction_0_thunk	32	new_127e90/frame__static_initialization_and_destruction_0_thunk.c
 0X128138	CGc_Construct	12	new_127e90/CGc_Construct.c
@@ -1207,8 +1208,10 @@ address	name	size	file
 0X12B4F8	LoadAcrcFromBrx	36	new_12ae28/LoadAcrcFromBrx.c
 0X12B520	func_0012B520	108	new_12ae28/fun_0012b520.cpp
 0X12B590	EvaluateAcrc	76	new_12ae28/EvaluateAcrc.c
+0X12B5E0	LoadAcrbFromBrx	248	new_12ae28/LoadAcrbFromBrx.cpp
 0X12B6D8	IkeyFindAcrb	96	new_12ae28/IkeyFindAcrb.cpp
 0X12B9D0	EvaluateAcrb	200	new_12ae28/EvaluateAcrb.cpp
+0X12BA98	func_0012BA98	216	new_12ae28/fun_0012ba98.cpp
 0X12BB70	func_0012BB70	96	new_12ae28/fun_0012bb70.cpp
 0X12BE68	func_0012BE68	196	new_12ae28/fun_0012be68.cpp
 0X12C0E0	func_0012C0E0	96	new_12ae28/fun_0012c0e0.cpp
@@ -1303,6 +1306,7 @@ address	name	size	file
 0X1308A8	Asega_AddRef	16	aseg-asega/Asega_AddRef.c
 0X1308B8	Asega_Release	92	aseg-asega/Asega_Release.cpp
 0X130D30	SeekAsega	384	aseg-asega/SeekAsega.cpp
+0X130F88	HandleAsegaEvents	372	asega/HandleAsegaEvents.cpp
 0X131270	PloRootOrAseg	28	asega/PloRootOrAseg.cpp
 0X131290	HandleAsegaEvent	1188	asega/HandleAsegaEvent.cpp
 0X131738	SendAsegaMessage	156	asega/SendAsegaMessage.cpp
@@ -1739,6 +1743,7 @@ address	name	size	file
 0X14E698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	52	cm/CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR.cpp
 0X14E920	ResetCmAdjust__FP2CMP2SOP6CPDEFI	72	cm/ResetCmAdjust__FP2CMP2SOP6CPDEFI.cpp
 0X14F030	func_0014F030	12	unsorted/fun_0014f030.cpp
+0X14F3C8	func_0014F3C8	96	unsorted/fun_0014f3c8.cpp
 0X14F428	SetCmMat	80	cm/SetCmMat.cpp
 0X14F5A0	SetCmFov	88	cm/SetCmFov.cpp
 0X14F5F8	func_0014F5F8	24	unsorted/fun_0014f5f8.cpp
@@ -2568,6 +2573,7 @@ address	name	size	file
 0X195930	GlobalInitSlotheaps	32	new_1942f0/GlobalInitSlotheaps.c
 0X195950	InitJmp	112	new_1942f0/InitJmp.cpp
 0X1959C0	func_001959C0	60	new_1942f0/fun_001959c0.cpp
+0X197370	StartJmpDirectionAseg	344	new_1942f0/StartJmpDirectionAseg.cpp
 0X19AA58	GMeasureJumpRail__FP3MJRf	96	stephide/GMeasureJumpRail__FP3MJRf.cpp
 0X19AAB8	GMeasureJumpHpnt	128	stephide/GMeasureJumpHpnt.cpp
 0X19AB38	GMeasureJumpToHshape	128	stephide/GMeasureJumpToHshape.cpp
@@ -4645,6 +4651,7 @@ address	name	size	file
 0X238F00	sceSifLoadFileReset	56	sdk/sceSifLoadFileReset.cpp
 0X239198	func_00239198	340	sdk/fun_00239198.cpp
 0X2395B0	func_002395B0	252	sdk/fun_002395b0.cpp
+0X2396C0	func_002396C0	84	sdk/fun_002396c0.c
 0X239738	func_00239738	56	unsorted/fun_00239738.cpp
 0X239898	func_00239898	48	unsorted/fun_00239898.cpp
 0X239920	func_00239920	56	unsorted/fun_00239920.cpp
@@ -4685,6 +4692,7 @@ address	name	size	file
 0X23EB40	__unwinding_cleanup	8	sdk/__unwinding_cleanup.cpp
 0X23F240	func_0023F240	68	sdk/fun_0023f240.cpp
 0X23F288	func_0023F288	80	sdk/fun_0023f288.cpp
+0X23F688	func_0023F688	136	sdk/fun_0023f688.cpp
 0X23F710	func_0023F710	316	sdk/fun_0023f710.cpp
 0X23FE00	func_0023FE00	120	sdk/fun_0023fe00.c
 0X2401C8	func_002401C8	12	sdk/fun_002401c8.cpp
@@ -4757,6 +4765,8 @@ address	name	size	file
 0X253D20	func_00253D20	324	sdk/fun_00253d20.c
 0X253FA8	func_00253FA8	232	sdk/fun_00253fa8.c
 0X2544C8	func_002544C8	340	sdk/fun_002544c8.c
+0X254678	func_00254678	140	sdk/fun_00254678.cpp
+0X254708	func_00254708	148	sdk/fun_00254708.cpp
 0X254898	func_00254898	116	sdk/fun_00254898.c
 0X254910	func_00254910	116	sdk/fun_00254910.c
 0X254988	func_00254988	228	sdk/fun_00254988.c

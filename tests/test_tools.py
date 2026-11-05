@@ -23,6 +23,7 @@ import boundaries  # noqa: E402
 import compile_unit  # noqa: E402
 import credit_audit  # noqa: E402
 import harvest  # noqa: E402
+import loop_pad  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
 import idioms  # noqa: E402
@@ -1113,6 +1114,47 @@ class VuAssemblerTests(unittest.TestCase):
     def test_listing_of_vudis_is_accepted(self):
         text = '    0  0x000  nop                                          | nop                                      [e]\n'
         self.assertEqual(vuasm.assemble(text), bytes.fromhex('3c030080ff020040'))
+
+
+def diff_row(retail, ours, marker=' '):
+    return f'001fd800 {retail:<39}{marker} {ours}'
+
+
+class LoopPadTest(unittest.TestCase):
+    HEADER = 'score 3  (1 same-mnemonic)  target 4 instr  ours 5 instr F  prefix 1/4 first-mismatch +0x4'
+
+    def report(self, rows):
+        return '\n'.join([self.HEADER] + rows)
+
+    def test_one_more_nop_before_a_backward_branch_is_the_wall(self):
+        report = self.report([
+            diff_row('lw $s0, 0x38($s0)', 'lw $s0, 0x38($s0)'),
+            diff_row('nop', 'nop'),
+            diff_row('bnez $s0, . + 4 + (-0x5 << 2)', 'nop', '|'),
+            ' ' * 48 + '> bnez $s0, . + 4 + (-0x6 << 2)',
+        ])
+        self.assertEqual(loop_pad.classify_report(report)[0], 'wall')
+
+    def test_a_register_swap_is_open_work(self):
+        report = self.report([
+            diff_row('slti $v1, $s1, 0x7F', 'slti $v0, $s1, 0x7F', '|'),
+            diff_row('nop', 'nop'),
+            diff_row('nop', 'nop'),
+            diff_row('bnez $s0, . + 4 + (-0x5 << 2)', 'bnez $s0, . + 4 + (-0x5 << 2)'),
+        ])
+        self.assertEqual(loop_pad.classify_report(report)[0], 'open')
+
+    def test_an_extra_nop_outside_a_loop_is_open_work(self):
+        report = self.report([
+            diff_row('lw $v0, 0x4($a0)', 'lw $v0, 0x4($a0)'),
+            diff_row('beqz $v0, . + 4 + (0x3 << 2)', 'beqz $v0, . + 4 + (0x3 << 2)'),
+            ' ' * 48 + '> nop',
+            diff_row('jr $ra', 'jr $ra'),
+        ])
+        self.assertEqual(loop_pad.classify_report(report)[0], 'open')
+
+    def test_a_report_that_matches_is_not_a_wall(self):
+        self.assertEqual(loop_pad.classify_report('score 0  (0 same-mnemonic)  target 1 instr  ours 1 instr F\n')[0], 'open')
 
 
 if __name__ == '__main__':

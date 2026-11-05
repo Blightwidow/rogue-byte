@@ -13,6 +13,7 @@ sly1-decomp's workflow with this repository's tools. Fixes that usually move the
 | `make unit UNIT=<module>` | Do the matched functions of a module still link from C? |
 | `make pal` | The matched C checked at its PAL counterpart; writes `config/eu/` and `progress/eu/report.json` |
 | `make objdiff`, `make readme` | The ByteMatch report `progress/us/report.json` and the README table |
+| `.venv/bin/python scripts/matching/loop_pad.py scan` | Splits the near misses into the short-loop padding wall (one extra `nop` before a backward branch, no C fixes it) and open work; `--open-out FILE` feeds `claim.py init W --addresses FILE` |
 | `python3 scripts/matching/permute.py ADDRESS FILE.cpp --write` | Tries other orders of independent statements, keeps the best score |
 | `make check` | The CI checks locally, plus ruff, shellcheck and the link check |
 

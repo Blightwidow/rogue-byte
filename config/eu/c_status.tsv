@@ -1136,6 +1136,7 @@ us_address	name	other_address	pair	score	addresses
 0x127C00	CFrame_RefAddBinding	0X127C00	same	0	ok
 0x127CF0	RefSetBinding__6CFrameUiP4CRef	0X127CF0	identical	0	ok
 0x127D78	FFindBinding__6CFrameUiiP4CRef	0X127D78	identical	0	ok
+0x127E90	PframeClone	0X127E90	same	0	ok
 0x127FE0	frame__static_initialization_and_destruction_0	0X127FE0	same	0	ok
 0x128118	frame__static_initialization_and_destruction_0_thunk	0X128118	identical	0	ok
 0x128138	CGc_Construct	0X128138	gap	0	ok
@@ -1207,8 +1208,10 @@ us_address	name	other_address	pair	score	addresses
 0x12B4F8	LoadAcrcFromBrx	0X12B4F8	identical	0	ok
 0x12B520	func_0012B520	0X12B520	identical	0	ok
 0x12B590	EvaluateAcrc	0X12B590	same	0	ok
+0x12B5E0	LoadAcrbFromBrx	0X12B5E0	same	0	ok
 0x12B6D8	IkeyFindAcrb	0X12B6D8	identical	0	ok
 0x12B9D0	EvaluateAcrb	0X12B9D0	identical	0	ok
+0x12BA98	func_0012BA98	0X12BA98	same	0	ok
 0x12BB70	func_0012BB70	0X12BB70	identical	0	ok
 0x12BE68	func_0012BE68	0X12BE68	identical	0	ok
 0x12C0E0	func_0012C0E0	0X12C0E0	identical	0	ok
@@ -1303,6 +1306,7 @@ us_address	name	other_address	pair	score	addresses
 0x1308A8	Asega_AddRef	0X1308A8	gap	0	ok
 0x1308B8	Asega_Release	0X1308B8	same	0	ok
 0x130D30	SeekAsega	0X130D30	same	0	ok
+0x130F88	HandleAsegaEvents	0X130F88	identical	0	ok
 0x131270	PloRootOrAseg	0X131270	identical	0	ok
 0x131290	HandleAsegaEvent	0X131290	same	0	ok
 0x131738	SendAsegaMessage	0X131738	identical	0	ok
@@ -1739,6 +1743,7 @@ us_address	name	other_address	pair	score	addresses
 0x14E698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	0X14E6C0	identical	0	ok
 0x14E920	ResetCmAdjust__FP2CMP2SOP6CPDEFI	0X14E948	same	0	ok
 0x14F030	func_0014F030	0X14F058	gap	0	ok
+0x14F3C8	func_0014F3C8	0X14F3F0	same	0	ok
 0x14F428	SetCmMat	0X14F450	same	0	ok
 0x14F5A0	SetCmFov	0X14F5C8	same	0	ok
 0x14F5F8	func_0014F5F8	0X14F620	identical	0	ok
@@ -2568,6 +2573,7 @@ us_address	name	other_address	pair	score	addresses
 0x195930	GlobalInitSlotheaps	0X1958B8	same	0	ok
 0x195950	InitJmp	0X1958D8	same	0	ok
 0x1959C0	func_001959C0	0X195948	identical	0	ok
+0x197370	StartJmpDirectionAseg	0X1972F8	same	0	ok
 0x19AA58	GMeasureJumpRail__FP3MJRf	0X19A9E0	same	0	ok
 0x19AAB8	GMeasureJumpHpnt	0X19AA40	same	0	ok
 0x19AB38	GMeasureJumpToHshape	0X19AAC0	same	0	ok
@@ -4645,6 +4651,7 @@ us_address	name	other_address	pair	score	addresses
 0x238F00	sceSifLoadFileReset	0X239EC8	same	0	ok
 0x239198	func_00239198	0X23A160	same	0	ok
 0x2395B0	func_002395B0	0X23A578	same	0	ok
+0x2396C0	func_002396C0	0X23A688	same	0	ok
 0x239738	func_00239738	0X23A700	identical	0	ok
 0x239898	func_00239898	0X23A870	identical	0	ok
 0x239920	func_00239920	0X23AA68	identical	0	ok
@@ -4685,6 +4692,7 @@ us_address	name	other_address	pair	score	addresses
 0x23EB40	__unwinding_cleanup	0X23F500	gap	0	ok
 0x23F240	func_0023F240	0X23FC00	identical	0	ok
 0x23F288	func_0023F288	0X23FC48	identical	0	ok
+0x23F688	func_0023F688	0X240048	identical	0	ok
 0x23F710	func_0023F710	0X2400D0	same	0	ok
 0x23FE00	func_0023FE00	0X2407C0	same	0	ok
 0x2401C8	func_002401C8	0X240B88	gap	0	ok
@@ -4757,6 +4765,8 @@ us_address	name	other_address	pair	score	addresses
 0x253D20	func_00253D20	0X254770	same	0	ok
 0x253FA8	func_00253FA8	0X2549F8	same	0	ok
 0x2544C8	func_002544C8	0X254F18	same	0	ok
+0x254678	func_00254678	0X2550C8	same	0	ok
+0x254708	func_00254708	0X255158	same	0	ok
 0x254898	func_00254898	0X2552E8	same	0	ok
 0x254910	func_00254910	0X255360	same	0	ok
 0x254988	func_00254988	0X2553D8	same	0	ok

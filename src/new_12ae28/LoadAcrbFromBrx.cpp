@@ -4,7 +4,7 @@ struct ALLOCREQ { int cb; int cbAlign; };
 struct KEYB { float pos[3]; float t; float vecIn[4]; float vecOut[4]; };
 struct ACRB { int pad0; int ckey; KEYB *akey; };
 extern "C" {
-int ReadVector__18CBinaryInputStreamP6VECTOR(Bis *, VECTOR *);
+void ReadVector__18CBinaryInputStreamP6VECTOR(Bis *, VECTOR *);
 unsigned short U16Read__18CBinaryInputStream(Bis *);
 void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 }

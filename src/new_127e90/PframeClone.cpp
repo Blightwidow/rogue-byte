@@ -24,7 +24,7 @@ extern "C" HFrame *PframeClone(HFrame *result, CFrame *src, unsigned long arg)
     func_00257058(&h, PframeNew());
     h.p->slotCount = src->slotCount;
     for (i = 0; i < src->slotCount; i++) {
-        CFramePtr_Assign((char *)h.p + i * 4 + 0xC, src->slots[i]);
+        CFramePtr_Assign((char *)(i * 4) + (int)h.p + 0xC, src->slots[i]);
     }
     if (src->varbs != 0) {
         HV varbs;
