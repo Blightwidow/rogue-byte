@@ -4847,6 +4847,7 @@ address	name	size	file
 0X238F00	sceSifLoadFileReset	56	sdk/sceSifLoadFileReset.cpp
 0X239140	sceSifLoadModule	28	sdk/sceSifLoadModule.cpp
 0X239198	func_00239198	340	sdk/fun_00239198.cpp
+0X239340	sceSifRebootIop	272	sdk/sceSifRebootIop.cpp
 0X2395B0	func_002395B0	252	sdk/fun_002395b0.cpp
 0X2396C0	func_002396C0	84	sdk/fun_002396c0.c
 0X239738	func_00239738	56	unsorted/fun_00239738.cpp
@@ -4929,6 +4930,8 @@ address	name	size	file
 0X243388	func_00243388	200	sdk/fun_00243388.cpp
 0X243458	func_00243458	164	sdk/fun_00243458.cpp
 0X243500	scePadGetState	80	sdk/scePadGetState.cpp
+0X243558	scePadInfoAct	288	sdk/scePadInfoAct.cpp
+0X243680	scePadInfoMode	312	sdk/scePadInfoMode.cpp
 0X2437B8	scePadSetMainMode	180	sdk/scePadSetMainMode.cpp
 0X243870	scePadSetActDirect	192	sdk/scePadSetActDirect.cpp
 0X243930	scePadSetActAlign	216	sdk/scePadSetActAlign.cpp
@@ -4949,6 +4952,7 @@ address	name	size	file
 0X2456F0	acosf	252	sdk/acosf.cpp
 0X2457F0	asinf	252	sdk/asinf.cpp
 0X2458F0	atan2f	296	sdk/atan2f.cpp
+0X245A18	fmodf	316	sdk/fmodf.c
 0X246060	sqrtf	276	sdk/sqrtf.cpp
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp
 0X249888	__kernel_sinf	260	sdk/__kernel_sinf.cpp

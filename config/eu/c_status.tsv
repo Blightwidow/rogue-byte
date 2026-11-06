@@ -4847,6 +4847,7 @@ us_address	name	other_address	pair	score	addresses
 0x238F00	sceSifLoadFileReset	0X239EC8	same	0	ok
 0x239140	sceSifLoadModule	0X23A108	same	0	ok
 0x239198	func_00239198	0X23A160	same	0	ok
+0x239340	sceSifRebootIop	0X23A308	same	0	ok
 0x2395B0	func_002395B0	0X23A578	same	0	ok
 0x2396C0	func_002396C0	0X23A688	same	0	ok
 0x239738	func_00239738	0X23A700	identical	0	ok
@@ -4929,6 +4930,8 @@ us_address	name	other_address	pair	score	addresses
 0x243388	func_00243388	0X243DD0	same	0	ok
 0x243458	func_00243458	0X243EA0	same	0	ok
 0x243500	scePadGetState	0X243F48	same	0	ok
+0x243558	scePadInfoAct	0X243FA0	same	0	ok
+0x243680	scePadInfoMode	0X2440C8	same	0	ok
 0x2437B8	scePadSetMainMode	0X244200	same	0	ok
 0x243870	scePadSetActDirect	0X2442B8	same	0	ok
 0x243930	scePadSetActAlign	0X244378	same	0	ok
@@ -4949,6 +4952,7 @@ us_address	name	other_address	pair	score	addresses
 0x2456F0	acosf	0X246138	same	0	ok
 0x2457F0	asinf	0X246238	same	0	ok
 0x2458F0	atan2f	0X246338	same	0	ok
+0x245A18	fmodf	0X246460	same	0	ok
 0x246060	sqrtf	0X246AA8	same	0	ok
 0x248DE0	__kernel_cosf	0X249828	identical	0	ok
 0x249888	__kernel_sinf	0X24A2D0	identical	0	ok

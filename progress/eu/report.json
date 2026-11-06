@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 75.478737,
+  "fuzzy_match_percent": 75.563447,
   "total_code": "1402440",
-  "matched_code": "1058544",
-  "matched_code_percent": 75.478737,
+  "matched_code": "1059732",
+  "matched_code_percent": 75.563447,
   "total_data": "1038916",
   "total_functions": 6822,
-  "matched_functions": 5943,
-  "matched_functions_percent": 87.115215,
+  "matched_functions": 5947,
+  "matched_functions_percent": 87.173849,
   "complete_code": "179736",
   "complete_code_percent": 12.815949,
   "total_units": 434,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151000",
-     "fuzzy_match_percent": 26.64106,
+     "fuzzy_match_percent": 27.427815,
      "metadata": {}
     }
    ],
@@ -45486,9 +45486,9 @@
     {
      "name": "sceSifRebootIop",
      "size": "272",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "31064",
-     "fuzzy_match_percent": 0.0
+     "address": "31064"
     },
     {
      "name": "func_00239450",
@@ -47035,9 +47035,9 @@
     {
      "name": "scePadInfoAct",
      "size": "288",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "72560",
-     "fuzzy_match_percent": 0.0
+     "address": "72560"
     },
     {
      "name": "func_00243678",
@@ -47049,9 +47049,9 @@
     {
      "name": "scePadInfoMode",
      "size": "312",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "72856",
-     "fuzzy_match_percent": 0.0
+     "address": "72856"
     },
     {
      "name": "scePadSetMainMode",
@@ -47329,9 +47329,9 @@
     {
      "name": "fmodf",
      "size": "316",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "81968",
-     "fuzzy_match_percent": 0.0
+     "address": "81968"
     },
     {
      "name": "PowF_245b58",
@@ -48762,14 +48762,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 26.64106,
+    "fuzzy_match_percent": 27.427815,
     "total_code": "151000",
-    "matched_code": "40228",
-    "matched_code_percent": 26.64106,
+    "matched_code": "41416",
+    "matched_code_percent": 27.427815,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 445,
-    "matched_functions_percent": 58.940397,
+    "matched_functions": 449,
+    "matched_functions_percent": 59.470199,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64558,14 +64558,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 26.64106,
+    "fuzzy_match_percent": 27.427815,
     "total_code": "151000",
-    "matched_code": "40228",
-    "matched_code_percent": 26.64106,
+    "matched_code": "41416",
+    "matched_code_percent": 27.427815,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 445,
-    "matched_functions_percent": 58.940397,
+    "matched_functions": 449,
+    "matched_functions_percent": 59.470199,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
