@@ -24,6 +24,7 @@ if '--split' in sys.argv:
     subprocess.check_call(['python3', 'scripts/names/export_splat_symbols.py'], cwd=ROOT)
     subprocess.check_call([os.path.join(ROOT, '.venv', 'bin', 'splat'), 'split', 'sly2.us.yaml'],
                           cwd=os.path.join(ROOT, 'config', 'us'))
+    subprocess.check_call(['python3', 'scripts/build/numeric_constants.py'], cwd=ROOT)
 
 with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     ninja = ninja_syntax.Writer(handle, width=120)
