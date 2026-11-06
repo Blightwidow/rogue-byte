@@ -46,7 +46,9 @@ DECLARATION = re.compile(r'^(M2C_UNK|s32|void|f32|\w+)(\s+\**)(\w+)\((.*)\);\s*(
 
 def candidates(arguments):
     with open(scorer.REGISTRY, encoding='utf-8') as handle:
-        rows = [row for row in csv.DictReader(handle, delimiter='\t') if row['status'] in (('todo', 'tried') if arguments.tried else ('todo',)) and arguments.min_size <= int(row['size']) <= arguments.max_size]
+        rows = [row for row in csv.DictReader(handle, delimiter='\t') if row['status'] in (('todo', 'tried') if arguments.tried else ('todo',)) + (('library',) if arguments.library else ()) and arguments.min_size <= int(row['size']) <= arguments.max_size]
+    if arguments.assembler:  # a toolchain override is for the SDK range only: a game function judged with Sony's gcc would get a wrong score
+        rows = [row for row in rows if 0x2319E8 <= int(row['address'], 16) < 0x256CE8]
     rows.sort(key=lambda row: int(row['size']))
     return rows[:arguments.limit] if arguments.limit else rows
 
@@ -524,7 +526,7 @@ def judge_with_repair(address, text, attempts=8):
         stem = os.path.join(scorer.BUILD, f'repair-{address:06X}-{os.getpid()}-{next(scorer._counter)}')
         with open(stem + '.cpp', 'w') as handle:
             handle.write(text)
-        ok, message = compile_unit.compile_object('c++', stem + '.cpp', stem + '.o', assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
+        ok, message = compile_unit.compile_object('c++', stem + '.cpp', stem + '.o', assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
         for leftover in (stem + '.cpp', stem + '.o', stem + '.o.tmp', stem + '.o.s'):
             if os.path.exists(leftover):
                 os.remove(leftover)
@@ -653,9 +655,13 @@ def main():
     parser.add_argument('--refresh', action='store_true', help='with --write: replace a saved source when the new draft scores strictly lower')
     parser.add_argument('--tried', action='store_true', help='also redraft the functions that have a source (with --refresh --write, a saved source is replaced only by a strictly lower score)')
     parser.add_argument('--near', type=int, default=0, metavar='N', help='list the N closest drafts')
+    parser.add_argument('--library', action='store_true', help='also draft the SDK-range functions without a source (status library)')
+    parser.add_argument('--assembler', choices=['sony29'], help='judge every draft with this toolchain (the SDK range builds with Sony\'s gcc 2.9)')
     arguments = parser.parse_args()
     if not scorer.compare:
         sys.exit('needs rabbitizer and pyelftools: run with .venv/bin/python')
+    if arguments.assembler:
+        os.environ['TRY_ASSEMBLER'] = arguments.assembler
     scorer.registry()
     signatures = read_signatures()
     if arguments.context:

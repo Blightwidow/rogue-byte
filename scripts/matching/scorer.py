@@ -147,10 +147,16 @@ def score_of(output):
     return int(output.split()[1]) if output and output.startswith('score ') else None
 
 
+def cache_key(text, lang):
+    """The key of a judged source: the toolchain, the language, the assembler an override asks for (TRY_ASSEMBLER: a Sony-toolchain score must not
+    answer for the default build) and the text."""
+    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode()).hexdigest()[:20]
+
+
 def judge(address, text, lang='c++'):
     """The score of the source for the function at `address` (0 = match), None when it fails to compile or compare."""
     address = address_of(address)
-    key = hashlib.sha1(f'{fingerprint()}\0{lang}\0{text}'.encode()).hexdigest()[:20]
+    key = cache_key(text, lang)
     entries = cache_for(address)
     if key in entries:
         return entries[key]

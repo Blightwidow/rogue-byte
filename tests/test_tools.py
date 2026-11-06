@@ -534,6 +534,18 @@ class FingerprintTests(unittest.TestCase):
         self.assertEqual(scorer.content_digest(handle.name), before)
         os.remove(handle.name)
 
+    def test_the_cache_key_depends_on_the_assembler_override(self):
+        import scorer
+        saved = os.environ.pop('TRY_ASSEMBLER', None)
+        try:
+            plain = scorer.cache_key('int f();', 'c++')
+            os.environ['TRY_ASSEMBLER'] = 'sony29'
+            self.assertNotEqual(scorer.cache_key('int f();', 'c++'), plain)
+        finally:
+            os.environ.pop('TRY_ASSEMBLER', None)
+            if saved is not None:
+                os.environ['TRY_ASSEMBLER'] = saved
+
     def test_a_changed_file_changes_its_digest(self):
         import scorer
         import tempfile
