@@ -4939,6 +4939,7 @@ us_address	name	other_address	pair	score	addresses
 0x24B930	func_0024B930	0X24C378	same	0	ok
 0x24B9A0	func_0024B9A0	0X24C3E8	same	0	ok
 0x24B9C8	func_0024B9C8	0X24C410	same	0	ok
+0x24C360	func_0024C360	0X24CDA8	same	0	ok
 0x24C420	func_0024C420	0X24CE68	same	0	ok
 0x24F770	SceMpegDemuxPss	0X2501B8	same	0	ok
 0x24F8D0	func_0024F8D0	0X250318	same	0	ok

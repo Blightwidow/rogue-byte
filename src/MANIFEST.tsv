@@ -4939,6 +4939,7 @@ address	name	size	file
 0X24B930	func_0024B930	108	sdk/fun_0024b930.cpp
 0X24B9A0	func_0024B9A0	36	sdk/fun_0024b9a0.cpp
 0X24B9C8	func_0024B9C8	36	sdk/fun_0024b9c8.cpp
+0X24C360	func_0024C360	192	sdk/fun_0024c360.cpp
 0X24C420	func_0024C420	144	sdk/fun_0024c420.cpp
 0X24F770	SceMpegDemuxPss	32	sdk/SceMpegDemuxPss.cpp
 0X24F8D0	func_0024F8D0	160	sdk/fun_0024f8d0.cpp
