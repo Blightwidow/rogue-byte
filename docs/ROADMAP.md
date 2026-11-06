@@ -18,8 +18,12 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses.
 2. Remove the third-party names and prototype data that landed before "derive everything ourselves"
    ([THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), "Legacy"), or re-derive them from retail.
-3. Count matched data (globals defined in C at retail's bytes), as sly1's `c_data.tsv` does.
-4. Decide whether to move to windowed `src/` files with whole-file assembly includes, as sly1 does.
+3. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
+   `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
+   included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
+4. Data from C, after code reaches 80 to 90%: `.rodata` literals and `switch` jump tables first, then globals defined at
+   retail's address, counted as matched data like sly1's `c_data.tsv`. Needs a ruling on AGENTS.md's "source that defines
+   game data read out of retail" for globals with initial values. Depends on 3 for per-file data. Today 0.72% of data.
 
 ## Not goals
 
