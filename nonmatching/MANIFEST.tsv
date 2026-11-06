@@ -29,7 +29,6 @@ address	name	size	file	score
 0X11CAB0	GMaxAxisScale	160	util-alo/GMaxAxisScale.c	38
 0X11D508	CSolveQuadratic__FfffPf	168	util_11cf60/CSolveQuadratic__FfffPf.cpp	18
 0X11D608	CalculateSinCos__FfPfT1	312	util_11cf60/CalculateSinCos__FfPfT1.cpp	3
-0X11DCD8	UnpackColorU8ToVec_11dcd8	88	new_11dcd8/UnpackColorU8ToVec_11dcd8.c	0
 0X11E1A0	SetVectorCylind__FP6VECTORfff	104	vec/SetVectorCylind__FP6VECTORfff.c	23
 0X11E290	SProjectVector__FP6VECTORT0	72	vec/SProjectVector__FP6VECTORT0.c	14
 0X11E390	GetPerpendicularVector	288	vec/GetPerpendicularVector.c	69
@@ -123,7 +122,6 @@ address	name	size	file	score
 0X144640	func_00144640	688	new_13f888/fun_00144640.c	130
 0X1448F0	func_001448F0	216	new_13f888/fun_001448f0.c	39
 0X144BC8	GoalFollowCrvVjoy_FillVjoy	600	new_144b58/GoalFollowCrvVjoy_FillVjoy.c	119
-0X144E20	func_00144E20	72	new_144b58/fun_00144e20.c	2
 0X1450E0	GoalPartnerFollow_PloFindEnemy	784	new_144b58/GoalPartnerFollow_PloFindEnemy.c	142
 0X145DB0	func_00145DB0	696	new_144b58/fun_00145db0.c	187
 0X1462A8	func_001462A8	696	new_144b58/fun_001462a8.c	187
@@ -204,7 +202,6 @@ address	name	size	file	score
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	56
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
-0X15FEF8	CRichText_DyWrap	72	font_15f000/CRichText_DyWrap.c	0
 0X160CE0	ClearPendingFrame__FP3FRM	392	frm/ClearPendingFrame__FP3FRM.cpp	43
 0X160E68	FlushFrames__Fi	304	frm/FlushFrames__Fi.c	52
 0X160F98	BlendPrevFrame__Fv	672	frm/BlendPrevFrame__Fv.cpp	87
@@ -248,7 +245,6 @@ address	name	size	file	score
 0X173D18	func_00173D18	352	new_1715f0/fun_00173d18.c	84
 0X174BD0	GoalAnim_FHandleMessage	720	new_1715f0/GoalAnim_FHandleMessage.c	150
 0X175D00	func_00175D00	752	new_1715f0/fun_00175d00.c	123
-0X175FF0	func_00175FF0	112	new_1715f0/fun_00175ff0.c	1
 0X176098	GoalNotice_Update	960	new_1715f0/GoalNotice_Update.c	133
 0X176458	GoalNotice_SetState	640	new_1715f0/GoalNotice_SetState.cpp	0
 0X177F78	GoalFollowCrv_Steer	2688	new_1715f0/GoalFollowCrv_Steer.c	657
@@ -389,7 +385,6 @@ address	name	size	file	score
 0X1A6340	GetLoEulerDegrees	112	new_1a6290/GetLoEulerDegrees.c	22
 0X1A64E8	SetSoProperties	480	new_1a6290/SetSoProperties.cpp	50
 0X1A6730	CLo_Clone	928	new_1a6290/CLo_Clone.cpp	85
-0X1A6B30	func_001A6B30	88	new_1a6290/fun_001a6b30.c	2
 0X1A7050	ConvertLoMat	352	stepguard-sw/ConvertLoMat.c	82
 0X1A7630	func_001A7630	608	stepguard-sw/fun_001a7630.cpp	47
 0X1A7970	StartupAll	336	stepguard-sw/StartupAll.cpp	23
@@ -530,7 +525,6 @@ address	name	size	file	score
 0X1CD780	bevy_camera_cm_screen_px_ps2	536	new_1cd780/bevy_camera_cm_screen_px_ps2.c	125
 0X1CE2E8	BounceRipgRips__FP4RIPG	800	rip_1cde70/BounceRipgRips__FP4RIPG.cpp	127
 0X1CE6D0	ConstructRipOfType	440	rip_1cde70/ConstructRipOfType.cpp	84
-0X1CEAA8	ForceRipFade__FP3RIPf	96	rip_1ce9c0/ForceRipFade__FP3RIPf.c	0
 0X1CEB08	FBounceRip__FP3RIPP2SOP6VECTORT2	1216	rip_1ce9c0/FBounceRip__FP3RIPP2SOP6VECTORT2.c	325
 0X1CEFC8	FIsZeroV__FP6VECTOR	72	alo_1cefc8/FIsZeroV__FP6VECTOR.c	15
 0X1CF010	FIsZeroW__FP6VECTOR	72	alo_1cefc8/FIsZeroW__FP6VECTOR.c	16
@@ -548,7 +542,6 @@ address	name	size	file	score
 0X1D2420	func_001D2420	112	rip-rumble/fun_001d2420.c	13
 0X1D2490	func_001D2490	384	rip-rumble/fun_001d2490.c	86
 0X1D4050	AdjustVehicleNewXp	296	rip-rumble/AdjustVehicleNewXp.c	68
-0X1D4C88	UpdateVehicleHpBlot	88	rip-rumble/UpdateVehicleHpBlot.c	0
 0X1D54B8	StoreAudioModeInSave	256	new_1d54b8/StoreAudioModeInSave.cpp	31
 0X1D6480	AllocRenderTreeNode	136	new_1d54b8/AllocRenderTreeNode.cpp	16
 0X1D6848	FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO	424	vec_1d6848/FCalculateMuzzleVelocity__FP6VECTORT0fT0P2SO.c	96
@@ -590,7 +583,6 @@ address	name	size	file	score
 0X1E6180	MeasureCrv	432	splice-ref-crv/MeasureCrv.c	78
 0X1E67B8	EvaluateCrvFromU	488	splice-ref-crv/EvaluateCrvFromU.c	114
 0X1E7668	IcvFindCrvS	328	new_1e6f10/IcvFindCrvS.cpp	5
-0X1E7B38	SDiffCrv	128	new_1e7a28/SDiffCrv.c	0
 0X1E7BB8	GetCrvBounds	472	new_1e7a28/GetCrvBounds.c	116
 0X1E7D90	SRadiusCrv	608	new_1e7a28/SRadiusCrv.c	144
 0X1E8008	SRandNearCrv	440	new_1e7a28/SRandNearCrv.cpp	66
@@ -625,7 +617,6 @@ address	name	size	file	score
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	24
 0X1F3E00	func_001F3E00	168	so-po/fun_001f3e00.cpp	10
 0X1F3EA8	func_001F3EA8	248	so-po/fun_001f3ea8.cpp	14
-0X1F3FB0	func_001F3FB0	96	so-po/fun_001f3fb0.c	2
 0X1F42E0	RotateSoToMat	352	so-po/RotateSoToMat.c	72
 0X1F4558	GetSoAngularVelocityVec	384	so-po/GetSoAngularVelocityVec.c	84
 0X1F46D8	SetSoAngularVelocityVec	368	so-po/SetSoAngularVelocityVec.c	65
@@ -697,7 +688,6 @@ address	name	size	file	score
 0X20A408	PhitfxChooseForGuard	272	step-rwm/PhitfxChooseForGuard.cpp	30
 0X20A818	func_0020A818	400	rwm-steprun/fun_0020a818.c	108
 0X20ACC0	func_0020ACC0	120	rwm-steprun/fun_0020acc0.c	19
-0X20AF08	func_0020AF08	32	rwm-steprun/fun_0020af08.c	0
 0X20B140	func_0020B140	208	rwm-steprun/fun_0020b140.cpp	9
 0X20B868	PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL	624	steprun/PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL.c	148
 0X20BAD8	CalculateBlrunV	112	steprun-stream/CalculateBlrunV.c	26
@@ -737,7 +727,6 @@ address	name	size	file	score
 0X219190	ApplySpriteKeySounds	440	font-break/ApplySpriteKeySounds.cpp	23
 0X219FE0	AdvanceSpriteInstance	2488	font-break/AdvanceSpriteInstance.cpp	4
 0X21AA60	InitDynamicTextStatics	4360	font-break/InitDynamicTextStatics.c	1379
-0X21BB88	InitFragile__FP7FRAGILE	72	break/InitFragile__FP7FRAGILE.c	2
 0X21BC08	func_0021BC08	272	break-text/fun_0021bc08.cpp	17
 0X21C1C8	func_0021C1C8	376	break-text/fun_0021c1c8.c	39
 0X21C340	func_0021C340	696	break-text/fun_0021c340.c	211
@@ -754,7 +743,6 @@ address	name	size	file	score
 0X2236E8	UpdateCptnSquishCut	808	tn_220dd8/UpdateCptnSquishCut.c	206
 0X223A10	FtndCptnSquishConstraint	96	tn_220dd8/FtndCptnSquishConstraint.c	21
 0X223A70	FindCptnClearEyePosition	936	tn_220dd8/FindCptnClearEyePosition.c	246
-0X223FE0	LoadGadgetObjFromBrx	72	tn-screen/LoadGadgetObjFromBrx.c	1
 0X2240B0	UpdateGadgetObj	224	tn-screen/UpdateGadgetObj.c	32
 0X224698	PresetGadgetObjAccel	392	new_2241d8/PresetGadgetObjAccel.c	77
 0X224BF8	ExplodeGadgetBurst	632	new_2241d8/ExplodeGadgetBurst.c	132
