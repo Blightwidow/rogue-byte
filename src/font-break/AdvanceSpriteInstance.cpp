@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct AFF { float a, b, c, d, e, f, u6, u7; } __attribute__((aligned(16)));
 struct RGBA4 { char b[4]; };
@@ -53,12 +54,17 @@ extern "C" void AdvanceSpriteInstance(float dt, LABEL *label, int iinst, AFF *px
     FRAME fr;
     INST *inst;
     int cslot;
-    SLOT *aslot = PinstFromLabel(label, iinst)->aslot;
+    SLOT *aslot;
+    float tNow;
+    int ikey;
+    int firstPass;
+    float tLast;
     cslot = PinstFromLabel(label, iinst)->cslot;
-    float tNow = PinstFromLabel(label, iinst)->t;
-    int ikey = (unsigned short)PinstFromLabel(label, iinst)->ikeyNext;
-    int firstPass = (ikey == 0);
-    float tLast = tNow;
+    ikey = (unsigned short)PinstFromLabel(label, iinst)->ikeyNext;
+    firstPass = (ikey == 0);
+    tNow = PinstFromLabel(label, iinst)->t;
+    tLast = tNow;
+    aslot = PinstFromLabel(label, iinst)->aslot;
     do {
         if (ikey < label->ckey) {
             KEY *key = (__typeof__(&(label->akey)[0]))((ikey) * sizeof((label->akey)[0]) + (unsigned)(label->akey));

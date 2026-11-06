@@ -1,11 +1,6 @@
-// 0x256C38 PairHandle_Init
-void PairHandle_Init(int* a0, int* a1)
-{
-    if (a1 != 0)
-    {
-        int v0 = *a1;
-        v0 = v0 + 1;
-        *a1 = v0;
+extern "C" void PairHandle_Init(int **handle, int *pair) {
+    if (pair != 0) {
+        *pair += 1;
     }
-    *a0 = (int)a1;
+    *handle = pair;
 }

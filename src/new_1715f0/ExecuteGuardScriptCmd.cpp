@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct VT {
-    short delta18; short unused18; void (*fn1C)(void *, int, int, int, void *, int);
     char pad0[0x18];
+    short delta18; short unused18; void (*fn1C)(void *, int, int, int, void *, int);
     char pad1[0x40 - 0x20];
     short delta40; short unused40; void (*fn44)(void *);
 };
@@ -17,7 +18,6 @@ struct GUARD {
     CMD *labelBase; int object; CMD *current; float timer; int done; OBJ2 *source; float value48; int flag4C;
     char animref[4]; int ref54; int pad58; int ref5C;
 };
-struct GOAL { char pad0[0xC]; VT *vt; };
 extern "C" {
 void ApplyAseg(int, int, float, float, int, void *);
 void BindAnimref(void *, void *);
@@ -39,7 +39,11 @@ void func_002562A8(GTARGET *);
 extern float g_2dded0;
 static inline void InitGoalTarget(GTARGET *ptarget) { func_002562A8(ptarget); }
 void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
-    struct { QW vec; GTARGET target; float sp30; CMD *sp34; int sp38; } L;
+    VECTOR position;
+    GTARGET target;
+    float heading;
+    int *argument;
+    int asegResult;
     switch (cmd->op) {
     case 0:
         self->object = PloFindScriptObject(self, cmd->a);
@@ -52,13 +56,13 @@ void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
         *(EIGHT *)((char *)self->player + 0x2D4) = *(EIGHT *)&cmd->b;
         break;
     case 3:
-        func_00171AF8(self, PloFindScriptObject(self, cmd->a), &L.vec, &L.sp30);
-        TeleportGuardScript(self, L.vec, L.sp30);
+        func_00171AF8(self, PloFindScriptObject(self, cmd->a), &position, &heading);
+        TeleportGuardScript(self, *(QW *)&position, heading);
         break;
     case 4: {
+        argument = &cmd->a;
         VT *vt = self->vt;
-        L.sp34 = (CMD *)&cmd->a;
-        vt->fn1C((char *)self + vt->delta18, 4, 0, 1, &L.sp34, 0);
+        vt->fn1C((char *)self + vt->delta18, 4, 0, 1, &argument, 0);
         break;
     }
     case 5: {
@@ -127,27 +131,27 @@ void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
         break;
     }
     case 7: {
-        InitGoalTarget(&L.target);
+        InitGoalTarget(&target);
         CMD *current = self->current;
         int objectId = current->a;
         if (objectId == -1) {
-            L.target.vec2 = *((CMDPOS *)current)->ppos;
+            target.vec2 = *((CMDPOS *)current)->ppos;
             self->value48 = ((CMDPOS *)current)->g;
         } else {
             int found = PloFindScriptObject(self, objectId);
             if (found != 0) {
                 func_00171AF8(self, found, 0, &self->value48);
                 if (FIsBasicDerivedFrom(found, 0xA))
-                    L.target.target0 = found;
+                    target.target0 = found;
                 else
-                    L.target.target1 = found;
+                    target.target1 = found;
             }
         }
         PLAYER *player = self->player;
         int mode = player->mode;
         if (mode == -1) {
             char *obj = func_00205438(player, 0xBA);
-            SetGoalTarget(obj, &L.target);
+            SetGoalTarget(obj, &target);
             int other = cmd->d;
             if (other != mode) *(int *)(obj + 0xA8) = PloFindScriptObject(self, other);
             VT *vt = ((OBJ *)obj)->vt;
@@ -159,7 +163,7 @@ void ExecuteGuardScriptCmd(GUARD *self, CMD *cmd) {
         break;
     }
     case 8:
-        ApplyAseg(PloFindScriptObject(self, cmd->a), 0, 0.0f, 1.0f, 0, &L.sp38);
+        ApplyAseg(PloFindScriptObject(self, cmd->a), 0, 0.0f, 1.0f, 0, &asegResult);
         break;
     case 10: {
         CMD *label = PcmdFindScriptLabel(self->labelBase, cmd->a);

@@ -502,6 +502,27 @@ class RecordOnlyTests(unittest.TestCase):
         self.assertEqual(record.only_sources(sources, ['0x1eb960', '202768']), ['d/1EB960.cpp', 'd/202768.c'])
 
 
+class CompilerOverrideTests(unittest.TestCase):
+    def test_ee_gcc_dir_replaces_the_compiler_for_one_run(self):
+        saved = os.environ.get('EE_GCC_DIR')
+        os.environ['EE_GCC_DIR'] = '/somewhere/ee-gcc2.95.3-107'
+        try:
+            self.assertEqual(compile_unit.compiler_directory(), '/somewhere/ee-gcc2.95.3-107')
+        finally:
+            if saved is None:
+                del os.environ['EE_GCC_DIR']
+            else:
+                os.environ['EE_GCC_DIR'] = saved
+
+    def test_without_the_variable_the_pinned_compiler_is_used(self):
+        saved = os.environ.pop('EE_GCC_DIR', None)
+        try:
+            self.assertIn('ee-gcc2.95.3-136', compile_unit.compiler_directory())
+        finally:
+            if saved is not None:
+                os.environ['EE_GCC_DIR'] = saved
+
+
 class FingerprintTests(unittest.TestCase):
     def test_a_touched_file_with_the_same_content_keeps_its_digest(self):
         import scorer
@@ -512,6 +533,18 @@ class FingerprintTests(unittest.TestCase):
         os.utime(handle.name, (1, 1))
         self.assertEqual(scorer.content_digest(handle.name), before)
         os.remove(handle.name)
+
+    def test_the_cache_key_depends_on_the_assembler_override(self):
+        import scorer
+        saved = os.environ.pop('TRY_ASSEMBLER', None)
+        try:
+            plain = scorer.cache_key('int f();', 'c++')
+            os.environ['TRY_ASSEMBLER'] = 'sony29'
+            self.assertNotEqual(scorer.cache_key('int f();', 'c++'), plain)
+        finally:
+            os.environ.pop('TRY_ASSEMBLER', None)
+            if saved is not None:
+                os.environ['TRY_ASSEMBLER'] = saved
 
     def test_a_changed_file_changes_its_digest(self):
         import scorer

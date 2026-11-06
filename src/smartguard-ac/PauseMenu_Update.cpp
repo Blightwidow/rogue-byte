@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 struct CRef { int tagk; union { int n; float g; }; int pad[2]; };
 struct ITEM;
 typedef void (*PFNITEM)(ITEM *);
@@ -26,7 +27,7 @@ void func_001AF490(PAUSEMENU *);
 int func_001B0078(PAUSEMENU *);
 void func_001D9870();
 extern char B_002E6550[];
-struct MCDATA { SAVE asave[3]; int pad[2]; SAVE *psaveCur; };
+struct MCDATA { SAVE asave[3]; int pad[2]; };
 extern MCDATA B_002E6604;
 extern int B_003E0FAC;
 }
@@ -143,7 +144,8 @@ extern "C" void PauseMenu_Update(PAUSEMENU *pmenu)
                         float value = ref.g;
                         CRef_Destruct(&ref);
                         if (value != 0.0f) {
-                            *(SAVE **)((char *)&B_002E6604 + 0xFD34) = psave;
+                            char *pcard = (char *)&B_002E6604 + 0x7FDC;
+                            *(SAVE **)(pcard + 0x7D58) = psave;
                             MemcardMenu_SetState(B_002E6550, 0x20);
                         }
                     }
