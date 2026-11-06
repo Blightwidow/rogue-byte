@@ -4925,6 +4925,7 @@ address	name	size	file
 0X241E88	sceCdSync	160	sdk/sceCdSync.cpp
 0X241F28	func_00241F28	108	sdk/fun_00241f28.cpp
 0X242AB8	func_00242AB8	36	sdk/fun_00242ab8.cpp
+0X242D08	scePadInit	320	sdk/scePadInit.cpp
 0X243270	func_00243270	96	sdk/fun_00243270.cpp
 0X2432D0	scePadRead	180	sdk/scePadRead.cpp
 0X243388	func_00243388	200	sdk/fun_00243388.cpp

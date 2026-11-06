@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 75.563447,
+  "fuzzy_match_percent": 75.586264,
   "total_code": "1402440",
-  "matched_code": "1059732",
-  "matched_code_percent": 75.563447,
+  "matched_code": "1060052",
+  "matched_code_percent": 75.586264,
   "total_data": "1038916",
   "total_functions": 6822,
-  "matched_functions": 5947,
-  "matched_functions_percent": 87.173849,
+  "matched_functions": 5948,
+  "matched_functions_percent": 87.188508,
   "complete_code": "179736",
   "complete_code_percent": 12.815949,
   "total_units": 434,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151000",
-     "fuzzy_match_percent": 27.427815,
+     "fuzzy_match_percent": 27.639735,
      "metadata": {}
     }
    ],
@@ -46951,9 +46951,9 @@
     {
      "name": "scePadInit",
      "size": "320",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "70432",
-     "fuzzy_match_percent": 0.0
+     "address": "70432"
     },
     {
      "name": "func_00242E48",
@@ -48762,14 +48762,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 27.427815,
+    "fuzzy_match_percent": 27.639735,
     "total_code": "151000",
-    "matched_code": "41416",
-    "matched_code_percent": 27.427815,
+    "matched_code": "41736",
+    "matched_code_percent": 27.639735,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 449,
-    "matched_functions_percent": 59.470199,
+    "matched_functions": 450,
+    "matched_functions_percent": 59.602649,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64558,14 +64558,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 27.427815,
+    "fuzzy_match_percent": 27.639735,
     "total_code": "151000",
-    "matched_code": "41416",
-    "matched_code_percent": 27.427815,
+    "matched_code": "41736",
+    "matched_code_percent": 27.639735,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 449,
-    "matched_functions_percent": 59.470199,
+    "matched_functions": 450,
+    "matched_functions_percent": 59.602649,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
