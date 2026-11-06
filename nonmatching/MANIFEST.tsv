@@ -235,7 +235,6 @@ address	name	size	file	score
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.c	108
 0X1711F0	PcmdFindScriptLabel	56	jsg-jt/PcmdFindScriptLabel.c	8
 0X171468	FGuardScriptWaiting	336	jsg-jt/FGuardScriptWaiting.cpp	9
-0X1715F0	ExecuteGuardScriptCmd	1288	new_1715f0/ExecuteGuardScriptCmd.cpp	4
 0X172658	func_00172658	264	new_1715f0/fun_00172658.c	52
 0X172798	FAddSearchCand	240	new_1715f0/FAddSearchCand.c	36
 0X1733C8	AddSpawnerOffset	48	new_1715f0/AddSpawnerOffset.cpp	6
@@ -407,7 +406,6 @@ address	name	size	file	score
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
 0X1ADA20	func_001ADA20	408	memcard-memory/fun_001ada20.c	107
 0X1ADC40	func_001ADC40	432	memcard-memory/fun_001adc40.c	124
-0X1AEEE0	PauseMenu_Update	1192	smartguard-ac/PauseMenu_Update.cpp	8
 0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.cpp	66
 0X1AF9C8	RefreshOptionItem	448	smartguard-ac/RefreshOptionItem.cpp	57
 0X1AFB88	PauseMenu_ApplyOption	1024	smartguard-ac/PauseMenu_ApplyOption.cpp	58
@@ -725,7 +723,6 @@ address	name	size	file	score
 0X218790	CombineColorTransforms	288	font-break/CombineColorTransforms.cpp	17
 0X2188B0	RefreshSpriteInstance	2120	font-break/RefreshSpriteInstance.cpp	8
 0X219190	ApplySpriteKeySounds	440	font-break/ApplySpriteKeySounds.cpp	23
-0X219FE0	AdvanceSpriteInstance	2488	font-break/AdvanceSpriteInstance.cpp	4
 0X21AA60	InitDynamicTextStatics	4360	font-break/InitDynamicTextStatics.c	1379
 0X21BC08	func_0021BC08	272	break-text/fun_0021bc08.cpp	17
 0X21C1C8	func_0021C1C8	376	break-text/fun_0021c1c8.c	39

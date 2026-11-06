@@ -2238,6 +2238,7 @@ us_address	name	other_address	pair	score	addresses
 0x1713E8	UpdateGuardScriptBeh	0X171370	same	0	ok
 0x171458	FGuardScriptDone	0X1713E0	gap	0	ok
 0x1715B8	PloFindScriptObject	0X171540	same	0	ok
+0x1715F0	ExecuteGuardScriptCmd	0X171578	same	0	ok
 0x171AF8	func_00171AF8	0X171A80	same	0	ok
 0x171B60	TeleportGuardScript	0X171AE8	same	0	ok
 0x171C18	func_00171C18	0X171BA0	same	0	ok
@@ -2940,6 +2941,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AE9E8	PauseMenu_Show	0X1AEB60	same	0	ok
 0x1AEA40	PauseMenu_Hide	0X1AEBB8	same	0	ok
 0x1AEAA8	PauseMenu_SetState	0X1AEC20	same	0	ok
+0x1AEEE0	PauseMenu_Update	0X1AF058	same	0	ok
 0x1AF388	func_001AF388	0X1AF500	gap	0	ok
 0x1AF390	func_001AF390	0X1AF508	same	0	ok
 0x1AF490	func_001AF490	0X1AF608	same	0	ok
@@ -4537,6 +4539,7 @@ us_address	name	other_address	pair	score	addresses
 0x218738	func_00218738	0X218F58	gap	0	ok
 0x2190F8	func_002190F8	0X219918	same	0	ok
 0x219348	ClearSpriteKeySlots	0X219B68	same	0	ok
+0x219FE0	AdvanceSpriteInstance	0X21A800	same	0	ok
 0x21A998	QueueSpriteInstanceSlots	0X21B1B8	same	0	ok
 0x21BB68	InitDynamicTextStatics_thunk	0X21C388	same	0	ok
 0x21BB88	InitFragile__FP7FRAGILE	0X21C3A8	same	0	ok

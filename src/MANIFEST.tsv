@@ -2238,6 +2238,7 @@ address	name	size	file
 0X1713E8	UpdateGuardScriptBeh	112	jsg-jt/UpdateGuardScriptBeh.cpp
 0X171458	FGuardScriptDone	12	jsg-jt/FGuardScriptDone.c
 0X1715B8	PloFindScriptObject	52	jt/PloFindScriptObject.cpp
+0X1715F0	ExecuteGuardScriptCmd	1284	new_1715f0/ExecuteGuardScriptCmd.cpp
 0X171AF8	func_00171AF8	100	new_1715f0/fun_00171af8.cpp
 0X171B60	TeleportGuardScript	180	new_1715f0/TeleportGuardScript.cpp
 0X171C18	func_00171C18	124	new_1715f0/fun_00171c18.cpp
@@ -2940,6 +2941,7 @@ address	name	size	file
 0X1AE9E8	PauseMenu_Show	84	smartguard-ac/PauseMenu_Show.cpp
 0X1AEA40	PauseMenu_Hide	100	smartguard-ac/PauseMenu_Hide.cpp
 0X1AEAA8	PauseMenu_SetState	1080	smartguard-ac/PauseMenu_SetState.cpp
+0X1AEEE0	PauseMenu_Update	1188	smartguard-ac/PauseMenu_Update.cpp
 0X1AF388	func_001AF388	8	smartguard-ac/fun_001af388.c
 0X1AF390	func_001AF390	256	smartguard-ac/fun_001af390.cpp
 0X1AF490	func_001AF490	68	smartguard-ac/fun_001af490.cpp
@@ -4537,6 +4539,7 @@ address	name	size	file
 0X218738	func_00218738	12	font-break/fun_00218738.c
 0X2190F8	func_002190F8	152	font-break/fun_002190f8.cpp
 0X219348	ClearSpriteKeySlots	184	font-break/ClearSpriteKeySlots.cpp
+0X219FE0	AdvanceSpriteInstance	2484	font-break/AdvanceSpriteInstance.cpp
 0X21A998	QueueSpriteInstanceSlots	196	font-break/QueueSpriteInstanceSlots.cpp
 0X21BB68	InitDynamicTextStatics_thunk	32	font-break/InitDynamicTextStatics_thunk.c
 0X21BB88	InitFragile__FP7FRAGILE	72	break/InitFragile__FP7FRAGILE.c
