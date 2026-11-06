@@ -4788,7 +4788,7 @@ us_address	name	other_address	pair	score	addresses
 0x232438	snd_PauseAllSoundsInGroup	0X232C80	same	0	ok
 0x232468	snd_ContinueAllSoundsInGroup	0X232CB0	same	0	ok
 0x232498	snd_SoundIsStillPlaying_CB	0X232CE0	same	0	ok
-0x232500	func_00232500	0X232D48	same	2	ok
+0x232500	func_00232500	0X232D48	same	0	ok
 0x232568	snd_AutoVol	0X232DB0	same	0	ok
 0x232BB8	snd_PostMessage__Fv	0X233400	same	0	ok
 0x232D80	snd_StreamSafeCheckCDIdle	0X2335C8	same	0	ok

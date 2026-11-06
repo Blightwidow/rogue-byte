@@ -1,6 +1,6 @@
 extern "C" {
 int func_0024F390(int, int, int, int, int);
-int SceMpegDemuxPss(int mpeg, int first, int second) {
-    return func_0024F390(mpeg, first, second, 0, -1);
+int SceMpegDemuxPss(int first, int second, int third) {
+    return func_0024F390(first, second, third, 0, -1);
 }
 }

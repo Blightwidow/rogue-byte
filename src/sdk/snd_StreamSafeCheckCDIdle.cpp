@@ -1,8 +1,6 @@
 extern "C" {
-int func_002325E0(int, int, char *);
-void snd_StreamSafeCheckCDIdle(int a0) {
-    int buf[4];
-    buf[0] = a0;
-    func_002325E0(0x36, 4, (char *)buf);
+int func_002325E0(int, int, int *);
+int snd_StreamSafeCheckCDIdle(int value) {
+    return func_002325E0(0x36, 4, &value);
 }
 }

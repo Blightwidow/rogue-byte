@@ -4979,7 +4979,7 @@ address	name	size	file
 0X2562E0	func_002562E0	12	unsorted/fun_002562e0.c
 0X2562F0	func_002562F0	36	sdk/fun_002562f0.c
 0X256318	func_00256318	12	unsorted/fun_00256318.c
-0X256328	func_00256328	36	sdk/fun_00256328.c
+0X256328	func_00256328	36	sdk/fun_00256328.cpp
 0X256350	func_00256350	12	unsorted/fun_00256350.c
 0X256360	ConstructGuard	132	sdk/ConstructGuard.cpp
 0X2563E8	ConstructSly	88	sdk/ConstructSly.c
@@ -4995,7 +4995,7 @@ address	name	size	file
 0X2566B0	func_002566B0	36	sdk/fun_002566b0.cpp
 0X2566D8	Vector_Load	244	sdk/Vector_Load.cpp
 0X2567D0	HashTable_Clear	204	sdk/HashTable_Clear.cpp
-0X2568A0	HashTable_Clear_thunk	28	sdk/HashTable_Clear_thunk.c
+0X2568A0	HashTable_Clear_thunk	28	sdk/HashTable_Clear_thunk.cpp
 0X2568C0	HashTable_Resize	312	sdk/HashTable_Resize.cpp
 0X2569F8	HashTable_Insert	248	sdk/HashTable_Insert.cpp
 0X256B48	PpairNew	236	sdk/PpairNew.cpp
