@@ -118,6 +118,35 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
 6. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames
    them when it lands related functions together.
 
+## Picking work and running a local model (2026-11-06)
+
+- **Only `asm` is open work.** `c` is a function already linked from C in the image and counted (`docs/build/progress.md`, "What is
+  counted"); `matched` is a registry match not yet linked; `draft` has a compiling source in `nonmatching/`. A queue built from
+  `list_functions.py --status asm` (blockers are left out by default) is the open work. A first local-model run queued the `c` rows too
+  and spent about an hour re-matching 173 functions that were already counted. `list_functions.py --limit` caps what it prints: pass a
+  large `--limit` and write to a file, not a terminal.
+- **A local OpenAI-compatible model works as a worker.** `scripts/matching/agent_loop.py <address> --endpoint http://localhost:11234/v1
+  --model <id> --tries 8` (key: `ROGUE_AGENT_KEY=local`), four at a time through `xargs -P 4`. An SDK-range function needs
+  `TRY_ASSEMBLER=sony29` in the environment, otherwise the score is the default toolchain's and means nothing for it. Thinking mode
+  makes a try several times slower; its `<think>` output is dropped by the loop.
+- **The loop writes `data/matching/src/fn/<ADDRESS>.cpp` even when it fails**, over an existing draft. `make land` publishes every
+  source in that folder whose registry row says matched, so a rejected draft reaches `src/` and a stale report gets committed. Copy
+  `data/matching/src/fn` before a run and restore every function that did not reach 0.
+- **Do not edit `config/us/sony_gcc29.txt` or `config/matching/symbol_addrs.txt` while workers run** (the scorer fingerprint changes);
+  add the addresses afterwards and run one `make land ONLY="..."`. A registry row whose source path is an old m2c `.c`
+  (`data/matching/src/auto/`) keeps being published from that file: point the row at the clean `fn/<ADDRESS>.cpp`, because
+  Sony's gcc 2.9 rejects `m2c_macros.h`.
+- **A model's source is a draft.** The ones that reached 0 needed hand cleanup every time: no `extern "C"` or a stray `#include`, a
+  callee declared with a type it does not have, a local that only holds an argument, and in one case `asm volatile("" ::: "memory")`
+  to order a store before a load. Re-judge the cleaned source before landing.
+- **8-byte SDK "functions" are mostly not functions.** `addiu $sp, $sp, N` + `nop` is a delay-slot epilogue split off the function
+  above; it cannot match alone. The real small ones are wrappers: a tail call (`j target`) compiles from **C** (`--lang c`, gcc
+  sibling-call), not C++, which keeps `jal` + epilogue; a function with no epilogue calls a `noreturn` callee
+  (`__attribute__((noreturn))` on `exit_thunk`); a `lui`/`addiu` pair before a `j` loads a string or data address.
+- **A store followed by a load of an unrelated type is reordered** by gcc's alias analysis (`sh` or `swc1` put into the `jal` delay slot
+  with the argument `lw` hoisted above it). Giving the stored and the loaded field the same type (both `int`) keeps retail's order
+  (0x256328); with a `short` or `float` store the order stays wrong and the function is left open (0x2562F0, 0x2562B8, score 4).
+
 ## Rulings
 
 What AGENTS.md allows and bans, in one place (the full list with reasons and dates is docs/contributing/exceptions.md):
