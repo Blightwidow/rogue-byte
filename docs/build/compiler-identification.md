@@ -238,6 +238,21 @@ It looks practical, at a per-function level.
   `lib/gcc-lib/ee/2.95.3/cc1plus.exe`; its `cc1plus.exe` has the same sha1 as `tools/compilers/ee-gcc2.95.3-136/.../cc1plus.exe`
   (`2e7192cd633a2a...`). So the compiler and the 1.9.25 assembler are one release, and the difference in loop padding (retail pads to five, this
   release to six, [assembler.md](assembler.md) "Short loops") points to a ProDG release that no public mirror has.
+- **More flags, the CPU model and the other SN builds (2026-11-06, later).** Thirty-two further options on the same 138 near misses and 100
+  controls: `-m5900` and `-mcpu=r5900` give the same code as the build (the default is already the R5900 model); `-mcpu=r4000` breaks 22 controls,
+  `-m4650` 14, `-fstrict-aliasing` 16, `-funroll-all-loops` 16, so the scheduler model and these options matter and the build's are right; the
+  others (`-mmad`, `-mno-memcpy`, `-fregmove`, `-fschedule-insns`, ...) change nothing. `-fmove-all-movables` and `-freduce-all-givs` over every
+  matched non-SDK function (3,257 with a source) and 378 open drafts: `-freduce-all-givs` breaks 183 matched functions, so it is not a build
+  setting; `-fmove-all-movables` breaks 12 (0.4%) and takes two open functions to exactly 0 (0x20C0E8 from 62, 0x1BEB28 from 2) and improves 21 more
+  (0x17D6C8 from 50 to 5, 0x20F7E0 from 27 to 6), but hurts 22 open ones, and the helped and hurt functions interleave in address order (57
+  affected, 35 runs), so it is at most a few files' flag, and per function it is the same kind of exception as `config/us/vu0_regs.txt`
+  (docs/contributing/exceptions.md). The other SN compiler builds on disk (2.95.3-107 and -114, 2.95.2-273a and -274) are so far from retail
+  that nearly every function changes (158 of 191 controls break, every near miss worsens): the stack layout moves (`sq $s2, 0x20($sp)` against
+  `0x40`). `scripts/build/compile_unit.py` reads `EE_GCC_DIR` for such a run (a build never sets it).
+- **Two causes ruled out in the source (2026-11-06).** Declaring `g_2dded0` (the frame clock, in 315 drafts) volatile breaks 30 of 145 matched
+  drafts and improves 2 of 165 open ones, so it is not volatile. A scan of 564 open drafts for a C that matches up to the end of the shorter
+  side finds one real split-boundary error (0x1C7A58: registry size 176, real 180), nine 8-byte SDK stubs whose draft lacks the delay-slot
+  instruction, and wrong drafts; boundary errors are not a systematic cause.
 - **SDK range under Sony's gcc 2.9 (2026-11-06).** The registry's best score for an SDK-range function comes from the default toolchain, so the
   116 open functions with a draft that are not in `config/us/sony_gcc29.txt` were scored again under `TRY_ASSEMBLER=sony29`: 7 improve, one
   reaches 0 (0x24C360, 192 bytes), the rest stay far. No batch of SDK functions hides there.

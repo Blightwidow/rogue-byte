@@ -88,6 +88,9 @@ def assembler_for(address):
 
 
 def compiler_directory():
+    """The SN compiler: EE_GCC_DIR (one run of a probe, scripts/matching/compiler_probe.py) replaces the pinned build 1.36; a build never sets it."""
+    if os.environ.get('EE_GCC_DIR'):
+        return os.environ['EE_GCC_DIR']
     return COMPILER if os.path.isdir(os.path.join(COMPILER, 'bin')) else LEGACY_COMPILER
 
 
