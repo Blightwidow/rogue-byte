@@ -226,6 +226,22 @@ It looks practical, at a per-function level.
   one function (0x1EA6C8) reaches 0, under -fno-schedule-insns, and its module's other functions don't follow. So the build keeps
   `-O2 -G0 -ffast-math -fno-exceptions` for every module.
 
+- **Second flag sweep (2026-11-06).** Twelve flags the first sweep did not try, chosen because worker reports kept blaming loop hoisting and
+  register allocation and because the sister projects (rac3-uya-decomp) use some of them per file: `-fno-force-mem`, `-fno-rerun-loop-opt`,
+  `-fno-regmove`, `-fno-expensive-optimizations`, `-fno-defer-pop`, `-fno-thread-jumps`, `-fno-caller-saves`, `-fno-function-cse`,
+  `-fno-optimize-sibling-calls` (the compiler rejects it), `-fforce-addr`, `-freduce-all-givs`, `-mno-split-addresses`. Each ran on the 138 near
+  misses (best draft 1 to 16, outside the SDK range) and 100 matched controls. None wins: `-no-force-mem` improves 3 near misses and worsens 30, and
+  breaks 5 controls; `-mno-split-addresses` worsens 89 and breaks 39; `-freduce-all-givs` brings 2 near misses to 0 but breaks 4 controls, so it
+  is a per-function effect and not a setting of the build; the rest change nothing or only hurt. The build keeps `-O2 -G0 -ffast-math
+  -fno-exceptions`.
+- **The ProDG 3.01 compiler is the one we use (2026-11-06).** The mirror the assembler comes from also ships `ee-gcc2953.exe` and
+  `lib/gcc-lib/ee/2.95.3/cc1plus.exe`; its `cc1plus.exe` has the same sha1 as `tools/compilers/ee-gcc2.95.3-136/.../cc1plus.exe`
+  (`2e7192cd633a2a...`). So the compiler and the 1.9.25 assembler are one release, and the difference in loop padding (retail pads to five, this
+  release to six, [assembler.md](assembler.md) "Short loops") points to a ProDG release that no public mirror has.
+- **SDK range under Sony's gcc 2.9 (2026-11-06).** The registry's best score for an SDK-range function comes from the default toolchain, so the
+  116 open functions with a draft that are not in `config/us/sony_gcc29.txt` were scored again under `TRY_ASSEMBLER=sony29`: 7 improve, one
+  reaches 0 (0x24C360, 192 bytes), the rest stay far. No batch of SDK functions hides there.
+
 ## SDK range: Sony's gcc 2.9 (2026-10-29)
 
 The libgcc double-precision support (`__adddf3` at 0x23D748, and its neighbours down to `__fixdfsi`) was not built by the
