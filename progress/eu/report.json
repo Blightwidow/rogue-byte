@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 74.934257,
+  "fuzzy_match_percent": 74.931976,
   "total_code": "1402440",
-  "matched_code": "1050908",
-  "matched_code_percent": 74.934257,
+  "matched_code": "1050876",
+  "matched_code_percent": 74.931976,
   "total_data": "1038916",
   "total_functions": 6822,
-  "matched_functions": 5904,
-  "matched_functions_percent": 86.543536,
+  "matched_functions": 5903,
+  "matched_functions_percent": 86.528877,
   "complete_code": "160916",
   "complete_code_percent": 11.474002,
   "total_units": 434,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151000",
-     "fuzzy_match_percent": 26.516556,
+     "fuzzy_match_percent": 26.495364,
      "metadata": {}
     }
    ],
@@ -43660,7 +43660,7 @@
     {
      "name": "func_00232500",
      "size": "32",
-     "fuzzy_match_percent": 100.0,
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
      "address": "2840"
     },
@@ -48762,14 +48762,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 26.516556,
+    "fuzzy_match_percent": 26.495364,
     "total_code": "151000",
-    "matched_code": "40040",
-    "matched_code_percent": 26.516556,
+    "matched_code": "40008",
+    "matched_code_percent": 26.495364,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 430,
-    "matched_functions_percent": 56.953642,
+    "matched_functions": 429,
+    "matched_functions_percent": 56.821192,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64558,14 +64558,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 26.516556,
+    "fuzzy_match_percent": 26.495364,
     "total_code": "151000",
-    "matched_code": "40040",
-    "matched_code_percent": 26.516556,
+    "matched_code": "40008",
+    "matched_code_percent": 26.495364,
     "matched_data_percent": 100.0,
     "total_functions": 755,
-    "matched_functions": 430,
-    "matched_functions_percent": 56.953642,
+    "matched_functions": 429,
+    "matched_functions_percent": 56.821192,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
