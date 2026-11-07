@@ -590,7 +590,6 @@ address	name	size	file	score
 0X1ED448	ShutdownIdHashTables_1ed448	40	new_1ed1a8/ShutdownIdHashTables_1ed448.cpp	3
 0X1ED470	AddToIdTableA_1ed470	112	new_1ed1a8/AddToIdTableA_1ed470.cpp	17
 0X1ED560	AddToIdTableB_1ed560	112	new_1ed1a8/AddToIdTableB_1ed560.cpp	15
-0X1EE7B0	FlushSaaUnpacks	112	shdanim_1ee480/FlushSaaUnpacks.c	8
 0X1EE988	SjisFromAsciiChar	232	shdanim_1ee480/SjisFromAsciiChar.c	35
 0X1EF8C8	bevy_gfx_screen_C2d9500_v15	112	shdanim-sm/bevy_gfx_screen_C2d9500_v15.c	20
 0X1EFAC0	CSm_LoadFromBrx	1544	sm/CSm_LoadFromBrx.cpp	470
@@ -603,9 +602,7 @@ address	name	size	file	score
 0X1F2C30	AddSoLoHierarchy	280	sm-so/AddSoLoHierarchy.cpp	32
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.c	59
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.cpp	105
-0X1F3118	func_001F3118	200	sm-so/fun_001f3118.cpp	9
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	24
-0X1F3E00	func_001F3E00	168	so-po/fun_001f3e00.cpp	10
 0X1F3EA8	func_001F3EA8	248	so-po/fun_001f3ea8.cpp	14
 0X1F42E0	RotateSoToMat	352	so-po/RotateSoToMat.c	72
 0X1F4558	GetSoAngularVelocityVec	384	so-po/GetSoAngularVelocityVec.c	84

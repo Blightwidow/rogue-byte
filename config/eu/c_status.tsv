@@ -3802,6 +3802,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EE688	InitCircler__FP7CIRCLERP4SAAF	0X1EEE48	same	0	ok
 0x1EE6D8	UpdateCircler__FP7CIRCLERf	0X1EEE98	same	0	ok
 0x1EE768	UCompleteCircler__FP7CIRCLER	0X1EEF28	same	0	ok
+0x1EE7B0	FlushSaaUnpacks	0X1EEF70	same	0	ok
 0x1EE820	AddRefSharedSlotheaps	0X1EEFE0	same	0	ok
 0x1EE958	AddRefSharedSlotheaps_thunk	0X1EF118	same	0	ok
 0x1EEA70	ConvertAsciiToSjis	0X1EF230	same	0	ok
@@ -3901,6 +3902,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F2BA8	RemoveSoGeomsFromOxa	0X1F3368	same	0	ok
 0x1F2FE0	func_001F2FE0	0X1F37A0	identical	0	ok
 0x1F3078	func_001F3078	0X1F3838	identical	0	ok
+0x1F3118	func_001F3118	0X1F38D8	same	0	ok
 0x1F31E0	CSo_LoadFromBrx	0X1F39A0	same	0	ok
 0x1F3590	func_001F3590	0X1F3D50	identical	0	ok
 0x1F35C8	SetSoMass__FP2SOf	0X1F3D88	same	0	ok
@@ -3914,6 +3916,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F3C10	func_001F3C10	0X1F43D0	same	0	ok
 0x1F3C70	func_001F3C70	0X1F4430	same	0	ok
 0x1F3CC8	func_001F3CC8	0X1F4488	same	0	ok
+0x1F3E00	func_001F3E00	0X1F45C0	same	0	ok
 0x1F3FA0	PmatWorldSo	0X1F4760	gap	0	ok
 0x1F3FB0	func_001F3FB0	0X1F4770	same	0	ok
 0x1F4010	func_001F4010	0X1F47D0	same	0	ok
@@ -4842,6 +4845,7 @@ us_address	name	other_address	pair	score	addresses
 0x2368A0	func_002368A0	0X2370E0	same	0	ok
 0x236C00	func_00236C00	0X237BC8	same	0	ok
 0x236CD0	func_00236CD0	0X237C98	identical	0	ok
+0x236D20	func_00236D20	0X237CE8	same	0	ok
 0x236E30	func_00236E30	0X237DF8	same	0	ok
 0x236F48	func_00236F48	0X237F10	identical	0	ok
 0x236F98	func_00236F98	0X237F60	same	0	ok

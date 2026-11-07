@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+struct VECTOR { float x, y, z, w; } __attribute__((aligned(16)));
+// SPDX-License-Identifier: GPL-3.0-or-later
 struct VTA_k02 { char pad[0xB0]; short delta; void (*fn)(void *); };
 struct VTB_k02 { char pad[0x188]; short delta; void (*fn)(void *); };
 struct NODE_k02 { char pad0[0xC]; VTA_k02 *vptr; char pad1[0x24 - 0x10]; NODE_k02 *next; };
@@ -22,6 +24,7 @@ extern char B_003E11AC[];
 }
 extern "C" void func_001F3E00(ALO_k02 *palo)
 {
+    VECTOR vector;
     RemoveAloHierarchy(palo);
     RemoveAloFromRenderTree(palo);
     NODE_k02 *pnode = palo->first64;

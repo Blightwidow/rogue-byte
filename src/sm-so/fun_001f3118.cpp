@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct VT { char pad[0x150]; short delta; short index; void (*fn)(void *, float); };
 struct SoNode {
@@ -10,6 +11,7 @@ extern "C" void ReinsertSwRoot(void *, int);
 extern char B_003DD490;
 extern "C" void func_001F3118(SoNode *so, float value)
 {
+    VECTOR vector;
     so->f38 = value;
     if (so->gen != -1) {
         RemoveAloFromRenderTree(so);
