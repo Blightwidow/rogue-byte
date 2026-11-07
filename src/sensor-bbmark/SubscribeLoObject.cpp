@@ -8,15 +8,16 @@ extern "C" void *PvAllocSlotheapImpl(SLOTHEAP *);
 
 void SubscribeLoObject(LO *plo, LO *ploTarget)
 {
-    for (SUBSCRIBER *psub = plo->psubFirst; psub != 0; psub = psub->pnext) {
+    SUBSCRIBER *psub;
+    for (psub = plo->psubFirst; psub != 0; psub = psub->pnext) {
         if (psub->plo == ploTarget) {
             psub->csub = psub->csub + 1;
             return;
         }
     }
-    SUBSCRIBER *psubNew = (SUBSCRIBER *)PvAllocSlotheapImpl(&B_003E1144);
-    psubNew->plo = ploTarget;
-    psubNew->csub = 1;
-    psubNew->pnext = plo->psubFirst;
-    plo->psubFirst = psubNew;
+    psub = (SUBSCRIBER *)PvAllocSlotheapImpl(&B_003E1144);
+    psub->csub = 1;
+    psub->plo = ploTarget;
+    psub->pnext = plo->psubFirst;
+    plo->psubFirst = psub;
 }

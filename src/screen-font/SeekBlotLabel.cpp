@@ -18,8 +18,8 @@ extern "C" void SeekBlotLabel(float u, Blot *blot, int label)
     for (int i = 0; i < blot->spriteCount; i++) {
         Sprite *sprite = SpriteAt(blot, i);
         for (int j = 0; j < sprite->labelCount; j++) {
+            int last = -1;
             if (label == LabelIdAt(sprite, j)) {
-                int last = -1;
                 for (int k = 0; k < sprite->instCount; k++) {
                     if (sprite->insts[k].state != -1) last = k;
                 }

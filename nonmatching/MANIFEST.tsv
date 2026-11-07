@@ -79,7 +79,6 @@ address	name	size	file	score
 0X130EB0	UpdateAsegaIeaCur__FP5ASEGA	216	asega/UpdateAsegaIeaCur__FP5ASEGA.cpp	33
 0X131100	HandleAsegaEventsFF	368	asega/HandleAsegaEventsFF.cpp	9
 0X133040	AddSwTimedCall	240	new_132b08/AddSwTimedCall.cpp	5
-0X1333C0	SubscribeLoObject	136	sensor-bbmark/SubscribeLoObject.cpp	8
 0X1337D0	FreeSwPoxa	616	sensor-bbmark/FreeSwPoxa.cpp	84
 0X133A38	UpdateSwPox	560	sensor-bbmark/UpdateSwPox.cpp	99
 0X134040	RecalcSwXpAll	720	bbmark-blend/RecalcSwXpAll.cpp	105
@@ -94,7 +93,6 @@ address	name	size	file	score
 0X137A30	EnsureAsegBlendDynamic	1416	bbmark-blend/EnsureAsegBlendDynamic.cpp	73
 0X138BA0	func_00138BA0	528	ac-blip/fun_00138ba0.cpp	88
 0X139250	OnBlipgRemove__FP5BLIPG	200	blip/OnBlipgRemove__FP5BLIPG.cpp	14
-0X139370	PropagateBlipgShader__FP5BLIPG	344	blip/PropagateBlipgShader__FP5BLIPG.cpp	5
 0X1394C8	SetBlipgEmitb__FP5BLIPGP5EMITB	1048	blip/SetBlipgEmitb__FP5BLIPGP5EMITB.c	248
 0X139950	CblipeProjectBlipTransformAccel__FP7MATRIX4G8VU_FLOATP5BLIPPP5BLIPVP5BLIPXi6BLIPOKP6VECTORT7	360	blip/CblipeProjectBlipTransformAccel__FP7MATRIX4G8VU_FLOATP5BLIPPP5BLIPVP5BLIPXi6BLIPOKP6VECTORT7.c	88
 0X13A1E8	DrawBlipg	1184	blip-light/DrawBlipg.c	279
@@ -233,7 +231,6 @@ address	name	size	file	score
 0X16F868	ResetGs__Fv	80	gs/ResetGs__Fv.c	11
 0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	9
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.c	108
-0X1711F0	PcmdFindScriptLabel	56	jsg-jt/PcmdFindScriptLabel.c	8
 0X171468	FGuardScriptWaiting	336	jsg-jt/FGuardScriptWaiting.cpp	9
 0X172658	func_00172658	264	new_1715f0/fun_00172658.c	52
 0X172798	FAddSearchCand	240	new_1715f0/FAddSearchCand.c	36
@@ -308,7 +305,6 @@ address	name	size	file	score
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
 0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.c	45
 0X188E78	AdjustSlyXpVelocity	168	joy-jt/AdjustSlyXpVelocity.c	28
-0X1894F8	FAllowBinocSly	56	joy-jt/FAllowBinocSly.cpp	2
 0X189618	UpdateJtBalance	1576	joy-jt/UpdateJtBalance.c	334
 0X189C40	RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG	648	jt_189c40/RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG.c	158
 0X189EC8	FMatchJtXmg	512	jt_189c40/FMatchJtXmg.c	107
@@ -399,7 +395,6 @@ address	name	size	file	score
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.c	324
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	31
 0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	6
-0X1AC260	load_file_from_disc	448	memcard/load_file_from_disc.cpp	9
 0X1AC598	CheckCardStatus	264	memcard/CheckCardStatus.cpp	9
 0X1ACCC8	MemcardMenu_Update	792	memcard-memory/MemcardMenu_Update.cpp	66
 0X1ACFE0	func_001ACFE0	392	memcard-memory/fun_001acfe0.cpp	16
@@ -460,7 +455,6 @@ address	name	size	file	score
 0X1BDE80	MergeObstacles	872	new_1bc198/MergeObstacles.c	186
 0X1BE398	func_001BE398	856	rog-path/fun_001be398.cpp	93
 0X1BE6F0	func_001BE6F0	672	rog-path/fun_001be6f0.c	123
-0X1BEA40	func_001BEA40	72	rog-path/fun_001bea40.c	6
 0X1BEB28	func_001BEB28	464	rog-path/fun_001beb28.cpp	2
 0X1BF1F8	PcgtPointInCgSafe	416	rog-path/PcgtPointInCgSafe.c	104
 0X1BF980	FindPathAStar__FP2CGP3CGVT1iPiPP3CGV	664	path_1bf970/FindPathAStar__FP2CGP3CGVT1iPiPP3CGV.c	141
@@ -494,10 +488,8 @@ address	name	size	file	score
 0X1C6DE8	func_001C6DE8	496	new_1c3df8/fun_001c6de8.c	132
 0X1C6FD8	CpdprizeAttractSwDprizes	1648	new_1c3df8/CpdprizeAttractSwDprizes.c	450
 0X1C7A58	SelectCoinLootDef	184	new_1c76d0/SelectCoinLootDef.cpp	1
-0X1C7B18	PpathClueFlag	160	new_1c76d0/PpathClueFlag.cpp	3
 0X1C7C30	SetClueFound	208	new_1c76d0/SetClueFound.cpp	12
 0X1C7D08	CcluesFound	304	new_1c76d0/CcluesFound.cpp	4
-0X1C8090	PpathVaultFlag	128	new_1c76d0/PpathVaultFlag.cpp	3
 0X1C8188	SetVaultOpen	248	new_1c76d0/SetVaultOpen.cpp	34
 0X1C8280	func_001C8280	112	new_1c76d0/fun_001c8280.cpp	2
 0X1C8350	func_001C8350	392	new_1c76d0/fun_001c8350.cpp	53
@@ -704,8 +696,6 @@ address	name	size	file	score
 0X210740	StartSwAmbSfx	424	button-po/StartSwAmbSfx.cpp	15
 0X2124F0	PrepareBlotMovie	656	po-screen/PrepareBlotMovie.cpp	28
 0X212A70	SetBlotBlots	480	screen-font/SetBlotBlots.cpp	46
-0X212E40	SeekBlotLabel	312	screen-font/SeekBlotLabel.cpp	8
-0X212F80	func_00212F80	312	screen-font/fun_00212f80.cpp	8
 0X2137F0	FBlotObscured	64	screen-font/FBlotObscured.c	12
 0X213F70	FStartSpriteLabelInstance	400	screen-font/FStartSpriteLabelInstance.c	88
 0X214100	FStartSpriteDepthInstance	432	screen-font/FStartSpriteDepthInstance.cpp	10
