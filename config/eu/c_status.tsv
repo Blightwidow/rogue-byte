@@ -2836,6 +2836,7 @@ us_address	name	other_address	pair	score	addresses
 0x1A7518	main		none		
 0x1A7890	func_001A7890	0X1A78A0	same	0	ok
 0x1A7900	func_001A7900	0X1A7910	same	0	ok
+0x1A7970	StartupAll	0X1A7980	same	1	ok
 0x1A7AC0	StaticInitSlotheaps_1a7ac0	0X1A7BB8	same	0	ok
 0x1A7BF8	GlobalCtorSlotheaps_1a7bf8	0X1A7CF0	same	0	ok
 0x1A7E10	FreeSwMqList__FP2SWP2MQ	0X1A7F08	identical	0	ok
@@ -3288,6 +3289,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C9950	IsetFromCloneId	0X1C9BC0	gap	0	ok
 0x1C9958	IcloneFromCloneId	0X1C9BC8	gap	0	ok
 0x1C9968	OidFromCloneId	0X1C9BD8	same	0	ok
+0x1CA308	ALO_SetCloneId	0X1CA578	same	0	ok
 0x1CA370	InstantiateClone	0X1CA5E0	same	0	ok
 0x1CA500	InitCloneSets	0X1CA770	same	0	ok
 0x1CA788	func_001CA788	0X1CA9F8	same	0	ok
@@ -3900,6 +3902,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F2AD0	func_001F2AD0	0X1F3290	same	0	ok
 0x1F2B20	AddSoGeomsToOxa	0X1F32E0	same	0	ok
 0x1F2BA8	RemoveSoGeomsFromOxa	0X1F3368	same	0	ok
+0x1F2C30	AddSoLoHierarchy	0X1F33F0	gap	0	ok
 0x1F2FE0	func_001F2FE0	0X1F37A0	identical	0	ok
 0x1F3078	func_001F3078	0X1F3838	identical	0	ok
 0x1F3118	func_001F3118	0X1F38D8	same	0	ok
@@ -4315,6 +4318,7 @@ us_address	name	other_address	pair	score	addresses
 0x20A100	SetGuardGotoTarget	0X20A8C0	same	0	ok
 0x20A298	func_0020A298	0X20AA58	same	0	ok
 0x20A378	func_0020A378	0X20AB38	same	0	ok
+0x20A408	PhitfxChooseForGuard	0X20ABC8	same	0	ok
 0x20A518	func_0020A518	0X20ACD8	identical	0	ok
 0x20A540	func_0020A540	0X20AD00	same	0	ok
 0x20A5F8	InitAlert	0X20ADB8	same	0	ok

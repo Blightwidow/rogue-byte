@@ -2836,6 +2836,7 @@ address	name	size	file
 0X1A7518	main	276	stepguard-sw/main.cpp
 0X1A7890	func_001A7890	108	stepguard-sw/fun_001a7890.c
 0X1A7900	func_001A7900	108	stepguard-sw/fun_001a7900.c
+0X1A7970	StartupAll	336	stepguard-sw/StartupAll.cpp
 0X1A7AC0	StaticInitSlotheaps_1a7ac0	308	stepguard-sw/StaticInitSlotheaps_1a7ac0.c
 0X1A7BF8	GlobalCtorSlotheaps_1a7bf8	32	stepguard-sw/GlobalCtorSlotheaps_1a7bf8.c
 0X1A7E10	FreeSwMqList__FP2SWP2MQ	76	sw/FreeSwMqList__FP2SWP2MQ.cpp
@@ -3288,6 +3289,7 @@ address	name	size	file
 0X1C9950	IsetFromCloneId	8	new_1c90d0/IsetFromCloneId.c
 0X1C9958	IcloneFromCloneId	12	new_1c90d0/IcloneFromCloneId.c
 0X1C9968	OidFromCloneId	108	new_1c90d0/OidFromCloneId.cpp
+0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.cpp
 0X1CA370	InstantiateClone	396	new_1c90d0/InstantiateClone.cpp
 0X1CA500	InitCloneSets	648	new_1c90d0/InitCloneSets.cpp
 0X1CA788	func_001CA788	48	new_1c90d0/fun_001ca788.c
@@ -3900,6 +3902,7 @@ address	name	size	file
 0X1F2AD0	func_001F2AD0	80	sm-so/fun_001f2ad0.cpp
 0X1F2B20	AddSoGeomsToOxa	136	sm-so/AddSoGeomsToOxa.cpp
 0X1F2BA8	RemoveSoGeomsFromOxa	136	sm-so/RemoveSoGeomsFromOxa.cpp
+0X1F2C30	AddSoLoHierarchy	276	sm-so/AddSoLoHierarchy.cpp
 0X1F2FE0	func_001F2FE0	148	sm-so/fun_001f2fe0.cpp
 0X1F3078	func_001F3078	156	sm-so/fun_001f3078.cpp
 0X1F3118	func_001F3118	196	sm-so/fun_001f3118.cpp
@@ -4315,6 +4318,7 @@ address	name	size	file
 0X20A100	SetGuardGotoTarget	104	step-rwm/SetGuardGotoTarget.c
 0X20A298	func_0020A298	224	step-rwm/fun_0020a298.cpp
 0X20A378	func_0020A378	144	step-rwm/fun_0020a378.c
+0X20A408	PhitfxChooseForGuard	272	step-rwm/PhitfxChooseForGuard.cpp
 0X20A518	func_0020A518	40	unsorted/fun_0020a518.cpp
 0X20A540	func_0020A540	184	step-rwm/fun_0020a540.cpp
 0X20A5F8	InitAlert	92	step-rwm/InitAlert.c

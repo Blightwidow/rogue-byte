@@ -382,7 +382,6 @@ address	name	size	file	score
 0X1A6730	CLo_Clone	928	new_1a6290/CLo_Clone.cpp	85
 0X1A7050	ConvertLoMat	352	stepguard-sw/ConvertLoMat.c	82
 0X1A7630	func_001A7630	608	stepguard-sw/fun_001a7630.cpp	47
-0X1A7970	StartupAll	336	stepguard-sw/StartupAll.cpp	23
 0X1A7C18	PxpAdd	504	stepguard-sw/PxpAdd.c	101
 0X1A7E60	RecalcSwXpPos	352	sw-mark/RecalcSwXpPos.c	69
 0X1A81F8	ClsgClipSoBspEdges	536	sw-mark/ClsgClipSoBspEdges.cpp	16
@@ -502,7 +501,6 @@ address	name	size	file	score
 0X1C99D8	PcnodeFindOrAddClonePath	304	new_1c90d0/PcnodeFindOrAddClonePath.cpp	8
 0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	48
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	21
-0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.c	18
 0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	66
 0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	100
 0X1CB250	PloLeaseCloneObject	112	new_1c90d0/PloLeaseCloneObject.cpp	2
@@ -599,7 +597,6 @@ address	name	size	file	score
 0X1F1A40	func_001F1A40	696	sm-so/fun_001f1a40.cpp	26
 0X1F2500	func_001F2500	392	sm-so/fun_001f2500.c	96
 0X1F2930	RemoveSoGeomFromOxa	304	sm-so/RemoveSoGeomFromOxa.cpp	12
-0X1F2C30	AddSoLoHierarchy	280	sm-so/AddSoLoHierarchy.cpp	32
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.c	59
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.cpp	105
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	24
@@ -672,7 +669,6 @@ address	name	size	file	score
 0X209618	func_00209618	336	step-rwm/fun_00209618.c	73
 0X209C88	func_00209C88	416	step-rwm/fun_00209c88.cpp	48
 0X20A168	NCompareHitfxForGuard	304	step-rwm/NCompareHitfxForGuard.c	43
-0X20A408	PhitfxChooseForGuard	272	step-rwm/PhitfxChooseForGuard.cpp	30
 0X20A818	func_0020A818	400	rwm-steprun/fun_0020a818.c	108
 0X20ACC0	func_0020ACC0	120	rwm-steprun/fun_0020acc0.c	19
 0X20B140	func_0020B140	208	rwm-steprun/fun_0020b140.cpp	9
