@@ -7289,3 +7289,4 @@ func_00100228 = 0x00100228; // type:func size:0x7C
 RO_FLT_002A53D4 = 0x002A53D4; // source:provisional
 D_FLT_002BE610 = 0x002BE610; // source:provisional
 D_002AC138 = 0x002AC138; // source:provisional
+func_00256278 = 0x00256278; // type:func source:boundary size:0x1C
