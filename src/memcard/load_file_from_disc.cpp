@@ -13,7 +13,7 @@ struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[
 };
 struct STREAM { char pad[0x70]; };
 extern "C" {
-void CStackFrame_Construct(SAVE *);
+void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 int sprintf(char *, const char *, ...);
 int McOpenFile(SAVE *, const char *, int, int *);
@@ -24,14 +24,14 @@ void CBinaryInputStream_ConstructFromBuffer(STREAM *, int, void *, int);
 int CBinaryFileStream_FOpenLocation(STREAM *, CFileLocation *);
 int CBinaryInputStream_Read(STREAM *, int, void *);
 void CBinaryFileStream_Close(STREAM *);
-void CBinaryFileStream_Destructor(STREAM *);
+void CBinaryFileStream_Destructor(STREAM *, int);
 extern const char RO_002A6CB8[];
 }
 extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned *record, const char *file)
 {
     char frame[0x10];
     char path[0x50];
-    CStackFrame_Construct(psave);
+    CStackFrame_Construct(frame);
     sprintf(path, RO_002A6CB8, dir, file);
     int fd = -1;
     int error = McOpenFile(psave, path, 0x202, &fd);
@@ -69,7 +69,7 @@ extern "C" int load_file_from_disc(SAVE *psave, const char *dir, const unsigned 
         int closeError = McClose(psave, fd);
         if (error == 0)
             error = closeError;
-        CBinaryFileStream_Destructor(&stream);
+        CBinaryFileStream_Destructor(&stream, 2);
     }
     CStackFrame_Destructor(frame, 2);
     return error;

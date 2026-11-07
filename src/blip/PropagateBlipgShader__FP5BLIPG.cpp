@@ -18,10 +18,10 @@ extern "C" void PropagateBlipgShader__FP5BLIPG(BLIPG *pblipg, int oidShader)
             pblipg->color[ib] = (pshd->color[ib] + 1) >> 1;
     }
     int cduplicate = 0;
-    int cframe = pshd->cframe;
     int cqw = 1;
-    for (int shifted = cframe >> 1; shifted != 0; shifted >>= 1)
+    for (int shifted = pshd->cframe >> 1; shifted != 0; shifted >>= 1)
         cqw <<= 1;
+    int cframe = pshd->cframe;
     cqw <<= (cqw < cframe) ? 1 : 0;
     while (cqw > 31)
         cqw >>= 1;

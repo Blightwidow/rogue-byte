@@ -1390,6 +1390,7 @@ us_address	name	other_address	pair	score	addresses
 0x1331F8	PostScriptMessage	0X1331F8	same	0	ok
 0x133340	EnableLasen__FP5LASEN5SENSM	0X133340	identical	0	ok
 0x133380	func_00133380	0X133380	identical	0	ok
+0x1333C0	SubscribeLoObject	0X1333C0	same	0	ok
 0x133448	UnsubscribeLoObject	0X133448	same	0	ok
 0x1334A8	Basic_FreeSubscribers	0X1334A8	same	0	ok
 0x133508	PostLoMessage	0X133508	identical	0	ok
@@ -1460,6 +1461,7 @@ us_address	name	other_address	pair	score	addresses
 0x1390D8	PblipgNew	0X1390D8	same	0	ok
 0x1391C8	InitBlipg	0X1391C8	same	0	ok
 0x139318	DeleteBlipg	0X139318	same	0	ok
+0x139370	PropagateBlipgShader__FP5BLIPG	0X139370	same	0	ok
 0x1398E0	func_001398E0	0X1398E0	same	0	ok
 0x139900	SubscribeBlipgObject__FP5BLIPGP2LO	0X139900	identical	0	ok
 0x13A688	func_0013A688	0X13A688	same	0	ok
@@ -2232,6 +2234,7 @@ us_address	name	other_address	pair	score	addresses
 0x170E00	PcmdAllocScript	0X170D88	same	0	ok
 0x170E68	RunGuardScriptIfActor	0X170DF0	same	0	ok
 0x1710F8	GetScriptPose	0X171080	same	0	ok
+0x1711F0	PcmdFindScriptLabel	0X171178	identical	0	ok
 0x171228	InitGuardScriptBeh	0X1711B0	same	0	ok
 0x171258	SetGuardScript	0X1711E0	same	0	ok
 0x171398	ExitGuardScriptBeh	0X171320	same	0	ok
@@ -2593,6 +2596,7 @@ us_address	name	other_address	pair	score	addresses
 0x188F20	HandleSlyMessage	0X188EA8	same	0	ok
 0x189458	FFaceSlyAimTarget	0X1893E0	same	0	ok
 0x189488	GetSlyExposeMode	0X189410	same	0	ok
+0x1894F8	FAllowBinocSly	0X189480	same	0	ok
 0x189530	SetSlyHide	0X1894B8	same	0	ok
 0x18A0C8	UpdateJtStand__FP2JT	0X18A050	same	0	ok
 0x18A238	func_0018A238	0X18A1C0	same	0	ok
@@ -2871,6 +2875,7 @@ us_address	name	other_address	pair	score	addresses
 0x1ABE78	ReadMemcardDirectory	0X1ABF58	same	0	ok
 0x1ABFC0	FindMemcardFile	0X1AC0A0	same	0	ok
 0x1AC238	load_sly_icon_from_disc		none		
+0x1AC260	load_file_from_disc		none		
 0x1AC420	WriteSaveSlot	0X1AC468	same	0	ok
 0x1AC468	InitAndWriteSaveSlot		none		
 0x1AC4C8	ReadSaveSlot	0X1AC5A8	same	0	ok
@@ -3132,6 +3137,7 @@ us_address	name	other_address	pair	score	addresses
 0x1BE378	CreateSharedSlotheaps_1be240_thunk	0X1BE5E0	same	0	ok
 0x1BE990	func_001BE990	0X1BEBF8	same	0	ok
 0x1BE9E8	func_001BE9E8	0X1BEC50	same	0	ok
+0x1BEA40	func_001BEA40	0X1BECA8	same	0	ok
 0x1BEA88	RtAlo_LoadFromBrx	0X1BECF0	same	0	ok
 0x1BEAA8	func_001BEAA8	0X1BED10	identical	0	ok
 0x1BEAD0	func_001BEAD0	0X1BED38	identical	0	ok
@@ -3254,6 +3260,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C7A08	func_001C7A08	0X1C7C70	gap	0	ok
 0x1C7A10	func_001C7A10	0X1C7C78	identical	0	ok
 0x1C7A40	func_001C7A40	0X1C7CA8	identical	0	ok
+0x1C7B18	PpathClueFlag	0X1C7D80	same	0	ok
 0x1C7BB8	FClueFound	0X1C7E20	same	0	ok
 0x1C7D00	func_001C7D00	0X1C7F68	gap	0	ok
 0x1C7E38	func_001C7E38	0X1C80A0	same	0	ok
@@ -3261,6 +3268,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C7EA8	func_001C7EA8	0X1C8110	same	0	ok
 0x1C7EE8	SetCluebottleState	0X1C8150	same	0	ok
 0x1C8030	PostClueLoad	0X1C8298	same	0	ok
+0x1C8090	PpathVaultFlag	0X1C82F8	same	0	ok
 0x1C8110	FVaultOpen	0X1C8378	same	0	ok
 0x1C82F0	func_001C82F0	0X1C8560	same	0	ok
 0x1C8AF0	func_001C8AF0	0X1C8D60	same	0	ok
@@ -4481,6 +4489,8 @@ us_address	name	other_address	pair	score	addresses
 0x212A30	func_00212A30	0X213200	same	0	ok
 0x212A50	SetTimerTimers__FP5TIMER6TIMERS	0X213220	same	0	ok
 0x212C50	UpdateBlotMovie	0X213420	same	0	ok
+0x212E40	SeekBlotLabel	0X213610	same	0	ok
+0x212F80	func_00212F80	0X213750	same	0	ok
 0x2130C0	BuildBlotDmaHeader	0X213890	same	0	ok
 0x2132D0	FDrawBlotMovie	0X213AA0	same	0	ok
 0x213300	DrawBlotMovie	0X213AD0	same	0	ok
@@ -4823,6 +4833,7 @@ us_address	name	other_address	pair	score	addresses
 0x232FC0	func_00232FC0	0X233808	same	0	ok
 0x232FE8	func_00232FE8	0X233830	same	0	ok
 0x233018	func_00233018	0X233860	same	0	ok
+0x233048	func_00233048	0X233890	same	0	ok
 0x233800	AtoiPchz	0X234048	same	0	ok
 0x2342A0	rand	0X234AE8	same	0	ok
 0x234580	func_00234580	0X234DC8	same	0	ok
