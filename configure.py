@@ -44,6 +44,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
     # SN's compiler, then SN's ps2eeas, the one assembler)
     sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
+    import asm_units
     import compile_unit
     assembler_for = compile_unit.assembler_for
 
@@ -61,6 +62,14 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             address = int(line.split('\t')[0], 16)
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
                         variables={'assembler': options(address)})
+            units.append(unit)
+        # whole files (config/us/whole_files.tsv): one source per retail file, its unmatched functions included from Splat's assembly
+        # (INCLUDE_ASM), so the object depends on the split; link_image.py links it at the file's start in place of its functions
+        for start, _, source in asm_units.whole_files():
+            unit = os.path.join('build', 'units', source + '.o')
+            ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', os.path.join('src', source),
+                        implicit=['include/sly2.h', 'include/m2c_macros.h', 'include/include_asm.h', os.path.join(SPLAT_OUTPUT, 'undefined_syms_auto.txt')],
+                        variables={'assembler': options(start)})
             units.append(unit)
         ninja.build('units', 'phony', units)
 

@@ -8,6 +8,15 @@ TEXT_END = 0x259DF0
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 INSTRUCTION = re.compile(r'\s*/\* \S+ ([0-9A-F]{8}) ')
 
+def whole_files(path=None):
+    """[(start, end, file)] of config/us/whole_files.tsv: the retail files built as one source (src/<file>), from `start` up to `end`."""
+    path = path or os.path.join(ROOT, 'config', 'us', 'whole_files.tsv')
+    if not os.path.exists(path):
+        return []
+    rows = [line.rstrip('\n').split('\t') for line in list(open(path))[1:] if line.strip()]
+    return [(int(start, 16), int(end, 16), file) for start, end, file in rows]
+
+
 def split_points():
     """Addresses where a matched function (src/MANIFEST.tsv) starts or ends. Splat does not always cut the assembly there: a
     function can sit in the middle of a chunk, or be followed by code that has no label of its own."""
@@ -17,6 +26,8 @@ def split_points():
         for line in list(open(manifest))[1:]:
             address, _, size, _ = line.rstrip('\n').split('\t')
             points |= {int(address, 16), (int(address, 16) + int(size) + 7) & ~7}  # the object ends padded to 8
+    for start, end, _ in whole_files():  # a whole file's object replaces exactly its range
+        points |= {start, end}
     return points
 
 def manifest_spans():

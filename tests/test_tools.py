@@ -136,6 +136,21 @@ class AssemblyUnitTests(unittest.TestCase):
         self.assertEqual([line for line in pieces[1] if 'glabel' in line], ['  glabel inner\n'])
 
 
+class WholeFileTests(unittest.TestCase):
+    def test_whole_files_are_read_as_ranges(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile('w', suffix='.tsv', delete=False) as handle:
+            handle.write('start\tend\tfile\n0x116CA0\t0x117030\tmemory-bez/ary.cpp\n')
+        self.addCleanup(os.remove, handle.name)
+        self.assertEqual(asm_units.whole_files(handle.name), [(0x116CA0, 0x117030, 'memory-bez/ary.cpp')])
+
+    def test_missing_list_means_no_whole_files(self):
+        self.assertEqual(asm_units.whole_files('/nonexistent/whole_files.tsv'), [])
+
+    def test_whole_file_bounds_are_split_points(self):
+        self.assertTrue(all({start, end} <= asm_units.split_points() for start, end, _ in asm_units.whole_files()))
+
+
 class MergeTests(unittest.TestCase):
     def test_chunk_inside_a_matched_function_is_folded_in(self):
         functions = [{'address': 0x100000, 'lines': ['a\n']}, {'address': 0x100050, 'lines': ['b\n']}, {'address': 0x100058, 'lines': ['c\n']}]
@@ -197,6 +212,31 @@ class CompileUnitTests(unittest.TestCase):
 
     def test_text_without_externs_is_unchanged(self):
         self.assertEqual(compile_unit.hoist_externs('a\nb'), 'a\nb')
+
+    SPLAT = ['.align 3\n', 'glabel func_00100000\n', '    /* 80 00100000 3000BD27 */  addiu      $sp, $sp, 0x30\n',
+             '  .L00100004:\n', '    /* 84 00100004 00000000 */  nop\n', '.size func_00100000, . - func_00100000\n']
+
+    def test_include_asm_marker_becomes_the_splat_function(self):
+        expanded = compile_unit.expand_include_asm('foo:\n\t.include_asm 0x100000\nbar:', {0x100000: self.SPLAT}).split('\n')
+        self.assertEqual(expanded[expanded.index('func_00100000:') + 1], '\taddiu      $sp, $sp, 0x30')
+
+    def test_included_assembly_keeps_its_delay_slots(self):
+        expanded = compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT}).split('\n')
+        self.assertEqual((expanded[0], expanded[-1]), ('\t.set\tnoreorder', '\t.set\treorder'))
+
+    def test_included_assembly_drops_comments_and_sizes(self):
+        expanded = compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT})
+        self.assertFalse(any(token in expanded for token in ('/*', '.size')))
+
+    def test_included_local_label_stays_a_label(self):
+        self.assertIn('\n.L00100004:\n', compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT}))
+
+    def test_include_asm_of_an_unknown_address_raises(self):
+        with self.assertRaises(KeyError):
+            compile_unit.expand_include_asm('\t.include_asm 0x100008', {0x100000: self.SPLAT})
+
+    def test_assembly_without_marker_is_unchanged(self):
+        self.assertEqual(compile_unit.expand_include_asm('a\nb', {}), 'a\nb')
 
     def test_only_the_sony_list_picks_another_assembler(self):
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))

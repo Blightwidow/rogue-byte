@@ -22,6 +22,10 @@ def directory_name(module):
     return re.sub(r'[^A-Za-z0-9_-]+', '-', module).strip('-') or 'unsorted'
 
 readme = open('src/README.md').read() if os.path.exists('src/README.md') else None  # documentation, not generated
+# whole files (config/us/whole_files.tsv) are written by hand, not generated: kept as they are
+whole_paths = [os.path.join('src', line.rstrip('\n').split('\t')[2]) for line in list(open('config/us/whole_files.tsv'))[1:] if line.strip()] \
+    if os.path.exists('config/us/whole_files.tsv') else []
+whole_sources = {path: open(path).read() for path in whole_paths if os.path.exists(path)}
 shutil.rmtree('src', ignore_errors=True)
 manifest = []
 for row in csv.DictReader(open('data/matching/functions.tsv'), delimiter='\t'):
@@ -48,6 +52,10 @@ with open('src/MANIFEST.tsv', 'w') as handle:
 for header in os.listdir('data/matching/include'):
     shutil.copyfile(os.path.join('data/matching/include', header), os.path.join('include', header))
 print(f'{len(manifest)} functions -> src/')
+for path, text in whole_sources.items():
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as handle:
+        handle.write(text)
 if readme is not None:
     with open('src/README.md', 'w') as handle:
         handle.write(readme)
