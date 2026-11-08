@@ -7293,3 +7293,4 @@ func_00256278 = 0x00256278; // type:func source:boundary size:0x1C
 func_00239520 = 0x00239520; // type:func source:boundary size:0x38
 func_00239558 = 0x00239558; // type:func source:boundary size:0x40
 func_001C7B10 = 0x001C7B10; // type:func source:boundary size:0x8
+RO_002C3DF0 = 0x002C3DF0; // source:provisional

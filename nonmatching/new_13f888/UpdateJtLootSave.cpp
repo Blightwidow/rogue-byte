@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 struct CRef;
 extern "C" int CRef_CopyConstruct(CRef *, const CRef *);
 extern "C" void CRef_Destruct(CRef *);
@@ -20,7 +21,7 @@ extern "C" {
 void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 CRef func_001D8B20(const CRef &, ...);
-CRef func_001D8A38(const char *, const char *, char *, int);
+CRef func_001D8A38(const char *, ...);
 CRef RefSetGameSaveValue(int, const CRef &, void *);
 int IdCurrentLevel();
 int LootId(void *);
@@ -40,13 +41,19 @@ static inline void SetSaveInt(int path, int number)
     CRef copy(value);
     RefSetGameSaveValue(path, copy, B_003D4A60);
 }
+// Retail: a CStackFrame around a three-way switch on mode. Every save write is the same inline shape: a CRef {0x15, value}
+// copied with CRef_CopyConstruct and handed to RefSetGameSaveValue(path, copy, B_003D4A60), then the result, the copy and the
+// value destroyed in that order, which is SetSaveInt with two named CRef locals. func_001D8A38 is varargs (it spills $a1-$t3)
+// and retail passes it a terminating 0 in $t0, like func_001D8B20. Still differs: in the `ploot == 0` branch of case 0 retail
+// computes %hi(B_003D4A60) into $s0 before PpathCrfodbLoot (beql fills its slot with the move to $a0), ours at the use; the
+// same early %hi shows in SetGameCoins, SetClueFound and the case 2 of StoreAudioModeInSave and is not reproduced yet.
 void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
 {
     char frame[0x10];
     CStackFrame_Construct(frame);
     switch (mode) {
     case 0: {
-        CRef ref = func_001D8B20(CRef(0x15, loot->pbooty != 0 ? LootId(loot->pbooty) : -1), self->GetKey(), RO_002A4DB0, 0);
+        CRef result = func_001D8B20(CRef(0x15, loot->pbooty != 0 ? LootId(loot->pbooty) : -1), self->GetKey(), RO_002A4DB0, 0);
         if (self->ploot != 0) {
             if (loot->pbooty == 0) {
                 int oid = PpathFindBootyOid(self->idSave);
@@ -64,13 +71,13 @@ void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
         if (oid != 0) {
             SetSaveInt(oid, -1);
         }
-        CRef ref = func_001D8B20(CRef(0x15, -1), self->GetKey(), RO_002A4DB0, 0);
-        int number = self->ploot->pinfo->oid;
-        if (number != -1) {
+        CRef result = func_001D8B20(CRef(0x15, -1), self->GetKey(), RO_002A4DB0, 0);
+        int oidBooty = self->ploot->pinfo->oid;
+        if (oidBooty != -1) {
             char buffer[0x20];
-            sprintf(buffer, RO_002A4D50, number);
-            ref = func_001D8A38(RO_002A4DC0, RO_002A4DC8, buffer, 0);
-            ref = func_001D8B20(CRef(0x15, ref.n + 1), RO_002A4DC0, RO_002A4DC8, buffer, 0);
+            sprintf(buffer, RO_002A4D50, oidBooty);
+            result = func_001D8A38(RO_002A4DC0, RO_002A4DC8, buffer, 0);
+            result = func_001D8B20(CRef(0x15, result.n + 1), RO_002A4DC0, RO_002A4DC8, buffer, 0);
         }
         break;
     }

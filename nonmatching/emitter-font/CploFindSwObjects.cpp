@@ -1,14 +1,21 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 struct OBJ { char pad0[0x10]; OBJ *pnext; int pad14; int oid; OBJ *pnextOid; char pad20[0xC]; char index; char pad2d[0xF]; int value; };
 struct Link { int pad0; int arg; int oid; Link *pnext; OBJ *pobj; };
-struct Entry { OBJ *pobj; char pad[8]; };
-struct Link2 { Link *plink; };
 extern "C" {
 char *PdlFromSwOid(char *, int);
 Link **func_0015E3C0(char *, int);
 void MatchSwObject(char *, OBJ *, int, int, OBJ *, int, int, int *, int *, int *);
 }
+// Search state at sp+0x10: retail passes &count (0x14) and &best (0x18) to MatchSwObject and keeps plist (0x1C) and
+// flag (0x20) beside them; the word at 0x10 is never touched but retail's frame has it.
 struct Locals { int unused; int count; int best; OBJ *plist; int flag; };
 extern int B_003E139C;
+
+// Retail calls PdlFromSwOid and func_0015E3C0 twice each and keeps only the second result (a list-head macro evaluated
+// twice), so the source calls them twice. The duplicate check in the link loop reads loc.count both as the loop bound and
+// in the test after it, with no separate `count > 0` guard: retail's `blez` is the rotated for-loop's own entry test
+// (score 22 -> 8). Still differs (score 8): retail computes the 0x200 flag into $v1 after `pnode = pobj0` and stores it
+// after plist; ours computes it into $v0 first, and the two later reloads of loc.flag are $v1 in retail, $v0 here.
 extern "C" int CploFindSwObjects(char *psw, int grf, int oid, OBJ *pobj0, int limit, int max, int *pfound)
 {
     Locals loc;
@@ -45,13 +52,14 @@ extern "C" int CploFindSwObjects(char *psw, int grf, int oid, OBJ *pobj0, int li
     func_0015E3C0(psw, oid);
     for (Link *plink = *func_0015E3C0(psw, oid); plink; plink = plink->pnext) {
         if (plink->oid == oid) {
-            OBJ *pobj = plink->pobj;
-            if (pobj) {
-                if (pobj->oid == oid && loc.count > 0) {
-                    int i = 0;
-                    for (; i < loc.count; i++)
-                        if (pfound[i] == (int)pobj) break;
-                    if (i < loc.count) continue;
+            if (plink->pobj) {
+                if (plink->pobj->oid == oid) {
+                    int found;
+                    for (found = 0; found < loc.count; found++)
+                        if (pfound[found] == (int)plink->pobj)
+                            break;
+                    if (found < loc.count)
+                        continue;
                 }
                 MatchSwObject(psw, plink->pobj, plink->arg, grf, pobj0, limit, max, &loc.count, pfound, &loc.best);
             }
