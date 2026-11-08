@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 75.938053,
+  "fuzzy_match_percent": 76.362444,
   "total_code": "1402480",
-  "matched_code": "1065016",
-  "matched_code_percent": 75.938053,
+  "matched_code": "1070968",
+  "matched_code_percent": 76.362444,
   "total_data": "1038916",
   "total_functions": 6824,
-  "matched_functions": 5992,
-  "matched_functions_percent": 87.807737,
+  "matched_functions": 6020,
+  "matched_functions_percent": 88.218054,
   "complete_code": "179736",
   "complete_code_percent": 12.815584,
   "total_units": 434,
@@ -10955,7 +10955,7 @@
     {
      "name": ".text",
      "size": "2556",
-     "fuzzy_match_percent": 46.635368,
+     "fuzzy_match_percent": 58.528951,
      "metadata": {}
     }
    ],
@@ -11035,7 +11035,7 @@
     {
      "name": "FlushFrames__Fi",
      "size": "304",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {
       "demangled_name": "FlushFrames(int)"
      },
@@ -11060,14 +11060,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 46.635368,
+    "fuzzy_match_percent": 58.528951,
     "total_code": "2556",
-    "matched_code": "1192",
-    "matched_code_percent": 46.635368,
+    "matched_code": "1496",
+    "matched_code_percent": 58.528951,
     "matched_data_percent": 100.0,
     "total_functions": 10,
-    "matched_functions": 7,
-    "matched_functions_percent": 70.0,
+    "matched_functions": 8,
+    "matched_functions_percent": 80.0,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -18730,9 +18730,9 @@
     {
      "name": "MpegDisplayThread",
      "size": "280",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "1168",
-     "fuzzy_match_percent": 0.0
+     "address": "1168"
     },
     {
      "name": "func_001B2940",
@@ -18958,7 +18958,7 @@
     {
      "name": ".text",
      "size": "5908",
-     "fuzzy_match_percent": 46.310088,
+     "fuzzy_match_percent": 52.606635,
      "metadata": {}
     }
    ],
@@ -19162,16 +19162,16 @@
     {
      "name": "Update__5CMpeg",
      "size": "228",
+     "fuzzy_match_percent": 100.0,
      "metadata": {
       "demangled_name": "CMpeg::Update"
      },
-     "address": "5592",
-     "fuzzy_match_percent": 0.0
+     "address": "5592"
     },
     {
      "name": "Finish__5CMpeg",
      "size": "144",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {
       "demangled_name": "CMpeg::Finish"
      },
@@ -19187,14 +19187,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 46.310088,
+    "fuzzy_match_percent": 52.606635,
     "total_code": "5908",
-    "matched_code": "2736",
-    "matched_code_percent": 46.310088,
+    "matched_code": "3108",
+    "matched_code_percent": 52.606635,
     "matched_data_percent": 100.0,
     "total_functions": 26,
-    "matched_functions": 19,
-    "matched_functions_percent": 73.076923,
+    "matched_functions": 21,
+    "matched_functions_percent": 80.769231,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151040",
-     "fuzzy_match_percent": 29.144597,
+     "fuzzy_match_percent": 32.476165,
      "metadata": {}
     }
    ],
@@ -43918,9 +43918,9 @@
     {
      "name": "StricmpPchz",
      "size": "124",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "10472",
-     "fuzzy_match_percent": 0.0
+     "address": "10472"
     },
     {
      "name": "func_00234350",
@@ -45052,9 +45052,9 @@
     {
      "name": "func_002357B8",
      "size": "176",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "15824",
-     "fuzzy_match_percent": 0.0
+     "address": "15824"
     },
     {
      "name": "func_00235868",
@@ -45087,9 +45087,9 @@
     {
      "name": "func_00236820",
      "size": "88",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "20024",
-     "fuzzy_match_percent": 0.0
+     "address": "20024"
     },
     {
      "name": "func_00236878",
@@ -45150,9 +45150,9 @@
     {
      "name": "func_00236C28",
      "size": "168",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "21056",
-     "fuzzy_match_percent": 0.0
+     "address": "21056"
     },
     {
      "name": "func_00236CD0",
@@ -45283,9 +45283,9 @@
     {
      "name": "func_002375E0",
      "size": "236",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "23544",
-     "fuzzy_match_percent": 0.0
+     "address": "23544"
     },
     {
      "name": "func_002376D0",
@@ -45402,9 +45402,9 @@
     {
      "name": "func_00238BD0",
      "size": "136",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "29160",
-     "fuzzy_match_percent": 0.0
+     "address": "29160"
     },
     {
      "name": "func_00238C58",
@@ -45514,9 +45514,9 @@
     {
      "name": "func_002394B8",
      "size": "96",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "31440",
-     "fuzzy_match_percent": 0.0
+     "address": "31440"
     },
     {
      "name": "func_00239518",
@@ -45668,9 +45668,9 @@
     {
      "name": "InitAlarm",
      "size": "212",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "32640",
-     "fuzzy_match_percent": 0.0
+     "address": "32640"
     },
     {
      "name": "func_00239A40",
@@ -45801,9 +45801,9 @@
     {
      "name": "func_0023A2F0",
      "size": "172",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "35080",
-     "fuzzy_match_percent": 0.0
+     "address": "35080"
     },
     {
      "name": "func_0023A3A0",
@@ -45864,16 +45864,16 @@
     {
      "name": "func_0023A6C8",
      "size": "300",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "36064",
-     "fuzzy_match_percent": 0.0
+     "address": "36064"
     },
     {
      "name": "func_0023A7F8",
      "size": "240",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "36368",
-     "fuzzy_match_percent": 0.0
+     "address": "36368"
     },
     {
      "name": "func_0023A8E8",
@@ -46405,9 +46405,9 @@
     {
      "name": "get_reg_addr",
      "size": "136",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "53184",
-     "fuzzy_match_percent": 0.0
+     "address": "53184"
     },
     {
      "name": "copy_reg",
@@ -46671,9 +46671,9 @@
     {
      "name": "sceGszbufaddr",
      "size": "200",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "62920",
-     "fuzzy_match_percent": 0.0
+     "address": "62920"
     },
     {
      "name": "sceGsSetDefDrawEnv",
@@ -46790,9 +46790,9 @@
     {
      "name": "func_00241830",
      "size": "152",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "65096",
-     "fuzzy_match_percent": 0.0
+     "address": "65096"
     },
     {
      "name": "func_002418C8",
@@ -46972,9 +46972,9 @@
     {
      "name": "func_00242E90",
      "size": "224",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "70824",
-     "fuzzy_match_percent": 0.0
+     "address": "70824"
     },
     {
      "name": "func_00242F70",
@@ -47266,9 +47266,9 @@
     {
      "name": "cosf",
      "size": "232",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "78888",
-     "fuzzy_match_percent": 0.0
+     "address": "78888"
     },
     {
      "name": "fabsf",
@@ -47567,9 +47567,9 @@
     {
      "name": "func_0024A908",
      "size": "204",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "102176",
-     "fuzzy_match_percent": 0.0
+     "address": "102176"
     },
     {
      "name": "sceMpegCreate",
@@ -47581,9 +47581,9 @@
     {
      "name": "func_0024AC10",
      "size": "200",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "102952",
-     "fuzzy_match_percent": 0.0
+     "address": "102952"
     },
     {
      "name": "func_0024ACD8",
@@ -48022,9 +48022,9 @@
     {
      "name": "func_002522C0",
      "size": "148",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "133336",
-     "fuzzy_match_percent": 0.0
+     "address": "133336"
     },
     {
      "name": "func_00252358",
@@ -48330,9 +48330,9 @@
     {
      "name": "func_002547A0",
      "size": "244",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "142776",
-     "fuzzy_match_percent": 0.0
+     "address": "142776"
     },
     {
      "name": "func_00254898",
@@ -48456,9 +48456,9 @@
     {
      "name": "UnlinkFrameNode",
      "size": "336",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "146824",
-     "fuzzy_match_percent": 0.0
+     "address": "146824"
     },
     {
      "name": "LinkProcNode",
@@ -48477,9 +48477,9 @@
     {
      "name": "UnlinkProcNode",
      "size": "336",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "147656",
-     "fuzzy_match_percent": 0.0
+     "address": "147656"
     },
     {
      "name": "LinkSidebagNode",
@@ -48498,9 +48498,9 @@
     {
      "name": "UnlinkSidebagNode",
      "size": "336",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "148480",
-     "fuzzy_match_percent": 0.0
+     "address": "148480"
     },
     {
      "name": "func_00255F38",
@@ -48519,9 +48519,9 @@
     {
      "name": "func_00256120",
      "size": "336",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "149304",
-     "fuzzy_match_percent": 0.0
+     "address": "149304"
     },
     {
      "name": "func_00256270",
@@ -48776,14 +48776,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 29.144597,
+    "fuzzy_match_percent": 32.476165,
     "total_code": "151040",
-    "matched_code": "44020",
-    "matched_code_percent": 29.144597,
+    "matched_code": "49052",
+    "matched_code_percent": 32.476165,
     "matched_data_percent": 100.0,
     "total_functions": 757,
-    "matched_functions": 479,
-    "matched_functions_percent": 63.27609,
+    "matched_functions": 503,
+    "matched_functions_percent": 66.446499,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -51499,7 +51499,7 @@
     {
      "name": ".text",
      "size": "6472",
-     "fuzzy_match_percent": 92.707046,
+     "fuzzy_match_percent": 96.477132,
      "metadata": {}
     }
    ],
@@ -51591,7 +51591,7 @@
     {
      "name": "func_001F3EA8",
      "size": "244",
-     "fuzzy_match_percent": 0.0,
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
      "address": "2048"
     },
@@ -51808,14 +51808,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 92.707046,
+    "fuzzy_match_percent": 96.477132,
     "total_code": "6472",
-    "matched_code": "6000",
-    "matched_code_percent": 92.707046,
+    "matched_code": "6244",
+    "matched_code_percent": 96.477132,
     "matched_data_percent": 100.0,
     "total_functions": 42,
-    "matched_functions": 40,
-    "matched_functions_percent": 95.238095,
+    "matched_functions": 41,
+    "matched_functions_percent": 97.619048,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64553,14 +64553,14 @@
    "id": "game",
    "name": "Game code",
    "measures": {
-    "fuzzy_match_percent": 81.585693,
+    "fuzzy_match_percent": 81.659209,
     "total_code": "1251440",
-    "matched_code": "1020996",
-    "matched_code_percent": 81.585693,
+    "matched_code": "1021916",
+    "matched_code_percent": 81.659209,
     "matched_data_percent": 100.0,
     "total_functions": 6067,
-    "matched_functions": 5513,
-    "matched_functions_percent": 90.868634,
+    "matched_functions": 5517,
+    "matched_functions_percent": 90.934564,
     "complete_code": "179736",
     "complete_code_percent": 14.362335,
     "complete_data_percent": 100.0,
@@ -64572,14 +64572,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 29.144597,
+    "fuzzy_match_percent": 32.476165,
     "total_code": "151040",
-    "matched_code": "44020",
-    "matched_code_percent": 29.144597,
+    "matched_code": "49052",
+    "matched_code_percent": 32.476165,
     "matched_data_percent": 100.0,
     "total_functions": 757,
-    "matched_functions": 479,
-    "matched_functions_percent": 63.27609,
+    "matched_functions": 503,
+    "matched_functions_percent": 66.446499,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64591,14 +64591,14 @@
    "id": "sly1",
    "name": "Sly 1 engine code",
    "measures": {
-    "fuzzy_match_percent": 79.833622,
+    "fuzzy_match_percent": 79.948331,
     "total_code": "802028",
-    "matched_code": "640288",
-    "matched_code_percent": 79.833622,
+    "matched_code": "641208",
+    "matched_code_percent": 79.948331,
     "matched_data_percent": 100.0,
     "total_functions": 3852,
-    "matched_functions": 3431,
-    "matched_functions_percent": 89.070613,
+    "matched_functions": 3435,
+    "matched_functions_percent": 89.174455,
     "complete_code": "120624",
     "complete_code_percent": 15.039874,
     "complete_data_percent": 100.0,
@@ -64648,14 +64648,14 @@
    "id": "graphics",
    "name": "Graphics and effects",
    "measures": {
-    "fuzzy_match_percent": 85.333872,
+    "fuzzy_match_percent": 85.514407,
     "total_code": "168388",
-    "matched_code": "143692",
-    "matched_code_percent": 85.333872,
+    "matched_code": "143996",
+    "matched_code_percent": 85.514407,
     "matched_data_percent": 100.0,
     "total_functions": 758,
-    "matched_functions": 683,
-    "matched_functions_percent": 90.105541,
+    "matched_functions": 684,
+    "matched_functions_percent": 90.237467,
     "complete_code": "37612",
     "complete_code_percent": 22.336509,
     "complete_data_percent": 100.0,
@@ -64724,14 +64724,14 @@
    "id": "objects",
    "name": "World objects and physics",
    "measures": {
-    "fuzzy_match_percent": 83.245554,
+    "fuzzy_match_percent": 83.326276,
     "total_code": "302272",
-    "matched_code": "251628",
-    "matched_code_percent": 83.245554,
+    "matched_code": "251872",
+    "matched_code_percent": 83.326276,
     "matched_data_percent": 100.0,
     "total_functions": 1537,
-    "matched_functions": 1391,
-    "matched_functions_percent": 90.500976,
+    "matched_functions": 1392,
+    "matched_functions_percent": 90.566038,
     "complete_code": "40256",
     "complete_code_percent": 13.317806,
     "complete_data_percent": 100.0,
@@ -64762,14 +64762,14 @@
    "id": "av",
    "name": "Audio, video and input",
    "measures": {
-    "fuzzy_match_percent": 78.635415,
+    "fuzzy_match_percent": 79.206038,
     "total_code": "65192",
-    "matched_code": "51264",
-    "matched_code_percent": 78.635415,
+    "matched_code": "51636",
+    "matched_code_percent": 79.206038,
     "matched_data_percent": 100.0,
     "total_functions": 280,
-    "matched_functions": 244,
-    "matched_functions_percent": 87.142857,
+    "matched_functions": 246,
+    "matched_functions_percent": 87.857143,
     "complete_code": "1032",
     "complete_code_percent": 1.583016,
     "complete_data_percent": 100.0,

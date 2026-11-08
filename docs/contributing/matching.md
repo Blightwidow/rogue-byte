@@ -153,8 +153,10 @@ What AGENTS.md allows and bans, in one place (the full list with reasons and dat
 
 - **No inline asm in functions**, no register pins, no empty `asm` with clobbers, no dummy operands, no `"memory"` clobber to order blocks.
   The one shared `Sqrt` helper (`sqrt.s`) is the only asm.
-- **`volatile`** only on a hardware register at a fixed address (0x10000000 and up) or on data shared with hardware, an interrupt handler or
-  another thread.
+- **`volatile`** only on a hardware register at a fixed address (0x10000000 and up), through a pointer to a register block (a DMA channel's),
+  or on data shared with hardware, an interrupt handler or another thread (a library's semaphore ids and state flags, a field an interrupt
+  handler sets), where retail's code reads and writes it as volatile (the rule of sly1-decomp). Outside the hardware range, mark the line
+  `// volatile-ok: <reason>` and name the register block or the handler and its address; `record.py` accepts nothing else.
 - **A dead local** only as a type the original plausibly declared (retail's frame shows it); never a padding array or an invented field.
 - **A callee prototype** is read from the callee's own disassembly: no return type or argument it does not have.
 - **Game data** (a palette, a header read out of retail) is referenced with an `extern` at retail's address, never defined in source.

@@ -10,7 +10,7 @@ the best score so far and one more try (a near miss that holds a banned construc
 afterwards). A function of the SDK range (status `library`) is registered the same way.
 
 A new match is scanned for what AGENTS.md bans: `volatile` on ordinary data (a pointer to a hardware register, an address from
-0x10000000 up, is allowed), `register` pins, and inline asm in a function (only the shared `sqrt.s` helper is allowed).
+0x10000000 up, is allowed; so is a line marked `// volatile-ok: <reason>` for a register-block pointer or interrupt-shared data), `register` pins, and inline asm in a function (only the shared `sqrt.s` helper is allowed).
 A source that scores 0 but breaks a rule (scripts/matching/check_source.py: the scan above, the cleanup rules, a padding local) is not
 registered: it is parked (scripts/matching/park.py) in data/matching/asm-archive or cleanup-pending and the run lists it (`--no-scan` skips
 the check). Prints the totals and the
@@ -35,6 +35,10 @@ STAMP = 'work/matching/last_record'  # sources older than the last record were c
 SOURCES = 'data/matching/src/fn'
 
 HARDWARE_ADDRESS = re.compile(r'0x1[0-9A-Fa-f]{7}\b')
+# `// volatile-ok: <reason>` on the line of a `volatile`: sly1-decomp's other allowed cases, a pointer to a register block (a DMA channel's) and
+# data shared with an interrupt handler or another thread where retail reads and writes it as volatile. The reason names the register block or
+# the handler (and its address), so every use can be audited; a bare marker with no reason does not count.
+VOLATILE_OK = re.compile(r'volatile-ok:\s*\S')
 BANNED = [
     ('volatile', re.compile(r'(?<!asm )(?<!asm\t)\bvolatile\b')),  # not the `asm volatile` of a statement: the inline asm check covers those
     ('register pin', re.compile(r'\bregister\b[^;]*\basm\b|\basm\s*\(\s*"\$')),
@@ -49,9 +53,11 @@ def scan(text):
     found = []
     lines = text.split('\n')
     for number, line in enumerate(lines, 1):
-        code = line.split('//')[0]
+        code, _, comment = line.partition('//')
         for what, pattern in BANNED:
-            if pattern.search(code) and not (what == 'volatile' and HARDWARE_ADDRESS.search(code)):
+            if what == 'volatile' and (HARDWARE_ADDRESS.search(code) or VOLATILE_OK.search(comment)):
+                continue
+            if pattern.search(code):
                 found.append((number, what, line.strip()[:100]))
     code = '\n'.join(line.split('//')[0] for line in lines)
     for match in ASM_STATEMENT.finditer(code):

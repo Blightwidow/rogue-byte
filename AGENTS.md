@@ -35,8 +35,10 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. No matched source holds inline asm (the 236 that did went back to unmatched on 2026-11-04); `scripts/matching/record.py` scans every
   new match for it.
   `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
-  fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block, and data shared with hardware, an
-  interrupt handler or another thread, where retail's code reads and writes it as volatile.
+  fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block (a DMA channel's), and data shared with
+  hardware, an interrupt handler or another thread (a library's semaphore ids and state flags, a field an interrupt handler sets),
+  where retail's code reads and writes it as volatile. A fixed address from 0x10000000 up needs nothing more; any other `volatile`
+  carries `// volatile-ok: <reason>` on its line, naming the register block or the handler that writes it (scripts/matching/record.py).
   `do { } while (0)` is one too: in game code it is allowed only as the form C macros take (`#define NAME(...) do { ... } while (0)`)
   that the original plausibly had and retail's code needs. Never a wrapper written only to move instructions.
 - **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, or hand-written assembly (`config/us/blockers.tsv`, from `make blockers`), stays
