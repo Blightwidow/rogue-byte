@@ -2358,6 +2358,7 @@ address	name	size	file
 0X17A9D0	GoalGrab_Init	52	hide-puffer/GoalGrab_Init.cpp
 0X17AA08	GoalGrab_Activate	112	hide-puffer/GoalGrab_Activate.cpp
 0X17ABC8	func_0017ABC8	200	hide-puffer/fun_0017abc8.cpp
+0X17AF30	GoalAnimLeap_FHandleMessage	580	hide-puffer/GoalAnimLeap_FHandleMessage.cpp
 0X17B178	GoalAnimLeap_Deactivate	48	hide-puffer/GoalAnimLeap_Deactivate.cpp
 0X17B578	func_0017B578	24	hide-puffer/fun_0017b578.cpp
 0X17B590	func_0017B590	44	hide-puffer/fun_0017b590.cpp
@@ -3160,6 +3161,7 @@ address	name	size	file
 0X1C02D0	FFindPathzoneCrv	80	path/FFindPathzoneCrv.cpp
 0X1C0320	FFindClosestPointInCg	88	path/FFindClosestPointInCg.cpp
 0X1C0378	InitPathzone	68	path/InitPathzone.cpp
+0X1C03C0	CPathZone_LoadFromBrx	644	path/CPathZone_LoadFromBrx.cpp
 0X1C0920	FPosInPathzone	32	new_1c0920/FPosInPathzone.c
 0X1C0940	FFindPathzoneClosestPoint	28	new_1c0920/FFindPathzoneClosestPoint.c
 0X1C0960	ClsgClipEdgeToPathzone	28	new_1c0920/ClsgClipEdgeToPathzone.c
@@ -4112,6 +4114,7 @@ address	name	size	file
 0X1FDEC0	func_001FDEC0	8	new_1fcff8/fun_001fdec0.c
 0X1FDEC8	UpdateStreamCues	544	new_1fcff8/UpdateStreamCues.cpp
 0X1FE0E8	RunStreamCue	100	new_1fcff8/RunStreamCue.cpp
+0X1FE150	QueueStream	444	new_1fcff8/QueueStream.cpp
 0X1FE310	DequeueStream	228	new_1fcff8/DequeueStream.cpp
 0X1FE3F8	MarkClockTickRealOnly__FP5CLOCK	128	clock/MarkClockTickRealOnly__FP5CLOCK.cpp
 0X1FE478	func_001FE478	316	new_1fe478/fun_001fe478.cpp

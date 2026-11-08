@@ -254,7 +254,6 @@ address	name	size	file	score
 0X17A468	func_0017A468	72	hide-puffer/fun_0017a468.c	16
 0X17AA78	func_0017AA78	336	hide-puffer/fun_0017aa78.c	80
 0X17AC90	GoalAnimLeap_Update	672	hide-puffer/GoalAnimLeap_Update.c	139
-0X17AF30	GoalAnimLeap_FHandleMessage	584	hide-puffer/GoalAnimLeap_FHandleMessage.cpp	4
 0X17B9C0	func_0017B9C0	952	hide-puffer/fun_0017b9c0.c	260
 0X17BFF8	func_0017BFF8	1008	hide-puffer/fun_0017bff8.c	216
 0X17C3E8	func_0017C3E8	360	hide-puffer/fun_0017c3e8.c	71
@@ -456,7 +455,6 @@ address	name	size	file	score
 0X1BF1F8	PcgtPointInCgSafe	416	rog-path/PcgtPointInCgSafe.c	104
 0X1BF980	FindPathAStar__FP2CGP3CGVT1iPiPP3CGV	664	path_1bf970/FindPathAStar__FP2CGP3CGVT1iPiPP3CGV.c	141
 0X1BFDB0	PosClosestOnCgt	376	path_1bf970/PosClosestOnCgt.c	92
-0X1C03C0	CPathZone_LoadFromBrx	648	path_1bf970/CPathZone_LoadFromBrx.cpp	5
 0X1C0648	SetupDefaultPathzone	568	path_1bf970/SetupDefaultPathzone.cpp	8
 0X1C0880	HookupCg__FP2CG	160	path_1bf970/HookupCg__FP2CG.c	32
 0X1C1138	HookupPzgraph	296	new_1c0920/HookupPzgraph.cpp	13
@@ -634,7 +632,6 @@ address	name	size	file	score
 0X1FC510	StartStreamAmb	392	new_1fbf20/StartStreamAmb.cpp	80
 0X1FCD38	func_001FCD38	360	new_1fbf20/fun_001fcd38.cpp	2
 0X1FD0E8	LoadSndFromBrx	1280	new_1fcff8/LoadSndFromBrx.cpp	46
-0X1FE150	QueueStream	448	new_1fcff8/QueueStream.cpp	4
 0X1FEA60	SetSndbankVolumeFactor	912	light-button/SetSndbankVolumeFactor.cpp	120
 0X1FF4F0	func_001FF4F0	72	button-spliceobj/fun_001ff4f0.c	13
 0X1FF858	ReadSpliceBlock	488	button-spliceobj/ReadSpliceBlock.cpp	81

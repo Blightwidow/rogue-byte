@@ -2358,6 +2358,7 @@ us_address	name	other_address	pair	score	addresses
 0x17A9D0	GoalGrab_Init	0X17A958	same	0	ok
 0x17AA08	GoalGrab_Activate	0X17A990	same	0	ok
 0x17ABC8	func_0017ABC8	0X17AB50	same	0	ok
+0x17AF30	GoalAnimLeap_FHandleMessage	0X17AEB8	same	0	ok
 0x17B178	GoalAnimLeap_Deactivate	0X17B100	same	0	ok
 0x17B578	func_0017B578	0X17B500	identical	0	ok
 0x17B590	func_0017B590	0X17B518	same	0	ok
@@ -3160,6 +3161,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C02D0	FFindPathzoneCrv	0X1C0538	same	0	ok
 0x1C0320	FFindClosestPointInCg	0X1C0588	same	0	ok
 0x1C0378	InitPathzone	0X1C05E0	same	0	ok
+0x1C03C0	CPathZone_LoadFromBrx	0X1C0628	same	0	ok
 0x1C0920	FPosInPathzone	0X1C0B88	same	0	ok
 0x1C0940	FFindPathzoneClosestPoint	0X1C0BA8	same	0	ok
 0x1C0960	ClsgClipEdgeToPathzone	0X1C0BC8	same	0	ok
@@ -4112,6 +4114,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FDEC0	func_001FDEC0	0X1FE680	gap	0	ok
 0x1FDEC8	UpdateStreamCues	0X1FE688	same	0	ok
 0x1FE0E8	RunStreamCue	0X1FE8A8	same	0	ok
+0x1FE150	QueueStream	0X1FE910	same	0	ok
 0x1FE310	DequeueStream	0X1FEAD0	same	0	ok
 0x1FE3F8	MarkClockTickRealOnly__FP5CLOCK	0X1FEBB8	same	0	ok
 0x1FE478	func_001FE478	0X1FEC38	same	0	ok

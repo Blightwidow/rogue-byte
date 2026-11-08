@@ -9,7 +9,7 @@ extern "C" int GoalAnim_FHandleMessage(GOAL *, int, int *);
 extern "C" void *func_00209518(void *);
 extern "C" int FDoneAnimref(void *);
 extern "C" void StopAnimref(void *);
-extern "C" void StartAnimref(float, void *, void *, unsigned);
+extern "C" void StartAnimref(void *, void *, unsigned, float);
 extern "C" float *PeaFindAsegLabel(void *, int);
 extern "C" void SeekAsega(void *, int, float, float);
 extern "C" void GoalAnimLeap_SetState(GOAL *, int);
@@ -47,10 +47,7 @@ extern "C" int GoalAnimLeap_FHandleMessage(GOAL *goal, int message, int *data)
         return 0;
     if (FDoneAnimref(goal->animref)) {
         StopAnimref(goal->animref);
-        void *animref = goal->animref;
-        void *guard = goal->guard;
-        unsigned flags = *(unsigned *)((char *)animref + 0xC);
-        StartAnimref(0.0f, animref, guard, flags | 1);
+        StartAnimref(goal->animref, goal->guard, *(unsigned *)(goal->animref + 0xC) | 1, 0.0f);
     }
     hits = goal->hits + 1;
     goal->hits = hits;
