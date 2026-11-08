@@ -2048,6 +2048,7 @@ address	name	size	file
 0X160A98	CloseFrame__Fv	212	frm/CloseFrame__Fv.cpp
 0X160B70	FrameRenderLoop__FPv	272	frm/FrameRenderLoop__FPv.cpp
 0X160C80	RenderFrame__FP3FRMi	92	frm/RenderFrame__FP3FRMi.cpp
+0X160E68	FlushFrames__Fi	304	frm/FlushFrames__Fi.cpp
 0X161238	func_00161238	332	frm-splice-frame/fun_00161238.c
 0X161388	func_00161388	32	frm-splice-frame/fun_00161388.c
 0X1613A8	func_001613A8	76	frm-splice-frame/fun_001613a8.c
@@ -3008,6 +3009,7 @@ address	name	size	file
 0X1B26C8	StaticInitSlotheaps_1b26c8	308	missile-mpeg/StaticInitSlotheaps_1b26c8.c
 0X1B2800	GlobalCtorSlotheaps_1b2800	32	missile-mpeg/GlobalCtorSlotheaps_1b2800.c
 0X1B2820	func_001B2820	8	missile-mpeg/fun_001b2820.c
+0X1B2828	MpegDisplayThread	280	missile-mpeg/MpegDisplayThread.cpp
 0X1B2940	func_001B2940	144	unsorted/fun_001b2940.cpp
 0X1B29D0	CQueueOutputIop_FInit	176	missile-mpeg/CQueueOutputIop_FInit.cpp
 0X1B2A80	Reset__15CQueueOutputIop	28	mpeg/Reset__15CQueueOutputIop.cpp
@@ -3029,6 +3031,8 @@ address	name	size	file
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp
 0X1B3BD0	Execute__5CMpeg	748	mpeg/Execute__5CMpeg.cpp
 0X1B3EC0	CMpeg_Start	404	mpeg/CMpeg_Start.cpp
+0X1B4058	Update__5CMpeg	228	mpeg/Update__5CMpeg.cpp
+0X1B4140	Finish__5CMpeg	144	mpeg/Finish__5CMpeg.cpp
 0X1B41D0	CMpeg_CbDemuxed	236	mpeg-memcard/CMpeg_CbDemuxed.cpp
 0X1B42C0	func_001B42C0	12	mpeg-memcard/fun_001b42c0.c
 0X1B42D0	StaticInitMpeg	324	mpeg-memcard/StaticInitMpeg.c

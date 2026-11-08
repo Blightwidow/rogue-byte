@@ -2048,6 +2048,7 @@ us_address	name	other_address	pair	score	addresses
 0x160A98	CloseFrame__Fv	0X160AC0	same	0	ok
 0x160B70	FrameRenderLoop__FPv	0X160B98	same	0	ok
 0x160C80	RenderFrame__FP3FRMi	0X160CA8	same	0	ok
+0x160E68	FlushFrames__Fi	0X160E90	same	0	ok
 0x161238	func_00161238	0X161260	same	0	ok
 0x161388	func_00161388	0X1613B0	same	0	ok
 0x1613A8	func_001613A8	0X1613D0	gap	1	ok
@@ -3008,6 +3009,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B26C8	StaticInitSlotheaps_1b26c8	0X1B2888	same	0	ok
 0x1B2800	GlobalCtorSlotheaps_1b2800	0X1B29C0	same	0	ok
 0x1B2820	func_001B2820		none		
+0x1B2828	MpegDisplayThread		none		
 0x1B2940	func_001B2940	0X1B2BC8	same	0	ok
 0x1B29D0	CQueueOutputIop_FInit	0X1B2C58	same	0	ok
 0x1B2A80	Reset__15CQueueOutputIop	0X1B2D08	identical	0	ok
@@ -3029,6 +3031,8 @@ us_address	name	other_address	pair	score	addresses
 0x1B3B08	FPlayQueuedMovies	0X1B3D90	same	0	ok
 0x1B3BD0	Execute__5CMpeg		none		
 0x1B3EC0	CMpeg_Start	0X1B40F8	same	0	ok
+0x1B4058	Update__5CMpeg	0X1B4290	same	0	ok
+0x1B4140	Finish__5CMpeg	0X1B4378	same	0	ok
 0x1B41D0	CMpeg_CbDemuxed	0X1B4408	same	0	ok
 0x1B42C0	func_001B42C0		none		
 0x1B42D0	StaticInitMpeg		none		

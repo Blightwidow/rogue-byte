@@ -201,7 +201,6 @@ address	name	size	file	score
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
 0X160CE0	ClearPendingFrame__FP3FRM	392	frm/ClearPendingFrame__FP3FRM.cpp	43
-0X160E68	FlushFrames__Fi	304	frm/FlushFrames__Fi.c	52
 0X160F98	BlendPrevFrame__Fv	672	frm/BlendPrevFrame__Fv.cpp	87
 0X161478	UpdatePlayTime	488	new_161458/UpdatePlayTime.cpp	65
 0X1617E0	SetGameCoins	136	new_161458/SetGameCoins.cpp	9
@@ -415,7 +414,6 @@ address	name	size	file	score
 0X1B2FD8	CbWrite__15CQueueOutputIpuiPv	96	mpeg/CbWrite__15CQueueOutputIpuiPv.c	23
 0X1B3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	496	mpeg/BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii.cpp	50
 0X1B3700	DrawMpegFrame	840	mpeg/DrawMpegFrame.cpp	37
-0X1B4140	Finish__5CMpeg	144	mpeg/Finish__5CMpeg.c	19
 0X1B44D8	func_001B44D8	248	mpeg-memcard/fun_001b44d8.c	52
 0X1B4728	InitMurray	352	mpeg-memcard/InitMurray.cpp	7
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.c	160
