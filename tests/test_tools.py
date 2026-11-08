@@ -1452,5 +1452,13 @@ class ClassifyDiffsTests(unittest.TestCase):
         self.assertEqual(classify_diffs.class_of(1, [hunk], 0), ('register', 'register'))
 
 
+class MovablesFlagTests(unittest.TestCase):
+    def test_a_listed_function_is_compiled_with_the_flag(self):
+        self.assertTrue(compile_unit.movables_for(0x20C0E8))
+
+    def test_an_unlisted_function_is_not(self):
+        self.assertFalse(compile_unit.movables_for(0x100000))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -77,6 +77,19 @@ def vu0_for(address):
     return os.environ.get('TRY_VU0') == '1' or address in vu0_functions()
 
 
+MOVE_FLAG = '-fmove-all-movables'  # loop.c treats every loop-invariant movable as worth hoisting, not only the ones it judges profitable
+
+
+def movables_functions():
+    """Addresses of the functions compiled with MOVE_FLAG (config/us/move_movables.txt): retail's loop-invariant hoisting there is what this option gives
+    and the default does not (docs/contributing/exceptions.md). Every function of src/ is its own source file, so this is that file's flag set."""
+    return listed_functions('move_movables.txt')
+
+
+def movables_for(address):
+    return os.environ.get('TRY_MOVABLES') == '1' or address in movables_functions()
+
+
 def sony_functions():
     """Addresses of the functions built with Sony's gcc 2.9 (config/us/sony_gcc29.txt): the libgcc and libc units of the SDK range."""
     return listed_functions('sony_gcc29.txt')
@@ -126,14 +139,14 @@ def compile_sony(language, source, output, include=None, localize=True):
     return True, ''
 
 
-def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False):
+def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False, movables=False):
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
     if assembler == 'sony29':
         return compile_sony(language, source, output, include, localize)
     directory = compiler_directory()
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
-              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else [])]
+              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else []), *([MOVE_FLAG] if movables else [])]
     if EE_AS == EE_AS_BUILD:
         make_assembler()
     if not os.path.isfile(EE_AS):
@@ -175,9 +188,10 @@ def main():
     parser.add_argument('source')
     parser.add_argument('output')
     parser.add_argument('--vu0', action='store_true', help='compile with ' + VU0_FLAG)
+    parser.add_argument('--movables', action='store_true', help='compile with ' + MOVE_FLAG)
     parser.add_argument('--assembler', choices=['sony29'])
     arguments = parser.parse_args()
-    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0)
+    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0, movables=arguments.movables)
     if not ok:
         sys.stderr.write(message)
         sys.exit(1)

@@ -77,7 +77,7 @@ def fingerprint():
             digest.update(' '.join(compile_unit.FLAGS).encode())
             digest.update(os.environ.get('EE_AS_ARGS', '').encode())
             digest.update(os.environ.get('EE_GCC_DIR', '').encode())  # empty for a build: the fingerprint of a normal run does not change
-            for path in (compile_unit.EE_AS, os.path.join(LAB, 'config', 'us', 'sony_gcc29.txt'), SYMBOLS):
+            for path in (compile_unit.EE_AS, os.path.join(LAB, 'config', 'us', 'sony_gcc29.txt'), os.path.join(LAB, 'config', 'us', 'move_movables.txt'), SYMBOLS):
                 digest.update(f'{path}:{content_digest(path)}'.encode())
             for directory, _, names in sorted(os.walk(INCLUDE)):
                 for name in sorted(names):
@@ -133,7 +133,7 @@ def compile_and_compare(address, text, lang, quiet):
     with open(source, 'w') as handle:
         handle.write(text)
     try:
-        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
+        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address))
         if not ok:
             return None
         return compare_object(address, path, quiet)
