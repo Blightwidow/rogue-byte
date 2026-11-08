@@ -18,12 +18,10 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 ## Next
 
 1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses.
-2. Remove the third-party names and prototype data that landed before "derive everything ourselves"
-   ([THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), "Legacy"), or re-derive them from retail.
-3. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
+2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
-4. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
+3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 0.83% of data (8,375 of 1,011,732 bytes: only a function's own literals and
    jump tables, `data/rodata-c`). What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data); `data/irx` 474 KB (IOP modules) and
@@ -32,9 +30,9 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    plain definition lays out 8 bytes short of retail's gap; `link_image.py` places only an object's own `.rodata`, and `derive_rodata_base` assumes
    section-symbol relocations. Per-global sweeps are small (18 `.rodata` externs, 178 bytes behind matched functions; 674 `.data` externs, 103 KB, 129 of
    them over 1 KB). The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
-   sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 3.
+   sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
 
-5. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
+4. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
    VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report
    honest and match about 106 to 258 of the 853 blockers. First a compile pilot on about 10 functions, then the rule change in
    AGENTS.md; the headline falls by about 1.7 to 4.2 points. See [build/inline-asm-helpers.md](build/inline-asm-helpers.md).
