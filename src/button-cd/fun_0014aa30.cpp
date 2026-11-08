@@ -21,10 +21,12 @@ extern "C" LM D_002BD490;
 extern "C" LM D_002BD498;
 extern "C" LM D_002BD4A0;
 // sqrt.s as the game's math header writes it (asm volatile, precedent SetSlotSoSmp / 220D40)
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
 static inline float SqrtfAsm(float value)
 {
     float result;
-    asm volatile("sqrt.s %0, %1" : "=f" (result) : "f" (value));
+    asm volatile("sqrt.s %0, %1" : "=&f"(result) : "f" (value));
     return result;
 }
 static inline float GFracLm(LM *plm, float g)

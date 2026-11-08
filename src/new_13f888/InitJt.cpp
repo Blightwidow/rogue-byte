@@ -10,6 +10,8 @@ void InitJtPipe(void *, void *);
 void func_00144638(void *, void *);
 void SetAloInteract(void *, int, int);
 }
+// The `0x12F0 = 0x10F0 = 1` chain is two plain stores: 0x10F0 before the 0x10D4/0x10D8 float chain, 0x12F0 after the 0x1144 store. The
+// scheduler keeps a store that needs no constant register last in source order, which puts 0x10F0 before 0x10D8 as in retail.
 void InitJt(char *jt)
 {
     InitStep(jt);
@@ -23,12 +25,13 @@ void InitJt(char *jt)
     func_00144638(jt + 0xFD0, jt);
     *(float *)(jt + 0x103C) = 20.0f;
     *(float *)(jt + 0x1048) = 125.0f;
+    *(int *)(jt + 0x10F0) = 1;
     *(float *)(jt + 0x10D4) = *(float *)(jt + 0x10D8) = 1.0f;
     *(float *)(jt + 0x1138) = 1.5f;
     *(float *)(jt + 0x113C) = 2.5f;
     *(float *)(jt + 0x1140) = 3.0f;
     *(float *)(jt + 0x1144) = 5.0f;
-    *(int *)(jt + 0x12F0) = *(int *)(jt + 0x10F0) = 1;
+    *(int *)(jt + 0x12F0) = 1;
     *(float *)(jt + 0x1020) = 100.0f;
     *(int *)(jt + 0x1300) = 100;
     *(float *)(jt + 0x1304) = -60.0f;

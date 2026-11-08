@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CLQ { float a; int b; float c; };
+struct CLQ { float a; float b; float c; };
 struct SND {
     int unk0;
     int unk4;
@@ -31,11 +31,14 @@ struct SND {
 };
 extern "C" {
 extern char D_002CA510[];
-extern float RO_FLT_002A83B8[2];
-extern float RO_FLT_002A83C0[2];
+extern const float RO_FLT_002A83B8[2];
+extern const float RO_FLT_002A83C0[2];
 void CreateSlotheapSwAlign(void *, int, int, int);
 void InitDl__FP2DLi(void *, int);
 void FitClq__FffffP3CLQ(float, float, float, float, CLQ *);
+// Two choices. CLQ is three floats (no `*(float *)&b` pun). The rodata tables RO_FLT_002A83B8/C0 are `const`, as they are in retail's
+// rodata: that makes their loads independent of the `c = 0.25f` store, so the scheduler puts the store after the three argument loads. The
+// clqA/clqB/clqC pointer locals are needed (every access through psnd-> scores 42).
 SND *func_001FCD38(SND *psnd)
 {
     psnd->unk0 = 0;
@@ -48,7 +51,6 @@ SND *func_001FCD38(SND *psnd)
     int count = 7;
     do { *word++ = 0; } while (--count != -1);
     psnd->unk228 = 0;
-    float half = 0.5f;
     InitDl__FP2DLi(psnd->dl, 0x38);
     CLQ *clqC = &psnd->clqC;
     CLQ *clqB = &psnd->clqB;
@@ -57,17 +59,17 @@ SND *func_001FCD38(SND *psnd)
     psnd->unk68 = 3;
     psnd->unk10 = 0;
     psnd->unk104 = 0;
-    clqC->b = 0;
+    clqC->b = 0.0f;
     clqC->c = 0.25f;
     psnd->clqB.a = 1.0f;
-    clqB->b = 0;
+    clqB->b = 0.0f;
     clqB->c = 0.25f;
     psnd->clqA.a = 3.0f;
-    clqA->b = 0;
-    float seed = *(float *)&clqA->b;
-    float lo1 = RO_FLT_002A83B8[1];
-    FitClq__FffffP3CLQ((clqA->c = 0.25f, seed), lo1, half, RO_FLT_002A83B8[0], &psnd->fitA);
-    FitClq__FffffP3CLQ(seed, RO_FLT_002A83C0[1], half, RO_FLT_002A83C0[0], &psnd->fitB);
+    clqA->b = 0.0f;
+    clqA->c = 0.25f;
+    float seed = clqA->b;
+    FitClq__FffffP3CLQ(seed, RO_FLT_002A83B8[1], 0.5f, RO_FLT_002A83B8[0], &psnd->fitA);
+    FitClq__FffffP3CLQ(seed, RO_FLT_002A83C0[1], 0.5f, RO_FLT_002A83C0[0], &psnd->fitB);
     psnd->unk58 = 0;
     return psnd;
 }

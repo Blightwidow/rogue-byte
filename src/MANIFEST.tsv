@@ -954,6 +954,7 @@ address	name	size	file
 0X11D448	GRandInRange	136	util/GRandInRange.c
 0X11D4D0	FFloatsNear__Ffff	56	util/FFloatsNear__Ffff.cpp
 0X11D5B0	PrescaleClq__FP3CLQffT0	88	util/PrescaleClq__FP3CLQffT0.c
+0X11D608	CalculateSinCos__FfPfT1	308	util/CalculateSinCos__FfPfT1.cpp
 0X11D740	GTrunc__Fd	176	util/GTrunc__Fd.cpp
 0X11D7F0	GTrunc__Ff	168	util/GTrunc__Ff.cpp
 0X11D898	GModPositive__Fff	60	util/GModPositive__Fff.cpp
@@ -1145,6 +1146,7 @@ address	name	size	file
 0X127068	RefEvalLambda	296	splice-eval-splice-frame/RefEvalLambda.cpp
 0X127190	RefEvalProcBody	152	splice-eval-splice-frame/RefEvalProcBody.cpp
 0X127228	RefEvalBegin	184	splice-eval-splice-frame/RefEvalBegin.cpp
+0X127838	RefEval	388	splice-eval-splice-frame/RefEval.cpp
 0X1279C0	StaticInitSpliceFrameSlotheaps	308	splice-eval-splice-frame/StaticInitSpliceFrameSlotheaps.c
 0X127AF8	GlobalInitSpliceFrameSlotheaps	32	splice-eval-splice-frame/GlobalInitSpliceFrameSlotheaps.c
 0X127B18	bevy_splice_frame_set_parent	36	splice-eval-splice-frame/bevy_splice_frame_set_parent.c
@@ -1537,6 +1539,7 @@ address	name	size	file
 0X13FA30	func_0013FA30	156	new_13f888/fun_0013fa30.cpp
 0X13FE18	StaticInitJtPools	308	new_13f888/StaticInitJtPools.c
 0X13FF50	GlobalCtorJtPools	32	new_13f888/GlobalCtorJtPools.c
+0X13FF70	InitJt	324	new_13f888/InitJt.cpp
 0X140338	func_00140338	152	new_13f888/fun_00140338.cpp
 0X1403D0	UpdateJt	392	new_13f888/UpdateJt.cpp
 0X140558	UpdateJtFocus	288	new_13f888/UpdateJtFocus.cpp
@@ -1891,6 +1894,7 @@ address	name	size	file
 0X154A40	GlobalCtorSensorSight	32	new_154180/GlobalCtorSensorSight.c
 0X154A60	OnDifficultyGameLoad__FP10DIFFICULTY	32	difficulty/OnDifficultyGameLoad__FP10DIFFICULTY.cpp
 0X154A80	func_00154A80	16	new_154a80/fun_00154a80.cpp
+0X154C90	GetSuck	248	new_154a80/GetSuck.cpp
 0X154D88	AddSuck	60	sw/AddSuck.c
 0X154DC8	ChangeSuck__FfP10DIFFICULTY	68	difficulty/ChangeSuck__FfP10DIFFICULTY.cpp
 0X154E10	OnDifficultyBreak	1048	difficulty-crv/OnDifficultyBreak.cpp
@@ -2358,6 +2362,7 @@ address	name	size	file
 0X17A9D0	GoalGrab_Init	52	hide-puffer/GoalGrab_Init.cpp
 0X17AA08	GoalGrab_Activate	112	hide-puffer/GoalGrab_Activate.cpp
 0X17ABC8	func_0017ABC8	200	hide-puffer/fun_0017abc8.cpp
+0X17AF30	GoalAnimLeap_FHandleMessage	580	hide-puffer/GoalAnimLeap_FHandleMessage.cpp
 0X17B178	GoalAnimLeap_Deactivate	48	hide-puffer/GoalAnimLeap_Deactivate.cpp
 0X17B578	func_0017B578	24	hide-puffer/fun_0017b578.cpp
 0X17B590	func_0017B590	44	hide-puffer/fun_0017b590.cpp
@@ -2581,6 +2586,7 @@ address	name	size	file
 0X1870D0	UpdateGrfjoytFromGrfusr__Fv	128	joy/UpdateGrfjoytFromGrfusr__Fv.cpp
 0X187150	InitJoy	112	joy/InitJoy.cpp
 0X1871C0	UpdateJoy__FP3JOY	1016	joy/UpdateJoy__FP3JOY.cpp
+0X187998	FReadJoy__FP3JOY	996	joy/FReadJoy__FP3JOY.cpp
 0X187D80	FJoyButtonPressed	76	joy/FJoyButtonPressed.c
 0X187DD0	FJoyButtonPeek	12	joy/FJoyButtonPeek.c
 0X187DE0	ConsumeJoyButton	40	joy/ConsumeJoyButton.c
@@ -3160,6 +3166,7 @@ address	name	size	file
 0X1C02D0	FFindPathzoneCrv	80	path/FFindPathzoneCrv.cpp
 0X1C0320	FFindClosestPointInCg	88	path/FFindClosestPointInCg.cpp
 0X1C0378	InitPathzone	68	path/InitPathzone.cpp
+0X1C03C0	CPathZone_LoadFromBrx	644	path/CPathZone_LoadFromBrx.cpp
 0X1C0920	FPosInPathzone	32	new_1c0920/FPosInPathzone.c
 0X1C0940	FFindPathzoneClosestPoint	28	new_1c0920/FFindPathzoneClosestPoint.c
 0X1C0960	ClsgClipEdgeToPathzone	28	new_1c0920/ClsgClipEdgeToPathzone.c
@@ -3221,6 +3228,7 @@ address	name	size	file
 0X1C4130	func_001C4130	136	new_1c3df8/fun_001c4130.cpp
 0X1C4280	VJOY_constructor	100	new_1c3df8/VJOY_constructor.cpp
 0X1C42E8	ResetVjoy	72	new_1c3df8/ResetVjoy.cpp
+0X1C4468	UpdateVjoy	320	new_1c3df8/UpdateVjoy.cpp
 0X1C45A8	UpdateVjoyPressTimes	148	new_1c3df8/UpdateVjoyPressTimes.cpp
 0X1C4640	SetVjoyMode	28	new_1c3df8/SetVjoyMode.c
 0X1C4660	GrfbtnVjoyPressedWithin	96	new_1c3df8/GrfbtnVjoyPressedWithin.cpp
@@ -3268,6 +3276,7 @@ address	name	size	file
 0X1C7B18	PpathClueFlag	156	new_1c76d0/PpathClueFlag.cpp
 0X1C7BB8	FClueFound	120	new_1c76d0/FClueFound.cpp
 0X1C7D00	func_001C7D00	8	new_1c76d0/fun_001c7d00.c
+0X1C7D08	CcluesFound	300	new_1c76d0/CcluesFound.cpp
 0X1C7E38	func_001C7E38	48	new_1c76d0/fun_001c7e38.c
 0X1C7E68	func_001C7E68	60	new_1c76d0/fun_001c7e68.cpp
 0X1C7EA8	func_001C7EA8	60	new_1c76d0/fun_001c7ea8.cpp
@@ -3723,6 +3732,7 @@ address	name	size	file
 0X1E7380	FindCrvClosestPointFromS	144	new_1e6f10/FindCrvClosestPointFromS.cpp
 0X1E7410	bevy_player_p5_target_1e7410	292	new_1e6f10/bevy_player_p5_target_1e7410.cpp
 0X1E7538	IcvFindCrvU	304	new_1e6f10/IcvFindCrvU.cpp
+0X1E7668	IcvFindCrvS	328	new_1e6f10/IcvFindCrvS.cpp
 0X1E77B0	PosClosestOnCrv	48	new_1e6f10/PosClosestOnCrv.cpp
 0X1E77E8	bevy_player_p5_target_1e77e8	84	new_1e6f10/bevy_player_p5_target_1e77e8.cpp
 0X1E7840	PattachCrv	236	new_1e6f10/PattachCrv.cpp
@@ -3884,6 +3894,7 @@ address	name	size	file
 0X1F1768	func_001F1768	72	sm-so/fun_001f1768.cpp
 0X1F17B0	func_001F17B0	72	sm-so/fun_001f17b0.cpp
 0X1F17F8	func_001F17F8	264	sm-so/fun_001f17f8.cpp
+0X1F1900	func_001F1900	316	sm-so/fun_001f1900.cpp
 0X1F1CF8	func_001F1CF8	292	sm-so/fun_001f1cf8.cpp
 0X1F1E20	func_001F1E20	148	sm-so/fun_001f1e20.cpp
 0X1F1EB8	func_001F1EB8	124	sm-so/fun_001f1eb8.cpp
@@ -4093,6 +4104,7 @@ address	name	size	file
 0X1FCCA0	StreamAmb_Release	76	new_1fbf20/StreamAmb_Release.cpp
 0X1FCCF0	PvAllocStreamAmb	32	new_1fbf20/PvAllocStreamAmb.c
 0X1FCD10	FreeStreamAmb	36	new_1fbf20/FreeStreamAmb.c
+0X1FCD38	func_001FCD38	356	new_1fbf20/fun_001fcd38.cpp
 0X1FCEA0	InitSndSystem	204	new_1fbf20/InitSndSystem.cpp
 0X1FCF70	func_001FCF70	20	unsorted/fun_001fcf70.cpp
 0X1FCF88	func_001FCF88	20	unsorted/fun_001fcf88.cpp
@@ -4112,6 +4124,7 @@ address	name	size	file
 0X1FDEC0	func_001FDEC0	8	new_1fcff8/fun_001fdec0.c
 0X1FDEC8	UpdateStreamCues	544	new_1fcff8/UpdateStreamCues.cpp
 0X1FE0E8	RunStreamCue	100	new_1fcff8/RunStreamCue.cpp
+0X1FE150	QueueStream	444	new_1fcff8/QueueStream.cpp
 0X1FE310	DequeueStream	228	new_1fcff8/DequeueStream.cpp
 0X1FE3F8	MarkClockTickRealOnly__FP5CLOCK	128	clock/MarkClockTickRealOnly__FP5CLOCK.cpp
 0X1FE478	func_001FE478	316	new_1fe478/fun_001fe478.cpp
@@ -4863,9 +4876,11 @@ address	name	size	file
 0X236CF0	func_00236CF0	48	sdk/fun_00236cf0.c
 0X236D20	func_00236D20	64	sdk/fun_00236d20.cpp
 0X236E30	func_00236E30	64	sdk/fun_00236e30.cpp
+0X236E70	func_00236E70	208	sdk/fun_00236e70.c
 0X236F48	func_00236F48	76	sdk/fun_00236f48.cpp
 0X236F98	func_00236F98	64	sdk/fun_00236f98.cpp
 0X2370A8	sceSifBindRpc	332	sdk/sceSifBindRpc.cpp
+0X2371F8	func_002371F8	140	unsorted/fun_002371f8.c
 0X237488	sceSifCheckStatRpc	60	sdk/sceSifCheckStatRpc.cpp
 0X2374E0	func_002374E0	112	sdk/fun_002374e0.cpp
 0X237558	func_00237558	136	sdk/fun_00237558.c
@@ -4886,6 +4901,8 @@ address	name	size	file
 0X2392F0	sceSifSyncIop	80	sdk/sceSifSyncIop.c
 0X239340	sceSifRebootIop	272	sdk/sceSifRebootIop.cpp
 0X2394B8	func_002394B8	96	sdk/fun_002394b8.c
+0X239520	func_00239520	56	unsorted/fun_00239520.c
+0X239558	func_00239558	64	unsorted/fun_00239558.c
 0X2395B0	func_002395B0	252	sdk/fun_002395b0.cpp
 0X2396C0	func_002396C0	84	sdk/fun_002396c0.c
 0X239738	func_00239738	56	unsorted/fun_00239738.cpp
@@ -4979,6 +4996,7 @@ address	name	size	file
 0X241E88	sceCdSync	160	sdk/sceCdSync.cpp
 0X241F28	func_00241F28	108	sdk/fun_00241f28.cpp
 0X242AB8	func_00242AB8	36	sdk/fun_00242ab8.cpp
+0X242B78	sceCdBreak	184	sdk/sceCdBreak.c
 0X242D08	scePadInit	320	sdk/scePadInit.cpp
 0X242E90	func_00242E90	224	sdk/fun_00242e90.c
 0X243270	func_00243270	96	sdk/fun_00243270.cpp

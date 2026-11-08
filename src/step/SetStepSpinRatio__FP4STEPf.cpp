@@ -8,7 +8,9 @@ struct Step204D48 {
     float spinY;
     float spinZ;
 };
-static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x)); return r; }
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
+static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=&f"(r) : "f"(x)); return r; }
 extern "C" const Vec12_204D48 D_002C3CB8;
 extern "C" void SetStepSpinRatio__FP4STEPf(Step204D48 *step, float ratio)
 {

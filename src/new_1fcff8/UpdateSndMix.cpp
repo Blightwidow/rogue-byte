@@ -28,10 +28,12 @@ static inline int FAmbActive(AMB *pamb)
 {
     return pamb->cplay != 0 || (pamb->grf & 1) != 0;
 }
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
 static inline float SqrtF(float value)
 {
     float result;
-    asm volatile("sqrt.s %0, %1" : "=f" (result) : "f" (value));
+    asm volatile("sqrt.s %0, %1" : "=&f"(result) : "f" (value));
     return result;
 }
 

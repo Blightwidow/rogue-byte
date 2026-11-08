@@ -18,7 +18,9 @@ extern char D_002DDEC0[];
 extern float D_002DEB30;
 extern char D_003DD490[];
 extern float g_2ddf0c;
-static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x)); return r; }
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
+static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=&f"(r) : "f"(x)); return r; }
 #define F(type, off) (*(type *)(self + (off)))
 s32 FReadJoy__FP3JOY(char *self)
 {
