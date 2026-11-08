@@ -1,0 +1,27 @@
+address	name	class	reason	evidence
+0x24B480	sceMpegInit	toolchain	store in a jal delay slot with its address in a register: Sony gcc fills a call slot only with a non-volatile store, which folds into lui $at; sw	2026-11-08 o08, s-pass: 8 forms, scores 2 to 35
+0x235780	func_00235780	toolchain	sb in the jr delay slot, same wall (non-volatile folds, volatile is never put in a slot)	2026-11-08 o03: 9 compiles, 25 probes
+0x241468	sceDmaReset	toolchain	sw to 0x1000E010 in the jal memclr slot, same wall	2026-11-08 p1: 5 compiles from a raw m2c draft
+0x24C4B0	func_0024C4B0	toolchain	hardware stores in delay slots (libmpeg), same wall; no other Sony gcc build changes it	docs/build/compiler-identification.md, libmpeg on other Sony builds
+0x24C670	func_0024C670	toolchain	hardware stores in delay slots (libmpeg), same wall	docs/build/compiler-identification.md
+0x2539D0	func_002539D0	toolchain	delay-slot store shape found by the o03 scan of retail	2026-11-08 o03 scan
+0x23A420	func_0023A420	toolchain	retail stores $gp into the slot; plain C has no form that reads $gp	2026-11-08 o10
+0x206820	func_00206820	tie	sched1 tie: both stores ready at t=1, the vtable load waits for the copy of a0	2026-11-08 s04: 16 compiles, RTL dumps
+0x22CB90	BuildXfAngularRateMatrix	tie	two instructions before a jal in the other order; only a struct-return temp gives retail order, at score 30	2026-11-08 s11: 14 compiles
+0x1C41B8	func_001C41B8	tie	vptr and delta register tie in global alloc; 18 compiles and 30 permuter runs	2026-11-08 s08
+0x214100	FStartSpriteDepthInstance	tie	iinst in $t2, retail $a1: global alloc	2026-11-08 t11: 20 compiles
+0x1BEB28	func_001BEB28	tie	loop.c moves the lui in pass 2: needs 61 RTL insns or fewer in the loop, plain forms have 63 to 64	2026-11-08 q08: dumps
+0x216750	CMovieText_DrawGlyphs	tie	$hi of g_2c40a8 in $a1 vs $v0: reload order after loop.c hoisting	2026-11-08 q02: 17 compiles + 52 permuter
+0x165538	RestartAtTask	tie	fB8 pseudo takes $v0 ahead of the address pseudo in local-alloc	2026-11-08 q04: 16 compiles
+0x121710	RefOpMap	tie	sched2 ranks a0=sp before a1=v0 after the PpairNew call	2026-11-08 q06
+0x16E438	LoadGlobSkinnedFromBrx	tie	loop.c hoists three values into the pass loop entry block; scheduler order of the chains	2026-11-08 q01: dumps
+0x1B9130	AdjustMurrayNewXp	tie	float compare keeps $v0 live across hit = 1; global alloc picks $a0	2026-11-08 q09: 19 compiles
+0x1533B0	JudgeRhythmPress	tie	strength reduction of the 36-byte stride: ee-gcc emits a real mult	2026-11-08 q07
+0x1AC008	WriteIconSys	tie	two scheduling spots; 750 permuter orders	2026-11-08 t06
+0x24A9D8	sceMpegCreate	tie	temps for work+0x1F8 and +0x260 swapped between $v0 and $v1; 17 compiles	2026-11-08 o12
+0x241A30	func_00241A30	tie	combine merges the call-result copy into the store; delay-slot scheduling of the 4th call	2026-11-08 o13
+0x1488D8	RunBtnAsegs	tie	base address order of the loop pointer built by loop.c	2026-11-08 u04: 18 compiles + permuter
+0x2577E0	SweepPairs	tie	index shift lands in the wrong register; the plain shift form scores 12	2026-11-08 u07
+0x179898	GoalKnockDown_Activate	tie	the compiler reuses the guard copy instead of reloading it	2026-11-08 u05: 21 compiles
+0x1B98A0	FMurrayCanUseGadget	tie	store-flag expansion of the call result before the branch	2026-11-08 u08: 21 compiles
+0x14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	tie	pcm and icpr priority in global alloc (15 vs 16 refs)	2026-11-08 u02: .lreg dumps

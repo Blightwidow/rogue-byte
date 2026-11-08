@@ -1789,6 +1789,7 @@ address	name	size	file
 0X14D6D8	InitCm	484	cm/InitCm.cpp
 0X14D8C0	SetResetFlag__FP2CM	24	cm/SetResetFlag__FP2CM.cpp
 0X14D8D8	bevy_camera_cm_14d8d8	32	cm/bevy_camera_cm_14d8d8.cpp
+0X14D8F8	CombineEyeLookAtProj	272	cm/CombineEyeLookAtProj.cpp
 0X14DB70	RecalcCmFrustrum__FP2CM	228	cm/RecalcCmFrustrum__FP2CM.cpp
 0X14E000	func_0014E000	120	unsorted/fun_0014e000.cpp
 0X14E078	func_0014E078	208	new_14e078/fun_0014e078.cpp
@@ -2904,6 +2905,7 @@ address	name	size	file
 0X1AC468	InitAndWriteSaveSlot	92	memcard/InitAndWriteSaveSlot.cpp
 0X1AC4C8	ReadSaveSlot	164	memcard/ReadSaveSlot.cpp
 0X1AC570	ValidateSaveSlot	36	memcard/ValidateSaveSlot.cpp
+0X1AC598	CheckCardStatus	264	memcard/CheckCardStatus.cpp
 0X1AC6A0	GetCardFreeBytes	164	memcard/GetCardFreeBytes.cpp
 0X1AC748	MakeMemcardDirectory	84	memcard/MakeMemcardDirectory.c
 0X1AC7A0	McOpenFile	100	memcard/McOpenFile.c
@@ -3155,6 +3157,7 @@ address	name	size	file
 0X1BC570	Obstacle_PostLoad	276	new_1bc198/Obstacle_PostLoad.cpp
 0X1BCF18	FFindCrvSInPathzone	292	new_1bc198/FFindCrvSInPathzone.cpp
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	new_1bc198/Obstacle_RemoveFromPathzone.c
+0X1BD218	ObstacleGroup_Dissolve	244	new_1bc198/ObstacleGroup_Dissolve.cpp
 0X1BD310	PobstacleFindEdgeBlocker	240	new_1bc198/PobstacleFindEdgeBlocker.cpp
 0X1BD560	func_001BD560	436	new_1bc198/fun_001bd560.cpp
 0X1BD718	func_001BD718	396	new_1bc198/fun_001bd718.cpp
@@ -3194,6 +3197,7 @@ address	name	size	file
 0X1C0EC0	LoadSwPzgraphFromBrx	112	new_1c0920/LoadSwPzgraphFromBrx.cpp
 0X1C0F30	LoadPzgraphFromBrx	408	new_1c0920/LoadPzgraphFromBrx.cpp
 0X1C10C8	func_001C10C8	108	new_1c0920/fun_001c10c8.cpp
+0X1C1138	HookupPzgraph	292	new_1c0920/HookupPzgraph.cpp
 0X1C1260	BuildPzgraphAdjacency	476	new_1c0920/BuildPzgraphAdjacency.cpp
 0X1C1440	ResetPathzoneQuery	100	new_1c0920/ResetPathzoneQuery.cpp
 0X1C15F8	SweepPathzoneAxis	260	new_1c0920/SweepPathzoneAxis.cpp
@@ -3262,6 +3266,7 @@ address	name	size	file
 0X1C4940	SetSwFocusBase	260	new_1c3df8/SetSwFocusBase.cpp
 0X1C4A48	PpoSwFocus	20	new_1c3df8/PpoSwFocus.c
 0X1C4A60	SetSwFocusOverride	152	new_1c3df8/SetSwFocusOverride.cpp
+0X1C4BD8	func_001C4BD8	288	new_1c3df8/fun_001c4bd8.cpp
 0X1C4CF8	dprize__static_initialization_and_destruction_0	308	new_1c3df8/dprize__static_initialization_and_destruction_0.c
 0X1C4E30	func_001C4E30	32	new_1c3df8/fun_001c4e30.c
 0X1C4E50	InitDprize	168	new_1c3df8/InitDprize.cpp
@@ -3271,6 +3276,7 @@ address	name	size	file
 0X1C5570	FFilterDprizeObjects	108	new_1c3df8/FFilterDprizeObjects.cpp
 0X1C5D18	CheckDprizeCollect	216	new_1c3df8/CheckDprizeCollect.cpp
 0X1C5DF0	FAbsorbDprizeWkr	84	new_1c3df8/FAbsorbDprizeWkr.cpp
+0X1C5FA0	RenderDprizeAll	276	new_1c3df8/RenderDprizeAll.cpp
 0X1C60B8	SetDprizeDprizes	588	new_1c3df8/SetDprizeDprizes.cpp
 0X1C64F8	func_001C64F8	16	new_1c3df8/fun_001c64f8.cpp
 0X1C6508	func_001C6508	128	new_1c3df8/fun_001c6508.cpp
@@ -3326,6 +3332,7 @@ address	name	size	file
 0X1C9950	IsetFromCloneId	8	new_1c90d0/IsetFromCloneId.c
 0X1C9958	IcloneFromCloneId	12	new_1c90d0/IcloneFromCloneId.c
 0X1C9968	OidFromCloneId	108	new_1c90d0/OidFromCloneId.cpp
+0X1C99D8	PcnodeFindOrAddClonePath	300	new_1c90d0/PcnodeFindOrAddClonePath.cpp
 0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.cpp
 0X1CA370	InstantiateClone	396	new_1c90d0/InstantiateClone.cpp
 0X1CA500	InitCloneSets	648	new_1c90d0/InitCloneSets.cpp
@@ -3502,6 +3509,7 @@ address	name	size	file
 0X1D8640	NHashPchz	80	new_1d7780/NHashPchz.cpp
 0X1D8690	AddSymtabEntry	144	new_1d7780/AddSymtabEntry.cpp
 0X1D8720	SymidFindSymtab	160	new_1d7780/SymidFindSymtab.cpp
+0X1D87C0	BuildSavePath	268	new_1d7780/BuildSavePath.cpp
 0X1D88D0	PsavepathNew	216	new_1d7780/PsavepathNew.cpp
 0X1D89A8	PsavepathNewStack	144	new_1d7780/PsavepathNewStack.cpp
 0X1D8A38	func_001D8A38	228	new_1d7780/fun_001d8a38.cpp
@@ -3510,6 +3518,7 @@ address	name	size	file
 0X1D9280	StaticInitSlotheaps_1d9280	308	splice-pair-jump/StaticInitSlotheaps_1d9280.c
 0X1D93B8	GlobalCtorSlotheaps_1d93b8	32	splice-pair-jump/GlobalCtorSlotheaps_1d93b8.c
 0X1D93D8	StartupJmt__Fv	44	jump/StartupJmt__Fv.cpp
+0X1D9408	CGc_Shutdown	276	jump-splice-spliceutils/CGc_Shutdown.cpp
 0X1D9520	ShutdownSplice__Fv	152	splice-spliceutils/ShutdownSplice__Fv.c
 0X1D95B8	CGc_UpdateTop	144	new_1d95b8/CGc_UpdateTop.cpp
 0X1D9648	CGc_Update	472	new_1d95b8/CGc_Update.cpp
@@ -3615,8 +3624,10 @@ address	name	size	file
 0X1DFAD8	InitJsg	56	game-stepguard/InitJsg.cpp
 0X1DFB10	CSeq_LoadFromBrx	232	game-stepguard/CSeq_LoadFromBrx.cpp
 0X1DFBF8	CSeq_Clone	84	game-stepguard/CSeq_Clone.cpp
+0X1DFC50	UpdateJsg	260	game-stepguard/UpdateJsg.cpp
 0X1DFD58	StartJsg	292	game-stepguard/StartJsg.cpp
 0X1DFE80	StartJsgFocus	56	game-stepguard/StartJsgFocus.c
+0X1DFEB8	StopJsg	284	game-stepguard/StopJsg.cpp
 0X1DFFD8	FIsJsgActive	8	game-stepguard/FIsJsgActive.c
 0X1DFFE0	ClearJsg	60	game-stepguard/ClearJsg.cpp
 0X1E0020	EnsureSggAlarm__FP3SGGP5ALARM	80	stepguard/EnsureSggAlarm__FP3SGGP5ALARM.cpp
@@ -3941,6 +3952,7 @@ address	name	size	file
 0X1F2798	func_001F2798	88	sm-so/fun_001f2798.cpp
 0X1F27F0	EnsureSoOxa	124	sm-so/EnsureSoOxa.c
 0X1F2870	AddSoGeomToOxa	192	sm-so/AddSoGeomToOxa.cpp
+0X1F2930	RemoveSoGeomFromOxa	300	sm-so/RemoveSoGeomFromOxa.cpp
 0X1F2A60	func_001F2A60	108	sm-so/fun_001f2a60.cpp
 0X1F2AD0	func_001F2AD0	80	sm-so/fun_001f2ad0.cpp
 0X1F2B20	AddSoGeomsToOxa	136	sm-so/AddSoGeomsToOxa.cpp

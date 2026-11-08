@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mutate  # noqa: E402
 import rules  # noqa: E402
 import scorer  # noqa: E402
+import search_guard  # noqa: E402
 from progress import Progress  # noqa: E402
 
 LAB = scorer.LAB
@@ -131,8 +132,8 @@ def read(path):
 
 
 def write(path, text):
-    with open(path, 'w', encoding='utf-8') as handle:
-        handle.write(text)
+    """Write the source unless the rewrite adds a banned construct, a cleanup problem or a review warning that the current source does not have."""
+    return search_guard.guarded_write(path, text)
 
 
 def pool_of(arguments):
@@ -142,6 +143,8 @@ def pool_of(arguments):
         address = int(name.split('.')[0], 16)
         row = registry.get(address)
         if row and row['status'] == 'tried' and row['best'].isdigit() and arguments.min_score <= int(row['best']) <= arguments.max_score:
+            if search_guard.skipped(address):
+                continue
             pool.append((int(row['best']), address, os.path.join(SOURCES, name)))
     return sorted(pool)
 
@@ -188,8 +191,8 @@ def main():
     score, text, used, _ = search(address, original, arguments.depth, arguments.beam, arguments.budget, arguments.jobs, arguments.choices, log=print, lang=language_of(path))
     print(f'best {score} ({used} compiles)')
     if arguments.write and score is not None and text != original and score < (scorer.judge(address, original, language_of(path)) or 10 ** 9):
-        write(path, text)
-        print('written')
+        if write(path, text):
+            print('written')
     return 0
 
 

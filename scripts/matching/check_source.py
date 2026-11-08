@@ -82,14 +82,66 @@ def destination(found):
     return 'asm-archive' if any(kind == 'banned' for _, kind, _ in found) else 'cleanup-pending'
 
 
+LITERAL_LOCAL = re.compile(r'^\s+(?:(?:unsigned|signed|const)\s+)*(?:int|char|short|long|float|double|[su](?:8|16|32|64)|f(?:32|64))\s+(\w+)\s*=\s*'
+                           r'(-?(?:0[xX][0-9a-fA-F]+|\d+(?:\.\d*)?f?))\s*;')
+CONSTANT_CONDITION = re.compile(r'\|\|\s*(?:1|true)\s*[)|&]|&&\s*(?:0|false)\s*[)|&]')
+
+
+def literal_locals(text):
+    """[(line number, line)] of locals set from a number once and never changed (no assignment, increment or address taken) that are used at least twice:
+    a literal given its own name so that each use takes a register of its own. AGENTS.md allows a typed local bound to a value the code reads and then
+    uses, not one that only holds a literal for a store or a compare to use (ClineWrap's `int newline = 10;`). A heuristic: a loop bound or a real
+    named constant looks the same, so this is a warning, never a ban."""
+    clean = strip_comments(text)
+    found, stack, head = [], [], ''
+    for number, line in enumerate(clean.split('\n'), 1):
+        match = LITERAL_LOCAL.match(line)
+        if stack and stack[-1] == 'block' and match:
+            name = match.group(1)
+            uses = len(re.findall(r'\b%s\b' % re.escape(name), clean)) - 1
+            changed = re.search(r'\b%s\s*(?:[-+*/|&^]=|=(?!=)|\+\+|--)|(?:\+\+|--)\s*%s\b|&\s*%s\b' % ((re.escape(name),) * 3), clean.replace(line, '', 1))
+            if uses >= 2 and not changed:
+                found.append((number, line.strip()[:100]))
+        for character in line:
+            if character == '{':
+                stack.append('linkage' if LINKAGE.search(head) else 'type' if TYPE_HEAD.search(head) and '(' not in head else 'block')
+                head = ''
+            elif character == '}':
+                if stack:
+                    stack.pop()
+                head = ''
+            elif character == ';':
+                head = ''
+            else:
+                head += character
+        head += ' '
+    return found
+
+
+def review(text):
+    """[(line number, 'review', message)]: what the rules do not ban but a person should read before a rewrite is adopted (a literal-holding local, a
+    constant-true condition). Kept apart from `problems`: record.py parks a source that has a problem, and these are warnings. A lint for a callee
+    declared with an argument it does not have was tried (callee_sigs `params` against the declaration) and dropped: it fired on 19% of the matched
+    sources, because a callee may ignore an argument its callers still pass. That check needs retail's call sites, not the callee's code."""
+    found = [(number, 'review', f'literal local: {line}') for number, line in literal_locals(text)]
+    for number, line in enumerate(strip_comments(text).split('\n'), 1):
+        if CONSTANT_CONDITION.search(line):
+            found.append((number, 'review', f'constant condition: {line.strip()[:100]}'))
+    return sorted(found)
+
+
 def main():
     paths = [argument for argument in sys.argv[1:] if not argument.startswith('-')]
     if not paths:
-        sys.exit('usage: check_source.py FILE...')
+        sys.exit('usage: check_source.py [--review] FILE...   (--review also prints the warnings of `review`; they never fail the check)')
     failed = False
     for path in paths:
         with open(path, encoding='utf-8') as handle:
-            found = problems(handle.read())
+            text = handle.read()
+        found = problems(text)
+        if '--review' in sys.argv:
+            for number, kind, message in review(text):
+                print(f'{path}:{number}: {kind}: {message}')
         if found:
             failed = True
             for number, kind, message in found:

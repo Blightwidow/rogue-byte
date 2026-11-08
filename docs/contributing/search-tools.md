@@ -110,11 +110,13 @@ Every search tool has a target; `MIN`, `MAX` (the near-miss score range, default
 | :--- | :--- |
 | `make permute ADDRESS=0x11A060` | `permute.py` on one function (its `//P`-marked statements, then the runs of consecutive statements); a better source is written in place |
 | `make permute-stores MIN=1 MAX=9` | `permute_stores.py`: the store-order search over the near misses; improved sources go to `work/matching/permute-stores/` |
+| `make boundary-suspects` | `boundary_suspects.py --write`: near misses whose score is a split artifact (a `jr $ra` whose delay slot is in the next piece, a piece that is only an epilogue); written to `work/matching/boundary_suspects.tsv`, and the search tools skip them. Fix them by hand (`split_boundary.py`, `merges.tsv`) |
+| `make sigs MIN=1 MAX=9` | `callee_sigs.py sweep`: the return types of the callees of the near misses, read from the executable; a better source is written to `data/matching/src/fn` |
 | `make fix-stack` | `fix_stack.py`: the real size of the placeholder `sp[0x400]` buffers; improved sources go to `work/matching/fix-stack/` |
 | `make adopt` | `adopt.py`: takes the sources of those two folders that score strictly lower than the current ones into `data/matching/src/fn` (a `.c` file is judged as C) |
 | `make mutate` | `mutate.py --batch`: the random rewrites |
 | `make rules` | `neighborhood.py --batch` with the rewrites of `rules.py` |
-| `make search` | `fix-stack`, `permute-stores`, `adopt`, `rules` in that order |
+| `make search` | `boundary-suspects`, `sigs`, `fix-stack`, `permute-stores`, `adopt`, `rules` in that order |
 | `make land` | after any of them: register the matches, publish, byte gate, reports (below) |
 
 None of them registers anything. `make land` does, and everything after it:
@@ -140,3 +142,25 @@ score is not. A scan of 474 near misses (score 1 to 60, 2026-11-03): 363 have th
 in frame size (mostly by one 16-byte slot: a dead `QW` local retail's frame shows). The frame wall is about a fifth of the near misses, not most of them.
 Fixes that moved a frame: a struct that groups locals with pad fields (`16CAA0`), declaring one local before another (`181060`), scoping each `GIFS`/`CRef` temporary
 to its own block so they share a slot, a dead `QW junk[N]` the frame shows, and an inline helper that takes the address as a parameter.
+
+## What a search may write, and what it leaves alone (2026-11-08)
+
+`scripts/matching/search_guard.py` is shared by every search tool.
+
+- **A rewrite must not add a finding.** `neighborhood.py`, `mutate.py`, `callee_sigs.py sweep` and `adopt.py` compare a rewritten source with the one it came
+  from, through `check_source.py`: a new banned construct (inline asm, a padding local, `volatile` on ordinary data), a new cleanup problem, or a new
+  `review` warning (`check_source.py --review`: a local set from a literal that is never changed and used at least twice, such as `int newline = 10;`;
+  a constant-true condition such as `|| 1`) means the source is not written, and the tool says why on stderr. A finding the current source already has
+  does not block an improvement. Before this, only `adopt.py` checked; the others wrote a lower score into `data/matching/src/fn` with whatever it held.
+  The literal-local warning fires on 0.6% of the matched sources and on 3.7% of the unmatched ones, so it is a warning to read, not a ban.
+- **Functions left out.** `config/matching/walls.tsv` lists the near misses whose remaining difference was traced to the toolchain (a store in a delay slot
+  whose address is in a register; a `$gp` save: class `toolchain`) or to a scheduling or allocation tie found in the RTL dumps after a long manual
+  search (class `tie`); each row has its reason and evidence. The tools skip them, and `SEARCH_INCLUDE_WALLS=1` searches them anyway. The boundary
+  suspects of `make boundary-suspects` are skipped the same way. Add a row when a function is shown to be a wall, with the dump or the count of compiles.
+- **Store order, first rule.** `permute_stores.py` tries the orders that follow gcc 2.95's first-scheduler rule before the random search: among stores that
+  share a constant, the one written last is emitted first (the constant's register dies there). InitMurray was found that way after 2,500 random orders had not
+  reached it.
+
+Tried and dropped: a lint for a callee declared with more integer parameters than its own code reads (`callee_sigs` `params`). It fired on 19% of the matched
+sources, because a callee may ignore an argument its callers still pass: the check needs retail's call sites (which argument registers are set before the `jal`),
+not the callee's code. The search is still not protected against an invented argument; the score is, since retail does not set the register.

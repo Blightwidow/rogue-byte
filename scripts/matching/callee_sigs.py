@@ -26,6 +26,7 @@ import sys
 
 LAB = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import search_guard  # noqa: E402
 REGISTRY = os.path.join(LAB, 'data', 'matching', 'functions.tsv')
 SYMBOLS = os.path.join(LAB, 'config', 'matching', 'symbol_addrs.txt')
 ELF = os.path.join(LAB, 'work', 'elf', 'SCUS_973.16')
@@ -297,9 +298,8 @@ def apply(arguments):
     before, after = scorer.judge(address, original), scorer.judge(address, text)
     print(f'{address:#x}: changed {", ".join(changed)}: score {before} -> {after}')
     if arguments.write and after is not None and (before is None or after < before):
-        with open(path, 'w', encoding='utf-8') as handle:
-            handle.write(text)
-        print('written')
+        if search_guard.guarded_write(path, text):
+            print('written')
     return 0
 
 
@@ -417,6 +417,8 @@ def sweep(arguments):
         address = int(name.split('.')[0], 16)
         row = registry.get(address)
         if row and row['status'] == 'tried' and row['best'].isdigit() and arguments.min_score <= int(row['best']) <= arguments.max_score:
+            if search_guard.skipped(address):
+                continue
             pool.append((int(row['best']), address, os.path.join(SOURCES, name)))
     pool.sort()
     print(f'{len(pool)} functions, score {arguments.min_score}-{arguments.max_score}, up to {arguments.budget} compiles each')
@@ -431,8 +433,7 @@ def sweep(arguments):
                 matched += score == 0
                 print(f'{address:#x}: {best} -> {score} ({used} compiles)', flush=True)
                 if arguments.write:
-                    with open(path, 'w', encoding='utf-8') as handle:
-                        handle.write(text)
+                    search_guard.guarded_write(path, text)
     print(f'{improved} improved, {matched} reach 0')
 
 

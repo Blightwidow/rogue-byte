@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import check_source  # noqa: E402
+import search_guard  # noqa: E402
 import scorer  # noqa: E402
 from progress import Progress  # noqa: E402
 
@@ -47,6 +48,10 @@ def consider(folder, name, dry_run):
         # construct): record.py would park the current one, so the match is lost unless the clean source takes its place
         if not (new_score == old_score and check_source.problems(read(current)) and not check_source.problems(read(candidate))):
             return 1, 0, 0
+    added = search_guard.new_findings(read(current), read(candidate)) if current else []
+    if added:  # a lower score reached with a construct the current source does not have is not a result: AGENTS.md, docs/contributing/matching.md
+        print(f'{address:#X}: {old_score} -> {new_score} not adopted, it adds: ' + '; '.join(f'{kind}: {message}' for kind, message in added[:3]))
+        return 1, 0, 0
     destination = os.path.join(SOURCES, f'{address:06X}{os.path.splitext(name)[1]}')
     print(f'{address:#X}: {old_score} -> {new_score} ({os.path.relpath(candidate, LAB)})')
     if not dry_run:

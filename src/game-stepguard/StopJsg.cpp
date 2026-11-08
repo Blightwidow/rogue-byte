@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 struct DL { void *pfirst; void *plast; int ibDle; };
 struct DLI { DL *pdl; char *ppv; int ibDle; DLI *pdliNext; };
 struct JSG;
@@ -27,12 +28,6 @@ inline void PushDli(DLI *it, DL *list)
     it->pdliNext = g_2dd2fc;
     g_2dd2fc = it;
 }
-inline char *PvFirst(DLI *it)
-{
-    char *item = (char *)it->pdl->pfirst;
-    it->ppv = item + it->pdl->ibDle;
-    return item;
-}
 inline char *PvStep(DLI *it)
 {
     char *item = *(char **)it->ppv;
@@ -45,6 +40,10 @@ void func_001E0120(JSG *);
 void func_001A6CA8(JSG *, int);
 }
 
+// Retail reads the list's ibDle once (lw v0,8(a0)) and takes the first node
+// through the iterator's own cursor, which starts at the list head: the loop
+// is the PvStep-first form of OnRipgRemove (src/rip/), with no separate
+// "first" helper re-reading pdl->ibDle.
 void StopJsg(JSG *pjsg)
 {
     if (pjsg->fRunning == 0)
@@ -54,11 +53,9 @@ void StopJsg(JSG *pjsg)
     pjsg->fRunning = 0;
     DLI dli;
     PushDli(&dli, &pjsg->dlSeqnode);
-    char *pseqnode = PvFirst(&dli);
-    while (pseqnode != 0) {
+    char *pseqnode;
+    for (pseqnode = PvStep(&dli); pseqnode != 0; pseqnode = PvStep(&dli))
         StopSeqnode(pseqnode);
-        pseqnode = PvStep(&dli);
-    }
     func_001E0120(pjsg);
     if (pjsg->fLatched != 0) {
         func_001A6CA8(pjsg, 2);
