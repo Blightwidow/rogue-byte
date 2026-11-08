@@ -4,8 +4,9 @@
 
 Per module unit (build/splat/asm/<unit>.s): the target object is that assembly assembled (the retail code); the base
 object links the unit's compiled functions from src/ (`ld -r`), with their symbols renamed to the names the assembly
-uses (function labels, D_<address> for data) so objdiff pairs functions and relocations by name. A unit without C gets an
-empty base object. Needs `make elf` (build/image/derived.tsv, build/units) and tools/objdiff/objdiff-cli."""
+uses (function labels, D_<address> for data) so objdiff pairs functions and relocations by name. A function inside a whole file
+(config/us/whole_files.tsv) has no object of its own: it is cut out of the whole file's object at its offset (address = start of the range
++ symbol value). A unit without C gets an empty base object. Needs `make elf` (build/image/derived.tsv, build/units) and tools/objdiff/objdiff-cli."""
 import bisect
 import concurrent.futures
 import csv
@@ -20,7 +21,8 @@ from elftools.elf.elffile import ELFFile
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 os.chdir(ROOT)
 sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
-from asm_units import read_units  # noqa: E402
+from asm_units import read_units, whole_files  # noqa: E402
+import make_whole_files  # noqa: E402
 
 BINUTILS = os.path.join('tools', 'binutils-mips-ps2-decompals', 'mips-ps2-decompals')
 OBJDIFF = os.path.join('tools', 'objdiff', 'objdiff-cli')
@@ -90,6 +92,10 @@ def run(command):
         sys.exit(' '.join(command[:3]) + ' failed: ' + result.stderr.strip())
 
 manifest = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('src/MANIFEST.tsv'))[1:]}
+# a function inside a whole file (src/MANIFEST.tsv `whole_file`) is read from that file's object: start of the range + symbol offset
+whole_start = {file: start for start, _, file in whole_files()}
+in_whole = {address: (row[4], whole_start[row[4]]) for address, row in
+            ((int(line.split('\t')[0], 16), line.rstrip('\n').split('\t') + [''] * 2) for line in list(open('src/MANIFEST.tsv'))[1:]) if row[4] in whole_start}
 drafts = {int(line.split('\t')[0], 16): line.rstrip('\n').split('\t')[3] for line in list(open('nonmatching/MANIFEST.tsv'))[1:]} if os.path.exists('nonmatching/MANIFEST.tsv') else {}
 manifest_size = {int(line.split('\t')[0], 16): int(line.split('\t')[2]) for line in list(open('src/MANIFEST.tsv'))[1:]}
 
@@ -111,11 +117,41 @@ def assemble_target(unit):
     run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-no-pad-sections', '-I', 'include',
          '-I', os.path.join('build', 'splat', 'asm'), '-o', destination, source])
 
+def whole_part(function):
+    """The base part of a function inside a whole file: the function cut out of the whole object (make_whole_files.cut_function), its
+    symbol and the functions of the file it calls renamed to the names the assembly uses (their address is the file's start plus their
+    offset in the object), or None when the object is missing."""
+    file, start = in_whole[function['address']]
+    whole_object = os.path.join('build', 'units', file + '.o')
+    if not os.path.isfile(whole_object):
+        return None
+    cut = os.path.join(BASE, 'parts', f"whole_{function['address']:06X}.o")
+    cut, outside = make_whole_files.cut_function(whole_object, function['address'] - start, cut)
+    renames = {}
+    with open(cut, 'rb') as handle:
+        elf = ELFFile(handle)
+        for symbol in elf.get_section_by_name('.symtab').iter_symbols():
+            if symbol['st_shndx'] == 1 and symbol['st_info']['type'] == 'STT_FUNC' and function['name'] not in renames.values():
+                renames[symbol.name] = function['name']
+            elif symbol['st_shndx'] == 'SHN_UNDEF' and symbol.name:
+                target = function_name.get(start + outside[symbol.name]) if symbol.name in outside else target_name(symbol.name)
+                if target and target != symbol.name and target not in renames.values():
+                    renames[symbol.name] = target
+    renamed_path = cut[:-2] + '.renamed.o'
+    open(cut + '.syms', 'w').write(''.join(f'{old} {new}\n' for old, new in renames.items()))
+    run([BINUTILS + '-objcopy', '--redefine-syms', cut + '.syms', cut, renamed_path])
+    return renamed_path
+
 def build_base(unit):
     destination = os.path.join(BASE, unit + '.o')
     os.makedirs(os.path.dirname(destination), exist_ok=True)
     renamed = []
     for function in units[unit]:
+        if function['address'] in in_whole:
+            part = whole_part(function)
+            if part:
+                renamed.append(part)
+            continue
         file = manifest.get(function['address'])
         path = os.path.join('build', 'units', file + '.o') if file else None
         if not file and function['address'] in drafts:  # a source that compiles but does not match: objdiff counts the partial work

@@ -17,7 +17,15 @@ the linkage their per-function objects had. The constructor wrapper and the stat
 --prove compiles every candidate (scripts/build/compile_unit.py, INCLUDE_ASM expanded from build/splat) in a scratch directory and compares
 the object's .text with retail's bytes of the range, relocated fields masked on both sides (scripts/matching/compare.py's masks); a file is
 proved when the sizes are equal, every word is equal and the object uses no data of its own (what scripts/build/link_image.py needs to link it
-whole). --write writes the proved files to src/ and prints their config/us/whole_files.tsv rows (it never edits that list)."""
+whole). --write writes the proved files to src/ and prints their config/us/whole_files.tsv rows (it never edits that list).
+
+A whole file is the only record of the functions in its range (scripts/matching/export_src.py publishes no per-function copy of them).
+
+  .venv/bin/python scripts/build/make_whole_files.py --land 0xADDRESS [--source PATH] [--dry-run --output PATH]
+
+--land puts a function that scores 0 on its own (its per-function source, by default the registry's) into its whole file in place of its
+INCLUDE_ASM line, merged as above, and writes the file only when the whole range proves again; scripts/matching/record.py does it for every
+new match inside a whole file. cut_function() gives one function of a whole object (objdiff), function_symbols() their offsets (PAL)."""
 import argparse
 import concurrent.futures
 import os
@@ -303,6 +311,74 @@ def declared_name(item):
     return classify(item)[1]
 
 
+class Merge:
+    """What a whole file holds while per-function sources are merged into it: its includes, the items already written (a later identical
+    item is dropped), the struct-like and function definitions by name (a later different one is renamed) and, with `rename_declarations`,
+    the first declaration of each name."""
+
+    def __init__(self, language, wrap_c=True, rename_declarations=False):
+        self.language, self.wrap_c, self.rename_declarations = language, wrap_c, rename_declarations
+        self.includes, self.notes = [], []
+        self.seen_text = set()
+        self.defined = {}  # name -> normalized text of its first struct-like or function definition
+        self.declared = {}  # name -> (normalized text, address of the source) of its first declaration or function definition
+
+    def declare_definitions(self, text, address):
+        """Records the function definitions of `text` as the first declarations of their names (rename_declarations)."""
+        for item in split_items(text):
+            kind, name = classify(item)
+            if kind == 'function' and name:
+                self.declared.setdefault(name, (normalized(item.split('{', 1)[0]), address))
+
+    def absorb(self, address, text, source_is_c):
+        """The chunk a per-function source adds at its function's place: its includes are collected, an item written before is dropped, a
+        struct or helper defined differently before takes the function's address as a suffix, a C source in C++ goes inside extern "C"."""
+        text = clean_text(text)
+        if self.language == 'c':
+            text = to_c(text)
+        for _ in range(50):
+            clash = None
+            for item in split_items(text):
+                kind, name = classify(item)
+                if name and '::' not in name and name in self.defined and self.defined[name] != normalized(item) and \
+                        ((kind == 'type' and is_struct_definition(item)) or kind == 'function'):
+                    clash = name
+                    break
+            if clash is None:
+                break
+            new_name = f'{clash}_{address:X}'
+            self.notes.append(f'{clash} -> {new_name}')
+            text = rename(text, clash, new_name)
+        if self.rename_declarations:
+            for item in split_items(text):
+                kind, name = classify(item)
+                if kind != 'declaration' or not name or '::' in name:
+                    continue
+                key = re.sub(r'^extern\s*(?:"C"\s*)?', '', normalized(item)).rstrip(';').strip()
+                first = self.declared.setdefault(name, (key, address))
+                if first[1] != address and first[0] != key and re.sub(r'^extern\s*(?:"C"\s*)?', '', first[0]) != key:
+                    self.notes.append(f'declaration {name} -> {name}_{address:X}')
+                    text = rename(text, name, f'{name}_{address:X}')
+        kept = []
+        for item in split_items(text):
+            kind, name = classify(item)
+            key = normalized(item)
+            if kind == 'preprocessor' and key.startswith('#include'):
+                if key not in self.includes:
+                    self.includes.append(key)
+                continue
+            if kind == 'comment' or (key and key in self.seen_text):
+                continue
+            self.seen_text.add(key)
+            if name and ((kind == 'type' and is_struct_definition(item)) or kind == 'function'):
+                self.defined.setdefault(name, key)
+            kept.append(item.strip('\n') + '\n')
+        chunk = '\n'.join(kept)
+        if self.language == 'c++' and self.wrap_c and source_is_c and chunk.strip():
+            chunk = 'extern "C" {\n' + chunk + '}\n'
+        return chunk
+
+
 def build_whole_file(start, end, functions, matched, read_source=None, language=None, wrap_c=True, rename_declarations=False):
     """(language, text, notes) of the whole file over [start, end): `functions` are the retail function starts in the range (build/splat),
     `matched` src/MANIFEST.tsv. `read_source(path)` returns a per-function source's text (default: from src/). The language is C when every
@@ -314,73 +390,25 @@ def build_whole_file(start, end, functions, matched, read_source=None, language=
     sources = [(address, matched[address][2]) for address in functions if address in matched]
     if language is None:
         language = 'c' if sources and all(path.endswith('.c') for _, path in sources) else 'c++'
-    includes, body, notes = [], [], []
-    seen_text = set()
-    defined = {}  # name -> normalized text of its first struct-like or function definition
-    declared = {}  # name -> (normalized text, address of the source) of its first declaration or function definition
+    merge = Merge(language, wrap_c, rename_declarations)
+    body = []
     if rename_declarations:
         for address in functions:
             if address in matched:
-                for item in split_items(clean_text(read_source(matched[address][2]))):
-                    kind, name = classify(item)
-                    if kind == 'function' and name:
-                        declared.setdefault(name, (normalized(item.split('{', 1)[0]), address))
+                merge.declare_definitions(clean_text(read_source(matched[address][2])), address)
     for address in functions:
         if address not in matched:
             body.append(f'INCLUDE_ASM({address:#X});\n')
             continue
-        text = clean_text(read_source(matched[address][2]))
-        if language == 'c':
-            text = to_c(text)
-        # a struct or helper this source defines differently from an earlier one takes the function's address as a suffix
-        for _ in range(50):
-            clash = None
-            for item in split_items(text):
-                kind, name = classify(item)
-                if name and '::' not in name and name in defined and defined[name] != normalized(item) and \
-                        ((kind == 'type' and is_struct_definition(item)) or kind == 'function'):
-                    clash = name
-                    break
-            if clash is None:
-                break
-            new_name = f'{clash}_{address:X}'
-            notes.append(f'{clash} -> {new_name}')
-            text = rename(text, clash, new_name)
-        if rename_declarations:
-            for item in split_items(text):
-                kind, name = classify(item)
-                if kind != 'declaration' or not name or '::' in name:
-                    continue
-                key = re.sub(r'^extern\s*(?:"C"\s*)?', '', normalized(item)).rstrip(';').strip()
-                first = declared.setdefault(name, (key, address))
-                if first[1] != address and first[0] != key and re.sub(r'^extern\s*(?:"C"\s*)?', '', first[0]) != key:
-                    notes.append(f'declaration {name} -> {name}_{address:X}')
-                    text = rename(text, name, f'{name}_{address:X}')
-        kept = []
-        for item in split_items(text):
-            kind, name = classify(item)
-            key = normalized(item)
-            if kind == 'preprocessor' and key.startswith('#include'):
-                if key not in includes:
-                    includes.append(key)
-                continue
-            if kind == 'comment' or (key and key in seen_text):
-                continue
-            seen_text.add(key)
-            if name and ((kind == 'type' and is_struct_definition(item)) or kind == 'function'):
-                defined.setdefault(name, key)
-            kept.append(item.strip('\n') + '\n')
-        chunk = '\n'.join(kept)
-        if language == 'c++' and wrap_c and matched[address][2].endswith('.c') and chunk.strip():
-            chunk = 'extern "C" {\n' + chunk + '}\n'
-        body.append(chunk)
+        body.append(merge.absorb(address, read_source(matched[address][2]), matched[address][2].endswith('.c')))
     lines = [HEADER, f'// Retail {start:#X}-{end:#X}: one source file, its end from the constructor list (config/us/whole_files.tsv).\n',
              '// Generated by scripts/build/make_whole_files.py from the per-function sources of src/MANIFEST.tsv; the rest come from assembly.\n']
+    includes = merge.includes
     if any(line.startswith('INCLUDE_ASM') for line in body):
         includes = includes + ['#include "include_asm.h"']
     lines += [include + '\n' for include in includes]
     text = ''.join(lines) + '\n' + '\n'.join(body)
-    return language, text, notes
+    return language, text, merge.notes
 
 
 CONFLICT = re.compile(r'conflicting types for|new declaration|declaration of C function .* conflicts with|redefinition of|ambiguates old declaration|'
@@ -533,6 +561,220 @@ def make_and_prove(start, end, relative, functions, matched):
     return relative + ('.c' if first_language == 'c' else '.cpp'), text, notes, cause
 
 
+# ---------------------------------------------------------------- one function of a whole object
+
+COMPILER_MARKERS = ('gcc2_compiled.', '__gnu_compiled_c', '__gnu_compiled_cplusplus')
+
+
+def function_symbols(object_path):
+    """{offset in .text: symbol name} of the functions a whole object defines (its C functions and its INCLUDE_ASM labels: the named .text
+    symbols other than the compiler's markers). A function's retail address is the whole file's start plus its offset."""
+    from elftools.elf.elffile import ELFFile
+    with open(object_path, 'rb') as handle:
+        elf = ELFFile(handle)
+        text_index = elf.get_section_index('.text')
+        found = {}
+        for symbol in elf.get_section_by_name('.symtab').iter_symbols():
+            if symbol['st_shndx'] == text_index and symbol.name and symbol['st_info']['type'] in ('STT_FUNC', 'STT_NOTYPE') and \
+                    not symbol.name.startswith(COMPILER_MARKERS + ('.',)):
+                found.setdefault(symbol['st_value'], symbol.name)
+        return found
+
+
+def write_object(output, code, symbols, local_count, relocations, flags=0, alignment=8):
+    """Writes a little-endian MIPS relocatable object with one .text (`code`), its .rel.text and a symbol table. `symbols` are (name, value,
+    size, info) after the null symbol, all defined in .text except the ones whose info has a binding (info >> 4) and no type, which are
+    undefined; the first `local_count` entries (the null one included) are local. `relocations` are (offset, symbol index, type)."""
+    import struct
+    names = bytearray(b'\0')
+    entries = [struct.pack('<IIIBBH', 0, 0, 0, 0, 0, 0)]
+    for name, value, size, info in symbols:
+        position = len(names)
+        names.extend(name.encode() + b'\0')
+        undefined = info >> 4 and not info & 0xF
+        entries.append(struct.pack('<IIIBBH', position if name else 0, value, size, info, 0, 0 if undefined else 1))
+    relocation_bytes = b''.join(struct.pack('<II', place, index << 8 | kind) for place, index, kind in relocations)
+    section_names = b'\0.text\0.rel.text\0.symtab\0.strtab\0.shstrtab\0'
+    blobs = [bytes(code), relocation_bytes, b''.join(entries), bytes(names), section_names]
+    positions, cursor = [], 52
+    for blob in blobs:
+        cursor = (cursor + 15) & ~15
+        positions.append(cursor)
+        cursor += len(blob)
+    section_table = (cursor + 3) & ~3
+    out = bytearray(section_table + 40 * 6)
+    out[:52] = struct.pack('<4sBBBB8sHHIIIIIHHHHHH', b'\x7fELF', 1, 1, 1, 0, bytes(8), 1, 8, 1, 0, 0, section_table, flags, 52, 0, 0, 40, 6, 5)
+    for blob, position in zip(blobs, positions):
+        out[position:position + len(blob)] = blob
+    out[section_table:] = b''.join([bytes(40),
+                                    struct.pack('<10I', 1, 1, 6, 0, positions[0], len(code), 0, 0, alignment, 0),
+                                    struct.pack('<10I', 7, 9, 0, 0, positions[1], len(relocation_bytes), 3, 1, 4, 8),
+                                    struct.pack('<10I', 17, 2, 0, 0, positions[2], len(blobs[2]), 4, local_count, 4, 16),
+                                    struct.pack('<10I', 25, 3, 0, 0, positions[3], len(names), 0, 0, 1, 0),
+                                    struct.pack('<10I', 33, 3, 0, 0, positions[4], len(section_names), 0, 0, 1, 0)])
+    os.makedirs(os.path.dirname(output) or '.', exist_ok=True)
+    with open(output, 'wb') as handle:
+        handle.write(out)
+
+
+def cut_function(object_path, offset, output):
+    """(output, outside): a relocatable object holding only the function of the whole object that starts at `offset` (up to the next
+    function, function_symbols()), with its relocations. Every other function it refers to becomes an undefined global name, so a call to
+    it reads as a call by name; `outside` maps those names to their offsets in the whole object (retail address = start + offset). Raises
+    ValueError when no function starts at `offset` or a relocation points into the object other than at a named .text symbol."""
+    from elftools.elf.elffile import ELFFile
+    functions = function_symbols(object_path)
+    if offset not in functions:
+        raise ValueError(f'no function at offset {offset:#x}')
+    with open(object_path, 'rb') as handle:
+        elf = ELFFile(handle)
+        text = elf.get_section_by_name('.text')
+        text_index = elf.get_section_index('.text')
+        end = next((value for value in sorted(functions) if value > offset), text['sh_size'])
+        code = text.data()[offset:end]
+        symbol_table = elf.get_section_by_name('.symtab')
+        symbols = list(symbol_table.iter_symbols())
+        relocation_section = elf.get_section_by_name('.rel.text')
+        relocations = [(relocation['r_offset'], relocation['r_info_type'], relocation['r_info_sym'])
+                       for relocation in (relocation_section.iter_relocations() if relocation_section else [])
+                       if offset <= relocation['r_offset'] < end]
+        flags, alignment = elf['e_flags'], text['sh_addralign']
+    table, index_of, outside = [('', 0, 0, 3)], {}, {}  # after the null symbol: the .text section's
+    for number, symbol in enumerate(symbols):
+        if symbol['st_shndx'] == text_index and symbol.name and offset <= symbol['st_value'] < end:
+            index_of[number] = len(table) + 1
+            kind = {'STT_FUNC': 2, 'STT_OBJECT': 1}.get(symbol['st_info']['type'], 0)
+            table.append((symbol.name, symbol['st_value'] - offset, symbol['st_size'], kind))
+    local_count = len(table) + 1
+    for place, kind, number in relocations:
+        if number in index_of:
+            continue
+        symbol = symbols[number]
+        if symbol['st_shndx'] == text_index and symbol.name and symbol['st_info']['type'] != 'STT_SECTION':
+            outside[symbol.name] = symbol['st_value']
+        elif symbol['st_shndx'] != 'SHN_UNDEF' or not symbol.name:
+            raise ValueError(f'relocation at {place:#x} against {symbol.name or "a section"}: not a name')
+        index_of[number] = len(table) + 1
+        table.append((symbol.name, 0, 0, 0x10))  # an undefined global name
+    write_object(output, code, table, local_count, [(place - offset, index_of[number], kind) for place, kind, number in relocations], flags, alignment)
+    return output, outside
+
+
+# ---------------------------------------------------------------- landing one function in a whole file
+
+def include_asm_marker(address):
+    """The pattern of the INCLUDE_ASM line of `address` in a whole file (any spelling of the hexadecimal, a comment after it)."""
+    return re.compile(r'^[ \t]*INCLUDE_ASM\(\s*0x0*%X\s*\)\s*;[^\n]*\n?' % address, re.M | re.I)
+
+
+def whole_file_of(address, wholes=None):
+    """(start, end, file) of the whole file (config/us/whole_files.tsv) whose range holds `address`, or None."""
+    if wholes is None:
+        from asm_units import whole_files
+        wholes = whole_files()
+    return next(((start, end, file) for start, end, file in wholes if start <= address < end), None)
+
+
+def insert_function(whole_text, address, source_text, source_is_c, language, wrap_c=True, rename_declarations=False):
+    """(text, notes): the whole file with the INCLUDE_ASM line of `address` replaced by the per-function source, merged the way
+    build_whole_file merges one (Merge): an item the file writes before that line is dropped from the source, a struct-like or function
+    definition the file has anywhere and the source defines differently takes the address suffix in the source, a new include goes after
+    the file's includes, and `#include "include_asm.h"` goes when no INCLUDE_ASM is left. Raises ValueError without that line."""
+    marker = include_asm_marker(address).search(whole_text)
+    if marker is None:
+        raise ValueError(f'no INCLUDE_ASM({address:#X}) line in the whole file')
+    merge = Merge(language, wrap_c, rename_declarations)
+    for _, _, offset, item in item_spans(whole_text):
+        kind, name = classify(item)
+        key = normalized(item)
+        if kind == 'preprocessor':
+            if key.startswith('#include') and key not in merge.includes:
+                merge.includes.append(key)
+            continue
+        if kind == 'comment':
+            continue
+        if offset < marker.start():
+            merge.seen_text.add(key)
+        if name and ((kind == 'type' and is_struct_definition(item)) or kind == 'function'):
+            merge.defined.setdefault(name, key)
+        if name and kind == 'function' and rename_declarations:
+            merge.declared.setdefault(name, (normalized(item.split('{', 1)[0]), None))
+    known = list(merge.includes)
+    chunk = merge.absorb(address, source_text, source_is_c)
+    text = whole_text[:marker.start()] + chunk + whole_text[marker.end():]
+    added = [include for include in merge.includes if include not in known]
+    if added:
+        last = None
+        for last in re.finditer(r'^#include[^\n]*\n', text, re.M):
+            pass
+        at = last.end() if last else re.match(r'(?:(?://[^\n]*|/\*.*?\*/)?\n)*', text, re.S).end()
+        text = text[:at] + ''.join(include + '\n' for include in added) + text[at:]
+    if not re.search(r'^[ \t]*INCLUDE_ASM\(', text, re.M):
+        text = re.sub(r'^#include "include_asm\.h"[^\n]*\n', '', text, flags=re.M)
+    return text, merge.notes
+
+
+def registry_source(address):
+    """The source data/matching/functions.tsv records for `address` (the per-function source a worker matched), or None."""
+    for row in read_table(os.path.join(ROOT, 'data', 'matching', 'functions.tsv')):
+        if int(row['address'], 16) == address:
+            return os.path.join(ROOT, row['source']) if row.get('source') else None
+    return None
+
+
+def land(address, source_path, wholes=None, compile_source=None, prove=None, write=True):
+    """(ok, message, text) of landing a function that scores 0 on its own in its whole file: its INCLUDE_ASM line becomes its source
+    (insert_function), the conflicts the merge leaves are resolved by compiling (resolve), and the whole range is compiled and compared with
+    retail (compare_object) before anything is written. A failure leaves the file as it was and says why. With `write` false nothing is
+    written (a dry run: text is what would be written). `compile_source(text, language)` and `prove()` stand in for the compiler and the
+    comparison in tests."""
+    found = whole_file_of(address, wholes)
+    if found is None:
+        return False, f'{address:#X} is in no whole file', None
+    start, end, file = found
+    flagged = listed_addresses('move_movables.txt') | listed_addresses('vu0_regs.txt') | listed_addresses('sony_gcc29.txt')
+    if address in flagged:
+        return False, f'{address:#X} is in a per-function flag list; src/{file} has one flag set: not changed', None
+    path = os.path.join(ROOT, 'src', file)
+    whole_text = open(path).read()
+    if not include_asm_marker(address).search(whole_text):
+        return False, f'src/{file} has no INCLUDE_ASM({address:#X}) line: not changed', None
+    if not source_path or not os.path.isfile(source_path):
+        return False, f'no source for {address:#X} ({source_path}): src/{file} not changed', None
+    language = 'c' if file.endswith('.c') else 'c++'
+    source_text, source_is_c = open(source_path).read(), source_path.endswith('.c')
+    name = f'land_{address:X}'
+    compile_source = compile_source or compiler(name)
+    prove = prove or (lambda: compare_object(os.path.join(SCRATCH, name + '.o'), start, end))
+    attempts = [(True, False)] + ([(False, False)] if language == 'c++' and source_is_c else []) + [(True, True)]
+    cause = None
+    for wrap_c, rename_declarations in attempts:
+        text, notes = insert_function(whole_text, address, source_text, source_is_c, language, wrap_c, rename_declarations)
+        text, dropped, error = resolve(text, language, compile_source)
+        text = tidy(text)
+        if error:
+            cause = cause or f'compile ({language}): {error}'
+            continue
+        ok, message = compile_source(text, language)
+        if not ok:
+            cause = cause or f'compile ({language}): {message.strip()[:200]}'
+            continue
+        difference = prove()
+        if difference:
+            cause = difference
+            continue
+        left = sorted({match.group(0) for match in CLEANUP_LEFT.finditer(text)})
+        if left:
+            return False, f'src/{file} not changed: cleanup left in the source: {", ".join(left[:3])}', text
+        if write:
+            with open(path, 'w') as handle:
+                handle.write(text)
+        notes = notes + dropped
+        return True, f'src/{file}: {address:#X} {"would land" if not write else "landed"}, {start:#X}-{end:#X} proved' + \
+            (f' ({"; ".join(notes)})' if notes else ''), text
+    return False, f'src/{file} not changed: {cause}', None
+
+
 # ---------------------------------------------------------------- the command line
 
 def candidates(boundaries_path):
@@ -561,7 +803,11 @@ def candidates(boundaries_path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--boundaries', required=True, help='work/boundaries/file_boundaries.tsv')
+    parser.add_argument('--boundaries', help='work/boundaries/file_boundaries.tsv')
+    parser.add_argument('--land', metavar='ADDRESS', help='land this function (it scores 0 on its own) in its whole file: see land()')
+    parser.add_argument('--source', help='--land: the per-function source (default: the registry\'s, data/matching/functions.tsv)')
+    parser.add_argument('--dry-run', action='store_true', help='--land: prove but write nothing; --output gets the text')
+    parser.add_argument('--output', help='--land: also write the landed whole file here')
     parser.add_argument('--list', action='store_true', help='print the candidates and why the others are left out')
     parser.add_argument('--write', action='store_true', help='write the proved files to src/ and print their whole_files.tsv rows')
     parser.add_argument('--limit', type=int, help='only the first N candidates')
@@ -570,6 +816,16 @@ def main():
     parser.add_argument('--report', help='write the stage report (start, end, file, status, cause) here')
     parser.add_argument('--dump', help='write every generated text to this directory, proved or not')
     arguments = parser.parse_args()
+    if arguments.land:
+        address = int(arguments.land, 16)
+        ok, message, text = land(address, arguments.source or registry_source(address), write=not arguments.dry_run)
+        if text is not None and arguments.output:
+            with open(arguments.output, 'w') as handle:
+                handle.write(text)
+        print(('' if ok else 'not landed: ') + message)
+        return 0 if ok else 1
+    if not arguments.boundaries:
+        parser.error('--boundaries is needed unless --land is given')
     rows = candidates(arguments.boundaries)
     if arguments.list:
         for start, end, relative, reason, inside in rows:
@@ -620,4 +876,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

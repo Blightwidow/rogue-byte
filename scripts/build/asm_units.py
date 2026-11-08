@@ -24,7 +24,7 @@ def split_points():
     manifest = os.path.join(ROOT, 'src', 'MANIFEST.tsv')
     if os.path.exists(manifest):
         for line in list(open(manifest))[1:]:
-            address, _, size, _ = line.rstrip('\n').split('\t')
+            address, _, size = line.rstrip('\n').split('\t')[:3]
             points |= {int(address, 16), (int(address, 16) + int(size) + 7) & ~7}  # the object ends padded to 8
     for start, end, _ in whole_files():  # a whole file's object replaces exactly its range
         points |= {start, end}

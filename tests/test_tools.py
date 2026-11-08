@@ -28,6 +28,7 @@ import harvest  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
 import make_whole_files  # noqa: E402
+import export_src  # noqa: E402
 import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
@@ -323,6 +324,170 @@ class MakeWholeFilesTests(unittest.TestCase):
         if listed:
             self.assertEqual(compile_unit.assembler_for(next(iter(listed))), 'sony29')
 
+
+
+class WholeFileRecordTests(unittest.TestCase):
+    """The whole file as the only record of its functions: landing one (make_whole_files.insert_function, land), cutting one out of the
+    whole object (cut_function), and the src/MANIFEST.tsv rows of export_src.py. Synthetic sources and objects only."""
+    WHOLE = ('// SPDX-License-Identifier: GPL-3.0-or-later\n#include "sly2.h"\n#include "include_asm.h"\n\n'
+             'struct S { int a; };\n\nvoid First(S *s) { s->a = 1; }\n\nINCLUDE_ASM(0x100010); // a comment\n\nINCLUDE_ASM(0X100020);\n')
+
+    def test_marker_matches_any_spelling_of_the_address(self):
+        marker = make_whole_files.include_asm_marker(0x100010)
+        self.assertTrue(all(marker.search(text) for text in ('INCLUDE_ASM(0x100010);\n', 'INCLUDE_ASM(0X00100010); // x\n', 'INCLUDE_ASM(0x10001a);'.replace('a', '0'))))
+
+    def test_marker_does_not_match_another_address(self):
+        self.assertIsNone(make_whole_files.include_asm_marker(0x100010).search('INCLUDE_ASM(0x1000100);\n'))
+
+    def test_whole_file_of_finds_the_range(self):
+        self.assertEqual(make_whole_files.whole_file_of(0x100018, [(0x100000, 0x100030, 'm/a.cpp')]), (0x100000, 0x100030, 'm/a.cpp'))
+        self.assertIsNone(make_whole_files.whole_file_of(0x100030, [(0x100000, 0x100030, 'm/a.cpp')]))
+
+    def insert(self, source, address=0x100010, source_is_c=False, whole=None):
+        return make_whole_files.insert_function(whole or self.WHOLE, address, source, source_is_c, 'c++')
+
+    def test_landing_replaces_the_include_asm_line(self):
+        text, _ = self.insert('void Second() {}\n')
+        self.assertNotIn('0x100010', text)
+        self.assertLess(text.index('void Second() {}'), text.index('INCLUDE_ASM(0X100020);'))
+
+    def test_landing_drops_an_item_written_before(self):
+        text, _ = self.insert('struct S { int a; };\nvoid Second(S *s) { s->a = 2; }\n')
+        self.assertEqual(text.count('struct S {'), 1)
+
+    def test_landing_renames_a_struct_defined_differently(self):
+        text, notes = self.insert('struct S { char b; };\nvoid Second(S *s) { s->b = 2; }\n')
+        self.assertIn('void Second(S_100010 *s)', text)
+
+    def test_landing_adds_a_new_include_after_the_others(self):
+        text, _ = self.insert('#include "m2c_macros.h"\nvoid Second() {}\n')
+        self.assertIn('#include "include_asm.h"\n#include "m2c_macros.h"\n', text)
+
+    def test_landing_keeps_c_linkage_of_a_c_source(self):
+        text, _ = self.insert('void Second() {}\n', source_is_c=True)
+        self.assertIn('extern "C" {\nvoid Second() {}\n}', text)
+
+    def test_landing_the_last_include_asm_drops_its_header(self):
+        whole = self.WHOLE.replace('\nINCLUDE_ASM(0X100020);\n', '')
+        text, _ = self.insert('void Second() {}\n', whole=whole)
+        self.assertNotIn('include_asm.h', text)
+
+    def test_landing_without_the_line_raises(self):
+        with self.assertRaises(ValueError):
+            self.insert('void Second() {}\n', address=0x100018)
+
+    def land(self, prove_result):
+        import tempfile
+        folder = tempfile.mkdtemp()
+        self.addCleanup(__import__('shutil').rmtree, folder)
+        os.makedirs(os.path.join(folder, 'src', 'm'))
+        whole_path, source = os.path.join(folder, 'src', 'm', 'a.cpp'), os.path.join(folder, '100010.cpp')
+        open(whole_path, 'w').write(self.WHOLE)
+        open(source, 'w').write('void Second() {}\n')
+        old = make_whole_files.ROOT
+        make_whole_files.ROOT = folder
+        try:
+            result = make_whole_files.land(0x100010, source, [(0x100000, 0x100030, 'm/a.cpp')],
+                                           compile_source=lambda text, language: (True, ''), prove=lambda: prove_result)
+        finally:
+            make_whole_files.ROOT = old
+        return result, open(whole_path).read()
+
+    def test_land_writes_the_file_when_the_range_proves(self):
+        (ok, _, _), text = self.land(None)
+        self.assertTrue(ok and 'void Second() {}' in text)
+
+    def test_land_leaves_the_file_when_the_range_differs(self):
+        (ok, message, _), text = self.land('bytes differ at 0X100014')
+        self.assertEqual((ok, text), (False, self.WHOLE))
+        self.assertIn('bytes differ', message)
+
+    def whole_object(self):
+        import tempfile
+        folder = tempfile.mkdtemp()
+        self.addCleanup(__import__('shutil').rmtree, folder)
+        path = os.path.join(folder, 'whole.o')
+        # three functions of 16 bytes; the second calls the third and an undefined name
+        symbols = [('', 0, 0, 3), ('gcc2_compiled.', 0, 0, 0), ('Alpha', 0x0, 16, 2), ('Beta', 0x10, 16, 2), ('Gamma', 0x20, 16, 2), ('ext', 0, 0, 0x10)]
+        code = b''.join(value.to_bytes(4, 'little') for value in range(1, 13))
+        make_whole_files.write_object(path, code, symbols, 5, [(0x14, 5, 4), (0x18, 6, 4), (0x24, 6, 4)])
+        return folder, path
+
+    def test_function_symbols_leave_out_the_compiler_marker(self):
+        _, path = self.whole_object()
+        self.assertEqual(make_whole_files.function_symbols(path), {0x0: 'Alpha', 0x10: 'Beta', 0x20: 'Gamma'})
+
+    def test_cut_keeps_only_the_function(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            self.assertEqual(ELFFile(handle).get_section_by_name('.text').data(), b''.join(value.to_bytes(4, 'little') for value in range(5, 9)))
+
+    def test_cut_moves_the_relocations_to_the_function(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            elf = ELFFile(handle)
+            symbols = elf.get_section_by_name('.symtab')
+            found = [(relocation['r_offset'], symbols.get_symbol(relocation['r_info_sym']).name) for relocation in elf.get_section_by_name('.rel.text').iter_relocations()]
+        self.assertEqual(found, [(0x4, 'Gamma'), (0x8, 'ext')])
+
+    def test_cut_makes_a_called_function_of_the_file_an_undefined_name_with_its_offset(self):
+        folder, path = self.whole_object()
+        _, outside = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        self.assertEqual(outside, {'Gamma': 0x20})
+
+    def test_cut_at_no_function_raises(self):
+        folder, path = self.whole_object()
+        with self.assertRaises(ValueError):
+            make_whole_files.cut_function(path, 0x8, os.path.join(folder, 'cut.o'))
+
+    REGISTRY = [{'address': '0x100000', 'name': 'First', 'size': '8', 'status': 'matched', 'source': 'fn/100000.cpp'},
+                {'address': '0x100010', 'name': 'Second', 'size': '8', 'status': 'matched', 'source': 'fn/100010.cpp'},
+                {'address': '0x200000', 'name': 'func_00200000', 'size': '8', 'status': 'matched', 'source': 'fn/200000.c'},
+                {'address': '0x200010', 'name': 'Other', 'size': '8', 'status': 'tried', 'source': ''}]
+    SOURCES = {'fn/100000.cpp': 'struct S;\nvoid First(S *s) {}\n', 'fn/100010.cpp': 'void Second() {}\n', 'fn/200000.c': 'void f(void) {}\n'}
+
+    def rows(self, whole_text):
+        return export_src.manifest_rows(self.REGISTRY, {0x200000: 'mod'}, [(0x100000, 0x100030, 'm/a.cpp')], {'m/a.cpp': whole_text},
+                                        read_source=self.SOURCES.get)
+
+    def test_a_function_inside_a_whole_file_is_recorded_by_the_file(self):
+        rows, _, _ = self.rows('void First() {}\nvoid Second() {}\n')
+        self.assertEqual([(row['file'], row['whole_file'], row['symbol']) for row in rows if row['address'] == '0X100000'], [('m/a.cpp', 'm/a.cpp', 'First')])
+
+    def test_a_function_inside_a_whole_file_gets_no_copy(self):
+        _, copies, _ = self.rows('void First() {}\nvoid Second() {}\n')
+        self.assertEqual(copies, [('fn/200000.c', 'mod/fun_00200000.c')])
+
+    def test_a_function_outside_whole_files_keeps_its_row(self):
+        rows, _, _ = self.rows('')
+        self.assertIn({'address': '0X200000', 'name': 'func_00200000', 'size': '8', 'file': 'mod/fun_00200000.c', 'whole_file': '', 'symbol': ''}, rows)
+
+    def test_a_match_its_whole_file_still_includes_from_assembly_is_not_published(self):
+        rows, _, unlanded = self.rows('void First() {}\nINCLUDE_ASM(0x100010);\n')
+        self.assertEqual(([row['address'] for row in unlanded], '0X100010' in [row['address'] for row in rows]), (['0x100010'], False))
+
+    def test_names_that_differ_only_in_case_do_not_share_a_file(self):
+        registry = [{'address': '0x200000', 'name': 'Foo', 'size': '8', 'status': 'matched', 'source': 'a.c'},
+                    {'address': '0x200008', 'name': 'foo', 'size': '8', 'status': 'matched', 'source': 'b.c'}]
+        _, copies, _ = export_src.manifest_rows(registry, {}, [], {}, read_source=lambda path: None)
+        self.assertEqual([destination for _, destination in copies], ['unsorted/Foo.c', 'unsorted/foo_200008.c'])
+
+    def test_source_symbol_prefers_the_registry_name(self):
+        self.assertEqual(export_src.source_symbol('static int helper() { return 1; }\nint Name__Fi(int a) { return a; }\nint Name() { return 0; }\n', 'Name'), 'Name')
+
+    def test_source_symbol_falls_back_to_the_last_definition(self):
+        self.assertEqual(export_src.source_symbol('int Helper() { return 1; }\nint Real() { return 0; }\n', 'func_00100000'), 'Real')
+
+    def test_check_unit_reads_the_first_four_manifest_columns(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile('w', suffix='.tsv', delete=False) as handle:
+            handle.write('address\tname\tsize\tfile\twhole_file\tsymbol\n0X100000\tFirst\t8\tm/a.cpp\tm/a.cpp\tFirst\n')
+        self.addCleanup(os.remove, handle.name)
+        self.assertEqual(check_unit.rows(handle.name, 4), [['0X100000', 'First', '8', 'm/a.cpp']])
 
 
 class PermuteMarkedTests(unittest.TestCase):

@@ -25,9 +25,13 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    `__static_initialization_and_destruction_0`; the linker builds the list, SN's compiler writes no `.ctors`); `modules.tsv` groupings straddle
    them (139 of 209 spans hold several modules). Stage 2: `src/memory-bez/ary.cpp` (0x116CA0-0x117030, 11 functions, two from `INCLUDE_ASM`)
    builds whole and the image stays byte for byte (`config/us/whole_files.tsv`, `make unit UNIT=src/memory-bez/ary.cpp`). 181 of the 209 files
-   (about 405 KB) can use the same path as it is; 26 need the file's own `.rodata` placed (item 3); 2 mix per-function flag lists. Still open:
-   the per-function sources are kept next to the whole file (they are what `try.py`, objdiff and PAL read), one flag set per file, counting per file
-   instead of per module, and the 826 low-confidence cuts inside a span.
+   (about 405 KB) can use the same path as it is; 26 need the file's own `.rodata` placed (item 3); 2 mix per-function flag lists. Stage 4: 78
+   whole files (276 matched functions) build whole. Stage 5 (2026-11-08): the whole file is the only record of its functions. `make src` publishes
+   no per-function copy of them (276 files, 223 KB, left `src/`; `src/MANIFEST.tsv` gives them `whole_file` and `symbol`); objdiff cuts each one
+   out of the whole object and PAL reads it there at its offset (both reports unchanged); a new match inside a whole file lands by replacing its
+   `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
+   (`data/matching/src/fn`, `try.py`). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
+   cuts inside a span.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 0.83% of data (8,375 of 1,011,732 bytes: only a function's own literals and

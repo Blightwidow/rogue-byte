@@ -7,7 +7,9 @@
 Each data/matching/src/fn/<ADDRESS>.cpp (or .c, judged as C) is judged by scripts/matching/try.py, which picks the assembler by
 address (config/us). The registry row (data/matching/functions.tsv) gets status `matched` with the source at score 0, else `tried` with
 the best score so far and one more try (a near miss that holds a banned construct, see below, does not lower the best score; a match is scanned
-afterwards). A function of the SDK range (status `library`) is registered the same way.
+afterwards). A function of the SDK range (status `library`) is registered the same way. A new match inside a whole file
+(config/us/whole_files.tsv) is landed there (scripts/build/make_whole_files.py land(): its INCLUDE_ASM line becomes its source and the
+whole range is proved against retail); only then is it registered as matched, else it stays `tried` with best 0 and the file is unchanged.
 
 A new match is scanned for what AGENTS.md bans: `volatile` on ordinary data (a pointer to a hardware register, an address from
 0x10000000 up, is allowed; so is a line marked `// volatile-ok: <reason>` for a register-block pointer or interrupt-shared data), `register` pins, and inline asm in a function (only the shared `sqrt.s` helper is allowed).
@@ -26,7 +28,9 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'build'))
 from progress import Progress  # noqa: E402
+import make_whole_files  # noqa: E402
 import check_source  # noqa: E402
 import park  # noqa: E402
 
@@ -106,7 +110,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         results = list(pool.map(judge, sources))
     progress.done()
-    new_matches, tried, parked = [], 0, []
+    new_matches, tried, parked, unlanded = [], 0, [], []
     since = os.path.getmtime(STAMP) if os.path.exists(STAMP) else 0
     for address, score, path in results:
         row = by_address.get(address)
@@ -129,6 +133,14 @@ def main():
                 row['status'] = 'tried'
                 tried += 1
                 continue
+            if make_whole_files.whole_file_of(address) is not None:  # its whole file is its record: it lands there or stays unmatched
+                landed, message, _ = make_whole_files.land(address, path, write=not arguments.dry_run)
+                print(message if landed else f'not landed: {message}')
+                if not landed:
+                    row['source'], row['status'] = path, 'tried'
+                    unlanded.append(row['address'])
+                    tried += 1
+                    continue
             row['status'], row['source'] = 'matched', path
             new_matches.append(row)
         else:
@@ -154,6 +166,8 @@ def main():
         print(f'parked: {address} {name}: {reason} ({path}:{number}: {what})')
     if parked:
         print(f'{len(parked)} source(s) score 0 but break a rule (check_source.py): parked in data/matching/asm-archive or cleanup-pending, not matched')
+    if unlanded:
+        print(f'{len(unlanded)} source(s) score 0 but did not land in their whole file (the file is unchanged), not matched: {" ".join(unlanded)}')
     return 0
 
 
