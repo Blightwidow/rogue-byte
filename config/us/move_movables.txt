@@ -1,0 +1,5 @@
+# Functions compiled with -fmove-all-movables (scripts/build/compile_unit.py MOVE_FLAG): one address per line, listed when the function reaches 0 with it
+# and not without (docs/contributing/exceptions.md). A function is its own source file in src/, so this is that file's flag set. Add a row with `make land`
+# only after `make elf` still reproduces the image.
+0x1BEB28
+0x20C0E8

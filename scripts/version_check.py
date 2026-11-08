@@ -79,7 +79,7 @@ def check(row, other_address, other_elf):
     os.makedirs(scorer.BUILD, exist_ok=True)
     path = stem + '.o'
     try:
-        ok, _ = compile_unit.compile_object(language, source, path, assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False)
+        ok, _ = compile_unit.compile_object(language, source, path, assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address))
         if not ok:
             return None, []
         arguments = types.SimpleNamespace(object=path, address=other_address, elf=other_elf, symbol=row['name'], size=int(row['size']), export=None, quiet=True, symbols=None)

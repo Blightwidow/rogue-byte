@@ -80,7 +80,7 @@ def our_profile(address, source, language):
     path = os.path.join(scorer.BUILD, f'frame-{address:06X}-{os.getpid()}.o')
     os.makedirs(scorer.BUILD, exist_ok=True)
     ok, message = compile_unit.compile_object(language, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address),
-                                              include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address))
+                                              include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address))
     if not ok:
         return None
     try:

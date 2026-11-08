@@ -1,11 +1,10 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
 struct TASK { char pad0[0x54]; int state; char pad1[0x14]; int done; };
 struct FTASK { char pad0[0x94]; int cprereq; TASK **aprereq; };
 extern "C" int FTaskPrerequisitesDone(FTASK *ptask)
 {
-    int index = 0;
     int result = 1;
-    if (ptask->cprereq > 0) {
+    int index = 0;
+    if (index < ptask->cprereq) {
         TASK **ppreq = ptask->aprereq;
         do {
             TASK *preq = *ppreq;
@@ -15,7 +14,7 @@ extern "C" int FTaskPrerequisitesDone(FTASK *ptask)
                 result = 1;
             ppreq++;
             index++;
-            if (!result)
+            if (result == 0)
                 break;
         } while (index < ptask->cprereq);
     }

@@ -15,5 +15,6 @@ extern "C" float UNoise__Ffff(float gFreq, float gPhase, float uRandom)
         uLeft = uRandom * (uLeft - 1.0f) + 1.0f;
     }
     float uFraction = gPosition - (float)nLattice;
-    return uLeft + (uRight - uLeft) * (uFraction * uFraction * (3.0f - (uFraction + uFraction)));
+    uFraction = uFraction * uFraction * (3.0f - (uFraction + uFraction));
+    return uLeft + uFraction * (uRight - uLeft);
 }
