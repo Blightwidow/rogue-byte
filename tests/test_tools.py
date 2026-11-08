@@ -18,6 +18,7 @@ import claim  # noqa: E402
 import check_source  # noqa: E402
 import adopt  # noqa: E402
 import classify_blockers  # noqa: E402
+import classify_diffs  # noqa: E402
 import check_unit  # noqa: E402
 import commit_msg  # noqa: E402
 import boundaries  # noqa: E402
@@ -1436,6 +1437,19 @@ class DeadConstantOrderTests(unittest.TestCase):
 
     def test_no_candidate_equals_the_input(self):
         self.assertNotIn(self.STORES, permute_stores.dead_constant_orders(self.STORES))
+
+
+class ClassifyDiffsTests(unittest.TestCase):
+    def test_a_diff_with_no_hunk_is_stale_not_follows(self):
+        self.assertEqual(classify_diffs.class_of(0, [], 0), ('stale', ''))
+
+    def test_a_branch_offset_only_hunk_is_follows(self):
+        hunk = (['beq $a0, $zero, . + 4 + (0x3 << 2)'], ['beq $a0, $zero, . + 4 + (0x4 << 2)'])
+        self.assertEqual(classify_diffs.class_of(2, [hunk], 0)[0], 'follows')
+
+    def test_a_register_only_hunk_is_register(self):
+        hunk = (['addu $v0, $a0, $a1'], ['addu $v1, $a0, $a1'])
+        self.assertEqual(classify_diffs.class_of(1, [hunk], 0), ('register', 'register'))
 
 
 if __name__ == '__main__':

@@ -17,6 +17,12 @@ every `tried` function again first) and classifies each hunk (a run of differing
   extra      our code has more instructions than retail in the hunk; missing: fewer (the structure differs: a temporary, an inline, a cast)
   link       the instructions are equal but a call or a global points elsewhere (the name or the prototype)
   follows    the hunk differs only in branch offsets, a consequence of an `extra`/`missing` elsewhere
+  stale      the kept diff says `score 0`, so it has no hunks: it was made by an earlier source (a steering asm draft, an older toolchain) and the
+             function still counts as unmatched. Run --refresh to judge it again; it is not a kind of difference (2026-11-08: all 148 rows of the
+             old `follows` class with no hunks were this or a permanent blocker)
+
+Permanent blockers (config/us/blockers.tsv) are left out: AGENTS.md leaves them out of the work queues, and their sources hold the inline asm that
+made them score 0.
 
 A function's class is its hunks' class when they all agree, else `mixed`; no diff means it does not compile. Prints the count per class and,
 by score, how many are within reach of the cheap fixes, and writes one row per function (address, score, class, hunk classes) to the output."""
@@ -30,6 +36,8 @@ import subprocess
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import search_guard  # noqa: E402
 LINE = re.compile(r'^(?:[0-9a-f]{8}|\s{8}) (.*?)\s+([|<>!]) (.*)$')
 OFFSET = re.compile(r'\. \+ 4 \+ \(-?0x[0-9A-F]+ << 2\)')
 NUMBER = re.compile(r'-?0x[0-9A-Fa-f]+|-?\d+')
@@ -96,6 +104,22 @@ def hunks_of(path):
     return score, hunks, links, True
 
 
+def class_of(score, hunks, links):
+    """(class, hunk classes) of a compiled diff: `stale` when it has no hunk and no link error (score 0), else the class of its hunks."""
+    kinds = [classify_hunk(left, right) for left, right in hunks]
+    real = [kind for kind in kinds if kind != 'follows']
+    if links:
+        real.append('link')
+    distinct = sorted(set(real))
+    every_left = [shape(text) for left, _ in hunks for text in left]
+    every_right = [shape(text) for _, right in hunks for text in right]
+    if distinct and set(distinct) <= {'extra', 'missing', 'order', 'follows'} and sorted(every_left) == sorted(every_right):
+        distinct = ['moved']  # the same instructions overall, in other places: scheduling, a delay slot, store order, a hoisted load
+    if not hunks and not links:
+        return 'stale', ''
+    return (distinct[0] if len(distinct) == 1 else ('mixed' if distinct else 'follows')), '+'.join(distinct)
+
+
 def refresh(rows, jobs):
     def judge(row):
         address = int(row['address'], 16)
@@ -114,6 +138,8 @@ def main():
     parser.add_argument('--out', default=os.path.join(ROOT, 'work', 'matching', 'classes.tsv'))
     arguments = parser.parse_args()
     rows = [row for row in csv.DictReader(open(os.path.join(ROOT, 'data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t') if row['status'] == 'tried']
+    blockers = search_guard.table(search_guard.BLOCKERS, 'kind')
+    rows = [row for row in rows if int(row['address'], 16) not in blockers]
     if arguments.refresh:
         refresh(rows, arguments.jobs)
     result = []
@@ -123,17 +149,8 @@ def main():
         if not compiled:
             result.append((row['address'], row['name'], '', 'no-compile', ''))
             continue
-        kinds = [classify_hunk(left, right) for left, right in hunks]
-        real = [kind for kind in kinds if kind != 'follows']
-        if links:
-            real.append('link')
-        distinct = sorted(set(real))
-        every_left = [shape(text) for left, _ in hunks for text in left]
-        every_right = [shape(text) for _, right in hunks for text in right]
-        if distinct and set(distinct) <= {'extra', 'missing', 'order', 'follows'} and sorted(every_left) == sorted(every_right):
-            distinct = ['moved']  # the same instructions overall, in other places: scheduling, a delay slot, store order, a hoisted load
-        kind = distinct[0] if len(distinct) == 1 else ('mixed' if distinct else 'follows')
-        result.append((row['address'], row['name'], str(score), kind, '+'.join(distinct)))
+        kind, distinct = class_of(score, hunks, links)
+        result.append((row['address'], row['name'], str(score), kind, distinct))
     os.makedirs(os.path.dirname(arguments.out), exist_ok=True)
     with open(arguments.out, 'w') as out:
         out.write('address\tname\tscore\tclass\thunks\n')
