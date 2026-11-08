@@ -3920,6 +3920,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F3C70	func_001F3C70	0X1F4430	same	0	ok
 0x1F3CC8	func_001F3CC8	0X1F4488	same	0	ok
 0x1F3E00	func_001F3E00	0X1F45C0	same	0	ok
+0x1F3EA8	func_001F3EA8	0X1F4668	same	0	ok
 0x1F3FA0	PmatWorldSo	0X1F4760	gap	0	ok
 0x1F3FB0	func_001F3FB0	0X1F4770	same	0	ok
 0x1F4010	func_001F4010	0X1F47D0	same	0	ok
@@ -4864,11 +4865,13 @@ us_address	name	other_address	pair	score	addresses
 0x237488	sceSifCheckStatRpc	0X238450	identical	0	ok
 0x2374E0	func_002374E0	0X2384A8	same	0	ok
 0x237558	func_00237558	0X238520	same	0	ok
+0x2375E0	func_002375E0	0X2385A8	same	0	ok
 0x237AF8	func_00237AF8	0X238AC0	same	0	ok
 0x237B50	func_00237B50	0X238B18	same	0	ok
 0x237B80	func_00237B80	0X238B48	gap	0	ok
 0x237DE0	func_00237DE0	0X238DA8	same	0	ok
 0x237E70	sceFsReset	0X238E38	same	0	ok
+0x238BD0	func_00238BD0	0X239B98	same	0	ok
 0x238C58	func_00238C58	0X239C20	same	0	ok
 0x238CC8	func_00238CC8	0X239C90	same	0	ok
 0x238D40	func_00238D40	0X239D08	same	0	ok
@@ -4888,6 +4891,7 @@ us_address	name	other_address	pair	score	addresses
 0x2398C8	func_002398C8		none		
 0x2398D0	exit	0X23AA18	same	0	ok
 0x239920	func_00239920	0X23AA68	identical	0	ok
+0x239968	InitAlarm	0X23AAB0	same	0	ok
 0x239AA8	func_00239AA8	0X23ABF0	gap	0	ok
 0x239AB0	func_00239AB0	0X23ABF8	gap	0	ok
 0x239AC0	func_00239AC0	0X23AC08	gap	0	ok
@@ -4897,9 +4901,12 @@ us_address	name	other_address	pair	score	addresses
 0x239E68	func_00239E68	0X23AFB0	same	0	ok
 0x239EF0	func_00239EF0	0X23B038	same	0	ok
 0x23A298	func_0023A298	0X23B3E0	same	0	ok
+0x23A2F0	func_0023A2F0	0X23B438	same	0	ok
 0x23A3A0	func_0023A3A0	0X23B4E8	same	0	ok
 0x23A518	func_0023A518	0X23B660	same	0	ok
 0x23A618	func_0023A618	0X23B760	same	0	ok
+0x23A6C8	func_0023A6C8	0X23B810	same	0	ok
+0x23A7F8	func_0023A7F8	0X23B940	same	0	ok
 0x23A8E8	func_0023A8E8	0X23BA30	same	0	ok
 0x23A9C8	func_0023A9C8	0X23BB10	gap	0	ok
 0x23AA40	func_0023AA40	0X23BB88	same	0	ok
@@ -4963,6 +4970,7 @@ us_address	name	other_address	pair	score	addresses
 0x241728	func_00241728	0X2420E8	same	0	ok
 0x2417A0	func_002417A0	0X242160	same	0	ok
 0x2417F0	func_002417F0	0X2421B0	same	0	ok
+0x241830	func_00241830	0X2421F0	same	0	ok
 0x241C10	func_00241C10	0X2425D0	same	0	ok
 0x241E88	sceCdSync	0X242848	same	0	ok
 0x241F28	func_00241F28	0X2428E8	same	0	ok
@@ -5015,6 +5023,7 @@ us_address	name	other_address	pair	score	addresses
 0x24A7B0	func_0024A7B0	0X24B1F8	same	0	ok
 0x24A820	func_0024A820	0X24B268	same	0	ok
 0x24A860	sceScfGetLanguage	0X24B2A8	same	0	ok
+0x24A908	func_0024A908	0X24B350	same	0	ok
 0x24AC10	func_0024AC10	0X24B658	same	0	ok
 0x24B530	func_0024B530	0X24BF78	gap	0	ok
 0x24B540	sceMpegGetPicture	0X24BF88	same	0	ok
@@ -5072,12 +5081,16 @@ us_address	name	other_address	pair	score	addresses
 0x255438	UnlinkVarbNode	0X255E88	same	0	ok
 0x255588	LinkFrameNode	0X255FD8	same	0	ok
 0x255718	InitFrameNode	0X256168	same	0	ok
+0x255770	UnlinkFrameNode	0X2561C0	same	0	ok
 0x2558C0	LinkProcNode	0X256310	same	0	ok
 0x255A58	InitProcNode	0X2564A8	same	0	ok
+0x255AB0	UnlinkProcNode	0X256500	same	0	ok
 0x255C00	LinkSidebagNode	0X256650	same	0	ok
 0x255D90	InitSidebagNode	0X2567E0	same	0	ok
+0x255DE8	UnlinkSidebagNode	0X256838	same	0	ok
 0x255F38	func_00255F38	0X256988	same	0	ok
 0x2560C8	func_002560C8	0X256B18	same	0	ok
+0x256120	func_00256120	0X256B70	same	0	ok
 0x256278	func_00256278	0X256CC8	same	0	ok
 0x256298	func_00256298	0X256CE8	gap	0	ok
 0x2562A0	func_002562A0	0X256CF0	gap	0	ok

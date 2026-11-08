@@ -600,7 +600,6 @@ address	name	size	file	score
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.c	59
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.cpp	105
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	24
-0X1F3EA8	func_001F3EA8	248	so-po/fun_001f3ea8.cpp	14
 0X1F42E0	RotateSoToMat	352	so-po/RotateSoToMat.c	72
 0X1F4558	GetSoAngularVelocityVec	384	so-po/GetSoAngularVelocityVec.c	84
 0X1F46D8	SetSoAngularVelocityVec	368	so-po/SetSoAngularVelocityVec.c	65
