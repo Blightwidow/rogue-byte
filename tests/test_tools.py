@@ -27,6 +27,7 @@ import credit_audit  # noqa: E402
 import harvest  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
+import make_whole_files  # noqa: E402
 import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
@@ -237,6 +238,81 @@ class CompileUnitTests(unittest.TestCase):
 
     def test_assembly_without_marker_is_unchanged(self):
         self.assertEqual(compile_unit.expand_include_asm('a\nb', {}), 'a\nb')
+
+    def test_vadda_is_written_as_its_word(self):
+        lines = ['glabel f\n', '    /* 80 00100000 BC12E04B */  vadda.xyzw $ACC, $vf0, $vf2\n']
+        self.assertIn('\t.word\t0x4be012bc', compile_unit.splat_for_ps2eeas(lines).split('\n'))
+
+    def test_c1_is_written_as_its_word(self):
+        lines = ['glabel f\n', '    /* 80 00100000 44030046 */  c1         0x344\n']
+        self.assertIn('\t.word\t0x46000344', compile_unit.splat_for_ps2eeas(lines).split('\n'))
+
+
+class MakeWholeFilesTests(unittest.TestCase):
+    MANIFEST = {0x100000: ('First', 8, 'module/First.cpp'), 0x100010: ('Second', 8, 'module/Second.cpp'),
+                0x100020: ('Third', 8, 'module/Third.c')}
+
+    def build(self, sources, functions=(0x100000, 0x100008, 0x100010), language=None):
+        return make_whole_files.build_whole_file(0x100000, 0x100030, list(functions), self.MANIFEST, read_source=sources.__getitem__, language=language)
+
+    def test_items_split_at_top_level(self):
+        items = make_whole_files.split_items('#include "a.h"\nstruct S { int a; };\nint f(S *s) { return s->a; }\nextern int g;\n')
+        self.assertEqual([make_whole_files.classify(item) for item in items],
+                         [('preprocessor', '#include "a.h"'), ('type', 'S'), ('function', 'f'), ('declaration', 'g')])
+
+    def test_semicolon_in_a_comment_does_not_end_an_item(self):
+        self.assertEqual(len(make_whole_files.split_items('/* a; b */ extern int g;\n')), 1)
+
+    def test_rename_skips_comments_and_longer_names(self):
+        self.assertEqual(make_whole_files.rename('VT *x; /* VT */ VTable y;', 'VT', 'VT_1'), 'VT_1 *x; /* VT */ VTable y;')
+
+    def test_unmatched_function_becomes_include_asm(self):
+        _, text, _ = self.build({'module/First.cpp': 'void First() {}\n', 'module/Second.cpp': 'void Second() {}\n'})
+        self.assertLess(text.index('void First'), text.index('INCLUDE_ASM(0X100008);'))
+
+    def test_include_asm_header_is_added(self):
+        _, text, _ = self.build({'module/First.cpp': 'void First() {}\n', 'module/Second.cpp': 'void Second() {}\n'})
+        self.assertIn('#include "include_asm.h"', text)
+
+    def test_identical_declaration_is_kept_once(self):
+        _, text, _ = self.build({'module/First.cpp': 'extern int g;\nvoid First() { g = 1; }\n', 'module/Second.cpp': 'extern int g;\nvoid Second() { g = 2; }\n'})
+        self.assertEqual(text.count('extern int g;'), 1)
+
+    def test_differing_struct_takes_the_address_suffix(self):
+        _, text, notes = self.build({'module/First.cpp': 'struct S { int a; };\nvoid First(S *s) {}\n', 'module/Second.cpp': 'struct S { char b; };\nvoid Second(S *s) {}\n'})
+        self.assertIn('void Second(S_100010 *s)', text)
+
+    def test_includes_go_to_the_top_once(self):
+        _, text, _ = self.build({'module/First.cpp': '#include "sly2.h"\nvoid First() {}\n', 'module/Second.cpp': '#include "sly2.h"\nvoid Second() {}\n'})
+        self.assertEqual(text.count('#include "sly2.h"'), 1)
+
+    def test_c_source_in_a_cpp_file_keeps_c_linkage(self):
+        sources = {'module/First.cpp': 'void First() {}\n', 'module/Third.c': 'void Third() {}\n'}
+        _, text, _ = self.build(sources, functions=(0x100000, 0x100020))
+        self.assertIn('extern "C" {\nvoid Third() {}\n}', text)
+
+    def test_all_c_sources_make_a_c_file(self):
+        language, _, _ = self.build({'module/Third.c': 'void Third() {}\n'}, functions=(0x100020,))
+        self.assertEqual(language, 'c')
+
+    def test_c_file_spells_linkage_as_c(self):
+        self.assertEqual(make_whole_files.to_c('extern "C" int f(void);'), 'extern int f(void);')
+
+    def test_m2c_unk_becomes_s32(self):
+        self.assertEqual(make_whole_files.clean_text('M2C_UNK f(M2C_UNK *a);\n'), 's32 f(s32 *a);\n')
+
+    def test_resolve_drops_the_later_conflicting_declaration(self):
+        text = 'extern int g;\nextern char g;\nvoid f() {}\n'
+        def compile_source(source, language):
+            if 'extern char g;' in source:
+                return False, 'x.cpp:2: conflicting types for `char g\'\nx.cpp:1: previous declaration as `int g\''
+            return True, ''
+        resolved, notes, error = make_whole_files.resolve(text, 'c++', compile_source)
+        self.assertEqual((make_whole_files.tidy(resolved), error), ('extern int g;\n\nvoid f() {}\n', None))
+
+    def test_resolve_stops_on_another_error(self):
+        _, _, error = make_whole_files.resolve('void f() { x; }\n', 'c++', lambda source, language: (False, 'x.cpp:1: `x\' undeclared'))
+        self.assertIn('undeclared', error)
 
     def test_only_the_sony_list_picks_another_assembler(self):
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))

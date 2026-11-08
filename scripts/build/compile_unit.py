@@ -51,6 +51,11 @@ def hoist_externs(assembly):
 
 INCLUDE_ASM_MARKER = re.compile(r'^[ \t]*\.include_asm[ \t]+(0[xX][0-9A-Fa-f]+)[ \t]*$', re.M)  # what include/include_asm.h's INCLUDE_ASM(address) writes
 SPLAT_COMMENT = re.compile(r'/\*.*?\*/')
+SPLAT_ENCODING = re.compile(r'\s*/\* [0-9A-F]+ [0-9A-F]{8} ([0-9A-F]{8}) \*/')  # Splat's comment: file offset, address, the word's bytes
+# instructions that ps2eeas does not read as spimdisasm writes them, emitted as the word Splat's comment gives (none takes a relocation):
+# `c1 0x...` (a COP1 operation spimdisasm names only by its function, the R5900's sqrt.s forms; ps2eeas has no `c1`) and `vadda`
+# (spimdisasm prints ft before fs, ps2eeas reads fs first). Measured over every game function (docs/ROADMAP.md item 2, stage 4).
+SPELLED_AS_WORD = {'c1', 'vadda'}
 
 
 @functools.lru_cache(maxsize=None)
@@ -64,15 +69,18 @@ def splat_functions():
 
 def splat_for_ps2eeas(lines):
     """One function of Splat's assembly as ps2eeas reads it: spimdisasm's comments and the `.size` lines dropped, `glabel`/`jlabel`/`dlabel` as
-    plain labels, between `.set noreorder` and `.set reorder` (Splat writes every delay slot itself). Macro mode stays on: ps2eeas refuses a
+    plain labels, the instructions of SPELLED_AS_WORD as their word, between `.set noreorder` and `.set reorder` (Splat writes every delay slot itself). Macro mode stays on: ps2eeas refuses a
     backward branch in a short loop under `.set nomacro`, although retail's loop is already padded and nothing is added (the build compares)."""
     body = []
     for line in lines:
         text = SPLAT_COMMENT.sub('', line).strip()
         if not text or text.startswith('.size '):
             continue
+        encoding = SPLAT_ENCODING.match(line)
         if text.split()[0] in ('glabel', 'jlabel', 'dlabel'):
             body.append(text.split()[1] + ':')
+        elif encoding and text.split()[0].split('.')[0] in SPELLED_AS_WORD:
+            body.append(f"\t.word\t{int.from_bytes(bytes.fromhex(encoding.group(1)), 'little'):#010x}")
         else:
             body.append(text if text.endswith(':') else '\t' + text)
     return '\n'.join(['\t.set\tnoreorder', '\t.set\tnoat', *body, '\t.set\tat', '\t.set\treorder'])
