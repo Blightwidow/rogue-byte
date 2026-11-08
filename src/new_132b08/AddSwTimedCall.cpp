@@ -10,6 +10,10 @@ extern SWG B_003DD490;
 extern "C" void *PvAllocSlotheapImpl(void *);
 extern "C" void InsertSlEntryAfter(TCLIST *, TIMEDCALL *, TIMEDCALL *);
 
+// Retail rotates one list walk: the first test (phead) compares against tFire still in $f20 (CSE of the store
+// just made), the loop body reloads pcall->tFire and branches back with bc1fl after a loop-aligned nop. That is
+// gcc's loop rotation of a plain `for` over the list with a break, so the source walks the list in one for loop
+// rather than testing the head separately (which duplicated the loop or lost the alignment nop).
 TIMEDCALL *AddSwTimedCall(SWW *psw, void *powner, PAIR *ppair, float tFire)
 {
     ppair->cref++;
@@ -23,19 +27,10 @@ TIMEDCALL *AddSwTimedCall(SWW *psw, void *powner, PAIR *ppair, float tFire)
     pcall->tFire = tFire;
     pcall->pnext = 0;
     TIMEDCALL *pprev = 0;
-    if (B_003E0E80.phead != 0) {
-        if (tFire < B_003E0E80.phead->tFire) {
-        } else {
-            pprev = B_003E0E80.phead;
-        loop:
-            TIMEDCALL *pnext = pprev->pnext;
-            if (pnext != 0) {
-                if (!(pnext->tFire > pcall->tFire)) {
-                    pprev = pnext;
-                    goto loop;
-                }
-            }
-        }
+    for (TIMEDCALL *pnext = B_003E0E80.phead; pnext != 0; pnext = pnext->pnext) {
+        if (pnext->tFire > pcall->tFire)
+            break;
+        pprev = pnext;
     }
     InsertSlEntryAfter(&B_003E0E80, pprev, pcall);
     return pcall;

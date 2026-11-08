@@ -1388,6 +1388,7 @@ us_address	name	other_address	pair	score	addresses
 0x132ED0	func_00132ED0	0X132ED0	gap	0	ok
 0x132ED8	BuildScriptCall	0X132ED8	same	0	ok
 0x133000	EvalScriptCall	0X133000	identical	0	ok
+0x133040	AddSwTimedCall	0X133040	same	0	ok
 0x133130	CancelSwTimedCall	0X133130	same	0	ok
 0x1331F8	PostScriptMessage	0X1331F8	same	0	ok
 0x133340	EnableLasen__FP5LASEN5SENSM	0X133340	identical	0	ok
@@ -1718,6 +1719,7 @@ us_address	name	other_address	pair	score	addresses
 0x1498F8	StaticInitSlotheaps_1498f8	0X149938	same	0	ok
 0x149A30	StaticInitSlotheaps_1498f8_thunk	0X149A70	same	0	ok
 0x149A50	QueueSwCallback	0X149A90	identical	0	ok
+0x149AB8	QueueSwCallbackOnce	0X149AF8	same	0	ok
 0x149B58	CancelSwCallbacks	0X149B98	identical	0	ok
 0x149EB0	StaticInitSlotheaps_149eb0	0X149EF0	same	0	ok
 0x149FE8	StaticInitSlotheaps_149eb0_thunk	0X14A028	same	0	ok
@@ -1830,6 +1832,7 @@ us_address	name	other_address	pair	score	addresses
 0x150610	DeactivateCplook	0X150638	same	0	ok
 0x150728	func_00150728	0X150750	same	0	ok
 0x150780	bevy_classes_k30_cam_150780	0X1507A8	same	0	ok
+0x150938	bevy_classes_k30_cam_activate_2	0X150960	same	0	ok
 0x150DE8	bevy_classes_k30_cam_reset	0X150E10	same	0	ok
 0x150E20	bevy_classes_k30_cam_set	0X150E48	same	0	ok
 0x150E60	func_00150E60	0X150E88	same	0	ok
@@ -2469,6 +2472,7 @@ us_address	name	other_address	pair	score	addresses
 0x1805C8	Chaser_PostLoad	0X180550	same	0	ok
 0x180638	Chaser_OnAdd	0X1805C0	same	0	ok
 0x180FF0	Chaser_AdjustNewXp	0X180F78	same	0	ok
+0x1811B8	Chaser_FTakeHit	0X181140	same	0	ok
 0x181238	Chaser_Reset	0X1811C0	same	0	ok
 0x181268	Chaser_SetState	0X1811F0	same	0	ok
 0x181308	Chaser_SetStateAnim	0X181290	identical	0	ok
@@ -2632,6 +2636,7 @@ us_address	name	other_address	pair	score	addresses
 0x18ED70	EnsureAloSfx__FP3ALO	0X18ECF8	same	0	ok
 0x18F050	ChooseJtCaneAlternateSwing	0X18EFD8	same	0	ok
 0x18F560	ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL	0X18F4E8	same	0	ok
+0x18F688	ChooseJtRushTarget__FP2JT	0X18F610	same	0	ok
 0x18F740	ChooseJtSmashTarget__FP2JT	0X18F6C8	same	0	ok
 0x18F7B0	StaticInitSlotheaps_18f7b0	0X18F738	same	0	ok
 0x18F8E8	func_0018F8E8	0X18F870	same	0	ok
@@ -3273,6 +3278,8 @@ us_address	name	other_address	pair	score	addresses
 0x1C7A08	func_001C7A08	0X1C7C70	gap	0	ok
 0x1C7A10	func_001C7A10	0X1C7C78	identical	0	ok
 0x1C7A40	func_001C7A40	0X1C7CA8	identical	0	ok
+0x1C7A58	SelectCoinLootDef	0X1C7CC0	same	0	ok
+0x1C7B10	func_001C7B10	0X1C7D78	gap	0	ok
 0x1C7B18	PpathClueFlag	0X1C7D80	same	0	ok
 0x1C7BB8	FClueFound	0X1C7E20	same	0	ok
 0x1C7D00	func_001C7D00	0X1C7F68	gap	0	ok
@@ -3284,6 +3291,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C8030	PostClueLoad	0X1C8298	same	0	ok
 0x1C8090	PpathVaultFlag	0X1C82F8	same	0	ok
 0x1C8110	FVaultOpen	0X1C8378	same	0	ok
+0x1C8280	func_001C8280	0X1C84F0	same	0	ok
 0x1C82F0	func_001C82F0	0X1C8560	same	0	ok
 0x1C8AF0	func_001C8AF0	0X1C8D60	same	0	ok
 0x1C8B68	func_001C8B68	0X1C8DD8	same	0	ok
@@ -3313,6 +3321,7 @@ us_address	name	other_address	pair	score	addresses
 0x1CA958	PleaseFromIclone	0X1CABC8	identical	0	ok
 0x1CA978	NGradeLease	0X1CABE8	same	0	ok
 0x1CADE0	PleaseFindBest	0X1CB050	same	0	ok
+0x1CB250	PloLeaseCloneObject	0X1CB4C0	same	0	ok
 0x1CB2C0	FCanLease	0X1CB530	same	0	ok
 0x1CB2E0	PloLeased	0X1CB550	same	0	ok
 0x1CB328	EnsureLeasedObject	0X1CB598	same	0	ok
@@ -3784,6 +3793,7 @@ us_address	name	other_address	pair	score	addresses
 0x1ECC28	FBuildUploadBitmapGifs__FiP3GSBP4GIFS	0X1ED3E8	same	0	ok
 0x1ED278	FilterColorRgba8_1ed278	0X1EDA38	same	0	ok
 0x1ED3A8	InitIdHashTables_1ed3a8	0X1EDB68	same	0	ok
+0x1ED448	ShutdownIdHashTables_1ed448	0X1EDC08	same	0	ok
 0x1ED4E0	PidFindInIdTableA_1ed4e0	0X1EDCA0	same	0	ok
 0x1ED5D0	PidFindInIdTableB_1ed5d0	0X1EDD90	same	0	ok
 0x1ED650	StaticInitSlotheaps_1ed650	0X1EDE10	same	0	ok
@@ -4563,6 +4573,7 @@ us_address	name	other_address	pair	score	addresses
 0x217EF8	IinstFindFreeSprite	0X218718	identical	0	ok
 0x217F38	ClearSpriteInstance	0X218758	same	0	ok
 0x217FB8	func_00217FB8	0X2187D8	same	0	ok
+0x217FE0	SeekSpriteInstanceFraction	0X218800	same	0	ok
 0x218038	func_00218038	0X218858	same	0	ok
 0x218060	SeekSpriteInstanceTime	0X218880	same	0	ok
 0x2183E8	UpdateSpriteInstance	0X218C08	same	0	ok
@@ -4821,6 +4832,7 @@ us_address	name	other_address	pair	score	addresses
 0x2311B0	CloneXfm	0X2319D0	same	0	ok
 0x231220	func_00231220	0X231A40	identical	0	ok
 0x2312A0	TranslateXfmToPos	0X231AC0	same	0	ok
+0x231300	RotateXfmToMat	0X231B20	same	0	ok
 0x231368	UpdateXfmMatWorld	0X231B88	identical	0	ok
 0x2313F0	InvalidateXfmMatWorld	0X231C10	same	0	ok
 0x231440	GetXfmMatWorld	0X231C60	same	0	ok
@@ -5024,6 +5036,7 @@ us_address	name	other_address	pair	score	addresses
 0x244918	sceMcDelete	0X245360	same	0	ok
 0x244A58	sceMcGetEntSpace	0X2454A0	same	0	ok
 0x244E10	cosf	0X245858	same	0	ok
+0x244EF8	fabsf	0X245940	identical	0	ok
 0x244F18	floorf	0X245960	identical	0	ok
 0x2450F0	tanf	0X245B38	same	0	ok
 0x2456F0	acosf	0X246138	same	0	ok
