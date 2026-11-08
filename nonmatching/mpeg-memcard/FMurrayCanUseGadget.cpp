@@ -8,6 +8,12 @@ extern "C" int FActiveCplcy(void *);
 extern "C" char B_002DE2E0[];
 extern int g_2dfbc0;
 
+// Retail: two jump tables (state 0..20, gadget-1 0..21); arms 2/0xd/0x14 call a per-state
+// "allows gadget" check and fall into the gadget switch; state 5 answers by itself (gadget 3,
+// or gadget 0x13 and the focus object derived from class 0x38). Gotos keep retail's block order.
+// NEAR 10: retail copies FIsBasicDerivedFrom's result to $v1 before `bnez` and uses `bnel` for
+// gadget != 0x13; every form tried (direct test, typed/bool/long local, &&/||, inline helper,
+// nested switch, result variables, ternary) gives `bnez $v0` (or sltu), one instruction short.
 extern "C" int FMurrayCanUseGadget(MURRAY *pmurray, int gadget)
 {
     if (bevy_player_p15_binoc_active(pmurray) != 0)

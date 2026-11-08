@@ -11,13 +11,17 @@ void func_00209818(void *, float);
 void Goal_Pop(void *);
 }
 extern float g_2dded0;
+// Retail loads pbeh->pcmd into $v0 for the switch, then copies it to $a1 (daddu $a1,$v0) before the jump table, and every
+// case passes that copy as the second argument without reloading it. That copy is what gcse inserts when each case reads
+// pbeh->pcmd again into its own pseudo: a scoped local per case (bound to the value the case passes on) reproduces it, while one
+// local before the switch is loaded straight into $a1 (score 9) and passing pbeh->pcmd directly reloads it per call (score 27).
 extern "C" int FGuardScriptWaiting(BEH *pbeh)
 {
     if (pbeh->fWaiting == 0)
         return 0;
-    CMD *pcmd = pbeh->pcmd;
-    switch (pcmd->op) {
-    case 6:
+    switch (pbeh->pcmd->op) {
+    case 6: {
+        CMD *pcmd = pbeh->pcmd;
         switch (pbeh->pactor->state) {
         case -1:
             if (func_0017EE78(pbeh->pgoal, pcmd))
@@ -33,21 +37,26 @@ extern "C" int FGuardScriptWaiting(BEH *pbeh)
             break;
         }
         break;
-    case 7:
+    }
+    case 7: {
+        CMD *pcmd = pbeh->pcmd;
         if (GoalGoto_FArrived(pbeh->pgoal, pcmd)) {
             pbeh->fWaiting = 0;
             func_00209818((char *)pbeh->pactor + 0xFD0, pbeh->yaw);
         }
         break;
+    }
     case 5:
-        if (pcmd->duration < g_2dded0 - pbeh->tStart)
+        if (pbeh->pcmd->duration < g_2dded0 - pbeh->tStart)
             pbeh->fWaiting = 0;
         break;
     case 13:
-    case 14:
+    case 14: {
+        CMD *pcmd = pbeh->pcmd;
         if (FGoalAnimDone(pbeh->pgoal, pcmd))
             pbeh->fWaiting = 0;
         break;
+    }
     }
     if (pbeh->fWaiting == 0)
         Goal_Pop(&pbeh->pgoal);

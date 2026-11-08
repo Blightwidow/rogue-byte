@@ -11,6 +11,13 @@ extern "C" QW ConvertAloPos(void *, int, QW);
 extern "C" void OnDifficultyBreak(void *, QW, int, int, void *);
 extern "C" void RecalcSwOxfFilterForObject(void *, void *);
 extern "C" void ResetSensorStates(void *);
+// Retail loads the stored coin count (+0x3D8) into a temporary, copies the guard pointer into $a1 in the bltz delay slot, sets
+// coins from the temporary on the >= 0 arm and reloads goal->guard (+0x10) for ConvertAloPos's first argument after the join,
+// while the +0x3E0 vector is read through the $a1 copy. This form (one `coins` local tested < 0) is the closest found: score 10,
+// coins lands straight in $s0 (bgez) and the guard copy is not made. An explicit if/else on a stored-count local reproduces the
+// temporary and the copy (score 12) but then the reload of goal->guard is CSE'd into the copy (which becomes $a0, swapping the
+// loop's $a0/$a1). Tried: `current` local before/after the 3D8 load, inline helpers for the count or for the break call,
+// separate QW local, swapped arms (worse, 42).
 extern "C" void GoalKnockDown_Activate(GOAL *goal)
 {
     int index = func_001F78A0(goal->type);

@@ -1332,6 +1332,7 @@ us_address	name	other_address	pair	score	addresses
 0x1308B8	Asega_Release	0X1308B8	same	0	ok
 0x130D30	SeekAsega	0X130D30	same	0	ok
 0x130F88	HandleAsegaEvents	0X130F88	identical	0	ok
+0x131100	HandleAsegaEventsFF	0X131100	same	0	ok
 0x131270	PloRootOrAseg	0X131270	identical	0	ok
 0x131290	HandleAsegaEvent	0X131290	same	0	ok
 0x131738	SendAsegaMessage	0X131738	identical	0	ok
@@ -1759,6 +1760,7 @@ us_address	name	other_address	pair	score	addresses
 0x14BEA8	AddCode	0X14BED0	same	0	ok
 0x14BF18	UnmarkAll__10CSplotheap	0X14BF40	identical	0	ok
 0x14BF48	_MatchCodes__FP3JOYUs	0X14BF70	same	0	ok
+0x14BFF8	UpdateCodes	0X14C020	same	0	ok
 0x14C140	func_0014C140	0X14C168	same	0	ok
 0x14C190	OnCodeWarpToEpisode	0X14C1B8	same	0	ok
 0x14C200	OnCodeGrantGadgetIf100Percent	0X14C228	same	0	ok
@@ -2251,6 +2253,7 @@ us_address	name	other_address	pair	score	addresses
 0x171398	ExitGuardScriptBeh	0X171320	same	0	ok
 0x1713E8	UpdateGuardScriptBeh	0X171370	same	0	ok
 0x171458	FGuardScriptDone	0X1713E0	gap	0	ok
+0x171468	FGuardScriptWaiting	0X1713F0	same	0	ok
 0x1715B8	PloFindScriptObject	0X171540	same	0	ok
 0x1715F0	ExecuteGuardScriptCmd	0X171578	same	0	ok
 0x171AF8	func_00171AF8	0X171A80	same	0	ok
@@ -2496,6 +2499,7 @@ us_address	name	other_address	pair	score	addresses
 0x1817E8	Swarm_Init	0X181770	same	0	ok
 0x1819E0	Swarm_Reset	0X181968	same	0	ok
 0x181A90	SwarmGroup_PlaceRiders	0X181A18	same	0	ok
+0x181CB0	SwarmGroup_UpdateTargets	0X181C38	same	0	ok
 0x181E10	Swarm_UpdateRiderState	0X181D98	same	0	ok
 0x181EB0	Swarm_SetRiderState	0X181E38	same	0	ok
 0x182700	Swarm_AdjustNewXp	0X182688	same	0	ok
@@ -3059,6 +3063,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B4478	func_001B4478	0X1B46E0	same	0	ok
 0x1B45D0	StaticInitMurray	0X1B4838	same	0	ok
 0x1B4708	GlobalCtorMurray	0X1B4970	same	0	ok
+0x1B4728	InitMurray	0X1B4990	same	0	ok
 0x1B4888	LoadMurrayFromBrx	0X1B4AF0	same	0	ok
 0x1B49E0	PostMurrayLoad	0X1B4C48	same	0	ok
 0x1B4AA0	UpdateMurrayActive	0X1B4D08	same	0	ok
@@ -3195,6 +3200,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C18B8	RemovePathzoneEndpoints	0X1C1B20	same	0	ok
 0x1C1968	RemovePathzoneObstacle	0X1C1BD0	same	0	ok
 0x1C1BA0	AddPathzoneObstacle	0X1C1E08	same	0	ok
+0x1C1D20	GrowPathzoneSlots	0X1C1F88	same	0	ok
 0x1C1EC0	func_001C1EC0	0X1C2128	same	0	ok
 0x1C1F28	func_001C1F28	0X1C2190	same	0	ok
 0x1C2048	InitPzlink	0X1C22B0	same	0	ok
@@ -3207,6 +3213,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C2900	func_001C2900	0X1C2B68	same	0	ok
 0x1C2920	StaticInitSlotheaps_1c2920	0X1C2B88	same	0	ok
 0x1C2A58	func_001C2A58	0X1C2CC0	same	0	ok
+0x1C2A78	func_001C2A78	0X1C2CE0	same	0	ok
 0x1C2BA8	func_001C2BA8	0X1C2E10	same	0	ok
 0x1C2BC8	StaticInitSlotheaps_1c2bc8	0X1C2E30	same	0	ok
 0x1C2D00	func_001C2D00	0X1C2F68	same	0	ok
@@ -3547,6 +3554,7 @@ us_address	name	other_address	pair	score	addresses
 0x1DB820	ShopMenu_InitPage	0X1DBB68	same	0	ok
 0x1DB870	ShopMenu_Update	0X1DBBB8	same	0	ok
 0x1DBBA0	ShopMenu_IrowEnd	0X1DBEE8	same	0	ok
+0x1DBBE0	ShopMenu_Select	0X1DBF28	same	0	ok
 0x1DBD10	ShopMenu_BuildList	0X1DC058	same	0	ok
 0x1DC260	ShopMenu_SetPage	0X1DC5A8	same	0	ok
 0x1DC4B0	ShopMenu_SetDirection	0X1DC7F8	same	0	ok
@@ -4432,6 +4440,7 @@ us_address	name	other_address	pair	score	addresses
 0x20D5D0	__5OSTRMi	0X20DD90	identical	0	ok
 0x20D5F0	__5OSTRMPvi	0X20DDB0	identical	0	ok
 0x20D618	func_0020D618	0X20DDD8	same	0	ok
+0x20D660	CbWrite__5OSTRMPvi	0X20DE20	same	0	ok
 0x20D798	Flush__5OSTRM	0X20DF58	same	0	ok
 0x20D878	StaticInitSlotheaps_20d878	0X20E038	same	0	ok
 0x20D9B0	StaticInitSlotheaps_20d878_thunk	0X20E170	same	0	ok
@@ -4477,6 +4486,7 @@ us_address	name	other_address	pair	score	addresses
 0x2104A0	EnableDisableLoPart	0X210C98	same	0	ok
 0x210538	func_00210538	0X210D30	same	0	ok
 0x210678	SetEyesClosedByOid	0X210E70	same	0	ok
+0x210740	StartSwAmbSfx	0X210F38	same	0	ok
 0x2108E8	StopSwAmbSfx	0X2110E0	same	0	ok
 0x210940	func_00210940	0X211138	same	0	ok
 0x210978	func_00210978	0X211170	gap	0	ok

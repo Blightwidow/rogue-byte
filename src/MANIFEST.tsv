@@ -1332,6 +1332,7 @@ address	name	size	file
 0X1308B8	Asega_Release	92	aseg-asega/Asega_Release.cpp
 0X130D30	SeekAsega	384	aseg-asega/SeekAsega.cpp
 0X130F88	HandleAsegaEvents	372	asega/HandleAsegaEvents.cpp
+0X131100	HandleAsegaEventsFF	368	asega/HandleAsegaEventsFF.cpp
 0X131270	PloRootOrAseg	28	asega/PloRootOrAseg.cpp
 0X131290	HandleAsegaEvent	1188	asega/HandleAsegaEvent.cpp
 0X131738	SendAsegaMessage	156	asega/SendAsegaMessage.cpp
@@ -1759,6 +1760,7 @@ address	name	size	file
 0X14BEA8	AddCode	100	new_14bd50/AddCode.cpp
 0X14BF18	UnmarkAll__10CSplotheap	48	splice-splotheap/UnmarkAll__10CSplotheap.cpp
 0X14BF48	_MatchCodes__FP3JOYUs	176	joy/_MatchCodes__FP3JOYUs.cpp
+0X14BFF8	UpdateCodes	328	new_14bff8/UpdateCodes.cpp
 0X14C140	func_0014C140	80	new_14bff8/fun_0014c140.cpp
 0X14C190	OnCodeWarpToEpisode	76	new_14bff8/OnCodeWarpToEpisode.cpp
 0X14C200	OnCodeGrantGadgetIf100Percent	88	new_14bff8/OnCodeGrantGadgetIf100Percent.c
@@ -2251,6 +2253,7 @@ address	name	size	file
 0X171398	ExitGuardScriptBeh	76	jsg-jt/ExitGuardScriptBeh.c
 0X1713E8	UpdateGuardScriptBeh	112	jsg-jt/UpdateGuardScriptBeh.cpp
 0X171458	FGuardScriptDone	12	jsg-jt/FGuardScriptDone.c
+0X171468	FGuardScriptWaiting	336	jsg-jt/FGuardScriptWaiting.cpp
 0X1715B8	PloFindScriptObject	52	jt/PloFindScriptObject.cpp
 0X1715F0	ExecuteGuardScriptCmd	1284	new_1715f0/ExecuteGuardScriptCmd.cpp
 0X171AF8	func_00171AF8	100	new_1715f0/fun_00171af8.cpp
@@ -2496,6 +2499,7 @@ address	name	size	file
 0X1817E8	Swarm_Init	88	pzo-hide/Swarm_Init.cpp
 0X1819E0	Swarm_Reset	176	pzo-hide/Swarm_Reset.cpp
 0X181A90	SwarmGroup_PlaceRiders	208	pzo-hide/SwarmGroup_PlaceRiders.cpp
+0X181CB0	SwarmGroup_UpdateTargets	352	pzo-hide/SwarmGroup_UpdateTargets.cpp
 0X181E10	Swarm_UpdateRiderState	160	pzo-hide/Swarm_UpdateRiderState.cpp
 0X181EB0	Swarm_SetRiderState	164	pzo-hide/Swarm_SetRiderState.cpp
 0X182700	Swarm_AdjustNewXp	116	pzo-hide/Swarm_AdjustNewXp.cpp
@@ -3059,6 +3063,7 @@ address	name	size	file
 0X1B4478	func_001B4478	96	mpeg-memcard/fun_001b4478.cpp
 0X1B45D0	StaticInitMurray	308	mpeg-memcard/StaticInitMurray.c
 0X1B4708	GlobalCtorMurray	32	mpeg-memcard/GlobalCtorMurray.c
+0X1B4728	InitMurray	352	mpeg-memcard/InitMurray.cpp
 0X1B4888	LoadMurrayFromBrx	344	mpeg-memcard/LoadMurrayFromBrx.cpp
 0X1B49E0	PostMurrayLoad	188	mpeg-memcard/PostMurrayLoad.cpp
 0X1B4AA0	UpdateMurrayActive	1432	mpeg-memcard/UpdateMurrayActive.cpp
@@ -3195,6 +3200,7 @@ address	name	size	file
 0X1C18B8	RemovePathzoneEndpoints	176	new_1c0920/RemovePathzoneEndpoints.cpp
 0X1C1968	RemovePathzoneObstacle	204	new_1c0920/RemovePathzoneObstacle.cpp
 0X1C1BA0	AddPathzoneObstacle	380	new_1c0920/AddPathzoneObstacle.cpp
+0X1C1D20	GrowPathzoneSlots	412	new_1c0920/GrowPathzoneSlots.cpp
 0X1C1EC0	func_001C1EC0	104	new_1c0920/fun_001c1ec0.cpp
 0X1C1F28	func_001C1F28	120	new_1c0920/fun_001c1f28.cpp
 0X1C2048	InitPzlink	48	new_1c0920/InitPzlink.cpp
@@ -3207,6 +3213,7 @@ address	name	size	file
 0X1C2900	func_001C2900	32	new_1c0920/fun_001c2900.c
 0X1C2920	StaticInitSlotheaps_1c2920	308	new_1c0920/StaticInitSlotheaps_1c2920.c
 0X1C2A58	func_001C2A58	32	new_1c0920/fun_001c2a58.c
+0X1C2A78	func_001C2A78	304	new_1c0920/fun_001c2a78.cpp
 0X1C2BA8	func_001C2BA8	28	new_1c0920/fun_001c2ba8.c
 0X1C2BC8	StaticInitSlotheaps_1c2bc8	308	new_1c0920/StaticInitSlotheaps_1c2bc8.c
 0X1C2D00	func_001C2D00	32	new_1c0920/fun_001c2d00.c
@@ -3547,6 +3554,7 @@ address	name	size	file
 0X1DB820	ShopMenu_InitPage	80	game-stepguard/ShopMenu_InitPage.cpp
 0X1DB870	ShopMenu_Update	812	game-stepguard/ShopMenu_Update.cpp
 0X1DBBA0	ShopMenu_IrowEnd	60	game-stepguard/ShopMenu_IrowEnd.cpp
+0X1DBBE0	ShopMenu_Select	304	game-stepguard/ShopMenu_Select.cpp
 0X1DBD10	ShopMenu_BuildList	480	game-stepguard/ShopMenu_BuildList.cpp
 0X1DC260	ShopMenu_SetPage	592	game-stepguard/ShopMenu_SetPage.cpp
 0X1DC4B0	ShopMenu_SetDirection	228	game-stepguard/ShopMenu_SetDirection.cpp
@@ -4432,6 +4440,7 @@ address	name	size	file
 0X20D5D0	__5OSTRMi	32	stream/__5OSTRMi.c
 0X20D5F0	__5OSTRMPvi	36	stream/__5OSTRMPvi.c
 0X20D618	func_0020D618	68	stream/fun_0020d618.cpp
+0X20D660	CbWrite__5OSTRMPvi	312	stream/CbWrite__5OSTRMPvi.cpp
 0X20D798	Flush__5OSTRM	224	stream/Flush__5OSTRM.cpp
 0X20D878	StaticInitSlotheaps_20d878	308	stream-chkpnt/StaticInitSlotheaps_20d878.c
 0X20D9B0	StaticInitSlotheaps_20d878_thunk	32	stream-chkpnt/StaticInitSlotheaps_20d878_thunk.c
@@ -4477,6 +4486,7 @@ address	name	size	file
 0X2104A0	EnableDisableLoPart	152	button-po/EnableDisableLoPart.cpp
 0X210538	func_00210538	316	button-po/fun_00210538.cpp
 0X210678	SetEyesClosedByOid	196	button-po/SetEyesClosedByOid.cpp
+0X210740	StartSwAmbSfx	424	button-po/StartSwAmbSfx.cpp
 0X2108E8	StopSwAmbSfx	88	button-po/StopSwAmbSfx.cpp
 0X210940	func_00210940	52	button-po/fun_00210940.cpp
 0X210978	func_00210978	20	unsorted/fun_00210978.c
