@@ -283,3 +283,19 @@ signed `int` keeps the sign-extending `sd`. Still open in the range: 0x23D338 (`
 348 near misses (score 1 to 9) judged under 12 flag sets (`COMPILE_FLAGS`, sources unchanged): `-O2` base; `-O1` and `-O3`; and `-O2` with `-fno-delayed-branch`, `-fno-schedule-insns`, `-fno-schedule-insns2`, `-fno-gcse`, `-fno-strength-reduce`, `-fno-peephole`, `-fno-cse-follow-jumps`, `-fno-rerun-loop-opt`, `-fno-expensive-optimizations`. None helps systematically: `-O1` improved 18 and worsened 270, `-fno-delayed-branch` 4 and 307, `-fno-schedule-insns2` 19 and 240, the rest are neutral or worse. `-fno-schedule-insns` improved 29 (three reached 0) and worsened 193, but 34 of the 53 already matched functions in the same modules break under it, so those three are coincidences, not a per-file flag. The default (`-O2 -G0 -ffast-math -fno-exceptions`) stays.
 
 The diffs of the same 348 near misses by kind (`work/matching/cluster/` is local): 85 differ in branch layout (shared exits, delay-slot content), 83 in order plus register choice, 54 around a `nop`, 41 in instruction selection or extra instructions, 31 involve VU asm, 29 in scheduling order only, 28 in register choice only. Only three differ in the callee-saved save order alone. The commonest moved instructions are the argument setup around calls (`addiu`, `daddu`) and `sw`/`lw`: there is no single dominant wall.
+
+## libmpeg on other Sony builds (2026-11-08)
+
+Hypothesis: the libmpeg functions (`func_0024C670` score 13, `func_0024C4B0` score 94) were built by another Sony gcc, because two volatile hardware
+stores sit in delay slots that 2.9-991111b never schedules there. Both drafts were compiled `-O2 -G0` with every Sony Linux build under Docker (colima or
+Docker Desktop, `i386/debian:bookworm-slim`, `ee-gcc -x c++`) and judged with `compare.py`:
+
+| Compiler | `func_0024C670` | `func_0024C4B0` |
+| :--- | :--- | :--- |
+| 2.9-991111b (`try.py`, baseline) | 13 | 94 |
+| 2.9-991111, 2.9-991111-01 | 13 | 94 |
+| 2.9-990721 | 53 | 111 |
+| 2.96 | 345 | 103 |
+| 3.2-030926, 3.2-040921 | 285 | 106 |
+
+Negative: the Linux 2.9-991111 output equals the Win32 991111b one, and every other build is worse. The delay-slot stores are not a compiler-version effect.
