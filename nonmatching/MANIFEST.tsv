@@ -28,7 +28,6 @@ address	name	size	file	score
 0X11C500	FInvertMatrix__FiPfT1	1000	mat/FInvertMatrix__FiPfT1.cpp	111
 0X11CAB0	GMaxAxisScale	160	util-alo/GMaxAxisScale.c	38
 0X11D508	CSolveQuadratic__FfffPf	168	util_11cf60/CSolveQuadratic__FfffPf.cpp	18
-0X11D608	CalculateSinCos__FfPfT1	312	util_11cf60/CalculateSinCos__FfPfT1.cpp	3
 0X11E1A0	SetVectorCylind__FP6VECTORfff	104	vec/SetVectorCylind__FP6VECTORfff.c	23
 0X11E290	SProjectVector__FP6VECTORT0	72	vec/SProjectVector__FP6VECTORT0.c	14
 0X11E390	GetPerpendicularVector	288	vec/GetPerpendicularVector.c	69
@@ -59,7 +58,6 @@ address	name	size	file	score
 0X126A18	RefEvalCond__FP5CPairP6CFrame	392	splice-eval/RefEvalCond__FP5CPairP6CFrame.cpp	40
 0X126BA0	RefEvalCase__FP5CPairP6CFrame	536	splice-eval/RefEvalCase__FP5CPairP6CFrame.cpp	28
 0X1272E0	RefEvalApply	1368	splice-eval-splice-frame/RefEvalApply.cpp	87
-0X127838	RefEval	392	splice-eval-splice-frame/RefEval.cpp	5
 0X1286E0	CGc_Collect	800	new_127e90/CGc_Collect.cpp	28
 0X12A3D8	PpairSerializeIn	1104	splice-ref-splice-sidebag/PpairSerializeIn.cpp	69
 0X12B738	func_0012B738	664	new_12ae28/fun_0012b738.c	140
@@ -104,7 +102,6 @@ address	name	size	file	score
 0X13DA18	LoadSwFromBrx	1384	new_13d8b8/LoadSwFromBrx.cpp	56
 0X13FAD0	func_0013FAD0	112	new_13f888/fun_0013fad0.cpp	9
 0X13FB40	LoadSwObjectsFromBrx	728	new_13f888/LoadSwObjectsFromBrx.cpp	116
-0X13FF70	InitJt	328	new_13f888/InitJt.cpp	2
 0X140750	func_00140750	616	new_13f888/fun_00140750.c	102
 0X140C30	func_00140C30	88	new_13f888/fun_00140c30.c	6
 0X140DB0	AdjustJtXpVelocity	256	new_13f888/AdjustJtXpVelocity.c	45
@@ -176,7 +173,6 @@ address	name	size	file	score
 0X153760	GMeanRhythmScore	160	rip-game/GMeanRhythmScore.cpp	16
 0X1541D8	NNextSensorState	848	new_154180/NNextSensorState.c	182
 0X154A90	OnDifficultyEvent	512	new_154a80/OnDifficultyEvent.c	70
-0X154C90	GetSuck	248	new_154a80/GetSuck.cpp	5
 0X155868	func_00155868	328	crv-lo/fun_00155868.c	73
 0X155AE0	func_00155AE0	688	crv-lo/fun_00155ae0.c	86
 0X155FB0	PosAimAtPlayer	992	crv-lo/PosAimAtPlayer.c	215
@@ -299,7 +295,6 @@ address	name	size	file	score
 0X186930	InitIkLimb	288	binoc-joy/InitIkLimb.c	52
 0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.c	274
 0X1875B8	SetJoyJoys__FP3JOY4JOYS4JOYK	432	joy_187030/SetJoyJoys__FP3JOY4JOYS4JOYK.cpp	6
-0X187998	FReadJoy__FP3JOY	1000	joy_187030/FReadJoy__FP3JOY.cpp	7
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
 0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.c	45
 0X188E78	AdjustSlyXpVelocity	168	joy-jt/AdjustSlyXpVelocity.c	28
@@ -471,7 +466,6 @@ address	name	size	file	score
 0X1C41B8	func_001C41B8	112	new_1c3df8/fun_001c41b8.cpp	5
 0X1C4228	func_001C4228	88	new_1c3df8/fun_001c4228.cpp	11
 0X1C4330	UpdateVjoyStick	312	new_1c3df8/UpdateVjoyStick.c	86
-0X1C4468	UpdateVjoy	320	new_1c3df8/UpdateVjoy.cpp	2
 0X1C4768	bevy_player_p14_1c4768	216	new_1c3df8/bevy_player_p14_1c4768.c	53
 0X1C4AF8	func_001C4AF8	224	new_1c3df8/fun_001c4af8.c	47
 0X1C4BD8	func_001C4BD8	288	new_1c3df8/fun_001c4bd8.cpp	10
@@ -484,7 +478,6 @@ address	name	size	file	score
 0X1C6FD8	CpdprizeAttractSwDprizes	1648	new_1c3df8/CpdprizeAttractSwDprizes.c	450
 0X1C7A58	SelectCoinLootDef	184	new_1c76d0/SelectCoinLootDef.cpp	1
 0X1C7C30	SetClueFound	208	new_1c76d0/SetClueFound.cpp	12
-0X1C7D08	CcluesFound	304	new_1c76d0/CcluesFound.cpp	4
 0X1C8188	SetVaultOpen	248	new_1c76d0/SetVaultOpen.cpp	34
 0X1C8280	func_001C8280	112	new_1c76d0/fun_001c8280.cpp	2
 0X1C8350	func_001C8350	392	new_1c76d0/fun_001c8350.cpp	53
@@ -566,7 +559,6 @@ address	name	size	file	score
 0X1E5FC8	FillCrvcCache	440	splice-ref-crv/FillCrvcCache.c	113
 0X1E6180	MeasureCrv	432	splice-ref-crv/MeasureCrv.c	78
 0X1E67B8	EvaluateCrvFromU	488	splice-ref-crv/EvaluateCrvFromU.c	114
-0X1E7668	IcvFindCrvS	328	new_1e6f10/IcvFindCrvS.cpp	5
 0X1E7BB8	GetCrvBounds	472	new_1e7a28/GetCrvBounds.c	116
 0X1E7D90	SRadiusCrv	608	new_1e7a28/SRadiusCrv.c	144
 0X1E8008	SRandNearCrv	440	new_1e7a28/SRandNearCrv.cpp	66
@@ -589,7 +581,6 @@ address	name	size	file	score
 0X1EFAC0	CSm_LoadFromBrx	1544	sm/CSm_LoadFromBrx.cpp	470
 0X1F0D88	ChooseSmaTransition	536	sm-so/ChooseSmaTransition.cpp	108
 0X1F11A8	DtSmaReachState	424	sm-so/DtSmaReachState.cpp	16
-0X1F1900	func_001F1900	320	sm-so/fun_001f1900.cpp	3
 0X1F1A40	func_001F1A40	696	sm-so/fun_001f1a40.cpp	26
 0X1F2500	func_001F2500	392	sm-so/fun_001f2500.c	96
 0X1F2930	RemoveSoGeomFromOxa	304	sm-so/RemoveSoGeomFromOxa.cpp	12
@@ -630,7 +621,6 @@ address	name	size	file	score
 0X1FB8E0	UpdateAmb	536	sound/UpdateAmb.cpp	32
 0X1FC380	SetAmbSlotPan	136	new_1fbf20/SetAmbSlotPan.cpp	16
 0X1FC510	StartStreamAmb	392	new_1fbf20/StartStreamAmb.cpp	80
-0X1FCD38	func_001FCD38	360	new_1fbf20/fun_001fcd38.cpp	2
 0X1FD0E8	LoadSndFromBrx	1280	new_1fcff8/LoadSndFromBrx.cpp	46
 0X1FEA60	SetSndbankVolumeFactor	912	light-button/SetSndbankVolumeFactor.cpp	120
 0X1FF4F0	func_001FF4F0	72	button-spliceobj/fun_001ff4f0.c	13

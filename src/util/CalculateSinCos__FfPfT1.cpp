@@ -1,4 +1,7 @@
 #include "sly2.h"
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
+static inline float Sqrt(float x) { float r; asm volatile("sqrt.s %0, %1" : "=&f"(r) : "f"(x)); return r; }
 extern "C" void CalculateSinCos__FfPfT1(float rad, float *pgSin, float *pgCos)
 {
     float gHalfTurns = (rad + 1.5707964f) * 0.31830987f;
@@ -27,8 +30,8 @@ extern "C" void CalculateSinCos__FfPfT1(float rad, float *pgSin, float *pgCos)
         gSin = highest;
     float gCosSquared = 1.0f - gSin * gSin;
     float gCos;
-    // sqrt.s as in retail (asm: the compiler path emits no hazard nop)
-    asm("sqrt.s %0, %1" : "=f" (gCos) : "f" (gCosSquared));
+    // cos = sqrt(1 - sin^2) through the Sqrt helper: retail computes the cosine from the clamped sine, not with a second polynomial.
+    gCos = Sqrt(gCosSquared);
     if (fOdd)
         gCos = -gCos;
     *pgCos = gCos;

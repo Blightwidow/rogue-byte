@@ -45,6 +45,10 @@ int func_001FCFF8(SND *, int);
 AMB *NewStreamAmb(int, int);
 void AddAmbSlotSource(AMB *, unsigned, int, float, const RANGE *);
 
+// `taken` is an AMBREF, a reference-holding smart pointer: its copy constructor and assignment call the real functions func_00259BB0 and
+// func_00259B48 and its inline destructor releases through the vtable. That makes func_001FE478 return it through a hidden pointer (taken
+// at sp+0, range at sp+0x10) and gives both release paths. It replaces the padding local the score-4 draft needed. AddAmbSlotSource is
+// declared volume before range, as in CloneProxy (same registers either way; only this order reproduces retail's call-site scheduling).
 AMB *QueueStream(SND *snd, int id)
 {
     AMBREF taken = func_001FE478(snd, id);

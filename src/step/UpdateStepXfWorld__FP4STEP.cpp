@@ -3,6 +3,8 @@ struct LM { int unk; };
 struct STEP { float f0, f4, f8, fC, f10, f14, f18, f1C, f20, f24, f28, f2C, f30; char pad[0x54]; float f88, f8C; };
 extern LM D_002C41B0;
 float GLimitLm(LM *, float);
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
 static inline float sqrtf(float value)
 {
     float result;

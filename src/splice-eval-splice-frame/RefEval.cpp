@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct CRef { int tagk; int n; };
-struct CPair { int pad0; int pad4; CRef ref; CPair *next; };
+struct CPair { int field0; int field4; CRef ref; CPair *next; };
 struct CFrame;
 extern "C" {
 void SetTag__4CRef4TAGK(CRef *, int);
@@ -21,70 +21,72 @@ void RefEvalLambda(CRef *, CPair *, CFrame *);
 void RefEvalBegin(CRef *, CPair *, CFrame *);
 void RefEvalApply(CRef *, CPair *, CFrame *);
 }
+// One `return pref;` at the end and `default:` written first as its own CRef_CopyConstruct call, case 18 with its own call: gcc then drops
+// the no-op a0 = s0 move on the default path, cross-jumps the two copy calls and puts the epilogue in retail's order (ld ra before lq s0).
+// A `goto copy` form scored 5.
 extern "C" CRef *RefEval(CRef *pref, CPair *ppair, CFrame *pframe)
 {
-    CRef * result;
     switch (ppair->ref.tagk) {
+    default:
+        CRef_CopyConstruct(pref, &ppair->ref);
+        break;
     case 0x18:
         RefEvalSymbol(pref, ppair, pframe);
-        { result = pref; goto done; }
+        break;
     case 0x1F: {
         CPair *head = (CPair *)ppair->ref.n;
         switch (head->ref.tagk) {
         case 1:
             RefEvalSet(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 2:
             RefEvalDefine(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 5:
             RefEvalAssert__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 6:
             func_001266C8(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 7:
             RefEvalIf__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 8:
             RefEvalOr__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 9:
             RefEvalAnd__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 10:
             RefEvalCond__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 12:
             RefEvalCase__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 13:
             RefEvalLet(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 14:
             RefEvalWhile__FP5CPairP6CFrame(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 16:
             RefEvalBegin(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 15:
             RefEvalLambda(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         case 18:
-            ppair = head->next;
-        copy:
-            CRef_CopyConstruct(pref, &ppair->ref);
-            { result = pref; goto done; }
+            CRef_CopyConstruct(pref, &head->next->ref);
+            break;
         case 17:
             SetTag__4CRef4TAGK(pref, -1);
-            { result = pref; goto done; }
+            break;
         default:
             RefEvalApply(pref, ppair, pframe);
-            { result = pref; goto done; }
+            break;
         }
+        break;
     }
     }
-    goto copy;
-done:
-    return result;
+    return pref;
 }

@@ -16,6 +16,8 @@ extern "C" void GoalAnimLeap_SetState(GOAL *, int);
 extern "C" OBJ *PloFindSwObject_thunk(void *, int, int, int);
 extern "C" void PhitfxSpawn(void *, QW, void *);
 extern "C" QW PosLoWorld(void *);
+// StartAnimref takes (void *, void *, unsigned, float) with the float last, as in GoalAnim_SetState; the draft put the float first, which
+// moved the mtc1 and a lw before the other argument loads (score 4). No temporaries: the arguments are computed inline.
 extern "C" int GoalAnimLeap_FHandleMessage(GOAL *goal, int message, int *data)
 {
     int hits, index, total;

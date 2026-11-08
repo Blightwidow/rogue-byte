@@ -954,6 +954,7 @@ us_address	name	other_address	pair	score	addresses
 0x11D448	GRandInRange	0X11D448	identical	0	ok
 0x11D4D0	FFloatsNear__Ffff	0X11D4D0	identical	0	ok
 0x11D5B0	PrescaleClq__FP3CLQffT0	0X11D5B0	identical	0	ok
+0x11D608	CalculateSinCos__FfPfT1	0X11D608	identical	0	ok
 0x11D740	GTrunc__Fd	0X11D740	same	0	ok
 0x11D7F0	GTrunc__Ff	0X11D7F0	identical	0	ok
 0x11D898	GModPositive__Fff	0X11D898	same	0	ok
@@ -1145,6 +1146,7 @@ us_address	name	other_address	pair	score	addresses
 0x127068	RefEvalLambda	0X127068	same	0	ok
 0x127190	RefEvalProcBody	0X127190	identical	0	ok
 0x127228	RefEvalBegin	0X127228	identical	0	ok
+0x127838	RefEval	0X127838	same	0	ok
 0x1279C0	StaticInitSpliceFrameSlotheaps	0X1279C0	same	0	ok
 0x127AF8	GlobalInitSpliceFrameSlotheaps	0X127AF8	identical	0	ok
 0x127B18	bevy_splice_frame_set_parent	0X127B18	same	0	ok
@@ -1537,6 +1539,7 @@ us_address	name	other_address	pair	score	addresses
 0x13FA30	func_0013FA30	0X13FA48	same	0	ok
 0x13FE18	StaticInitJtPools	0X13FE30	same	0	ok
 0x13FF50	GlobalCtorJtPools	0X13FF68	same	0	ok
+0x13FF70	InitJt	0X13FF88	same	0	ok
 0x140338	func_00140338	0X140350	same	0	ok
 0x1403D0	UpdateJt	0X1403E8	same	0	ok
 0x140558	UpdateJtFocus	0X140570	same	0	ok
@@ -1891,6 +1894,7 @@ us_address	name	other_address	pair	score	addresses
 0x154A40	GlobalCtorSensorSight	0X154A68	same	0	ok
 0x154A60	OnDifficultyGameLoad__FP10DIFFICULTY	0X154A88	same	0	ok
 0x154A80	func_00154A80	0X154AA8	gap	0	ok
+0x154C90	GetSuck	0X154CB8	same	0	ok
 0x154D88	AddSuck	0X154DB0	same	0	ok
 0x154DC8	ChangeSuck__FfP10DIFFICULTY	0X154DF0	same	0	ok
 0x154E10	OnDifficultyBreak	0X154E38	same	0	ok
@@ -2582,6 +2586,7 @@ us_address	name	other_address	pair	score	addresses
 0x1870D0	UpdateGrfjoytFromGrfusr__Fv	0X187058	same	0	ok
 0x187150	InitJoy	0X1870D8	same	0	ok
 0x1871C0	UpdateJoy__FP3JOY	0X187148	same	0	ok
+0x187998	FReadJoy__FP3JOY	0X187920	same	0	ok
 0x187D80	FJoyButtonPressed	0X187D08	same	0	ok
 0x187DD0	FJoyButtonPeek	0X187D58	gap	0	ok
 0x187DE0	ConsumeJoyButton	0X187D68	identical	0	ok
@@ -3223,6 +3228,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C4130	func_001C4130	0X1C4398	same	0	ok
 0x1C4280	VJOY_constructor	0X1C44E8	same	0	ok
 0x1C42E8	ResetVjoy	0X1C4550	same	0	ok
+0x1C4468	UpdateVjoy	0X1C46D0	same	0	ok
 0x1C45A8	UpdateVjoyPressTimes	0X1C4810	same	0	ok
 0x1C4640	SetVjoyMode	0X1C48A8	identical	0	ok
 0x1C4660	GrfbtnVjoyPressedWithin	0X1C48C8	same	0	ok
@@ -3270,6 +3276,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C7B18	PpathClueFlag	0X1C7D80	same	0	ok
 0x1C7BB8	FClueFound	0X1C7E20	same	0	ok
 0x1C7D00	func_001C7D00	0X1C7F68	gap	0	ok
+0x1C7D08	CcluesFound	0X1C7F70	same	0	ok
 0x1C7E38	func_001C7E38	0X1C80A0	same	0	ok
 0x1C7E68	func_001C7E68	0X1C80D0	same	0	ok
 0x1C7EA8	func_001C7EA8	0X1C8110	same	0	ok
@@ -3725,6 +3732,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E7380	FindCrvClosestPointFromS	0X1E7B40	same	0	ok
 0x1E7410	bevy_player_p5_target_1e7410	0X1E7BD0	same	0	ok
 0x1E7538	IcvFindCrvU	0X1E7CF8	same	0	ok
+0x1E7668	IcvFindCrvS	0X1E7E28	same	0	ok
 0x1E77B0	PosClosestOnCrv	0X1E7F70	same	0	ok
 0x1E77E8	bevy_player_p5_target_1e77e8	0X1E7FA8	same	0	ok
 0x1E7840	PattachCrv	0X1E8000	same	0	ok
@@ -3886,6 +3894,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F1768	func_001F1768	0X1F1F28	identical	0	ok
 0x1F17B0	func_001F17B0	0X1F1F70	identical	0	ok
 0x1F17F8	func_001F17F8	0X1F1FB8	same	0	ok
+0x1F1900	func_001F1900	0X1F20C0	same	0	ok
 0x1F1CF8	func_001F1CF8	0X1F24B8	same	0	ok
 0x1F1E20	func_001F1E20	0X1F25E0	same	0	ok
 0x1F1EB8	func_001F1EB8	0X1F2678	same	0	ok
@@ -4095,6 +4104,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FCCA0	StreamAmb_Release	0X1FD460	same	0	ok
 0x1FCCF0	PvAllocStreamAmb	0X1FD4B0	same	0	ok
 0x1FCD10	FreeStreamAmb	0X1FD4D0	same	0	ok
+0x1FCD38	func_001FCD38	0X1FD4F8	same	0	ok
 0x1FCEA0	InitSndSystem	0X1FD660	same	0	ok
 0x1FCF70	func_001FCF70	0X1FD730	gap	0	ok
 0x1FCF88	func_001FCF88	0X1FD748	gap	0	ok
@@ -4866,9 +4876,11 @@ us_address	name	other_address	pair	score	addresses
 0x236CF0	func_00236CF0	0X237CB8	identical	0	ok
 0x236D20	func_00236D20	0X237CE8	same	0	ok
 0x236E30	func_00236E30	0X237DF8	same	0	ok
+0x236E70	func_00236E70	0X237E38	same	0	ok
 0x236F48	func_00236F48	0X237F10	identical	0	ok
 0x236F98	func_00236F98	0X237F60	same	0	ok
 0x2370A8	sceSifBindRpc	0X238070	same	0	ok
+0x2371F8	func_002371F8	0X2381C0	same	0	ok
 0x237488	sceSifCheckStatRpc	0X238450	identical	0	ok
 0x2374E0	func_002374E0	0X2384A8	same	0	ok
 0x237558	func_00237558	0X238520	same	0	ok

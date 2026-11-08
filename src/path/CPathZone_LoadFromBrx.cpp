@@ -32,6 +32,9 @@ int U8Read__18CBinaryInputStream(CBinaryInputStream *);
 void HookupCg__FP2CG(void *);
 extern GameWorld B_003DD490;
 }
+// Both loops are plain `for` loops with their own counters: gcc splits the first iteration of the vertex loop itself (a hand-split `k = i +
+// 1` / do-while is not needed), and the edge loop's 3-slot countdown has its own counter, since reusing the vertex loop's inner counter
+// swapped $s1 and $s2.
 extern "C" void CPathZone_LoadFromBrx(CPathZone *zone, CBinaryInputStream *stream)
 {
     AllocRequest request;
