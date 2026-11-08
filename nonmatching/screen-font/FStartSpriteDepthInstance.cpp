@@ -5,6 +5,11 @@ struct SLOT { char pad0[0x10]; char pos[0x20]; CHAR *pchar; char pad1[0x58 - 0x3
 struct INST { int cslot; SLOT *aslot; int pad[4]; };
 struct SPRITE { char pad0[8]; INST *ainst; char pad1[0x30 - 0xC]; };
 struct BLOT { char pad[0x84]; SPRITE *psprite; };
+/* Retail loads slot->iinst (lw 0x58($s0)) in the delay slot of the isprite test, before either branch,
+ * so the source reads it into a local after the pchar checks; the else branch indexes the child sprite's
+ * INST array with it and passes cslot/aslot straight from ainst[iinst]. The add/mul colours are literal
+ * stores that loop.c hoists and reload spills to 0x24/0x28, as in PlayRootSpriteLabelIndex.
+ * NEAR 4: retail keeps iinst in $a1, ours in $t2 (global-alloc choice); every other instruction matches. */
 extern "C" {
 void StopSpriteInstance(SPRITE *);
 void ClearSle(void *);
@@ -22,23 +27,22 @@ int FStartSpriteDepthInstance(BLOT *pblot, int isprite, int ilabel, int idDepth,
         CHAR *pchar = slot->pchar;
         if (pchar == 0 || pchar->kind != 4)
             continue;
+        int iinst = slot->iinst;
         if (pchar->isprite == isprite) {
             if (idDepth == slot->idDepth) {
                 StopSpriteInstance(&pblot->psprite[isprite]);
                 ClearSle(slot->sle);
                 slot->iinst = IinstFindFreeSprite(&pblot->psprite[isprite]);
-                unsigned addv = 0x7F7F7F7F;
-                unsigned int mulv = 0xFFFFFFFF;
-                unsigned add[4];
-                unsigned mul[4];
-                add[0] = addv;
-                mul[0] = mulv;
-                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos, add, mul);
+                unsigned argbaAdd[4];
+                unsigned argbaMul[4];
+                argbaAdd[0] = 0x7F7F7F7F;
+                argbaMul[0] = 0xFFFFFFFF;
+                StartSpriteInstance(0.0f, &pblot->psprite[isprite], ilabel, slot->iinst, slot->pos, argbaAdd, argbaMul);
                 return 1;
             }
         } else {
-            INST *pinst = &pblot->psprite[pchar->isprite].ainst[slot->iinst];
-            if (FStartSpriteDepthInstance(pblot, isprite, ilabel, idDepth, pinst->cslot, pinst->aslot))
+            INST *ainst = pblot->psprite[pchar->isprite].ainst;
+            if (FStartSpriteDepthInstance(pblot, isprite, ilabel, idDepth, ainst[iinst].cslot, ainst[iinst].aslot))
                 return 1;
         }
     }
