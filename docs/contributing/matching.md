@@ -112,7 +112,11 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
    and reports one line per function: `EXACT`, `NEAR` (what still differs) or `SKIP` (why). A worker that runs a make target passes
    `PROGRESS=0` (every worker brief says so).
 4. A worker's `EXACT` is not a match. The lead puts each source in place, runs `make elf` and `make unit UNIT=<module>`, and sends a
-   function that breaks the build back to `nonmatching/`.
+   function that breaks the build back to `nonmatching/`. A function inside a whole file (`config/us/whole_files.tsv`) has no
+   per-function copy in `src/`: `record.py` (`make land`) puts its source into the whole file in place of its `INCLUDE_ASM` line and
+   registers it only when the whole range proves again (`make_whole_files.py --land 0xADDR`, `--dry-run` to try); otherwise the file is
+   unchanged, the function stays `tried` with best 0 and the run says why (a type or declaration the file already has differently, most
+   often). Check it with `make unit UNIT=src/<whole file>`. Workers match as before, one function per source in their scratch folder.
 5. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),
    is hand-written, needs an instruction C cannot ask for, or three different wordings give the same wrong bytes.
 6. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames

@@ -7,7 +7,7 @@ function whose object is usable, the function's assembly is dropped from build/s
 linked at the function's address instead; the rest of the assembly is assembled in runs. After linking, every swapped
 function's bytes are compared with the retail ones and the ones that differ (relocations into the object's own data,
 unresolved names, size) fall back to assembly. A whole file (config/us/whole_files.tsv) is linked as one object over its range and
-compared as a whole; if it differs, its functions take the per-function path. Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
+compared as a whole; if it differs, its functions come from assembly (a function inside a whole file has no source of its own). Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
 import concurrent.futures
 import hashlib
 import os
@@ -251,9 +251,11 @@ candidates = {}
 manifest_addresses = set()
 retargeted = set()  # addresses whose object keeps its rodata out of the image (retarget_rodata)  # address -> (object path, undefined names)
 for line in list(open(os.path.join('src', 'MANIFEST.tsv')))[1:]:
-    address_text, name, size, file = line.rstrip('\n').split('\t')
+    address_text, name, size, file, whole_file = (line.rstrip('\n').split('\t') + [''])[:5]
     address = int(address_text, 16)
     manifest_addresses.add(address)
+    if whole_file:  # its whole file is its only source: no object of its own
+        continue
     object_path = os.path.join(UNITS, file + '.o')
     if address not in by_address or not os.path.isfile(object_path):
         continue
@@ -300,13 +302,14 @@ print(f'{len(candidates)} of {len(functions)} functions have a usable object', f
 
 # whole files (config/us/whole_files.tsv): one object per retail file, its unmatched functions included from Splat's assembly (INCLUDE_ASM).
 # It is linked at the file's start and takes the whole range: neither the per-function objects nor the assembly of its functions are linked.
-# A whole file whose object is missing, has another size or needs its own data falls back to the per-function path.
+# A whole file whose object is missing, has another size or needs its own data is not linked: its functions come from assembly (their
+# only source is the whole file, src/MANIFEST.tsv `whole_file`).
 wholes = {}  # start -> (end, object path, undefined names)
 for start, end, file in whole_files():
     object_path = os.path.join(UNITS, file + '.o')
     found = inspect(object_path) if os.path.isfile(object_path) else None
     if start not in by_address or (end not in by_address and end != TEXT_END) or found is None or found[0] != end - start or found[2]:
-        print(f'whole file {file}: not linked ({"no object" if not os.path.isfile(object_path) else "range, size or own data"}), its functions take the per-function path', flush=True)
+        print(f'whole file {file}: not linked ({"no object" if not os.path.isfile(object_path) else "range, size or own data"}), its functions come from assembly', flush=True)
         continue
     wholes[start] = (end, object_path, found[1])
 
@@ -460,7 +463,7 @@ for attempt in range(1, 12):
         if actual != expected:
             failing_wholes.add(start)
             first = next((k for k in range(0, len(expected), 4) if actual[k:k + 4] != expected[k:k + 4]), 0)
-            print(f'whole file at {start:#X}: bytes differ at {start + first:#X}, its functions take the per-function path', flush=True)
+            print(f'whole file at {start:#X}: bytes differ at {start + first:#X}, its functions come from assembly', flush=True)
     bad_pieces = {piece_ranges[(start, end)] for start in asm_pieces for end in [start + next(size for _, begin, size in piece_list if begin == start)]
                   if image[start - TEXT_START:end - TEXT_START] != region[start - RODATA_START:end - RODATA_START]}
     raw_pieces |= bad_pieces
@@ -500,7 +503,7 @@ with open(os.path.join('config', 'us', 'swapped.tsv'), 'w') as handle:
 with open(os.path.join(BUILD, 'whole_files.tsv'), 'w') as handle:  # read by scripts/check_unit.py
     handle.write('start\tend\tfile\tlinked\n')
     for start, end, file in whole_files():
-        handle.write(f"{start:#X}\t{end:#X}\t{file}\t{'whole' if start in active else 'per-function'}\n")
+        handle.write(f"{start:#X}\t{end:#X}\t{file}\t{'whole' if start in active else 'assembly'}\n")
 with open(os.path.join(BUILD, 'derived.tsv'), 'w') as handle:
     for name, address in sorted(derived.items()):
         if address is not None:

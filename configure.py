@@ -41,7 +41,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
         pieces.append(object_path)
     ninja.build('pieces', 'phony', pieces)
 
-    # the matched functions of src/ (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
+    # the matched functions of src/ outside whole files (python3 scripts/matching/export_src.py), compiled the way the retail build did (scripts/build/compile_unit.py:
     # SN's compiler, then SN's ps2eeas, the one assembler)
     sys.path.insert(0, os.path.join(ROOT, 'scripts', 'build'))
     import asm_units
@@ -57,9 +57,12 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     manifest = os.path.join(ROOT, 'src', 'MANIFEST.tsv')
     if os.path.exists(manifest):
         for line in list(open(manifest))[1:]:
-            source = os.path.join('src', line.rstrip('\n').split('\t')[3])
+            columns = line.rstrip('\n').split('\t')
+            if len(columns) > 4 and columns[4]:  # inside a whole file: that file's object holds it (below)
+                continue
+            source = os.path.join('src', columns[3])
             unit = os.path.join('build', 'units', source[len('src/'):] + '.o')
-            address = int(line.split('\t')[0], 16)
+            address = int(columns[0], 16)
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
                         variables={'assembler': options(address)})
             units.append(unit)

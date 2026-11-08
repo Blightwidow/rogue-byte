@@ -5,7 +5,8 @@
   .venv/bin/python scripts/version_check.py        (after scripts/pair_versions.py: it reads config/eu/map.tsv)
 
 Each matched function (data/matching/functions.tsv, status `matched`) is compiled the way try.py compiles it and compared with the
-function that config/eu/map.tsv pairs it with in the other executable: the fields the object relocates (the targets of calls, the
+function that config/eu/map.tsv pairs it with in the other executable (a function inside a whole file, src/MANIFEST.tsv `whole_file`, is
+read from that file's object at its offset instead, the file compiled once as `make elf` compiles it): the fields the object relocates (the targets of calls, the
 %hi/%lo of an address) are masked on both sides, the rest must be equal. A score of 0 means the same C gives the other version's
 instructions: the function counts for that version, whatever addresses its calls and data have there. `--symbols` is not used: what the
 masked fields point at is the next step.
@@ -24,6 +25,8 @@ LAB = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '
 sys.path.insert(0, os.path.join(LAB, 'scripts', 'matching'))
 sys.path.insert(0, os.path.join(LAB, 'scripts', 'build'))
 import compile_unit  # noqa: E402
+from asm_units import whole_files  # noqa: E402
+import make_whole_files  # noqa: E402
 import scorer  # noqa: E402
 from progress import Progress  # noqa: E402
 
@@ -68,9 +71,42 @@ def sites(object_path, symbol, us_address, other_address, size, other_elf):
     return found
 
 
-def check(row, other_address, other_elf):
-    """(score, sites) of the function's own source against the other executable; the score is None when it does not compile or compare."""
+def whole_rows(manifest_path=None):
+    """{address: (whole file, start of its range)} of the matched functions inside a whole file (src/MANIFEST.tsv `whole_file`): the whole
+    file is their source."""
+    starts = {file: start for start, _, file in whole_files()}
+    path = manifest_path or os.path.join(LAB, 'src', 'MANIFEST.tsv')
+    found = {}
+    for row in csv.DictReader(open(path, encoding='utf-8'), delimiter='\t'):
+        if row.get('whole_file') and row['whole_file'] in starts:
+            found[int(row['address'], 16)] = (row['whole_file'], starts[row['whole_file']])
+    return found
+
+
+def compile_whole(file, start):
+    """(object path, {offset: symbol}) of a whole file compiled as `make elf` compiles it (INCLUDE_ASM from build/splat), or (None, {})."""
+    os.makedirs(scorer.BUILD, exist_ok=True)
+    path = os.path.join(scorer.BUILD, f'whole-{start:06X}-{os.getpid()}.o')
+    ok, _ = compile_unit.compile_object('c' if file.endswith('.c') else 'c++', os.path.join(LAB, 'src', file), path, assembler=compile_unit.assembler_for(start),
+                                        localize=False, vu0=compile_unit.vu0_for(start), movables=compile_unit.movables_for(start))
+    return (path, make_whole_files.function_symbols(path)) if ok else (None, {})
+
+
+def check(row, other_address, other_elf, whole=None):
+    """(score, sites) of the function's own source against the other executable; the score is None when it does not compile or compare.
+    `whole` is (object, symbols, start) for a function inside a whole file: it is read from that object at its offset (start + symbol value)."""
     address = int(row['address'], 16)
+    if whole is not None:
+        object_path, symbols, start = whole
+        symbol = symbols.get(address - start)
+        if object_path is None or symbol is None:
+            return None, []
+        arguments = types.SimpleNamespace(object=object_path, address=other_address, elf=other_elf, symbol=symbol, size=int(row['size']), export=None, quiet=True, symbols=None)
+        try:
+            output = compare.compare(arguments)
+        except SystemExit:
+            return None, []
+        return scorer.score_of(output), sites(object_path, symbol, address, other_address, int(row['size']), other_elf)
     source = os.path.join(LAB, row['source'])
     if not os.path.isfile(source):
         return None, []
@@ -109,10 +145,17 @@ def main():
     if not compare:
         sys.exit('needs rabbitizer and pyelftools: run with .venv/bin/python')
     pairs = {int(row['us_address'], 16): row for row in csv.DictReader(open(arguments.map, encoding='utf-8'), delimiter='\t') if row['other_address']}
-    rows = [row for row in csv.DictReader(open(scorer.REGISTRY, encoding='utf-8'), delimiter='\t') if row['status'] == 'matched' and row['source']]
+    inside = whole_rows()
+    ranges = [(start, end) for start, end, _ in whole_files()]
+    # a matched function inside a whole file counts once the whole file holds it (export_src.py publishes nothing else for it)
+    rows = [row for row in csv.DictReader(open(scorer.REGISTRY, encoding='utf-8'), delimiter='\t') if row['status'] == 'matched' and row['source']
+            and (int(row['address'], 16) in inside or not any(start <= int(row['address'], 16) < end for start, end in ranges))]
     rows.sort(key=lambda row: int(row['address'], 16))
     if arguments.limit:
         rows = rows[:arguments.limit]
+    needed = sorted({inside[int(row['address'], 16)] for row in rows if int(row['address'], 16) in inside})
+    with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
+        wholes = dict(zip(needed, pool.map(lambda entry: compile_whole(*entry), needed)))
     progress = Progress(len(rows), 'version-check')
 
     def work(row):
@@ -120,7 +163,8 @@ def main():
         pair = pairs.get(address)
         name = row['address'][2:]
         progress.begin(name)
-        score, found = check(row, int(pair['other_address'], 16), arguments.other) if pair else (None, [])
+        whole = (*wholes[inside[address]], inside[address][1]) if address in inside else None
+        score, found = check(row, int(pair['other_address'], 16), arguments.other, whole) if pair else (None, [])
         progress.tick(f'{name}: {score}', name)
         return row, pair, score, found
 
@@ -128,6 +172,9 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         results = list(pool.map(work, rows))
     progress.done()
+    for object_path, _ in wholes.values():
+        if object_path and os.path.exists(object_path):
+            os.remove(object_path)
     pair_of = {address: int(row['other_address'], 16) for address, row in pairs.items()}
     votes = {}
     for _, _, _, found in results:

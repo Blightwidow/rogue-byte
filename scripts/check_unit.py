@@ -3,14 +3,15 @@
 """check_unit.py [module | address | src file]: after `make elf`, says for the matched functions of src/ (src/MANIFEST.tsv) whether each one
 links from C in the verified image (config/us/swapped.tsv) and why not when it fell back (build/image/fallbacks.tsv). Without an
 argument it checks every module. A whole file (config/us/whole_files.tsv) selects the matched functions of its range and must have linked
-whole (build/image/whole_files.tsv). Exit 1 when a function of the selection falls back to assembly."""
+whole (build/image/whole_files.tsv): it is their only source. Exit 1 when a function of the selection falls back to assembly."""
 import os
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
-def rows(path):
-    return [line.rstrip('\n').split('\t') for line in list(open(path))[1:]] if os.path.exists(path) else []
+def rows(path, width=None):
+    """The rows of a tab-separated file without its header line; `width` keeps that many columns (src/MANIFEST.tsv: address, name, size, file)."""
+    return [line.rstrip('\n').split('\t')[:width] for line in list(open(path))[1:]] if os.path.exists(path) else []
 
 def matches(entry, selector):
     address, name, _, file = entry
@@ -24,14 +25,14 @@ def main():
     swapped = {line.split('\t')[0].upper() for line in open(swapped_path)}
     reasons = {line.split('\t')[0].upper(): line.rstrip('\n').split('\t')[2] for line in open(os.path.join(ROOT, 'build', 'image', 'fallbacks.tsv'))} \
         if os.path.exists(os.path.join(ROOT, 'build', 'image', 'fallbacks.tsv')) else {}
-    chosen = [entry for entry in rows(os.path.join(ROOT, 'src', 'MANIFEST.tsv')) if matches(entry, selector)]
+    chosen = [entry for entry in rows(os.path.join(ROOT, 'src', 'MANIFEST.tsv'), 4) if matches(entry, selector)]
     whole = next((row for row in rows(os.path.join(ROOT, 'config', 'us', 'whole_files.tsv'))
                   if selector is not None and os.path.normpath(selector) in (row[2], os.path.join('src', row[2]))), None)
     if whole:
         start, end = int(whole[0], 16), int(whole[1], 16)
-        chosen = [entry for entry in rows(os.path.join(ROOT, 'src', 'MANIFEST.tsv')) if start <= int(entry[0], 16) < end]
+        chosen = [entry for entry in rows(os.path.join(ROOT, 'src', 'MANIFEST.tsv'), 4) if start <= int(entry[0], 16) < end]
         linked = {row[2]: row[3] for row in rows(os.path.join(ROOT, 'build', 'image', 'whole_files.tsv'))}
-        print(f"src/{whole[2]}: {'linked whole' if linked.get(whole[2]) == 'whole' else 'not linked whole (its functions took the per-function path)'}")
+        print(f"src/{whole[2]}: {'linked whole' if linked.get(whole[2]) == 'whole' else 'not linked whole (its functions came from assembly: build/image/link output says why)'}")
         if linked.get(whole[2]) != 'whole':
             sys.exit(1)
     if not chosen:
