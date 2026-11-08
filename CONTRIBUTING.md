@@ -1,6 +1,6 @@
 # Contributing
 
-Rogue Byte is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA), built from your own copy of the game.
+sly2-decomp is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA), built from your own copy of the game.
 The US executable is what functions are matched against; the PAL one (optional) is used to check the result.
 Matching a function, recovering a name, fixing a tool and improving the docs all help.
 

@@ -1,6 +1,6 @@
 # Third-party notices
 
-Rogue Byte is GPL-3.0-or-later (`LICENSE`). It contains no game code or data. This file lists the projects whose work
+sly2-decomp is GPL-3.0-or-later (`LICENSE`). It contains no game code or data. This file lists the projects whose work
 it uses or was informed by, and under which terms. A license listed as "reference only" means we read the project to
 check facts or learn how it is organised, and copied nothing from it.
 
@@ -25,13 +25,6 @@ does. Every borrowed name keeps its source visible in the data and is checked ag
 | [TheOnlyZac/sly1](https://github.com/TheOnlyZac/sly1) (Sly 1 decompilation) | CC0 1.0 | Symbols, class tree and field offsets in `config/sly1/`; Sly 2 names derived from them in `config/recovered/`. Names follow Sucker Punch's own. |
 | [Campfirecrucifix/sly2-bevy-of-thieves](https://github.com/Campfirecrucifix/sly2-bevy-of-thieves) (Rust port) | MIT | Function and global names from its address comments, `config/recovered/bevy_*.tsv`. Copyright its authors. |
 | SlyMods wiki (slymods.info) | CC BY-SA 4.0 | SEQ opcode names in `config/recovered/slymods_jsg_opcodes.tsv` and the notes in `docs/game/slymods-crosscheck.md`. These files stay under CC BY-SA 4.0; credit to the SlyMods wiki contributors. |
-
-## Artwork
-
-| Work | License | Use |
-| :--- | :--- | :--- |
-| Racing Sans One (Pablo Impallari, Rodrigo Fuenzalida) | SIL OFL 1.1 | The title of the logo, converted to paths (`assets/logo.svg`). The font itself is not included; `assets/source/make_assets.py` downloads it. |
-| The cap (`assets/cap.png`, `assets/source/cap-full.png`) | Public domain (CC0 1.0); the project releases it without restriction | The logo and icon. It was generated with an image model and cut out; it is a character-style hat in the spirit of the game, not taken from the game. |
 
 ## Used as tools, not included
 

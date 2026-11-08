@@ -7,7 +7,7 @@ keep it that way.
 
 ## What this repository is
 
-Rogue Byte is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA, `SCUS_973.16`). Matched C++ goes in `src/`,
+sly2-decomp is a byte-matching decompilation of Sly 2: Band of Thieves (PS2, USA, `SCUS_973.16`). Matched C++ goes in `src/`,
 best attempts for the rest in `nonmatching/`, recovered names and types in `config/`, and the tools in `scripts/`. A function
 counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` still reproduces the retail image byte for byte.
 Matching is done against the US executable only. PAL (`SCES_525.29`) is checked afterwards: `make pal` (end of `make land`) says whether the same C

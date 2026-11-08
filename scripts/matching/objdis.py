@@ -3,7 +3,7 @@
 """objdis.py <file.o> [symbol]: EE-aware disassembly of an object's .text (llvm-objdump + EE fixups), one line per insn:
    offset word text   (relocations appended as ' ; R:<sym>')"""
 import os, sys, subprocess, re
-LAB = os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+LAB = os.environ.get('SLY2_DECOMP_DIR') or os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eedecode import fix
 PORT = os.environ.get('GAME_DIR') or os.path.join(LAB, 'work', 'game')

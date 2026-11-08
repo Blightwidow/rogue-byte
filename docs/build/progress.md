@@ -1,6 +1,6 @@
 # Progress
 
-ByteMatch ([bytematch.dev](https://bytematch.dev/Blightwidow/rogue-byte)) and the table in the README show how much of the game's code
+ByteMatch ([bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp)) and the table in the README show how much of the game's code
 is rebuilt. Measuring it needs your own executable, so the reports are generated locally and committed.
 
 ## What is counted

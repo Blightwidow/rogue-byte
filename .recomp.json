@@ -7,7 +7,7 @@
     "region": "USA",
     "serial": "SCUS-97316"
   },
-  "project": "Rogue Byte",
+  "project": "sly2-decomp",
   "status": "in-progress",
   "toolchain": [
     "Splat",
@@ -24,7 +24,7 @@
   "links": [
     {
       "label": "Progress",
-      "url": "https://blightwidow.github.io/rogue-byte/"
+      "url": "https://openthievius.github.io/sly2-decomp/"
     }
   ]
 }

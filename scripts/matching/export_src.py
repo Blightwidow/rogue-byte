@@ -17,7 +17,7 @@ import re
 import shutil
 import sys
 
-LAB = os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+LAB = os.environ.get('SLY2_DECOMP_DIR') or os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'build'))
 import make_whole_files  # noqa: E402
 

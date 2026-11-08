@@ -1,6 +1,6 @@
 # Roadmap
 
-What is done and what comes next. Live numbers: [bytematch.dev](https://bytematch.dev/Blightwidow/rogue-byte) and the README table.
+What is done and what comes next. Live numbers: [bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp) and the README table.
 
 ## Done
 
