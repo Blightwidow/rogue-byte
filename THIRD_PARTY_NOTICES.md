@@ -15,9 +15,10 @@ tooling, not the game's own logic. The `.c` files started as output of [m2c](htt
 
 ## Material included in this repository
 
-**Legacy.** AGENTS.md now says "derive everything ourselves": nothing from other decompilations or ports of this game. The rows
-below landed before that rule. They stay listed, with their terms, until each is removed or re-derived from retail; no new material
-of this kind is added.
+**Names and notes from open licences.** AGENTS.md allows names, symbol maps, types, field offsets and notes from another project when
+its licence permits it and it is listed here with its terms and what is used, before the material lands. Code from other projects is
+not used. A project without a licence is read-only (facts and ideas, nothing copied). Attribution below stays as long as the material
+does. Every borrowed name keeps its source visible in the data and is checked against retail.
 
 | Project | License | What is used here |
 | :--- | :--- | :--- |

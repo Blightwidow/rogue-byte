@@ -13,7 +13,9 @@ run pads that way (docs/build/assembler.md, "Short loops"). The copy is made fro
 It assembles in one pass and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's
 `.extern SYM,SIZE` lines, written at the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own
 ee-gcc 2.9-ee-991111 and its driver (config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of
-several functions can be linked together.
+several functions can be linked together. A whole-file source (config/us/whole_files.tsv) includes its unmatched functions with
+INCLUDE_ASM(address) at file scope: the marker it leaves in the compiler's assembly is replaced by that function's Splat assembly
+(build/splat/asm) before ps2eeas runs, so the file assembles as one object in retail's order.
 
 EE_AS_EXE and EE_AS_ARGS in the environment replace the assembler and its arguments for one run: scripts/matching/assembler_probe.py sets
 them to measure a candidate, and a build never does (docs/build/assembler.md, "Before changing the assembler").
@@ -45,6 +47,52 @@ def hoist_externs(assembly):
     lines = assembly.split('\n')
     externs = [line for line in lines if re.match(r'\s*\.extern\s', line)]
     return '\n'.join(externs + [line for line in lines if not re.match(r'\s*\.extern\s', line)])
+
+
+INCLUDE_ASM_MARKER = re.compile(r'^[ \t]*\.include_asm[ \t]+(0[xX][0-9A-Fa-f]+)[ \t]*$', re.M)  # what include/include_asm.h's INCLUDE_ASM(address) writes
+SPLAT_COMMENT = re.compile(r'/\*.*?\*/')
+SPLAT_ENCODING = re.compile(r'\s*/\* [0-9A-F]+ [0-9A-F]{8} ([0-9A-F]{8}) \*/')  # Splat's comment: file offset, address, the word's bytes
+# instructions that ps2eeas does not read as spimdisasm writes them, emitted as the word Splat's comment gives (none takes a relocation):
+# `c1 0x...` (a COP1 operation spimdisasm names only by its function, the R5900's sqrt.s forms; ps2eeas has no `c1`) and `vadda`
+# (spimdisasm prints ft before fs, ps2eeas reads fs first). Measured over every game function (docs/ROADMAP.md item 2, stage 4).
+SPELLED_AS_WORD = {'c1', 'vadda'}
+
+
+@functools.lru_cache(maxsize=None)
+def splat_functions():
+    """{address: assembly lines} of every function in build/splat/asm (make elf's split), as scripts/build/asm_units.py cuts them."""
+    if os.path.dirname(os.path.abspath(__file__)) not in sys.path:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from asm_units import read_units
+    return {function['address']: function['lines'] for function in read_units(os.path.join(ROOT, 'build', 'splat'))[1]}
+
+
+def splat_for_ps2eeas(lines):
+    """One function of Splat's assembly as ps2eeas reads it: spimdisasm's comments and the `.size` lines dropped, `glabel`/`jlabel`/`dlabel` as
+    plain labels, the instructions of SPELLED_AS_WORD as their word, between `.set noreorder` and `.set reorder` (Splat writes every delay slot itself). Macro mode stays on: ps2eeas refuses a
+    backward branch in a short loop under `.set nomacro`, although retail's loop is already padded and nothing is added (the build compares)."""
+    body = []
+    for line in lines:
+        text = SPLAT_COMMENT.sub('', line).strip()
+        if not text or text.startswith('.size '):
+            continue
+        encoding = SPLAT_ENCODING.match(line)
+        if text.split()[0] in ('glabel', 'jlabel', 'dlabel'):
+            body.append(text.split()[1] + ':')
+        elif encoding and text.split()[0].split('.')[0] in SPELLED_AS_WORD:
+            body.append(f"\t.word\t{int.from_bytes(bytes.fromhex(encoding.group(1)), 'little'):#010x}")
+        else:
+            body.append(text if text.endswith(':') else '\t' + text)
+    return '\n'.join(['\t.set\tnoreorder', '\t.set\tnoat', *body, '\t.set\tat', '\t.set\treorder'])
+
+
+def expand_include_asm(assembly, functions=None):
+    """The compiler's assembly with every `.include_asm <address>` line (a whole-file source's INCLUDE_ASM) replaced by that function's Splat
+    assembly. `functions` ({address: lines}) defaults to build/splat; a missing address raises KeyError."""
+    if not INCLUDE_ASM_MARKER.search(assembly):
+        return assembly
+    functions = functions if functions is not None else splat_functions()
+    return INCLUDE_ASM_MARKER.sub(lambda match: splat_for_ps2eeas(functions[int(match.group(1), 16)]), assembly)
 
 
 BRANCH = re.compile(r'\s*(b|j|jal|jr|jalr|beq|bne|beqz|bnez|bgez|bgtz|blez|bltz|bc1[tf]l?|beql|bnel|bgezal|bltzal)\s')
@@ -157,6 +205,11 @@ def compile_object(language, source, output, assembler=None, include=None, local
     if result.returncode:
         return False, result.stderr or result.stdout
     text = open(assembly).read()
+    try:
+        text = expand_include_asm(text)
+    except KeyError as error:
+        os.remove(assembly)
+        return False, f'INCLUDE_ASM({int(error.args[0]):#X}): no function starts there in build/splat/asm (run make elf first)'
     open(assembly, 'w').write(hoist_externs(text))
     assembler_flags = os.environ['EE_AS_ARGS'].split() if os.environ.get('EE_AS_ARGS') else [flag for flag in FLAGS if flag.startswith('-G')]
     for attempt in range(3):  # under a parallel build the assembler (under wibo) now and then never returns; a rerun takes a fraction of a second

@@ -50,7 +50,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   size the frame is not allowed.
 - **Also not allowed**, because their only purpose is to steer the compiler: a callee declared with a return type or arguments it
   does not have, a variable that exists only to move a register (a typed local bound to a value the code reads and then uses is ordinary code), a local that only holds a global's address so a constant does not
-  fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
+  fold, and source that defines game data without meeting docs/contributing/exceptions.md ("Game data defined in source": a global is defined in C only where its initial value reproduces retail's bytes at its address; the rest stays an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
 - **One flag set per source file** and one assembler for all game code, never per function or ad hoc per attempt: SN's `ps2eeas` 1.9.25.758 with its one short-loop constant
   changed from 6 to 5 (`tools/ps2eeas/Ps2EeAs-loop5.exe`, made by `setup.sh` from the pinned download, never committed; retail pads every short
@@ -96,10 +96,13 @@ Details: docs/contributing/matching.md ("Teams of workers").
 
 ## Rules
 
-- **Derive everything ourselves.** Work from the retail executable of your own disc and public hardware documentation. Take nothing
-  from anyone else: no code, symbol maps, splits, names or notes from other decompilations or ports of this game, and no
-  third-party code. Never Sony's SDK source, samples or headers, or leaked or NDA material, not even as a reference.
-  Material that landed before this rule is listed in THIRD_PARTY_NOTICES.md ("Legacy") until it is removed or re-derived.
+- **Derive the code ourselves; names and notes only from open licences.** Work from the retail executable of your own disc and public
+  hardware documentation. Matched C is ours: no code from other decompilations or ports of this game, and no third-party code. Names,
+  symbol maps, types, field offsets, splits and notes from another project are allowed only when its licence permits it (CC0, MIT,
+  CC BY-SA, GPL-compatible) and it is listed in THIRD_PARTY_NOTICES.md with its terms and what is used, before the material lands.
+  Keep every name's source visible (`source:...`) and measure it against retail: a borrowed name is a hypothesis. Never Sony's SDK
+  source, samples or headers, or leaked or NDA material, not even as a reference. A project with no licence is read-only: facts
+  and ideas only, nothing copied.
 - **Nothing from the prototype.** No code, data, symbol names, signatures, types, field names or file lists from any prototype
   build, and no tool that extracts them. Looking at one to understand a function is allowed only if what you then write is entirely
   your own, reasoned from retail's bytes. When in doubt, treat it as copied and leave it out.

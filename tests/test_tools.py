@@ -27,6 +27,7 @@ import credit_audit  # noqa: E402
 import harvest  # noqa: E402
 import export_nonmatching  # noqa: E402
 import list_functions  # noqa: E402
+import make_whole_files  # noqa: E402
 import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
@@ -136,6 +137,21 @@ class AssemblyUnitTests(unittest.TestCase):
         self.assertEqual([line for line in pieces[1] if 'glabel' in line], ['  glabel inner\n'])
 
 
+class WholeFileTests(unittest.TestCase):
+    def test_whole_files_are_read_as_ranges(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile('w', suffix='.tsv', delete=False) as handle:
+            handle.write('start\tend\tfile\n0x116CA0\t0x117030\tmemory-bez/ary.cpp\n')
+        self.addCleanup(os.remove, handle.name)
+        self.assertEqual(asm_units.whole_files(handle.name), [(0x116CA0, 0x117030, 'memory-bez/ary.cpp')])
+
+    def test_missing_list_means_no_whole_files(self):
+        self.assertEqual(asm_units.whole_files('/nonexistent/whole_files.tsv'), [])
+
+    def test_whole_file_bounds_are_split_points(self):
+        self.assertTrue(all({start, end} <= asm_units.split_points() for start, end, _ in asm_units.whole_files()))
+
+
 class MergeTests(unittest.TestCase):
     def test_chunk_inside_a_matched_function_is_folded_in(self):
         functions = [{'address': 0x100000, 'lines': ['a\n']}, {'address': 0x100050, 'lines': ['b\n']}, {'address': 0x100058, 'lines': ['c\n']}]
@@ -197,6 +213,106 @@ class CompileUnitTests(unittest.TestCase):
 
     def test_text_without_externs_is_unchanged(self):
         self.assertEqual(compile_unit.hoist_externs('a\nb'), 'a\nb')
+
+    SPLAT = ['.align 3\n', 'glabel func_00100000\n', '    /* 80 00100000 3000BD27 */  addiu      $sp, $sp, 0x30\n',
+             '  .L00100004:\n', '    /* 84 00100004 00000000 */  nop\n', '.size func_00100000, . - func_00100000\n']
+
+    def test_include_asm_marker_becomes_the_splat_function(self):
+        expanded = compile_unit.expand_include_asm('foo:\n\t.include_asm 0x100000\nbar:', {0x100000: self.SPLAT}).split('\n')
+        self.assertEqual(expanded[expanded.index('func_00100000:') + 1], '\taddiu      $sp, $sp, 0x30')
+
+    def test_included_assembly_keeps_its_delay_slots(self):
+        expanded = compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT}).split('\n')
+        self.assertEqual((expanded[0], expanded[-1]), ('\t.set\tnoreorder', '\t.set\treorder'))
+
+    def test_included_assembly_drops_comments_and_sizes(self):
+        expanded = compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT})
+        self.assertFalse(any(token in expanded for token in ('/*', '.size')))
+
+    def test_included_local_label_stays_a_label(self):
+        self.assertIn('\n.L00100004:\n', compile_unit.expand_include_asm('\t.include_asm 0x100000', {0x100000: self.SPLAT}))
+
+    def test_include_asm_of_an_unknown_address_raises(self):
+        with self.assertRaises(KeyError):
+            compile_unit.expand_include_asm('\t.include_asm 0x100008', {0x100000: self.SPLAT})
+
+    def test_assembly_without_marker_is_unchanged(self):
+        self.assertEqual(compile_unit.expand_include_asm('a\nb', {}), 'a\nb')
+
+    def test_vadda_is_written_as_its_word(self):
+        lines = ['glabel f\n', '    /* 80 00100000 BC12E04B */  vadda.xyzw $ACC, $vf0, $vf2\n']
+        self.assertIn('\t.word\t0x4be012bc', compile_unit.splat_for_ps2eeas(lines).split('\n'))
+
+    def test_c1_is_written_as_its_word(self):
+        lines = ['glabel f\n', '    /* 80 00100000 44030046 */  c1         0x344\n']
+        self.assertIn('\t.word\t0x46000344', compile_unit.splat_for_ps2eeas(lines).split('\n'))
+
+
+class MakeWholeFilesTests(unittest.TestCase):
+    MANIFEST = {0x100000: ('First', 8, 'module/First.cpp'), 0x100010: ('Second', 8, 'module/Second.cpp'),
+                0x100020: ('Third', 8, 'module/Third.c')}
+
+    def build(self, sources, functions=(0x100000, 0x100008, 0x100010), language=None):
+        return make_whole_files.build_whole_file(0x100000, 0x100030, list(functions), self.MANIFEST, read_source=sources.__getitem__, language=language)
+
+    def test_items_split_at_top_level(self):
+        items = make_whole_files.split_items('#include "a.h"\nstruct S { int a; };\nint f(S *s) { return s->a; }\nextern int g;\n')
+        self.assertEqual([make_whole_files.classify(item) for item in items],
+                         [('preprocessor', '#include "a.h"'), ('type', 'S'), ('function', 'f'), ('declaration', 'g')])
+
+    def test_semicolon_in_a_comment_does_not_end_an_item(self):
+        self.assertEqual(len(make_whole_files.split_items('/* a; b */ extern int g;\n')), 1)
+
+    def test_rename_skips_comments_and_longer_names(self):
+        self.assertEqual(make_whole_files.rename('VT *x; /* VT */ VTable y;', 'VT', 'VT_1'), 'VT_1 *x; /* VT */ VTable y;')
+
+    def test_unmatched_function_becomes_include_asm(self):
+        _, text, _ = self.build({'module/First.cpp': 'void First() {}\n', 'module/Second.cpp': 'void Second() {}\n'})
+        self.assertLess(text.index('void First'), text.index('INCLUDE_ASM(0X100008);'))
+
+    def test_include_asm_header_is_added(self):
+        _, text, _ = self.build({'module/First.cpp': 'void First() {}\n', 'module/Second.cpp': 'void Second() {}\n'})
+        self.assertIn('#include "include_asm.h"', text)
+
+    def test_identical_declaration_is_kept_once(self):
+        _, text, _ = self.build({'module/First.cpp': 'extern int g;\nvoid First() { g = 1; }\n', 'module/Second.cpp': 'extern int g;\nvoid Second() { g = 2; }\n'})
+        self.assertEqual(text.count('extern int g;'), 1)
+
+    def test_differing_struct_takes_the_address_suffix(self):
+        _, text, notes = self.build({'module/First.cpp': 'struct S { int a; };\nvoid First(S *s) {}\n', 'module/Second.cpp': 'struct S { char b; };\nvoid Second(S *s) {}\n'})
+        self.assertIn('void Second(S_100010 *s)', text)
+
+    def test_includes_go_to_the_top_once(self):
+        _, text, _ = self.build({'module/First.cpp': '#include "sly2.h"\nvoid First() {}\n', 'module/Second.cpp': '#include "sly2.h"\nvoid Second() {}\n'})
+        self.assertEqual(text.count('#include "sly2.h"'), 1)
+
+    def test_c_source_in_a_cpp_file_keeps_c_linkage(self):
+        sources = {'module/First.cpp': 'void First() {}\n', 'module/Third.c': 'void Third() {}\n'}
+        _, text, _ = self.build(sources, functions=(0x100000, 0x100020))
+        self.assertIn('extern "C" {\nvoid Third() {}\n}', text)
+
+    def test_all_c_sources_make_a_c_file(self):
+        language, _, _ = self.build({'module/Third.c': 'void Third() {}\n'}, functions=(0x100020,))
+        self.assertEqual(language, 'c')
+
+    def test_c_file_spells_linkage_as_c(self):
+        self.assertEqual(make_whole_files.to_c('extern "C" int f(void);'), 'extern int f(void);')
+
+    def test_m2c_unk_becomes_s32(self):
+        self.assertEqual(make_whole_files.clean_text('M2C_UNK f(M2C_UNK *a);\n'), 's32 f(s32 *a);\n')
+
+    def test_resolve_drops_the_later_conflicting_declaration(self):
+        text = 'extern int g;\nextern char g;\nvoid f() {}\n'
+        def compile_source(source, language):
+            if 'extern char g;' in source:
+                return False, 'x.cpp:2: conflicting types for `char g\'\nx.cpp:1: previous declaration as `int g\''
+            return True, ''
+        resolved, notes, error = make_whole_files.resolve(text, 'c++', compile_source)
+        self.assertEqual((make_whole_files.tidy(resolved), error), ('extern int g;\n\nvoid f() {}\n', None))
+
+    def test_resolve_stops_on_another_error(self):
+        _, _, error = make_whole_files.resolve('void f() { x; }\n', 'c++', lambda source, language: (False, 'x.cpp:1: `x\' undeclared'))
+        self.assertIn('undeclared', error)
 
     def test_only_the_sony_list_picks_another_assembler(self):
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))
@@ -1458,6 +1574,29 @@ class MovablesFlagTests(unittest.TestCase):
 
     def test_an_unlisted_function_is_not(self):
         self.assertFalse(compile_unit.movables_for(0x100000))
+
+
+class DataDefinitionTests(unittest.TestCase):
+    def kinds(self, text):
+        return [message for _, _, message in check_source.data_definitions(text)]
+
+    def test_a_marked_scalar_constant_is_allowed(self):
+        self.assertEqual(self.kinds('// data-ok: pooled float\nconst float g_x = 1.5f;\n'), [])
+
+    def test_a_definition_without_the_marker_is_banned(self):
+        self.assertEqual(len(self.kinds('const float g_x = 1.5f;\n')), 1)
+
+    def test_a_large_typed_table_with_the_marker_is_allowed(self):
+        self.assertEqual(self.kinds('// data-ok: table\nconst int g_t[4000] = {0};\n'), [])
+
+    def test_a_long_byte_array_is_banned_as_a_dump(self):
+        self.assertIn('a dump, not typed data', self.kinds('// data-ok: bytes\nconst unsigned char g_b[65] = {0};\n')[0])
+
+    def test_an_extern_declaration_and_a_static_constant_are_not_definitions(self):
+        self.assertEqual(self.kinds('extern float g_x;\nstatic const float huge = 1.0e30f;\n'), [])
+
+    def test_a_local_with_an_initializer_is_not_a_definition(self):
+        self.assertEqual(self.kinds('void f()\n{\n    float a = 1.0f;\n}\n'), [])
 
 
 if __name__ == '__main__':

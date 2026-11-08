@@ -6,7 +6,8 @@ Needs build/splat (make elf's split) and the objects of src/ compiled by ninja (
 function whose object is usable, the function's assembly is dropped from build/splat/asm/text.s and the object is
 linked at the function's address instead; the rest of the assembly is assembled in runs. After linking, every swapped
 function's bytes are compared with the retail ones and the ones that differ (relocations into the object's own data,
-unresolved names, size) fall back to assembly. Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
+unresolved names, size) fall back to assembly. A whole file (config/us/whole_files.tsv) is linked as one object over its range and
+compared as a whole; if it differs, its functions take the per-function path. Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
 import concurrent.futures
 import hashlib
 import os
@@ -42,7 +43,7 @@ region = retail[region_offset:region_offset + region_end - RODATA_START]
 piece_ranges = {(start, start + size): name for name, start, size in piece_list}
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from asm_units import read_units  # noqa: E402
+from asm_units import read_units, whole_files  # noqa: E402
 header, functions = read_units(SPLAT)
 by_address = {function['address']: function for function in functions}
 
@@ -247,10 +248,12 @@ def derive_addresses(address, object_path, names):
     return {name: next(iter(values)) for name, values in found.items() if len(values) == 1}
 
 candidates = {}
+manifest_addresses = set()
 retargeted = set()  # addresses whose object keeps its rodata out of the image (retarget_rodata)  # address -> (object path, undefined names)
 for line in list(open(os.path.join('src', 'MANIFEST.tsv')))[1:]:
     address_text, name, size, file = line.rstrip('\n').split('\t')
     address = int(address_text, 16)
+    manifest_addresses.add(address)
     object_path = os.path.join(UNITS, file + '.o')
     if address not in by_address or not os.path.isfile(object_path):
         continue
@@ -295,6 +298,21 @@ for address in sorted(candidates, key=lambda a: candidates[a][3] or 0):
         holes_taken.append((base, base + size))
 print(f'{len(candidates)} of {len(functions)} functions have a usable object', flush=True)
 
+# whole files (config/us/whole_files.tsv): one object per retail file, its unmatched functions included from Splat's assembly (INCLUDE_ASM).
+# It is linked at the file's start and takes the whole range: neither the per-function objects nor the assembly of its functions are linked.
+# A whole file whose object is missing, has another size or needs its own data falls back to the per-function path.
+wholes = {}  # start -> (end, object path, undefined names)
+for start, end, file in whole_files():
+    object_path = os.path.join(UNITS, file + '.o')
+    found = inspect(object_path) if os.path.isfile(object_path) else None
+    if start not in by_address or (end not in by_address and end != TEXT_END) or found is None or found[0] != end - start or found[2]:
+        print(f'whole file {file}: not linked ({"no object" if not os.path.isfile(object_path) else "range, size or own data"}), its functions take the per-function path', flush=True)
+        continue
+    wholes[start] = (end, object_path, found[1])
+
+def in_whole(address, active):
+    return any(start <= address < wholes[start][0] for start in active)
+
 def assemble_run(run_lines, address):
     text = ''.join(header + run_lines)
     digest = hashlib.sha1(text.encode()).hexdigest()[:10]
@@ -306,11 +324,11 @@ def assemble_run(run_lines, address):
                                '-I', 'include', '-I', os.path.join(SPLAT, 'asm'), '-o', object_path, source])
     return object_path
 
-def link(swapped):
+def link(swapped, active):
     # contiguous assembly functions form a run
     runs, current, last_unit = [], None, None
     for function in functions:
-        if function['address'] in swapped:
+        if function['address'] in swapped or in_whole(function['address'], active):
             current = None
             continue
         if current is None or function['unit'] != last_unit:
@@ -322,20 +340,22 @@ def link(swapped):
         run_objects = list(pool.map(lambda run: assemble_run(run[1], run[0]), runs))
     placed = [(address, path) for (address, _), path in zip(runs, run_objects)]
     placed += [(address, candidates[address][0]) for address in swapped]
-    defined = {function['name'] for function in functions if function['address'] not in swapped}
+    placed += [(start, wholes[start][1]) for start in active]
+    defined = {function['name'] for function in functions if function['address'] not in swapped and not in_whole(function['address'], active)}
     return placed, defined
 
 derived = {}
 
-def definitions(swapped, defined):
+def definitions(swapped, active, defined):
     lines = []
     seen = set()
-    for address in swapped:
+    for address in sorted(swapped) + [function['address'] for function in functions if in_whole(function['address'], active)]:
         name = by_address[address]['name']
         lines.append(f'{name} = 0x{address:X};')
         seen.add(name)
-    for address in swapped:
-        for name in candidates[address][1]:
+    objects = [(address, candidates[address][0], candidates[address][1]) for address in swapped] + [(start, wholes[start][1], wholes[start][2]) for start in active]
+    for address, object_path, names in objects:
+        for name in names:
             if name in seen or name in defined:
                 continue
             seen.add(name)
@@ -345,7 +365,7 @@ def definitions(swapped, defined):
             elif name in symbols:
                 lines.append(f'{name} = 0x{symbols[name]:X};')
             else:
-                derived.setdefault(name, derive_addresses(address, candidates[address][0], {name}).get(name))
+                derived.setdefault(name, derive_addresses(address, object_path, {name}).get(name))
                 if derived[name] is not None:
                     lines.append(f'{name} = 0x{derived[name]:X};')
     lines += [line.rstrip('\n') for line in open(os.path.join(SPLAT, 'undefined_syms_auto.txt'))]
@@ -381,8 +401,8 @@ for directory, _, files in os.walk(os.path.join(SPLAT, 'asm')):
             referenced_names.update(re.findall(r'[A-Za-z_][A-Za-z0-9_]*', open(os.path.join(directory, file)).read()))
 piece_sources = {}
 
-def build(swapped, raw_pieces):
-    placed, defined = link(swapped)
+def build(swapped, active, raw_pieces):
+    placed, defined = link(swapped, active)
     sections = [f'    .t_{address:06X} 0x{address:X} : SUBALIGN(1) {{ */{os.path.basename(path)}(.text) }}'
                 for address, path in sorted(placed)]
     sections += [f'    .nl_{address:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(candidates[address][0])}(.rodata) }}' for address in sorted(swapped & retargeted)]
@@ -418,7 +438,7 @@ def build(swapped, raw_pieces):
                        for piece in sorted(pieces)]
     tail = [line.rstrip('\n') for line in open(os.path.join('config', 'us', 'image.ld'))
             if not line.lstrip().startswith(('SECTIONS', '. = 0x100000', '.text', '}', '. = 0x262380', '.rodata', '. = 0x2ac880', '.data'))]
-    script = ['SECTIONS {'] + sections + rodata_sections + tail + ['}'] + definitions(swapped, defined) + piece_definitions(pieces)
+    script = ['SECTIONS {'] + sections + rodata_sections + tail + ['}'] + definitions(swapped, active, defined) + piece_definitions(pieces)
     open(os.path.join(BUILD, 'link.ld'), 'w').write('\n'.join(script) + '\n')
     objects = list(dict.fromkeys([path for _, path in placed] + [piece[1] for piece in pieces] + [os.path.join(BUILD, f'{name}.o') for name in ('vutext', 'irx_gap', 'irx')]))
     subprocess.check_call([BINUTILS + '-ld', '-EL', '-T', os.path.join(BUILD, 'link.ld'), '-o', os.path.join(BUILD, 'image.elf'),
@@ -426,12 +446,21 @@ def build(swapped, raw_pieces):
     subprocess.check_call([BINUTILS + '-objcopy', '-O', 'binary', os.path.join(BUILD, 'image.elf'), os.path.join(BUILD, 'image.bin')])
     return open(os.path.join(BUILD, 'image.bin'), 'rb').read(), {piece[0] for piece in pieces if piece[1].endswith('_asm.o')}
 
-swapped = set(candidates)
+active = set(wholes)
+swapped = {address for address in candidates if not in_whole(address, active)}
 differences = {}
 raw_pieces = set()
 for attempt in range(1, 12):
-    image, asm_pieces = build(swapped, raw_pieces)
+    image, asm_pieces = build(swapped, active, raw_pieces)
     failing = set()
+    failing_wholes = set()
+    for start in active:
+        end = wholes[start][0]
+        actual, expected = image[start - TEXT_START:end - TEXT_START], retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + end - TEXT_START]
+        if actual != expected:
+            failing_wholes.add(start)
+            first = next((k for k in range(0, len(expected), 4) if actual[k:k + 4] != expected[k:k + 4]), 0)
+            print(f'whole file at {start:#X}: bytes differ at {start + first:#X}, its functions take the per-function path', flush=True)
     bad_pieces = {piece_ranges[(start, end)] for start in asm_pieces for end in [start + next(size for _, begin, size in piece_list if begin == start)]
                   if image[start - TEXT_START:end - TEXT_START] != region[start - RODATA_START:end - RODATA_START]}
     raw_pieces |= bad_pieces
@@ -448,9 +477,13 @@ for attempt in range(1, 12):
             retail_ro = retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + start - TEXT_START + candidates[address][2]]
             if image[start - TEXT_START:start - TEXT_START + candidates[address][2]] != retail_ro:
                 failing.add(address)
-    print(f'attempt {attempt}: {len(swapped)} swapped, {len(failing)} differ; {len(asm_pieces) - len(bad_pieces)} pieces from assembly, {len(bad_pieces)} differ', flush=True)
-    if not failing and not bad_pieces:
+    print(f'attempt {attempt}: {len(swapped)} swapped, {len(failing)} differ; {len(active) - len(failing_wholes)} of {len(active)} whole files; '
+          f'{len(asm_pieces) - len(bad_pieces)} pieces from assembly, {len(bad_pieces)} differ', flush=True)
+    if not failing and not bad_pieces and not failing_wholes:
         break
+    for start in failing_wholes:
+        active.discard(start)
+        swapped |= {address for address in candidates if start <= address < wholes[start][0]}
     if attempt == 1:
         defined_names = {function['name'] for function in functions} | set(symbols)
         with open(os.path.join(BUILD, 'fallbacks.tsv'), 'w') as handle:
@@ -460,11 +493,16 @@ for attempt in range(1, 12):
     swapped -= failing
 else:
     sys.exit('did not settle')
+from_whole = {address for address in manifest_addresses if address in by_address and in_whole(address, active)}  # matched C linked through a whole file
 with open(os.path.join('config', 'us', 'swapped.tsv'), 'w') as handle:
-    for address in sorted(swapped):
+    for address in sorted(swapped | from_whole):
         handle.write(f"{address:#X}\t{by_address[address]['name']}\n")
+with open(os.path.join(BUILD, 'whole_files.tsv'), 'w') as handle:  # read by scripts/check_unit.py
+    handle.write('start\tend\tfile\tlinked\n')
+    for start, end, file in whole_files():
+        handle.write(f"{start:#X}\t{end:#X}\t{file}\t{'whole' if start in active else 'per-function'}\n")
 with open(os.path.join(BUILD, 'derived.tsv'), 'w') as handle:
     for name, address in sorted(derived.items()):
         if address is not None:
             handle.write(f'{name}\t{address:#X}\n')
-print(f'{len(swapped)} functions come from C, {len(functions) - len(swapped)} from assembly')
+print(f'{len(swapped | from_whole)} functions come from C ({len(from_whole)} through {len(active)} whole files), {len(functions) - len(swapped | from_whole)} from assembly')
