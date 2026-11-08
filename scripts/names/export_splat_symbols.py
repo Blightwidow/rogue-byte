@@ -8,7 +8,7 @@ import os
 import re
 import sys
 
-LAB = os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+LAB = os.environ.get('SLY2_DECOMP_DIR') or os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 source = sys.argv[1] if len(sys.argv) > 1 else os.path.join(LAB, 'config', 'recovered', 'sly2_combined_symbol_addrs.txt')
 destination = sys.argv[2] if len(sys.argv) > 2 else os.path.join(LAB, 'config', 'us', 'symbol_addrs.txt')
 

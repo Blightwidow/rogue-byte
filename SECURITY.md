@@ -1,6 +1,6 @@
 # Security
 
-Rogue Byte is a set of build and analysis scripts, a downloaded toolchain and reconstructed code. It has no service and no user
+sly2-decomp is a set of build and analysis scripts, a downloaded toolchain and reconstructed code. It has no service and no user
 data. What can go wrong is:
 
 - a script or a workflow that runs code it should not (a pull request that reaches a secret or a write token),

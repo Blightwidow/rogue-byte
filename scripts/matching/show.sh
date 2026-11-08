@@ -1,7 +1,7 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-3.0-or-later
 # show.sh <hex addr>: Ghidra C + disassembly of one Sly 2 function
-LAB=${ROGUE_BYTE_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../.." && pwd)}
+LAB=${SLY2_DECOMP_DIR:-${ROGUE_BYTE_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../.." && pwd)}}
 PORT=${GAME_DIR:-$LAB/work/game}
 export LAB PORT
 cd $LAB || exit 1

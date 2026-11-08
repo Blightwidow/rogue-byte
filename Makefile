@@ -1,4 +1,4 @@
-# Rogue Byte: decompilation tooling for Sly 2 (PS2, USA). No game data in this repository.
+# sly2-decomp: decompilation tooling for Sly 2 (PS2, USA). No game data in this repository.
 #
 # Setup: ./setup.sh --sly2 /path/to/SCUS_973.16, then `make elf`; names: docs/build/name-recovery.md.
 

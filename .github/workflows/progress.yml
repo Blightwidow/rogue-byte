@@ -1,4 +1,4 @@
-# ByteMatch progress reports (https://bytematch.dev/Blightwidow/rogue-byte), as in sly1-decomp.
+# ByteMatch progress reports (https://bytematch.dev/OpenThievius/sly2-decomp), as in sly1-decomp.
 #
 # ByteMatch reads objdiff's report.json from an artifact named "<VERSION>_report", from successful push runs on the default branch.
 # This job does not build the game: the compiler and the retail executable cannot be redistributed. `make objdiff` and `make pal`

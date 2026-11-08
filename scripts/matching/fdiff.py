@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from match import load_target, object_functions
 from eedecode import fix
 import subprocess
-LAB = os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+LAB = os.environ.get('SLY2_DECOMP_DIR') or os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 PORT = os.environ.get('GAME_DIR') or os.path.join(LAB, 'work', 'game')
 path, symbol, address = sys.argv[1], sys.argv[2], int(sys.argv[3], 16)
 if os.path.isdir(path):  # a build directory: find the object defining the symbol

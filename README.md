@@ -1,16 +1,18 @@
-<p align="center"><img src="assets/logo.png" alt="Rogue Byte" width="480"></p>
-<p align="center">
-  <a href="https://bytematch.dev/Blightwidow/rogue-byte"><img src="https://bytematch.dev/Blightwidow/rogue-byte.svg?mode=shield&label=Matched+code&measure=matched_code_percent" alt="bytematch progress"></a>
-  <a href="docs/build/building.md"><img src="https://img.shields.io/badge/Build-Guide-c3cbd8?style=flat-square&logo=gnubash&logoColor=c3cbd8&labelColor=0d1117" alt="Build guide"></a>
-  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/Contributing-Guide-c3cbd8?style=flat-square&logo=github&logoColor=c3cbd8&labelColor=0d1117" alt="Contributing guide"></a>
-</p>
-<p align="center">
-    A work-in-progress, byte-matching decompilation of Sly 2: Band of Thieves for PlayStation 2.<br>
-    Reconstructing the original game code in readable C.
-</p>
+<img align="right" width="108" alt="OpenThievius icon" src="https://github.com/OpenThievius.png">
+
+# Sly 2: Band of Thieves (PS2) Decompilation
+
+[![OpenThievius](https://img.shields.io/badge/Project-OpenThievius-2a6db5?logo=github&logoColor=white)](https://github.com/OpenThievius/OpenThievius)
+[![Progress report](https://github.com/OpenThievius/sly2-decomp/actions/workflows/progress.yml/badge.svg)](https://github.com/OpenThievius/sly2-decomp/actions/workflows/progress.yml)
+[![Code](https://bytematch.dev/OpenThievius/sly2-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenThievius/sly2-decomp)
+[![Functions](https://bytematch.dev/OpenThievius/sly2-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenThievius/sly2-decomp)
+[![Build guide](https://img.shields.io/badge/Build-Guide-c3cbd8?logo=gnubash&logoColor=c3cbd8&labelColor=0d1117)](docs/build/building.md)
+[![Contributing guide](https://img.shields.io/badge/Contributing-Guide-c3cbd8?logo=github&logoColor=c3cbd8&labelColor=0d1117)](CONTRIBUTING.md)
+
+A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Sucker Punch Productions, 2004) for the PlayStation 2, part of **[OpenThievius](https://github.com/OpenThievius/OpenThievius)**. Reconstructing the original game code in readable C++.
 
 > [!WARNING]
-> Rogue Byte does not include game data, executables, disc images, or proprietary toolchains.<br>
+> This repository does not include game data, executables, disc images, or proprietary toolchains.<br>
 > A legitimately obtained copy of the **USA / NTSC-U** release (`SCUS_97316`) is required; the tools rebuild everything locally.<br>
 > The **PAL** release (`SCES_52529`) is optional: with its executable the tools also check that the matched C reproduces the PAL code.<br>
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
@@ -24,7 +26,7 @@
 A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, or hand-written assembly: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
 <!-- progress:end -->
 
-Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/rogue-byte).
+Live numbers on [bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp).
 
 ## Layout
 
@@ -57,7 +59,7 @@ More: [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) (compiler, assembler, flags), [docs
 Name recovery needs more (Ghidra 12.1.4 with the ghidra-emotionengine-reloaded extension, Java 21, your Sly 1 executable):
 [docs/build/name-recovery.md](docs/build/name-recovery.md) and [docs/build/decompilation.md](docs/build/decompilation.md).
 
-Run every tool from this repository's root. `ROGUE_BYTE_DIR` overrides the detected repository root.
+Run every tool from this repository's root. `SLY2_DECOMP_DIR` (or the older `ROGUE_BYTE_DIR`) overrides the detected repository root.
 
 ## License
 

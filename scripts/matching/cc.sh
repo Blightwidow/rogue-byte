@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # usage: cc.sh <compiler-id> <src> <out.o> [flags...]
 # Runs a candidate EE compiler: SN/Win32 via wibo-macos, Linux i386 via docker (colima), mwcc via wibo.
-LAB=${ROGUE_BYTE_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../.." && pwd)}
+LAB=${SLY2_DECOMP_DIR:-${ROGUE_BYTE_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../.." && pwd)}}
 PORT=${GAME_DIR:-$LAB/work/game}
 export LAB PORT
 set -e

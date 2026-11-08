@@ -26,14 +26,14 @@ is wrong, and the reported progress hides work that may be possible.
 
 ## How the two projects differ
 
-| | sly1-decomp (now) | rogue-byte (now) |
+| | sly1-decomp (now) | sly2-decomp (now) |
 | :--- | :--- | :--- |
 | Inline asm in matched C | allowed as shared helpers in `include/` | not allowed; `Sqrt` is the one exception |
 | VU0, MMI, COP0 function | **inline** (to match) when framed and mostly C; otherwise hand-written | permanent blocker, any share of special instructions |
 | Counts as finished | hand-written only | all 853 blockers |
 | Special instructions are mostly... | short sequences (1 to 5%) | vector code, long VU0 runs |
 
-Rogue Byte already went the other way once: on 2026-11-04 (`a82e9edc`) the 236 matches with inline asm went back to assembly
+This project already went the other way once: on 2026-11-04 (`a82e9edc`) the 236 matches with inline asm went back to assembly
 (5,304 to 4,836 of 6,757). Sly 1 then moved from "assembly is finished" to "assembly with helpers is work", the reverse step.
 
 ## Audit of our 853 blockers (2026-11-08, read-only)
