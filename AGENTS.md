@@ -31,7 +31,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   model's claim. Report exactly what you ran and what it printed, failures included.
 - **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers. The one exception is the square root
   (`sqrt.s`): retail's bare instruction behaves as an inline-assembly helper that no C form reproduces; a function computes a bare
-  square root through one shared `Sqrt` helper and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
+  square root through one shared `Sqrt` helper (`asm volatile("sqrt.s %0, %1" : "=&f"(r) : "f"(x))`, the early-clobber measured on every
+  user: docs/contributing/exceptions.md) and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
   a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. No matched source holds inline asm (the 236 that did went back to unmatched on 2026-11-04); `scripts/matching/record.py` scans every
   new match for it.
   `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
@@ -48,7 +49,7 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   frames show where the original declared one. A padding array (`s32 scratch[4];`), an invented type or a field that exists only to
   size the frame is not allowed.
 - **Also not allowed**, because their only purpose is to steer the compiler: a callee declared with a return type or arguments it
-  does not have, a variable that exists only to move a register, a local that only holds a global's address so a constant does not
+  does not have, a variable that exists only to move a register (a typed local bound to a value the code reads and then uses is ordinary code), a local that only holds a global's address so a constant does not
   fold, and source that defines game data read out of retail (reference it with an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
 - **One flag set per source file** and one assembler for all game code, never per function or ad hoc per attempt: SN's `ps2eeas` 1.9.25.758 with its one short-loop constant

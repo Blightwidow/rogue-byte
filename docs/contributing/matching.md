@@ -152,7 +152,7 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
 What AGENTS.md allows and bans, in one place (the full list with reasons and dates is docs/contributing/exceptions.md):
 
 - **No inline asm in functions**, no register pins, no empty `asm` with clobbers, no dummy operands, no `"memory"` clobber to order blocks.
-  The one shared `Sqrt` helper (`sqrt.s`) is the only asm.
+  The one shared `Sqrt` helper (`sqrt.s`, early-clobber `=&f`) is the only asm.
 - **`volatile`** only on a hardware register at a fixed address (0x10000000 and up), through a pointer to a register block (a DMA channel's),
   or on data shared with hardware, an interrupt handler or another thread (a library's semaphore ids and state flags, a field an interrupt
   handler sets), where retail's code reads and writes it as volatile (the rule of sly1-decomp). Outside the hardware range, mark the line
