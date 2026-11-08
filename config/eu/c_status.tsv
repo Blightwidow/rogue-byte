@@ -4981,6 +4981,7 @@ us_address	name	other_address	pair	score	addresses
 0x241E88	sceCdSync	0X242848	same	0	ok
 0x241F28	func_00241F28	0X2428E8	same	0	ok
 0x242AB8	func_00242AB8	0X243478	same	0	ok
+0x242B78	sceCdBreak	0X243538	same	0	ok
 0x242D08	scePadInit	0X2436C8	same	0	ok
 0x242E90	func_00242E90	0X243850	same	0	ok
 0x243270	func_00243270	0X243CB8	same	0	ok

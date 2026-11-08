@@ -18,8 +18,8 @@
 <!-- progress:begin (scripts/readme_progress.py) -->
 | Version | Code | of which exact C | Functions | Blocked for C |
 | :--- | ---: | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 77.86% (1091996 of 1402480 bytes) | 47.73% | 6109 of 6825 | 853 functions, 30.13% |
-| PAL `SCES_525.29` | 76.37% (1071088 of 1402480 bytes) | 46.24% | 6022 of 6825 | 853 functions, 30.13% |
+| NTSC-U `SCUS_973.16` | 77.87% (1092180 of 1402480 bytes) | 47.74% | 6110 of 6825 | 853 functions, 30.13% |
+| PAL `SCES_525.29` | 76.38% (1071272 of 1402480 bytes) | 46.25% | 6023 of 6825 | 853 functions, 30.13% |
 
 A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, or hand-written assembly: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
 <!-- progress:end -->
