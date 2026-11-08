@@ -1,6 +1,7 @@
 #include "sly2.h"
 struct HITFXDEF156898 { char pad[0x54]; float scale; char pad1[8]; float duration; };
 struct HITFX156898 { char pad[0x14]; HITFXDEF156898 *def; char pad1[0x34]; float start; };
+// steer-ok: GMin keeps the constant as the first operand of the min, so its result shares the constant's register (matching.md "Register allocation"); same form as GMax in src/cm/RecalcCmFrustrum__FP2CM.cpp
 static inline float GMin(float a, float b) { return a <? b; }
 extern "C" {
 extern float g_2dded0;

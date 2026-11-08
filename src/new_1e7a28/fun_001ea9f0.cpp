@@ -8,6 +8,7 @@ struct CLR {
     CLR(int value) : rgba(value) {}
     void Set(int value) { rgba = value; }
 };
+// steer-ok: a helper call keeps fold from re-associating scaled * (alpha * 128) into (scaled * 128) * alpha, as retail's operand order shows
 static inline int ScaleAlpha(float scale, float alpha) { return (int)(scale * alpha); }
 struct SW { char pad0[0x3EA0]; unsigned long gs; };
 extern "C" {

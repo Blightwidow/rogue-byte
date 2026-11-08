@@ -13,6 +13,7 @@ extern "C" void RefGetGameSaveValue(CRef *, int, int *);
 extern "C" void CRef_Destruct(CRef *);
 extern "C" void SetEpselMode(EPSEL *, int, int);
 extern "C" void func_00187E78(char *);
+// steer-ok: GetSaveFloat and GetSaveInt read the value through an inline return, which shortens its live range and raises its allocation priority (matching.md "Register allocation"); the two CRef temporaries share one frame slot
 static inline float GetSaveFloat(int path)
 {
     CRef ref;
