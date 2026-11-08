@@ -66,6 +66,83 @@ def padding_locals(text):
     return found
 
 
+BYTE_DUMP_LIMIT = 64  # a byte-sized array longer than this is a dump of retail's bytes, not typed data: docs/contributing/exceptions.md "Game data defined in source"
+ELEMENT_SIZES = {'char': 1, 'u8': 1, 's8': 1, 'short': 2, 'u16': 2, 's16': 2, 'int': 4, 'float': 4, 'u32': 4, 's32': 4, 'f32': 4, 'long': 8, 'double': 8, 'u64': 8, 's64': 8, 'f64': 8}
+DATA_DEFINITION = re.compile(r'^\s*(?:static\s+)?(?:(?:const|unsigned|signed)\s+)*(\w+)\s+(\w+)\s*(?:\[\s*(\w*)\s*\])?\s*=\s*(.*)$', re.DOTALL)
+DATA_OK = re.compile(r'data-ok:\s*\S')
+
+
+def initializer_count(initializer):
+    """How many top-level elements a brace initializer lists (a scalar initializer is one)."""
+    body = initializer.strip().rstrip(';').strip()
+    if not body.startswith('{'):
+        return 1
+    depth, count, started = 0, 0, False
+    for character in body[1:-1] if body.endswith('}') else body[1:]:
+        if character in '{(':
+            depth += 1
+        elif character in '})':
+            depth -= 1
+        elif character == ',' and depth == 0:
+            count += started
+            started = False
+        elif not character.isspace():
+            started = True
+    return count + started
+
+
+def data_definitions(text):
+    """[(line number, kind, message)] for a global defined with an initializer (`float g_x = 1.5f;`, `const int tbl[3] = {1, 2, 3};`) at file or
+    `extern "C"` level (a `static` constant is ordinary source, like the libm constants of src/sdk, not data another file could reach). A global is
+    defined in C only where its initial value reproduces retail's bytes at its address (`make elf` proves that); docs/contributing/exceptions.md
+    ("Game data defined in source") allows it, and each definition carries `// data-ok: <reason>` on its first line or the line above. A definition
+    without the marker, or a byte-sized array (`char`, `u8`, `s8`) of more than BYTE_DUMP_LIMIT elements (a dump, not typed data), is banned:
+    the source can never match as written."""
+    lines = text.split('\n')
+    clean = strip_comments(text).split('\n')
+    found, stack, head, number = [], [], '', 0
+    statement, start = '', 0
+    while number < len(clean):
+        line = clean[number]
+        number += 1
+        top = all(entry == 'linkage' for entry in stack)
+        if top and not statement and line.strip() and not line.lstrip().startswith(('#', 'static', 'extern', 'typedef', 'struct', 'union', 'class', 'enum', 'template')):
+            before = line.split('=', 1)[0]
+            if '=' in line and '(' not in before and DATA_DEFINITION.match(line):
+                statement, start = '', number
+                joined = line
+                index = number
+                while ';' not in joined and index < len(clean):
+                    joined += ' ' + clean[index].strip()
+                    index += 1
+                match = DATA_DEFINITION.match(joined)
+                marker = DATA_OK.search(lines[start - 1]) or (start > 1 and DATA_OK.search(lines[start - 2]))
+                if match:
+                    type_name, name, length, initializer = match.groups()
+                    size = ELEMENT_SIZES.get(type_name)
+                    elements = (int(length) if length and length.isdigit() else initializer_count(initializer)) if length is not None else 1
+                    if not marker:
+                        found.append((start, 'banned', f'data definition without `// data-ok: <reason>`: {name}'))
+                    elif size == 1 and elements > BYTE_DUMP_LIMIT:
+                        found.append((start, 'banned', f'byte array of {elements} elements, over the {BYTE_DUMP_LIMIT}-element limit (a dump, not typed data): {name}'))
+                number = max(number, index)
+                line = ''
+        for character in line:
+            if character == '{':
+                stack.append('linkage' if LINKAGE.search(head) else 'type' if TYPE_HEAD.search(head) and '(' not in head else 'block')
+                head = ''
+            elif character == '}':
+                if stack:
+                    stack.pop()
+                head = ''
+            elif character == ';':
+                head = ''
+            else:
+                head += character
+        head += ' '
+    return found
+
+
 def problems(text):
     """[(line number, kind, message)] of everything wrong with a source; kind is `banned` or `cleanup`."""
     found = [(number, 'banned', what) for number, what, _ in record.scan(text)]
@@ -74,6 +151,7 @@ def problems(text):
             if pattern.search(line):
                 found.append((number, 'cleanup', message.split(':')[0]))
     found += [(number, 'cleanup', f'padding local: {line}') for number, line in padding_locals(text)]
+    found += data_definitions(text)
     return sorted(found)
 
 

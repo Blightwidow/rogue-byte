@@ -23,11 +23,16 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 3. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
-4. Data from C (code passed 80% on 2026-11-08, so this is open): `.rodata` literals and `switch` jump tables first, then globals defined at
-   retail's address, counted as matched data like sly1's `c_data.tsv`. Needs a ruling on AGENTS.md's "source that defines
-   game data read out of retail" for globals with initial values. Depends on 3 for per-file data. Today 0.83% of data (8,375 of 1,011,732 bytes).
-   What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data together); `data/irx` 474 KB (IOP modules) and `data/vutext` 34 KB
-   (VU microcode) are not game C, so 49% is the ceiling for this item.
+4. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
+   defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
+   file declares it `extern`; the defined bytes count as matched data. Today 0.83% of data (8,375 of 1,011,732 bytes: only a function's own literals and
+   jump tables, `data/rodata-c`). What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data); `data/irx` 474 KB (IOP modules) and
+   `data/vutext` 34 KB (VU microcode) are not game C. A pilot on `HitFx_GIntensity` (2026-11-08) found the build side missing, not the ruling: the
+   two constants it reads (`g_2bdce0`, `g_2bdcf0[3]`) are in `.data`, not `.rodata`; a `const` scalar is folded into `lui`/`mtc1` (score 24) and a
+   plain definition lays out 8 bytes short of retail's gap; `link_image.py` places only an object's own `.rodata`, and `derive_rodata_base` assumes
+   section-symbol relocations. Per-global sweeps are small (18 `.rodata` externs, 178 bytes behind matched functions; 674 `.data` externs, 103 KB, 129 of
+   them over 1 KB). The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
+   sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 3.
 
 5. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
    VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report

@@ -1460,5 +1460,28 @@ class MovablesFlagTests(unittest.TestCase):
         self.assertFalse(compile_unit.movables_for(0x100000))
 
 
+class DataDefinitionTests(unittest.TestCase):
+    def kinds(self, text):
+        return [message for _, _, message in check_source.data_definitions(text)]
+
+    def test_a_marked_scalar_constant_is_allowed(self):
+        self.assertEqual(self.kinds('// data-ok: pooled float\nconst float g_x = 1.5f;\n'), [])
+
+    def test_a_definition_without_the_marker_is_banned(self):
+        self.assertEqual(len(self.kinds('const float g_x = 1.5f;\n')), 1)
+
+    def test_a_large_typed_table_with_the_marker_is_allowed(self):
+        self.assertEqual(self.kinds('// data-ok: table\nconst int g_t[4000] = {0};\n'), [])
+
+    def test_a_long_byte_array_is_banned_as_a_dump(self):
+        self.assertIn('a dump, not typed data', self.kinds('// data-ok: bytes\nconst unsigned char g_b[65] = {0};\n')[0])
+
+    def test_an_extern_declaration_and_a_static_constant_are_not_definitions(self):
+        self.assertEqual(self.kinds('extern float g_x;\nstatic const float huge = 1.0e30f;\n'), [])
+
+    def test_a_local_with_an_initializer_is_not_a_definition(self):
+        self.assertEqual(self.kinds('void f()\n{\n    float a = 1.0f;\n}\n'), [])
+
+
 if __name__ == '__main__':
     unittest.main()
