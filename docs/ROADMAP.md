@@ -25,6 +25,11 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    retail's address, counted as matched data like sly1's `c_data.tsv`. Needs a ruling on AGENTS.md's "source that defines
    game data read out of retail" for globals with initial values. Depends on 3 for per-file data. Today 0.72% of data.
 
+5. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
+   VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report
+   honest and match about 106 to 258 of the 853 blockers. First a compile pilot on about 10 functions, then the rule change in
+   AGENTS.md; the headline falls by about 1.7 to 4.2 points. See [build/inline-asm-helpers.md](build/inline-asm-helpers.md).
+
 ## Not goals
 
 The renderer, the audio engine, a platform layer and the port itself live in other projects.
