@@ -4843,13 +4843,17 @@ address	name	size	file
 0X233048	func_00233048	64	sdk/fun_00233048.cpp
 0X233800	AtoiPchz	40	sdk/AtoiPchz.cpp
 0X2342A0	rand	48	sdk/rand.cpp
+0X2342D0	StricmpPchz	124	sdk/StricmpPchz.c
 0X234580	func_00234580	52	sdk/fun_00234580.cpp
 0X2345B8	func_002345B8	32	sdk/fun_002345b8.c
 0X235388	func_00235388	236	sdk/fun_00235388.cpp
+0X2357B8	func_002357B8	176	sdk/fun_002357b8.c
 0X235868	func_00235868	52	sdk/fun_00235868.c
+0X236820	func_00236820	88	unsorted/fun_00236820.c
 0X236878	func_00236878	40	sdk/fun_00236878.cpp
 0X2368A0	func_002368A0	40	sdk/fun_002368a0.cpp
 0X236C00	func_00236C00	36	sdk/fun_00236c00.cpp
+0X236C28	func_00236C28	168	sdk/fun_00236c28.c
 0X236CD0	func_00236CD0	28	sdk/fun_00236cd0.cpp
 0X236CF0	func_00236CF0	48	sdk/fun_00236cf0.c
 0X236D20	func_00236D20	64	sdk/fun_00236d20.cpp
@@ -4874,6 +4878,7 @@ address	name	size	file
 0X239198	func_00239198	340	sdk/fun_00239198.cpp
 0X2392F0	sceSifSyncIop	80	sdk/sceSifSyncIop.c
 0X239340	sceSifRebootIop	272	sdk/sceSifRebootIop.cpp
+0X2394B8	func_002394B8	96	sdk/fun_002394b8.c
 0X2395B0	func_002395B0	252	sdk/fun_002395b0.cpp
 0X2396C0	func_002396C0	84	sdk/fun_002396c0.c
 0X239738	func_00239738	56	unsorted/fun_00239738.cpp
@@ -4932,6 +4937,7 @@ address	name	size	file
 0X23E3E8	eh_context_initialize	40	sdk/eh_context_initialize.cpp
 0X23E410	eh_context_static	104	sdk/eh_context_static.cpp
 0X23E478	__get_dynamic_handler_chain	40	sdk/__get_dynamic_handler_chain.cpp
+0X23E9A8	get_reg_addr	136	sdk/get_reg_addr.c
 0X23EA30	copy_reg	124	sdk/copy_reg.cpp
 0X23EAB0	next_stack_level	140	sdk/next_stack_level.cpp
 0X23EB40	__unwinding_cleanup	8	sdk/__unwinding_cleanup.cpp
@@ -4950,6 +4956,7 @@ address	name	size	file
 0X240AA0	sceGsPutIMR	60	sdk/sceGsPutIMR.cpp
 0X240B68	sceGsGetIMR	28	sdk/sceGsGetIMR.cpp
 0X240B88	checkModelVersion	160	sdk/checkModelVersion.cpp
+0X240FB0	sceGszbufaddr	200	sdk/sceGszbufaddr.c
 0X2413E0	func_002413E0	40	sdk/fun_002413e0.cpp
 0X241408	memclr	52	sdk/memclr.cpp
 0X241440	sceDmaGetChan	40	sdk/sceDmaGetChan.cpp
@@ -4961,6 +4968,7 @@ address	name	size	file
 0X241F28	func_00241F28	108	sdk/fun_00241f28.cpp
 0X242AB8	func_00242AB8	36	sdk/fun_00242ab8.cpp
 0X242D08	scePadInit	320	sdk/scePadInit.cpp
+0X242E90	func_00242E90	224	sdk/fun_00242e90.c
 0X243270	func_00243270	96	sdk/fun_00243270.cpp
 0X2432D0	scePadRead	180	sdk/scePadRead.cpp
 0X243388	func_00243388	200	sdk/fun_00243388.cpp
@@ -4985,6 +4993,7 @@ address	name	size	file
 0X244848	sceMcFormat	204	sdk/sceMcFormat.cpp
 0X244918	sceMcDelete	284	sdk/sceMcDelete.cpp
 0X244A58	sceMcGetEntSpace	268	sdk/sceMcGetEntSpace.cpp
+0X244E10	cosf	232	sdk/cosf.c
 0X244F18	floorf	228	sdk/floorf.cpp
 0X2450F0	tanf	136	sdk/tanf.c
 0X2456F0	acosf	252	sdk/acosf.cpp
@@ -5006,6 +5015,7 @@ address	name	size	file
 0X24A7B0	func_0024A7B0	112	sdk/fun_0024a7b0.cpp
 0X24A820	func_0024A820	64	sdk/fun_0024a820.cpp
 0X24A860	sceScfGetLanguage	96	sdk/sceScfGetLanguage.cpp
+0X24AC10	func_0024AC10	200	sdk/fun_0024ac10.c
 0X24B530	func_0024B530	8	sdk/fun_0024b530.cpp
 0X24B540	sceMpegGetPicture	72	sdk/sceMpegGetPicture.cpp
 0X24B590	func_0024B590	124	sdk/fun_0024b590.cpp
@@ -5029,6 +5039,7 @@ address	name	size	file
 0X251E60	func_00251E60	360	sdk/fun_00251e60.cpp
 0X251FC8	func_00251FC8	384	sdk/fun_00251fc8.cpp
 0X252230	func_00252230	140	sdk/fun_00252230.cpp
+0X2522C0	func_002522C0	148	sdk/fun_002522c0.c
 0X252358	func_00252358	52	sdk/fun_00252358.c
 0X252390	func_00252390	8	sdk/fun_00252390.c
 0X252398	func_00252398	188	sdk/fun_00252398.c
@@ -5047,6 +5058,7 @@ address	name	size	file
 0X254628	func_00254628	80	sdk/fun_00254628.c
 0X254678	func_00254678	140	sdk/fun_00254678.cpp
 0X254708	func_00254708	148	sdk/fun_00254708.cpp
+0X2547A0	func_002547A0	244	sdk/fun_002547a0.c
 0X254898	func_00254898	116	sdk/fun_00254898.c
 0X254910	func_00254910	116	sdk/fun_00254910.c
 0X254988	func_00254988	228	sdk/fun_00254988.c
