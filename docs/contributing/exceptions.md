@@ -17,7 +17,13 @@ are rebuilt from the original assembly again, and `scripts/matching/record.py` s
 are archived locally in `data/matching/asm-archive/` (git-ignored) and nothing here is a pattern for new work. A function that needs
 VU0 macro code, MMI, a lane move or COP0 stays in `nonmatching/` or in assembly until plain C reproduces it.
 
-Still open: 11 matched sources use `volatile` on ordinary data (`record.py` flags it), to be rewritten or demoted next.
+Still open: 11 matched sources use `volatile` on ordinary data (`record.py` flags it), to be rewritten or demoted next. Since 2026-11-08 a `volatile` that sly1-decomp's rule allows (register-block pointer, interrupt-shared data) is marked `// volatile-ok: <reason>`.
+
+## Allowed now
+
+| Construct | Why it is allowed (evidence) | Decided | Seen in |
+| :--- | :--- | :--- | :--- |
+| **`volatile` through a register-block pointer, or on data an interrupt handler or another thread writes** (`// volatile-ok: <reason>`) | sly1-decomp's rule: allowed where retail's code reads and writes it as volatile (a DMA channel's registers, a library's state flags, a field an interrupt handler sets). The reason names the block or the handler; the shape in retail (an address kept as `lui`+`addiu`, a store kept out of a delay slot, a reload after a store) is the evidence. | 2026-11-08 | see the `volatile-ok` lines in `src/` |
 
 ## Allowed before 2026-11-04 (history; no longer in force)
 

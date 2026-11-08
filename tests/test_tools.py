@@ -349,6 +349,14 @@ class RecordScanTests(unittest.TestCase):
         found = record.scan('extern volatile int g_2deb20;\nint f(void) { return g_2deb20; }\n')
         self.assertEqual([what for _, what, _ in found], ['volatile'])
 
+    def test_a_volatile_with_a_reason_marker_is_allowed(self):
+        source = 'struct S { volatile int id; };  // volatile-ok: set by the alarm handler 0x239F28\n'
+        self.assertEqual(record.scan(source), [])
+
+    def test_a_volatile_marker_without_a_reason_is_flagged(self):
+        found = record.scan('struct S { volatile int id; };  // volatile-ok:\n')
+        self.assertEqual([what for _, what, _ in found], ['volatile'])
+
     def test_a_volatile_pointer_to_a_hardware_register_is_allowed(self):
         self.assertEqual(record.scan('void f(void) { *(volatile unsigned *)0x1000E010 = 1; }\n'), [])
 
