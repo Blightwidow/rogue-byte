@@ -1368,6 +1368,30 @@ class SearchGuardTests(unittest.TestCase):
         finally:
             os.environ.pop('SEARCH_INCLUDE_WALLS')
 
+    def test_a_permanent_blocker_is_skipped(self):
+        import csv
+        with open(search_guard.BLOCKERS, encoding='utf-8') as handle:
+            blocker = int(next(csv.DictReader(handle, delimiter='\t'))['address'], 16)
+        self.assertTrue(search_guard.skipped(blocker).startswith('permanent blocker'))
+
+    def test_a_function_whose_source_holds_inline_asm_is_skipped(self):
+        import tempfile
+        saved = search_guard.LAB
+        with tempfile.TemporaryDirectory() as lab:
+            folder = os.path.join(lab, 'data', 'matching', 'src', 'fn')
+            os.makedirs(folder)
+            with open(os.path.join(folder, '000010.cpp'), 'w', encoding='utf-8') as handle:
+                handle.write('void f()\n{\n    asm volatile("lqc2 vf1, 0(%0)" : : "r"(0));\n}\n')
+            with open(os.path.join(folder, '000020.cpp'), 'w', encoding='utf-8') as handle:
+                handle.write('int g(int x)\n{\n    return x + 1;\n}\n')
+            search_guard.LAB = lab
+            try:
+                self.assertTrue(search_guard.banned_source(0x10).startswith('banned construct'))
+                self.assertIsNone(search_guard.banned_source(0x20))
+                self.assertIsNone(search_guard.banned_source(0x30))
+            finally:
+                search_guard.LAB = saved
+
     def test_every_wall_row_has_a_reason_and_evidence(self):
         import csv
         with open(search_guard.WALLS, encoding='utf-8') as handle:

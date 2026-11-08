@@ -1279,6 +1279,7 @@ address	name	size	file
 0X12E0F0	SetActvalGoal	44	alo-missile/SetActvalGoal.c
 0X12E1F0	PvAllocAct	32	alo-missile/PvAllocAct.c
 0X12E210	FreeAct	36	alo-missile/FreeAct.c
+0X12E238	PactNew	440	alo-missile/PactNew.cpp
 0X12E3F0	PactClone	112	alo-missile/PactClone.c
 0X12E460	func_0012E460	72	alo-missile/fun_0012e460.c
 0X12E4A8	CreateSharedSlotheaps	308	alo-missile/CreateSharedSlotheaps.c
@@ -1966,6 +1967,7 @@ address	name	size	file
 0X157A30	func_00157A30	32	dmas-dzg/fun_00157a30.c
 0X157A50	func_00157A50	72	unsorted/fun_00157a50.cpp
 0X157A98	func_00157A98	72	unsorted/fun_00157a98.cpp
+0X157AE0	SortRenderRecords	524	dmas-dzg/SortRenderRecords.cpp
 0X158480	StaticInitSlotheaps_158480	308	dmas-dzg/StaticInitSlotheaps_158480.c
 0X1585B8	func_001585B8	32	dmas-dzg/fun_001585b8.c
 0X1585D8	InitDzg	144	dmas-dzg/InitDzg.cpp
@@ -2114,6 +2116,7 @@ address	name	size	file
 0X163400	FEndTaskComplete	44	new_161458/FEndTaskComplete.c
 0X163430	func_00163430	44	new_161458/fun_00163430.cpp
 0X1635A0	InitTask	88	sensor/InitTask.cpp
+0X1635F8	LoadTaskFromBrx	492	sensor-geom/LoadTaskFromBrx.cpp
 0X1637E8	FTaskRunning	76	sensor-geom/FTaskRunning.cpp
 0X163838	AddTaskToggle	104	sensor-geom/AddTaskToggle.cpp
 0X1638A0	AddTaskAnim	84	sensor-geom/AddTaskAnim.cpp
@@ -2732,6 +2735,7 @@ address	name	size	file
 0X1A0B18	InitJtZap	40	jp-stepzap/InitJtZap.cpp
 0X1A1098	PostJtLoadZap__FP2JT	172	stepzap/PostJtLoadZap__FP2JT.cpp
 0X1A12F0	UpdateZap	104	new_1a1148/UpdateZap.cpp
+0X1A1358	UpdateZapPost	600	new_1a1148/UpdateZapPost.cpp
 0X1A15B0	SetZapContinuation	32	new_1a1148/SetZapContinuation.cpp
 0X1A15D0	ZapContinue	216	new_1a1148/ZapContinue.cpp
 0X1A16A8	WarpZapToSafePoint	32	new_1a1148/WarpZapToSafePoint.c
@@ -3038,6 +3042,7 @@ address	name	size	file
 0X1B29D0	CQueueOutputIop_FInit	176	missile-mpeg/CQueueOutputIop_FInit.cpp
 0X1B2A80	Reset__15CQueueOutputIop	28	mpeg/Reset__15CQueueOutputIop.cpp
 0X1B2AA0	CQueueOutputIop_Deinterleave	320	mpeg/CQueueOutputIop_Deinterleave.cpp
+0X1B2DB8	CQueueOutputIop_SendToIop	252	mpeg/CQueueOutputIop_SendToIop.cpp
 0X1B2EB8	CQueueOutputIop_Update	280	mpeg/CQueueOutputIop_Update.cpp
 0X1B2FD0	FAsyncDrain__15CQueueOutputIop	8	mpeg/FAsyncDrain__15CQueueOutputIop.c
 0X1B3038	FAsyncDrain__15CQueueOutputIpu	8	mpeg/FAsyncDrain__15CQueueOutputIpu.c
@@ -3051,6 +3056,7 @@ address	name	size	file
 0X1B33F0	FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg	224	mpeg/FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg.cpp
 0X1B34D0	FMpegBackground	56	mpeg/FMpegBackground.cpp
 0X1B3508	func_001B3508	8	unsorted/fun_001b3508.c
+0X1B3700	DrawMpegFrame	836	mpeg/DrawMpegFrame.cpp
 0X1B3A48	QueueMovie	188	mpeg/QueueMovie.cpp
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp
 0X1B3BD0	Execute__5CMpeg	748	mpeg/Execute__5CMpeg.cpp
@@ -3326,6 +3332,7 @@ address	name	size	file
 0X1C9090	func_001C9090	8	prog-memcard/fun_001c9090.c
 0X1C9098	StopLoadingLogo	56	memcard/StopLoadingLogo.c
 0X1C90D0	InitLoadingLogoThread	188	new_1c90d0/InitLoadingLogoThread.cpp
+0X1C9190	LoadingLogoThread	588	new_1c90d0/LoadingLogoThread.cpp
 0X1C93E0	DrawLoadingLogo	676	new_1c90d0/DrawLoadingLogo.cpp
 0X1C9920	StaticInitLoadingLogo_thunk	32	new_1c90d0/StaticInitLoadingLogo_thunk.c
 0X1C9940	MakeCloneId	16	new_1c90d0/MakeCloneId.c
@@ -3484,6 +3491,7 @@ address	name	size	file
 0X1D57B8	PushRenderNode	40	new_1d54b8/PushRenderNode.cpp
 0X1D57E0	PopRenderNode	40	new_1d54b8/PopRenderNode.cpp
 0X1D6310	RemoveAloFromRenderTree	100	new_1d54b8/RemoveAloFromRenderTree.cpp
+0X1D6480	AllocRenderTreeNode	132	new_1d54b8/AllocRenderTreeNode.cpp
 0X1D66F0	StaticInitSlotheaps_1d66f0	308	new_1d54b8/StaticInitSlotheaps_1d66f0.c
 0X1D6828	func_001D6828	32	new_1d54b8/fun_001d6828.c
 0X1D6A90	InitLaunch	112	vec-coin/InitLaunch.cpp
@@ -3492,6 +3500,7 @@ address	name	size	file
 0X1D7238	InitHub	44	coin/InitHub.cpp
 0X1D7268	PostHubLoad	60	new_1d7268/PostHubLoad.cpp
 0X1D7418	SetHubPlayable	104	new_1d7268/SetHubPlayable.c
+0X1D7480	SetHubState	708	new_1d7268/SetHubState.cpp
 0X1D7748	AddHubEntry	56	stepguard/AddHubEntry.cpp
 0X1D7780	SetHubAllowedStates	76	new_1d7780/SetHubAllowedStates.cpp
 0X1D77D0	StepHubState	264	new_1d7780/StepHubState.cpp
@@ -3860,6 +3869,7 @@ address	name	size	file
 0X1EE7B0	FlushSaaUnpacks	112	shdanim/FlushSaaUnpacks.cpp
 0X1EE820	AddRefSharedSlotheaps	308	shdanim/AddRefSharedSlotheaps.c
 0X1EE958	AddRefSharedSlotheaps_thunk	32	shdanim/AddRefSharedSlotheaps_thunk.c
+0X1EE988	SjisFromAsciiChar	232	shdanim/SjisFromAsciiChar.cpp
 0X1EEA70	ConvertAsciiToSjis	152	shdanim/ConvertAsciiToSjis.cpp
 0X1EEB08	StaticInitGoalSlotheaps	308	shdanim-sm/StaticInitGoalSlotheaps.c
 0X1EEC40	func_001EEC40	32	shdanim-sm/fun_001eec40.c
@@ -4438,6 +4448,7 @@ address	name	size	file
 0X20CE08	func_0020CE08	32	steprun-stream/fun_0020ce08.c
 0X20CE28	func_0020CE28	24	steprun-stream/fun_0020ce28.cpp
 0X20CE40	func_0020CE40	44	steprun-stream/fun_0020ce40.cpp
+0X20CE70	UpdateFallCheck	336	steprun-stream/UpdateFallCheck.cpp
 0X20CFC0	func_0020CFC0	96	steprun-stream/fun_0020cfc0.cpp
 0X20D020	FGuardOffGround	232	steprun-stream/FGuardOffGround.cpp
 0X20D108	SetFallCheckState	112	steprun-stream/SetFallCheckState.cpp
@@ -4687,6 +4698,7 @@ address	name	size	file
 0X221140	CloneTn	52	tn/CloneTn.c
 0X221178	SetTnTns__FP2TN3TNS	240	tn/SetTnTns__FP2TN3TNS.cpp
 0X221268	SetTnTnsOverride	44	tn/SetTnTnsOverride.cpp
+0X221298	UpdateTnCallback	240	tn/UpdateTnCallback.cpp
 0X221388	UpdateTn__FP2TNf	76	tn/UpdateTn__FP2TNf.cpp
 0X2213D8	OnTnRemove	48	tn/OnTnRemove.c
 0X221818	func_00221818	296	tn/fun_00221818.cpp
@@ -4757,6 +4769,7 @@ address	name	size	file
 0X227440	func_00227440	32	new_2271f8/fun_00227440.c
 0X227460	StaticInitSlotheaps_227460	308	new_2271f8/StaticInitSlotheaps_227460.c
 0X227598	func_00227598	32	new_2271f8/fun_00227598.c
+0X227728	func_00227728	92	new_2271f8/fun_00227728.cpp
 0X227788	func_00227788	72	new_2271f8/fun_00227788.cpp
 0X2277D0	func_002277D0	80	new_2271f8/fun_002277d0.c
 0X227820	func_00227820	284	new_2271f8/fun_00227820.cpp
@@ -4910,6 +4923,7 @@ address	name	size	file
 0X2342D0	StricmpPchz	124	sdk/StricmpPchz.c
 0X234580	func_00234580	52	sdk/fun_00234580.cpp
 0X2345B8	func_002345B8	32	sdk/fun_002345b8.c
+0X2352B0	func_002352B0	216	sdk/fun_002352b0.c
 0X235388	func_00235388	236	sdk/fun_00235388.cpp
 0X2357B8	func_002357B8	176	sdk/fun_002357b8.c
 0X235868	func_00235868	52	sdk/fun_00235868.c
