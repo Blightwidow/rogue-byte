@@ -1932,6 +1932,7 @@ address	name	size	file
 0X156728	HitFx_CheckExpiry	84	crv-lo/HitFx_CheckExpiry.c
 0X156780	HitFx_Remove	240	crv-lo/HitFx_Remove.cpp
 0X156870	FHitFxGone	40	crv-lo/FHitFxGone.c
+0X156898	HitFx_GIntensity	124	crv-lo/HitFx_GIntensity.cpp
 0X156B98	SpawnSwHitFx	68	new_1569b8/SpawnSwHitFx.cpp
 0X156BE0	ReplaceHitFx	160	new_1569b8/ReplaceHitFx.cpp
 0X156C80	ReplaceSwHitFx	72	new_1569b8/ReplaceSwHitFx.cpp
@@ -2003,6 +2004,7 @@ address	name	size	file
 0X15C650	PsfxEnsureExpls	60	bomb/PsfxEnsureExpls.c
 0X15CD48	func_0015CD48	32	emitter-font/fun_0015cd48.c
 0X15CD68	InitEpsel	64	emitter-font/InitEpsel.cpp
+0X15CDA8	PostEpselLoad	392	emitter-font/PostEpselLoad.cpp
 0X15CF30	UpdateEpsel	1684	emitter-font/UpdateEpsel.cpp
 0X15D5C8	LabelFromEpselMode	128	emitter-font/LabelFromEpselMode.cpp
 0X15D648	SetEpselMode	336	emitter-font/SetEpselMode.cpp
@@ -2132,6 +2134,7 @@ address	name	size	file
 0X164098	func_00164098	104	unsorted/fun_00164098.cpp
 0X164100	VisitTaskInOrder	368	sensor-geom/VisitTaskInOrder.cpp
 0X164270	RestoreTaskStateFromSave	316	sensor-geom/RestoreTaskStateFromSave.cpp
+0X1645D0	FTaskPrerequisitesDone	108	sensor-geom/FTaskPrerequisitesDone.cpp
 0X164640	RequestTaskState	536	sensor-geom/RequestTaskState.cpp
 0X164858	ForceTaskState	372	sensor-geom/ForceTaskState.cpp
 0X1649D0	UpdateCurrentJob	212	sensor-geom/UpdateCurrentJob.cpp
@@ -4627,6 +4630,7 @@ address	name	size	file
 0X218660	StopSpriteInstance	172	font-break/StopSpriteInstance.cpp
 0X218710	func_00218710	40	font-break/fun_00218710.cpp
 0X218738	func_00218738	12	font-break/fun_00218738.c
+0X2188B0	RefreshSpriteInstance	2120	font-break/RefreshSpriteInstance.cpp
 0X2190F8	func_002190F8	152	font-break/fun_002190f8.cpp
 0X219348	ClearSpriteKeySlots	184	font-break/ClearSpriteKeySlots.cpp
 0X219FE0	AdvanceSpriteInstance	2484	font-break/AdvanceSpriteInstance.cpp
@@ -4835,6 +4839,7 @@ address	name	size	file
 0X22B720	func_0022B720	124	so-wr/fun_0022b720.cpp
 0X22B7A0	func_0022B7A0	56	so-wr/fun_0022b7a0.cpp
 0X22BE08	UNoise__Fi	88	wr/UNoise__Fi.cpp
+0X22BE60	UNoise__Ffff	220	wr/UNoise__Ffff.cpp
 0X22BF40	UBias__Fff	48	wr/UBias__Fff.c
 0X22BF70	GFromOnz__FP3ONZ	180	wr/GFromOnz__FP3ONZ.cpp
 0X22C3B0	AddWrCircleWarp__FP2WR	128	wr/AddWrCircleWarp__FP2WR.cpp

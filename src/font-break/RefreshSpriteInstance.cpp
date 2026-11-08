@@ -30,7 +30,7 @@ static inline AFF Mult(const AFF &child, const AFF &parent)
     return product;
 }
 static inline float ItoF(int v) { return (float)v; }
-static inline unsigned char LerpByte(int from, int to, float u)
+static inline char LerpByte(int from, int to, float u)
 {
     if (from == to) return to;
     if (from < to) return from + (int)(u * (ItoF(to) + 0.999f - ItoF(from)));

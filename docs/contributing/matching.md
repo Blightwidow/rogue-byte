@@ -147,6 +147,25 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
   with the argument `lw` hoisted above it). Giving the stored and the loaded field the same type (both `int`) keeps retail's order
   (0x256328); with a `short` or `float` store the order stays wrong and the function is left open (0x2562F0, 0x2562B8, score 4).
 
+## Register allocation: what decides a swapped register (2026-11-08)
+
+Read from the RTL dumps (`-dl` local-alloc, `-dg` global-alloc, `-dG` GCSE) of five near misses that were register-only: `HitFx_GIntensity`, `UNoise__Ffff`,
+`RefreshSpriteInstance`, `PostEpselLoad` and `FTaskPrerequisitesDone` (the last one a loop-form fix, not allocation). Six integer cases (`0x1733C8`, `0x1C9058`, `0x120548`,
+`0x218748`, `0x1A5D98`, `0x13FAD0`) did not respond to any of these and stay in `nonmatching/`. Dump-only compiles cost nothing against the `try.py` budget.
+
+- **sched1 runs before register allocation at `-O2`.** The allocator sees sched1's order, not the source order, so reordering statements often changes nothing.
+- **A variable reassigned in its block** (`x = f(x)`, dump: "set 2 times; user var; dies in 2 places") is not taken by local-alloc; global-alloc places it
+  later, in a higher register than the short temporaries beside it. Retail's chain sits higher than ours: reuse one variable. Lower: split it into fresh ones.
+- **An insn's output takes the register of its first input that dies there.** Operand order is fixed before allocation (`fold` makes `1.0f < t ? 1.0f : t` a
+  `MIN_EXPR` with the constant second). To keep a constant first, pass it through an inline helper: `static inline float GMin(float a, float b) { return a <? b; }`
+  (`GMax` in `src/cm/RecalcCmFrustrum__FP2CM.cpp`, `GClamp` in `src/font-break/SeekSpriteInstanceFraction.cpp`).
+- **Global-alloc order is by priority**, about `floor_log2(refs) * refs / live length`; the lowest free register goes to the highest priority. A short-lived value
+  that retail keeps in a lower register is usually read through an inline helper's return, which shortens its live range (`PostEpselLoad`: `GetSaveFloat`,
+  `GetSaveInt`; each inlined `CRef` shares one frame slot).
+- **A tie goes by pseudo number, and GCSE PRE numbers its pseudos in hash-bucket order** (hash mod `(insn count before GCSE / 2) | 1`; the `-dG` dump prints
+  "Expression hash table (N buckets"). Anything that changes the RTL insn count without changing the final code (a helper's return type: `RefreshSpriteInstance`,
+  `LerpByte` returns `char`, not `unsigned char`) can flip which of two equal-priority addresses gets the lower register. It is a steering form: say so in the commit.
+
 ## Rulings
 
 What AGENTS.md allows and bans, in one place (the full list with reasons and dates is docs/contributing/exceptions.md):

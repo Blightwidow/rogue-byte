@@ -166,7 +166,6 @@ address	name	size	file	score
 0X155868	func_00155868	328	crv-lo/fun_00155868.c	73
 0X155AE0	func_00155AE0	688	crv-lo/fun_00155ae0.c	86
 0X155FB0	PosAimAtPlayer	992	crv-lo/PosAimAtPlayer.c	215
-0X156898	HitFx_GIntensity	128	crv-lo/HitFx_GIntensity.cpp	8
 0X156918	FHitFxCoversPos	160	lo_156918/FHitFxCoversPos.c	33
 0X1569B8	InitSwHitFxParms	480	new_1569b8/InitSwHitFxParms.c	63
 0X156FE8	FHitFxSensorReaches	192	new_1569b8/FHitFxSensorReaches.c	39
@@ -180,7 +179,6 @@ address	name	size	file	score
 0X15B7E8	OriginateParticles__FiP5EMITBP7EMITGEN	520	emitter_1591b0/OriginateParticles__FiP5EMITBP7EMITGEN.c	115
 0X15BF40	SetEmitdvEmitb__FP6EMITDVP5EMITB	152	emitter_1591b0/SetEmitdvEmitb__FP6EMITDVP5EMITB.c	30
 0X15CAD8	expl__static_initialization_and_destruction_0	624	emitter-font/expl__static_initialization_and_destruction_0.cpp	68
-0X15CDA8	PostEpselLoad	392	emitter-font/PostEpselLoad.cpp	18
 0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	8
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	56
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
@@ -191,7 +189,6 @@ address	name	size	file	score
 0X1617E0	SetGameCoins	136	new_161458/SetGameCoins.cpp	9
 0X163460	SaveJobVariables	320	new_161458/SaveJobVariables.cpp	23
 0X1643B0	SaveTaskVariables	544	sensor-geom/SaveTaskVariables.cpp	84
-0X1645D0	FTaskPrerequisitesDone	112	sensor-geom/FTaskPrerequisitesDone.cpp	8
 0X164DF0	SetTaskState	808	sensor-geom/SetTaskState.cpp	106
 0X165538	RestartAtTask	624	sensor-geom/RestartAtTask.cpp	4
 0X165B40	UpdateDependentTaskState	232	sensor-geom/UpdateDependentTaskState.cpp	22
@@ -634,7 +631,6 @@ address	name	size	file	score
 0X2177E0	DrawMovieBitmapCharacter	952	font-break/DrawMovieBitmapCharacter.cpp	129
 0X218748	PauseSpriteInstance	72	font-break/PauseSpriteInstance.cpp	7
 0X218790	CombineColorTransforms	288	font-break/CombineColorTransforms.cpp	17
-0X2188B0	RefreshSpriteInstance	2120	font-break/RefreshSpriteInstance.cpp	8
 0X219190	ApplySpriteKeySounds	440	font-break/ApplySpriteKeySounds.cpp	23
 0X21AA60	InitDynamicTextStatics	4360	font-break/InitDynamicTextStatics.c	1379
 0X21BC08	func_0021BC08	272	break-text/fun_0021bc08.cpp	17
@@ -670,7 +666,6 @@ address	name	size	file	score
 0X22A060	func_0022A060	448	so-wr/fun_0022a060.c	101
 0X22A908	func_0022A908	1504	so-wr/fun_0022a908.c	437
 0X22B220	ActivateWipe	512	so-wr/ActivateWipe.cpp	42
-0X22BE60	UNoise__Ffff	224	wr/UNoise__Ffff.cpp	9
 0X22C8C0	BuildXfLocalMatrix	344	wr-vec/BuildXfLocalMatrix.c	77
 0X22CAD0	ConvertDeulToW__FP6VECTORN20	192	vec_22cad0/ConvertDeulToW__FP6VECTORN20.c	45
 0X22CB90	BuildXfAngularRateMatrix	112	vec-alo/BuildXfAngularRateMatrix.cpp	2

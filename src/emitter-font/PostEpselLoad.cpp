@@ -13,26 +13,35 @@ extern "C" void RefGetGameSaveValue(CRef *, int, int *);
 extern "C" void CRef_Destruct(CRef *);
 extern "C" void SetEpselMode(EPSEL *, int, int);
 extern "C" void func_00187E78(char *);
+static inline float GetSaveFloat(int path)
+{
+    CRef ref;
+    RefGetGameSaveValue(&ref, path, &B_003D4A60);
+    float g = ref.g;
+    CRef_Destruct(&ref);
+    return g;
+}
+static inline int GetSaveInt(int path)
+{
+    CRef ref;
+    RefGetGameSaveValue(&ref, path, &B_003D4A60);
+    int n = ref.n;
+    CRef_Destruct(&ref);
+    return n;
+}
 extern "C" void PostEpselLoad(EPSEL *pepsel)
 {
     PostBlotLoad(pepsel);
     pepsel->last = 8;
     if (D_002BE26C == 0) {
         do {
-            CRef ref;
-            RefGetGameSaveValue(&ref, B_003E0FE8[pepsel->last], &B_003D4A60);
-            float dtPlayed = ref.g;
-            CRef_Destruct(&ref);
+            float dtPlayed = GetSaveFloat(B_003E0FE8[pepsel->last]);
             if (dtPlayed != 0.0f)
                 break;
-            int percent = 0;
             int *percentbase = &B_003E0FE8[9];
             int ppath = PathAt(percentbase, pepsel->last - 1);
-            if (ppath != 0) {
-                RefGetGameSaveValue(&ref, ppath, &B_003D4A60);
-                percent = ref.n;
-                CRef_Destruct(&ref);
-            }
+            int percent = 0;
+            if (ppath != 0) percent = GetSaveInt(ppath);
             if (99 < percent)
                 break;
             pepsel->last--;

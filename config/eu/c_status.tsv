@@ -1932,6 +1932,7 @@ us_address	name	other_address	pair	score	addresses
 0x156728	HitFx_CheckExpiry	0X156750	same	0	ok
 0x156780	HitFx_Remove	0X1567A8	same	0	ok
 0x156870	FHitFxGone	0X156898	same	0	ok
+0x156898	HitFx_GIntensity	0X1568C0	same	0	ok
 0x156B98	SpawnSwHitFx	0X156BC0	same	0	ok
 0x156BE0	ReplaceHitFx	0X156C08	same	0	ok
 0x156C80	ReplaceSwHitFx	0X156CA8	same	0	ok
@@ -2003,6 +2004,7 @@ us_address	name	other_address	pair	score	addresses
 0x15C650	PsfxEnsureExpls	0X15C678	same	0	ok
 0x15CD48	func_0015CD48	0X15CD70	same	0	ok
 0x15CD68	InitEpsel	0X15CD90	same	0	ok
+0x15CDA8	PostEpselLoad	0X15CDD0	same	0	ok
 0x15CF30	UpdateEpsel	0X15CF58	same	0	ok
 0x15D5C8	LabelFromEpselMode	0X15D5F0	same	0	ok
 0x15D648	SetEpselMode	0X15D670	same	0	ok
@@ -2132,6 +2134,7 @@ us_address	name	other_address	pair	score	addresses
 0x164098	func_00164098	0X164000	identical	0	ok
 0x164100	VisitTaskInOrder	0X164068	same	0	ok
 0x164270	RestoreTaskStateFromSave	0X1641D8	same	0	ok
+0x1645D0	FTaskPrerequisitesDone	0X164548	identical	0	ok
 0x164640	RequestTaskState	0X1645B8	same	0	ok
 0x164858	ForceTaskState	0X1647D0	same	0	ok
 0x1649D0	UpdateCurrentJob	0X164948	same	0	ok
@@ -4627,6 +4630,7 @@ us_address	name	other_address	pair	score	addresses
 0x218660	StopSpriteInstance	0X218E80	same	0	ok
 0x218710	func_00218710	0X218F30	identical	0	ok
 0x218738	func_00218738	0X218F58	gap	0	ok
+0x2188B0	RefreshSpriteInstance	0X2190D0	same	0	ok
 0x2190F8	func_002190F8	0X219918	same	0	ok
 0x219348	ClearSpriteKeySlots	0X219B68	same	0	ok
 0x219FE0	AdvanceSpriteInstance	0X21A800	same	0	ok
@@ -4835,6 +4839,7 @@ us_address	name	other_address	pair	score	addresses
 0x22B720	func_0022B720	0X22BF40	same	0	ok
 0x22B7A0	func_0022B7A0	0X22BFC0	identical	0	ok
 0x22BE08	UNoise__Fi	0X22C628	identical	0	ok
+0x22BE60	UNoise__Ffff	0X22C680	same	0	ok
 0x22BF40	UBias__Fff	0X22C760	identical	0	ok
 0x22BF70	GFromOnz__FP3ONZ	0X22C790	same	0	ok
 0x22C3B0	AddWrCircleWarp__FP2WR	0X22CBD0	same	0	ok
