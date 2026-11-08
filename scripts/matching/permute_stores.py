@@ -21,6 +21,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import permute  # noqa: E402
 from progress import Progress  # noqa: E402
+import search_guard  # noqa: E402
 
 STORE = re.compile(r'^\s+(?:\*\s*\(|\*\w|M2C_FIELD\(|[\w.]+\s*->\s*\w+|[\w.]+\s*\[[^\]]*\]|\(\*)[^=;]*=(?!=)[^;]*;\s*(//.*)?$')
 
@@ -41,6 +42,49 @@ def regions(lines):
     if len(stores) >= 2:
         found.append(stores)
     return sorted(found, key=len, reverse=True)
+
+
+CONSTANT_STORE = re.compile(r'[^=;]*[^=!<>]=(?!=)\s*(-?(?:0[xX][0-9a-fA-F]+|\d+(?:\.\d*)?f?))\s*;\s*(?://.*)?$')
+
+
+def constant_of(line):
+    """The literal a store assigns (`-1`, `0x20`, `1.0f`), or None for a store of anything else (a chain `a = b = 0;` counts as None)."""
+    match = CONSTANT_STORE.match(line.strip())
+    return match.group(1) if match and line.count('=') == 1 else None
+
+
+def dead_constant_orders(stores):
+    """Candidate orders of a region's store lines from one rule of gcc 2.95's first scheduler: a store that is the last use of its constant (the
+    constant's register dies there, REG_DEAD) is ranked ahead of one that is not, then source order decides. So among the stores that share a
+    constant, the one written LAST in the source is the one emitted first. Found on InitMurray, which 2,500 random orders did not reach: the
+    -1 stores wanted one in the group written last (0x17F4) and the -60 pair the other way round. Returns the orders that differ from the given
+    one: the last store of each constant group moved to the group's first place (every group together, then each group alone), and every group
+    reversed. At most about ten, tried before the random search."""
+    groups = {}
+    for position, line in enumerate(stores):
+        constant = constant_of(line)
+        if constant is not None:
+            groups.setdefault(constant, []).append(position)
+    groups = {constant: places for constant, places in groups.items() if len(places) >= 2}
+    if not groups:
+        return []
+
+    def reordered(chosen, how):
+        order = list(stores)
+        for constant in chosen:
+            places = groups[constant]
+            members = [stores[place] for place in places]
+            members = [members[-1]] + members[:-1] if how == 'rotate' else members[::-1]
+            for place, line in zip(places, members):
+                order[place] = line
+        return order
+
+    found = []
+    for candidate in [reordered(groups, 'rotate'), reordered(groups, 'reverse')] + [reordered([constant], 'rotate') for constant in groups] \
+            + [reordered([constant], 'reverse') for constant in groups if len(groups[constant]) > 2]:
+        if candidate != stores and candidate not in found:
+            found.append(candidate)
+    return found[:10]
 
 
 def climb(address, lines, region, lang, budget, start_score):
@@ -95,6 +139,16 @@ def search(address, source, budget, seed=1):
         if spent >= budget or best_score == 0:
             break
         lines = best_text.split('\n')
+        for order in dead_constant_orders([lines[index] for index in region]):  # one rule of the first scheduler, before any random order
+            trial = list(lines)
+            for index, line in zip(region, order):
+                trial[index] = line
+            score = permute.judge(address, '\n'.join(trial), lang)
+            spent += 1
+            if score is not None and score < best_score:
+                best_score, best_text, lines = score, '\n'.join(trial), trial
+        if best_score == 0:
+            break
         marked = [line + ' //P' if index in region else line for index, line in enumerate(lines)]
         score, candidate, used = permute.marked_search(address, '\n'.join(marked), budget - spent, 1, lang, budget - spent, seed=seed)
         spent += used
@@ -122,6 +176,10 @@ def main():
     wanted = {int(address, 16) for address in arguments.addresses}
     rows = [row for row in csv.DictReader(open(os.path.join('nonmatching', 'MANIFEST.tsv'), encoding='utf-8'), delimiter='\t')
             if (int(row['address'], 16) in wanted if wanted else arguments.min <= int(row['score']) <= arguments.max)]
+    left_out = [row for row in rows if search_guard.skipped(int(row['address'], 16))]
+    rows = [row for row in rows if row not in left_out]
+    if left_out:
+        print(f'{len(left_out)} functions left out (config/matching/walls.tsv, boundary suspects)')
     rows = [row for row in rows if regions(open(os.path.join('nonmatching', row['file']), encoding='utf-8').read().split('\n'))]
     os.makedirs(arguments.out, exist_ok=True)
     improved = matched = 0

@@ -26,6 +26,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import permute  # noqa: E402
 from progress import Progress  # noqa: E402
+import search_guard  # noqa: E402
 
 LAB = permute.LAB
 SKIP = re.compile(r'^\s*(#|struct\b|typedef\b|extern\b|union\b|class\b|enum\b|template\b)|\basm\b|__asm__')
@@ -489,11 +490,12 @@ def batch(arguments):
     if arguments.manifest:  # the current scores of nonmatching/MANIFEST.tsv instead of the registry's best
         for row in csv.DictReader(open(os.path.join(LAB, 'nonmatching', 'MANIFEST.tsv'), encoding='utf-8'), delimiter='\t'):
             path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(row["address"], 16):06X}.cpp')
-            if arguments.min_score <= int(row['score']) <= arguments.max_score and os.path.exists(path):
+            if arguments.min_score <= int(row['score']) <= arguments.max_score and os.path.exists(path) and not search_guard.skipped(int(row['address'], 16)):
                 pool.append((int(row['score']), f"0x{int(row['address'], 16):06X}", path))
     for row in [] if arguments.manifest else rows:
         path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(row["address"], 16):06X}.cpp')
-        if row['status'] == 'tried' and row['best'] != '' and arguments.min_score <= int(row['best']) <= arguments.max_score and os.path.exists(path):
+        if row['status'] == 'tried' and row['best'] != '' and arguments.min_score <= int(row['best']) <= arguments.max_score and os.path.exists(path) \
+                and not search_guard.skipped(row['address']):
             pool.append((int(row['best']), row['address'], path))
     if arguments.classes:  # only functions of these kinds of difference (scripts/matching/classify_diffs.py, work/matching/classes.tsv), plus any with two returns
         wanted = set(arguments.classes.split(','))
@@ -508,7 +510,7 @@ def batch(arguments):
         score, text, used = climb(address, original, arguments.budget, arguments.jobs, 'c++', seed=int(address, 16) + arguments.seed)
         if score is not None and score < best:
             if not arguments.no_write:
-                open(path, 'w', encoding='utf-8').write(text)
+                search_guard.guarded_write(path, text)
             improved += 1
             matched += score == 0
         progress.tick(f'{address}: {best} -> {score}', address)
@@ -544,8 +546,8 @@ def main():
     score, text, used = climb(arguments.address, original, arguments.budget, arguments.jobs, lang, arguments.seed, log=print)
     print(f'best {score} (was {start}, {used} compiles)')
     if arguments.write and score is not None and (start is None or score < start):
-        open(arguments.source, 'w', encoding='utf-8').write(text)
-        print(f'wrote {arguments.source}')
+        if search_guard.guarded_write(arguments.source, text):
+            print(f'wrote {arguments.source}')
     return 0 if score == 0 else 1
 
 

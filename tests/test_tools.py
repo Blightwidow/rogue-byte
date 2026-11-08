@@ -30,6 +30,9 @@ import idioms  # noqa: E402
 import mutate  # noqa: E402
 import neighborhood  # noqa: E402
 import permute  # noqa: E402
+import permute_stores  # noqa: E402
+import search_guard  # noqa: E402
+import boundary_suspects  # noqa: E402
 import rules  # noqa: E402
 import park  # noqa: E402
 import record  # noqa: E402
@@ -1312,6 +1315,103 @@ class VuAssemblerTests(unittest.TestCase):
     def test_listing_of_vudis_is_accepted(self):
         text = '    0  0x000  nop                                          | nop                                      [e]\n'
         self.assertEqual(vuasm.assemble(text), bytes.fromhex('3c030080ff020040'))
+
+
+class ReviewTests(unittest.TestCase):
+    LOCAL = 'int f(int *p)\n{\n    int newline = 10;\n    p[0] = newline;\n    if (p[1] == newline) return 1;\n    return 0;\n}\n'
+
+    def test_a_local_that_only_holds_a_literal_for_two_uses_is_a_warning(self):
+        self.assertEqual([message.split(':')[0] for _, _, message in check_source.review(self.LOCAL)], ['literal local'])
+
+    def test_a_local_that_changes_is_not_a_literal_holder(self):
+        text = 'int f(int *p)\n{\n    int count = 0;\n    while (p[count]) count++;\n    return count;\n}\n'
+        self.assertEqual(check_source.review(text), [])
+
+    def test_a_local_read_from_memory_is_not_a_literal_holder(self):
+        text = 'int f(int *p)\n{\n    int first = p[0];\n    p[1] = first;\n    p[2] = first;\n    return 0;\n}\n'
+        self.assertEqual(check_source.review(text), [])
+
+    def test_a_constant_true_condition_is_a_warning(self):
+        text = 'int f(int x)\n{\n    if (x == 0 || 1) return 1;\n    return 0;\n}\n'
+        self.assertEqual([message.split(':')[0] for _, _, message in check_source.review(text)], ['constant condition'])
+
+    def test_review_never_fails_problems(self):
+        self.assertEqual(check_source.problems(self.LOCAL), [])
+
+
+class SearchGuardTests(unittest.TestCase):
+    CLEAN = 'int f(int *p)\n{\n    p[0] = 1;\n    return 0;\n}\n'
+
+    def test_a_rewrite_that_adds_a_padding_local_is_not_accepted(self):
+        worse = 'int f(int *p)\n{\n    int scratch[4];\n    p[0] = 1;\n    return 0;\n}\n'
+        self.assertFalse(search_guard.accept(self.CLEAN, worse))
+
+    def test_a_rewrite_that_adds_inline_asm_is_not_accepted(self):
+        worse = 'int f(int *p)\n{\n    asm volatile("lqc2 vf1, 0(%0)" : : "r"(p));\n    return 0;\n}\n'
+        self.assertIn('banned', [kind for kind, _ in search_guard.new_findings(self.CLEAN, worse)])
+
+    def test_a_finding_the_current_source_already_has_does_not_block_a_rewrite(self):
+        old = 'int f(int *p)\n{\n    int newline = 10;\n    p[0] = newline;\n    p[1] = newline;\n    return 0;\n}\n'
+        new = old.replace('p[1] = newline;', 'p[2] = newline;')
+        self.assertTrue(search_guard.accept(old, new))
+
+    def test_a_clean_rewrite_is_accepted(self):
+        self.assertTrue(search_guard.accept(self.CLEAN, self.CLEAN.replace('p[0] = 1;', 'p[0] = 2;')))
+
+    def test_a_wall_is_skipped_unless_the_environment_says_otherwise(self):
+        wall = next(iter(search_guard.table(search_guard.WALLS, 'reason')))
+        os.environ.pop('SEARCH_INCLUDE_WALLS', None)
+        self.assertTrue(search_guard.skipped(wall).startswith('wall:'))
+        os.environ['SEARCH_INCLUDE_WALLS'] = '1'
+        try:
+            self.assertIsNone(search_guard.skipped(wall))
+        finally:
+            os.environ.pop('SEARCH_INCLUDE_WALLS')
+
+    def test_every_wall_row_has_a_reason_and_evidence(self):
+        import csv
+        with open(search_guard.WALLS, encoding='utf-8') as handle:
+            rows = list(csv.DictReader(handle, delimiter='\t'))
+        self.assertTrue(rows and all(row['reason'] and row['evidence'] and row['class'] in ('toolchain', 'tie') for row in rows))
+
+
+class BoundarySuspectTests(unittest.TestCase):
+    BASE = 0x1000
+    JR, POP, PUSH, NOP, LW = 0x03E00008, 0x27BD0030, 0x27BDFFD0, 0, 0x8C820244
+
+    def find(self, words, rows):
+        return [(name, reason.split(':')[0]) for _, name, _, reason in boundary_suspects.suspects(rows, words, self.BASE)]
+
+    def test_a_function_that_ends_at_jr_before_a_stack_pop_is_a_delay_slot_cut(self):
+        words = [self.PUSH] + [self.NOP] * 18 + [self.JR, self.POP, self.NOP, self.JR, self.LW]
+        rows = [(self.BASE, 80, 'Cut'), (self.BASE + 80, 16, 'Next')]
+        self.assertEqual(self.find(words, rows), [('Cut', 'delay slot cut'), ('Next', 'epilogue tail')])  # the piece after the cut is the epilogue
+
+    def test_an_eight_byte_piece_with_jr_and_a_stack_pop_is_an_epilogue_tail(self):
+        words = [self.PUSH, self.NOP, self.JR, self.POP, self.NOP, self.NOP]
+        self.assertEqual(self.find(words, [(self.BASE, 8, 'Body'), (self.BASE + 8, 8, 'Tail')]), [('Tail', 'epilogue tail')])
+
+    def test_a_small_getter_is_not_a_suspect(self):
+        words = [self.JR, self.LW]
+        self.assertEqual(self.find(words, [(self.BASE, 8, 'Getter')]), [])
+
+
+class DeadConstantOrderTests(unittest.TestCase):
+    STORES = ['  a = -1;', '  b = 0;', '  c = -1;', '  d = -60;', '  e = -1;', '  f = -60;', '  g = x;']
+
+    def test_the_last_store_of_a_constant_moves_to_the_front_of_its_group(self):
+        first = permute_stores.dead_constant_orders(self.STORES)[0]
+        self.assertEqual([first[index] for index in (0, 2, 4)], ['  e = -1;', '  a = -1;', '  c = -1;'])
+
+    def test_stores_of_other_values_and_single_constants_stay_in_place(self):
+        for order in permute_stores.dead_constant_orders(self.STORES):
+            self.assertEqual((order[1], order[6]), ('  b = 0;', '  g = x;'))
+
+    def test_a_region_without_a_repeated_constant_has_no_candidates(self):
+        self.assertEqual(permute_stores.dead_constant_orders(['  a = 1;', '  b = 2;', '  c = x;']), [])
+
+    def test_no_candidate_equals_the_input(self):
+        self.assertNotIn(self.STORES, permute_stores.dead_constant_orders(self.STORES))
 
 
 if __name__ == '__main__':

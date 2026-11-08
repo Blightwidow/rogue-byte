@@ -51,7 +51,16 @@ mutate: ## The random rewrites of mutate.py on the near misses scoring MIN to MA
 adopt: ## Take the sources of work/matching/fix-stack and permute-stores that score strictly lower than the current ones into data/matching/src/fn
 	.venv/bin/python scripts/matching/adopt.py
 
-search: ## Everything in order: fix-stack, permute-stores, adopt, rules (MIN, MAX, BUDGET, JOBS apply); then register matches with try.py --record
+boundary-suspects: ## Near misses whose score is a split artifact (work/matching/boundary_suspects.tsv: the search tools skip them; fix them by hand with split_boundary.py or merges.tsv)
+	.venv/bin/python scripts/matching/boundary_suspects.py --write
+
+sigs: ## Return types of the callees of the near misses scoring MIN to MAX, read from the executable (callee_sigs.py sweep); a better source is written to data/matching/src/fn
+	.venv/bin/python scripts/matching/callee_sigs.py build
+	.venv/bin/python scripts/matching/callee_sigs.py sweep --min-score $(MIN) --max-score $(MAX) --jobs $(JOBS) --write
+
+search: ## Everything in order: boundary-suspects, sigs, fix-stack, permute-stores, adopt, rules (MIN, MAX, BUDGET, JOBS apply); then register matches with try.py --record. A rewrite that adds a banned construct, a cleanup problem or a review warning is not written (search_guard.py); config/matching/walls.tsv lists what is left out
+	$(MAKE) boundary-suspects
+	$(MAKE) sigs
 	$(MAKE) fix-stack
 	$(MAKE) permute-stores
 	$(MAKE) adopt
