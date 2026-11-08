@@ -132,7 +132,6 @@ address	name	size	file	score
 0X14CFE0	StaticInitClock	136	new_14cdb0/StaticInitClock.c	28
 0X14D240	TickReadCount	64	new_14d1d0/TickReadCount.c	10
 0X14D478	UpdateCmLast	472	cm_14d478/UpdateCmLast.cpp	47
-0X14D8F8	CombineEyeLookAtProj	272	cm_14d478/CombineEyeLookAtProj.cpp	6
 0X14DA08	BuildFrustrum	360	cm_14d478/BuildFrustrum.c	88
 0X14E1A8	SetCmLookAt	200	font-cm/SetCmLookAt.c	48
 0X14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	416	cm_14e270/SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv.cpp	9
@@ -216,7 +215,7 @@ address	name	size	file	score
 0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	63
 0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
 0X16F868	ResetGs__Fv	80	gs/ResetGs__Fv.c	11
-0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	9
+0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	21
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.c	108
 0X172658	func_00172658	264	new_1715f0/fun_00172658.c	52
 0X172798	FAddSearchCand	240	new_1715f0/FAddSearchCand.c	36
@@ -371,7 +370,6 @@ address	name	size	file	score
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.c	324
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	31
 0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	6
-0X1AC598	CheckCardStatus	264	memcard/CheckCardStatus.cpp	9
 0X1ACCC8	MemcardMenu_Update	792	memcard-memory/MemcardMenu_Update.cpp	66
 0X1ACFE0	func_001ACFE0	392	memcard-memory/fun_001acfe0.cpp	16
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
@@ -422,7 +420,6 @@ address	name	size	file	score
 0X1BC9F0	FObstacleContainsPos	208	new_1bc198/FObstacleContainsPos.c	60
 0X1BCCE0	func_001BCCE0	568	new_1bc198/fun_001bcce0.cpp	77
 0X1BD040	Obstacle_AddToPathzone	416	new_1bc198/Obstacle_AddToPathzone.c	84
-0X1BD218	ObstacleGroup_Dissolve	248	new_1bc198/ObstacleGroup_Dissolve.cpp	12
 0X1BD400	Obstacle_UpdatePlanes	352	new_1bc198/Obstacle_UpdatePlanes.c	74
 0X1BD8A8	func_001BD8A8	344	new_1bc198/fun_001bd8a8.c	68
 0X1BDA00	PobstacleGroupAlloc	456	new_1bc198/PobstacleGroupAlloc.cpp	66
@@ -434,7 +431,6 @@ address	name	size	file	score
 0X1BF980	FindPathAStar__FP2CGP3CGVT1iPiPP3CGV	664	path_1bf970/FindPathAStar__FP2CGP3CGVT1iPiPP3CGV.c	141
 0X1BFDB0	PosClosestOnCgt	376	path_1bf970/PosClosestOnCgt.c	92
 0X1C0880	HookupCg__FP2CG	160	path_1bf970/HookupCg__FP2CG.c	32
-0X1C1138	HookupPzgraph	296	new_1c0920/HookupPzgraph.cpp	13
 0X1C14A8	IepSweepPathzoneCursor	336	new_1c0920/IepSweepPathzoneCursor.cpp	46
 0X1C1A38	InsertPathzoneEndpoints	360	new_1c0920/InsertPathzoneEndpoints.cpp	25
 0X1C1FA0	func_001C1FA0	168	new_1c0920/fun_001c1fa0.c	41
@@ -448,11 +444,9 @@ address	name	size	file	score
 0X1C4330	UpdateVjoyStick	312	new_1c3df8/UpdateVjoyStick.c	86
 0X1C4768	bevy_player_p14_1c4768	216	new_1c3df8/bevy_player_p14_1c4768.c	53
 0X1C4AF8	func_001C4AF8	224	new_1c3df8/fun_001c4af8.c	47
-0X1C4BD8	func_001C4BD8	288	new_1c3df8/fun_001c4bd8.cpp	10
 0X1C5148	ProjectDprizeTransform	1064	new_1c3df8/ProjectDprizeTransform.c	246
 0X1C5B20	func_001C5B20	504	new_1c3df8/fun_001c5b20.c	120
 0X1C5E48	UpdateDprize	344	new_1c3df8/UpdateDprize.c	48
-0X1C5FA0	RenderDprizeAll	280	new_1c3df8/RenderDprizeAll.cpp	10
 0X1C60B8	SetDprizeDprizes	592	new_1c3df8/SetDprizeDprizes.cpp	0
 0X1C6DE8	func_001C6DE8	496	new_1c3df8/fun_001c6de8.c	132
 0X1C6FD8	CpdprizeAttractSwDprizes	1648	new_1c3df8/CpdprizeAttractSwDprizes.c	450
@@ -464,7 +458,6 @@ address	name	size	file	score
 0X1C9058	StartLoadingLogo	56	prog-memcard/StartLoadingLogo.cpp	6
 0X1C9190	LoadingLogoThread	592	new_1c90d0/LoadingLogoThread.cpp	23
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	65
-0X1C99D8	PcnodeFindOrAddClonePath	304	new_1c90d0/PcnodeFindOrAddClonePath.cpp	8
 0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	48
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	21
 0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	66
@@ -504,11 +497,9 @@ address	name	size	file	score
 0X1D7ED8	RefGetSaveValue	496	new_1d7780/RefGetSaveValue.c	89
 0X1D80C8	RefSetSaveValue	496	new_1d7780/RefSetSaveValue.c	97
 0X1D82B8	NPercentCompleteSaveData	504	new_1d7780/NPercentCompleteSaveData.cpp	65
-0X1D87C0	BuildSavePath	272	new_1d7780/BuildSavePath.cpp	6
 0X1D8B20	func_001D8B20	240	new_1d7780/fun_001d8b20.cpp	16
 0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.c	169
 0X1D8FF8	ApplyOptionsFromSave	648	splice-pair-jump/ApplyOptionsFromSave.cpp	19
-0X1D9408	CGc_Shutdown	280	jump-splice-spliceutils/CGc_Shutdown.cpp	11
 0X1D9968	InitMeter	456	splice-gc-wipe/InitMeter.cpp	73
 0X1D9B60	SetMeterState	664	splice-gc-wipe/SetMeterState.c	128
 0X1DAC58	GadgetMenu_DrawSlotLabels	456	game-stepguard/GadgetMenu_DrawSlotLabels.cpp	76
@@ -520,8 +511,6 @@ address	name	size	file	score
 0X1DF0A0	AddLaserCustomXps	448	game-stepguard/AddLaserCustomXps.c	102
 0X1DF3D0	AdvanceLaserBeams	480	game-stepguard/AdvanceLaserBeams.cpp	72
 0X1DF908	AddLaserBeam	120	game-stepguard/AddLaserBeam.cpp	15
-0X1DFC50	UpdateJsg	264	game-stepguard/UpdateJsg.cpp	14
-0X1DFEB8	StopJsg	288	game-stepguard/StopJsg.cpp	14
 0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.c	13
 0X1E1238	AddSeqRecordConfrontCamera	168	splice-ref-crv/AddSeqRecordConfrontCamera.c	34
 0X1E12E0	AddSeqRecordEndConfrontCamera	168	splice-ref-crv/AddSeqRecordEndConfrontCamera.c	37
@@ -556,7 +545,6 @@ address	name	size	file	score
 0X1F11A8	DtSmaReachState	424	sm-so/DtSmaReachState.cpp	16
 0X1F1A40	func_001F1A40	696	sm-so/fun_001f1a40.cpp	26
 0X1F2500	func_001F2500	392	sm-so/fun_001f2500.c	96
-0X1F2930	RemoveSoGeomFromOxa	304	sm-so/RemoveSoGeomFromOxa.cpp	12
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.c	59
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.cpp	105
 0X1F3B28	func_001F3B28	232	so-po/fun_001f3b28.cpp	24
@@ -622,7 +610,7 @@ address	name	size	file	score
 0X206820	func_00206820	184	step-rwm/fun_00206820.cpp	2
 0X207030	SetGuardMode	600	step-rwm/SetGuardMode.cpp	80
 0X2082D0	func_002082D0	616	step-rwm/fun_002082d0.c	129
-0X2085D0	AddGuardSensedObject	304	step-rwm/AddGuardSensedObject.cpp	14
+0X2085D0	AddGuardSensedObject	304	step-rwm/AddGuardSensedObject.cpp	5
 0X209618	func_00209618	336	step-rwm/fun_00209618.c	73
 0X209C88	func_00209C88	416	step-rwm/fun_00209c88.cpp	48
 0X20A168	NCompareHitfxForGuard	304	step-rwm/NCompareHitfxForGuard.c	43

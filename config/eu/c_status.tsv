@@ -1789,6 +1789,7 @@ us_address	name	other_address	pair	score	addresses
 0x14D6D8	InitCm	0X14D700	same	2	ok
 0x14D8C0	SetResetFlag__FP2CM	0X14D8E8	identical	0	ok
 0x14D8D8	bevy_camera_cm_14d8d8	0X14D900	identical	0	ok
+0x14D8F8	CombineEyeLookAtProj	0X14D920	same	0	ok
 0x14DB70	RecalcCmFrustrum__FP2CM	0X14DB98	same	1	ok
 0x14E000	func_0014E000	0X14E028	identical	0	ok
 0x14E078	func_0014E078	0X14E0A0	same	0	ok
@@ -2904,6 +2905,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AC468	InitAndWriteSaveSlot		none		
 0x1AC4C8	ReadSaveSlot	0X1AC5A8	same	0	ok
 0x1AC570	ValidateSaveSlot	0X1AC650	same	0	ok
+0x1AC598	CheckCardStatus	0X1AC678	same	0	ok
 0x1AC6A0	GetCardFreeBytes	0X1AC780	same	0	ok
 0x1AC748	MakeMemcardDirectory	0X1AC828	same	0	ok
 0x1AC7A0	McOpenFile	0X1AC880	same	0	ok
@@ -3155,6 +3157,7 @@ us_address	name	other_address	pair	score	addresses
 0x1BC570	Obstacle_PostLoad	0X1BC7D8	same	0	ok
 0x1BCF18	FFindCrvSInPathzone	0X1BD180	same	0	ok
 0x1BD1E0	Obstacle_RemoveFromPathzone	0X1BD448	same	0	ok
+0x1BD218	ObstacleGroup_Dissolve	0X1BD480	same	0	ok
 0x1BD310	PobstacleFindEdgeBlocker	0X1BD578	same	0	ok
 0x1BD560	func_001BD560	0X1BD7C8	same	0	ok
 0x1BD718	func_001BD718	0X1BD980	same	0	ok
@@ -3194,6 +3197,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C0EC0	LoadSwPzgraphFromBrx	0X1C1128	same	0	ok
 0x1C0F30	LoadPzgraphFromBrx	0X1C1198	same	0	ok
 0x1C10C8	func_001C10C8	0X1C1330	same	0	ok
+0x1C1138	HookupPzgraph	0X1C13A0	same	0	ok
 0x1C1260	BuildPzgraphAdjacency	0X1C14C8	same	0	ok
 0x1C1440	ResetPathzoneQuery	0X1C16A8	same	0	ok
 0x1C15F8	SweepPathzoneAxis	0X1C1860	same	0	ok
@@ -3262,6 +3266,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C4940	SetSwFocusBase	0X1C4BA8	same	0	ok
 0x1C4A48	PpoSwFocus	0X1C4CB0	gap	0	ok
 0x1C4A60	SetSwFocusOverride	0X1C4CC8	same	0	ok
+0x1C4BD8	func_001C4BD8	0X1C4E40	same	0	ok
 0x1C4CF8	dprize__static_initialization_and_destruction_0	0X1C4F60	same	0	ok
 0x1C4E30	func_001C4E30	0X1C5098	same	0	ok
 0x1C4E50	InitDprize	0X1C50B8	same	0	ok
@@ -3271,6 +3276,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C5570	FFilterDprizeObjects	0X1C57D8	identical	0	ok
 0x1C5D18	CheckDprizeCollect	0X1C5F80	same	0	ok
 0x1C5DF0	FAbsorbDprizeWkr	0X1C6058	identical	0	ok
+0x1C5FA0	RenderDprizeAll	0X1C6208	same	0	ok
 0x1C60B8	SetDprizeDprizes	0X1C6320	same	0	ok
 0x1C64F8	func_001C64F8	0X1C6760	gap	0	ok
 0x1C6508	func_001C6508	0X1C6770	same	0	ok
@@ -3326,6 +3332,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C9950	IsetFromCloneId	0X1C9BC0	gap	0	ok
 0x1C9958	IcloneFromCloneId	0X1C9BC8	gap	0	ok
 0x1C9968	OidFromCloneId	0X1C9BD8	same	0	ok
+0x1C99D8	PcnodeFindOrAddClonePath	0X1C9C48	same	0	ok
 0x1CA308	ALO_SetCloneId	0X1CA578	same	0	ok
 0x1CA370	InstantiateClone	0X1CA5E0	same	0	ok
 0x1CA500	InitCloneSets	0X1CA770	same	0	ok
@@ -3502,6 +3509,7 @@ us_address	name	other_address	pair	score	addresses
 0x1D8640	NHashPchz	0X1D88B8	same	0	ok
 0x1D8690	AddSymtabEntry	0X1D8908	same	0	ok
 0x1D8720	SymidFindSymtab	0X1D8998	same	0	ok
+0x1D87C0	BuildSavePath	0X1D8A38	same	0	ok
 0x1D88D0	PsavepathNew	0X1D8B48	same	0	ok
 0x1D89A8	PsavepathNewStack	0X1D8C20	same	0	ok
 0x1D8A38	func_001D8A38	0X1D8CB0	same	0	ok
@@ -3510,6 +3518,7 @@ us_address	name	other_address	pair	score	addresses
 0x1D9280	StaticInitSlotheaps_1d9280	0X1D95C8	same	0	ok
 0x1D93B8	GlobalCtorSlotheaps_1d93b8	0X1D9700	same	0	ok
 0x1D93D8	StartupJmt__Fv	0X1D9720	identical	0	ok
+0x1D9408	CGc_Shutdown	0X1D9750	same	0	ok
 0x1D9520	ShutdownSplice__Fv	0X1D9868	same	0	ok
 0x1D95B8	CGc_UpdateTop	0X1D9900	same	0	ok
 0x1D9648	CGc_Update	0X1D9990	same	0	ok
@@ -3615,8 +3624,10 @@ us_address	name	other_address	pair	score	addresses
 0x1DFAD8	InitJsg	0X1E0298	same	0	ok
 0x1DFB10	CSeq_LoadFromBrx	0X1E02D0	same	0	ok
 0x1DFBF8	CSeq_Clone	0X1E03B8	same	0	ok
+0x1DFC50	UpdateJsg	0X1E0410	same	0	ok
 0x1DFD58	StartJsg	0X1E0518	same	0	ok
 0x1DFE80	StartJsgFocus	0X1E0640	same	0	ok
+0x1DFEB8	StopJsg	0X1E0678	same	0	ok
 0x1DFFD8	FIsJsgActive	0X1E0798	gap	0	ok
 0x1DFFE0	ClearJsg	0X1E07A0	same	0	ok
 0x1E0020	EnsureSggAlarm__FP3SGGP5ALARM	0X1E07E0	identical	0	ok
@@ -3941,6 +3952,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F2798	func_001F2798	0X1F2F58	identical	0	ok
 0x1F27F0	EnsureSoOxa	0X1F2FB0	same	0	ok
 0x1F2870	AddSoGeomToOxa	0X1F3030	same	0	ok
+0x1F2930	RemoveSoGeomFromOxa	0X1F30F0	same	0	ok
 0x1F2A60	func_001F2A60	0X1F3220	same	0	ok
 0x1F2AD0	func_001F2AD0	0X1F3290	same	0	ok
 0x1F2B20	AddSoGeomsToOxa	0X1F32E0	same	0	ok

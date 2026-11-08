@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct DL { char *first; char *last; int offset; };
 struct DLI { DL *list; char *current; int offset; DLI *next; };
@@ -14,16 +15,9 @@ inline void PushDli(DLI *it, DL *list)
 {
     it->list = list;
     it->current = (char *)list;
-    DLI *prev = g_2dd2fc;
-    g_2dd2fc = it;
     it->offset = list->offset;
-    it->next = prev;
-}
-inline char *PvFirst(DLI *it)
-{
-    char *item = it->list->first;
-    it->current = item + it->offset;
-    return item;
+    it->next = g_2dd2fc;
+    g_2dd2fc = it;
 }
 inline char *PvStep(DLI *it)
 {
@@ -33,11 +27,16 @@ inline char *PvStep(DLI *it)
 }
 inline void PopDli(DLI *it) { g_2dd2fc = it->next; }
 
+// Retail stores the iterator into g_2dd2fc and keeps list->offset in a register before it loads the
+// first member (lw 0x1C4 after the global store, addu with the kept offset): the first item is read
+// through the pushed iterator (current starts at the list head, as in OnRipgRemove and UpdateCodes),
+// and PushDli reads the old head as it->next = g_2dd2fc. A draft that read list->first directly let
+// the scheduler hoist that load above the push (score 12).
 void ObstacleGroup_Dissolve(OBS *group)
 {
     DLI iterator;
     PushDli(&iterator, &group->members);
-    for (char *item = PvFirst(&iterator); item != 0; item = PvStep(&iterator)) {
+    for (char *item = PvStep(&iterator); item != 0; item = PvStep(&iterator)) {
         OBS *member = (OBS *)item;
         RemoveDlEntry(&group->members, member);
         member->group = 0;

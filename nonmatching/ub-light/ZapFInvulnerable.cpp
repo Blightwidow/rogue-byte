@@ -10,6 +10,11 @@ struct SW;
 extern SW B_003DD490;
 extern int g_2e1e00;
 extern "C" int FSwHandsOff(SW *);
+// Retail: the jmps test is gcc's balanced decision tree for a switch with case -1 and the GNU case range 8 ... 17
+// (== -1, < -1, < 0x12, < 8), so the source writes that switch. Every return 0 / return 1 goes through one shared
+// label: plain returns let jump.c turn the branches into xori/sltu/movz (score 25). NEAR 6: in the 8 ... 17 case retail
+// loads 0x4000 into $v1 and fills the beq delay slot with $v0 = 1 from the target; ours takes $v0 for the constant
+// and fills the slot from the fall-through (v0 = 0), so the tail differs by two instructions.
 int ZapFInvulnerable(ZAP *pzap, int grftak)
 {
     if (pzap->pjt->inv != 0)
@@ -29,22 +34,17 @@ int ZapFInvulnerable(ZAP *pzap, int grftak)
             case 6:
             case 9:
                 goto zero;
-            case -1: {
-                int jmps = pzap->pjt->jmps;
-                if (jmps == -1)
+            case -1:
+                switch (pzap->pjt->jmps) {
+                case -1:
                     goto zero;
-                if (jmps < -1)
-                    goto zero;
-                if (jmps < 0x12) {
-                    if (jmps < 8)
-                        goto zero;
-                    if (grftak == 0x4000) {
+                case 8 ... 17:
+                    if (grftak == 0x4000)
                         goto one;
-                    }
+                    goto zero;
+                default:
                     goto zero;
                 }
-                goto zero;
-            }
             default:
                 goto one;
             }
