@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct REQ { int size; int align; };
 struct CGV;
@@ -17,13 +18,19 @@ extern "C" void *PvAllocSwClearImpl__Fi(REQ *);
 extern "C" void *PvAllocSwImpl__Fi(REQ *);
 void HookupCg(CG *);
 
+// Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
+// retail's helper keeps the result out of the operand's register. The one Sqrt helper form (docs/contributing/exceptions.md).
 static inline float SqrtF(float value)
 {
     float result;
-    asm volatile("sqrt.s %0, %1" : "=f" (result) : "f" (value));
+    asm volatile("sqrt.s %0, %1" : "=&f"(result) : "f" (value));
     return result;
 }
 
+// Retail builds the default graph: 4 vertices from D_002C0C10 (each with its edge list), 2 faces from D_002C0C90, one edge whose
+// weights are +/- sqrt(2)/2. In the edge-list loop retail computes j*8 into $a1 and loads pcgv->acgvl into $a0, then adds them:
+// the element address is formed first and stored through, which is what a pointer to the CGVL element (pcgvl) gives; indexing
+// acgvl[j].pcgv directly swaps $a0/$a1 (score 2).
 void SetupDefaultPathzone(PATHZONE *ppathzone)
 {
     REQ req;
@@ -42,8 +49,10 @@ void SetupDefaultPathzone(PATHZONE *ppathzone)
         req.size = ccgv * 8 + 8;
         req.align = 0x10;
         pcgv->acgvl = (CGVL *)PvAllocSwImpl__Fi(&req);
-        for (j = 0; j < pcgv->ccgvl; j++)
-            pcgv->acgvl[j].pcgv = &ppathzone->cg.acgv[pdef->aicgv[j]];
+        for (j = 0; j < pcgv->ccgvl; j++) {
+            CGVL *pcgvl = &pcgv->acgvl[j];
+            pcgvl->pcgv = &ppathzone->cg.acgv[pdef->aicgv[j]];
+        }
     }
     ppathzone->cg.ccgf = 2;
     req.size = 0x18;

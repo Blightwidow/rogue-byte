@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct M4 { QW row[4]; };
 struct VTE { short delta; short index; void *fn; };
@@ -9,8 +10,8 @@ struct CARRY { JT *pjt; char pad0[0x34 - 4]; OBJ *source; char pad1[0x94 - 0x38]
 extern "C" {
 void func_0012E460(void *);
 SO *func_001CCA40(JT *, SO *);
-M4 ConvertAloMat(int, SO *, M4 *);
-void InvertMatrix4Affine(M4 *, M4 *);
+M4 ConvertAloMat(SO *, SO *, M4 *);
+M4 InvertMatrix4Affine(M4 *);
 M4 __ml__FRC7MATRIX4T0(const M4 &, const M4 &);
 void SetLoPosMat(SO *, M4 *);
 void SetSoCnstrForce(SO *, int);
@@ -20,6 +21,11 @@ void *func_0012DC18(SO *, void *, int, int, int, QW);
 void FadeAloIn(SO *, float);
 }
 
+// Retail: ConvertAloMat(NULL, so, anchor matrix) returns into a temp at sp+0xC0 that is copied to matAnchor (sp+0x80);
+// InvertMatrix4Affine returns its MATRIX4 by hidden pointer (a0 = sp+0x100, a1 = &matAnchor, as in ConvertAloMat.cpp) and
+// the product's temp reuses sp+0xC0, so the inverse is an argument expression, not an out-parameter local. The two
+// GetXfDofValue/func_0012DC18 pairs read one reused `xf` local: separate locals schedule `por $t1` before `move $a1` in the
+// first pair.
 void Carry_Attach(CARRY *carry, SO *so)
 {
     if (so == carry->attached) return;
@@ -35,20 +41,18 @@ void Carry_Attach(CARRY *carry, SO *so)
     SO *anchor = func_001CCA40(carry->pjt, so);
     if (anchor) {
         M4 matAnchor;
-        M4 inverse;
         matAnchor = ConvertAloMat(0, so, ((M4 *(*)(void *))anchor->vt->getMat.fn)((char *)anchor + anchor->vt->getMat.delta));
-        InvertMatrix4Affine(&inverse, &matAnchor);
-        matPlace = __ml__FRC7MATRIX4T0(matPlace, inverse);
+        matPlace = __ml__FRC7MATRIX4T0(matPlace, InvertMatrix4Affine(&matAnchor));
     }
     SetLoPosMat(so, &matPlace);
     if (so->pphys) {
         SetSoCnstrForce(so, 1);
         SetSoCnstrTorque(so, 1);
     }
-    void *xfLinear = so->pxfLinear;
-    carry->act98 = func_0012DC18(so, xfLinear, 5, 0, 2, GetXfDofValue(xfLinear, xfLinear));
-    void *xfAngular = so->pxfAngular;
-    carry->act9C = func_0012DC18(so, xfAngular, 5, 0, 2, GetXfDofValue(xfAngular, xfAngular));
+    void *xf = so->pxfLinear;
+    carry->act98 = func_0012DC18(so, xf, 5, 0, 2, GetXfDofValue(xf, xf));
+    xf = so->pxfAngular;
+    carry->act9C = func_0012DC18(so, xf, 5, 0, 2, GetXfDofValue(xf, xf));
     FadeAloIn(so, 0.25f);
     carry->attached = so;
 }

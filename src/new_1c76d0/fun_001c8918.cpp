@@ -23,6 +23,10 @@ extern QW D_002C1080;
 extern QW D_002C1090;
 }
 
+// Retail reloads kp->xf after every call (lw 0x204 once per convert) and keeps it in $s0 across the
+// convert, with that load scheduled after the cell-index load and in the jal delay slot. One local
+// reassigned three times is one pseudo whose reload sched1 hoists to the top of each block; a separate
+// XF* local per field write (three pseudos) gives retail's order.
 void func_001C8918(KP *kp, int state)
 {
     if (state == kp->state) return;
@@ -40,15 +44,12 @@ void func_001C8918(KP *kp, int state)
     case 1: {
         SetJtAttach5(kp->jt, kp->camera);
         kp->xf->tArrive = g_2dded0[0] + 0.25f;
-        XF *xf = kp->xf;
-        QW heading = bevy_camera_follow_track_heading_weight(kp->jt, 0, D_002C1080);
-        xf->vel = ConvertXfVec(0, xf->parent, heading);
-        xf = kp->xf;
-        QW cellPos = PosLoWorld(kp->cells[kp->icell]);
-        xf->pos = ConvertXfPos(0, xf->parent, cellPos);
-        xf = kp->xf;
-        QW tangent = bevy_camera_follow_track_heading_weight(kp->jt, 0, D_002C1090);
-        xf->tan = ConvertXfVec(0, xf->parent, tangent);
+        XF *xfVel = kp->xf;
+        xfVel->vel = ConvertXfVec(0, xfVel->parent, bevy_camera_follow_track_heading_weight(kp->jt, 0, D_002C1080));
+        XF *xfPos = kp->xf;
+        xfPos->pos = ConvertXfPos(0, xfPos->parent, PosLoWorld(kp->cells[kp->icell]));
+        XF *xfTan = kp->xf;
+        xfTan->tan = ConvertXfVec(0, xfTan->parent, bevy_camera_follow_track_heading_weight(kp->jt, 0, D_002C1090));
         SetXfKind(kp, kp->xf, 0x11);
         break;
     }

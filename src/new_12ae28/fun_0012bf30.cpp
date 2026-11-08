@@ -17,6 +17,10 @@ struct ACRAXIS {
 };
 extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);
 
+// Retail keeps the axis buffer in its own register (a0) for the store to apg[iaxis] and starts the
+// key pointer (s0) from it in the delay slot of a plain blez: the key pointer is a giv that loop.c
+// strength-reduces from indexed stores apg[ikey * 3 + n]. A hand-advanced pointer (apg += 3) shares
+// one register with the buffer and gives blezl instead (score 7).
 void func_0012BF30(ACRAXIS *pacr, CBinaryInputStream *pbis)
 {
     int ikey;
@@ -41,10 +45,9 @@ void func_0012BF30(ACRAXIS *pacr, CBinaryInputStream *pbis)
         float *apg = (float *)PvAllocSwImpl__Fi(&allocreq);
         pacr->apg[iaxis] = apg;
         for (ikey = 0; ikey < pacr->ckey; ikey++) {
-            apg[0] = pbis->F32Read();
-            apg[1] = pbis->F32Read();
-            apg[2] = pbis->F32Read();
-            apg += 3;
+            apg[ikey * 3 + 0] = pbis->F32Read();
+            apg[ikey * 3 + 1] = pbis->F32Read();
+            apg[ikey * 3 + 2] = pbis->F32Read();
         }
     }
 }

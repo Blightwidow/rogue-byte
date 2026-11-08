@@ -1,7 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct P12 { char pad[12]; };
-struct M4 { QW r0; QW r1; QW r2; QW r3; };
-struct M3 { QW row0; QW row1; QW row2; };
 struct VA : P12 {
     virtual void f0();
     virtual void f1();
@@ -94,6 +93,7 @@ struct VB : VBB {
 struct XF { char pad[0xA0]; int id; };
 struct SMAREC { int oid; int pad[5]; };
 struct SLOT { char pad[16]; };
+struct CLOCK { float t; float dt; };
 struct MBASE : P12 {
     virtual void f0();
     virtual void f1();
@@ -135,8 +135,8 @@ struct MBASE : P12 {
 struct MOUNT : MBASE {
     char pad10[0x54 - 0x10];
     XF *pxfA; XF *pxfB; XF *pxfC;
-    int state;
     char pad60[0x1C0 - 0x60];
+    int state;
     float timer;
     char pad1C8[0x230 - 0x1C8];
     int csma;
@@ -153,7 +153,7 @@ struct MOUNT : MBASE {
 extern "C" {
 extern char B_002DEB30;
 extern QW g_2a2dd0;
-extern float g_2dded0;
+extern CLOCK g_2dded0;
 void ConvertXfMatrix4(MATRIX4 *, int, int, void *);
 QW DecomposeRotateMatrixEuler(void *);
 void Mount_UpdateHealthBlot(MOUNT *);
@@ -175,19 +175,25 @@ void func_001F68A8(MOUNT *, int);
 void func_00213B00(VA *, int);
 }
 
+// Retail reads the state at 0x1C0 and stores the new one there, then the clock time at
+// 0x1C4 and the per-state slots from 0x1C8 (sll 4 + 0x1C8), so state/timer sit together
+// before the slots. The clock global 0x2DDED0 is read as the first float of a struct
+// (time, dt) as in SetBentleyState: as a plain float, gcc hoists its lwc1 above the state
+// store into every branch delay slot; a struct member load keeps retail's order
+// (sw state, then lwc1 time).
 extern "C" void Mount_SetState(MOUNT *self, int newState)
 {
-    int old = self->state;
-    if (newState == old)
+    int stateOld = self->state;
+    if (newState == stateOld)
         return;
-    switch (old) {
+    switch (stateOld) {
     case -1: {
         VA *pobj = self->pobjA;
         if (pobj != 0) {
             pobj->exitA(-1);
             func_00213B00(self->pobjA, 0x34F);
             Mount_UpdateHealthBlot(self);
-            if (self->idEmitter != old) {
+            if (self->idEmitter != -1) {
                 int emitter = NewEmitter(self->idEmitter);
                 SetEmitterUnpositioned(emitter, 0);
                 VirtualRefPtr_Assign(&self->ref, emitter);
@@ -222,7 +228,7 @@ extern "C" void Mount_SetState(MOUNT *self, int newState)
     }
     }
     self->state = newState;
-    self->timer = g_2dded0;
+    self->timer = g_2dded0.t;
     switch (newState) {
     case -1: {
         VA *pobj = self->pobjA;

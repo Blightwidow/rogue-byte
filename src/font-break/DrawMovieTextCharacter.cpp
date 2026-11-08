@@ -25,7 +25,7 @@ extern float D_002C40B8;
 char *PchzStringFromId(void *, int);
 char *strcpy(char *, const char *);
 char *strcat(char *, const char *);
-void func_00215BA8(MT_216BC8 *, char *, Char_216BC8 *, Ctx_216BC8);
+MT_216BC8 *func_00215BA8(MT_216BC8 *, char *, Char_216BC8 *, Ctx_216BC8);
 int CMovieText_ClineWrap(MT_216BC8 *);
 void func_00227820(char *, MT_216BC8 *);
 void CMovieText_Reset(MT_216BC8 *, char *);
@@ -37,6 +37,11 @@ float GModPositive__Fff(float, float);
 void SetHudLabelState(Hud_216BC8 *, int);
 }
 static inline float GMax(float a, float b) { return a > b ? a : b; }
+// Retail: func_00215BA8 is CMovieText's constructor; it ends `move $v0, $s0` and returns the object (SN's
+// constructors return `this`), so it is declared returning MT_216BC8 *. Declared void, the call left $v0
+// free and sched2 ordered the default path's three `lq` of the by-value context 0,1,2; with $v0 set by the
+// call retail's order is row 1 first, which reorg puts in the delay slots of the branches to that path
+// (and drops the then-redundant `lq $t0` of the 0x2F1 path). Everything else follows retail's control flow.
 extern "C" void DrawMovieTextCharacter(Char_216BC8 *ch, Matrix_216BC8 *mat, Ctx_216BC8 *ctx)
 {
     char str[0x400];

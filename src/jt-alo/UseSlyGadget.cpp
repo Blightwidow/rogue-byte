@@ -5,47 +5,52 @@ extern ACT B_002DEB30;
 extern float B_003E1BEC;
 extern float D_002BF3EC;
 extern float D_002BF3F0;
-extern int g_2dded0;
+extern char g_2dded0[];
 void bevy_camera_follow_activity(ACT *, int, void *);
 void CarryThrow_SetState(void *, int);
 void ExplodeExpl(int);
 int FGadgetObjKept(void *);
 void GrfbtnJtGadget(void *, int);
-int NewEmitter(int);
+void *NewEmitter(int);
 void *PloLeaseCloneObject(int, int);
 void SetClockRate(void *, int, float);
-void SetEmitterUnpositioned(int, int);
+void SetEmitterUnpositioned(void *, int);
 void SetJmpBodyState(void *, int, int);
 void SetJmpState(void *, int, int, int);
 void SetJtState(void *, int, int);
 void SpendJtGadgetPower(void *, int);
 void StartAttach(void *, int, int, int);
-void VirtualRefPtr_Assign(void *, int);
+void VirtualRefPtr_Assign(void *, void *);
 void func_00141D38(void *, int);
 void func_0018D698(void *, void *, void *);
 int *func_0018D6F8(void *, int);
 }
 struct SLOT { int gadget; int pool; int plo; };
+// Retail repeats the time-gadget body (SpendJtGadgetPower, SetClockRate, the
+// B_003E1BEC store, NewEmitter, SetEmitterUnpositioned, VirtualRefPtr_Assign)
+// for gadgets 29 and 42, and gcc's cross-jumping merges only their common tail
+// (emitter id in the branch delay slot). Written as one block with a goto to a
+// shared label, the argument moves before SpendJtGadgetPower and SetClockRate
+// schedule in the other order; two full case bodies give retail's order.
 extern "C" void UseSlyGadget(char *psly, int gadget)
 {
     B_002DEB30.field = gadget;
     bevy_camera_follow_activity(&B_002DEB30, 0x3C, psly);
-    int emitterId;
     switch (gadget) {
     case 29: {
         SpendJtGadgetPower(psly, gadget);
-        SetClockRate(&g_2dded0, 1, D_002BF3EC);
+        SetClockRate(g_2dded0, 1, D_002BF3EC);
         B_003E1BEC = -1.0f;
-        emitterId = 0x67;
-        goto emit;
+        void *emitter = NewEmitter(0x67);
+        SetEmitterUnpositioned(emitter, 0);
+        VirtualRefPtr_Assign(psly + 0x2044, emitter);
+        return;
     }
-    case 42:
+    case 42: {
         SpendJtGadgetPower(psly, gadget);
-        SetClockRate(&g_2dded0, 1, D_002BF3F0);
+        SetClockRate(g_2dded0, 1, D_002BF3F0);
         B_003E1BEC = 0.7f;
-        emitterId = 0x66;
-    emit: {
-        int emitter = NewEmitter(emitterId);
+        void *emitter = NewEmitter(0x66);
         SetEmitterUnpositioned(emitter, 0);
         VirtualRefPtr_Assign(psly + 0x2044, emitter);
         return;

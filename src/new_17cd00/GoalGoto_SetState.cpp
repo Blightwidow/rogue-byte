@@ -7,6 +7,9 @@ extern "C" void Goal_Pop(void *);
 extern "C" OBJ *func_00205438(GUARD *, int);
 extern "C" void GoalFollowCrv_SetCrv(OBJ *, void *, int);
 extern float g_2dded0;
+// Retail computes the follow mode straight into $v0 with three branches (9 in the first two delay slots, 8 in
+// the last one, 9 on fall-through) and one store at the join: two stores in an if/else, which gcc merges at the
+// join without if-converting to movn. A local `mode` assigned in both arms becomes movn or a bnel store instead.
 extern "C" void GoalGoto_SetState(GOAL *goal, int newState)
 {
     int previous = goal->state;
@@ -44,10 +47,10 @@ extern "C" void GoalGoto_SetState(GOAL *goal, int newState)
             follow = func_00205438(goal->guard, 0xA7);
             *(int *)((char *)follow + 0xC8) = *(int *)((char *)goal + 0xA8);
             *(int *)((char *)follow + 0x40) = *(int *)((char *)goal + 0xBC);
-            int mode = 8;
-            if (*(int *)((char *)goal + 0xA8) == 0 || *(int *)((char *)goal + 0xAC) != 0 || (goal->guard->grf & 4) == 0)
-                mode = 9;
-            *(int *)((char *)follow + 0xC0) = mode;
+            if (*(int *)((char *)goal + 0xA8) != 0 && *(int *)((char *)goal + 0xAC) == 0 && (goal->guard->grf & 4) != 0)
+                *(int *)((char *)follow + 0xC0) = 8;
+            else
+                *(int *)((char *)follow + 0xC0) = 9;
             GoalFollowCrv_SetCrv(follow, goal->guard->crv, 0);
             VT *vtable = follow->vptr;
             vtable->fn((char *)follow + vtable->delta);
