@@ -5,9 +5,11 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 ## Done
 
 - The executable splits and rebuilds byte for byte from assembly plus the matched C (`make elf`).
-- The assembler is SN's `ps2eeas` with its short-loop constant changed from 6 to 5, one for all game code (2026-11-05, [build/assembler.md](build/assembler.md) "Short loops"); no inline asm in matched code, no per-function lists.
-- Matched C: 5,040 functions in `src/`; every other function is built from its original assembly, and the best compiling draft of
+- The assembler is SN's `ps2eeas` with its short-loop constant changed from 6 to 5, one for all game code (2026-11-05, [build/assembler.md](build/assembler.md) "Short loops"); no inline asm in matched code apart from the shared `Sqrt` helper. The only per-function compile lists are documented exceptions ([contributing/exceptions.md](contributing/exceptions.md)): the SDK range's Sony compiler (`config/us/sony_gcc29.txt`) and `-fmove-all-movables` (`config/us/move_movables.txt`, 2026-11-08); steering helpers carry `// steer-ok:`.
+- Matched C: 6,192 functions in `src/` (2026-11-08); every other function is built from its original assembly, and the best compiling draft of
   each is in `nonmatching/`.
+- NTSC-U code reached 80% on 2026-11-08 (80.10%, blockers counted as finished; PAL 78.64%). Outside the SDK range it is 85.8% (53.1% exact C); the SDK range
+  (150 KB, libm and libc giants) is 33%.
 - VU0, MMI, COP0 and hand-written functions are flagged as permanent blockers (`config/us/blockers.tsv`) and counted as finished apart from the exact C, as in sly1 ([build/vu0-mmi.md](build/vu0-mmi.md)).
 - PAL is checked against the same C (`make pal`); US is the reference.
 - CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
@@ -21,9 +23,11 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 3. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
-4. Data from C, after code reaches 80 to 90%: `.rodata` literals and `switch` jump tables first, then globals defined at
+4. Data from C (code passed 80% on 2026-11-08, so this is open): `.rodata` literals and `switch` jump tables first, then globals defined at
    retail's address, counted as matched data like sly1's `c_data.tsv`. Needs a ruling on AGENTS.md's "source that defines
-   game data read out of retail" for globals with initial values. Depends on 3 for per-file data. Today 0.72% of data.
+   game data read out of retail" for globals with initial values. Depends on 3 for per-file data. Today 0.83% of data (8,375 of 1,011,732 bytes).
+   What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data together); `data/irx` 474 KB (IOP modules) and `data/vutext` 34 KB
+   (VU microcode) are not game C, so 49% is the ceiling for this item.
 
 5. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
    VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report
