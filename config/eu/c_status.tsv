@@ -4886,6 +4886,8 @@ us_address	name	other_address	pair	score	addresses
 0x2392F0	sceSifSyncIop	0X23A2B8	same	0	ok
 0x239340	sceSifRebootIop	0X23A308	same	0	ok
 0x2394B8	func_002394B8	0X23A480	same	0	ok
+0x239520	func_00239520	0X23A4E8	identical	0	ok
+0x239558	func_00239558	0X23A520	identical	0	ok
 0x2395B0	func_002395B0	0X23A578	same	0	ok
 0x2396C0	func_002396C0	0X23A688	same	0	ok
 0x239738	func_00239738	0X23A700	identical	0	ok

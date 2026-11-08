@@ -4886,6 +4886,8 @@ address	name	size	file
 0X2392F0	sceSifSyncIop	80	sdk/sceSifSyncIop.c
 0X239340	sceSifRebootIop	272	sdk/sceSifRebootIop.cpp
 0X2394B8	func_002394B8	96	sdk/fun_002394b8.c
+0X239520	func_00239520	56	unsorted/fun_00239520.c
+0X239558	func_00239558	64	unsorted/fun_00239558.c
 0X2395B0	func_002395B0	252	sdk/fun_002395b0.cpp
 0X2396C0	func_002396C0	84	sdk/fun_002396c0.c
 0X239738	func_00239738	56	unsorted/fun_00239738.cpp
