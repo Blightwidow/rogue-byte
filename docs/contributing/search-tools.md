@@ -153,10 +153,13 @@ to its own block so they share a slot, a dead `QW junk[N]` the frame shows, and 
   a constant-true condition such as `|| 1`) means the source is not written, and the tool says why on stderr. A finding the current source already has
   does not block an improvement. Before this, only `adopt.py` checked; the others wrote a lower score into `data/matching/src/fn` with whatever it held.
   The literal-local warning fires on 0.6% of the matched sources and on 3.7% of the unmatched ones, so it is a warning to read, not a ban.
-- **Functions left out.** `config/matching/walls.tsv` lists the near misses whose remaining difference was traced to the toolchain (a store in a delay slot
+- **Functions left out.** Permanent blockers (`config/us/blockers.tsv`: a VU0, MMI or COP0 instruction, hand-written assembly) are never searched, as AGENTS.md
+  leaves them out of the work queues. `config/matching/walls.tsv` lists the near misses whose remaining difference was traced to the toolchain (a store in a delay slot
   whose address is in a register; a `$gp` save: class `toolchain`) or to a scheduling or allocation tie found in the RTL dumps after a long manual
   search (class `tie`); each row has its reason and evidence. The tools skip them, and `SEARCH_INCLUDE_WALLS=1` searches them anyway. The boundary
-  suspects of `make boundary-suspects` are skipped the same way. Add a row when a function is shown to be a wall, with the dump or the count of compiles.
+  suspects of `make boundary-suspects` are skipped the same way, and so is a function whose current source holds a banned construct (inline asm, a
+  register pin): it can never match, `record.py` ignores a score reached with it, and the first overnight run spent its budget there (57 of 82
+  "improved" sources held VU0 asm). Add a row when a function is shown to be a wall, with the dump or the count of compiles.
 - **Store order, first rule.** `permute_stores.py` tries the orders that follow gcc 2.95's first-scheduler rule before the random search: among stores that
   share a constant, the one written last is emitted first (the constant's register dies there). InitMurray was found that way after 2,500 random orders had not
   reached it.

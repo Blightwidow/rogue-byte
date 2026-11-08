@@ -4,7 +4,7 @@
 
   from search_guard import skipped, new_findings, accept
 
-  skipped(address)          why a function is left out of a search (a wall, a boundary suspect), or None
+  skipped(address)          why a function is left out of a search (a permanent blocker, a wall, a boundary suspect, a source with a banned construct), or None
   new_findings(old, new)    [(kind, message)] that a rewritten source has and the source it came from does not
   accept(old, new)          True when a rewrite adds nothing: no new banned construct, cleanup problem or review warning
 
@@ -13,11 +13,14 @@ Why: a search scores sources, and a lower score reached with a padding local, an
 without it. A rewrite is compared with the source it came from, so a finding the current source already has (a draft that has a warning today) does
 not block an improvement; only a finding the rewrite adds does.
 
-The skip list has two sources:
+The skip list has these sources:
+  * config/us/blockers.tsv (`make blockers`): permanent blockers, a function with a VU0, MMI or COP0 instruction or hand-written assembly. AGENTS.md leaves
+    them out of the work queues; the first `make search` did not, and 53 of its 82 "improved" sources were blockers (VU0 and MMI inline asm).
   * config/matching/walls.tsv: functions whose remaining difference was traced to the toolchain and no plain-C form reached it (a store in a delay
     slot whose address is in a register, a $gp save) or that hold a scheduling tie found in the RTL dumps after a long manual search. Searching them
     only spends the budget. SEARCH_INCLUDE_WALLS=1 searches them anyway.
-  * work/matching/boundary_suspects.tsv (boundary_suspects.py): functions whose score is probably a split artifact, not a code difference."""
+  * work/matching/boundary_suspects.tsv (boundary_suspects.py): functions whose score is probably a split artifact, not a code difference.
+  * a source that holds a banned construct (inline asm, a register pin, `volatile` on ordinary data): it can never match as written."""
 import csv
 import os
 import sys
@@ -29,6 +32,7 @@ import check_source  # noqa: E402
 
 WALLS = os.path.join(LAB, 'config', 'matching', 'walls.tsv')
 SUSPECTS = os.path.join(LAB, 'work', 'matching', 'boundary_suspects.tsv')
+BLOCKERS = os.path.join(LAB, 'config', 'us', 'blockers.tsv')
 
 
 def table(path, reason_column):
@@ -47,7 +51,25 @@ def skipped(address):
         if reason:
             return f'wall: {reason}'
     reason = table(SUSPECTS, 'reason').get(address)
-    return f'boundary suspect: {reason}' if reason else None
+    if reason:
+        return f'boundary suspect: {reason}'
+    kind = table(BLOCKERS, 'kind').get(address)
+    if kind:
+        return f'permanent blocker ({kind}): AGENTS.md leaves it out of the work queues, it is never matched with asm'
+    return banned_source(address)
+
+
+def banned_source(address):
+    """A reason when the function's source in data/matching/src/fn holds a banned construct (inline asm, a register pin, `volatile` on ordinary data), else None.
+    Such a source can never be a match, record.py ignores a score reached with one, and a search on it only spends its budget: the first run of
+    `make search` took 14 functions from 18-39 to 2-4 that way (PosCplookEye, GMaxAxisScale: VU0 asm), and none of it counted."""
+    for extension in ('.cpp', '.c'):
+        path = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{address:06X}{extension}')
+        if os.path.exists(path):
+            with open(path, encoding='utf-8', errors='replace') as handle:
+                banned = [message for _, kind, message in check_source.problems(handle.read()) if kind == 'banned']
+            return f'banned construct in the source: {banned[0]}' if banned else None
+    return None
 
 
 def findings(text):
