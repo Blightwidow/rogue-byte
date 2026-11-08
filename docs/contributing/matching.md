@@ -165,6 +165,11 @@ Read from the RTL dumps (`-dl` local-alloc, `-dg` global-alloc, `-dG` GCSE) of f
 - **A tie goes by pseudo number, and GCSE PRE numbers its pseudos in hash-bucket order** (hash mod `(insn count before GCSE / 2) | 1`; the `-dG` dump prints
   "Expression hash table (N buckets"). Anything that changes the RTL insn count without changing the final code (a helper's return type: `RefreshSpriteInstance`,
   `LerpByte` returns `char`, not `unsigned char`) can flip which of two equal-priority addresses gets the lower register. It is a steering form: say so in the commit.
+- **Structure before registers (`func_001EA9F0`, score 49 to 0).** Two empty count-down loops in retail were the empty-constructor loops of arrays of a small
+  class (`CLR palette[256]`), not wait loops. Separate locals in declaration order (locals take ascending frame offsets in that order; arrays are 16-byte aligned and
+  their constructor loop runs where they are declared) gave the frame. A post-increment store of an inline-constructor temporary (`*out++ = CLR(x)`) copies the
+  pointer into a register per case and cross-jumping shares the tail; `arr[i].Set(v)` (address as `this`) makes that array the loop's strength-reduction base,
+  `arr[i] = v` does not. `static inline int ScaleAlpha(float scale, float alpha)` keeps `scaled * (alpha * 128)` from being re-associated (a steering helper, like `GMin`).
 
 ## Rulings
 

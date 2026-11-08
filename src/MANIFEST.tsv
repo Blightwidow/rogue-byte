@@ -3807,6 +3807,7 @@ address	name	size	file
 0X1EA6C8	func_001EA6C8	136	new_1e7a28/fun_001ea6c8.cpp
 0X1EA750	func_001EA750	344	new_1e7a28/fun_001ea750.cpp
 0X1EA8A8	func_001EA8A8	324	new_1e7a28/fun_001ea8a8.cpp
+0X1EA9F0	func_001EA9F0	936	new_1e7a28/fun_001ea9f0.cpp
 0X1EAD98	CopyPaletteHeader	164	new_1e7a28/CopyPaletteHeader.cpp
 0X1EAE40	func_001EAE40	272	new_1e7a28/fun_001eae40.cpp
 0X1EAF50	LoadBmpFromBrx	252	font/LoadBmpFromBrx.cpp
