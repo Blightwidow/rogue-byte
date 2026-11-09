@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Mat4_230CF0 { QW row[4]; };
 struct VtA_230CF0 { char pad0[0x90]; short delta; short unused; void (*fn)(void *); };
 struct ObjA_230CF0 { char pad0[0xC]; VtA_230CF0 *vt; };

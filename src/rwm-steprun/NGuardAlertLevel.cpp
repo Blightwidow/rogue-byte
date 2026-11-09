@@ -1,4 +1,4 @@
-typedef long s64; typedef int s32;
+#include "types.h"
 extern "C" {
 s64 GrfsgsFromSgs(int);
 s32 NGuardAlertLevel(char *arg0) {

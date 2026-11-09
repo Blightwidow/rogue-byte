@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 void CheckForOutOfMemory__Fv(s32);
 extern s32 g_2f6384;

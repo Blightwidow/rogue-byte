@@ -1,4 +1,4 @@
-typedef int s32; typedef short s16;
+#include "types.h"
 extern "C" {
 struct Obj_258040;
 struct VT_258040 {

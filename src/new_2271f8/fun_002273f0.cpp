@@ -1,7 +1,6 @@
 extern "C" {
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int s32;
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 QW ConvertAloPos(void *, void *, QW);
 int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int, QW);
 void func_00227440(void *, int);

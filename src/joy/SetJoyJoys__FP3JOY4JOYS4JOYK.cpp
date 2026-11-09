@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
-typedef float f32;
+#include "types.h"
 
 struct RANGE {
     f32 min; // 0x0

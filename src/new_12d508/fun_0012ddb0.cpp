@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct ALO; struct XF;
 struct MAT { QW row[4]; };
 struct ACT { char pad[0x1C]; XF *pxfTarget; int unk0x20[4]; MAT mat; };

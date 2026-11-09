@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" void MeasureJtJumpToTargetAtTime(int, int, QW, float *, int, int);
 struct Mjt { int pjmp; int palo; int pad[2]; QW pos; };
 float GMeasureJumpTargetTime(Mjt *mjt)

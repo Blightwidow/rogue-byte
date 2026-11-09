@@ -1,4 +1,4 @@
-typedef int s32; typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 void CopyAqw__FPvT0i(s128 *dest, s128 *src, s32 count) {
     s32 remainder = count & 3;

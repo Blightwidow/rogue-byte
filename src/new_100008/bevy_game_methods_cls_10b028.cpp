@@ -1,7 +1,6 @@
 #include "sly2.h"
 struct CRef { int tagk; int pad[3]; };
 struct BASIC;
-typedef int QW __attribute__((mode(TI)));
 struct VT { char pad[704]; short delta; short index; void (*fn)(void *, int); };
 struct OBJ { char pad[0xC]; VT *vptr; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);

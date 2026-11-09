@@ -1,4 +1,4 @@
-typedef unsigned int u32;
+#include "types.h"
 extern "C" {
 struct Ipu_251E60 { int pad0[0x20B]; unsigned cmdState; int pad830[0xE]; void *field868; int pad86C[3]; int field878; };
 int func_0024B6E8(void *);

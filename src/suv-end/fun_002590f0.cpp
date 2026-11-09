@@ -1,4 +1,4 @@
-typedef int s32; typedef signed char s8;
+#include "types.h"
 struct Params { s32 size; s32 align; };
 extern "C" {
 s32 *PvAllocSwCopyImpl__FiPv(Params *, s32 *);

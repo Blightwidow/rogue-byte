@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
+#include "types.h"
 
 struct ALLOCREQ_1553F0 {
     int cb;

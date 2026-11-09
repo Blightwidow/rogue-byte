@@ -1,4 +1,4 @@
-typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 struct JT { char pad[0x1880]; int c; char pad2[0xC]; s128 bounds[17]; char pad3[0x19AC - 0x1890 - 17*16]; float r; };
 extern "C" {
 void ExtendSoBounds(JT *, s128, float);

@@ -1,6 +1,5 @@
 extern "C" {
-typedef int s32;
-typedef short s16;
+#include "types.h"
 typedef void (*FnSlot_1C7EA8)(char *, s32);
 void func_001CB5D0(char *);
 void func_001C7EA8(char *arg0)

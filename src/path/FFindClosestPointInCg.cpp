@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 
 extern "C" {
 s32 PcgtPointInCgSafe(void *arg0, s32 arg1, QW point);

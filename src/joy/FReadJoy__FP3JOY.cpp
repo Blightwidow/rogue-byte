@@ -1,5 +1,4 @@
-typedef unsigned char u8;
-typedef int s32;
+#include "types.h"
 struct JOY_187998;
 struct LM_187998;
 struct CLOCK_187998 { char pad[0x3C]; float f3C; float f40; };

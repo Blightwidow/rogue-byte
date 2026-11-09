@@ -1,4 +1,4 @@
-typedef float f32;
+#include "types.h"
 struct Curve {
     char pad[0x38];
     f32 radius;

@@ -1,4 +1,4 @@
-typedef float f32;
+#include "types.h"
 struct XfmObject {
     char pad0[0x38];
     f32 value;

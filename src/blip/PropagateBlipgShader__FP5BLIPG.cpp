@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct SHD { char pad0[8]; unsigned flags; unsigned char color[4]; int cframe; long *apacket; };
 struct BLIPG {
     char pad0[0x1A0]; int cqwTexture; char pad1[0x1B0 - 0x1A4]; QW aqw[1];

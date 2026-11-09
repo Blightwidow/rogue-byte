@@ -1,5 +1,5 @@
 extern "C" {
-typedef signed char s8; typedef short s16; typedef int s32;
+#include "types.h"
 
 s32 sceMcRead(s32, s32, s32);
 s32 McSync(s32, s32, s32, s32);

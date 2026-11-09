@@ -1,4 +1,4 @@
-typedef int s32; typedef long s64; typedef signed char s8;
+#include "types.h"
 #define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
 struct Ent { s32 id; s32 p4; s32 p8; s32 flags; s32 p10[5]; s8 *obj; };
 extern "C" {

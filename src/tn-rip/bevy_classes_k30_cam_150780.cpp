@@ -1,4 +1,4 @@
-typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 struct Cam_2DDF40 { char pad[0x90]; s128 position; };
 extern Cam_2DDF40 B_002DDF40;

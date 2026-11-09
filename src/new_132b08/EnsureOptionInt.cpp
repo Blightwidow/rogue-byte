@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef short s16; typedef int s32;
-typedef unsigned char u8; typedef unsigned int u32;
+#include "types.h"
 
 struct EnsureOptionIntArgs_132C20 {
     s32 mode;

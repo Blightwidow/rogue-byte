@@ -1,4 +1,4 @@
-typedef int s32; typedef long s64; typedef signed char s8;
+#include "types.h"
 extern "C" {
 void SetJmpState(s32, s32, s32, s32);
 void SetJtZapState(void *, s32);

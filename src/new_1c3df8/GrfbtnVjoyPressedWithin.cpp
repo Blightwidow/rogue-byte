@@ -1,6 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
-typedef unsigned int u32;
-typedef float f32;
+#include "types.h"
 
 extern "C" {
 extern f32 g_2dded0;

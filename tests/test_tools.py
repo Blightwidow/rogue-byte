@@ -110,6 +110,20 @@ class CleanupTests(unittest.TestCase):
     def test_other_files_are_not_code(self):
         self.assertEqual(check_cleanup.check_lines({'docs/a.md': [(1, 'M2C_FIELD tab\t')]}), [])
 
+    def test_local_fixed_width_typedef_in_source_fails(self):
+        line = 'typedef signed char s8; typedef long long s64;'
+        self.assertEqual(len(check_cleanup.check_lines({'src/mat/Foo.c': [(1, line)]})), 1)
+
+    def test_local_quadword_typedef_in_source_fails(self):
+        line = 'typedef int QW __attribute__((mode(TI)));'
+        self.assertEqual(len(check_cleanup.check_lines({'src/mat/Foo.cpp': [(1, line)]})), 1)
+
+    def test_fixed_width_typedef_in_shared_header_passes(self):
+        self.assertEqual(check_cleanup.check_lines({'include/types.h': [(1, 'typedef long s64;')]}), [])
+
+    def test_other_typedef_in_source_passes(self):
+        self.assertEqual(check_cleanup.check_lines({'src/mat/Foo.c': [(1, 'typedef s32 Count;')]}), [])
+
     def test_game_data_files_are_flagged(self):
         flagged = check_cleanup.check_files(['work/elf/SCUS_973.16', 'a/b.irx', 'x/y.s', 'build/a', 'tools/wibo'])
         self.assertEqual(len(flagged), 5)
@@ -1530,6 +1544,12 @@ class HarvestTests(unittest.TestCase):
         text = harvest.build(self.DRAFT)
         self.assertIn('extern "C" {', text)
         self.assertIn('void f(s8 *arg0)', text)
+
+    def test_draft_takes_the_shared_types(self):
+        self.assertIn('#include "types.h"', harvest.build(self.DRAFT))
+
+    def test_draft_declares_no_fixed_width_typedef(self):
+        self.assertNotIn('typedef long', harvest.build(self.DRAFT))
 
     def test_draft_with_an_unhandled_instruction_is_refused(self):
         self.assertIsNone(harvest.build('M2C_ERROR(/* unknown instruction: ldl */);'))

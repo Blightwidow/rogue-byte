@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct LO_1A6BE8;
 struct VT_1A6BE8 {
     char pad[0xE8];

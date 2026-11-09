@@ -35,9 +35,9 @@ There are three separate "100%"s (numbers from `progress/us/report.json`):
 - **PAL, 78.78%** against US 80.25%: close it with `make pal` after each land.
 
 - **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. `include/sly2.h` is 12 lines; 1,696 files
-  size their structs with padding; 401 struct names have different bodies in different files (`VT` 131, `SO` 65); 639 files declare
-  their own integer typedefs, and `s64` is `long` (64 bits) in 262 of them and `long long` (128 bits on the EE) in 249. Measured
-  2026-11-09: [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md).
+  size their structs with padding; 401 struct names have different bodies in different files (`VT` 131, `SO` 65). Measured
+  2026-11-09: [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md). The fixed-width typedefs are shared since 2026-11-09
+  (`include/types.h`, item 1).
 
 Order (2026-11-09, [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md)): shared types first (item 1), because every match landed on
 padded local structs adds to the later cost; then one source layout (item 2) and the data build side (item 3); then the port-facing
@@ -51,8 +51,11 @@ Preservation is the priority; what helps a later port is additive (headers, type
 matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md) "The rule").
 
 1. **Shared types.** One definition per class in `include/`, typed from what retail's code does, field names keeping their `source:`.
-   - Fixed-width typedefs in `include/sly2.h` (`s8`..`s64`, `u8`..`u64`, `f32`, `QW`), replacing the per-file copies; settle `s64`
-     (`long`, 64 bits) against the 249 files that declare it `long long`, re-proving each.
+   - Done 2026-11-09: fixed-width typedefs in `include/types.h` (`s8`..`s128`, `u8`..`u128`, `f32`, `f64`, `QW`), included by
+     `sly2.h` and `m2c_macros.h`; 815 sources (808 per-function, 7 whole files) dropped their own copies. `s64` is `long`: with SN's
+     ee-gcc `sizeof(long)` is 8 and `sizeof(long long)` 16, and `long long` arithmetic fails ("unsupported wide integer operation");
+     none of the 252 sources that declared `s64` as `long long` used it. `make elf` byte for byte, objdiff report unchanged.
+     `make cleanup` fails on a new local fixed-width typedef in `src/`; `harvest.py` drafts include `types.h`.
    - Start from the recovered layouts (`config/recovered/sly2_structs.h`, 157 structs, unverified) and the padded copies in `src/`;
      a field enters the shared header when a matched function's code shows its offset and type.
    - Pilot: one widely used class (`XF` or `SO`), its header with `static_assert` offset and `sizeof` checks (PS2 build only), then

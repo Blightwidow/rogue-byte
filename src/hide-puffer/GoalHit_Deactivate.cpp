@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 
-typedef int s128 __attribute__((mode(TI)));
 
 extern "C" void func_00174B28(char *);
 extern "C" void ReplaceSwHitFx(char *, int, s128, int, int);

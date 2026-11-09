@@ -59,7 +59,6 @@ void AddSafePointOnMember(float parameter, SPL *list, MEM *pmember)
 
 INCLUDE_ASM(0X19FEB0);
 
-typedef int QW __attribute__((mode(TI)));
 
 struct SP_1A0048 { int a; int b; int c; int d; QW q1; };
 

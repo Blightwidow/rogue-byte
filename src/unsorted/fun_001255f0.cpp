@@ -1,6 +1,6 @@
 extern "C" {
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int s32;
+#include "types.h"
 void *func_001255F0(void *arg0, s32 arg1, void *arg2) {
     s32 mask = -1;
     char *node = 0;

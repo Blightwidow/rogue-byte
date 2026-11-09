@@ -1,4 +1,4 @@
-typedef float f32;
+#include "types.h"
 
 struct WrCircle {
     char pad0[0x64];

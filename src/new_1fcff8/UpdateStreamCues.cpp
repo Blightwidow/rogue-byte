@@ -1,6 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32;
+#include "types.h"
 extern "C" {
 struct Entry { s16 delay; char pad[6]; };
 struct Sub { char pad0[0x50]; f32 limit; s32 count; Entry *entries; };

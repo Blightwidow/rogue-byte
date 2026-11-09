@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 void ResetSlotheap(void *);
 extern s32 B_002DD290;

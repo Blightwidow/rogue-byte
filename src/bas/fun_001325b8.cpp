@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 void Close__18CBinaryAsyncStream(s32);
 void __builtin_delete(s32);

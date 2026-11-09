@@ -1,4 +1,4 @@
-typedef int s32; typedef signed char s8;
+#include "types.h"
 extern "C" {
 s32 FFindDlEntry(s32, s8 *);
 void RemoveDlEntry(s32, s8 *);

@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct V4_11DFA0 { float x, y, z, w; } __attribute__((aligned(16)));
 extern "C" {
 void ConvertHsvToRgb__FP6VECTORT0(V4_11DFA0 *, float *);

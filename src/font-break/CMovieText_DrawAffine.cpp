@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 union AFF { float f[8]; QW q[2]; };
 struct MAT { float f[16]; };
 struct CMovieText { char pad[0x7C]; float rxScale; float ryScale; float dyLine; float gScale; };

@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct CurveOwner {
     char pad[0xE4];
     s32 disabled;

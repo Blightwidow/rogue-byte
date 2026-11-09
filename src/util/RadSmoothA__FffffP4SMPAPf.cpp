@@ -1,4 +1,4 @@
-typedef float f32;
+#include "types.h"
 struct SMPA_11D340;
 extern "C" {
 f32 GSmoothA__FffffP4SMPAPf(f32, f32, f32, f32, SMPA_11D340 *, f32 *);

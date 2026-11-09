@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct SRC { char pad[0x184]; int ndamage; int grftak; };
 struct VT { char pad[0x108]; short delta; short idx; QW (*fn)(void *); };
 struct OBJ { char pad[0xC]; VT *vt; };

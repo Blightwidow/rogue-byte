@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned u32; typedef signed char s8;
+#include "types.h"
 extern "C" {
 void *memset(void *, int, unsigned);
 extern s32 B_002E1E68;

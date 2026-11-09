@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned u32; typedef float f32;
+#include "types.h"
 struct SLA { char b[0xC]; }; struct SLB { char b[0xC]; }; struct SLC { char b[0xC]; };
 struct RGB3 { float r, g, b; }; struct V3 { float a, b, c; }; struct V2 { float a, b; };
 struct SWC {

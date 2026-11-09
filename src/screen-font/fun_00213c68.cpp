@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
-typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 struct OBJ_213C68;
 struct VT_213C68 { char pad[8]; short delta; short unused; void *(*fn)(char *, int, int); };

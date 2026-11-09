@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 void CRef_Destruct(char *);
 QW *PvAllocSlotheapImpl(void *);

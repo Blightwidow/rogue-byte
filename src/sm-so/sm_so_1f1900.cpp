@@ -131,7 +131,6 @@ int func_001F1E20(S *s)
     return result;
 }
 
-typedef int s32;
 
 extern "C" {
 struct E_1F1EB8 { s32 v; s32 p[3]; };

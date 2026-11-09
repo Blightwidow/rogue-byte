@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct B4 { char b[4]; };
 
 struct Char { int pad0; int type; int pad8; int padC; int sprite; };

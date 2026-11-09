@@ -1,7 +1,5 @@
 extern "C" {
-typedef int s32;
-typedef short s16;
-typedef float f32;
+#include "types.h"
 void WakeXf(s32, void *, f32);
 
 void func_001F8830(void *arg0, f32 fparg0) {

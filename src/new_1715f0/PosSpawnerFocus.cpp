@@ -1,4 +1,4 @@
-typedef int s32; typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 s128 PosLoWorld(s32);
 s32 PpoSwFocusBase(void *);

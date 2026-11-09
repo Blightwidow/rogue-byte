@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef int s32; typedef unsigned int u32; typedef float f32;
+#include "types.h"
 extern "C" {
 extern s8 B_002E65E0[];
 extern f32 g_2ddf0c;

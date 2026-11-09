@@ -31,7 +31,7 @@ Measured on `src/` on 2026-11-09 (5,119 source files):
 | `struct` definitions / distinct struct names | 5,365 / 2,346 |
 | Struct names defined with different bodies in different files | 401 |
 | Worst: `VT`, `SO`, `CRef`, `SW`, `Obj`, `LO`, `ALO` | 131, 65, 50, 47, 43, 38, 24 bodies |
-| Files declaring their own integer typedefs / `s64` as `long` / as `long long` (128 bits on the EE) | 639 / 262 / 249 |
+| Files declaring their own integer typedefs / `s64` as `long` / as `long long` (128 bits on the EE) | 639 / 262 / 249 (0 since `include/types.h`, 2026-11-09) |
 | Distinct `func_XXXXXXXX` callees referenced | 2,246 |
 | Distinct address-named globals (`g_`, `B_`, `D_`) | 1,166 |
 | Files with `extern "C"` / files named with a mangled symbol | 3,202 / 316 |
@@ -85,7 +85,8 @@ port's repository.
 1. **Shared headers with real types**, one definition per class (`SO`, `ALO`, `LO`, `XF`, `GUARD`, the vtable layouts), typed from
    what retail's code does, field names keeping their `source:`. New matches include them; existing matches move over file by
    file, each re-proved with `make elf` and `make unit`.
-2. **Fixed-width typedefs** (`s8`..`s64`, `u8`..`u64`, `f32`, `QW` for 128-bit) instead of bare `int` and `long`. On the EE
+2. **Fixed-width typedefs** (`s8`..`s64`, `u8`..`u64`, `f32`, `QW` for 128-bit) instead of bare `int` and `long` (one definition
+   in `include/types.h` since 2026-11-09). On the EE
    `long` is 64 bits, which a Windows x64 port reads as 32. The compiled bytes do not change.
 3. **Layout asserts** in the headers: `static_assert(offsetof(SO, pxfLinear) == 0x58)` and `sizeof` checks, active only for the PS2
    build. They record retail's layout for preservation and give a port the exact list of what moves with 8-byte pointers.

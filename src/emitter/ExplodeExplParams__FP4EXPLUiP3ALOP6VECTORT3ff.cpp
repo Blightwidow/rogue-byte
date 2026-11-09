@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct ALO_15C198;
 struct EXPLP_15C198 {
     unsigned grfexpl;

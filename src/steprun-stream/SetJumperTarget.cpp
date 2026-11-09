@@ -1,4 +1,4 @@
-typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 s128 ConvertXfPos(int, int, s128);
 void SetJumperTarget(char *arg0, s128 arg1) {

@@ -1,7 +1,6 @@
 extern "C" {
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int s32;
-typedef float f32;
+#include "types.h"
 
 s32 func_0012C0E0(char *arg0, f32 fparg0) {
     f32 *elements;

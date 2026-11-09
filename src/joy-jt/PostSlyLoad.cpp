@@ -1,6 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64; typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 #define NULL 0
 extern "C" {
 struct Child { s8 gap[0x58]; s32 f_58; };

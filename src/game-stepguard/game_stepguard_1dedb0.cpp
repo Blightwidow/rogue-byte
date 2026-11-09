@@ -96,7 +96,6 @@ INCLUDE_ASM(0X1DEF98);
 
 INCLUDE_ASM(0X1DF0A0);
 
-typedef int QW __attribute__((mode(TI)));
 
 struct MQ_1DF260 { int plo; char pad0[0x10 - 4]; QW pos; char pad1[0x4C - 0x20]; int pgeom; char pad2[0xA0 - 0x50]; float s; char pad3[0xAC - 0xA4]; MQ_1DF260 *next; };
 

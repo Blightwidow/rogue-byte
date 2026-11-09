@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef unsigned char u8;
+#include "types.h"
 extern "C" {
 struct Color { float red; float green; float blue; };
 void PackColorVecToU8_11dd30(Color *color, int alpha, u8 *out) {

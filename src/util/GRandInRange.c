@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 s32 NRandRaw();
 
 float GRandInRange(float low, float high) {

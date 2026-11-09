@@ -1,5 +1,4 @@
-typedef long s64;
-typedef unsigned int u32;
+#include "types.h"
 typedef struct Slot { struct Slot* next; int field4; u32 id; u32 flags; s64 time; s64 field18; s64 field20; int callback; int field2c; int field30; int pad[3]; } Slot;
 typedef struct { s64 timeHigh; int field8; int generation; int count; Slot* freeList; int field18; volatile u32 current; } KernelState;  // volatile-ok: current is set and cleared by the alarm interrupt handler func_00239F28 (sw at 0x23A02C, 0x23A0E0)
 extern KernelState D_002C5A30;

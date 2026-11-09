@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Step { QW q[9]; };
 struct TN { char pad[0x110]; int count; Step *steps; Step *current; int fixed; };
 extern "C" void func_00221940(TN *);

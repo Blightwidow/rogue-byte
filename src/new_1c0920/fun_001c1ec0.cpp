@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct TGT { void *crv; void *plo; int pad8[2]; QW vec; };
 extern "C" {
 extern char B_003DD020[];

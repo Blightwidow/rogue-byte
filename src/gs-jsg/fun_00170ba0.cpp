@@ -1,6 +1,5 @@
 extern "C" {
-typedef int s32;
-typedef unsigned char u8;
+#include "types.h"
 typedef struct { u8 bytes[8]; } Bytes8_170BA0;
 char *PcmdAllocScript(void *arg0, s32 arg1, s32 arg2);
 

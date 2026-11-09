@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct Level_1A5078 { char p0[4]; s32 f4; char p8[0x34]; s32 f3C; };
 struct Entry_1A5078 { char p0[8]; Level_1A5078 *level; s32 fC; s32 f10; };
 extern "C" Entry_1A5078 *PentryAddBootQueue(void *, s32);

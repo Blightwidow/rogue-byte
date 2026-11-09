@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct Elem_1BEE10 { char bytes[40]; };
 extern "C" {
 extern Elem_1BEE10 B_003E1A78[];

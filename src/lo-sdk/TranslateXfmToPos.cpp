@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef signed char s8;
 extern "C" {
 QW ConvertXfPos(int, int, QW);
 void InvalidateXfmMatWorld(s8 *);

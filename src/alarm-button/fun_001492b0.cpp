@@ -1,6 +1,5 @@
 extern "C" {
-typedef unsigned int u32;
-typedef int s32;
+#include "types.h"
 void RemoveSoLoHierarchy(void *);
 void SetButtonButtons(void *, s32);
 void func_001492B0(void *arg0)

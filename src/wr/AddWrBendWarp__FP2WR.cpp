@@ -1,4 +1,4 @@
-typedef int s32; typedef float f32; typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 struct BENDWARP { s32 active; char pad4[0xC]; s128 rowA; s128 rowB; char pad30[8]; f32 half38; char pad3C[0x4C]; f32 half88; char pad8C[0x44]; };
 struct WR { char pad0[0x54]; s32 cwarp; s32 cwarpTotal; char pad5C[4]; BENDWARP warps[1]; };
 struct WRCOUNT { char pad0[0x6E0]; s32 count; };

@@ -17,6 +17,11 @@ LINE_RULES = (
     (re.compile(r'\t'), 'a tab: use four spaces'),
 )
 
+SOURCE_RULES = (  # src/ only: include/types.h is where these live
+    (re.compile(r'\btypedef\s+[^;{}]+?\s+(s8|u8|s16|u16|s32|u32|s64|u64|s128|u128|f32|f64|QW)\s*(__attribute__\s*\(\(.*?\)\))?\s*;'),
+     'a local fixed-width typedef: include "types.h" (or sly2.h) instead'),
+)
+
 WARNING_RULES = (  # the tie-break rule (docs/PRESERVATION_AND_PORT.md): printed, never fail the check
     (re.compile(r'\b(char|u8|s8)\s+pad\w*\s*\['), 'a padding member: prefer the shared type from include/ (add the field there)'),
     (re.compile(r'\*\s*\(\s*[\w ]+\*+\s*\)\s*\(.*\+\s*(0x[0-9A-Fa-f]+|\d+)\s*\)'), 'a cast offset: prefer the struct member'),
@@ -40,7 +45,8 @@ def parse_diff(text):
 def check_lines(added):
     """Problems (path:line: rule) in the added lines of code files."""
     return [f'{path}:{number}: {message}' for path, lines in sorted(added.items()) if CODE.match(path)
-            for number, text in lines for pattern, message in LINE_RULES if pattern.search(text)]
+            for number, text in lines for pattern, message in LINE_RULES + (SOURCE_RULES if path.startswith('src/') else ())
+            if pattern.search(text)]
 
 def warn_lines(added):
     """Tie-break warnings (path:line: warning: rule) in the added lines of code files; they do not fail the check."""

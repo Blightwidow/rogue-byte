@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
-typedef float f32;
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 
 extern "C" {
 void func_001A58D0(void *arg0, s32 arg1, s32 arg2, f32 fparg3);

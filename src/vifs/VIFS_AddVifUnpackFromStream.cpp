@@ -1,6 +1,5 @@
 extern "C" {
-typedef int s32;
-typedef unsigned int u32;
+#include "types.h"
 void CBinaryInputStream_Read_thunk(void *stream, s32, s32);
 void UnpackHelper__4VIFS3UPKiiPiPPUi(void *thisVifs, void *upk, s32, s32, s32 *, u32 **);
 

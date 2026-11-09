@@ -1,4 +1,4 @@
-typedef int s32; typedef short s16;
+#include "types.h"
 struct VEnt { char pad0[0x148]; s16 adj; s16 pad; void (*fn)(void *, s32); };
 struct Part { char pad[0xC]; VEnt *vt; };
 struct Guard { char pad[0xF64]; Part *part; };

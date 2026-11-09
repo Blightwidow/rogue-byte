@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 s32 func_00143C78(char *self) {
     if (*(s32 *)(self + 0x204) != 0) return 0;

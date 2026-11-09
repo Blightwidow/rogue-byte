@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 struct Q_2022D8 { char pad[0x28]; u64 flags; };
 struct P_2022D8 { char pad[0x28]; u64 flags; char pad1[0xD0]; Q_2022D8 *other; };

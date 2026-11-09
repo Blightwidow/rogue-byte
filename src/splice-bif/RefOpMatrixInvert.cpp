@@ -1,4 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
+#include "types.h"
 
 extern "C" {
 void SetTag__4CRef4TAGK(s8 *, s32);

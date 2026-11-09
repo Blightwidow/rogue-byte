@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
-typedef short s16;
+#include "types.h"
 
 extern "C" {
 void UnsubscribeLoObject(char *subscriber, char *owner);

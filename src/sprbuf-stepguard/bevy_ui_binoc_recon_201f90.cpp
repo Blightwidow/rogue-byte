@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct SW; struct LO;
 struct RECON { char p0[0x20]; QW posEye; char p1[0xB8 - 0x30]; int fInVolume; };
 extern char B_003DD490[];

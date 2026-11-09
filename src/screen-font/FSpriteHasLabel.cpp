@@ -1,6 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64;
+#include "types.h"
 #define NULL 0
 struct Entry_2142B0 { s32 pad[5]; s32 label; };
 struct Sprite_2142B0 { u16 count; u16 pad; char *entries; };

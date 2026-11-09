@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 struct SortNode_239E68 { SortNode_239E68 *next; SortNode_239E68 *prev; s32 pad[2]; u64 a; u64 b; u64 c; };
 struct SortList_2C5A30 { char pad[0x18]; SortNode_239E68 *head; };

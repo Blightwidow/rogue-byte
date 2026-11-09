@@ -1,4 +1,4 @@
-typedef short s16;
+#include "types.h"
 struct VT { char pad[0x10]; s16 d10; s16 u10; void (*f14)(void *); };
 struct Obj { char pad0[0xC]; VT *vt; char pad1[0x42]; s16 s52; };
 extern "C" {

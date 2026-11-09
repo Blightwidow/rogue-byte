@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" s32 CploFindSwObjectsByClass(s32, s32, s32, s32, s32, void **);
 extern "C" void SetGuardMode(void *, s32);
 extern "C" void SetSwGuardsMode(s32 unusedWorld, s32 mode) {

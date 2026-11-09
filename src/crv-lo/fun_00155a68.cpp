@@ -1,6 +1,5 @@
 extern "C" {
-typedef int s32;
-typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 s128 PosLoWorld(s32);
 s32 func_00227C90(s32, s128);
 

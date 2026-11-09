@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
-typedef unsigned int u32;
+#include "types.h"
 
 extern "C" {
 s32 FTaskRunning(s8 *);

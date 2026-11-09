@@ -1,6 +1,6 @@
 extern "C" {
 /* 0x224028: add the hierarchy, then if the object at +0x164 is set, link it with the field at +0x168 as the fifth argument */
-typedef int s32;
+#include "types.h"
 void AddSoLoHierarchy(void *);
 void func_001F1448(void *, void *, s32, s32, void *);
 void AddGadgetObjLoHierarchy(char *arg0) {

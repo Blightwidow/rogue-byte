@@ -7,6 +7,7 @@ cleaned up piece by piece. Run it locally with `python3 scripts/check_cleanup.py
 | Rule | Why |
 | :--- | :--- |
 | No `M2C_UNK(...)` / `M2C_FIELD(...)` in added code | These are m2c's raw-offset accesses. Write the field of the struct in `include/sly2.h` (add the field when it is missing). The compiled bytes must stay the same. |
+| No local fixed-width typedef in `src/` (`typedef long s64;`) | One definition in `include/types.h`, reached through `sly2.h`, `m2c_macros.h` or `#include "types.h"`. On the EE `long` is 64 bits and `long long` 128. |
 | No `/* Error` comments | m2c left a spot it could not translate. Resolve it. |
 | No m2c temporary names (`unk_…`, `phi_…`, `saved_reg_…`) | Name the variable after what it holds. |
 | No trailing whitespace, no tabs | Four spaces, as `.clang-format`. |
