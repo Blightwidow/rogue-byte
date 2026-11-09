@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct MEMCARD;
-#include "cref.h"
+struct CRef { int tagk; float g; };
 struct SLOT { char pad[0x5464]; };
 struct SAVE {
     char pad0[8]; int state; int want; float tStamp;
@@ -58,7 +58,7 @@ void SetSaveState(SAVE *psave, int nState)
             SLOT *pslot = &psave->aslot[islot];
             CRef ref;
             RefGetGameSaveValue(&ref, B_003DD490.pdat, pslot);
-            float dt = ref.m_tag.m_g;
+            float dt = ref.g;
             CRef_Destruct(&ref);
             if (dt != 0.0f) {
                 if (CompareSaves((SAVE *)((char *)psave->pslotNewest + 0x5408), (SAVE *)((char *)pslot + 0x5408)) < 0)

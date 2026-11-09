@@ -1,4 +1,4 @@
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct Raw8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef*, int, CRef*, const void*, ...);
 extern "C" void CRef_Destruct(CRef*);
@@ -8,16 +8,13 @@ extern "C" const Raw8 RO_002A3C08;
 extern "C" void func_00149290(void*, int, int);
 extern "C" CRef* F105158(CRef* result, void* self, int count, CRef* args)
 {
-    Raw8 types;
-    CRef ref;
-    int a;
-    int b;
-    types = RO_002A3C08;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, &types, &a, &b);
-    CRef_Destruct(&ref);
-    SetTag__4CRef4TAGK(&ref, 0x24);
-    func_00149290(self, a, b);
-    CRef_CopyConstruct(result, &ref);
-    CRef_Destruct(&ref);
+    struct F { Raw8 types; char pad[8]; CRef ref; int a; int b; } f;
+    f.types = RO_002A3C08;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&f.ref, 2, args, &f.types, &f.a, &f.b);
+    CRef_Destruct(&f.ref);
+    SetTag__4CRef4TAGK(&f.ref, 0x24);
+    func_00149290(self, f.a, f.b);
+    CRef_CopyConstruct(result, &f.ref);
+    CRef_Destruct(&f.ref);
     return result;
 }

@@ -1,5 +1,5 @@
 #include "sly2.h"
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct B8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);
@@ -12,16 +12,11 @@ extern const struct B16 { char b[16]; } RO_002A3AC0;
 
 CRef *RefCallPasegaApplyAseg(CRef *result, BASIC *object, int count, CRef *args)
 {
-    B16 aotyp;
-    CRef ref;
-    int oid;
-    float a;
-    float b;
-    int c;
-    aotyp = RO_002A3AC0;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 4, args, (const int *)&aotyp, &oid, &a, &b, &c);
-    CRef_SetBasic(&ref, PasegaApplyAseg(object, oid, a, b, c));
-    CRef_CopyConstruct(result, &ref);
-    CRef_Destruct(&ref);
+    struct L { B16 aotyp; CRef ref; int oid; float a; float b; int c; } l;
+    l.aotyp = RO_002A3AC0;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 4, args, (const int *)&l.aotyp, &l.oid, &l.a, &l.b, &l.c);
+    CRef_SetBasic(&l.ref, PasegaApplyAseg(object, l.oid, l.a, l.b, l.c));
+    CRef_CopyConstruct(result, &l.ref);
+    CRef_Destruct(&l.ref);
     return result;
 }

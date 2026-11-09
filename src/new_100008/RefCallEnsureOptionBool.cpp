@@ -1,26 +1,20 @@
 #include "sly2.h"
 #include "cref.h"
+CRef RefSetArgsFromSplice(int cref, CRef *aref, const void *aotyp, ...);
 struct BASIC;
 struct B8 { char b[8]; };
-extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);
-extern "C" void CRef_Destruct(CRef *);
-extern "C" void SetTag__4CRef4TAGK(CRef *, int);
-extern "C" CRef *CRef_CopyConstruct(CRef *, CRef *);
 extern "C" void EnsureOptionBool(BASIC *, int, int);
 extern const B8 RO_002A3A30;
 
-CRef *RefCallEnsureOptionBool(CRef *result, BASIC *object, int count, CRef *args)
+CRef RefCallEnsureOptionBool(BASIC *object, int count, CRef *args)
 {
     B8 aotyp;
-    CRef ref;
     int oid;
     int arg;
     aotyp = RO_002A3A30;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, (const int *)&aotyp, &oid, &arg);
-    CRef_Destruct(&ref);
-    SetTag__4CRef4TAGK(&ref, 0x24);
+    RefSetArgsFromSplice(2, args, (const int *)&aotyp, &oid, &arg);
+    CRef ref;
+    ref.SetTag(TAGK_Void);
     EnsureOptionBool(object, oid, arg);
-    CRef_CopyConstruct(result, &ref);
-    CRef_Destruct(&ref);
-    return result;
+    return ref;
 }

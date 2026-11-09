@@ -1,5 +1,5 @@
 #include "sly2.h"
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct Raw8 { char b[8]; };
 extern "C" void *RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const void *, ...);
@@ -14,14 +14,11 @@ extern "C" const Raw8 RO_002A3A88;
 extern "C" BASIC *func_001F8510(BASIC *, int, int);
 CRef *RefCallPhandleNewAloEmitter(CRef *result, BASIC *object, int count, CRef *args)
 {
-    Raw8 types;
-    CRef ref;
-    int a;
-    int b;
-    types = RO_002A3A88;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, &types, &a, &b);
-    CRef_SetBasic(&ref, func_001F8510(object, a, b));
-    CRef_CopyConstruct(result, &ref);
-    CRef_Destruct(&ref);
+    struct F { Raw8 types; char pad[8]; CRef ref; int a; int b; } f;
+    f.types = RO_002A3A88;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&f.ref, 2, args, &f.types, &f.a, &f.b);
+    CRef_SetBasic(&f.ref, func_001F8510(object, f.a, f.b));
+    CRef_CopyConstruct(result, &f.ref);
+    CRef_Destruct(&f.ref);
     return result;
 }

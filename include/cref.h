@@ -3,7 +3,7 @@
 
    Names from the Sly 1 decompilation (source: sly1 include/splice/ref.h, CC0; THIRD_PARTY_NOTICES.md). The size is Sly 2's
    own: func_001239D8 reads aref[1].m_tag at 0xC, so an array of CRef steps by 8. The 16-byte local copies that 300 matched
-   bindings used were frame scaffolding: the same bindings match with this CRef and plain locals.
+   bindings used were frame scaffolding: 244 of them match as real C++ with this CRef (docs/ROADMAP.md item 1).
 
    Sly 2's tags are not Sly 1's values: each one below is the constant that Sly 2's setter of that kind writes (CRef_SetS32
    0x15, CRef_SetF32 0x16, CRef_SetBool 0x17, CRef_SetSymid 0x18, CRef_SetBifk 0x19, CRef_SetVector 0x1A, CRef_SetMatrixPtr
@@ -57,10 +57,32 @@ union TAG {
     struct CMethod *m_pmethod;
 };
 
+#ifdef __cplusplus
+/* The special members as retail shows them in the Splice bindings: a default constructor that does nothing (no call), an
+   out-of-line copy constructor (0x1291A8: copies the two words and calls Incref) used to return a CRef by value, and an inline
+   destructor that calls Decref (0x129EC8) with `this` alone; an out-of-line destructor would also pass g++'s in-charge flag,
+   which retail's calls lack. */
+struct CRef {
+    TAGK m_tagk;
+    TAG m_tag;
+    CRef() {}
+    CRef(const CRef &ref);
+    ~CRef() { Decref(); }
+    CRef &operator=(const CRef &ref);
+    int operator==(const CRef &ref);
+    void Incref();
+    void Decref();
+    void SetTag(TAGK tagk);
+    void SetS32(int n);
+    void SetBool(int fBool);
+    void SetBasic(struct BASIC *pbasic);
+};
+#else
 struct CRef {
     enum TAGK m_tagk;
     union TAG m_tag;
 };
+#endif
 typedef struct CRef CRef;
 
 #if defined(__mips__)

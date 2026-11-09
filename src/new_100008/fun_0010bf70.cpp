@@ -1,5 +1,5 @@
 #include "sly2.h"
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct AOT { int v[1]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const AOT *, ...);

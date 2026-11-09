@@ -1,5 +1,5 @@
 #include "sly2.h"
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct B8 { char b[8]; };
 struct B12 { B8 a; int b; };
@@ -13,16 +13,11 @@ extern "C" BASIC *PsmaApplySmEx(BASIC *, int, int, int, int);
 extern const B16 RO_002A3BD0;
 CRef *T(CRef *result, BASIC *object, int count, CRef *args)
 {
-    B16 aotyp;
-    CRef ref;
-    int a;
-    int b;
-    int c;
-    int d;
-    aotyp = RO_002A3BD0;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 4, args, (const int *)&aotyp, &a, &b, &c, &d);
-    CRef_SetBasic(&ref, PsmaApplySmEx(object, a, b, c, d));
-    CRef_CopyConstruct(result, &ref);
-    CRef_Destruct(&ref);
+    struct L { B16 aotyp; CRef ref; int a; int b; int c; int d; } l;
+    l.aotyp = RO_002A3BD0;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 4, args, (const int *)&l.aotyp, &l.a, &l.b, &l.c, &l.d);
+    CRef_SetBasic(&l.ref, PsmaApplySmEx(object, l.a, l.b, l.c, l.d));
+    CRef_CopyConstruct(result, &l.ref);
+    CRef_Destruct(&l.ref);
     return result;
 }

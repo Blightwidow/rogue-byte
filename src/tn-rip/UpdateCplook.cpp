@@ -1,5 +1,5 @@
 #include "sly2.h"
-#include "cref.h"
+struct CRef { int tagk; int n; };
 struct LM;
 struct SMP;
 struct AMB { char pad[0x4E]; short cpause; };
@@ -93,7 +93,7 @@ extern "C" void UpdateCplook(CPLOOK *pcplook, void *pv, JOY *pjoy)
     float dradTilt = -fabsf(y) * y * D_002BD994;
     CRef ref;
     RefGetGameSaveValue(&ref, B_003DD490.pvSave, B_003D4A60);
-    int fInvert = ref.m_tag.m_n;
+    int fInvert = ref.n;
     CRef_Destruct(&ref);
     if (fInvert)
         dradTilt = -dradTilt;

@@ -112,10 +112,15 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      the `TAG` union); Sly 2's size, 8 bytes (`func_001239D8` reads `aref[1]` at 0x8); Sly 2's own tag values, each read from the
      setter that writes it (`TAGK_S32` 0x15 ... `TAGK_Method` 0x22, `TAGK_Void` 0x24; the order is not Sly 1's). 304 of the copies
      were generated Splice bindings with a 16-byte `CRef` inside a frame struct (`struct L { ...; int pad[2]; CRef ref; int a; }`):
-     padding that only sized the frame, which the matching rules do not allow. 268 of them match with the shared `CRef` and plain
-     locals in the same order; 39 differ by 0x10 in frame size and keep their frame struct for now. 50 hand-written sources whose
-     `CRef` was data only moved too: 318 files in all. 46 sources declare `CRef` members (`operator=`, a copy constructor, a
-     destructor), which change what the compiler inserts; they wait for the class's special members to be settled.
+     padding that only sized the frame, which the matching rules do not allow, around explicit calls to the copy constructor and
+     the cleanup. Retail shows `CRef`'s special members: no default-constructor call, an out-of-line copy constructor (0x1291A8)
+     used to return a `CRef` by value, and an inline destructor calling `Decref` (0x129EC8) with `this` alone (an out-of-line one
+     would also pass g++'s in-charge flag, which retail's calls lack). With those members 244 bindings are real C++: they return
+     a `CRef` by value, discard `RefSetArgsFromSplice`'s result and let the compiler insert the copies and cleanups, and they
+     match (`config/matching/symbol_addrs.txt` gains the members' mangled names for the scorer's call check). 36 sources that
+     only take `CRef` pointers use it too: 280 files. Still local: 14 bindings outside the template (setters, an `int` argument
+     array), 39 that differ by 0x10 in frame size, and the hand-written sources that call the cleanup themselves on a local
+     `CRef`; each needs its calls rewritten as the compiler's.
    - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float

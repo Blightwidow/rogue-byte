@@ -1,4 +1,4 @@
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct JSG;
 struct JSGE { char pad[0x10]; int coid; int aoid[4]; };
 extern "C" void func_002013D8(CRef *, CRef *, int, int, unsigned *, int *);

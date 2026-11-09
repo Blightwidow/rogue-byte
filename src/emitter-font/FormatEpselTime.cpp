@@ -1,4 +1,4 @@
-#include "cref.h"
+struct CRef { int tagk; int n; };
 struct HERO { char pad[0x110]; int idx; };
 struct GLOBALS { char pad0[0x3B58]; int slots[1]; };
 extern "C" char B_003D4A60[];
@@ -18,7 +18,7 @@ void FormatEpselTime(char *out)
         if (key) {
             CRef ref;
             RefGetGameSaveValue(&ref, key, B_003D4A60);
-            float seconds = *(float *)&ref.m_tag.m_n;
+            float seconds = *(float *)&ref.n;
             CRef_Destruct(&ref);
             int whole = (int)(seconds * 0.00027777778f);
             int minutes = (int)(fmodf(seconds, 3600.0f) * 0.016666668f);

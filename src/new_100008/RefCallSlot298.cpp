@@ -1,5 +1,5 @@
 #include "types.h"
-#include "cref.h"
+struct CRef { int tagk; int pad[3]; };
 struct VT_10FC80 { char pad[0x298]; s16 delta; s16 p; void (*fn)(char *); };
 struct Obj_10FC80 { int pad[3]; VT_10FC80 *vt; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, int, int);
