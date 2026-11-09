@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 /* SO, the solid object: class 48 of retail's class table, 0x150 bytes, 75 vtable slots, derived from LO (include/lo.h, which
-   explains the rules: slot order, names, signatures, the two-reader rule for fields). C++ only. */
+   explains the rules: slot order, names, signatures, which readers a field needs). C++ only. */
 #ifndef SLY2_SO_H
 #define SLY2_SO_H
 #include "lo.h"
@@ -43,7 +43,10 @@ struct SO : LO {
     /* 0x58 */ struct XF *pxfLinear;   /* Carry_Attach, ProjectSoTransform, func_001F8F80, func_001CD308 */
     /* 0x5C */ struct XF *pxfAngular;  /* the same functions */
     /* 0x60 */ struct XF *pxfRoot;     /* GetSoCpdefi, func_001F4898, func_001F4930 */
-    u8 unknown_0x64[0x7C];
+    /* 0x64 */ struct LO *ploChildFirst; /* func_001CB518, func_001CB5D0, func_001F3CC8 (walked through LO::ploNext) */
+    u8 unknown_0x68[0x64];
+    /* 0xCC */ s32 islot;              /* func_001CB518 (SO's slot 26) sets it to -1 */
+    u8 unknown_0xD0[0x10];
     /* 0xE0 */ s32 cgeom;              /* ProjectSoTransform, RemoveSoGeomFromOxa (elements of 0xB0 bytes) */
     /* 0xE4 */ struct GEOM *ageom;     /* the same functions, PpartFindAlo, func_001F7A68 (as PART) */
     /* 0xE8 */ struct PHYS *pphys;     /* FIsSoLocked, ProjectSoTransform, TranslateSoToPos, UpdateSo and others */
@@ -61,6 +64,8 @@ SLY2_SIZE_CHECK(SO, 0x150);
 SLY2_OFFSET_CHECK(SO, pxfLinear, 0x58);
 SLY2_OFFSET_CHECK(SO, pxfAngular, 0x5C);
 SLY2_OFFSET_CHECK(SO, pxfRoot, 0x60);
+SLY2_OFFSET_CHECK(SO, ploChildFirst, 0x64);
+SLY2_OFFSET_CHECK(SO, islot, 0xCC);
 SLY2_OFFSET_CHECK(SO, cgeom, 0xE0);
 SLY2_OFFSET_CHECK(SO, ageom, 0xE4);
 SLY2_OFFSET_CHECK(SO, pphys, 0xE8);

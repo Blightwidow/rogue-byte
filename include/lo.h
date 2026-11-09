@@ -10,8 +10,11 @@
 
    A virtual is named after the function retail puts in its slot (the base class's, then the first override with a name),
    without the class in the name; Slot<n> where none has a name yet. A signature is written only where a matched caller
-   shows it; the others are `void ()` placeholders. Fields follow include/so.h's rule: two matched functions read them at
-   the same offset with the same type. C++ only. */
+   shows it; the others are `void ()` placeholders.
+
+   A field is here when a matched function reads it at that offset, and no matched function reads the offset as another type.
+   One reader is enough when it is a method of the class (its vtable holds it) or the class is otherwise certain; two are
+   needed when the class of the object is only a guess from a local struct's name. The readers are listed. C++ only. */
 #ifndef SLY2_LO_H
 #define SLY2_LO_H
 #ifndef __cplusplus
@@ -53,8 +56,8 @@ struct LO : BASIC {
     virtual void Slot23();
     virtual void Slot24();
     virtual void SetCloneId();          /* 25: ALO_SetCloneId (SO) */
-    virtual void Slot26();
-    virtual void Slot27();
+    virtual void Slot26(void *pv);      /* 26: func_001CB4E0, func_001CB518 (SO); func_001CB518 calls it on each child */
+    virtual void Slot27(void *pv);      /* 27: func_001CB5C8, func_001CB5D0 (SO); func_001CB5D0 calls it on each child */
     virtual void CReturnZero();         /* 28: CReturnZeroLo */
     virtual void TranslateToPos(QW pos); /* 29: TranslateSoToPos (SO); func_001B0D90 passes a quadword */
     virtual void Slot30();
@@ -79,7 +82,8 @@ struct LO : BASIC {
 
     /* 0x10 */ struct SO *psoParent;   /* InitSo, FFilterSensorSight (followed up to the root) */
     /* 0x14 */ s32 proot;              /* FFilterSensorSight (compared as an id), PoxaAllocSw (a list entry) */
-    u8 unknown_0x18[0x10];
+    u8 unknown_0x18[0xC];
+    /* 0x24 */ struct LO *ploNext;     /* the next child of the same parent: func_001CB518, func_001CB5D0, func_001F3CC8 */
     /* 0x28 */ u64 grfo;               /* RecalcSoLocked, func_001C4BD8, UpdateRip */
     u8 unknown_0x30[0x20];
 };
@@ -93,6 +97,7 @@ SLY2_SIZE_CHECK(BASIC, 0x10);
 SLY2_SIZE_CHECK(LO, 0x50);
 SLY2_OFFSET_CHECK(LO, psoParent, 0x10);
 SLY2_OFFSET_CHECK(LO, proot, 0x14);
+SLY2_OFFSET_CHECK(LO, ploNext, 0x24);
 SLY2_OFFSET_CHECK(LO, grfo, 0x28);
 #endif
 #endif

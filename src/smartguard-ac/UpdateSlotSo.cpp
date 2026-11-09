@@ -1,27 +1,16 @@
-struct SO {
-    char pad0[0x168];
-    float dtFade;
-    int pcrvWander;
-    char pad1[0x1C4 - 0x170];
-    int pactAnim;
-    char pad2[0x220 - 0x1C8];
-    int state;
-    int pad224;
-    float tNext;
-    float tFade;
-};
+#include "slotso.h"
 extern float g_2dded0;
 extern float g_2a70e0;
 extern "C" {
-void UpdateSo(SO *, float);
-int SenseSlotSoTargetState(SO *);
-int FSlotSoFacingHeading(SO *);
-void FadeAloOut(SO *, float);
-void SetSlotSoState(SO *, int);
-void SteerSlotSoAlongCrv(SO *);
+void UpdateSo(SLOTSO *, float);
+int SenseSlotSoTargetState(SLOTSO *);
+int FSlotSoFacingHeading(SLOTSO *);
+void FadeAloOut(SLOTSO *, float);
+void SetSlotSoState(SLOTSO *, int);
+void SteerSlotSoAlongCrv(SLOTSO *);
 }
 
-extern "C" void UpdateSlotSo(SO *pso, float dt)
+extern "C" void UpdateSlotSo(SLOTSO *pso, float dt)
 {
     UpdateSo(pso, dt);
     int stateNext = pso->state;

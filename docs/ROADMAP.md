@@ -81,12 +81,20 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      of 0xB0-byte elements, named `GEOM`), `uFade`/`duFade` 0x12C/0x130. The 0xEC conflict resolved: the two files that read
      `pphys` at 0xEC read `pcontact` at +0x6C of the object, next to `owner` +0x60, `first` +0x64 and `pmqList` +0x68 of the
      `poxa` readers: one `OXA`, misnamed.
-   - Status: 40 of the 72 files that declared their own `SO` use the shared classes (`make elf` PASS, reports unchanged, every
-     converted function links from C). The other 32: derived classes read past 0x150 (slot `SO`s at 0x168-0x22C, `0x298` slots,
-     `FSlotSoFacingHeading` at 0x1D8), fields one function reads (0x40, 0x64, 0xB8, 0x138...), opaque uses (`pad[0x300]`), and
-     `Carry_Attach` (its matrix type and a `JT` that needs its class). 292 files still write vtable calls by hand on other classes.
-     Next: the derived classes of `SO` from the class table (class 50, 0x180; class 51, 0x2C0...) by the same rules, and `XF` from
-     the functions that take one (the local name `XF` describes several types).
+   - Derived classes and children (2026-11-09): every function was mapped to the classes whose vtable holds it, which ties a matched
+     function to its class without trusting local names. `include/slotso.h`: `SLOTSO`, class 96 (0x250 bytes, derived from `SO`:
+     `UpdateSlotSo` is its slot 16, `AccelSlotSoRotation` 70, `FAbsorbSlotSoWkr` 75); 3 of its files moved, two of them with virtual
+     calls on the derived object (slots 29 and 31). The child list: `SO::ploChildFirst` 0x64 and `LO::ploNext` 0x24, walked by three
+     matched functions that call their own slot on each child (slots 20, 26, 27, recursive virtuals). A field needs one reader when
+     the reader is a method of the class, two when the class is only guessed from a local name, and never contradicts another
+     reader (the rule is at the top of `include/lo.h`).
+   - Status: 45 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
+     virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 27: `InitSo` and
+     `func_001F3CC8` need the `DL` and `GLOBSET` types (0x64, 0x80); derived classes with one matched file each (classes 85, 87, 103,
+     107); `SLOTSO`'s init function (unnamed float constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields
+     only one guessed reader shows (0x40, 0xB8, 0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on
+     other classes. Next: `DL` (the `InitDl__FP2DLi` name shows the type existed), `XF` from the functions that take one (the local
+     name `XF` describes several types), then the class table's other families.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
