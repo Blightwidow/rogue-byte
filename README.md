@@ -20,10 +20,10 @@ A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Suc
 <!-- progress:begin (scripts/readme_progress.py) -->
 | Version | Code | of which exact C | Functions | Blocked for C |
 | :--- | ---: | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 80.10% (1123428 of 1402480 bytes) | 49.97% | 6192 of 6825 | 853 functions, 30.13% |
-| PAL `SCES_525.29` | 78.64% (1102884 of 1402480 bytes) | 48.51% | 6106 of 6825 | 853 functions, 30.13% |
+| NTSC-U `SCUS_973.16` | 80.25% (1125476 of 1402480 bytes) | 49.97% | 6354 of 6825 | 1015 functions, 30.28% |
+| PAL `SCES_525.29` | 78.78% (1104932 of 1402480 bytes) | 48.51% | 6268 of 6825 | 1015 functions, 30.28% |
 
-A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, or hand-written assembly: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
+A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
 <!-- progress:end -->
 
 Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
@@ -32,9 +32,9 @@ Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
 
 | Path | What |
 |---|---|
-| `src/` | matched C/C++, one function per file, grouped by module ([src/README.md](src/README.md)) |
+| `src/` | matched C/C++ grouped by module: one function per file, or a whole source file proved from retail's constructor list ([src/README.md](src/README.md)) |
 | `nonmatching/` | the best source that compiles for each unmatched function: starting points that count as partial work in the report ([nonmatching/README.md](nonmatching/README.md)) |
-| `include/` | shared headers (`sly2.h`) and the assembler macros |
+| `include/` | shared headers (`sly2.h`) and the assembler macros; shared types move here ([docs/PRESERVATION_AND_PORT.md](docs/PRESERVATION_AND_PORT.md)) |
 | `config/` | the Splat configuration and the US retail layout, and `config/eu/`, the PAL pairing and check results ([config/README.md](config/README.md)) |
 | `scripts/build/` | the image pipeline: split, link, pack, objdiff |
 | `scripts/names/`, `scripts/ghidra/` | name recovery: the Sly 1 code matcher, headless Ghidra scripts |
@@ -54,7 +54,7 @@ Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
 4. Optional, PAL: `python3 scripts/disc_extract.py discs/<disc>.iso` puts `SCES_525.29` in `work/elf/`, then `make pal` pairs the functions and checks
    the matched C against it ([docs/build/building.md](docs/build/building.md#other-versions-pal)). The US build is the reference: PAL is verified, not rebuilt.
 
-More: [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) (compiler, assembler, flags), [docs/AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md) (the matching procedure, for people and AI agents), [docs/ROADMAP.md](docs/ROADMAP.md).
+More: [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) (compiler, assembler, flags), [docs/AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md) (the matching procedure, for people and AI agents), [docs/ROADMAP.md](docs/ROADMAP.md), [docs/PRESERVATION_AND_PORT.md](docs/PRESERVATION_AND_PORT.md) (preservation first, what is added for a later port).
 
 Name recovery needs more (Ghidra 12.1.4 with the ghidra-emotionengine-reloaded extension, Java 21, your Sly 1 executable):
 [docs/build/name-recovery.md](docs/build/name-recovery.md) and [docs/build/decompilation.md](docs/build/decompilation.md).

@@ -50,7 +50,13 @@ original assembly as finished apart from the exact C:
 
 - `scripts/classify_blockers.py` (`make blockers`, after `make elf`) writes `config/us/blockers.tsv` (address, name, size, kind) from the
   disassembly: `vu` (a VU0 macro instruction), `mmi` (a multimedia instruction), `system` (COP0 or a system instruction: `mfc0`, `ei`, `sync`,
-  not `break`, which the compiler emits for a division by zero) and `handwritten` (`config/us/handwritten_asm.txt`). 853 functions today.
+  not `break`, which the compiler emits for a division by zero) and `handwritten` (`config/us/handwritten_asm.txt`). 853 functions on
+  2026-11-04.
+- Since 2026-11-09 a fifth kind, `remnant`: a chunk of the split that is not a function. Nothing in retail reaches it (no `jal`, `j` or
+  branch target, no data word, no `lui`+`addiu`/`ori` pair, not the entry point) and it has no control-transfer instruction, so no
+  compiled function can be it: an epilogue left behind (`addiu $sp,$sp,N; nop`) or one or two leftover instructions. 162 chunks, 2,640
+  bytes. The control: every one of the 5,333 matched functions is reached or returns (9 are unreached but return), and the same reference
+  check reaches 5,325 of them. sly1-decomp's audit of 2026-11-07 calls the same thing remnants. 1,015 blockers in all.
 - A blocker stays **assembly**: it is built from the original assembly and is never matched in C. No inline asm, no exception.
 - It is **left out of the work queues**: `list_functions.py` skips it (`--blockers` shows it, `--status blocked` lists only them) and
   `claim.py init` skips it. `work/report.json` gives it the status `blocked`.

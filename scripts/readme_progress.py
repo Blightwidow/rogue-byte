@@ -30,8 +30,9 @@ def table():
             label, float(measures['matched_code_percent']), matched, total, 100 * (matched - blocked['bytes']) / total,
             measures['matched_functions'], measures['total_functions'], blocked['functions'], 100 * blocked['bytes'] / total))
     note = ('A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces '
-            "PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, or hand-written assembly: `config/us/blockers.tsv`, "
-            '[docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.')
+            "PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: "
+            '`config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, '
+            'shown apart from the exact C.')
     return '\n'.join(rows) + '\n\n' + note + '\n'
 
 

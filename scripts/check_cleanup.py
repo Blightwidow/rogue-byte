@@ -17,6 +17,13 @@ LINE_RULES = (
     (re.compile(r'\t'), 'a tab: use four spaces'),
 )
 
+WARNING_RULES = (  # the tie-break rule (docs/PRESERVATION_AND_PORT.md): printed, never fail the check
+    (re.compile(r'\b(char|u8|s8)\s+pad\w*\s*\['), 'a padding member: prefer the shared type from include/ (add the field there)'),
+    (re.compile(r'\*\s*\(\s*[\w ]+\*+\s*\)\s*\(.*\+\s*(0x[0-9A-Fa-f]+|\d+)\s*\)'), 'a cast offset: prefer the struct member'),
+    (re.compile(r'->\s*delta\b'), 'a hand-written vtable call: prefer a virtual member function when it matches'),
+    (re.compile(r'^(?!\s*typedef\b).*\blong\b'), 'a bare long: prefer s64 (64 bits) or QW (128 bits)'),
+)
+
 def parse_diff(text):
     """{path: [(line number, added line)]} of a `git diff -U0`."""
     added, path, number = {}, None, 0
@@ -35,6 +42,11 @@ def check_lines(added):
     return [f'{path}:{number}: {message}' for path, lines in sorted(added.items()) if CODE.match(path)
             for number, text in lines for pattern, message in LINE_RULES if pattern.search(text)]
 
+def warn_lines(added):
+    """Tie-break warnings (path:line: warning: rule) in the added lines of code files; they do not fail the check."""
+    return [f'{path}:{number}: warning: {message}' for path, lines in sorted(added.items()) if CODE.match(path)
+            for number, text in lines for pattern, message in WARNING_RULES if pattern.search(text)]
+
 def check_files(paths):
     """Problems for added files that could be game data or build output."""
     return [f'{path}: game data or build output must not be committed (see .gitignore)' for path in paths if FORBIDDEN_FILES.search(path)]
@@ -45,7 +57,12 @@ def main():
     arguments = parser.parse_args()
     diff = subprocess.check_output(['git', 'diff', '-U0', '--diff-filter=AM', arguments.base, 'HEAD'], text=True)
     new_files = subprocess.check_output(['git', 'diff', '--name-only', '--diff-filter=A', arguments.base, 'HEAD'], text=True).split()
-    problems = check_lines(parse_diff(diff)) + check_files(new_files)
+    added = parse_diff(diff)
+    problems = check_lines(added) + check_files(new_files)
+    warnings = warn_lines(added)
+    if warnings:
+        print('\n'.join(warnings))
+        print(f'{len(warnings)} tie-break warnings (docs/contributing/code-cleanup.md): not failures')
     print('\n'.join(problems) if problems else 'cleanup rules: ok')
     sys.exit(1 if problems else 0)
 

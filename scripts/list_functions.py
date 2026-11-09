@@ -19,7 +19,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--module')
     parser.add_argument('--status', choices=['c', 'matched', 'draft', 'asm', 'blocked'])
-    parser.add_argument('--blockers', action='store_true', help='include the permanent blockers (VU0, MMI, COP0, hand-written), left out by default')
+    parser.add_argument('--blockers', action='store_true', help='include the permanent blockers (VU0, MMI, COP0, hand-written, remnants), left out by default')
     parser.add_argument('--unnamed', action='store_true')
     parser.add_argument('--min-size', type=int, default=0)
     parser.add_argument('--max-size', type=int)

@@ -77,6 +77,7 @@ def fingerprint():
             digest.update(' '.join(compile_unit.FLAGS).encode())
             digest.update(os.environ.get('EE_AS_ARGS', '').encode())
             digest.update(os.environ.get('EE_GCC_DIR', '').encode())  # empty for a build: the fingerprint of a normal run does not change
+            digest.update(os.environ.get('SONY_COMPILE_FLAGS', '').encode())  # likewise, for SDK-range probes
             for path in (compile_unit.EE_AS, os.path.join(LAB, 'config', 'us', 'sony_gcc29.txt'), os.path.join(LAB, 'config', 'us', 'move_movables.txt'), SYMBOLS):
                 digest.update(f'{path}:{content_digest(path)}'.encode())
             for directory, _, names in sorted(os.walk(INCLUDE)):

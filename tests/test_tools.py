@@ -117,6 +117,30 @@ class CleanupTests(unittest.TestCase):
     def test_source_files_are_not_flagged(self):
         self.assertEqual(check_cleanup.check_files(['src/mat/Foo.c', 'tools/README.md', 'docs/build/building.md', 'scripts/workflow.py']), [])
 
+    def warnings_for(self, line):
+        return check_cleanup.warn_lines({'src/mat/Foo.cpp': [(1, line)]})
+
+    def test_warns_on_padding_member(self):
+        self.assertEqual(len(self.warnings_for('struct SO { char pad0[0x58]; XF *pxf; };')), 1)
+
+    def test_warns_on_cast_offset(self):
+        self.assertEqual(len(self.warnings_for('    *(float *)(base + 0x1434) = g_2dded0;')), 1)
+
+    def test_warns_on_hand_written_vtable_call(self):
+        self.assertEqual(len(self.warnings_for('    vt->fn((char *)pobject + vt->delta, 6, 0, 0, 0, 0);')), 1)
+
+    def test_warns_on_bare_long_outside_typedef(self):
+        self.assertEqual(len(self.warnings_for('    long value = 0;')), 1)
+
+    def test_typedef_of_long_is_not_warned(self):
+        self.assertEqual(self.warnings_for('typedef long s64;'), [])
+
+    def test_typed_member_access_is_not_warned(self):
+        self.assertEqual(self.warnings_for('    pso->pxfLinear = pxf;'), [])
+
+    def test_warnings_do_not_count_as_problems(self):
+        self.assertEqual(check_cleanup.check_lines({'src/mat/Foo.cpp': [(1, '    long value = 0;')]}), [])
+
 
 class AssemblyUnitTests(unittest.TestCase):
     CHUNK = ['.align 3\n', 'glabel func_00100000\n', '    /* 80 00100000 00000000 */  nop\n',
@@ -1024,6 +1048,34 @@ class BlockerTests(unittest.TestCase):
 
     def test_plain_code_and_division_checks_are_not_blockers(self):
         self.assertIsNone(classify_blockers.kind_of(['addiu', 'div', 'break', 'mflo', 'jr']))
+
+    def test_an_epilogue_left_behind_does_not_transfer_control(self):
+        self.assertFalse(classify_blockers.transfers_control(['addiu', 'nop']))
+
+    def test_a_function_that_returns_transfers_control(self):
+        self.assertTrue(classify_blockers.transfers_control(['addiu', 'jr', 'nop']))
+
+    def test_a_branch_transfers_control(self):
+        self.assertTrue(classify_blockers.transfers_control(['bc1t', 'nop']))
+
+    def test_a_call_target_is_a_reference(self):
+        jal = (3 << 26) | (0x00100040 >> 2)
+        self.assertIn(0x00100040, classify_blockers.references_in_words([jal], 0x00100000))
+
+    def test_a_branch_target_is_a_reference(self):
+        beq_forward_two = (4 << 26) | 2  # beq $zero, $zero, +2 at 0x100000: target 0x10000C
+        self.assertIn(0x0010000C, classify_blockers.references_in_words([beq_forward_two], 0x00100000))
+
+    def test_a_lui_addiu_pair_is_a_reference(self):
+        lui = (15 << 26) | (2 << 16) | 0x0011  # lui $v0, 0x11
+        addiu = (9 << 26) | (2 << 21) | (2 << 16) | 0x8000  # addiu $v0, $v0, -0x8000
+        self.assertIn(0x00108000, classify_blockers.references_in_words([lui, addiu], 0x00100000))
+
+    def test_a_pointer_in_data_is_a_reference(self):
+        self.assertIn(0x00123450, classify_blockers.references_in_words([0x00123450], 0x002A0000))
+
+    def test_an_address_nothing_aims_at_is_not_a_reference(self):
+        self.assertNotIn(0x00100100, classify_blockers.references_in_words([0x00000000, (3 << 26) | (0x00100040 >> 2)], 0x00100000))
 
     def test_mnemonics_are_read_from_splat_lines(self):
         lines = ['    /* 0 00100000 0C000000 */  jal        Callee\n', '    /* 4 00100004 2A00023C */  lqc2       $vf1, 0($a0)\n']
