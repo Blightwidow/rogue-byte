@@ -1,6 +1,6 @@
 # The assembler: SN's `ps2eeas`
 
-Compiled C goes through SN's EE-GCC 2.95.3 with `-S`, and then through **`tools/ps2eeas/Ps2EeAs.exe`**: SN Systems' own assembler (1.9.25.758,
+Compiled C goes through SN's EE-GCC 2.95.3 with `-S`, and then through **`tools/ps2eeas/Ps2EeAs-loop5.exe`** (made by `setup.sh` from `Ps2EeAs.exe`): SN Systems' own assembler (1.9.25.758,
 from the SN ProDG 3.01 tools), the one SN's ProDG driver runs. It is the one assembler of the build for game code, with **one byte changed** (its short-loop constant, see "Short loops") and **no per-function
 list**. `setup.sh --assembler` downloads it (pinned commit and SHA-256, from a public mirror of the SN ProDG 3.01 tools; never committed).
 
@@ -15,7 +15,7 @@ What it does that other assemblers do not:
 - It reaches a global through `$gp` only when it has already seen the symbol's size, so `compile_unit.py` moves the compiler's
   `.extern SYM,SIZE` lines (written at the end of the file) to the top before assembling.
 
-`scripts/build/compile_unit.py` compiles one source, moves the `.extern` lines up, assembles with `Ps2EeAs.exe -G0` under wibo and makes the
+`scripts/build/compile_unit.py` compiles one source, moves the `.extern` lines up, assembles with `Ps2EeAs-loop5.exe -G0` under wibo and makes the
 symbols local. Everything that compiles a source uses it: the ninja rules of `configure.py` (`src/` and `nonmatching/`) and
 `scripts/matching/try.py`, the per-function judge. If the assembler is missing the compile fails and says to run `./setup.sh --assembler`.
 Only the SDK range (`config/us/sony_gcc29.txt`) is built differently: Sony's own ee-gcc 2.9-ee-991111 and its driver.

@@ -14,7 +14,9 @@ build 1.36, `-O2 -G0 -ffast-math -fno-exceptions`). They do **not** produce the 
   finishes them.
 
 To finish one: edit it until `python3 scripts/matching/try.py <address> <file>` prints `score 0`, move it to your working copy
-(`data/matching/src/`), run `make src`, then `make elf` and `make unit UNIT=<module>`.
+(`data/matching/src/fn/`), then `make land ONLY="0x<address>"`: it registers the match, publishes it (into its whole file when it
+has one, `config/us/whole_files.tsv`), runs `make elf` and writes the reports; then `make unit UNIT=<module>`
+([docs/AGENT_WORKFLOW.md](../docs/AGENT_WORKFLOW.md) "Land").
 
 These files reconstruct code of Sly 2, which remains the property of its copyright holders (see
 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)).

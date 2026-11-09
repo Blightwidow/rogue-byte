@@ -1,13 +1,13 @@
 # Progress
 
-ByteMatch ([bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp)) and the table in the README show how much of the game's code
+ByteMatch ([bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp)) and the table in the README show how much of the game's code
 is rebuilt. Measuring it needs your own executable, so the reports are generated locally and committed.
 
 ## What is counted
 
 A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also
 reproduces PAL's code at its counterpart (`config/eu/c_status.tsv`). Permanent blockers (`config/us/blockers.tsv`: a VU0, MMI or COP0
-instruction, or hand-written assembly) are original assembly and count as finished too, as in sly1-decomp, shown apart from the exact C
+instruction, hand-written assembly, or a remnant that is not a function) are original assembly and count as finished too, as in sly1-decomp, shown apart from the exact C
 ([vu0-mmi.md](vu0-mmi.md)). Sony's SDK libraries (module `sdk`) are listed but not the
 game's own code.
 

@@ -11,7 +11,7 @@ miss belong in [matching.md](matching.md); this file is for the surprises around
   was measured with GNU `as`: judge it again.
 - **The hazard `nop` after `mtc1` and the padding of short loops come from the assembler, never from C.** Chasing them in the source
   wastes hours; `scripts/build/compile_unit.py` assembles every function with SN's `ps2eeas` (under wibo), one assembler for all ([assembler.md](../build/assembler.md)).
-- **Compile through the same path the build uses.** `ee-gcc -S`, then the `.extern` lines hoisted, then `Ps2EeAs.exe`, then `objcopy -L`.
+- **Compile through the same path the build uses.** `ee-gcc -S`, then the `.extern` lines hoisted, then `Ps2EeAs-loop5.exe`, then `objcopy -L`.
   A source that matches in a hand-run compile can still differ in the image.
 
 - **Flip a callee's declared return type before rewriting a near miss's body.** A discarded result still steers register allocation and
