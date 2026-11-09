@@ -4,7 +4,6 @@
 #include "m2c_macros.h"
 #include "include_asm.h"
 
-typedef short s16;
 
 struct Vec_190BE0 { float x, y; };
 

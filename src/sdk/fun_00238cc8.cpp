@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 struct RpcClient_44BE80 { int pad[9]; int serve; };
 extern RpcClient_44BE80 B_0044BE80;

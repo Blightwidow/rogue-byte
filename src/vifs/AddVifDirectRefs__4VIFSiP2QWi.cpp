@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned int u32; typedef signed char s8;
+#include "types.h"
 extern "C" {
 void AddDmaRefs__4DMASiP2QW(s8 *, s32, s32);
 int Align__4VIFSi(s8 *, int);

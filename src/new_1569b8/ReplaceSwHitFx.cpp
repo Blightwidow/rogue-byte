@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 int ReplaceHitFx(int, QW, int, int);
 int ReplaceSwHitFx(char *self, int side, QW vec, int a, int b) {

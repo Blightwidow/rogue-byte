@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);

@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct VEC_188F20 {
     float x, y, z, w;
     void Clear() { x = y = z = 0; }

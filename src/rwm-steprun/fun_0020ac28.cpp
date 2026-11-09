@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct XF { char pad[0xA0]; void *pxf; };
 struct GUARD { char pad[0xF08]; XF *paim; void *pact; int unk; char pad2[0xF20-0xF14]; QW vecLook; };
 extern "C" { extern QW g_2a2dd0; void func_0012E460(void *); void *func_0012DC18(void *, void *, int, int, int, QW); }

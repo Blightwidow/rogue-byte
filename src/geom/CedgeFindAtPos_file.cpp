@@ -10,27 +10,16 @@ INCLUDE_ASM(0X166428);
 
 INCLUDE_ASM(0X1664A0);
 
-typedef signed char s8;
 
- typedef short s16;
 
- typedef int s32;
 
- typedef long s64;
 
-typedef unsigned char u8;
 
- typedef unsigned short u16;
 
- typedef unsigned int u32;
 
- typedef unsigned long u64;
 
-typedef float f32;
 
- typedef double f64;
 
- typedef int s128 __attribute__((mode(TI)));
 
 #define NULL 0
 

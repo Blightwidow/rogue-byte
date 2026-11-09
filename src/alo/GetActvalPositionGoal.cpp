@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct XF { char pad0[0x30]; QW v30; char pad40[0x68]; float tEnd; char padAC[4]; QW vB0; };
 struct ACT { char pad[0x8]; XF *pxf; char pad2[0x14]; QW pos; QW vel; };
 extern float g_2dded0;

@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 s32 GoalFollowCrv_FBlocked(s32);
 s32 GoalGoto_FBlocked(char *arg0)
 {

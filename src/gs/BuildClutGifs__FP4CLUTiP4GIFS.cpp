@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned short u16;
+#include "types.h"
 extern "C" {
 void BuildImageGifs__FiiiiiiP4GIFS(s32, s32, s32, s32, s32, s32, void *);
 void BuildClutGifs__FP4CLUTiP4GIFS(char *arg0, s32 arg1, void *arg2) {

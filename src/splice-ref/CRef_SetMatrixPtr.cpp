@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct MATRIX { QW row[4]; };
 struct MATBOX { MATRIX matrix; int cref; };
 struct CRef { int tagk; MATBOX *pbox; int pad8; int padc; };

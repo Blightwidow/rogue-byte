@@ -1,6 +1,6 @@
 extern "C" {
 /* 0x1D8600: InitSymtab: store the count at +0xD4, allocate a table of arg1 16-byte entries (pair = {count * 16, 16}) and store its pointer at +0xD8 */
-typedef int s32;
+#include "types.h"
 void *PvAllocSwImpl__Fi(s32);
 void InitSymtab(char *arg0, s32 arg1) {
     s32 pair[2];

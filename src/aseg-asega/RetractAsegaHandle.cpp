@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef short s16; typedef int s32; typedef unsigned int u32;
+#include "types.h"
 extern "C" {
 void RetractAsega(s8 *);
 

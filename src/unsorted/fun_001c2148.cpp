@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Item { QW value; QW pad; };
 struct Q { char pad[0x50]; unsigned count; char pad2[0x1C]; Item items[6]; };
 void func_001C2148(Q *self, QW value) {

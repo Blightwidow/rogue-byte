@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 extern QW g_2a2dd0;
 struct Vt_19AB38 { char pad0[0x18]; short delta; short pad1; void (*fn)(void *, int, QW *, int); };

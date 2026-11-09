@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 s32 UnsubscribeLoObject(s32 object, char *owner);
 void HandleExplsMessage(char *arg0, s32 arg1, s32 arg2) {

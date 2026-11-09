@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct SUB { char pad[0x14]; int id; };
 struct ENT { unsigned short count; unsigned short itemCount; SUB *subs; char pad[0x2C - 8]; QW *transform; };
 struct VT { char pad[8]; short delta; short index; void *(*fn)(void *, int, int); };

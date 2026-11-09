@@ -1,4 +1,4 @@
-typedef short s16;
+#include "types.h"
 struct CRef { int tagk; int pad[3]; };
 struct VT_100B88 { char pad[0x48]; s16 delta; s16 p; void (*fn)(char *); };
 struct Obj_100B88 { int pad[3]; VT_100B88 *vt; };

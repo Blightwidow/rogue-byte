@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct VT { char pad[0x18]; short delta; short index; void (*fn)(void *, float, float, QW *, QW *); };
 struct CURVE { VT *vt; };
 struct CHN { char p0[4]; CURVE *curve; };

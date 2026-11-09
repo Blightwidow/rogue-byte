@@ -1,4 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
+#include "types.h"
 
 extern "C" {
 void StartAttach(s8 *, s32, s32, s32);

@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 s32 FAsegaGone(s32);
 s32 GetSmaCur(s32);

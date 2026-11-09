@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 struct Block_44E300 { Block_44E300 *next; char pad[0xC]; };
 extern Block_44E300 B_0044E300[64];

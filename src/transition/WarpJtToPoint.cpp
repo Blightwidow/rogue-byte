@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Safe { char pad[0x10]; QW pos; };
 void *memset(void *, int, unsigned int);
 extern "C" void WarpJtToSafePoint(void *, Safe *);

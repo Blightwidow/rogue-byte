@@ -1,7 +1,4 @@
-typedef int s32;
-typedef float f32;
-typedef long s64;
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct HitFxTarget {
     char pad0[0x54];
     f32 x;

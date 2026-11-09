@@ -1,4 +1,4 @@
-typedef int s32; typedef float f32;
+#include "types.h"
 struct RhythmNote { s32 a; s32 b; s32 c; f32 time; s32 d; s32 flag14; s32 flag18; s32 flag1C; s32 flag20; };
 struct Rhythm {
     char pad0[0x50]; s32 mode; char pad54[0x8]; f32 window; char pad60[0x1C0-0x60]; s32 count; RhythmNote notes[1];

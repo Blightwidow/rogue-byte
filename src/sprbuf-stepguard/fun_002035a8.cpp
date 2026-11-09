@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct XfmObject {
     char pad0[0xE0];
     float radius;

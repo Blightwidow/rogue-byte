@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8;
+#include "types.h"
 #define FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
 extern "C" {
 s8 *PjsgeAllocJsg(int, int, int);

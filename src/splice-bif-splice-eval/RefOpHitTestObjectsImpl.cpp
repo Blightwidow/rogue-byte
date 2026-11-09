@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct CRef {
     int tagk; union { int n; QW *pv; };
     CRef() { tagk = -1; }

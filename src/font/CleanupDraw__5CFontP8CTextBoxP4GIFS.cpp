@@ -1,4 +1,4 @@
-typedef long long s64; typedef unsigned long long u64;
+#include "types.h"
 extern "C" {
 void AddPrimPack__4GIFSiiUl(void *gifs, int a, int b, int c);
 void PackAD__4GIFSll(void *gifs, long reg, long value);

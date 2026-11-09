@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32;
-typedef float f32;
+#include "types.h"
 
 extern "C" {
 void SetAsegaMasterSpeed(s8 *, f32);

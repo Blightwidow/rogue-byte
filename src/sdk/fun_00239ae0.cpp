@@ -1,5 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 struct AlarmBlock_44C300 { AlarmBlock_44C300 *next; char pad[0x3C]; };
 struct AlarmState_2C5A30 { s64 ticks; s32 handlerId; s32 pad0C; s32 field10; AlarmBlock_44C300 *pool; };

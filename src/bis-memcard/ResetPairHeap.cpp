@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
+#include "types.h"
 extern "C" {
 void ResetSlotheap(void *arg0);
 extern s32 B_002DD280;

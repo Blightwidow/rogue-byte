@@ -1,4 +1,4 @@
-typedef short s16;
+#include "types.h"
 struct Obj_1306A8;
 struct VT_1306A8 { char pad[0x10]; s16 delta; s16 p; void (*fn)(char *); };
 struct Obj_1306A8 { int pad[3]; VT_1306A8 *vt; };

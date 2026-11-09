@@ -1,6 +1,4 @@
-typedef signed char s8; typedef short s16; typedef int s32; typedef long s64;
-typedef unsigned char u8; typedef unsigned short u16; typedef unsigned int u32; typedef unsigned long u64;
-typedef float f32; typedef double f64;
+#include "types.h"
 #define NULL 0
 struct Inner_2127C8 { char pad[0x58]; s32 state; s32 pad2; s32 start; s32 value; };
 struct Node_2127C8 { char pad[0x40]; Inner_2127C8 *inner; char pad2[0x8]; Node_2127C8 *next; };

@@ -2,7 +2,6 @@
 struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct AOT { int v[1]; };
-typedef int QW __attribute__((mode(TI)));
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const AOT *, ...);
 extern "C" void CRef_Destruct(CRef *);
 extern "C" CRef *CRef_SetBasic(CRef *, BASIC *);

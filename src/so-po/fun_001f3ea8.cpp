@@ -1,4 +1,4 @@
-typedef unsigned long u64;
+#include "types.h"
 extern "C" void func_001A6178(char *);
 extern "C" void AddAloToRenderTree(char *);
 extern "C" int FFindDlEntry(void *, void *);

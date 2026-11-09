@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef unsigned char u8;
+#include "types.h"
 struct DMAS_213300 { unsigned base; int pad4[2]; char *p; };
 struct Ctx_213300 { int kind; int pad4; float z; int padC; float add[4]; float mul[4]; };
 struct Node_213300 {

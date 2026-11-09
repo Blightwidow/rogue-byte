@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" void func_001CC168(void *, QW, void *, float *);
 extern "C" float Carry_SDistStartCurves(char *probe)
 {

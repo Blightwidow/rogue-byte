@@ -163,7 +163,6 @@ void FInvertMatrix4__FP7MATRIX4T0(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM(0X11C318);
 
-typedef int s128 __attribute__((mode(TI)));
 
 extern "C" {
 struct MATRIX4_11C3D0 { s128 row[4]; };

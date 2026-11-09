@@ -1,4 +1,4 @@
-typedef unsigned int u32;
+#include "types.h"
 typedef struct Unit {
     char pad0[0x828];
     int field828;

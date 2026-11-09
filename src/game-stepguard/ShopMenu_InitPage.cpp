@@ -1,7 +1,4 @@
-typedef signed char s8;
-typedef int s32;
-typedef unsigned int u32;
-typedef float f32;
+#include "types.h"
 extern "C" {
 extern f32 g_2ddf0c;
 void ShopMenu_InitPage(s8 *arg0) {

@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct ACT { char pad[0x148]; unsigned long flags; };
 struct GEOM { char pad0[0x40]; int unk40; char pad44[8]; ACT *act; char pad50[0x10]; QW pos; char pad70[0x18]; float unk88; };
 struct SELF { char pad0[0x4C0]; char sub4C0[1]; char pad4C1[0x51F]; char sub9E0[1]; char pad9E1[0x56F]; char subF50[1]; char padF51[0x47F]; int unk13D0; };

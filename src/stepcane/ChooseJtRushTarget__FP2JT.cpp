@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct TARGET_18F688;
 struct JTRange_18F688 { char pad[0x18]; float rangeNear; float rangeFar; };
 struct JT_18F688 {

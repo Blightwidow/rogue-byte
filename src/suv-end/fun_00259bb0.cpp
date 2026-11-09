@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef short s16; typedef int s32;
+#include "types.h"
 extern "C" {
 void func_00259BB0(s8 **arg0, s8 *arg1) {
     s8 *vtable;

@@ -1,5 +1,5 @@
 extern "C" {
-typedef int s32;
+#include "types.h"
 void EnsureAsegBlendDynamic(s32, s32, s32, void *, s32, s32, s32, void *);
 
 void func_001959C0(s32 *arg0) {

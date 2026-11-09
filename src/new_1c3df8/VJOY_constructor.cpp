@@ -1,4 +1,4 @@
-typedef signed char s8; typedef int s32;
+#include "types.h"
 extern "C" {
 void AppendSlEntry(void *, s8 *);
 void ResetVjoy();

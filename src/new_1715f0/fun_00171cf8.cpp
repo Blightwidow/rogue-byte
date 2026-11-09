@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
+#include "types.h"
 
 extern "C" {
 void *memset(void *dest, int value, unsigned int size);

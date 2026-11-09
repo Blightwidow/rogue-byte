@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Snd {
     char pad0[0x14];
     int f14;

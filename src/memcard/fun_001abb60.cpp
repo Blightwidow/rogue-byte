@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct Save_1ABB60 { char p0[0xFD50]; s32 slot; };
 extern "C" s32 CheckCardStatus();
 extern "C" s32 CreateSaveDirectory(Save_1ABB60 *);

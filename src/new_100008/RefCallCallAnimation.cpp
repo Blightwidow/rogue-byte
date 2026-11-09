@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct CRef { int tagk; int pad[3]; };
 struct BASIC;
 struct B16 { char b[16]; };

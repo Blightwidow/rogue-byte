@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef int s32; typedef int s128 __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 void AddVifUnpack__4VIFS3UPKiPvi(void *, int, int, void *, int);
 

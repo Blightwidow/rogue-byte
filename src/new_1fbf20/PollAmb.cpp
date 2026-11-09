@@ -1,4 +1,4 @@
-typedef int s32; typedef short s16; typedef unsigned short u16;
+#include "types.h"
 struct VEnt { char pad0[8]; s16 adj; s16 pad; void (*fn)(void *); };
 struct Obj { char pad[0xC]; VEnt *vt; char pad2[0x30]; s32 voice; char pad3[0xC]; u16 flags; };
 extern "C" {

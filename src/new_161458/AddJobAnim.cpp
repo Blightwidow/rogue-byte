@@ -1,6 +1,6 @@
 extern "C" {
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int s32;
+#include "types.h"
 
 struct JobAnimEntry_162728 {
     s32 word0;

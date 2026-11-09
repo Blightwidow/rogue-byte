@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 struct Vjoy {
     char pad0[0x1C];
     float leftStick;

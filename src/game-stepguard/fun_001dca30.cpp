@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 char *PchzStringFromId(void *, s32);
 char *strcpy(char *, const char *);

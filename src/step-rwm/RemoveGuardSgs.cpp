@@ -1,4 +1,4 @@
-typedef int s32; typedef short s16; typedef long s64;
+#include "types.h"
 extern "C" {
 struct VT_209970 { char pad0[0x18]; s16 d18; s16 p1a; void (*fn1c)(char *, s32, s32, s32, void *, s32); };
 struct Obj_209970 { char pad[0xC]; VT_209970 *vt; char pad1[0x2C0 - 0x10]; s64 grfsgs; };

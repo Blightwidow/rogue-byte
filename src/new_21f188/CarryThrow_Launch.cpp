@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Obj;
 struct VT {
     char pad[0x118]; short setVelDelta; short setVelIndex; void (*setVel)(void *, QW);

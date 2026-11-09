@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef int s32; typedef unsigned int u32;
+#include "types.h"
 extern "C" {
 s32 FAddAshOid(u32 *arg0, s32 arg1, s32 arg2) {
     s8 *base = (s8 *)arg0;

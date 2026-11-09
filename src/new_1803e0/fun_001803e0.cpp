@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
+#include "types.h"
 
 struct Slot {
     char pad0[0xC];

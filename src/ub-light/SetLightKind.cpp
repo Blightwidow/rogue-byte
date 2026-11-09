@@ -1,5 +1,5 @@
 extern "C" {
-typedef int s32;
+#include "types.h"
 void RebuildLight(void *);
 void func_001A3B38(void *);
 void SetLightKind(void *arg0, s32 arg1)

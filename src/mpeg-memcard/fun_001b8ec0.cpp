@@ -1,4 +1,4 @@
-typedef int s32; typedef float f32;
+#include "types.h"
 struct Murray {
     char pad0[0x150]; struct Target *target;
     char pad154[0x1030 - 0x154]; int jumper0;

@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 s32 FJoyButtonPressed(char *, int);
 struct CLOCK_G { char pad[0x3C]; float f3C; };

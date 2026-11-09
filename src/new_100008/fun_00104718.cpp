@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct CRef { int tagk; int n; int pad[2]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef*, int, CRef*, int*, ...);
 extern "C" CRef* CRef_Destruct(CRef*);

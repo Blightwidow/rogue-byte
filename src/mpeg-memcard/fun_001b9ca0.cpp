@@ -1,7 +1,6 @@
 extern "C" {
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int s32;
-typedef short s16;
+#include "types.h"
 
 void GoalStack_Clear(char *goalStack);
 char *func_00205438(char *guard, s32 id);

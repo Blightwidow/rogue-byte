@@ -1,4 +1,4 @@
-typedef int s32; typedef unsigned char u8;
+#include "types.h"
 extern "C" {
 s32 CchParsePchzInt__FPcPi(u8 *text, s32 *result) {
     s32 sign;

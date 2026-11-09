@@ -1,4 +1,4 @@
-typedef int s32;
+#include "types.h"
 extern "C" {
 void RefSetSaveValue(s32, void *, s32, s32, s32);
 extern int B_003E0EA8;

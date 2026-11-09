@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 extern "C" {
 QW ConvertAloPos(void *, void *, QW);
 int PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *, int, QW);

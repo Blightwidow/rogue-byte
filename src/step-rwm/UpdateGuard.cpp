@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct Guard { char pad[0x28]; unsigned long flags; };
 extern "C" void UpdateStep(Guard *);
 extern "C" void UpdateGuardModeTimeout(Guard *);

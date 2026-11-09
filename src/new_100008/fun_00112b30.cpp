@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int s32;
+#include "types.h"
 extern "C" {
 struct Element { char bytes[0x20]; };
 struct Holder {

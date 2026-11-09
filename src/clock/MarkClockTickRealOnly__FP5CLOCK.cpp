@@ -1,6 +1,4 @@
-typedef long s64;
-typedef unsigned long u64;
-typedef float f32;
+#include "types.h"
 struct Timer {
     char pad0[0x68];
     s64 ticks;

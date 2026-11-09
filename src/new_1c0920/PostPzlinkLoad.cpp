@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct PZLINK_1C2170 { char pad[0x50]; int index; char pad2[0x124 - 0x54]; void *pathzoneA; void *pathzoneB; char pad3[4]; QW posA; QW posB; };
 extern "C" void PostLoLoad(PZLINK_1C2170 *);
 extern "C" void *PpathzoneFindPos(QW, int);

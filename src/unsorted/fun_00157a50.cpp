@@ -1,5 +1,5 @@
 extern "C" {
-typedef int s32; typedef signed char s8; typedef float f32;
+#include "types.h"
 s32 func_00157A50(s8 **arg0, s8 **arg1) {
     s8 *left = *arg0;
     s8 *right = *arg1;

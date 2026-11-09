@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 extern "C" int FIsGuardInSgs(void *, int);
 extern "C" char *func_00205458(void *, int);
 extern "C" void func_0017A8C8(void *, int);

@@ -1,5 +1,5 @@
 struct GIFS { int pad0; unsigned start; int pad8; unsigned end; char pad10[0x20]; };
-typedef unsigned long u64;
+#include "types.h"
 extern "C" {
 void AddDmaCall__4DMASP2QW(void *, void *);
 void AddDmaCnt__4DMAS(void *);

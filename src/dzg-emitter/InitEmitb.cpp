@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct EMITB { int refs; int pk; int pad[2]; QW a[4]; QW b[7]; };
 struct BLK { QW q[4]; };
 struct BLK2 { QW q[7]; };

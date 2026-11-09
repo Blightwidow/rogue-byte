@@ -1,4 +1,4 @@
-typedef unsigned char u8; typedef int s32; typedef float f32;
+#include "types.h"
 struct Rgba { u8 r, g, b, a; };
 struct Fade {
     char pad0[0x50]; Rgba c0; Rgba c1; Rgba c2; f32 d1; f32 d2; f32 d3; f32 start; s32 kind;

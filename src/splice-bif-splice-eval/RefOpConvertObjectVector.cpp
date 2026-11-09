@@ -1,4 +1,4 @@
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct CRef { int tagk; void *pv; };
 extern "C" {
 void *CRef_CopyConstruct(CRef *, CRef *);

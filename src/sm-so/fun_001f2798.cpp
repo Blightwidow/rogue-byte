@@ -1,4 +1,4 @@
-typedef int s32; typedef long s64;
+#include "types.h"
 extern "C" {
 struct B_1F2798 { char pad[0xA0]; s32 f_a0; char p1[0x1C]; s32 f_c0; };
 struct A_1F2798 { char pad0[0x10]; A_1F2798 *next; char pad1[0xD4]; B_1F2798 *obj; char pad2[0x5C]; s64 flags; };

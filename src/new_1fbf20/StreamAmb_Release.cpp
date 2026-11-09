@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef signed char s8; typedef int s32; typedef unsigned short u16;
+#include "types.h"
 extern "C" {
 void BASIC_Destruct(s8 *, s32);
 void FreeStreamAmb(s8 *);

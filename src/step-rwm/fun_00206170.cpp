@@ -1,4 +1,4 @@
-typedef int s32; typedef short s16;
+#include "types.h"
 extern "C" {
 struct VT_206170 {
     char pad0[0x18];

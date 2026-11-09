@@ -1,4 +1,5 @@
-typedef int QW __attribute__((mode(TI)));  /* a quadword in one 128-bit register */
+#include "types.h"
+/* a quadword in one 128-bit register */
 
 extern "C" QW PosLoWorld(void *);
 extern "C" int FFindSurfaceAlongUp(QW *, int, int, float, float);

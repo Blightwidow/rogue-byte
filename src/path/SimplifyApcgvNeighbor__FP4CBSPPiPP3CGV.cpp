@@ -1,5 +1,4 @@
 #include "sly2.h"
-typedef int QW __attribute__((mode(TI)));
 struct ALLOCREQ { int cb; int cbAlign; };
 struct CBSP;
 struct CGV { QW pos; };

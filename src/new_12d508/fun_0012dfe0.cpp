@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-typedef int QW __attribute__((mode(TI)));
+#include "types.h"
 struct VEC4 { float x, y, z, w; };
 struct XF { char pad[0xC0]; QW vecGoal; };
 struct ACT { char pad[8]; XF *pxf; };
