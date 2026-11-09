@@ -195,10 +195,11 @@ with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
 DATA_SECTIONS = [('rodata', '.rodata'), ('data', '.data'), ('vutext', '.vutext'), ('irx', '.irx')]
 data_units = []
 
-def owned_rodata():
+def owned_rodata(kind='rodata'):
     """[(address, bytes)] of the rodata that compiled C objects own: the `.ro_<address>` sections of the linked image (build/image/image.elf)
-    that link.ld fills from an object rather than from the assembly pieces. The bytes are the linked ones, with a jump table's relocations resolved."""
-    pattern = re.compile(r'(\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.rodata\) \}')
+    that link.ld fills from an object rather than from the assembly pieces (kind 'data': the `.dd_<address>` sections of the data files, config/us/data_files.tsv).
+    The bytes are the linked ones, with a jump table's relocations resolved."""
+    pattern = re.compile(r'(\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.rodata\) \}' if kind == 'rodata' else r'(\.dd_\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.data\) \}')
     labels = {}
     for line in open(os.path.join('build', 'image', 'link.ld')):
         match = pattern.match(line.strip())
@@ -240,7 +241,7 @@ def build_data_units():
             blob_directory = os.path.join('build', 'objdiff', 'data', name)
             os.makedirs(blob_directory, exist_ok=True)
             retail, address = section.data(), section['sh_addr']
-            owned = owned_rodata() if name == 'rodata' else []
+            owned = owned_rodata(name) if name in ('rodata', 'data') else []
             header_line = f'.section {section_name}, "a", @progbits\n'
             # objdiff counts a data section as matched only when all of it matches, so the C-owned ranges are a unit of their own
             groups = {'': ([header_line], [header_line]), '-c': ([header_line], [header_line])}

@@ -74,6 +74,13 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
                         implicit=['include/sly2.h', 'include/m2c_macros.h', 'include/include_asm.h', os.path.join(SPLAT_OUTPUT, 'undefined_syms_auto.txt')],
                         variables={'assembler': options(start)})
             units.append(unit)
+        # data files (config/us/data_files.tsv): a source that defines game data (docs/contributing/exceptions.md); link_image.py links its .data
+        data_list = os.path.join(ROOT, 'config', 'us', 'data_files.tsv')
+        for line in (list(open(data_list))[1:] if os.path.isfile(data_list) else []):
+            start_text, _, source = line.rstrip('\n').split('\t')
+            ninja.build(os.path.join('build', 'units', source + '.o'), 'compile_c' if source.endswith('.c') else 'compile_cpp', os.path.join('src', source),
+                        variables={'assembler': options(int(start_text, 16))})
+            units.append(os.path.join('build', 'units', source + '.o'))
         ninja.build('units', 'phony', units)
 
     # the sources that compile but do not match (python3 scripts/matching/export_nonmatching.py): only objdiff looks at them

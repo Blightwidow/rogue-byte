@@ -40,7 +40,7 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    two constants it reads (`g_2bdce0`, `g_2bdcf0[3]`) are in `.data`, not `.rodata`; a `const` scalar is folded into `lui`/`mtc1` (score 24) and a
    plain definition lays out 8 bytes short of retail's gap; `link_image.py` places only an object's own `.rodata`, and `derive_rodata_base` assumes
    section-symbol relocations. Per-global sweeps are small (18 `.rodata` externs, 178 bytes behind matched functions; 674 `.data` externs, 103 KB, 129 of
-   them over 1 KB). The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
+   them over 1 KB). First global defined in C (2026-11-09): `src/crv-lo/data_2bdce0.cpp` defines `g_2bdce0` and `g_2bdcf0` as `float[4]` (retail's two 16-byte vectors; the earlier "8 bytes short" was the wrong type), listed in `config/us/data_files.tsv`; `link_image.py` links its `.data` at retail's address (`.dd_<address>`) and checks the bytes, `make_objdiff.py` counts it (data 8,375 -> 8,407 bytes). Remaining: `.bss`, more regions, the list feeding the report per global. The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
    sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
 
 4. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
