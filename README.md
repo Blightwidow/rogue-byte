@@ -4,8 +4,8 @@
 
 [![OpenThievius](https://img.shields.io/badge/Project-OpenThievius-2a6db5?logo=github&logoColor=white)](https://github.com/OpenThievius/OpenThievius)
 [![Progress report](https://github.com/OpenThievius/sly2-decomp/actions/workflows/progress.yml/badge.svg)](https://github.com/OpenThievius/sly2-decomp/actions/workflows/progress.yml)
-[![Code](https://bytematch.dev/OpenThievius/sly2-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenThievius/sly2-decomp)
-[![Functions](https://bytematch.dev/OpenThievius/sly2-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenThievius/sly2-decomp)
+[![Code](https://bytematch.dev/Blightwidow/sly2-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/Blightwidow/sly2-decomp)
+[![Functions](https://bytematch.dev/Blightwidow/sly2-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/Blightwidow/sly2-decomp)
 [![Build guide](https://img.shields.io/badge/Build-Guide-c3cbd8?logo=gnubash&logoColor=c3cbd8&labelColor=0d1117)](docs/build/building.md)
 [![Contributing guide](https://img.shields.io/badge/Contributing-Guide-c3cbd8?logo=github&logoColor=c3cbd8&labelColor=0d1117)](CONTRIBUTING.md)
 
@@ -26,7 +26,7 @@ A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Suc
 A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, or hand-written assembly: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
 <!-- progress:end -->
 
-Live numbers on [bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp).
+Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
 
 ## Layout
 
