@@ -10,7 +10,7 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
   each is in `nonmatching/`.
 - NTSC-U code reached 80% on 2026-11-08 (80.10%, blockers counted as finished; PAL 78.64%). Outside the SDK range it is 85.8% (53.1% exact C); the SDK range
   (150 KB, libm and libc giants) is 33%.
-- VU0, MMI, COP0 and hand-written functions are flagged as permanent blockers (`config/us/blockers.tsv`) and counted as finished apart from the exact C, as in sly1 ([build/vu0-mmi.md](build/vu0-mmi.md)).
+- VU0, MMI, COP0 and hand-written functions, and since 2026-11-09 the 162 remnants that are not functions, are flagged as permanent blockers (`config/us/blockers.tsv`) and counted as finished apart from the exact C, as in sly1 ([build/vu0-mmi.md](build/vu0-mmi.md)).
 - PAL is checked against the same C (`make pal`); US is the reference.
 - CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
   (objdiff reports for ByteMatch). Commit messages and the cleanup rules are checked locally (`make commits`, `make cleanup`).
@@ -19,21 +19,48 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 
 There are three separate "100%"s (numbers from `progress/us/report.json`):
 
-- **Code, 80.10%:** 279 KB in 633 functions (blockers already count as finished).
+- **Code, 80.25%:** 277 KB in 471 functions (blockers already count as finished).
   - 261 far near misses, 171 KB. Opus matches about 1 in 8 at about 70k tokens each.
   - 102 SDK-range functions with no draft, 64 KB (libm and libc giants, Sony gcc 2.9).
   - 19 held-back rulings, about 0.25 points. Fresh near misses (score 1-16) are used up.
   - What moved the number so far was systematic unlocks (the loop5 assembler patch, +22 KB; the `-fmove-all-movables` list; RTL-dump work on register-only misses), not worker waves (about 20 bytes per claimed function). Look for the next lever before spending a wave.
   - Six integer near misses have no known lever: 0x1733C8, 0x1C9058, 0x120548, 0x218748, 0x1A5D98, 0x13FAD0.
-- **Data, 0.83%:** ceiling 49% of data (item 3); the irx and vutext regions are not game C. Largest gap, and it needs build work, not matching.
-- **Exact C, 49.97%:** the 853 permanent blockers stay original assembly, so exact C tops out near 70% of code unless item 4 reclassifies some.
-- **PAL, 78.64%** against US 80.10%: close it with `make pal` after each land.
+  - 162 chunks of the split were not functions (2,640 bytes): nothing in retail reaches them and they never transfer control. Since
+    2026-11-09 they are the `remnant` kind of `config/us/blockers.tsv` ([build/vu0-mmi.md](build/vu0-mmi.md)); open went from 633 to
+    471 functions, code from 80.10% to 80.25%.
+  - The SDK range is not a reorder-mode or other Sony build ([build/compiler-identification.md](build/compiler-identification.md),
+    2026-11-08 and 2026-11-09): what is left there is drafting, not toolchain.
+- **Data, 20.36%** (205,995 of 1,011,732 bytes, 2026-11-09): ceiling 49% of data (item 3); the irx and vutext regions are not game C. Largest gap, and it needs build work, not matching.
+- **Exact C, 49.97%:** the 1,015 permanent blockers (853 functions C cannot express, 162 remnants) stay original assembly, so exact C tops out near 70% of code unless item 6 reclassifies some.
+- **PAL, 78.78%** against US 80.25%: close it with `make pal` after each land.
 
-Order: data build side (item 3), then a lever for the near-miss pool and the SDK giants (item 1), then PAL.
+- **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. `include/sly2.h` is 12 lines; 1,696 files
+  size their structs with padding; 401 struct names have different bodies in different files (`VT` 131, `SO` 65); 639 files declare
+  their own integer typedefs, and `s64` is `long` (64 bits) in 262 of them and `long long` (128 bits on the EE) in 249. Measured
+  2026-11-09: [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md).
+
+Order (2026-11-09, [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md)): shared types first (item 1), because every match landed on
+padded local structs adds to the later cost; then one source layout (item 2) and the data build side (item 3); then the port-facing
+metadata (item 4). Matching (item 5) runs only on a measured lever, not as waves: what this project adds is the whole-image proof and
+the source's shape, not the last points of the headline ([PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md) "Levers measured").
+PAL after each land.
 
 ## Next
 
-1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses. Remaining pools and their yield are in "What is left"; classify the 261 far near misses by diff cause (`classify_diffs.py`) before spending tokens, draft the 102 SDK giants biggest first, and prefer a systematic lever over a wave.
+Preservation is the priority; what helps a later port is additive (headers, typedefs, asserts, metadata, notes) and never changes
+matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md) "The rule").
+
+1. **Shared types.** One definition per class in `include/`, typed from what retail's code does, field names keeping their `source:`.
+   - Fixed-width typedefs in `include/sly2.h` (`s8`..`s64`, `u8`..`u64`, `f32`, `QW`), replacing the per-file copies; settle `s64`
+     (`long`, 64 bits) against the 249 files that declare it `long long`, re-proving each.
+   - Start from the recovered layouts (`config/recovered/sly2_structs.h`, 157 structs, unverified) and the padded copies in `src/`;
+     a field enters the shared header when a matched function's code shows its offset and type.
+   - Pilot: one widely used class (`XF` or `SO`), its header with `static_assert` offset and `sizeof` checks (PS2 build only), then
+     the matched functions that declare it moved over and re-proved with `make elf` and `make unit`. Measure the cost per file
+     before converting the rest.
+   - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
+   - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
+     score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
 2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
@@ -50,20 +77,42 @@ Order: data build side (item 3), then a lever for the near-miss pool and the SDK
    cuts inside a span.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
-   file declares it `extern`; the defined bytes count as matched data. Today 0.83% of data (8,375 of 1,011,732 bytes: only a function's own literals and
-   jump tables, `data/rodata-c`). What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data); `data/irx` 474 KB (IOP modules) and
+   file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from
+   `make_data_files.py`, plus a function's own literals and jump tables, `data/rodata-c`). What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data); `data/irx` 474 KB (IOP modules) and
    `data/vutext` 34 KB (VU microcode) are not game C. A pilot on `HitFx_GIntensity` (2026-11-08) found the build side missing, not the ruling: the
    two constants it reads (`g_2bdce0`, `g_2bdcf0[3]`) are in `.data`, not `.rodata`; a `const` scalar is folded into `lui`/`mtc1` (score 24) and a
    plain definition lays out 8 bytes short of retail's gap; `link_image.py` places only an object's own `.rodata`, and `derive_rodata_base` assumes
    section-symbol relocations. Per-global sweeps are small (18 `.rodata` externs, 178 bytes behind matched functions; 674 `.data` externs, 103 KB, 129 of
    them over 1 KB). First global defined in C (2026-11-09): `src/crv-lo/data_2bdce0.cpp` defines `g_2bdce0` and `g_2bdcf0` as `float[4]` (retail's two 16-byte vectors; the earlier "8 bytes short" was the wrong type), listed in `config/us/data_files.tsv`; `link_image.py` links its `.data` at retail's address (`.dd_<address>`) and checks the bytes, `make_objdiff.py` counts it (data 8,375 -> 8,407 bytes). Remaining: `.bss`, more regions, the list feeding the report per global. The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
    sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
-
-4. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
+   Data regions are typed with the shared headers of item 1, not with new per-file structs.
+4. **Port-facing metadata, no code change.** A layer column in `src/MANIFEST.tsv` and the registry (game logic, engine, platform:
+   GS, VIF and DMA, IOP, memory card, pad, VU microcode); JSON exports of symbols, the class tree, vtable layouts and struct offsets
+   generated from the headers; hardware access behind named macros or inlines only where retail's bytes are identical. Depends on 1.
+5. **Matching on a measured lever only** (procedure: [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)). Waves yield about 20 bytes per claimed
+   function and a far near miss costs about 70k tokens at 1 in 8; no wave starts without a lever measured on a pilot.
+   - Done 2026-11-09: the 162 remnants (chunks nothing reaches that never transfer control) are a blocker kind of their own
+     (`make blockers`); the open count went from 633 to 471.
+   - Then the levers, each measured before a wave: classify the 261 far near misses by diff cause (`classify_diffs.py`); draft
+     the SDK giants biggest first (drafting is what is left there, not toolchain). Measured and closed: no generator-style family
+     is left among the open functions (no group over 12 by module, name or size); reorder-mode assembly for the SDK range
+     (negative, 2026-11-09).
+   - A worker that meets a permanent blocker reports
+     one line of what it computes (`SKIP wall <semantics>`); the lead records it in `config/us/blocker_notes.tsv`, with a note on
+     PS2 FPU behaviour (no denormals, infinities or NaNs) where the result depends on it.
+6. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
    VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report
-   honest and match about 106 to 258 of the 853 blockers. First a compile pilot on about 10 functions, then the rule change in
+   honest and match about 106 to 258 of the 853 blockers that are not remnants. First a compile pilot on about 10 functions, then the rule change in
    AGENTS.md; the headline falls by about 1.7 to 4.2 points. See [build/inline-asm-helpers.md](build/inline-asm-helpers.md).
+
+## When a port starts
+
+- Reference C for functions that stay assembly, labelled "behaviour, not original", outside `src/` (a `reference/` folder or the
+  port's repository) and never in the reports. An equivalence harness, if built, is optional tooling here or lives in the port.
+- A host syntax check (`clang -fsyntax-only` for a 64-bit target over `src/` with a shim header) that writes a warnings report and
+  never gates.
 
 ## Not goals
 
-The renderer, the audio engine, a platform layer and the port itself live in other projects.
+The renderer, the audio engine, a platform layer and the port itself live in other projects. "Behaviourally equivalent" C is not
+a match and does not go in `src/` or the reports.

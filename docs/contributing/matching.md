@@ -119,8 +119,9 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
    often). Check it with `make unit UNIT=src/<whole file>`. Workers match as before, one function per source in their scratch folder.
 5. Stop and write the best attempt to `nonmatching/` when the code isn't a function (reads registers it never sets, no return),
    is hand-written, needs an instruction C cannot ask for, or three different wordings give the same wrong bytes.
-6. Types a worker defines carry the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead renames
-   them when it lands related functions together.
+6. Workers use the shared types of `include/` when they exist (AGENTS.md "Preservation first"). A type a worker has to define
+   locally carries the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead moves it into a
+   shared header (or renames it) when it lands related functions together.
 
 ## Picking work and running a local model (2026-11-06)
 

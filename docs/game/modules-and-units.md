@@ -20,7 +20,11 @@ the Sly 1 decompilation's file layout, `config/sly1/sly1.yaml`):
 - its rodata and data in `build/splat/asm/data/{rodata,data}/<module>.*.s`. The pieces are cut by ownership: each address the code
   names goes to the first unit, in code order, that refers to it, and a run of one owner becomes one piece
   (`config/us/pieces.tsv`). The rule is a heuristic, so a piece's name can be wrong while its bytes cannot,
-- its matched C in `src/<module>/`, one function per file, listed in `src/MANIFEST.tsv`.
+- its matched C in `src/<module>/`, one function per file or inside a whole source file (`config/us/whole_files.tsv`), listed in
+  `src/MANIFEST.tsv`.
+
+A module is the code matcher's guess at a Sly 1 file; a whole file is a Sly 2 source file proved from retail's constructor list,
+and 139 of the 209 file spans hold several modules ([ROADMAP.md](../ROADMAP.md) "Next", item 2).
 
 `make objdiff` writes one objdiff unit per module, so the same names line up in the progress map, the objdiff report and `src/`.
 
@@ -37,6 +41,8 @@ own bytes.
 | :--- | :--- |
 | `c` | Compiled from `src/` in the verified image |
 | `matched` | Matched, but the image still uses assembly for it |
+| `draft` | A compiling source in `nonmatching/`, not matched |
+| `blocked` | A permanent blocker (`config/us/blockers.tsv`): stays original assembly |
 | `asm` | Not matched yet |
 
 [progress.md](../build/progress.md) says how the numbers are counted.

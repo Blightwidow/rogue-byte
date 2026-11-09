@@ -299,3 +299,20 @@ Docker Desktop, `i386/debian:bookworm-slim`, `ee-gcc -x c++`) and judged with `c
 | 3.2-030926, 3.2-040921 | 285 | 106 |
 
 Negative: the Linux 2.9-991111 output equals the Win32 991111b one, and every other build is worse. The delay-slot stores are not a compiler-version effect.
+
+## SDK range assembled in reorder mode (2026-11-09)
+
+Hypothesis: Sony's SDK objects were
+compiled without delay-slot filling and assembled by GNU as in reorder mode, which fills each slot itself. Measured with Sony 2.9-991111b
+and its own `as.exe`, `-O2 -G0 -fno-delayed-branch` against the build's `-O2 -G0` (`SONY_COMPILE_FLAGS`, read by `compile_unit.py` and part of
+the scorer fingerprint when set; a build never sets it), over every SDK-range function in `config/us/sony_gcc29.txt` matched in `src/` (224
+controls, not whole files) and every open SDK draft (109, registry status `tried`):
+
+| Set | Better | Worse | Same | Reach 0 |
+| :--- | ---: | ---: | ---: | ---: |
+| 224 matched controls (all at 0 with the build's flags) | 0 | 216 | 8 | 8 stay at 0 |
+| 109 open drafts (3 errors) | 3 | 81 | 22 | 0 |
+
+Negative: the build's delay-slot filling by the compiler is right for the range. The three that improve (0x23D338 83 to 75, 0x2418C8 77 to
+71, 0x243CB0 166 to 148) stay far and are scattered across libraries, so no library hides a reorder-mode build. Under the build's flags none
+of the 109 open drafts reaches 0 either; their scores are the drafts', not a toolchain wall.

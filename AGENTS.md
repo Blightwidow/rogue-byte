@@ -13,11 +13,27 @@ counts as matched when `scripts/matching/try.py` scores it 0 **and** `make elf` 
 Matching is done against the US executable only. PAL (`SCES_525.29`) is checked afterwards: `make pal` (end of `make land`) says whether the same C
 reproduces the PAL code; `config/eu/` holds the results and `make check` fails when they are stale.
 
+## Preservation first, a port second
+
+Preservation is the absolute priority; a later PC port is the second user of the work (docs/PRESERVATION_AND_PORT.md, docs/ROADMAP.md
+"Next"). What helps a port is **additive**: headers, typedefs, asserts, metadata, notes. It never changes matched bytes or what
+counts as matched.
+
+- **Shared types over local ones.** Use a type from `include/` when it exists; when a function needs a field it lacks, add the field
+  there (re-prove its users) rather than declaring a padded local copy. A local struct stays allowed while no shared one exists.
+- **Tie-break:** of two wordings that both score 0 and both follow the rules, land the typed one: a member over a cast offset
+  (`*(int *)(base + 0x1404)`), a virtual call over a hand-written vtable call (`vt->fn(obj + vt->delta, ...)`), a shared type over a
+  local one, a fixed-width typedef over a bare `long`. `make cleanup` warns on these in added code; a warning does not fail it.
+- **Blockers get one line of semantics.** A worker that meets a permanent blocker says what it computes (`SKIP wall <semantics>`); the
+  lead records it in `config/us/blocker_notes.tsv`, noting PS2 FPU behaviour (no denormals, infinities or NaNs) where results depend on it.
+- **No "equivalent C".** C that behaves like a function but does not reproduce its bytes is not a match: never in `src/`, never in
+  the reports. If anyone writes it for a port, it lives outside `src/` (the port's repository or `reference/`), labelled as such.
+
 ## Layout
 
 | Path | Holds |
 | :--- | :--- |
-| `src/` | matched C++, one unit per module, published by `scripts/matching/export_src.py` |
+| `src/` | matched C++, one unit per module, published by `scripts/matching/export_src.py`; whole source files (`config/us/whole_files.tsv`) hold their functions in place |
 | `nonmatching/` | best compiling source of every unmatched function, with `MANIFEST.tsv` scores |
 | `config/` | splat config, symbol addresses, the SDK-range compiler list (`config/us/sony_gcc29.txt`) and `vu0_regs.txt`; `config/eu/` PAL pairing and status |
 | `include/` | headers for the matched code |
@@ -42,7 +58,8 @@ reproduces the PAL code; `config/eu/` holds the results and `make check` fails w
   carries `// volatile-ok: <reason>` on its line, naming the register block or the handler that writes it (scripts/matching/record.py).
   `do { } while (0)` is one too: in game code it is allowed only as the form C macros take (`#define NAME(...) do { ... } while (0)`)
   that the original plausibly had and retail's code needs. Never a wrapper written only to move instructions.
-- **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, or hand-written assembly (`config/us/blockers.tsv`, from `make blockers`), stays
+- **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant (a chunk nothing reaches that never
+  transfers control, so not a function) (`config/us/blockers.tsv`, from `make blockers`), stays
   original assembly: it is left out of the work queues, counts as finished in the reports apart from the exact C, and is never matched with asm
   (docs/build/vu0-mmi.md).
 - **An unused local only as a type the original plausibly declared.** GCC 2.95 gives an unused struct local a stack slot, so retail's

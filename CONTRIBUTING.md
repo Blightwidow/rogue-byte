@@ -26,6 +26,9 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
   samples or headers, or leaked or NDA material ([AGENTS.md](AGENTS.md)).
 - **Plain C++.** No inline assembly in functions (one shared `Sqrt` helper aside), no register pins, no tricks whose only purpose is
   to steer the compiler. A function that needs one stays in `nonmatching/`.
+- **Preservation first.** Use the shared types of `include/` over local padded copies, and of two wordings that both match land the
+  typed one ([docs/PRESERVATION_AND_PORT.md](docs/PRESERVATION_AND_PORT.md)). C that behaves like a function without reproducing its
+  bytes is not a match and does not go in `src/`.
 - New source files start with `SPDX-License-Identifier: GPL-3.0-or-later`; by contributing you license your work under it.
 - **Keep docs short and plain.** Plain English, short sentences, lists and tables where they help. When you shorten a doc, keep every
   number, path, command, decision and link.

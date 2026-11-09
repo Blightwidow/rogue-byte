@@ -41,8 +41,9 @@ The game is C++ built by SN Systems' GCC 2.95.3 and assembled by SN's `ps2eeas` 
 1. Read its disassembly (`build/splat/asm/`, git-ignored). Work out the arguments (`$a0`-`$a3`, then `$t0`-`$t3`; floats in `$f12`...),
    the return value (`$v0`, `$f0`), the fields it reads (`lw $v0, 0x708($a0)` is a 32-bit field at offset 0x708), the calls it makes
    and the data it uses.
-2. Write a C++ file with the declarations it needs and the function, named as in the disassembly. Data it refers to is an `extern` at
-   retail's address; a function it calls is declared with the arguments it is given.
+2. Write a C++ file with the declarations it needs and the function, named as in the disassembly. Use the shared types of `include/`
+   when they exist, and of two wordings that both score 0 keep the typed one ([AGENTS.md](../AGENTS.md) "Preservation first").
+   Data it refers to is an `extern` at retail's address; a function it calls is declared with the arguments it is given.
 3. `python3 scripts/matching/try.py ADDRESS FILE.cpp` until it prints `score 0`. Read the diff: the lines that differ are the
    instructions to fix. Then check the usual fixes in [contributing/matching.md](contributing/matching.md).
 4. Keep a near miss in `nonmatching/` with what still differs and move on.

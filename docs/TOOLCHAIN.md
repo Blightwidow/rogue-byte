@@ -17,10 +17,11 @@ Why these, and how each was identified: [build/compiler-identification.md](build
 
 ## Rules for the build
 
-- **One flag set per source file** and one assembler for every function, never per function. The only per-address exception is the
-  SDK range's compiler, which is a different Sony release.
+- **One flag set per source file** and one assembler for every function, never ad hoc per attempt. The per-address lists are documented
+  exceptions ([contributing/exceptions.md](contributing/exceptions.md)): the SDK range's compiler (`config/us/sony_gcc29.txt`, a
+  different Sony release) and `-fmove-all-movables` (`config/us/move_movables.txt`).
 - `scripts/build/compile_unit.py` is the one path that compiles a source: `ee-gcc -S`, the compiler's `.extern` lines moved to the top,
-  `Ps2EeAs.exe`, `objcopy -L` so each object's symbols are local. `try.py`, `configure.py` (ninja) and the search tools all use it.
+  `Ps2EeAs-loop5.exe`, `objcopy -L` so each object's symbols are local. `try.py`, `configure.py` (ninja) and the search tools all use it.
 - Nothing from the toolchain, no SDK header and no SDK source goes into the repository (AGENTS.md).
 
 ## Setup

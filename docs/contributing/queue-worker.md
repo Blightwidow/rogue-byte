@@ -12,7 +12,9 @@ ends early leaves free functions in the queue.
    nearest matched sources, your scratch folder, and the exact `try.py` command. Claim again until `done` says `DONE`. `QUEUE EMPTY` also
    counts as done. `take` claims: to look at the queue without claiming, use `claim.py status WAVE`.
 2. Step 0, one minute: a function that needs VU0 macro code, MMI, a lane move to an FP register or COP0 is a wall (inline asm is not
-   allowed, AGENTS.md): say `SKIP wall` and take the next function. A `nop` that no wording of the C gives is not a wall by itself: the
+   allowed, AGENTS.md): say `SKIP wall <semantics>`, one line of what it computes ("4x4 matrix times vector, w ignored"; add "FPU" when
+   the result depends on PS2 FPU behaviour: no denormals, infinities or NaNs), and take the next function. The lead records it in
+   `config/us/blocker_notes.tsv`. A `nop` that no wording of the C gives is not a wall by itself: the
    build's assembler pads short loops like retail (docs/build/assembler.md), so look for the real cause first.
 3. A packet line `parked source` (`data/matching/cleanup-pending/` or `asm-archive/`) is a source that once scored 0: copy it to your scratch folder
    and start there. A cleanup-pending one only needs its raw `M2C_UNK`/`M2C_FIELD` offsets turned into named struct fields (or its padding local
@@ -25,7 +27,9 @@ ends early leaves free functions in the queue.
 5. Plain C++ only (AGENTS.md "Matching rules" and the Rulings): no volatile on ordinary data, no register pins, no inline asm at all, no dummy
    operands, no wrong prototypes. `check_source.py` flags every local that nothing uses when it is an array or a scalar, whatever its name (`int dead[2]`):
    a frame slot retail shows is a typed local the original plausibly declared (a struct), never a filler array; say so in your report when you keep one.
-   Debug dumps (`-dL`) go to your scratch folder.
+   Debug dumps (`-dL`) go to your scratch folder. Use the shared types of `include/` when they exist; of two wordings that both
+   score 0, keep the typed one (AGENTS.md "Preservation first", the tie-break rule): a member over a cast offset, a virtual call
+   over a hand-written vtable call.
 6. A function that scores 0 only with `TRY_ASSEMBLER=sony29` (an SDK-range function: `sd`/`ld` saves, tail calls) is `NEAR needs sony29`: the
    lead adds its address to `config/us/sony_gcc29.txt`. Never edit that file or `config/matching/symbol_addrs.txt` yourself: either changes the scorer fingerprint and the log of every
    worker's runs stops counting (the lead edits them only after `claim.py land` has staged the wave).
