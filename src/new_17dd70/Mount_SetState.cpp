@@ -90,7 +90,7 @@ struct VBB : P12 {
 struct VB : VBB {
     int id;
 };
-struct XF { char pad[0xA0]; int id; };
+#include "xf.h"
 struct SMAREC { int oid; int pad[5]; };
 struct SLOT { char pad[16]; };
 struct CLOCK { float t; float dt; };
@@ -154,7 +154,7 @@ extern "C" {
 extern char B_002DEB30;
 extern QW g_2a2dd0;
 extern CLOCK g_2dded0;
-void ConvertXfMatrix4(MATRIX4 *, int, int, void *);
+void ConvertXfMatrix4(MATRIX4 *, XF *, XF *, void *);
 QW DecomposeRotateMatrixEuler(void *);
 void Mount_UpdateHealthBlot(MOUNT *);
 int NewEmitter(int);
@@ -245,7 +245,7 @@ extern "C" void Mount_SetState(MOUNT *self, int newState)
         MATRIX4 world;
         MATRIX4 matrix;
         int handle = self->pobjB->getMatrix(&world);
-        ConvertXfMatrix4(&matrix, self->pxfA->id, self->pxfB->id, &world);
+        ConvertXfMatrix4(&matrix, self->pxfA->pxfParent, self->pxfB->pxfParent, &world);
         world = matrix;
         self->place(self->pobjB->id, handle, 3);
         self->setA(g_2a2dd0);

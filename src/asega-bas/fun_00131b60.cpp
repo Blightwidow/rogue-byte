@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct PAIR { int idFilter; int dofFilter; };
-struct XF { char pad[0x94]; int dof; int pad98; int id; };
+#include "xf.h"
 struct ALO { char pad[0x50]; int cxf; char *axf; };
 struct ASEGA;
 extern "C" void func_00131B10(ASEGA *, ALO *, XF *);

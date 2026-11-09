@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct XF { char pad[0x40]; MATRIX3 mat; char pad2[0x70 - 0x40 - sizeof(MATRIX3)]; QW pos; };
+#include "xf.h"
 #include "so.h"
 struct CPDEFI { int grfcpd; char pad[0xC]; QW pos; QW vel; float radHome; float sAdjust; float tMoveLast; int cfk; };
 extern float g_2dded0[];
@@ -10,8 +10,8 @@ extern "C" float atan2f(float, float);
 void GetSoCpdefi(SO *so, float dt, CPDEFI *cp)
 {
     XF *xf = so->pxfRoot;
-    MATRIX3 *mat = &xf->mat;
-    QW pos = xf->pos;
+    MATRIX3 *mat = (MATRIX3 *)&xf->matWorld;
+    QW pos = xf->matWorld.row[3];
     cp->pos = pos;
     cp->vel = VelocityXfAtPos(xf, 0, pos);
     MATRIX3 up;

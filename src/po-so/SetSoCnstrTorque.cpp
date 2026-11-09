@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct XF { char p0[0x90]; void *act; char p1[0x4]; short kind; };
+#include "xf.h"
 struct PH { char p0[0x90]; char vec[0x10]; int ct; };
 struct SOB { char p0[0x58]; XF *xf; XF *xf2; char p1[136]; PH *ph; };
 extern "C" void SetXfKind(SOB *, XF *, int);
@@ -10,7 +10,7 @@ extern "C" void SetSoCnstrTorque(SOB *so, int cnstr)
 {
     if (so->ph) {
         XF *xf = so->xf2;
-        if (xf->act == 0) {
+        if (xf->pactFirst == 0) {
             if (xf->kind != 2)
                 SetXfKind(so, xf, 1);
         }

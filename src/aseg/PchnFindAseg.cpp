@@ -1,4 +1,4 @@
-struct XF { char pad[0x94]; int dof; };
+#include "xf.h"
 struct ASEGCHN { unsigned grf; unsigned other; };
 struct ASEG { char pad[0x5C]; int cchn; ASEGCHN *achn; };
 struct ALOVT { short delta; short idx; };

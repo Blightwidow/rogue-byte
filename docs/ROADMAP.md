@@ -95,18 +95,25 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      in the header. `SO::dlChild` (0x64) is a `DL`, which brought `InitSo` over. The children's link at 0x24 is not declared as a
      `DLE`: its `prev` would be 0x28, where retail reads `grfo` with `ld` (noted in `lo.h`). 15 of the 16 files with their own `DL`
      moved (`CloseFrame` defines its own `QW`).
-   - `XF` (2026-11-09): `include/xf.h`. Not in the class table; its first 0x80 bytes keep Sly 1's layout and names (`mat`, `pos`,
-     `matWorld`, `posWorld`: `GetSoCpdefi` reads 0x40 and 0x70 that way), the rest comes from functions that reach an `XF` through
-     `SO::pxf*` or take one by name: the act list 0x90, `kind` 0x98 (signed: `SleepXf` matches with it too), `pxfParent` 0xA0,
-     `generation` 0xA4, `vel` 0xB0, `accel` 0xF0. 10 functions moved. The local name `XF` was also given to at least four other
-     types (a 2D transform, objects with a float pair at 0x80); those stay local. Readers that copy 0x40-0x80 as one `MATRIX4`
-     (quadword moves) stay local until that view is settled against retail's copies.
+   - `XF` (2026-11-09): `include/xf.h`, 0x100 bytes (`func_00131B60` walks `ALO::axf` in steps of 0x100). Not in the class table.
+     Every field comes from functions that certainly hold an `XF` (through `SO::pxf*`, `ACT::pxf`, `SO` slot 51, `SetXfKind`'s
+     argument, or an `*Xf*` name). The matrices settled: Sly 1 splits each into `MATRIX3` + `VECTOR`; Sly 2's readers treat
+     `mat` (0x00) and `matWorld` (0x40) as one 4x4 `MATRIX4` each, row 3 being the position (`TranslateSoToPos` copies them with
+     quadword moves and writes row 3; `GetActvalPositionGoal` and `GetSoCpdefi` read rows 3 as quadwords). The shared `MATRIX4`
+     gained a quadword view of its rows (`union { float mat[4][4]; QW row[4]; }`): all 21 of its users stay byte for byte.
+     Then the act list 0x90, `dof` 0x94, `kind` 0x98 (signed; `SleepXf` matches with it too), `id` 0x9C, `pxfParent` 0xA0
+     (`Mount_SetState` and `func_0017ABC8` had it as an `int` passed to `ConvertXf*`), `generation` 0xA4, `vel` 0xB0, `posGoal`
+     0xC0, `velGoal` 0xD0, `accel` 0xF0. 0xA8 is a union by kind: a moving `XF` keeps its arrival time there
+     (`GetActvalPositionGoal`, `func_001C8918`), a mirrored one its `XFMIRROR` (`LoadXfMirrors`). 28 functions moved, two of
+     them inside whole files; one raw-offset cast went (`TranslateSoToPos`). The 5 local `XF`s left are other types the workers
+     also called `XF`: a 2D transform of six floats, and the segment type of `aseg`/`asega` (floats at 0x80, 0x84, pointers at
+     0x88, 0x8C, a short at 0x9A).
    - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float
      constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
-     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `XF`'s matrix view
-     (`MATRIX3` + `VECTOR` against `MATRIX4`), then the class table's other families.
+     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: the class table's other
+     families, and the `aseg` segment type.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

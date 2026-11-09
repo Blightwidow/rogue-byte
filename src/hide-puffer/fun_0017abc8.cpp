@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct QUERY { int fFound; char pad[0x2C]; };
-struct XF { char pad[0xA0]; int parent; };
+#include "xf.h"
 #include "so.h"
 struct ACT { char pad[0x1C]; float t; };
 struct GOAL { char pad[0x10]; SO *pguard; char pad2[0x48]; void *ptarget; int fHeld; ACT *pact; };
@@ -9,8 +9,8 @@ struct VT { char pad[0x300]; short delta; short index; void (*fn)(void *, QUERY 
 struct OBJ { char pad[0xC]; VT *vptr; };
 extern "C" float g_2dded0;
 extern "C" void func_0017AA78(GOAL *, QUERY *, QW *, QW *);
-extern "C" QW ConvertXfPos(int, int, QW);
-extern "C" QW ConvertXfVec(int, int, QW);
+extern "C" QW ConvertXfPos(int, XF *, QW);
+extern "C" QW ConvertXfVec(int, XF *, QW);
 extern "C" void SetActvalGoal(ACT *, QW, QW);
 void func_0017ABC8(GOAL *pgoal)
 {
@@ -27,7 +27,7 @@ void func_0017ABC8(GOAL *pgoal)
     }
     XF *xf = pgoal->pguard->pxfLinear;
     func_0017AA78(pgoal, &query, &posAim, &vecAim);
-    QW pos = ConvertXfPos(0, xf->parent, posAim);
-    QW vec = ConvertXfVec(0, xf->parent, vecAim);
+    QW pos = ConvertXfPos(0, xf->pxfParent, posAim);
+    QW vec = ConvertXfVec(0, xf->pxfParent, vecAim);
     SetActvalGoal(pgoal->pact, pos, vec);
 }

@@ -8,5 +8,6 @@ void *memcpy(void *, const void *, unsigned int);
 void *memset(void *, int, unsigned int);
 struct VECTOR { float x, y, z, w; } __attribute__((aligned(16)));
 struct MATRIX3 { float mat[3][4]; };                            /* 4-byte aligned: copies call memcpy */
-struct MATRIX4 { float mat[4][4]; } __attribute__((aligned(16))); /* copies are lq/sq */
+/* copies are lq/sq; row n read or written as one quadword (row 3 is the position in an XF's matrices) */
+struct MATRIX4 { union { float mat[4][4]; QW row[4]; }; } __attribute__((aligned(16)));
 #endif
