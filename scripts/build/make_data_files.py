@@ -147,6 +147,7 @@ def build_runs(label, end, names, functions):
     return grouped
 
 
+WORD_ARRAY_LIMIT = 64  # as BYTE_DUMP_LIMIT in scripts/matching/check_source.py, for a run of plain `unsigned int`
 CTYPE = {'w4': 'unsigned int', 'float': 'float', 'short': 'short', 'byte': 'unsigned char', 'str': 'char'}
 
 
@@ -225,6 +226,9 @@ def make_source(name, start, size, names, functions, allow_pointers=True, labels
             merged = [elements for run in runs for elements in run[1]]
             runs = [['w4', merged, sum(run[2] for run in runs), set().union(*(run[3] for run in runs))]]
         marker = f"// data-ok: retail's bytes at {label['address']:#X}"
+        if any(run[0] == 'w4' and not run[3] and len(run[1]) > WORD_ARRAY_LIMIT for run in runs):  # not ruled yet: see the TODO text
+            marker = ('// TODO: a plain word array over %d elements is not ruled as typed data yet (docs/contributing/exceptions.md "Game data defined in\n'
+                      '// source"); its type is Splat\'s guess, not recovered from the code that reads it\n' % WORD_ARRAY_LIMIT) + marker
         if len(runs) == 1:
             declaration, initializer = member(runs[0][0], runs[0][1], runs[0][2], label['name'], has_pointer)
             bodies.append(f'{marker}\n{declaration} = {initializer};')
