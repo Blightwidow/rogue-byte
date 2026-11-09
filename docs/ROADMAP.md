@@ -26,11 +26,11 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    them (139 of 209 spans hold several modules). Stage 2: `src/memory-bez/ary.cpp` (0x116CA0-0x117030, 11 functions, two from `INCLUDE_ASM`)
    builds whole and the image stays byte for byte (`config/us/whole_files.tsv`, `make unit UNIT=src/memory-bez/ary.cpp`). 181 of the 209 files
    (about 405 KB) can use the same path as it is; 26 need the file's own `.rodata` placed (item 3); 2 mix per-function flag lists. Stage 4: 78
-   whole files (276 matched functions) build whole. Stage 5 (2026-11-08): the whole file is the only record of its functions. `make src` publishes
+   whole files (276 matched functions) build whole; five more on 2026-11-09 (83 files, 304 matched functions). Stage 5 (2026-11-08): the whole file is the only record of its functions. `make src` publishes
    no per-function copy of them (276 files, 223 KB, left `src/`; `src/MANIFEST.tsv` gives them `whole_file` and `symbol`); objdiff cuts each one
    out of the whole object and PAL reads it there at its offset (both reports unchanged); a new match inside a whole file lands by replacing its
    `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
-   (`data/matching/src/fn`, `try.py`). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
+   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files are held back (`exclusion`) until objdiff can; landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
    cuts inside a span.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other

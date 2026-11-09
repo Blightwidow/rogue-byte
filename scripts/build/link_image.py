@@ -308,10 +308,17 @@ wholes = {}  # start -> (end, object path, undefined names)
 for start, end, file in whole_files():
     object_path = os.path.join(UNITS, file + '.o')
     found = inspect(object_path) if os.path.isfile(object_path) else None
-    if start not in by_address or (end not in by_address and end != TEXT_END) or found is None or found[0] != end - start or found[2]:
+    if start not in by_address or (end not in by_address and end != TEXT_END) or found is None or found[0] != end - start:
         print(f'whole file {file}: not linked ({"no object" if not os.path.isfile(object_path) else "range, size or own data"}), its functions come from assembly', flush=True)
         continue
-    wholes[start] = (end, object_path, found[1])
+    rodata_size, rodata_base = 0, None
+    if found[2]:  # its own jump tables and literals: linked where retail has them, as a function's own rodata is
+        object_path, rodata_size = trim_rodata(object_path)
+        rodata_base = derive_rodata_base(start, object_path)
+        if rodata_base is None or not RODATA_START <= rodata_base < RODATA_END:
+            print(f'whole file {file}: not linked (no single base for its own rodata), its functions come from assembly', flush=True)
+            continue
+    wholes[start] = (end, object_path, found[1], rodata_size, rodata_base)
 
 def in_whole(address, active):
     return any(start <= address < wholes[start][0] for start in active)
@@ -411,8 +418,9 @@ def build(swapped, active, raw_pieces):
     sections += [f'    .nl_{address:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(candidates[address][0])}(.rodata) }}' for address in sorted(swapped & retargeted)]
     # rodata and data are linked as pieces (config/us/pieces.tsv); a function's own rodata goes where the retail image
     # has it, so the pieces are cut around those holes
-    holes = sorted((candidates[address][3], candidates[address][3] + candidates[address][2], address)
-                   for address in swapped if candidates[address][2])
+    holes = sorted([(candidates[address][3], candidates[address][3] + candidates[address][2], address)
+                    for address in swapped if candidates[address][2]] +
+                   [(wholes[start][4], wholes[start][4] + wholes[start][3], start) for start in active if wholes[start][3]])
     for (_, previous_end, _), (next_start, _, address) in zip(holes, holes[1:]):
         if next_start < previous_end:
             raise SystemExit(f'rodata of {address:#X} overlaps another one')
@@ -436,7 +444,7 @@ def build(swapped, active, raw_pieces):
         return a, stem + '.o', '.data'
     with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
         pieces = list(pool.map(wrap, jobs))
-    pieces += [(candidates[address][3], candidates[address][0], '.rodata') for _, _, address in holes]
+    pieces += [(start, (wholes[address][1] if address in active else candidates[address][0]), '.rodata') for start, _, address in holes]
     rodata_sections = [f'    .ro_{piece[0]:06X} 0x{piece[0]:X} : SUBALIGN(1) {{ */{os.path.basename(piece[1])}({piece[2]}) }}'
                        for piece in sorted(pieces)]
     tail = [line.rstrip('\n') for line in open(os.path.join('config', 'us', 'image.ld'))
@@ -460,7 +468,9 @@ for attempt in range(1, 12):
     for start in active:
         end = wholes[start][0]
         actual, expected = image[start - TEXT_START:end - TEXT_START], retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + end - TEXT_START]
-        if actual != expected:
+        ro_size, ro_base = wholes[start][3], wholes[start][4]
+        rodata_ok = not ro_size or image[ro_base - TEXT_START:ro_base - TEXT_START + ro_size] == retail[FILE_OFFSET_OF_TEXT + ro_base - TEXT_START:FILE_OFFSET_OF_TEXT + ro_base - TEXT_START + ro_size]
+        if actual != expected or not rodata_ok:
             failing_wholes.add(start)
             first = next((k for k in range(0, len(expected), 4) if actual[k:k + 4] != expected[k:k + 4]), 0)
             print(f'whole file at {start:#X}: bytes differ at {start + first:#X}, its functions come from assembly', flush=True)

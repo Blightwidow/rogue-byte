@@ -15,6 +15,7 @@ start	end	file
 0x1258F0	0x126188	splice-bif-splice-eval/splice_bif_splice_eval_1258f0.cpp
 0x126188	0x1262E0	splice-bif-splice-eval/splice_bif_splice_eval_126188.c
 0x1262E0	0x126438	splice-bif-splice-eval/splice_bif_splice_eval_1262e0.c
+0x1281B0	0x128B60	new_127e90/bevy_splice_eval_reset_file.cpp
 0x128B60	0x128CB8	new_127e90/new_127e90_128b60.c
 0x128F70	0x1291A8	new_127e90/PprocClone_file.cpp
 0x12A3D8	0x12A980	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c
@@ -28,6 +29,8 @@ start	end	file
 0x13A1E8	0x13A9E8	blip-light/blip_light_13a1e8.cpp
 0x13D020	0x13D558	new_13cf38/Crfodb_OnGrab_file.cpp
 0x13DA18	0x13E368	new_13d8b8/LoadSwStringsFromBrx_file.cpp
+0x13F8A8	0x13FF70	new_13f888/AppendPloarray_file.cpp
+0x147410	0x147E20	new_144b58/SetWipeState_file.cpp
 0x148300	0x148620	new_147f40/StaticInitSwSlotheaps_3_file.c
 0x14C548	0x14C6A0	new_14bff8/new_14bff8_14c548.c
 0x1539A8	0x153B08	rip-game/rip_game_1539a8.c
@@ -48,6 +51,7 @@ start	end	file
 0x185E30	0x186610	binoc-joy/binoc_joy_185e30.cpp
 0x18F740	0x18F908	stepcane/ChooseJtSmashTarget_file.cpp
 0x190BE0	0x191090	stephang/GetJtHangHeading_file.cpp
+0x194F48	0x195950	unsorted/unsorted_194f48.cpp
 0x19FC30	0x1A0300	jp-stepzap/AddSafePointOnMember_file.cpp
 0x1A0300	0x1A0B18	jp-stepzap/jp_stepzap_1a0300.c
 0x1A2358	0x1A2BD0	ub-light/ub_light_1a2358.cpp
@@ -66,6 +70,7 @@ start	end	file
 0x1DEDB0	0x1DFAD8	game-stepguard/game_stepguard_1dedb0.cpp
 0x1EE978	0x1EEC60	shdanim/SjisFromAsciiChar_file.cpp
 0x1EF850	0x1EFA90	shdanim-sm/shdanim_sm_1ef850.cpp
+0x1F1900	0x1F2108	sm-so/sm_so_1f1900.cpp
 0x1FF690	0x1FF7E8	button-spliceobj/button_spliceobj_1ff690.c
 0x205910	0x205E70	step-rwm/step_rwm_205910.c
 0x210CF0	0x210EB0	po-screen/StaticInitSw_file.cpp
