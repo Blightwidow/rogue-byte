@@ -15,9 +15,25 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 - CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
   (objdiff reports for ByteMatch). Commit messages and the cleanup rules are checked locally (`make commits`, `make cleanup`).
 
+## What is left (2026-11-09)
+
+There are three separate "100%"s (numbers from `progress/us/report.json`):
+
+- **Code, 80.10%:** 279 KB in 633 functions (blockers already count as finished).
+  - 261 far near misses, 171 KB. Opus matches about 1 in 8 at about 70k tokens each.
+  - 102 SDK-range functions with no draft, 64 KB (libm and libc giants, Sony gcc 2.9).
+  - 19 held-back rulings, about 0.25 points. Fresh near misses (score 1-16) are used up.
+  - What moved the number so far was systematic unlocks (the loop5 assembler patch, +22 KB; the `-fmove-all-movables` list; RTL-dump work on register-only misses), not worker waves (about 20 bytes per claimed function). Look for the next lever before spending a wave.
+  - Six integer near misses have no known lever: 0x1733C8, 0x1C9058, 0x120548, 0x218748, 0x1A5D98, 0x13FAD0.
+- **Data, 0.83%:** ceiling 49% of data (item 3); the irx and vutext regions are not game C. Largest gap, and it needs build work, not matching.
+- **Exact C, 49.97%:** the 853 permanent blockers stay original assembly, so exact C tops out near 70% of code unless item 4 reclassifies some.
+- **PAL, 78.64%** against US 80.10%: close it with `make pal` after each land.
+
+Order: data build side (item 3), then a lever for the near-miss pool and the SDK giants (item 1), then PAL.
+
 ## Next
 
-1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses.
+1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses. Remaining pools and their yield are in "What is left"; classify the 261 far near misses by diff cause (`classify_diffs.py`) before spending tokens, draft the 102 SDK giants biggest first, and prefer a systematic lever over a wave.
 2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
