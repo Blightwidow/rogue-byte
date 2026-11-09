@@ -44,7 +44,8 @@ Measured on `src/` on 2026-11-09 (5,119 source files):
    it waits.
 2. **The C++ design is not recovered.** Sly 2 is real C++ (vtable pointer at +0xC, 8-byte slots), but virtual calls are written
    out by hand (`vt->fn((char *)obj + vt->delta, ...)`) and classes are rare. Linkage is mixed: mostly `extern "C"`, a few
-   mangled names.
+   mangled names. Started 2026-11-09: `BASIC`, `LO` and `SO` are real classes with their 75 virtuals in slot order, and a real virtual
+   call reproduces retail's bytes (ROADMAP.md item 1).
 3. **Raw offsets remain** (`*(int *)(base + 0x1404)`, 1,338 such casts by `make cleanup`'s pattern, see "Baseline"), even where a field would match.
 4. **The headline mixes source and bytes.** The permanent blockers (853 functions C cannot express and, since 2026-11-09, 162 remnants that are not functions; 30.28% of code) count as finished but are preserved as
    assembly, not as source. That is a fair rule for a byte-matching project, but the report should keep it visibly apart (it does,

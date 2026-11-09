@@ -1,11 +1,6 @@
 #include "sly2.h"
-struct VT { char pad[0x48]; short delta; short index; void (*fn)(void *); };
 struct PHYS { char pad[0xDC]; void *pregion; };
-struct SO {
-    char pad0[0xC]; VT *vt;
-    char pad1[0xD8]; PHYS *pphys;
-    char pad2[0x40]; float uFade; float duFade;
-};
+#include "so.h"
 extern "C" float g_2dded4;
 extern "C" {
 void UpdateLo(SO *);
@@ -29,8 +24,7 @@ extern "C" void UpdateSo(SO *pso)
         if (uFade <= 0.0f) {
             pso->uFade = 0.0f;
             pso->duFade = 0.0f;
-            VT *vt = pso->vt;
-            vt->fn((char *)pso + vt->delta);
+            pso->Remove();
         } else {
             if (1.0f <= uFade) {
                 pso->uFade = 1.0f;

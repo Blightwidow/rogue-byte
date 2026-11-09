@@ -60,16 +60,33 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      recovered layouts (`config/recovered/sly2_structs.h`) are mostly `field_0x...` gaps and Sly 1's offsets do not carry over, so
      the evidence is our own matched code. A local struct's name does not identify a class: the 28 local `XF` bodies describe at
      least five different types (a 2D transform of six floats, an object with an act list at 0x90, one with a kind at 0x98...).
-   - Pilot done 2026-11-09: `include/so.h`, a flat view of `SO`'s first 0x150 bytes with the nine fields two or more functions agree
+   - Pilot done 2026-11-09: `include/so.h`, first a flat view (now the class below) of `SO`'s first 0x150 bytes with the nine fields two or more functions agree
      on (`psoParent` 0x10, `proot` 0x14, `grfo` 0x28, `pxfLinear`/`pxfAngular`/`pxfRoot` 0x58-0x60, `pphys` 0xE8, `poxa` 0xEC, `grfso`
      0x148), the unknown gaps named by offset, and offset checks the PS2 build enforces (a negative array size on a moved field;
      gcc 2.95 has no `static_assert`). 21 of the 72 files that declared their own `SO` moved over (20 per-function sources, one
      whole file): drop the local struct, include `so.h`, rename 0 to 3 fields. All 21 score 0 again (`try.py`, `make unit`), `make elf`
      PASS, reports unchanged. Cost: one scripted pass and one hand fix (a same-named field of another struct), two compiles per file.
-   - What keeps the other 51 local: the vtable at 0xC (needs the class and virtual-call work), fields only one function reads
-     (0x64, 0x138, 0x1C8...), conflicts to settle against retail's code (`pphys` at 0xE8 in most files but 0xEC in two; 0xE4 read
-     as `GEOM *` and as `PART *`; 0x10 as `SO *` and as `PARENT *`), and fields past 0x150 (0x220 `state`...) that belong to derived
-     classes, not to `SO`. Next: the class chain (`LO`, `ALO`, `SO`) with the vtable, then the derived classes, each by the same rule.
+   - Classes and virtuals done 2026-11-09: `include/lo.h` (`BASIC`, `LO`) and `include/so.h` (`SO : LO`) are real C++ classes.
+     Retail's class table (0x2BAAE8, `config/recovered/class_diff.tsv`) names them by their vtables: class 2 (0x50 bytes, 48 slots:
+     `InitLo`, `SetLoParent`, `UpdateLo`...) is `LO`, class 48 (0x150 bytes, 75 slots: `InitSo`, `UpdateSo`, `ProjectSoTransform`...) is
+     `SO`; Sly 2 has no separate `ALO` level. g++ 2.95 puts the vtable pointer after the own fields of the first class with a virtual
+     (measured: `struct LO : BASIC { virtual...; char lo[0x40]; }` puts it at 0x4C), so retail's pointer at 0xC makes the root class
+     (class 0, 0x10 bytes) 0xC bytes of fields plus the pointer; class 155, the other branch from the root, shares slots 1, 2, 4 and 5
+     with `LO`, so slots 1 to 6 are the root's. An entry is 8 bytes (delta, index, function) and slot n sits at 8 * n, so the 75
+     virtuals are declared in slot order, named after the function retail puts there (`Slot<n>` while unnamed), with a signature only
+     where a matched caller shows it. A real virtual call compiles to retail's sequence (`lw` vptr, `lh` delta, `lw` function, `jalr`,
+     `addu` in the delay slot): 15 matched functions now call through `pso->FIsLocked()`, `pso->Remove()`, `attached->SetParent(...)`
+     instead of `vt->fn((char *)pso + vt->delta)`, all scoring 0. The PS2 build checks `sizeof` (0x10, 0x50, 0x150) and every offset.
+   - Fields added by the same two-reader rule: `cgeom`/`ageom` 0xE0/0xE4 (two files call the element `GEOM`, two `PART`: one array
+     of 0xB0-byte elements, named `GEOM`), `uFade`/`duFade` 0x12C/0x130. The 0xEC conflict resolved: the two files that read
+     `pphys` at 0xEC read `pcontact` at +0x6C of the object, next to `owner` +0x60, `first` +0x64 and `pmqList` +0x68 of the
+     `poxa` readers: one `OXA`, misnamed.
+   - Status: 40 of the 72 files that declared their own `SO` use the shared classes (`make elf` PASS, reports unchanged, every
+     converted function links from C). The other 32: derived classes read past 0x150 (slot `SO`s at 0x168-0x22C, `0x298` slots,
+     `FSlotSoFacingHeading` at 0x1D8), fields one function reads (0x40, 0x64, 0xB8, 0x138...), opaque uses (`pad[0x300]`), and
+     `Carry_Attach` (its matrix type and a `JT` that needs its class). 292 files still write vtable calls by hand on other classes.
+     Next: the derived classes of `SO` from the class table (class 50, 0x180; class 51, 0x2C0...) by the same rules, and `XF` from
+     the functions that take one (the local name `XF` describes several types).
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

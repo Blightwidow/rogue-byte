@@ -1,12 +1,12 @@
 #include "sly2.h"
-struct SO { char pad[0xEC]; int key; };
+#include "so.h"
 struct DIALOG { char pad[0x1C8]; SO *pso; };
 int FIgnoreSoIntersection(DIALOG *, SO *);
 int UntriggerDialog(DIALOG *pdialog, SO *psoOther)
 {
     SO *pso = pdialog->pso;
     if (pso) {
-        if (psoOther->key == pso->key)
+        if (psoOther->poxa == pso->poxa)
             return 3;
     }
     return FIgnoreSoIntersection(pdialog, psoOther);

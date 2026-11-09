@@ -1,9 +1,7 @@
 #include "sly2.h"
-struct SOVT { char pad[0x1F0]; short thisAdjust; short slotIndex; int (*function)(void *); };
-struct SO;
+#include "so.h"
 struct GEOM { char pad[0x10]; unsigned long grf; char pad2[0xB0 - 0x18]; };
 struct OXA { char pad[0x34]; char dl[0x2C]; SO *powner; };
-struct SO { char pad[0xC]; SOVT *vt; char pad2[0xE0 - 0x10]; int cgeom; GEOM *ageom; int unkE8; OXA *poxa; };
 extern "C" int FFindDlEntry(void *, void *);
 extern "C" void RemoveDlEntry(void *, void *);
 extern "C" int FIsDlEmpty__FP2DL(void *);
@@ -47,6 +45,6 @@ void RemoveSoGeomFromOxa(SO *pso, GEOM *pgeom)
             }
         }
     }
-    if (pso->vt->function((char *)pso + pso->vt->thisAdjust) == 0)
+    if (pso->FIsLocked() == 0)
         func_001F5078(pso);
 }
