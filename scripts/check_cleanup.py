@@ -22,10 +22,13 @@ SOURCE_RULES = (  # src/ only: include/types.h is where these live
      'a local fixed-width typedef: include "types.h" (or sly2.h) instead'),
 )
 
+SOURCE_WARNING_RULES = (  # src/ only: the shared header defines it
+    (re.compile(r'\bstruct\s+SO\s*\{'), 'a local SO: include "so.h" (add the field there when two matched functions read it)'),
+)
+
 WARNING_RULES = (  # the tie-break rule (docs/PRESERVATION_AND_PORT.md): printed, never fail the check
     (re.compile(r'\b(char|u8|s8)\s+pad\w*\s*\['), 'a padding member: prefer the shared type from include/ (add the field there)'),
     (re.compile(r'\*\s*\(\s*[\w ]+\*+\s*\)\s*\(.*\+\s*(0x[0-9A-Fa-f]+|\d+)\s*\)'), 'a cast offset: prefer the struct member'),
-    (re.compile(r'\bstruct\s+SO\s*\{'), 'a local SO: include "so.h" (add the field there when two matched functions read it)'),
     (re.compile(r'->\s*delta\b'), 'a hand-written vtable call: prefer a virtual member function when it matches'),
     (re.compile(r'^(?!\s*typedef\b).*\blong\b'), 'a bare long: prefer s64 (64 bits) or QW (128 bits)'),
 )
@@ -52,7 +55,8 @@ def check_lines(added):
 def warn_lines(added):
     """Tie-break warnings (path:line: warning: rule) in the added lines of code files; they do not fail the check."""
     return [f'{path}:{number}: warning: {message}' for path, lines in sorted(added.items()) if CODE.match(path)
-            for number, text in lines for pattern, message in WARNING_RULES if pattern.search(text)]
+            for number, text in lines for pattern, message in WARNING_RULES + (SOURCE_WARNING_RULES if path.startswith('src/') else ())
+            if pattern.search(text)]
 
 def check_files(paths):
     """Problems for added files that could be game data or build output."""
