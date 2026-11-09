@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct GEOM { char pad[0x10]; int lo; int hi; };
-struct XF { char pad[0x98]; short kind; char pad1[0xB0 - 0x9A]; QW velocity; char pad2[0xF0 - 0xC0]; int ax; int ay; int az; };
+#include "xf.h"
 struct PHYS { char pad[0x60]; QW linear; QW angular; };
 #include "so.h"
 extern "C" {
@@ -20,22 +20,22 @@ void ProjectSoTransform(SO *pso)
     }
     PHYS *pphys = pso->pphys;
     if (pphys != 0) {
-        if (pso->pxfLinear != 0) pphys->linear = pso->pxfLinear->velocity;
-        if (pso->pxfAngular != 0) pso->pphys->angular = pso->pxfAngular->velocity;
+        if (pso->pxfLinear != 0) pphys->linear = pso->pxfLinear->vel;
+        if (pso->pxfAngular != 0) pso->pphys->angular = pso->pxfAngular->vel;
         if ((unsigned short)(pso->pxfLinear->kind - 1) < 2 || pso->pxfAngular->kind == 1 || pso->pxfAngular->kind == 2) {
             if (FXfKindDynamic(pso->pxfLinear->kind)) {
                 XF *pxf = pso->pxfLinear;
-                int *accel = &pxf->ax;
+                int *accel = pxf->accel;
                 accel[2] = 0;
                 accel[1] = 0;
-                pxf->ax = 0;
+                pxf->accel[0] = 0;
             }
             if (FXfKindDynamic(pso->pxfAngular->kind)) {
                 XF *pxf = pso->pxfAngular;
-                int *accel = &pxf->ax;
+                int *accel = pxf->accel;
                 accel[2] = 0;
                 accel[1] = 0;
-                pxf->ax = 0;
+                pxf->accel[0] = 0;
             }
             pso->Slot70();
         }

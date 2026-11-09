@@ -1,4 +1,4 @@
-struct XF { char pad[0x98]; short kind; };
+#include "xf.h"
 struct PHYS { char pad[0xA0]; int ctTorque; char pad2[0xC0 - 0xA4]; int ctForce; };
 #include "so.h"
 struct NODE { char pad[0x40]; NODE *pnext; char pad1[0x60 - 0x44]; SO *pso; };

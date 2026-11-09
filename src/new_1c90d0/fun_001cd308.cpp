@@ -2,7 +2,7 @@
 struct Rows3 { QW row[3]; };
 struct M4 { QW row[4]; };
 #include "so.h"
-struct XF { char pad[0xA0]; XF *parent; };
+#include "xf.h"
 struct CARRY { char pad0[0x84]; SO *last; char pad1[0x94 - 0x88]; void *act94; void *act98; void *act9C; SO *attached; };
 extern "C" {
 void Carry_SetState(CARRY *, int);
@@ -36,11 +36,11 @@ void func_001CD308(CARRY *carry, LO *target)
         func_001A58D0(carry->attached, 0, 0xF);
     }
     XF *xfNode = carry->attached->pxfLinear;
-    QW local = ConvertXfPos(0, xfNode->parent, PosLoWorld(target));
+    QW local = ConvertXfPos(0, xfNode->pxfParent, PosLoWorld(target));
     carry->act94 = func_0012DE58(g_2dded0 + g_2c1ef4, carry->attached, xfNode, 5, local, g_2a2dd0);
     xfNode = carry->attached->pxfAngular;
     Rows3 matLocal;
-    matLocal = ConvertXfMat(0, xfNode->parent, PmatLoWorld(target));
+    matLocal = ConvertXfMat(0, xfNode->pxfParent, PmatLoWorld(target));
     QW euler = DecomposeRotateMatrixEuler(matLocal);
     carry->act9C = func_0012DC18(carry->attached, xfNode, 5, 7, 2, euler);
     SO *placed = carry->attached;

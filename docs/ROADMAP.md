@@ -95,12 +95,18 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      in the header. `SO::dlChild` (0x64) is a `DL`, which brought `InitSo` over. The children's link at 0x24 is not declared as a
      `DLE`: its `prev` would be 0x28, where retail reads `grfo` with `ld` (noted in `lo.h`). 15 of the 16 files with their own `DL`
      moved (`CloseFrame` defines its own `QW`).
+   - `XF` (2026-11-09): `include/xf.h`. Not in the class table; its first 0x80 bytes keep Sly 1's layout and names (`mat`, `pos`,
+     `matWorld`, `posWorld`: `GetSoCpdefi` reads 0x40 and 0x70 that way), the rest comes from functions that reach an `XF` through
+     `SO::pxf*` or take one by name: the act list 0x90, `kind` 0x98 (signed: `SleepXf` matches with it too), `pxfParent` 0xA0,
+     `generation` 0xA4, `vel` 0xB0, `accel` 0xF0. 10 functions moved. The local name `XF` was also given to at least four other
+     types (a 2D transform, objects with a float pair at 0x80); those stay local. Readers that copy 0x40-0x80 as one `MATRIX4`
+     (quadword moves) stay local until that view is settled against retail's copies.
    - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float
      constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
-     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `XF` from the
-     functions that take one (the local name `XF` describes several types), then the class table's other families.
+     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `XF`'s matrix view
+     (`MATRIX3` + `VECTOR` against `MATRIX4`), then the class table's other families.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
