@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct LM;
 struct SMP;
 struct AMB { char pad[0x4E]; short cpause; };
@@ -38,7 +38,7 @@ void SetCmFov(CM *, float);
 void SetCmLookAt(CM *, QW, QW, float, float);
 QW PosCplookEye(CPLOOK *);
 QW PosCplookAnchor(CPLOOK *);
-CRef *RefGetGameSaveValue(CRef *, void *, void *);
+CRef RefGetGameSaveValue(void *, void *);
 void CRef_Destruct(CRef *);
 float RadNormalize__Ff(float);
 extern float D_002BD980[3];
@@ -91,10 +91,7 @@ extern "C" void UpdateCplook(CPLOOK *pcplook, void *pv, JOY *pjoy)
     float y = pjoy->y;
     float dradPan = -fabsf(x) * x * D_002BD990;
     float dradTilt = -fabsf(y) * y * D_002BD994;
-    CRef ref;
-    RefGetGameSaveValue(&ref, B_003DD490.pvSave, B_003D4A60);
-    int fInvert = ref.n;
-    CRef_Destruct(&ref);
+    int fInvert = RefGetGameSaveValue(B_003DD490.pvSave, B_003D4A60).m_tag.m_n;
     if (fInvert)
         dradTilt = -dradTilt;
     dradPan = pcplook->dradPan + GLimitAbs__Fff(dradPan - pcplook->dradPan, D_002BD998 * g_2dded0.dt);

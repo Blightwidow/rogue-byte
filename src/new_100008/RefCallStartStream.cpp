@@ -1,24 +1,18 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
+CRef RefSetArgsFromSplice(int cref, CRef *aref, const void *aotyp, ...);
 struct BASIC;
 struct Raw8 { char b[8]; };
-extern "C" void *RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const void *, ...);
-extern "C" CRef *CRef_Destruct(CRef *);
-extern "C" void SetTag__4CRef4TAGK(CRef *, int);
-extern "C" void CRef_CopyConstruct(CRef *, CRef *);
-extern "C" CRef *CRef_SetBool(CRef *, int);
-extern "C" CRef *CRef_SetS32(CRef *, int);
-extern "C" CRef *CRef_SetBasic(CRef *, BASIC *);
 
 extern "C" const Raw8 RO_002A3B08;
 extern "C" BASIC *StartStream(BASIC *, int, int);
-CRef *RefCallStartStream(CRef *result, BASIC *object, int count, CRef *args)
+CRef RefCallStartStream(BASIC *object, int count, CRef *args)
 {
-    struct F { Raw8 types; char pad[8]; CRef ref; int a; int b; } f;
-    f.types = RO_002A3B08;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&f.ref, 2, args, &f.types, &f.a, &f.b);
-    CRef_SetBasic(&f.ref, StartStream(object, f.a, f.b));
-    CRef_CopyConstruct(result, &f.ref);
-    CRef_Destruct(&f.ref);
-    return result;
+    Raw8 types;
+    int a;
+    int b;
+    types = RO_002A3B08;
+    CRef ref = RefSetArgsFromSplice(2, args, &types, &a, &b);
+    ref.SetBasic(StartStream(object, a, b));
+    return ref;
 }

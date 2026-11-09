@@ -117,10 +117,14 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      used to return a `CRef` by value, and an inline destructor calling `Decref` (0x129EC8) with `this` alone (an out-of-line one
      would also pass g++'s in-charge flag, which retail's calls lack). With those members 244 bindings are real C++: they return
      a `CRef` by value, discard `RefSetArgsFromSplice`'s result and let the compiler insert the copies and cleanups, and they
-     match (`config/matching/symbol_addrs.txt` gains the members' mangled names for the scorer's call check). 36 sources that
-     only take `CRef` pointers use it too: 280 files. Still local: 14 bindings outside the template (setters, an `int` argument
-     array), 39 that differ by 0x10 in frame size, and the hand-written sources that call the cleanup themselves on a local
-     `CRef`; each needs its calls rewritten as the compiler's.
+     match (`config/matching/symbol_addrs.txt` gains the members' mangled names for the scorer's call check). 9 more set their
+     result with a setter (`CRef ref = RefSetArgsFromSplice(...); ref.SetBasic(...); return ref;`), which schedules as retail only
+     when the setters return `CRef &` (retail's setters end with `return this`). 6 hand-written sources read a returned `CRef`
+     as a temporary (`RefGetGameSaveValue(key, ...).m_tag.m_n`), the compiler's cleanup replacing their explicit one. With the
+     36 sources that only take `CRef` pointers: 295 files. Still local (195 files): bindings outside the templates, 39 bindings
+     whose result `CRef` sits between their other locals (retail's frame keeps its address in a saved register; a plain
+     initializer cannot place it there), and hand-written sources with other cleanup patterns; each needs its calls rewritten as
+     the compiler's.
    - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float

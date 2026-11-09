@@ -73,9 +73,11 @@ struct CRef {
     void Incref();
     void Decref();
     void SetTag(TAGK tagk);
-    void SetS32(int n);
-    void SetBool(int fBool);
-    void SetBasic(struct BASIC *pbasic);
+    /* the setters return this (CRef_SetS32, CRef_SetBool, CRef_SetBasic end with it); a binding that sets its result with
+       one schedules the call as retail only with that return type */
+    CRef &SetS32(int n);
+    CRef &SetBool(int fBool);
+    CRef &SetBasic(struct BASIC *pbasic);
 };
 #else
 struct CRef {

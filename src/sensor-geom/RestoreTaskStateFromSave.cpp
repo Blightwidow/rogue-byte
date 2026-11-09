@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct TASK;
 struct JOB { char pad0[0x64]; TASK *startTask; char pad1[0x14]; int cStart; };
 struct TASK {
@@ -7,26 +7,20 @@ struct TASK {
     char pad4[0x44]; char pathState[8]; char pathForced[8];
 };
 extern "C" int B_003D4A60;
-extern "C" void RefGetGameSaveValue(CRef *, void *, int *);
-extern "C" void CRef_Destruct(CRef *);
+extern "C" CRef RefGetGameSaveValue(void *, int *);
 extern "C" void ApplyTaskState(TASK *, int);
 void RestoreTaskStateFromSave(TASK *task)
 {
-    CRef ref;
     int state = 0;
     int forced = 0;
     char *pathState = task->pathState;
     if (*(int *)pathState != 0) {
-        RefGetGameSaveValue(&ref, pathState, &B_003D4A60);
-        int value = ref.n;
-        CRef_Destruct(&ref);
+        int value = RefGetGameSaveValue(pathState, &B_003D4A60).m_tag.m_n;
         state = value;
     }
     char *pathForced = task->pathForced;
     if (*(int *)pathForced != 0) {
-        RefGetGameSaveValue(&ref, pathForced, &B_003D4A60);
-        int value = ref.n;
-        CRef_Destruct(&ref);
+        int value = RefGetGameSaveValue(pathForced, &B_003D4A60).m_tag.m_n;
         forced = value;
     }
     if (forced != 0 && task->job != 0 && state < 3 && 0 < state) {

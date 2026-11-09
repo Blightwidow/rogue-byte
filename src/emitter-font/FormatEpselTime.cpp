@@ -1,11 +1,10 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct HERO { char pad[0x110]; int idx; };
 struct GLOBALS { char pad0[0x3B58]; int slots[1]; };
 extern "C" char B_003D4A60[];
 extern "C" char B_003DD490[];
 extern "C" const char RO_002A5168[];
-extern "C" CRef *RefGetGameSaveValue(CRef *, int, void *);
-extern "C" void CRef_Destruct(CRef *);
+extern "C" CRef RefGetGameSaveValue(int, void *);
 extern "C" float fmodf(float, float);
 extern "C" int sprintf(char *, const char *, ...);
 
@@ -16,10 +15,7 @@ void FormatEpselTime(char *out)
     if (hero) {
         int key = ((GLOBALS *)base)->slots[hero->idx];
         if (key) {
-            CRef ref;
-            RefGetGameSaveValue(&ref, key, B_003D4A60);
-            float seconds = *(float *)&ref.n;
-            CRef_Destruct(&ref);
+            float seconds = RefGetGameSaveValue(key, B_003D4A60).m_tag.m_g;
             int whole = (int)(seconds * 0.00027777778f);
             int minutes = (int)(fmodf(seconds, 3600.0f) * 0.016666668f);
             sprintf(out, RO_002A5168, whole, minutes);
