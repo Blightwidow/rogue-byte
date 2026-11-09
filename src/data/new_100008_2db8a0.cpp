@@ -1,0 +1,114 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Retail .data 0X2DB8A0-0X2DC018 (piece data/new_100008_2db8a0), one global per Splat label: written by scripts/build/make_data_files.py,
+// listed in config/us/data_files.tsv (link_image.py links it at its address and checks the bytes).
+
+extern "C" void ALO_SetCloneId();
+extern "C" void AddGadgetObjLoHierarchy();
+extern "C" void AddLo();
+extern "C" void AddSoGravityAcceleration();
+extern "C" void AddSoLoHierarchy();
+extern "C" void AddSoWaterAcceleration();
+extern "C" void AdjustGadgetObjNewXp();
+extern "C" void AdjustSoXpVelocity();
+extern "C" void CReturnZeroLo();
+extern "C" void CSo_Clone();
+extern "C" void CloneAloHierarchy();
+extern "C" void CloneTank();
+extern "C" void FAbsorbSoWkr();
+extern "C" void FIgnoreGadgetObjIntersection();
+extern "C" void FIgnoreTankIntersection();
+extern "C" void FInvulnerablePo();
+extern "C" void FIsSoLocked();
+extern "C" void FPointInAloParts();
+extern "C" void FReleaseGadgetObj();
+extern "C" void FReturnFalseLo();
+extern "C" void GetSoAngularVelocityVec();
+extern "C" void GetSoCpdefi__FP2SOfP6CPDEFI();
+extern "C" void GetSoVelocityVec();
+extern "C" void HandleGadgetObjMessage();
+extern "C" void HandleGadgetObjXps();
+extern "C" void HandleLoSpliceEvent();
+extern "C" void HandlePoMessage();
+extern "C" void InitDysh__FP4DYSH();
+extern "C" void InitGadgetObj();
+extern "C" void InitTank();
+extern "C" void LoadGadgetObjFromBrx();
+extern "C" void LoadPoFromBrx();
+extern "C" void MatchSoOtherObject();
+extern "C" void OnLoAdd__FP2LO();
+extern "C" void OnTankActive();
+extern "C" void PmatWorldSo();
+extern "C" void PostLoMessage();
+extern "C" void PostSoLoad();
+extern "C" void PostTankLoad();
+extern "C" void PoxaAllocSo();
+extern "C" void PresetGadgetObjAccel();
+extern "C" void ProjectSoTransform();
+extern "C" void PxfFromAloRef();
+extern "C" void RemoveGadgetObjLoHierarchy();
+extern "C" void RemoveLo();
+extern "C" void RemoveSoLoHierarchy();
+extern "C" void RotateSoToMat();
+extern "C" void SetDyshState();
+extern "C" void SetGadgetObjState();
+extern "C" void SetPoPlayable();
+extern "C" void SetSoAngularVelocityVec();
+extern "C" void SetSoParent();
+extern "C" void SetSoVelocityVec();
+extern "C" void TranslateSoToPos();
+extern "C" void UpdateAloXfWorldHierarchy();
+extern "C" void UpdateDysh();
+extern "C" void UpdateGadgetObj();
+extern "C" void UpdateSoBounds();
+extern "C" void UpdateSoRoot();
+extern "C" void UpdateTank();
+extern "C" void bevy_physics_driver_1f9e70();
+extern "C" void func_00113E60();
+extern "C" void func_00114050();
+extern "C" void func_00114070();
+extern "C" void func_00132B08();
+extern "C" void func_001A6DC8();
+extern "C" void func_001A6EF0();
+extern "C" void func_001A6EF8();
+extern "C" void func_001C3ED0();
+extern "C" void func_001C41B8();
+extern "C" void func_001C4228();
+extern "C" void func_001CB518();
+extern "C" void func_001CB5D0();
+extern "C" void func_001F2FE0();
+extern "C" void func_001F3078();
+extern "C" void func_001F3118();
+extern "C" void func_001F3590();
+extern "C" void func_001F3B28();
+extern "C" void func_001F3C70();
+extern "C" void func_001F3CC8();
+extern "C" void func_001F3E00();
+extern "C" void func_001F3EA8();
+extern "C" void func_001F3FB0();
+extern "C" void func_001F4010();
+extern "C" void func_001F4A80();
+extern "C" void func_001F4CA0();
+extern "C" void func_001F4F10();
+extern "C" void func_001F4FA8();
+extern "C" void func_001F4FB0();
+extern "C" void func_001F4FB8();
+extern "C" void func_001F4FC0();
+extern "C" void func_001F5988();
+extern "C" void func_001F5990();
+extern "C" void func_001F5998();
+extern "C" void func_001F7410();
+extern "C" void func_001FA328();
+extern "C" void func_001FA528();
+extern "C" void func_001FADD0();
+extern "C" void func_00210330();
+extern "C" void func_002255C8();
+extern "C" void func_002297F0();
+
+// data-ok: retail's bytes at 0X2DB8A0
+void *D_002DB8A0[156] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleGadgetObjMessage, 0, (void *)func_00114070, 0, (void *)InitDysh__FP4DYSH, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddGadgetObjLoHierarchy, 0, (void *)RemoveGadgetObjLoHierarchy, 0, (void *)UpdateSoRoot, 0, (void *)LoadGadgetObjFromBrx, 0, (void *)PostSoLoad, 0, (void *)UpdateDysh, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)func_001F3C70, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)func_001F3E00, 0, (void *)func_001F3EA8, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)func_001CB518, 0, (void *)func_001CB5D0, 0, (void *)CReturnZeroLo, 0, (void *)TranslateSoToPos, 0, (void *)RotateSoToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)MatchSoOtherObject, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CSo_Clone, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_001F5988, 0, (void *)AdjustGadgetObjNewXp, 0, (void *)func_001F4FB8, 0, (void *)func_001F4FC0, 0, (void *)HandleGadgetObjXps, 0, (void *)func_001F4FA8, 0, (void *)func_001F5990, 0, (void *)FIgnoreGadgetObjIntersection, 0, (void *)FIsSoLocked, 0, (void *)func_001F5998, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetGadgetObjAccel, 0, (void *)func_002255C8, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FReleaseGadgetObj, 0, (void *)SetDyshState, 0, 0};
+
+// data-ok: retail's bytes at 0X2DBB10
+void *D_002DBB10[156] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleGadgetObjMessage, 0, (void *)func_00114050, 0, (void *)InitGadgetObj, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddGadgetObjLoHierarchy, 0, (void *)RemoveGadgetObjLoHierarchy, 0, (void *)UpdateSoRoot, 0, (void *)LoadGadgetObjFromBrx, 0, (void *)PostSoLoad, 0, (void *)UpdateGadgetObj, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)func_001F3C70, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)func_001F3E00, 0, (void *)func_001F3EA8, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)func_001CB518, 0, (void *)func_001CB5D0, 0, (void *)CReturnZeroLo, 0, (void *)TranslateSoToPos, 0, (void *)RotateSoToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)MatchSoOtherObject, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CSo_Clone, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_001F5988, 0, (void *)AdjustGadgetObjNewXp, 0, (void *)func_001F4FB8, 0, (void *)func_001F4FC0, 0, (void *)HandleGadgetObjXps, 0, (void *)func_001F4FA8, 0, (void *)func_001F5990, 0, (void *)FIgnoreGadgetObjIntersection, 0, (void *)FIsSoLocked, 0, (void *)func_001F5998, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetGadgetObjAccel, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FReleaseGadgetObj, 0, (void *)SetGadgetObjState, 0, 0};
+
+// data-ok: retail's bytes at 0X2DBD80
+void *D_002DBD80[166] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandlePoMessage, 0, (void *)func_00113E60, 0, (void *)InitTank, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddSoLoHierarchy, 0, (void *)RemoveSoLoHierarchy, 0, (void *)UpdateSoRoot, 0, (void *)LoadPoFromBrx, 0, (void *)PostTankLoad, 0, (void *)UpdateTank, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)func_001F3C70, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)func_001F3E00, 0, (void *)func_001F3EA8, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)func_001CB518, 0, (void *)func_001CB5D0, 0, (void *)CReturnZeroLo, 0, (void *)TranslateSoToPos, 0, (void *)RotateSoToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)MatchSoOtherObject, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CloneTank, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_001F5988, 0, (void *)func_001F4FB0, 0, (void *)func_001F4FB8, 0, (void *)func_001F4FC0, 0, (void *)func_001F4F10, 0, (void *)func_001F4FA8, 0, (void *)func_001F5990, 0, (void *)FIgnoreTankIntersection, 0, (void *)FIsSoLocked, 0, (void *)func_001F5998, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)AddSoGravityAcceleration, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FAbsorbSoWkr, 0, (void *)FInvulnerablePo, 0, (void *)func_001C3ED0, 0, (void *)OnTankActive, 0, (void *)SetPoPlayable, 0, (void *)func_001C41B8, 0, (void *)func_001C4228, 0, 0};

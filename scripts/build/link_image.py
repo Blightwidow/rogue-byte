@@ -129,6 +129,23 @@ def trim_rodata(object_path):
     open(trimmed, 'wb').write(blob)
     return trimmed, size
 
+def trim_data(object_path, size):
+    """A copy of the object whose .data is `size` bytes: the compiler pads the section to its alignment (8), and the padding would overwrite the
+    retail bytes that follow the piece. Returns the path (unchanged when nothing is cut)."""
+    with open(object_path, 'rb') as handle:
+        elf = ELFFile(handle)
+        index = elf.get_section_index('.data')
+        current = elf.get_section_by_name('.data')['sh_size']
+    if current <= size:
+        return object_path
+    blob = bytearray(open(object_path, 'rb').read())
+    section_table, entry_size = (int.from_bytes(blob[at:at + width], 'little') for at, width in ((0x20, 4), (0x2E, 2)))
+    blob[section_table + index * entry_size + 20:section_table + index * entry_size + 24] = size.to_bytes(4, 'little')
+    trimmed = os.path.join(BUILD, 'trimmed', 'data_' + os.path.relpath(object_path, UNITS).replace(os.sep, '_'))
+    os.makedirs(os.path.dirname(trimmed), exist_ok=True)
+    open(trimmed, 'wb').write(blob)
+    return trimmed
+
 def inspect(object_path):
     """(text size, undefined symbol names) of an object, or None when it cannot stand in for assembly: a relocation
     into a section other than .text means the function uses its own data (jump table, literal), which the image
@@ -335,10 +352,11 @@ for line in (list(open(data_list))[1:] if os.path.isfile(data_list) else []):
     with open(object_path, 'rb') as handle:
         section = ELFFile(handle).get_section_by_name('.data')
         content = section.data() if section is not None else b''
-    if content != region[start - RODATA_START:end - RODATA_START]:
-        print(f'data file {file}: not linked (its .data is not retail\'s bytes at {start:#X}-{end:#X})', flush=True)
+    # a word the object relocates (an address) is zero here and is resolved by the link: only the others are compared now, the whole range after it
+    if len(content) < end - start or content[end - start:].strip(b'\0') or len(content) > end - start + 7:
+        print(f'data file {file}: not linked (its .data is {len(content):#x} bytes, retail\'s piece {end - start:#x})', flush=True)
         continue
-    data_files[start] = (end, object_path)
+    data_files[start] = (end, trim_data(object_path, end - start))
 
 def in_whole(address, active):
     return any(start <= address < wholes[start][0] for start in active)
@@ -499,6 +517,13 @@ for attempt in range(1, 12):
     bad_pieces = {piece_ranges[(start, end)] for start in asm_pieces for end in [start + next(size for _, begin, size in piece_list if begin == start)]
                   if image[start - TEXT_START:end - TEXT_START] != region[start - RODATA_START:end - RODATA_START]}
     raw_pieces |= bad_pieces
+    failing_data = {start for start, (end, _) in data_files.items()
+                    if image[start - TEXT_START:end - TEXT_START] != retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + end - TEXT_START]}
+    for start in sorted(failing_data):
+        actual, expected = image[start - TEXT_START:data_files[start][0] - TEXT_START], retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + data_files[start][0] - TEXT_START]
+        first = next((k for k in range(0, len(expected), 4) if actual[k:k + 4] != expected[k:k + 4]), 0)
+        print(f'data file at {start:#X}: bytes differ at {start + first:#X}, its range comes from assembly', flush=True)
+        del data_files[start]
     for address in swapped:
         end = by_address[address]['end']
         expected = retail[FILE_OFFSET_OF_TEXT + address - TEXT_START:FILE_OFFSET_OF_TEXT + end - TEXT_START]
@@ -514,7 +539,7 @@ for attempt in range(1, 12):
                 failing.add(address)
     print(f'attempt {attempt}: {len(swapped)} swapped, {len(failing)} differ; {len(active) - len(failing_wholes)} of {len(active)} whole files; '
           f'{len(asm_pieces) - len(bad_pieces)} pieces from assembly, {len(bad_pieces)} differ', flush=True)
-    if not failing and not bad_pieces and not failing_wholes:
+    if not failing and not bad_pieces and not failing_wholes and not failing_data:
         break
     for start in failing_wholes:
         active.discard(start)
