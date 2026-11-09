@@ -99,6 +99,10 @@ def main():
     readme = open('src/README.md').read() if os.path.exists('src/README.md') else None  # documentation, not generated
     wholes = read_whole_files('config/us/whole_files.tsv')
     whole_texts = {file: open(os.path.join('src', file)).read() for _, _, file in wholes if os.path.exists(os.path.join('src', file))}
+    # data files (config/us/data_files.tsv) are written by hand like whole files and kept as they are
+    data_list = 'config/us/data_files.tsv'
+    data_files = [line.rstrip('\n').split('\t')[2] for line in list(open(data_list))[1:]] if os.path.exists(data_list) else []
+    data_texts = {file: open(os.path.join('src', file)).read() for file in data_files if os.path.exists(os.path.join('src', file))}
     registry = list(csv.DictReader(open('data/matching/functions.tsv'), delimiter='\t'))
     rows, copies, unlanded = manifest_rows(registry, modules, wholes, whole_texts)
     shutil.rmtree('src', ignore_errors=True)
@@ -111,7 +115,7 @@ def main():
             handle.write('\t'.join(entry[column] for column in COLUMNS) + '\n')
     for header in os.listdir('data/matching/include'):
         shutil.copyfile(os.path.join('data/matching/include', header), os.path.join('include', header))
-    for file, text in whole_texts.items():
+    for file, text in list(whole_texts.items()) + list(data_texts.items()):
         path = os.path.join('src', file)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, 'w') as handle:

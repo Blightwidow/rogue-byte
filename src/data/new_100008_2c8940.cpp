@@ -1,0 +1,153 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Retail .data 0X2C8940-0X2C9670 (piece data/new_100008_2c8940), one global per Splat label: written by scripts/build/make_data_files.py,
+// listed in config/us/data_files.tsv (link_image.py links it at its address and checks the bytes).
+
+extern "C" void ALO_SetCloneId();
+extern "C" void AddLo();
+extern "C" void AddLoHierarchy();
+extern "C" void AddSoLoHierarchy();
+extern "C" void AddSoWaterAcceleration();
+extern "C" void AddStepCustomXps();
+extern "C" void AddStepguardHierarchy();
+extern "C" void AdjustSoXpVelocity();
+extern "C" void AdjustStepNewXp();
+extern "C" void AdjustStepXpVelocity();
+extern "C" void AdjustStepXps();
+extern "C" void CLo_Clone();
+extern "C" void CReturnZeroLo();
+extern "C" void CgeomExtraStep();
+extern "C" void ClearLoGrfField();
+extern "C" void CloneAloHierarchy();
+extern "C" void CloneGuard();
+extern "C" void CloneLoVirtual();
+extern "C" void FAbsorbGuardWkr();
+extern "C" void FIsGuardInvulnerable();
+extern "C" void FIsGuardWkrLethal();
+extern "C" void FIsSoLocked();
+extern "C" void FPointInAloParts();
+extern "C" void FReturnFalseLo();
+extern "C" void GetSoAngularVelocityVec();
+extern "C" void GetSoCpdefi__FP2SOfP6CPDEFI();
+extern "C" void GetSoVelocityVec();
+extern "C" void GrfGuardCustomXps();
+extern "C" void HandleLoMessage();
+extern "C" void HandleLoSpliceEvent();
+extern "C" void HandleStepguardMessage();
+extern "C" void InitGuard();
+extern "C" void InitLo();
+extern "C" void LO_PmatWorld();
+extern "C" void LO_SetCloneId();
+extern "C" void LoadLoFromBrx();
+extern "C" void LoadStepFromBrx();
+extern "C" void NGuardAlertLevel();
+extern "C" void OnGuardAdd();
+extern "C" void OnGuardRemove();
+extern "C" void OnLoAdd__FP2LO();
+extern "C" void OnPoActive();
+extern "C" void PmatWorldSo();
+extern "C" void PostGuardLoad();
+extern "C" void PostLoLoad();
+extern "C" void PostLoMessage();
+extern "C" void PostScriptMessage();
+extern "C" void PoxaAllocSo();
+extern "C" void PresetStepAccel();
+extern "C" void ProjectSoTransform();
+extern "C" void PxfFromAloRef();
+extern "C" void ReleaseAloSmKinds();
+extern "C" void RemoveAloHierarchy();
+extern "C" void RemoveLo();
+extern "C" void RemoveLoHierarchy();
+extern "C" void RemoveStepguardHierarchy();
+extern "C" void RenderStepguardSelf();
+extern "C" void RetainAloSmKinds();
+extern "C" void RotateStepToMat();
+extern "C" void SetLoGrfField();
+extern "C" void SetLoParent();
+extern "C" void SetLoPosMatFromLo();
+extern "C" void SetLoPosMatFromXf();
+extern "C" void SetPoPlayable();
+extern "C" void SetSoAngularVelocityVec();
+extern "C" void SetSoParent();
+extern "C" void SetSoVelocityVec();
+extern "C" void TranslateStepToPos();
+extern "C" void UpdateAloXfWorldHierarchy();
+extern "C" void UpdateGuard();
+extern "C" void UpdateLo();
+extern "C" void UpdateSoBounds();
+extern "C" void UpdateSoRoot();
+extern "C" void bevy_physics_driver_1f9e70();
+extern "C" void bevy_world_loads_b5_apply_xform();
+extern "C" void func_00113DF0();
+extern "C" void func_00113E20();
+extern "C" void func_00113E30();
+extern "C" void func_00113E40();
+extern "C" void func_00114170();
+extern "C" void func_001143A0();
+extern "C" void func_00132B08();
+extern "C" void func_001A5B80();
+extern "C" void func_001A5E80();
+extern "C" void func_001A5ED8();
+extern "C" void func_001A5EE0();
+extern "C" void func_001A6110();
+extern "C" void func_001A6118();
+extern "C" void func_001A6120();
+extern "C" void func_001A6130();
+extern "C" void func_001A6138();
+extern "C" void func_001A6148();
+extern "C" void func_001A6178();
+extern "C" void func_001A6B30();
+extern "C" void func_001A6C48();
+extern "C" void func_001A6DC0();
+extern "C" void func_001A6DC8();
+extern "C" void func_001A6E80();
+extern "C" void func_001A6EF0();
+extern "C" void func_001A6EF8();
+extern "C" void func_001C41B8();
+extern "C" void func_001C4228();
+extern "C" void func_001CB4E0();
+extern "C" void func_001CB5C8();
+extern "C" void func_001F1F38();
+extern "C" void func_001F2FE0();
+extern "C" void func_001F3078();
+extern "C" void func_001F3118();
+extern "C" void func_001F3590();
+extern "C" void func_001F3B28();
+extern "C" void func_001F3CC8();
+extern "C" void func_001F3FB0();
+extern "C" void func_001F4010();
+extern "C" void func_001F4A80();
+extern "C" void func_001F4CA0();
+extern "C" void func_001F4FB8();
+extern "C" void func_001F7410();
+extern "C" void func_001FA328();
+extern "C" void func_001FA528();
+extern "C" void func_001FADD0();
+extern "C" void func_00204C60();
+extern "C" void func_00205008();
+extern "C" void func_002052E0();
+extern "C" void func_00206380();
+extern "C" void func_002064D8();
+extern "C" void func_002082D0();
+extern "C" void func_00208BE0();
+extern "C" void func_00209C88();
+extern "C" void func_00210330();
+extern "C" void func_002297F0();
+extern "C" void func_0022FBD8();
+
+// data-ok: retail's bytes at 0X2C8940
+void *D_002C8940[182] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleStepguardMessage, 0, (void *)func_00113E40, 0, (void *)InitGuard, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddSoLoHierarchy, 0, (void *)func_002064D8, 0, (void *)UpdateSoRoot, 0, (void *)LoadStepFromBrx, 0, (void *)PostGuardLoad, 0, (void *)UpdateGuard, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)RenderStepguardSelf, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)RemoveStepguardHierarchy, 0, (void *)AddStepguardHierarchy, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)OnGuardAdd, 0, (void *)OnGuardRemove, 0, (void *)CReturnZeroLo, 0, (void *)TranslateStepToPos, 0, (void *)RotateStepToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)func_002052E0, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CloneGuard, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_00204C60, 0, (void *)AdjustStepNewXp, 0, (void *)func_001F4FB8, 0, (void *)AdjustStepXpVelocity, 0, (void *)AdjustStepXps, 0, (void *)func_00209C88, 0, (void *)AddStepCustomXps, 0, (void *)func_00206380, 0, (void *)FIsSoLocked, 0, (void *)CgeomExtraStep, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetStepAccel, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FAbsorbGuardWkr, 0, (void *)FIsGuardInvulnerable, 0, (void *)NGuardAlertLevel, 0, (void *)OnPoActive, 0, (void *)SetPoPlayable, 0, (void *)func_001C41B8, 0, (void *)func_001C4228, 0, (void *)func_00205008, 0, (void *)RetainAloSmKinds, 0, (void *)ReleaseAloSmKinds, 0, (void *)GrfGuardCustomXps, 0, (void *)FIsGuardWkrLethal, 0, (void *)func_001F1F38, 0, (void *)func_002082D0, 0, (void *)func_00208BE0, 0, 0};
+
+// data-ok: retail's bytes at 0X2C8C18
+void *D_002C8C18[182] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleStepguardMessage, 0, (void *)func_00113E30, 0, (void *)InitGuard, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddSoLoHierarchy, 0, (void *)func_002064D8, 0, (void *)UpdateSoRoot, 0, (void *)LoadStepFromBrx, 0, (void *)PostGuardLoad, 0, (void *)UpdateGuard, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)RenderStepguardSelf, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)RemoveStepguardHierarchy, 0, (void *)AddStepguardHierarchy, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)OnGuardAdd, 0, (void *)OnGuardRemove, 0, (void *)CReturnZeroLo, 0, (void *)TranslateStepToPos, 0, (void *)RotateStepToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)func_002052E0, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CloneGuard, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_00204C60, 0, (void *)AdjustStepNewXp, 0, (void *)func_001F4FB8, 0, (void *)AdjustStepXpVelocity, 0, (void *)AdjustStepXps, 0, (void *)func_00209C88, 0, (void *)AddStepCustomXps, 0, (void *)func_00206380, 0, (void *)FIsSoLocked, 0, (void *)CgeomExtraStep, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetStepAccel, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FAbsorbGuardWkr, 0, (void *)FIsGuardInvulnerable, 0, (void *)NGuardAlertLevel, 0, (void *)OnPoActive, 0, (void *)SetPoPlayable, 0, (void *)func_001C41B8, 0, (void *)func_001C4228, 0, (void *)func_00205008, 0, (void *)RetainAloSmKinds, 0, (void *)ReleaseAloSmKinds, 0, (void *)GrfGuardCustomXps, 0, (void *)FIsGuardWkrLethal, 0, (void *)func_001F1F38, 0, (void *)func_002082D0, 0, (void *)func_00208BE0, 0, 0};
+
+// data-ok: retail's bytes at 0X2C8EF0
+void *D_002C8EF0[182] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleStepguardMessage, 0, (void *)func_00113E20, 0, (void *)InitGuard, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddSoLoHierarchy, 0, (void *)func_002064D8, 0, (void *)UpdateSoRoot, 0, (void *)LoadStepFromBrx, 0, (void *)PostGuardLoad, 0, (void *)UpdateGuard, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)RenderStepguardSelf, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)RemoveStepguardHierarchy, 0, (void *)AddStepguardHierarchy, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)OnGuardAdd, 0, (void *)OnGuardRemove, 0, (void *)CReturnZeroLo, 0, (void *)TranslateStepToPos, 0, (void *)RotateStepToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)func_002052E0, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CloneGuard, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_00204C60, 0, (void *)AdjustStepNewXp, 0, (void *)func_001F4FB8, 0, (void *)AdjustStepXpVelocity, 0, (void *)AdjustStepXps, 0, (void *)func_00209C88, 0, (void *)AddStepCustomXps, 0, (void *)func_00206380, 0, (void *)FIsSoLocked, 0, (void *)CgeomExtraStep, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetStepAccel, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FAbsorbGuardWkr, 0, (void *)FIsGuardInvulnerable, 0, (void *)NGuardAlertLevel, 0, (void *)OnPoActive, 0, (void *)SetPoPlayable, 0, (void *)func_001C41B8, 0, (void *)func_001C4228, 0, (void *)func_00205008, 0, (void *)RetainAloSmKinds, 0, (void *)ReleaseAloSmKinds, 0, (void *)GrfGuardCustomXps, 0, (void *)FIsGuardWkrLethal, 0, (void *)func_001F1F38, 0, (void *)func_002082D0, 0, (void *)func_00208BE0, 0, 0};
+
+// data-ok: retail's bytes at 0X2C91C8
+void *D_002C91C8[182] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleStepguardMessage, 0, (void *)func_00113DF0, 0, (void *)InitGuard, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetSoParent, 0, (void *)AddSoLoHierarchy, 0, (void *)func_002064D8, 0, (void *)UpdateSoRoot, 0, (void *)LoadStepFromBrx, 0, (void *)PostGuardLoad, 0, (void *)UpdateGuard, 0, (void *)ProjectSoTransform, 0, (void *)UpdateAloXfWorldHierarchy, 0, (void *)RenderStepguardSelf, 0, (void *)func_001F3CC8, 0, (void *)func_001F3B28, 0, (void *)RemoveStepguardHierarchy, 0, (void *)AddStepguardHierarchy, 0, (void *)func_00210330, 0, (void *)ALO_SetCloneId, 0, (void *)OnGuardAdd, 0, (void *)OnGuardRemove, 0, (void *)CReturnZeroLo, 0, (void *)TranslateStepToPos, 0, (void *)RotateStepToMat, 0, (void *)PmatWorldSo, 0, (void *)func_001F3FB0, 0, (void *)GetSoVelocityVec, 0, (void *)GetSoAngularVelocityVec, 0, (void *)SetSoVelocityVec, 0, (void *)SetSoAngularVelocityVec, 0, (void *)func_001F4010, 0, (void *)func_002052E0, 0, (void *)func_001F4A80, 0, (void *)CloneAloHierarchy, 0, (void *)CloneGuard, 0, (void *)func_001F3118, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC8, 0, (void *)func_001F2FE0, 0, (void *)func_001F3078, 0, (void *)UpdateSoBounds, 0, (void *)GetSoCpdefi__FP2SOfP6CPDEFI, 0, (void *)PxfFromAloRef, 0, (void *)func_001F4CA0, 0, (void *)PoxaAllocSo, 0, (void *)func_00204C60, 0, (void *)AdjustStepNewXp, 0, (void *)func_001F4FB8, 0, (void *)AdjustStepXpVelocity, 0, (void *)AdjustStepXps, 0, (void *)func_00209C88, 0, (void *)AddStepCustomXps, 0, (void *)func_00206380, 0, (void *)FIsSoLocked, 0, (void *)CgeomExtraStep, 0, (void *)func_001F3590, 0, (void *)bevy_physics_driver_1f9e70, 0, (void *)func_001FA328, 0, (void *)func_001FA528, 0, (void *)AdjustSoXpVelocity, 0, (void *)func_001FADD0, 0, (void *)PresetStepAccel, 0, (void *)func_002297F0, 0, (void *)AddSoWaterAcceleration, 0, (void *)FPointInAloParts, 0, (void *)func_001F7410, 0, (void *)FAbsorbGuardWkr, 0, (void *)FIsGuardInvulnerable, 0, (void *)NGuardAlertLevel, 0, (void *)OnPoActive, 0, (void *)SetPoPlayable, 0, (void *)func_001C41B8, 0, (void *)func_001C4228, 0, (void *)func_00205008, 0, (void *)RetainAloSmKinds, 0, (void *)ReleaseAloSmKinds, 0, (void *)GrfGuardCustomXps, 0, (void *)FIsGuardWkrLethal, 0, (void *)func_001F1F38, 0, (void *)func_002082D0, 0, (void *)func_00208BE0, 0, 0};
+
+// data-ok: retail's bytes at 0X2C94A0
+void *D_002C94A0[16] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)PostScriptMessage, 0, (void *)PostLoMessage, 0, (void *)HandleLoMessage, 0, (void *)func_001143A0, 0, 0};
+
+// data-ok: retail's bytes at 0X2C94E0
+void *D_002C94E0[100] = {0, 0, 0, (void *)OnLoAdd__FP2LO, 0, (void *)func_00132B08, 0, (void *)HandleLoSpliceEvent, 0, (void *)PostLoMessage, 0, (void *)HandleLoMessage, 0, (void *)func_00114170, 0, (void *)InitLo, 0, (void *)AddLo, 0, (void *)RemoveLo, 0, (void *)SetLoParent, 0, (void *)AddLoHierarchy, 0, (void *)RemoveLoHierarchy, 0, (void *)func_001A5B80, 0, (void *)LoadLoFromBrx, 0, (void *)PostLoLoad, 0, (void *)UpdateLo, 0, (void *)func_001A5E80, 0, (void *)func_0022FBD8, 0, (void *)func_001A5ED8, 0, (void *)func_001A5EE0, 0, (void *)func_001A6E80, 0, (void *)RemoveAloHierarchy, 0, (void *)func_001A6178, 0, (void *)func_00210330, 0, (void *)LO_SetCloneId, 0, (void *)func_001CB4E0, 0, (void *)func_001CB5C8, 0, (void *)CReturnZeroLo, 0, (void *)func_001A6110, 0, (void *)func_001A6118, 0, (void *)LO_PmatWorld, 0, (void *)func_001A6B30, 0, (void *)func_001A6120, 0, (void *)func_001A6138, 0, (void *)func_001A6130, 0, (void *)func_001A6148, 0, (void *)bevy_world_loads_b5_apply_xform, 0, (void *)SetLoPosMatFromLo, 0, (void *)SetLoPosMatFromXf, 0, (void *)CloneLoVirtual, 0, (void *)CLo_Clone, 0, (void *)func_001A6C48, 0, (void *)FReturnFalseLo, 0, (void *)func_001A6EF0, 0, (void *)func_001A6EF8, 0, (void *)func_001A6DC0, 0, (void *)SetLoGrfField, 0, (void *)ClearLoGrfField, 0, 0};

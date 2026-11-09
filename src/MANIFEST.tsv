@@ -1162,10 +1162,10 @@ address	name	size	file	whole_file	symbol
 0X128118	frame__static_initialization_and_destruction_0_thunk	32	new_127e90/frame__static_initialization_and_destruction_0_thunk.c		
 0X128138	CGc_Construct	12	new_127e90/CGc_Construct.c		
 0X128148	func_00128148	100	new_127e90/fun_00128148.c		
-0X1281B0	bevy_splice_eval_reset	1064	new_127e90/bevy_splice_eval_reset.cpp		
-0X1285D8	CGc_MarkRef	264	new_127e90/CGc_MarkRef.cpp		
-0X128A00	gc__static_initialization_and_destruction_0	320	new_127e90/gc__static_initialization_and_destruction_0.c		
-0X128B40	gc__static_initialization_and_destruction_0_thunk	32	new_127e90/gc__static_initialization_and_destruction_0_thunk.c		
+0X1281B0	bevy_splice_eval_reset	1064	new_127e90/bevy_splice_eval_reset_file.cpp	new_127e90/bevy_splice_eval_reset_file.cpp	bevy_splice_eval_reset
+0X1285D8	CGc_MarkRef	264	new_127e90/bevy_splice_eval_reset_file.cpp	new_127e90/bevy_splice_eval_reset_file.cpp	CGc_MarkRef
+0X128A00	gc__static_initialization_and_destruction_0	320	new_127e90/bevy_splice_eval_reset_file.cpp	new_127e90/bevy_splice_eval_reset_file.cpp	gc__static_initialization_and_destruction_0
+0X128B40	gc__static_initialization_and_destruction_0_thunk	32	new_127e90/bevy_splice_eval_reset_file.cpp	new_127e90/bevy_splice_eval_reset_file.cpp	gc__static_initialization_and_destruction_0_thunk
 0X128B60	func_00128B60	308	new_127e90/new_127e90_128b60.c	new_127e90/new_127e90_128b60.c	func_00128B60
 0X128C98	StaticInitSlotheaps_128b60_thunk	32	new_127e90/new_127e90_128b60.c	new_127e90/new_127e90_128b60.c	StaticInitSlotheaps_128b60_thunk
 0X128CB8	PpairClone	352	new_127e90/PpairClone.cpp		
@@ -1539,11 +1539,11 @@ address	name	size	file	whole_file	symbol
 0X13E690	LoadRefFromBrx	392	new_13d8b8/LoadRefFromBrx.cpp		
 0X13F810	LoadOptionsFromBrx__FPvP18CBinaryInputStream	116	brx/LoadOptionsFromBrx__FPvP18CBinaryInputStream.cpp		
 0X13F888	InitPloarray	32	new_13f888/InitPloarray.c		
-0X13F8A8	AppendPloarray	232	new_13f888/AppendPloarray.cpp		
-0X13F990	func_0013F990	156	new_13f888/fun_0013f990.cpp		
-0X13FA30	func_0013FA30	156	new_13f888/fun_0013fa30.cpp		
-0X13FE18	StaticInitJtPools	308	new_13f888/StaticInitJtPools.c		
-0X13FF50	GlobalCtorJtPools	32	new_13f888/GlobalCtorJtPools.c		
+0X13F8A8	AppendPloarray	232	new_13f888/AppendPloarray_file.cpp	new_13f888/AppendPloarray_file.cpp	AppendPloarray
+0X13F990	func_0013F990	156	new_13f888/AppendPloarray_file.cpp	new_13f888/AppendPloarray_file.cpp	func_0013F990
+0X13FA30	func_0013FA30	156	new_13f888/AppendPloarray_file.cpp	new_13f888/AppendPloarray_file.cpp	AddPlosToSink
+0X13FE18	StaticInitJtPools	308	new_13f888/AppendPloarray_file.cpp	new_13f888/AppendPloarray_file.cpp	StaticInitJtPools
+0X13FF50	GlobalCtorJtPools	32	new_13f888/AppendPloarray_file.cpp	new_13f888/AppendPloarray_file.cpp	GlobalCtorJtPools
 0X13FF70	InitJt	324	new_13f888/InitJt.cpp		
 0X140338	func_00140338	152	new_13f888/fun_00140338.cpp		
 0X1403D0	UpdateJt	392	new_13f888/UpdateJt.cpp		
@@ -1662,12 +1662,12 @@ address	name	size	file	whole_file	symbol
 0X147220	PostWipeLoad	84	new_144b58/PostWipeLoad.cpp		
 0X147278	UpdateWipeState	192	new_144b58/UpdateWipeState.c		
 0X147338	HandleWipeMessage	216	new_144b58/HandleWipeMessage.cpp		
-0X147410	SetWipeState	432	new_144b58/SetWipeState.cpp		
-0X1475C0	DrawWipeSetup	496	new_144b58/DrawWipeSetup.cpp		
-0X1477B0	FUpdateSwDuringWipe	36	new_144b58/FUpdateSwDuringWipe.cpp		
-0X147C20	StartWipe	168	new_144b58/StartWipe.cpp		
-0X147CC8	StaticInitSwSlotheaps_2	308	new_144b58/StaticInitSwSlotheaps_2.c		
-0X147E00	StaticInitSwSlotheaps_2_thunk	32	new_144b58/StaticInitSwSlotheaps_2_thunk.c		
+0X147410	SetWipeState	432	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	SetWipeState
+0X1475C0	DrawWipeSetup	496	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	DrawWipeSetup
+0X1477B0	FUpdateSwDuringWipe	36	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	FUpdateSwDuringWipe
+0X147C20	StartWipe	168	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	StartWipe
+0X147CC8	StaticInitSwSlotheaps_2	308	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	StaticInitSwSlotheaps_2
+0X147E00	StaticInitSwSlotheaps_2_thunk	32	new_144b58/SetWipeState_file.cpp	new_144b58/SetWipeState_file.cpp	StaticInitSwSlotheaps_2_thunk
 0X147E20	RemoveSwRoot	100	new_144b58/RemoveSwRoot.cpp		
 0X147E88	ReinsertSwRoot	64	new_144b58/ReinsertSwRoot.cpp		
 0X147EC8	RemoveSwRootRaw	28	new_144b58/RemoveSwRootRaw.c		
@@ -2670,12 +2670,12 @@ address	name	size	file	whole_file	symbol
 0X194118	ResetJtDynamicTunnel__FP2JT	84	stephide/ResetJtDynamicTunnel__FP2JT.cpp		
 0X194558	FAttachAllowsGadget	228	new_1942f0/FAttachAllowsGadget.cpp		
 0X194640	func_00194640	68	new_1942f0/fun_00194640.cpp		
-0X194F48	func_00194F48	36	unsorted/fun_00194f48.cpp		
-0X195608	func_00195608	196	new_1942f0/fun_00195608.cpp		
-0X1956D0	PloSpawnTargetIndicator	236	new_1942f0/PloSpawnTargetIndicator.cpp		
-0X1957C0	FindTargetIndicatorTemplate	52	new_1942f0/FindTargetIndicatorTemplate.cpp		
-0X1957F8	StaticInitSlotheaps	308	new_1942f0/StaticInitSlotheaps.c		
-0X195930	GlobalInitSlotheaps	32	new_1942f0/GlobalInitSlotheaps.c		
+0X194F48	func_00194F48	36	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00194F48
+0X195608	func_00195608	196	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00195608
+0X1956D0	PloSpawnTargetIndicator	236	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	PloSpawnTargetIndicator
+0X1957C0	FindTargetIndicatorTemplate	52	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	FindTargetIndicatorTemplate
+0X1957F8	StaticInitSlotheaps	308	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	StaticInitSlotheaps
+0X195930	GlobalInitSlotheaps	32	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	GlobalInitSlotheaps
 0X195950	InitJmp	112	new_1942f0/InitJmp.cpp		
 0X1959C0	func_001959C0	60	new_1942f0/fun_001959c0.cpp		
 0X197370	StartJmpDirectionAseg	344	new_1942f0/StartJmpDirectionAseg.cpp		
@@ -3948,13 +3948,13 @@ address	name	size	file	whole_file	symbol
 0X1F1768	func_001F1768	72	sm-so/fun_001f1768.cpp		
 0X1F17B0	func_001F17B0	72	sm-so/fun_001f17b0.cpp		
 0X1F17F8	func_001F17F8	264	sm-so/fun_001f17f8.cpp		
-0X1F1900	func_001F1900	316	sm-so/fun_001f1900.cpp		
-0X1F1CF8	func_001F1CF8	292	sm-so/fun_001f1cf8.cpp		
-0X1F1E20	func_001F1E20	148	sm-so/fun_001f1e20.cpp		
-0X1F1EB8	func_001F1EB8	124	sm-so/fun_001f1eb8.cpp		
-0X1F1F38	func_001F1F38	120	sm-so/fun_001f1f38.cpp		
-0X1F1FB0	StaticInitSoSlotheaps	308	sm-so/StaticInitSoSlotheaps.c		
-0X1F20E8	func_001F20E8	32	sm-so/fun_001f20e8.c		
+0X1F1900	func_001F1900	316	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F1900
+0X1F1CF8	func_001F1CF8	292	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F1CF8
+0X1F1E20	func_001F1E20	148	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F1E20
+0X1F1EB8	func_001F1EB8	124	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F1EB8
+0X1F1F38	func_001F1F38	120	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F1F38
+0X1F1FB0	StaticInitSoSlotheaps	308	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	StaticInitSoSlotheaps
+0X1F20E8	func_001F20E8	32	sm-so/sm_so_1f1900.cpp	sm-so/sm_so_1f1900.cpp	func_001F20E8
 0X1F2108	InitSo	172	sm-so/InitSo.cpp		
 0X1F21B8	SetSoParent	684	sm-so/SetSoParent.cpp		
 0X1F2468	func_001F2468	148	sm-so/fun_001f2468.cpp		

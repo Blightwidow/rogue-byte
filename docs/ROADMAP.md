@@ -1,6 +1,6 @@
 # Roadmap
 
-What is done and what comes next. Live numbers: [bytematch.dev](https://bytematch.dev/OpenThievius/sly2-decomp) and the README table.
+What is done and what comes next. Live numbers: [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp) and the README table.
 
 ## Done
 
@@ -15,9 +15,25 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 - CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
   (objdiff reports for ByteMatch). Commit messages and the cleanup rules are checked locally (`make commits`, `make cleanup`).
 
+## What is left (2026-11-09)
+
+There are three separate "100%"s (numbers from `progress/us/report.json`):
+
+- **Code, 80.10%:** 279 KB in 633 functions (blockers already count as finished).
+  - 261 far near misses, 171 KB. Opus matches about 1 in 8 at about 70k tokens each.
+  - 102 SDK-range functions with no draft, 64 KB (libm and libc giants, Sony gcc 2.9).
+  - 19 held-back rulings, about 0.25 points. Fresh near misses (score 1-16) are used up.
+  - What moved the number so far was systematic unlocks (the loop5 assembler patch, +22 KB; the `-fmove-all-movables` list; RTL-dump work on register-only misses), not worker waves (about 20 bytes per claimed function). Look for the next lever before spending a wave.
+  - Six integer near misses have no known lever: 0x1733C8, 0x1C9058, 0x120548, 0x218748, 0x1A5D98, 0x13FAD0.
+- **Data, 0.83%:** ceiling 49% of data (item 3); the irx and vutext regions are not game C. Largest gap, and it needs build work, not matching.
+- **Exact C, 49.97%:** the 853 permanent blockers stay original assembly, so exact C tops out near 70% of code unless item 4 reclassifies some.
+- **PAL, 78.64%** against US 80.10%: close it with `make pal` after each land.
+
+Order: data build side (item 3), then a lever for the near-miss pool and the SDK giants (item 1), then PAL.
+
 ## Next
 
-1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses.
+1. Keep matching by tier (see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)): small functions first, then near misses. Remaining pools and their yield are in "What is left"; classify the 261 far near misses by diff cause (`classify_diffs.py`) before spending tokens, draft the 102 SDK giants biggest first, and prefer a systematic lever over a wave.
 2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
@@ -26,11 +42,11 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    them (139 of 209 spans hold several modules). Stage 2: `src/memory-bez/ary.cpp` (0x116CA0-0x117030, 11 functions, two from `INCLUDE_ASM`)
    builds whole and the image stays byte for byte (`config/us/whole_files.tsv`, `make unit UNIT=src/memory-bez/ary.cpp`). 181 of the 209 files
    (about 405 KB) can use the same path as it is; 26 need the file's own `.rodata` placed (item 3); 2 mix per-function flag lists. Stage 4: 78
-   whole files (276 matched functions) build whole. Stage 5 (2026-11-08): the whole file is the only record of its functions. `make src` publishes
+   whole files (276 matched functions) build whole; five more on 2026-11-09 (83 files, 304 matched functions). Stage 5 (2026-11-08): the whole file is the only record of its functions. `make src` publishes
    no per-function copy of them (276 files, 223 KB, left `src/`; `src/MANIFEST.tsv` gives them `whole_file` and `symbol`); objdiff cuts each one
    out of the whole object and PAL reads it there at its offset (both reports unchanged); a new match inside a whole file lands by replacing its
    `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
-   (`data/matching/src/fn`, `try.py`). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
+   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files are held back (`exclusion`) until objdiff can; landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
    cuts inside a span.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
@@ -40,7 +56,7 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
    two constants it reads (`g_2bdce0`, `g_2bdcf0[3]`) are in `.data`, not `.rodata`; a `const` scalar is folded into `lui`/`mtc1` (score 24) and a
    plain definition lays out 8 bytes short of retail's gap; `link_image.py` places only an object's own `.rodata`, and `derive_rodata_base` assumes
    section-symbol relocations. Per-global sweeps are small (18 `.rodata` externs, 178 bytes behind matched functions; 674 `.data` externs, 103 KB, 129 of
-   them over 1 KB). The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
+   them over 1 KB). First global defined in C (2026-11-09): `src/crv-lo/data_2bdce0.cpp` defines `g_2bdce0` and `g_2bdcf0` as `float[4]` (retail's two 16-byte vectors; the earlier "8 bytes short" was the wrong type), listed in `config/us/data_files.tsv`; `link_image.py` links its `.data` at retail's address (`.dd_<address>`) and checks the bytes, `make_objdiff.py` counts it (data 8,375 -> 8,407 bytes). Remaining: `.bss`, more regions, the list feeding the report per global. The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
    sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
 
 4. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for

@@ -107,7 +107,7 @@ def exclusion(functions, matched, swapped):
         if not os.path.isfile(object_path):
             return f'no per-function object ({address:#X})'
         use = object_data_use(object_path)
-        if use:
+        if use:  # own .rodata links (link_image.py) and proves (compare_object) but make_objdiff.cut_function cannot cut it yet
             return f'own {use} ({address:#X})'
         if address not in swapped:
             return f'not linked from C today ({address:#X})'
@@ -484,8 +484,46 @@ def retail_words(address, size):
     return compare.read_target_words(ELF, address, size)
 
 
+def rodata_cause(elf, text_data, start):
+    """None when the object's own .rodata (what its code reads, trimmed as scripts/build/link_image.py trims it) is retail's bytes at the one
+    base its hi/lo pairs give, relocated words (jump table entries) masked; else the cause. The base is where the file's own .rodata sits."""
+    import compare
+    rodata, relocations = elf.get_section_by_name('.rodata'), elf.get_section_by_name('.rel.text')
+    symbols, index = elf.get_section_by_name('.symtab'), elf.get_section_index('.rodata')
+    entries = [(r['r_offset'], r['r_info_type'], symbols.get_symbol(r['r_info_sym'])) for r in relocations.iter_relocations()]
+    signed = lambda value: value - 0x10000 if value & 0x8000 else value
+    word = lambda blob, offset: int.from_bytes(blob[offset:offset + 4], 'little')
+    retail = retail_words(start, len(text_data))
+    bases = set()
+    for position, (offset, kind, symbol) in enumerate(entries):
+        if kind != 5 or symbol['st_shndx'] != index:
+            continue
+        low = next((o for o, k, s in entries[position + 1:] if k == 6 and s['st_shndx'] == index), None)
+        if low is None:
+            return 'rodata: a hi16 without a lo16'
+        retail_value = ((retail[offset // 4] & 0xFFFF) << 16) + signed(retail[low // 4] & 0xFFFF)
+        object_value = ((word(text_data, offset) & 0xFFFF) << 16) + signed(word(text_data, low) & 0xFFFF)
+        bases.add(retail_value - object_value)
+    if len(bases) != 1:
+        return f'rodata: {len(bases)} bases'
+    base = next(iter(bases))
+    data = rodata.data()
+    masked = {r['r_offset'] // 4 for r in (elf.get_section_by_name('.rel.rodata').iter_relocations() if elf.get_section_by_name('.rel.rodata') else [])}
+    end = len(data.rstrip(b'\0'))
+    end = max([end] + [4 * word_index + 4 for word_index in masked])
+    end = (end + 3) & ~3
+    target = retail_words(base, end)
+    for word_index in range(end // 4):
+        if word_index in masked:
+            continue
+        if word(data, word_index * 4) != target[word_index]:
+            return f'rodata differs at {base + word_index * 4:#X}'
+    return None
+
+
 def compare_object(object_path, start, end):
-    """None when the object's .text is retail's [start, end) with relocated fields masked and it uses no data of its own, else the cause."""
+    """None when the object's .text is retail's [start, end) with relocated fields masked and its own .rodata (if it reads any) is retail's
+    bytes where its code points, else the cause. Data other than .rodata is not handled yet."""
     import compare
     from elftools.elf.elffile import ELFFile
     with open(object_path, 'rb') as handle:
@@ -495,20 +533,25 @@ def compare_object(object_path, start, end):
         masks = {}
         relocations = elf.get_section_by_name('.rel.text')
         symbols = elf.get_section_by_name('.symtab')
+        uses_rodata = False
         for relocation in (relocations.iter_relocations() if relocations else []):
             symbol = symbols.get_symbol(relocation['r_info_sym'])
-            if isinstance(symbol['st_shndx'], int) and elf.get_section(symbol['st_shndx']).name not in ('.text',):
-                return f"relocation into its own {elf.get_section(symbol['st_shndx']).name}"
+            if isinstance(symbol['st_shndx'], int):
+                section = elf.get_section(symbol['st_shndx']).name
+                if section == '.rodata':
+                    uses_rodata = True
+                elif section != '.text':
+                    return f'relocation into its own {section}'
             masks[relocation['r_offset'] // 4] = compare.MASK_BY_RELOCATION_TYPE.get(relocation['r_info_type'], 0xFFFFFFFF)
-    if len(data) != end - start:
-        return f'size {len(data):#x}, retail {end - start:#x}'
-    target = retail_words(start, end - start)
-    for index in range(len(data) // 4):
-        word = int.from_bytes(data[index * 4:index * 4 + 4], 'little')
-        mask = masks.get(index, 0xFFFFFFFF)
-        if word & mask != target[index] & mask:
-            return f'bytes differ at {start + index * 4:#X}'
-    return None
+        if len(data) != end - start:
+            return f'size {len(data):#x}, retail {end - start:#x}'
+        target = retail_words(start, end - start)
+        for index in range(len(data) // 4):
+            word = int.from_bytes(data[index * 4:index * 4 + 4], 'little')
+            mask = masks.get(index, 0xFFFFFFFF)
+            if word & mask != target[index] & mask:
+                return f'bytes differ at {start + index * 4:#X}'
+        return rodata_cause(elf, data, start) if uses_rodata else None
 
 
 def compiler(name):
