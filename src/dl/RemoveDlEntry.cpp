@@ -1,29 +1,26 @@
-#include "sly2.h"
-struct DLE { char *next; char *prev; };
-struct DL { char *first; char *last; int offset; };
-struct DLI { int pad0; DLE *current; int pad8; DLI *next; };
+#include "dl.h"
 extern DLI *g_2dd2fc;
 
-void RemoveDlEntry(DL *list, char *object)
+void RemoveDlEntry(DL *pdl, void *pv)
 {
-    DLE *entry = (DLE *)(object + list->offset);
-    DLI *iterator;
-    for (iterator = g_2dd2fc; iterator != 0; iterator = iterator->next) {
-        if (iterator->current == entry) {
-            if (entry->prev != 0)
-                iterator->current = (DLE *)(entry->prev + list->offset);
+    DLE *pdle = (DLE *)((char *)pv + pdl->ibDle);
+    DLI *pdli;
+    for (pdli = g_2dd2fc; pdli != 0; pdli = pdli->m_pdliNext) {
+        if (pdli->m_ppv == (void **)pdle) {
+            if (pdle->prev != 0)
+                pdli->m_ppv = (void **)((char *)pdle->prev + pdl->ibDle);
             else
-                iterator->current = (DLE *)list;
+                pdli->m_ppv = (void **)pdl;
         }
     }
-    if (entry->prev != 0)
-        ((DLE *)(entry->prev + list->offset))->next = entry->next;
+    if (pdle->prev != 0)
+        ((DLE *)((char *)pdle->prev + pdl->ibDle))->next = pdle->next;
     else
-        list->first = entry->next;
-    if (entry->next != 0)
-        ((DLE *)(entry->next + list->offset))->prev = entry->prev;
+        pdl->head = pdle->next;
+    if (pdle->next != 0)
+        ((DLE *)((char *)pdle->next + pdl->ibDle))->prev = pdle->prev;
     else
-        list->last = entry->prev;
-    entry->next = 0;
-    entry->prev = 0;
+        pdl->tail = pdle->prev;
+    pdle->next = 0;
+    pdle->prev = 0;
 }

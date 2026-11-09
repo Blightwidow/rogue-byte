@@ -20,6 +20,6 @@ extern "C" void func_001CB518(SO *so, void *pool)
         QW pos = PosLoWorld(so);
         func_001F37C8(so, PpathzoneFindPos(pos, 1));
     }
-    for (LO *child = so->ploChildFirst; child != 0; child = child->ploNext)
+    for (LO *child = (LO *)so->dlChild.head; child != 0; child = child->ploNext)
         child->Slot26(pool);
 }

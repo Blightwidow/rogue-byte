@@ -4,6 +4,7 @@
 #ifndef SLY2_SO_H
 #define SLY2_SO_H
 #include "lo.h"
+#include "dl.h"
 
 struct XF;
 struct PHYS;
@@ -43,8 +44,8 @@ struct SO : LO {
     /* 0x58 */ struct XF *pxfLinear;   /* Carry_Attach, ProjectSoTransform, func_001F8F80, func_001CD308 */
     /* 0x5C */ struct XF *pxfAngular;  /* the same functions */
     /* 0x60 */ struct XF *pxfRoot;     /* GetSoCpdefi, func_001F4898, func_001F4930 */
-    /* 0x64 */ struct LO *ploChildFirst; /* func_001CB518, func_001CB5D0, func_001F3CC8 (walked through LO::ploNext) */
-    u8 unknown_0x68[0x64];
+    /* 0x64 */ DL dlChild;             /* InitSo: InitDl(&dlChild, 0x24); func_001CB518, func_001CB5D0, func_001F3CC8 walk it */
+    u8 unknown_0x70[0x5C];
     /* 0xCC */ s32 islot;              /* func_001CB518 (SO's slot 26) sets it to -1 */
     u8 unknown_0xD0[0x10];
     /* 0xE0 */ s32 cgeom;              /* ProjectSoTransform, RemoveSoGeomFromOxa (elements of 0xB0 bytes) */
@@ -55,7 +56,10 @@ struct SO : LO {
     u8 unknown_0xF0[0x3C];
     /* 0x12C */ f32 uFade;             /* UpdateSo, InitFragile */
     /* 0x130 */ f32 duFade;            /* the same functions */
-    u8 unknown_0x134[0x14];
+    u8 unknown_0x134[0x8];
+    /* 0x13C */ f32 field_0x13C;       /* InitSo (from a constant) */
+    /* 0x140 */ s32 field_0x140;       /* InitSo (-1) */
+    u8 unknown_0x144[0x4];
     /* 0x148 */ u64 grfso;             /* ZapContinue, ExtractUniqueSosFromGeoms, UpdateSwXaList and others */
 };
 
@@ -64,7 +68,8 @@ SLY2_SIZE_CHECK(SO, 0x150);
 SLY2_OFFSET_CHECK(SO, pxfLinear, 0x58);
 SLY2_OFFSET_CHECK(SO, pxfAngular, 0x5C);
 SLY2_OFFSET_CHECK(SO, pxfRoot, 0x60);
-SLY2_OFFSET_CHECK(SO, ploChildFirst, 0x64);
+SLY2_OFFSET_CHECK(SO, dlChild, 0x64);
+SLY2_OFFSET_CHECK(SO, field_0x13C, 0x13C);
 SLY2_OFFSET_CHECK(SO, islot, 0xCC);
 SLY2_OFFSET_CHECK(SO, cgeom, 0xE0);
 SLY2_OFFSET_CHECK(SO, ageom, 0xE4);

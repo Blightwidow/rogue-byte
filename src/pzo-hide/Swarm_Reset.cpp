@@ -1,6 +1,5 @@
 #include "sly2.h"
-struct DL { int a, b; };
-struct DLE { int next; };
+#include "dl.h"
 struct Group { int pad0; int total; int pad8; int alive; char pad10[0x20]; };
 struct Group2 { char pad0[0x10]; DL dl; };
 struct Rider { char pad0[0x20]; Group2 *group; char pad24[0x3C]; DLE dle; };

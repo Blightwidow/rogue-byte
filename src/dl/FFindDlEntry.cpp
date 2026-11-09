@@ -1,8 +1,8 @@
-struct DL { int first; int last; int ib; };
-int FFindDlEntry(DL *list, char *pv)
+#include "dl.h"
+int FFindDlEntry(DL *pdl, void *pv)
 {
     int found = 0;
-    if (*(int *)(pv + list->ib) != 0 || list->last == (int)pv)
+    if (((DLE *)((char *)pv + pdl->ibDle))->next != 0 || pdl->tail == pv)
         found = 1;
     return found;
 }

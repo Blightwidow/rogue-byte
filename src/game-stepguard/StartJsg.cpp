@@ -1,4 +1,4 @@
-struct DL { void *pfirst; void *plast; int ibDle; };
+#include "dl.h"
 struct JSG;
 struct JVT { char pad[0x18]; short delta; short index; void (*fn)(char *, int, int, int, int, int); };
 struct JSG {

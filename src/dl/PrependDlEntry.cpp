@@ -1,16 +1,16 @@
-struct DL { int first; int last; int ib; };
-void PrependDlEntry(DL *list, char *pv)
+#include "dl.h"
+void PrependDlEntry(DL *pdl, void *pv)
 {
-    int ib = list->ib;
-    int first = list->first;
-    int *pdle = (int *)(pv + ib);
-    if (first == 0) {
-        list->last = (int)pv;
-        list->first = (int)pv;
+    int ibDle = pdl->ibDle;
+    char *pvHead = (char *)pdl->head;
+    DLE *pdle = (DLE *)((char *)pv + ibDle);
+    if (pvHead == 0) {
+        pdl->tail = pv;
+        pdl->head = pv;
     } else {
-        pdle[0] = first;
-        first += ib;
-        *(int *)(first + 4) = (int)pv;
-        list->first = (int)pv;
+        pdle->next = pvHead;
+        pvHead += ibDle;
+        ((DLE *)pvHead)->prev = pv;
+        pdl->head = pv;
     }
 }

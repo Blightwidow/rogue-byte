@@ -83,7 +83,9 @@ struct LO : BASIC {
     /* 0x10 */ struct SO *psoParent;   /* InitSo, FFilterSensorSight (followed up to the root) */
     /* 0x14 */ s32 proot;              /* FFilterSensorSight (compared as an id), PoxaAllocSw (a list entry) */
     u8 unknown_0x18[0xC];
-    /* 0x24 */ struct LO *ploNext;     /* the next child of the same parent: func_001CB518, func_001CB5D0, func_001F3CC8 */
+    /* 0x24 */ struct LO *ploNext;     /* the next child of the same parent: func_001CB518, func_001CB5D0, func_001F3CC8. The parent's
+                                       list has ibDle 0x24 (InitSo), but this is not declared as a DLE: its prev would be 0x28,
+                                       and retail reads grfo there as 64 bits (ld 0x28 in RecalcSoLocked, func_001C4BD8) */
     /* 0x28 */ u64 grfo;               /* RecalcSoLocked, func_001C4BD8, UpdateRip */
     u8 unknown_0x30[0x20];
 };

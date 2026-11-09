@@ -1,5 +1,4 @@
-struct DL { int a, b, c; };
-struct DLE { int a, b; };
+#include "dl.h"
 struct DZ { int pad0[3]; float sdv; float sf; int pad1[3]; DLE dle; };
 struct DZG { int pad0; int cdz; DZ *adz; DL dlPos; DL dlZero; DL dlMax; DL dlUncat; int cdzPos; };
 void ClearDl(DL *);

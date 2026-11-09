@@ -137,6 +137,9 @@ class CleanupTests(unittest.TestCase):
     def test_warns_on_local_so(self):
         self.assertEqual(len(self.warnings_for('struct SO { PHYS *pphys; };')), 1)
 
+    def test_warns_on_local_dl(self):
+        self.assertEqual(len(self.warnings_for('struct DL { char *first; char *last; int offset; };')), 1)
+
     def test_warns_on_local_lo(self):
         self.assertEqual(len(self.warnings_for('struct LO { int x; };')), 1)
 

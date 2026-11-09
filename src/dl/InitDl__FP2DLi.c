@@ -1,5 +1,6 @@
-#include "m2c_macros.h"
+#include "dl.h"
 
-void InitDl__FP2DLi(void *arg0, s32 arg1) {
-    M2C_FIELD(arg0, s32 *, 8) = arg1;
+void InitDl__FP2DLi(DL *pdl, s32 ibDle)
+{
+    pdl->ibDle = ibDle;
 }
