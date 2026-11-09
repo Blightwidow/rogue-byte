@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; float g; };
+#include "cref.h"
 struct CFrame;
 extern "C" void SetTag__4CRef4TAGK(CRef *, int);
 extern "C" void CRef_CopyConstruct(CRef *, CRef *);
@@ -14,7 +14,7 @@ CRef *RefOpDeferObjectUpdate(CRef *pref, int carg, CRef *aref, CFrame *pframe)
     float *pobject = (float *)((int *)aref)[1];
     CRef refDt;
     CRef_RefCoerceF32(&refDt, &aref[1]);
-    float dt = refDt.g;
+    float dt = refDt.m_tag.m_g;
     CRef_Destruct(&refDt);
     pobject[0x30 / 4] = g_2dded0 + dt;
     CRef_CopyConstruct(pref, &refVoid);

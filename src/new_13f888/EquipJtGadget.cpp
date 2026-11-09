@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; int pad[2]; };
+#include "cref.h"
 struct Slot { int gadget; int state; float t; };
 struct JVT { char pad[0x338]; short delta; short idx; void *(*fn)(void *); char pad2[0x348 - 0x340]; short delta2; short idx2; void (*fn2)(void *); };
 struct JtObj { char pad[0xC]; JVT *vt; };
@@ -31,8 +31,8 @@ void EquipJtGadget(char *jt, unsigned slot, int gadget)
             sprintf(name, RO_002A4D50, index);
             CRef result;
             CRef value;
-            value.tagk = 0x15;
-            value.n = scan->gadget;
+            value.m_tagk = TAGK_S32;
+            value.m_tag.m_n = scan->gadget;
             scan++;
             JtObj *obj = (JtObj *)jt;
             func_001D8B20(&result, &value, obj->vt->fn((char *)obj + obj->vt->delta), RO_002A4D58, name, 0);

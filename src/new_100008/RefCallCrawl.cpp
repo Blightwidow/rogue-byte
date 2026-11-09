@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B8 { char b[8]; };
 struct B20 { B8 x; B8 y; int z; };
@@ -12,13 +12,19 @@ extern "C" void AddSeqRecordCrawl(BASIC *, int, float, float, int, int);
 
 CRef *RefCallCrawl(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { B20 aotyp; int pad[3]; CRef ref; int v0; float v1; float v2; int v3; int v4; } l;
-    l.aotyp = RO_002A3D48;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 5, args, &l.aotyp, &l.v0, &l.v1, &l.v2, &l.v3, &l.v4);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    AddSeqRecordCrawl(object, l.v0, l.v1, l.v2, l.v3, l.v4);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    B20 aotyp;
+    CRef ref;
+    int v0;
+    float v1;
+    float v2;
+    int v3;
+    int v4;
+    aotyp = RO_002A3D48;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 5, args, &aotyp, &v0, &v1, &v2, &v3, &v4);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    AddSeqRecordCrawl(object, v0, v1, v2, v3, v4);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

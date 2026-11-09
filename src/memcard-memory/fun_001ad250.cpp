@@ -1,4 +1,4 @@
-struct CRef { int tagk; float g; };
+#include "cref.h"
 extern "C" char B_002E6604[];
 extern "C" char *B_003E0FAC;
 struct SAVE { char pad[0x7D50]; char *pslotCur; };
@@ -18,7 +18,7 @@ extern "C" void func_001AD250(ITEM *item)
     char *pslot = base + item->slot * 0x5464;
     CRef ref;
     RefGetGameSaveValue(&ref, B_003E0FAC, pslot);
-    float g = ref.g;
+    float g = ref.m_tag.m_g;
     CRef_Destruct(&ref);
     if (g == 0.0f) {
         SAVE *psave = (SAVE *)(base + 0x7FDC);

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; int pad[2]; };
+#include "cref.h"
 struct VT { char pad[0x270]; short delta; short idx; void (*fn)(void *, int); };
 struct PO { char pad[0xC]; VT *vt; char pad2[0x18 - 0x10]; int oid; };
 struct SW { char pad[0x3EFC]; PO *base; PO *over; };
@@ -27,8 +27,8 @@ void SetSwFocusBase(SW *psw, PO *ppo)
         if (FIsBasicDerivedFrom(ppo, 0x34)) {
             CRef result;
             CRef value;
-            value.tagk = 0x15;
-            value.n = ppo->oid;
+            value.m_tagk = TAGK_S32;
+            value.m_tag.m_n = ppo->oid;
             func_001D8B20(&result, &value, RO_002A76F8, 0);
             CRef_Destruct(&result);
             CRef_Destruct(&value);

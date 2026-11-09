@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct SM;
-struct CRef { int tagk; int n; int pad[2]; };
+#include "cref.h"
 struct PAD12 { char pad[0xC]; };
 // Retail's virtual calls read the gcc 2.95 vtable at +0xC: slot k sits at (k + 1) * 8 ({short delta, short index, fn}).
 // HUB calls slot 2 (+0x18) with five arguments. The vtable pointer is declared in a base so that gcc 2.95 puts it
@@ -99,7 +99,7 @@ void SetHubState(HUB *hub, int state)
     int oid;
     if (hub->sm) {
         func_001D8A38(&ref, RO_002A7878, 0);
-        int value = ref.n;
+        int value = ref.m_tag.m_n;
         CRef_Destruct(&ref);
         if (IsmsFindSmOptional__FP2SM3OID(hub->sm, value) == -1)
             oid = OidFromSmIsms(hub->sm, 0);

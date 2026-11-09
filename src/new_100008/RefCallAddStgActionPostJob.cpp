@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);
@@ -11,13 +11,16 @@ extern const B8 RO_002A3C08;
 
 CRef *RefCallAddStgActionPostJob(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { B8 aotyp; int pad[2]; CRef ref; int first; int second; } l;
-    l.aotyp = RO_002A3C08;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 2, args, (const int *)&l.aotyp, &l.first, &l.second);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    func_001BBD48(object, l.first, l.second);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    B8 aotyp;
+    CRef ref;
+    int first;
+    int second;
+    aotyp = RO_002A3C08;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, (const int *)&aotyp, &first, &second);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    func_001BBD48(object, first, second);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);
@@ -11,13 +11,16 @@ extern const B8 RO_002A3A80;
 
 CRef *RefCallSetAloScrollingMasterSpeeds(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { B8 aotyp; int pad[2]; CRef ref; float a; float b; } l;
-    l.aotyp = RO_002A3A80;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 2, args, (const int *)&l.aotyp, &l.a, &l.b);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    SetAloScrollingMasterSpeeds(object, l.a, l.b);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    B8 aotyp;
+    CRef ref;
+    float a;
+    float b;
+    aotyp = RO_002A3A80;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, (const int *)&aotyp, &a, &b);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    SetAloScrollingMasterSpeeds(object, a, b);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

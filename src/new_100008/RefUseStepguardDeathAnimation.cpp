@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct Raw8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const void *, ...);
@@ -11,13 +11,16 @@ struct OID { int a; };
 extern "C" void UseStepguardDeathAnimation__FP9STEPGUARDi3OID(BASIC *, int, int);
 CRef *RefUseStepguardDeathAnimation(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct F { Raw8 types; char pad[8]; CRef ref; int a; int b; } f;
-    f.types = RO_002A3C70;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&f.ref, 2, args, &f.types, &f.a, &f.b);
-    CRef_Destruct(&f.ref);
-    SetTag__4CRef4TAGK(&f.ref, 0x24);
-    UseStepguardDeathAnimation__FP9STEPGUARDi3OID(object, f.a, f.b);
-    CRef_CopyConstruct(result, &f.ref);
-    CRef_Destruct(&f.ref);
+    Raw8 types;
+    CRef ref;
+    int a;
+    int b;
+    types = RO_002A3C70;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, &types, &a, &b);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    UseStepguardDeathAnimation__FP9STEPGUARDi3OID(object, a, b);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

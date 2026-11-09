@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CFrame;
 extern "C" CRef *RefCmp(CRef *, CRef *, int);
 CRef *RefOpLE(CRef *prefReturn, int cref, CRef *aref)

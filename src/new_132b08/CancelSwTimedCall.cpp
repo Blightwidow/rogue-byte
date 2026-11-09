@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CPair { int cref; int pad4; CRef ref; CPair *next; };
 struct SLOTHEAP;
 struct TIMEDCALL { char pad[8]; CPair *ppair; int idCall; TIMEDCALL *pnext; };

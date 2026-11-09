@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B8 { char b[8]; };
 struct B12 { B8 x; int y; };
@@ -13,13 +13,16 @@ extern const B8 RO_002A40D8;
 
 CRef *RefAddVehicleAxle(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { B8 aotyp; int pad[2]; RANGE range; CRef ref; int oid; } l;
-    l.aotyp = RO_002A40D8;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 2, args, (const int *)&l.aotyp, &l.oid, &l.range);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    AddVehicleAxle(object, l.oid, &l.range);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    B8 aotyp;
+    RANGE range;
+    CRef ref;
+    int oid;
+    aotyp = RO_002A40D8;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 2, args, (const int *)&aotyp, &oid, &range);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    AddVehicleAxle(object, oid, &range);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

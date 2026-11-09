@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CFrame;
 extern "C" CRef *RefOpObjectOption__FiP4CRefP6CFrame4BIFK(CRef *, int, CRef *, CFrame *, int);
 extern "C" CRef *RefOpEnsureO(CRef *pref, int carg, CRef *aref, CFrame *pframe)

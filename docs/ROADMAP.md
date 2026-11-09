@@ -108,12 +108,20 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      them inside whole files; one raw-offset cast went (`TranslateSoToPos`). The 5 local `XF`s left are other types the workers
      also called `XF`: a 2D transform of six floats, and the segment type of `aseg`/`asega` (floats at 0x80, 0x84, pointers at
      0x88, 0x8C, a short at 0x9A).
+   - `CRef` (2026-11-09): `include/cref.h`, Splice's script value, the most copied local type (456 files). Sly 1's names (`m_tagk`,
+     the `TAG` union); Sly 2's size, 8 bytes (`func_001239D8` reads `aref[1]` at 0x8); Sly 2's own tag values, each read from the
+     setter that writes it (`TAGK_S32` 0x15 ... `TAGK_Method` 0x22, `TAGK_Void` 0x24; the order is not Sly 1's). 304 of the copies
+     were generated Splice bindings with a 16-byte `CRef` inside a frame struct (`struct L { ...; int pad[2]; CRef ref; int a; }`):
+     padding that only sized the frame, which the matching rules do not allow. 268 of them match with the shared `CRef` and plain
+     locals in the same order; 39 differ by 0x10 in frame size and keep their frame struct for now. 50 hand-written sources whose
+     `CRef` was data only moved too: 318 files in all. 46 sources declare `CRef` members (`operator=`, a copy constructor, a
+     destructor), which change what the compiler inserts; they wait for the class's special members to be settled.
    - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float
      constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
-     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: the class table's other
-     families, and the `aseg` segment type.
+     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `CRef`'s special members
+     (the 46 sources and the 39 bindings), the class table's other families, and the `aseg` segment type.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

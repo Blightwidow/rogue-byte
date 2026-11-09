@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B8 { char b[8]; };
 extern "C" void RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const void *, ...);
@@ -13,13 +13,18 @@ extern "C" const Raw16 RO_002A40B8;
 
 CRef *RefSwarm_AddGroup(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { Raw16 types; CRef ref; int a; int b; int c; float d; } l;
-    l.types = RO_002A40B8;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 4, args, &l.types, &l.a, &l.b, &l.c, &l.d);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    Swarm_AddGroup(object, l.a, l.b, l.c, l.d);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    Raw16 types;
+    CRef ref;
+    int a;
+    int b;
+    int c;
+    float d;
+    types = RO_002A40B8;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 4, args, &types, &a, &b, &c, &d);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    Swarm_AddGroup(object, a, b, c, d);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

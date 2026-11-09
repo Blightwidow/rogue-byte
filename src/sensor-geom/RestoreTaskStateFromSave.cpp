@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct TASK;
 struct JOB { char pad0[0x64]; TASK *startTask; char pad1[0x14]; int cStart; };
 struct TASK {
@@ -18,14 +18,14 @@ void RestoreTaskStateFromSave(TASK *task)
     char *pathState = task->pathState;
     if (*(int *)pathState != 0) {
         RefGetGameSaveValue(&ref, pathState, &B_003D4A60);
-        int value = ref.n;
+        int value = ref.m_tag.m_n;
         CRef_Destruct(&ref);
         state = value;
     }
     char *pathForced = task->pathForced;
     if (*(int *)pathForced != 0) {
         RefGetGameSaveValue(&ref, pathForced, &B_003D4A60);
-        int value = ref.n;
+        int value = ref.m_tag.m_n;
         CRef_Destruct(&ref);
         forced = value;
     }

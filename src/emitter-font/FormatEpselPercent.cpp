@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct GAME { char pad[0x4774]; };
 struct HERO { char pad[0x110]; int idx; };
 struct GLOBALS { char pad0[0x3B7C]; int slots[1]; };
@@ -20,7 +20,7 @@ void FormatEpselPercent(char *out)
         if (key) {
             CRef ref;
             RefGetGameSaveValue(&ref, key, B_003D4A60);
-            int count = ref.n;
+            int count = ref.m_tag.m_n;
             CRef_Destruct(&ref);
             int percent = count * 95 / 100;
             HERO *again = *(HERO **)(base + 0x4774);

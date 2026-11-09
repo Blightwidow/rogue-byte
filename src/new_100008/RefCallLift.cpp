@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct B24 { char b[24]; };
 extern "C" const B24 RO_002A3E78;
@@ -11,13 +11,15 @@ extern "C" void AddSeqRecordLift(BASIC *, int, int, int, int, int, int);
 
 CRef *RefCallLift(CRef *result, BASIC *object, int count, CRef *args)
 {
-    struct L { B24 aotyp; int padA[2]; CRef ref; int v0, v1, v2, v3, v4, v5; } l;
-    l.aotyp = RO_002A3E78;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 6, args, &l.aotyp, &l.v0, &l.v1, &l.v2, &l.v3, &l.v4, &l.v5);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
-    AddSeqRecordLift(object, l.v0, l.v1, l.v2, l.v3, l.v4, l.v5);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    B24 aotyp;
+    CRef ref;
+    int v0, v1, v2, v3, v4, v5;
+    aotyp = RO_002A3E78;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 6, args, &aotyp, &v0, &v1, &v2, &v3, &v4, &v5);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
+    AddSeqRecordLift(object, v0, v1, v2, v3, v4, v5);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

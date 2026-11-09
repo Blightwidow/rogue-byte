@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct AOT { int v[1]; };
 struct VT { char pad[0x260]; short delta; short index; int (*fn)(void *, int); };

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
 struct BASIC;
 struct VT { char pad[704]; short delta; short index; void (*fn)(void *, int); };
 struct OBJ { char pad[0xC]; VT *vptr; };
@@ -11,14 +11,16 @@ extern "C" void CRef_CopyConstruct(CRef *, CRef *);
 
 CRef *bevy_game_methods_cls_10b028(CRef *result, OBJ *object, int count, CRef *args)
 {
-    struct L { CRef ref; int aotyp[1]; int arg; } l;
-    l.aotyp[0] = 0x1057;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&l.ref, 1, args, l.aotyp, &l.arg);
-    CRef_Destruct(&l.ref);
-    SetTag__4CRef4TAGK(&l.ref, 0x24);
+    CRef ref;
+    int aotyp[1];
+    int arg;
+    aotyp[0] = 0x1057;
+    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&ref, 1, args, aotyp, &arg);
+    CRef_Destruct(&ref);
+    SetTag__4CRef4TAGK(&ref, 0x24);
     VT *vtable = object->vptr;
-    vtable->fn((char *)object + vtable->delta, l.arg);
-    CRef_CopyConstruct(result, &l.ref);
-    CRef_Destruct(&l.ref);
+    vtable->fn((char *)object + vtable->delta, arg);
+    CRef_CopyConstruct(result, &ref);
+    CRef_Destruct(&ref);
     return result;
 }

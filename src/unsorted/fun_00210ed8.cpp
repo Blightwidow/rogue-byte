@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct CRef { int tagk; int n; };
+#include "cref.h"
 extern "C" char B_003D4A60[];
 extern "C" const char RO_002A8AA0[];
 extern "C" CRef *RefGetGameSaveValue(CRef *, int *, void *);
@@ -13,7 +13,7 @@ extern "C" void func_00210ED0(char *out, int **pkey)
         const char *format = RO_002A8AA0;
         CRef ref;
         RefGetGameSaveValue(&ref, key, B_003D4A60);
-        int value = ref.n;
+        int value = ref.m_tag.m_n;
         CRef_Destruct(&ref);
         sprintf(out, format, value);
     }

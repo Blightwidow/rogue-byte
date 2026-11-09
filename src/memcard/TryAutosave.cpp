@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 extern "C" char B_003DD490[];
 extern "C" char B_003D4A60[];
 struct MENU { char pad[0x4C]; int mode; };
@@ -22,7 +22,7 @@ extern "C" void TryAutosave(char *psave, int fForce)
             if (IEpisodeCurrent() != 0 || fForce != 0) {
                 CRef ref;
                 RefGetGameSaveValue(&ref, *(void **)(B_003DD490 + 0x3B54), B_003D4A60);
-                int n = ref.n;
+                int n = ref.m_tag.m_n;
                 CRef_Destruct(&ref);
                 if (n == 0) {
                     B_002E6550.mode = 3;
