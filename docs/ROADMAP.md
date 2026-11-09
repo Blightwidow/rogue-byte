@@ -56,11 +56,20 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      ee-gcc `sizeof(long)` is 8 and `sizeof(long long)` 16, and `long long` arithmetic fails ("unsupported wide integer operation");
      none of the 252 sources that declared `s64` as `long long` used it. `make elf` byte for byte, objdiff report unchanged.
      `make cleanup` fails on a new local fixed-width typedef in `src/`; `harvest.py` drafts include `types.h`.
-   - Start from the recovered layouts (`config/recovered/sly2_structs.h`, 157 structs, unverified) and the padded copies in `src/`;
-     a field enters the shared header when a matched function's code shows its offset and type.
-   - Pilot: one widely used class (`XF` or `SO`), its header with `static_assert` offset and `sizeof` checks (PS2 build only), then
-     the matched functions that declare it moved over and re-proved with `make elf` and `make unit`. Measure the cost per file
-     before converting the rest.
+   - A field enters a shared header when at least two matched functions read it at the same offset with the same type; the
+     recovered layouts (`config/recovered/sly2_structs.h`) are mostly `field_0x...` gaps and Sly 1's offsets do not carry over, so
+     the evidence is our own matched code. A local struct's name does not identify a class: the 28 local `XF` bodies describe at
+     least five different types (a 2D transform of six floats, an object with an act list at 0x90, one with a kind at 0x98...).
+   - Pilot done 2026-11-09: `include/so.h`, a flat view of `SO`'s first 0x150 bytes with the nine fields two or more functions agree
+     on (`psoParent` 0x10, `proot` 0x14, `grfo` 0x28, `pxfLinear`/`pxfAngular`/`pxfRoot` 0x58-0x60, `pphys` 0xE8, `poxa` 0xEC, `grfso`
+     0x148), the unknown gaps named by offset, and offset checks the PS2 build enforces (a negative array size on a moved field;
+     gcc 2.95 has no `static_assert`). 21 of the 72 files that declared their own `SO` moved over (20 per-function sources, one
+     whole file): drop the local struct, include `so.h`, rename 0 to 3 fields. All 21 score 0 again (`try.py`, `make unit`), `make elf`
+     PASS, reports unchanged. Cost: one scripted pass and one hand fix (a same-named field of another struct), two compiles per file.
+   - What keeps the other 51 local: the vtable at 0xC (needs the class and virtual-call work), fields only one function reads
+     (0x64, 0x138, 0x1C8...), conflicts to settle against retail's code (`pphys` at 0xE8 in most files but 0xEC in two; 0xE4 read
+     as `GEOM *` and as `PART *`; 0x10 as `SO *` and as `PARENT *`), and fields past 0x150 (0x220 `state`...) that belong to derived
+     classes, not to `SO`. Next: the class chain (`LO`, `ALO`, `SO`) with the vtable, then the derived classes, each by the same rule.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

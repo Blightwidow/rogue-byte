@@ -1,7 +1,7 @@
-struct SO { char pad[0x148]; unsigned long flags; };
+#include "so.h"
 extern "C" void InitSo(SO *);
 extern "C" void func_001DE2A0(SO *so)
 {
     InitSo(so);
-    so->flags |= 0x400000000UL;
+    so->grfso |= 0x400000000UL;
 }

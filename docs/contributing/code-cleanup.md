@@ -21,6 +21,7 @@ added code; they do not fail it, because a local struct stays allowed while no s
 
 | Warning | Prefer |
 | :--- | :--- |
+| A local `struct SO { ... }` | `#include "so.h"`; a missing field goes there once two matched functions read it |
 | A padding member (`char pad[0x10]`, `u8 pad0[4]`) | The shared type from `include/`, with the field added there when it is missing |
 | A cast offset (`*(int *)(base + 0x1404)`, `*(float *)((char *)p + 8)`) | The struct member |
 | A hand-written vtable call (`vt->fn((char *)obj + vt->delta, ...)`) | A `virtual` member function, when it matches |

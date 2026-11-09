@@ -3,7 +3,7 @@
 struct VT { char pad[0x2a8]; short delta; short index; int (*fn)(void *); };
 struct SOB { char pad[0xc]; VT *vt; };
 struct OXA;
-struct SO { char pad[0xec]; OXA *poxa; char pad2[0x148 - 0xf0]; unsigned long grfso; };
+#include "so.h"
 struct XP { char pad0[8]; SOB *pso; char pad1[0x9c - 0xc]; int kind; char pad2[0xa8 - 0xa0]; int num; XP *next; };
 struct NODE { XP *pxp; NODE *next; char pad[4]; SO *pso; };
 struct OXA { char pad[0x64]; NODE *first; XP *own; };

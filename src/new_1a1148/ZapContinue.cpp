@@ -3,7 +3,7 @@ struct B8 { char b[8]; };
 struct PMF { short delta; short index; void (*fn)(void *); };
 struct VT { char pad[0x2E8]; short delta; short index; void (*fn)(void *); };
 struct JT { char pad[0xC]; VT *vt; };
-struct SO { char pad[0x148]; unsigned long grfso; };
+#include "so.h"
 struct ZAP { JT *pjt; int state; char pad[0x14]; B8 continuation; char pad2[0x30 - 0x24]; SO *psoSource; };
 extern "C" void WarpZapToSafePoint(ZAP *);
 extern "C" void SetJmpState(void *, int, int, int);

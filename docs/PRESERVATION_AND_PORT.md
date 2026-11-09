@@ -84,7 +84,7 @@ port's repository.
 
 1. **Shared headers with real types**, one definition per class (`SO`, `ALO`, `LO`, `XF`, `GUARD`, the vtable layouts), typed from
    what retail's code does, field names keeping their `source:`. New matches include them; existing matches move over file by
-   file, each re-proved with `make elf` and `make unit`.
+   file, each re-proved with `make elf` and `make unit`. Pilot (2026-11-09): `include/so.h`, 21 files moved (ROADMAP.md item 1).
 2. **Fixed-width typedefs** (`s8`..`s64`, `u8`..`u64`, `f32`, `QW` for 128-bit) instead of bare `int` and `long` (one definition
    in `include/types.h` since 2026-11-09). On the EE
    `long` is 64 bits, which a Windows x64 port reads as 32. The compiled bytes do not change.

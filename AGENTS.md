@@ -20,7 +20,7 @@ Preservation is the absolute priority; a later PC port is the second user of the
 counts as matched.
 
 - **Shared types over local ones.** The fixed-width typedefs live in `include/types.h` only (`make cleanup` fails on a local copy in
-  `src/`). Use a type from `include/` when it exists; when a function needs a field it lacks, add the field
+  `src/`). Use a type from `include/` when it exists (`so.h` for `SO`, since 2026-11-09); when a function needs a field it lacks, add the field
   there (re-prove its users) rather than declaring a padded local copy. A local struct stays allowed while no shared one exists.
 - **Tie-break:** of two wordings that both score 0 and both follow the rules, land the typed one: a member over a cast offset
   (`*(int *)(base + 0x1404)`), a virtual call over a hand-written vtable call (`vt->fn(obj + vt->delta, ...)`), a shared type over a

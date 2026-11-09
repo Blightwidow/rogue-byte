@@ -134,8 +134,11 @@ class CleanupTests(unittest.TestCase):
     def warnings_for(self, line):
         return check_cleanup.warn_lines({'src/mat/Foo.cpp': [(1, line)]})
 
+    def test_warns_on_local_so(self):
+        self.assertEqual(len(self.warnings_for('struct SO { PHYS *pphys; };')), 1)
+
     def test_warns_on_padding_member(self):
-        self.assertEqual(len(self.warnings_for('struct SO { char pad0[0x58]; XF *pxf; };')), 1)
+        self.assertEqual(len(self.warnings_for('struct GOAL { char pad0[0x58]; XF *pxf; };')), 1)
 
     def test_warns_on_cast_offset(self):
         self.assertEqual(len(self.warnings_for('    *(float *)(base + 0x1434) = g_2dded0;')), 1)
