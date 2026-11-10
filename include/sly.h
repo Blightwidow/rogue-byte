@@ -7,13 +7,17 @@
 #include "jt.h"
 
 struct PART;
+struct TARGET;
 
 struct SLY : JT {
-    u8 unknown_0x1320[0x560];
+    u8 unknown_0x1320[0x400];
+    /* 0x1720 */ void *apasegJts[0x2C]; /* BindJtStepAseg (slot 90) binds the entry jts indexes, entry 0 when it is empty; the count is the room
+                                           left before the carry state InitSly starts at 0x17D0, not a measured one */
+    u8 unknown_0x17D0[0xB0];
     /* 0x1880 */ s32 cbounds; /* UpdateJtBounds (slot 49) */
     u8 unknown_0x1884[0xC];
-    /* 0x1890 */ QW abounds[3]; /* UpdateJtBounds extends the bounds by each of the first cbounds; at most 3, field_0x18C0 follows */
-    /* 0x18C0 */ s32 field_0x18C0; /* FFaceSlyAimTarget (slot 92) */
+    /* 0x1890 */ QW abounds[3]; /* UpdateJtBounds extends the bounds by each of the first cbounds; at most 3, ptarget follows */
+    /* 0x18C0 */ struct TARGET *ptarget; /* the cane's target: FFaceSlyAimTarget (slot 92) faces it, ChooseJtSweepTarget sets it */
     u8 unknown_0x18C4[0x4];
     /* 0x18C8 */ s32 jts; /* the state: NSlyActionCategory (85), FAllowBinocSly (94), BindJtStepAseg (90), JT_FInvulnerable (76), func_0018A428 (50) */
     u8 unknown_0x18CC[0xD4];
@@ -33,7 +37,8 @@ struct SLY : JT {
 SLY2_SIZE_CHECK(SLY, 0x2060);
 SLY2_OFFSET_CHECK(SLY, cbounds, 0x1880);
 SLY2_OFFSET_CHECK(SLY, abounds, 0x1890);
-SLY2_OFFSET_CHECK(SLY, field_0x18C0, 0x18C0);
+SLY2_OFFSET_CHECK(SLY, apasegJts, 0x1720);
+SLY2_OFFSET_CHECK(SLY, ptarget, 0x18C0);
 SLY2_OFFSET_CHECK(SLY, jts, 0x18C8);
 SLY2_OFFSET_CHECK(SLY, apartHide, 0x19A0);
 SLY2_OFFSET_CHECK(SLY, rBounds, 0x19AC);

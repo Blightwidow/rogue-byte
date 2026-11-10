@@ -1,8 +1,8 @@
 #include "sly.h"
-extern "C" void func_002046F0(void *, int);
+extern "C" void func_002046F0(void *, TARGET *);
 int FFaceSlyAimTarget(SLY *self)
 {
-    int target = self->field_0x18C0;
+    TARGET *target = self->ptarget;
     if (target) {
         func_002046F0(self, target);
         return 1;

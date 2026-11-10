@@ -14,6 +14,13 @@
 #include "step.h"
 
 struct GUARD;
+struct LOOT;
+
+/* One of the player's three gadget slots: LoadJtGadgetSlots fills gadget from the level data, three 0xC-byte entries. */
+struct GADGETSLOT {
+    /* 0x0 */ s32 gadget;
+    u8 unknown_0x4[0x8];
+};
 
 struct JT : STEP {
     virtual void SetMode(int mode);     /* 88: SetBentleyMode (Bentley); func_0023C820 in Sly's vtable, as are 89 to 92, 94 and 103.
@@ -32,7 +39,7 @@ struct JT : STEP {
     virtual void UseGadget(int gadget); /* 100: func_00141D38, UseBentleyGadget; SetJtGadgetSlotState */
     virtual void DrainGadget();         /* 101: DrainJtGadget */
     virtual void Slot102(int gadget);   /* 102: func_00141E28; SetJtGadgetSlotState when a gadget slot leaves state 1 */
-    virtual void Slot103();
+    virtual const char *Slot103();      /* 103: LoadJtGadgetSlots reads the name it returns */
     virtual void Slot104();             /* 104: func_00141E30 */
     virtual void Slot105();             /* 105: func_00141E70, UpdateBentleyGadgetGlob */
     u8 unknown_0x2C0[0x1C];
@@ -42,7 +49,9 @@ struct JT : STEP {
     /* 0x4CC */ s32 field_0x4CC; /* func_0018A428 (Sly slot 50) */
     u8 unknown_0x4D0[0x50];
     /* 0x520 */ void *field_0x520; /* BindJtStepAseg (Sly slot 90) */
-    u8 unknown_0x524[0x498];
+    u8 unknown_0x524[0x47C];
+    /* 0x9A0 */ struct SO *pcarried; /* in the attachment: func_00211420, after testing the object is class 52 */
+    u8 unknown_0x9A4[0x18];
     /* 0x9BC */ s32 field_0x9BC; /* UseSlyGadget (Sly slot 100) */
     u8 unknown_0x9C0[0x434];
     /* 0xDF4 */ s32 zapState; /* in the zap state InitJt starts at 0xDF0: UpdateJt (16), func_00143C78 (85) */
@@ -83,7 +92,11 @@ struct JT : STEP {
     /* 0x113C */ f32 field_0x113C; /* InitJt sets 2.5 */
     /* 0x1140 */ f32 field_0x1140; /* InitJt sets 3 */
     /* 0x1144 */ f32 field_0x1144; /* InitJt sets 5 */
-    u8 unknown_0x1148[0x6C];
+    u8 unknown_0x1148[0x38];
+    /* 0x1180 */ GADGETSLOT aslot[3]; /* LoadJtGadgetSlots (called by PostJtLoad, slot 15; calls slot 103) */
+    u8 unknown_0x11A4[0x4];
+    /* 0x11A8 */ struct LOOT *plootHeld; /* GiveJtLoot, DropJtLoot, DeliverJtLoot, Crfodb_OnGrab; level_loaded (class 52 objects) */
+    u8 unknown_0x11AC[0x8];
     /* 0x11B4 */ s32 field_0x11B4; /* in the carry state InitJt starts at 0x11B0: UseSlyGadget (Sly slot 100) */
     u8 unknown_0x11B8[0x138];
     /* 0x12F0 */ s32 fGadgetsAllowed; /* InitJt sets 1; FAttachAllowsGadget, FJmpAllowsGadget test it */
@@ -99,11 +112,13 @@ struct JT : STEP {
 };
 
 #if defined(__mips__)
+SLY2_SIZE_CHECK(GADGETSLOT, 0xC);
 SLY2_SIZE_CHECK(JT, 0x1320);
 SLY2_OFFSET_CHECK(JT, jmpState, 0x2DC);
 SLY2_OFFSET_CHECK(JT, attachKind, 0x4C8);
 SLY2_OFFSET_CHECK(JT, field_0x4CC, 0x4CC);
 SLY2_OFFSET_CHECK(JT, field_0x520, 0x520);
+SLY2_OFFSET_CHECK(JT, pcarried, 0x9A0);
 SLY2_OFFSET_CHECK(JT, field_0x9BC, 0x9BC);
 SLY2_OFFSET_CHECK(JT, zapState, 0xDF4);
 SLY2_OFFSET_CHECK(JT, field_0xDFC, 0xDFC);
@@ -129,6 +144,8 @@ SLY2_OFFSET_CHECK(JT, field_0x1138, 0x1138);
 SLY2_OFFSET_CHECK(JT, field_0x113C, 0x113C);
 SLY2_OFFSET_CHECK(JT, field_0x1140, 0x1140);
 SLY2_OFFSET_CHECK(JT, field_0x1144, 0x1144);
+SLY2_OFFSET_CHECK(JT, aslot, 0x1180);
+SLY2_OFFSET_CHECK(JT, plootHeld, 0x11A8);
 SLY2_OFFSET_CHECK(JT, field_0x11B4, 0x11B4);
 SLY2_OFFSET_CHECK(JT, fGadgetsAllowed, 0x12F0);
 SLY2_OFFSET_CHECK(JT, pnPower, 0x12FC);

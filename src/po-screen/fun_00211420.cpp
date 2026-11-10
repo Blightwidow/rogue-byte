@@ -1,7 +1,7 @@
 #include "sly2.h"
+#include "jt.h"
 struct Kind { int p0; int idx; };
 struct Carried { char p0[0x224]; int sid; char p1[0x244 - 0x228]; Kind *pkind; };
-struct JT { char p0[0x4C8]; int attachKind; char p1[0x9A0 - 0x4CC]; Carried *pcarried; char p2[0x1318 - 0x9A4]; int sidDefault; };
 struct Rec { int a; int sid; int c; };
 extern "C" {
 extern char B_003DD490;
@@ -17,7 +17,7 @@ void func_00211420(char *pchzDest)
     JT *pjt = (JT *)PpoSwFocusBase(&B_003DD490);
     if (pjt != 0) {
         if (FIsBasicDerivedFrom(pjt, 0x34)) {
-            Carried *pcarried = pjt->pcarried;
+            Carried *pcarried = (Carried *)pjt->pcarried;
             if (pcarried != 0) {
                 int kind = pjt->attachKind;
                 if (kind == 0xC) {

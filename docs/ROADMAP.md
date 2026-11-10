@@ -166,9 +166,12 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `JT`s showed how far apart the guesses had gone: `UpdateJtBounds` declared 17 bounds where three fit before Sly's state at
      0x18C8 (read by five Sly methods), and `UpdateBentleyActive` read `InitJt`'s float at 0x1020 as an int. Slots 88, 93, 95, 99,
      100 and 102 have signatures, and 7 functions call them as virtuals. 29 matched sources use the headers (14 by script, 6
-     with virtual calls, 9 from raw offsets such as `*(int *)(pjt + 0x18C8)` to members), all scoring 0. 37 still declare a
-     local `JT`: some read fields no certain reader confirms yet (0x11A8, 0x1720, 0x18D8...), some read Sly's range from a
-     function not known to hold a Sly, and some local `JT`s are other types (a world at offset 0).
+     with virtual calls, 9 from raw offsets such as `*(int *)(pjt + 0x18C8)` to members), all scoring 0. A second pass added
+     the held loot (0x11A8, five readers, one of them collecting class-52 objects), the gadget slots (0x1180, read by
+     `PostJtLoad`'s callee through slot 103), the carried object (0x9A0, after a class-52 test), and Sly's step-aseg table
+     (0x1720, slot 90) and cane target (0x18C0): 9 more sources moved, and `SpendJtGadgetPower` got its name back from an
+     old field rename. 24 sources still declare a local `JT`-like struct: single readers (0x18D8, 0x1854, 0x218), Sly's or
+     Murray's range from a function not known to hold either, Bentley's own fields, and other types (a world at offset 0).
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
