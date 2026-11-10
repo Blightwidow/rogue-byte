@@ -1,12 +1,12 @@
 #include "types.h"
-struct Guard { char pad[0x28]; unsigned long flags; };
-extern "C" void UpdateStep(Guard *);
-extern "C" void UpdateGuardModeTimeout(Guard *);
-extern "C" void UpdateGuardSensor(Guard *);
+#include "stepguard.h"
+extern "C" void UpdateStep(STEPGUARD *);
+extern "C" void UpdateGuardModeTimeout(STEPGUARD *);
+extern "C" void UpdateGuardSensor(STEPGUARD *);
 extern "C" int FDoneAnimref(void *);
-extern "C" void func_0020AB68(Guard *, int, int, QW);
-extern "C" void func_0020ACC0(Guard *);
-extern "C" void func_001F1CF8(Guard *);
+extern "C" void func_0020AB68(STEPGUARD *, int, int, QW);
+extern "C" void func_0020ACC0(STEPGUARD *);
+extern "C" void func_001F1CF8(STEPGUARD *);
 extern "C" void UpdateFallCheck(void *);
 extern "C" void UpdateGuardDamage(void *);
 extern "C" void GoalStack_Update(void *);
@@ -17,10 +17,10 @@ extern "C" QW g_2a2dd0;
 
 #define F(type, off) (*(type *)((char *)guard + (off)))
 
-void UpdateGuard(Guard *guard)
+void UpdateGuard(STEPGUARD *guard)
 {
     UpdateStep(guard);
-    if (((guard->flags >> 60) & 1) == 0 || F(int, 0xFBC) == 0xE)
+    if (((guard->grfo >> 60) & 1) == 0 || F(int, 0xFBC) == 0xE)
         return;
     UpdateGuardModeTimeout(guard);
     UpdateGuardSensor(guard);

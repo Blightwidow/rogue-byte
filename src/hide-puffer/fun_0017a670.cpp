@@ -5,8 +5,14 @@ extern "C" QW PosLoWorld(void*);
 extern "C" float g_2dded0;
 struct Track { char pad[0x20]; QW pos; };
 struct Guard { char pad[0x35C]; Track* track; };
-struct Goal { char pad0[0x10]; Guard* guard; char pad1[0x50 - 0x14]; int state; char pad2[4]; float tNext; };
-extern "C" void func_0017A670(Goal* goal)
+#include "goal.h"
+struct GOAL_17A670 : GOAL {
+    char pad_30[0x20];
+    int state;
+    char pad_54[0x4];
+    float tNext;
+};
+extern "C" void func_0017A670(GOAL_17A670* goal)
 {
     GoalAnim_Update(goal);
     int state;
@@ -16,7 +22,7 @@ extern "C" void func_0017A670(Goal* goal)
             GoalFlinch_SetState(goal, 1);
         }
     } while (goal->state != state);
-    Guard* guard = goal->guard;
+    Guard* guard = ((Guard*)goal->pstep);
     Track* track = guard->track;
     track->pos = PosLoWorld(guard);
 }

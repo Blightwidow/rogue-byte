@@ -2,7 +2,16 @@
 struct VT { char pad[0x40]; short delta; short index; void (*fn)(void *); };
 struct OBJ { char pad[0xC]; VT *vptr; };
 struct TARGET { int a[4]; QW pos; };
-struct GOAL { char pad0[0x10]; void *pguard; char pad1[0x18 - 0x14]; void *pchild; char pad2[0x30 - 0x1C]; int target; char pad3[0x40 - 0x34]; QW offset; int state; float tState; QW pos; };
+#include "goal.h"
+struct GOAL_17C928 : GOAL {
+    int target;
+    char pad_34[0xC];
+    QW offset;
+    int state;
+    float tState;
+    char pad_58[0x8];
+    QW pos;
+};
 extern "C" {
 void Goal_Pop(void *);
 OBJ *func_00205438(void *, int);
@@ -12,16 +21,16 @@ void func_002562A8(TARGET *);
 void SetGoalTarget(void *, TARGET *);
 }
 extern float g_2dded0;
-extern "C" void func_0017C928(GOAL *pgoal, int newState)
+extern "C" void func_0017C928(GOAL_17C928 *pgoal, int newState)
 {
     if (newState == pgoal->state)
         return;
-    Goal_Pop(&pgoal->pchild);
+    Goal_Pop(&((void *)pgoal->pgoalChild));
     pgoal->state = newState;
     pgoal->tState = *(float *)&g_2dded0;
     switch (newState) {
     case 1: {
-        OBJ *pgoto = func_00205438(pgoal->pguard, 0xBA);
+        OBJ *pgoto = func_00205438(((void *)pgoal->pstep), 0xBA);
         QW pos = PosLoWorld((void *)pgoal->target);
         pgoal->pos = pos;
         *(int *)((char *)pgoto + 0xC0) = 1;
@@ -37,7 +46,7 @@ extern "C" void func_0017C928(GOAL *pgoal, int newState)
         break;
     }
     case 2: {
-        OBJ *palert = func_00205438(pgoal->pguard, 0x9E);
+        OBJ *palert = func_00205438(((void *)pgoal->pstep), 0x9E);
         int tgt = pgoal->target;
         *(int *)((char *)palert + 0x3C) = 1;
         *(int *)((char *)palert + 0x38) = tgt;
@@ -46,7 +55,7 @@ extern "C" void func_0017C928(GOAL *pgoal, int newState)
         break;
     }
     case 0: {
-        OBJ *pgoto = func_00205438(pgoal->pguard, 0xBA);
+        OBJ *pgoto = func_00205438(((void *)pgoal->pstep), 0xBA);
         pgoal->pos = PosLoWorld((void *)pgoal->target);
         QW off = ConvertAloPos((void *)pgoal->target, 0, pgoal->offset);
         *(int *)((char *)pgoto + 0xC0) = 1;

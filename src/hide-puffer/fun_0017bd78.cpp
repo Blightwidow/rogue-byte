@@ -1,17 +1,22 @@
 #include "sly2.h"
-struct GOAL { char pad[0x10]; void *pguard; char pad1[4]; GOAL *child; char pad2[0x30 - 0x1C]; int state; char pad3[0xC]; int pick; };
+#include "goal.h"
+struct GOAL_17BD78 : GOAL {
+    int state;
+    char pad_34[0xC];
+    int pick;
+};
 extern "C" {
-void func_001EEF98(GOAL *);
+void func_001EEF98(GOAL_17BD78 *);
 int func_00209098(void *);
-void func_0017B9C0(GOAL *);
-void func_0017B8B0(GOAL *, int);
-int func_001EF0A8(GOAL *);
-int FGoalNoticeDone(GOAL *);
+void func_0017B9C0(GOAL_17BD78 *);
+void func_0017B8B0(GOAL_17BD78 *, int);
+int func_001EF0A8(GOAL_17BD78 *);
+int FGoalNoticeDone(GOAL_17BD78 *);
 }
-void func_0017BD78(GOAL *pgoal)
+void func_0017BD78(GOAL_17BD78 *pgoal)
 {
     func_001EEF98(pgoal);
-    int fCan = func_00209098(pgoal->pguard);
+    int fCan = func_00209098(((void *)pgoal->pstep));
     func_0017B9C0(pgoal);
     while (func_001EF0A8(pgoal) == 0) {
         int nState = pgoal->state;
@@ -26,10 +31,10 @@ void func_0017BD78(GOAL *pgoal)
             if (fCan != 0)
                 func_0017B8B0(pgoal, 2);
             else if (pgoal->pick != 0) {
-                if (pgoal->pick != pgoal->child->state) {
+                if (pgoal->pick != ((GOAL_17BD78 *)pgoal->pgoalChild)->state) {
                     func_0017B8B0(pgoal, -1);
                     func_0017B8B0(pgoal, 1);
-                } else if (FGoalNoticeDone(pgoal->child) != 0)
+                } else if (FGoalNoticeDone(((GOAL_17BD78 *)pgoal->pgoalChild)) != 0)
                     func_0017B8B0(pgoal, 0);
             } else
                 func_0017B8B0(pgoal, 0);

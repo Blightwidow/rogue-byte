@@ -28,7 +28,9 @@ struct STEP : PO {
     /* 0x238 */ f32 field_0x238; /* func_00141588 */
     u8 unknown_0x23C[0xC];
     /* 0x248 */ f32 field_0x248; /* func_00141588 */
-    u8 unknown_0x24C[0x1C];
+    u8 unknown_0x24C[0x14];
+    /* 0x260 */ f32 field_0x260; /* PostGuardLoad (GUARD slot 15) */
+    u8 unknown_0x264[0x4];
     /* 0x268 */ void *pasegDefault; /* the fallback of SetMurrayAnimBase and func_00135D80 (slot 90 of Murray and Bentley) */
     u8 unknown_0x26C[0x4];
     /* 0x270 */ s32 field_0x270; /* UpdateJt (JT slot 16) */
@@ -45,6 +47,7 @@ SLY2_OFFSET_CHECK(STEP, tJump, 0x20C);
 SLY2_OFFSET_CHECK(STEP, field_0x220, 0x220);
 SLY2_OFFSET_CHECK(STEP, field_0x238, 0x238);
 SLY2_OFFSET_CHECK(STEP, field_0x248, 0x248);
+SLY2_OFFSET_CHECK(STEP, field_0x260, 0x260);
 SLY2_OFFSET_CHECK(STEP, pasegDefault, 0x268);
 SLY2_OFFSET_CHECK(STEP, field_0x270, 0x270);
 #endif

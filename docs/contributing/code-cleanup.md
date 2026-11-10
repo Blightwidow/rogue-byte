@@ -21,7 +21,7 @@ added code; they do not fail it, because a local struct stays allowed while no s
 
 | Warning | Prefer |
 | :--- | :--- |
-| A local `struct SO`, `LO`, `BASIC`, `SLOTSO`, `DL`, `DLE`, `DLI`, `XF`, `CRef`, `SW`, `SLOTHEAP`, `ALLOCREQ`, `PO`, `STEP`, `JT`, `SLY`, `MURRAY` or `BENTLEY` | `#include "so.h"` (or `lo.h`, `slotso.h`, `dl.h`, `xf.h`, `cref.h`, `sw.h`, `alloc.h`, `po.h`, `step.h`, `jt.h`, `sly.h`, `murray.h`, `bentley.h`); a missing field goes there with its reader (the rule is at the top of `lo.h`) |
+| A local `struct SO`, `LO`, `BASIC`, `SLOTSO`, `DL`, `DLE`, `DLI`, `XF`, `CRef`, `SW`, `SLOTHEAP`, `ALLOCREQ`, `PO`, `STEP`, `JT`, `SLY`, `MURRAY`, `BENTLEY`, `STEPGUARD` (or `GUARD`) or `GOAL` | `#include "so.h"` (or `lo.h`, `slotso.h`, `dl.h`, `xf.h`, `cref.h`, `sw.h`, `alloc.h`, `po.h`, `step.h`, `jt.h`, `sly.h`, `murray.h`, `bentley.h`, `stepguard.h`, `goal.h`); a missing field goes there with its reader (the rule is at the top of `lo.h`) |
 | A padding member (`char pad[0x10]`, `u8 pad0[4]`) | The shared type from `include/`, with the field added there when it is missing |
 | A cast offset (`*(int *)(base + 0x1404)`, `*(float *)((char *)p + 8)`) | The struct member |
 | A hand-written vtable call (`vt->fn((char *)obj + vt->delta, ...)`) | A `virtual` member function: slot n is declared n-th in `lo.h`/`so.h` (it matches) |

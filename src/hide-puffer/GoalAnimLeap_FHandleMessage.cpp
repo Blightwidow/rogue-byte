@@ -1,24 +1,32 @@
 #include "sly2.h"
-struct GOAL { char pad0[0x10]; char *guard; char pad1[0x40 - 0x14]; char *animref; char pad2[0x50 - 0x44]; int state; int pad54; int hits; };
+#include "goal.h"
+struct GOAL_17AF30 : GOAL {
+    char pad_30[0x10];
+    char *animref;
+    char pad_44[0xC];
+    int state;
+    char pad_54[0x4];
+    int hits;
+};
 struct VT { char pad[0x198]; short delta; short index; void (*fn)(void *, void *); };
 struct OBJ { char pad[0xC]; VT *vptr; };
 extern "C" char B_003DD490;
 extern "C" int D_002BE6D0[];
 extern "C" int D_002BE6E8[];
-extern "C" int GoalAnim_FHandleMessage(GOAL *, int, int *);
+extern "C" int GoalAnim_FHandleMessage(GOAL_17AF30 *, int, int *);
 extern "C" void *func_00209518(void *);
 extern "C" int FDoneAnimref(void *);
 extern "C" void StopAnimref(void *);
 extern "C" void StartAnimref(void *, void *, unsigned, float);
 extern "C" float *PeaFindAsegLabel(void *, int);
 extern "C" void SeekAsega(void *, int, float, float);
-extern "C" void GoalAnimLeap_SetState(GOAL *, int);
+extern "C" void GoalAnimLeap_SetState(GOAL_17AF30 *, int);
 extern "C" OBJ *PloFindSwObject_thunk(void *, int, int, int);
 extern "C" void PhitfxSpawn(void *, QW, void *);
 extern "C" QW PosLoWorld(void *);
 // StartAnimref takes (void *, void *, unsigned, float) with the float last, as in GoalAnim_SetState; the draft put the float first, which
 // moved the mtc1 and a lw before the other argument loads (score 4). No temporaries: the arguments are computed inline.
-extern "C" int GoalAnimLeap_FHandleMessage(GOAL *goal, int message, int *data)
+extern "C" int GoalAnimLeap_FHandleMessage(GOAL_17AF30 *goal, int message, int *data)
 {
     int hits, index, total;
     float seek;
@@ -49,7 +57,7 @@ extern "C" int GoalAnimLeap_FHandleMessage(GOAL *goal, int message, int *data)
         return 0;
     if (FDoneAnimref(goal->animref)) {
         StopAnimref(goal->animref);
-        StartAnimref(goal->animref, goal->guard, *(unsigned *)(goal->animref + 0xC) | 1, 0.0f);
+        StartAnimref(goal->animref, ((char *)goal->pstep), *(unsigned *)(goal->animref + 0xC) | 1, 0.0f);
     }
     hits = goal->hits + 1;
     goal->hits = hits;
@@ -71,12 +79,12 @@ extern "C" int GoalAnimLeap_FHandleMessage(GOAL *goal, int message, int *data)
         int packet[16];
         memset(packet, 0, 0x40);
         packet[0] = 5;
-        *(QW *)((char *)packet + 0x20) = PosLoWorld(goal->guard);
+        *(QW *)((char *)packet + 0x20) = PosLoWorld(((char *)goal->pstep));
         effect->vptr->fn((char *)effect + effect->vptr->delta, packet);
     }
-    total = *(int *)(goal->guard + 0x33C) + data[4];
-    *(int *)(goal->guard + 0x33C) = total > 4 ? total : 5;
-    PhitfxSpawn(*(void **)(&B_003DD490 + 0x4028), PosLoWorld(goal->guard), goal->guard);
+    total = *(int *)(((char *)goal->pstep) + 0x33C) + data[4];
+    *(int *)(((char *)goal->pstep) + 0x33C) = total > 4 ? total : 5;
+    PhitfxSpawn(*(void **)(&B_003DD490 + 0x4028), PosLoWorld(((char *)goal->pstep)), ((char *)goal->pstep));
     return 1;
 zero:
     return 0;

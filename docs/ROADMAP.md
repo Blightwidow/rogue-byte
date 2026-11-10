@@ -180,6 +180,14 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `FCanUseGadget`). 9 still declare a local copy: single readers (0x1AD0, 0x16D8), hand-written vtable calls on Bentley or
      on the carried object, layouts the converter cannot read (a union, `SetMurrayLiftState`), and one whose field at 0x150
      contradicts `PO`'s controller.
+   - Guards and goals (2026-11-10): `include/stepguard.h` (`STEPGUARD`, class 56, 0x1010 bytes, Sly 1's name; derived from
+     `STEP`, no vtable of its own like `JT`) and `include/goal.h` (`GOAL`, class 155, 0x30 bytes, the root's other branch).
+     `STEPGUARD`'s methods are the slot functions its eleven subclasses (57 to 67) share and `STEP` does not; it adds slots 88
+     and 89. `GOAL`'s own methods prove its actor at 0x10 (a `STEP`: `Goal_FillVjoy` reads its heading) and its child at 0x18.
+     14 sources moved to `STEPGUARD` (`PostGuardLoad`, `OnGuardAdd` and `UpdateGuard` among them, with virtual calls) and 43 to
+     `GOAL`: a local goal layout becomes a local subclass, `struct GOAL_<address> : GOAL`, keeping its fields from 0x30 until
+     the subclasses (GoalBrain, GoalAnim, GoalHit and about fifty more) get headers. 10 unmatched drafts moved at their scores.
+     48 local guard layouts remain: most belong to functions no method or second reader confirms yet.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

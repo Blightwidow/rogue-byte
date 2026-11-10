@@ -155,11 +155,14 @@ class CleanupTests(unittest.TestCase):
     def test_warns_on_local_bentley(self):
         self.assertEqual(len(self.warnings_for('struct BENTLEY { int state; };')), 1)
 
+    def test_warns_on_local_goal(self):
+        self.assertEqual(len(self.warnings_for('struct GOAL { int state; };')), 1)
+
     def test_shared_header_may_define_so(self):
         self.assertEqual(check_cleanup.warn_lines({'include/so.h': [(1, 'struct SO {')]}), [])
 
     def test_warns_on_padding_member(self):
-        self.assertEqual(len(self.warnings_for('struct GOAL { char pad0[0x58]; XF *pxf; };')), 1)
+        self.assertEqual(len(self.warnings_for('struct TARGET { char pad0[0x58]; XF *pxf; };')), 1)
 
     def test_warns_on_cast_offset(self):
         self.assertEqual(len(self.warnings_for('    *(float *)(base + 0x1434) = g_2dded0;')), 1)

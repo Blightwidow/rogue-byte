@@ -3,18 +3,23 @@ struct PZ { char pad[0x10]; void *zone; };
 struct OWN { char pad0[0xDC]; PZ *pz; };
 struct CRV { char pad[0xE8]; int count; char pad1[0xF4 - 0xEC]; QW *nodes; };
 struct JT { char pad0[0xE8]; OWN *own; char pad1[0x294 - 0xEC]; CRV *crv; };
-struct GOAL { char pad0[0x10]; JT *jt; char pad1[4]; GOAL *child; char pad2[0x30 - 0x1C]; int fSimple; char pad3[0x40 - 0x34]; QW posGoal; };
+#include "goal.h"
+struct GOAL_144F48 : GOAL {
+    int fSimple;
+    char pad_34[0xC];
+    QW posGoal;
+};
 extern "C" QW PosLoWorld(JT *);
 extern "C" void FFindPathzoneCrv(void *, QW, QW, CRV *);
 extern "C" void MeasureCrv(CRV *);
-extern "C" void GoalFollowCrv_SetCrv(GOAL *, CRV *, int);
+extern "C" void GoalFollowCrv_SetCrv(GOAL_144F48 *, CRV *, int);
 
-void GoalGotoPos_SetPos(GOAL *goal, QW posGoal)
+void GoalGotoPos_SetPos(GOAL_144F48 *goal, QW posGoal)
 {
     goal->posGoal = posGoal;
-    if (goal->child == 0)
+    if (((GOAL_144F48 *)goal->pgoalChild) == 0)
         return;
-    JT *jt = goal->jt;
+    JT *jt = ((JT *)goal->pstep);
     CRV *crv = jt->crv;
     PZ *pz = 0;
     if (jt->own)
@@ -32,5 +37,5 @@ void GoalGotoPos_SetPos(GOAL *goal, QW posGoal)
     } else {
         FFindPathzoneCrv(zone, posOwner, goal->posGoal, crv);
     }
-    GoalFollowCrv_SetCrv(goal->child, crv, 0);
+    GoalFollowCrv_SetCrv(((GOAL_144F48 *)goal->pgoalChild), crv, 0);
 }

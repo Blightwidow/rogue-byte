@@ -1,6 +1,15 @@
 #include "sly2.h"
 struct CRV { char pad[0xE4]; int closed; char pad2[0x180 - 0xE8]; void *ranges; };
-struct GOAL { char pad[0x10]; void *pguard; char pad1[4]; void *child; char pad2[0x30 - 0x1C]; CRV *crv; int fwd; float s; char pad3[0x40 - 0x3C]; QW pos; char pad4[0x58 - 0x50]; int param; };
+#include "goal.h"
+struct GOAL_17ECF0 : GOAL {
+    CRV *crv;
+    int fwd;
+    float s;
+    char pad_3C[0x4];
+    QW pos;
+    char pad_50[0x8];
+    int param;
+};
 struct TARGET { int a[4]; QW pos; };
 extern float D_FLT_002BE7BC;
 extern float D_FLT_002BE7C0;
@@ -16,10 +25,10 @@ void GetPathPosFromS(CRV *, QW *, void *, float);
 void func_002562A8(TARGET *);
 void SetGoalTarget(void *, TARGET *);
 }
-extern "C" void func_0017ECF0(GOAL *pgoal, int force)
+extern "C" void func_0017ECF0(GOAL_17ECF0 *pgoal, int force)
 {
     float step;
-    if (FIsBasicDerivedFrom(pgoal->pguard, 0x3A) != 0)
+    if (FIsBasicDerivedFrom(((void *)pgoal->pstep), 0x3A) != 0)
         step = D_FLT_002BE7BC;
     else
         step = D_FLT_002BE7C0;
@@ -55,7 +64,7 @@ extern "C" void func_0017ECF0(GOAL *pgoal, int force)
     }
     pgoal->s = snew;
     GetPathPosFromS(pgoal->crv, &pgoal->pos, 0, snew);
-    void *child = pgoal->child;
+    void *child = ((void *)pgoal->pgoalChild);
     TARGET t;
     func_002562A8(&t);
     t.pos = pgoal->pos;

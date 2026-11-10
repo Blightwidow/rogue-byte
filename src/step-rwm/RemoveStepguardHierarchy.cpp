@@ -1,3 +1,4 @@
+#include "stepguard.h"
 #include "types.h"
 typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
 #define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
@@ -9,10 +10,10 @@ void func_001F3E00();
 extern M2C_UNK B_003E1444;
 extern f32 g_2dded0;
 
-void RemoveStepguardHierarchy(void *arg0) {
+void RemoveStepguardHierarchy(STEPGUARD *arg0) {
     func_001F3E00();
     RemoveDlEntry(&B_003E1444, arg0);
-    M2C_FIELD(arg0, f32 *, 0xFF8) = (f32) g_2dded0;
+    arg0->field_0xFF8 = (f32) g_2dded0;
 }
 
 }
