@@ -1,6 +1,6 @@
-extern "C" void ClearDl__FP2DL(void* arg0)
+#include "dl.h"
+extern "C" void ClearDl__FP2DL(DL *pdl)
 {
-    int* p = (int*)arg0;
-    p[1] = 0;
-    p[0] = 0;
+    pdl->tail = 0;
+    pdl->head = 0;
 }

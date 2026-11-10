@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct SW;
-struct SO { char pad[0x148]; unsigned long grfso; };
+#include "so.h"
 struct XA { int unk0; SO *so; XA *nextSo; XA *next; };
 extern char B_003DD490[];
 void RemoveSoXa(SO *, XA *);

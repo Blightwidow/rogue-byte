@@ -1,4 +1,4 @@
-struct DL { void *pfirst; void *plast; int ibDle; };
+#include "dl.h"
 struct SVT { char pad0[8]; short d8; short i8; void (*fn8)(char *); short d10; short i10; void (*fn10)(char *); };
 struct SEQNODE { char pad0[0xC]; SVT *vt; char pad1[0x14 - 0x10]; char *powner; char pad2[0x9C - 0x18]; int fCamMove; };
 struct SeqnodeScope {

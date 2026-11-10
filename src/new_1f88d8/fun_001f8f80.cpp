@@ -1,6 +1,6 @@
-struct XF { char pad[0x98]; short kind; };
+#include "xf.h"
 struct PHYS { char pad[0xA0]; int ctTorque; char pad2[0xC0 - 0xA4]; int ctForce; };
-struct SO { char pad[0x58]; XF *pxfLinear; XF *pxfAngular; char pad1[0xE8 - 0x60]; PHYS *pphys; char pad2[0x148 - 0xEC]; unsigned long grfso; };
+#include "so.h"
 struct NODE { char pad[0x40]; NODE *pnext; char pad1[0x60 - 0x44]; SO *pso; };
 struct SW { char pad[0x3D1C]; NODE *plist; };
 int FXfKindStatic(int);

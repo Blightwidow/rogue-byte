@@ -1,10 +1,8 @@
 #include "sly2.h"
-struct DL { char *first; char *last; int offset; };
-struct DLI { DL *list; char *current; int offset; DLI *next; };
+#include "dl.h"
 struct RIPG { char pad[0x10]; int parent; char pad1[0xEC - 0x14]; int poxa; char pad2[0x15C - 0xF0]; DL rips; };
 struct SW { char pad[0x403C]; char slotheap[1]; };
 struct SWX { char pad[0x406C]; RIPG *group; };
-extern DLI *g_2dd2fc;
 extern SWX B_003DD490;
 extern "C" void RemoveRip(char *);
 extern "C" void RemoveSoLoHierarchy(RIPG *);
@@ -15,34 +13,13 @@ extern "C" void *PdlFromSwCid(SWX *, int);
 extern "C" void RemoveSlEntry(void *, RIPG *);
 extern "C" void FreeSlotheapPv(void *, RIPG *);
 
-inline void PushDli(DLI *it, DL *list)
-{
-    it->list = list;
-    it->current = (char *)list;
-    it->offset = list->offset;
-    it->next = g_2dd2fc;
-    g_2dd2fc = it;
-}
-inline char *PvFirst(DLI *it)
-{
-    char *item = it->list->first;
-    int offset = it->offset;
-    it->current = item + offset;
-    return item;
-}
-inline char *PvStep(DLI *it)
-{
-    char *item = *(char **)it->current;
-    it->current = item + it->offset;
-    return item;
-}
 
 void OnRipgRemove(RIPG *ripg)
 {
     DLI iterator;
     PushDli(&iterator, &ripg->rips);
     char *item;
-    for (item = PvStep(&iterator); item != 0; item = PvStep(&iterator))
+    for (item = (char *)PvStep(&iterator); item != 0; item = (char *)PvStep(&iterator))
         RemoveRip(item);
     if (ripg == B_003DD490.group)
         B_003DD490.group = 0;
@@ -56,5 +33,5 @@ void OnRipgRemove(RIPG *ripg)
     if (ripg->parent == 0)
         func_001A53E0(ripg);
     FreeSlotheapPv((char *)&B_003DD490 + 0x403C, ripg);
-    g_2dd2fc = iterator.next;
+    PopDli(&iterator);
 }

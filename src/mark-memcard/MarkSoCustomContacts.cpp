@@ -11,11 +11,7 @@ struct MQ {
     MQ *pmqNext;
     char padB0[0xC0 - 0xB0];
 } __attribute__((aligned(16)));
-struct VT {
-    char pad[0x1E0];
-    short delta; short index; void (*fn)(void *, void *, int, void *, void *, void *);
-};
-struct SO { char pad[0xC]; VT *vt; };
+#include "so.h"
 struct GEOM { char pad[0x18]; int grftak; };
 struct OXA { char pad[0x60]; SO *pso; char pad2[0x6C - 0x64]; MQ *pmqAbsorbed; };
 extern "C" {
@@ -29,7 +25,7 @@ extern "C" void MarkSoCustomContacts(char *psw, OXA *poxaRoot, OXA *poxaOwner, G
     void *ptarget = ppxpFirst;
     if (pgeom->grftak) ptarget = &pmqLocal;
     SO *pso = poxaRoot->pso;
-    pso->vt->fn((char *)pso + pso->vt->delta, pgeom, cbsp, absp, pbspLast, ptarget);
+    pso->Slot60(pgeom, cbsp, absp, pbspLast, ptarget);
     if (pmqLocal == 0) return;
     for (MQ *pmq = pmqLocal; pmq != 0; pmq = pmq->pmqNext) {
         int other = (GEOM *)pmq->pgeomXp0 != pgeom;

@@ -1,8 +1,8 @@
-struct DL { int first; int last; int ib; };
-extern "C" int CPvDl__FP2DL(DL *list)
+#include "dl.h"
+extern "C" int CPvDl__FP2DL(DL *pdl)
 {
     int count = 0;
-    for (char *pv = (char *)list->first; pv != 0; pv = *(char **)(pv + list->ib))
+    for (void *pv = pdl->head; pv != 0; pv = ((DLE *)((char *)pv + pdl->ibDle))->next)
         count++;
     return count;
 }

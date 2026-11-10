@@ -1,11 +1,11 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 static inline CRef *SetBoolRef(CRef *pref, int fValue)
 {
-    pref->n = fValue;
-    pref->tagk = 0x17;
+    pref->m_tag.m_n = fValue;
+    pref->m_tagk = TAGK_Bool;
     return pref;
 }
 extern "C" CRef *func_001209D0(CRef *prefReturn, int cref, CRef *aref)
 {
-    return SetBoolRef(prefReturn, aref->tagk == 0x21 && aref->n == 0);
+    return SetBoolRef(prefReturn, aref->m_tagk == TAGK_Basic && aref->m_tag.m_n == 0);
 }

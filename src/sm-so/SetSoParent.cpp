@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct XFN { char pad0[0x40]; MATRIX4 mat; char pad80[0x20]; XFN *next; };
+#include "xf.h"
 struct PARENT { char pad0[0x50]; int count; int base; char pad58[0xF0]; unsigned long grf; };
 struct SO;
 struct VE8 { char pad[0xE8]; short d; short i; void (*f)(void *, QW); };
@@ -8,7 +8,7 @@ struct V108 { char pad[0x108]; short d; short i; QW (*f)(void *); };
 struct V110 { char pad[0x110]; short d; short i; QW (*f)(void *); };
 struct V118 { char pad[0x118]; short d; short i; void (*f)(void *, QW); };
 struct V120 { char pad[0x120]; short d; short i; void (*f)(void *, QW); };
-struct SO { char pad0[0xC]; char *vt; PARENT *owner; char pad14[0x14]; unsigned long grf; char pad30[0x20]; int count; char *items; char pad58[8]; XFN *xf; };
+struct SO { char pad0[0xC]; char *vt; PARENT *owner; char pad14[0x14]; unsigned long grf; char pad30[0x20]; int count; char *items; char pad58[8]; XF *xf; };
 extern "C" {
 void SetLoParent(SO *, SO *, int, int);
 void UpdateAloXfWorld(SO *);
@@ -27,7 +27,7 @@ void SetSoParent(SO *self, SO *newParent, int arg2, int arg3)
             mat = *(MATRIX4 *)((char *)self->xf + 0x40);
         } else {
             memset(&mat, 0, 0x40);
-            XFN *node = self->xf;
+            XF *node = self->xf;
             mat.mat[3][3] = 1.0f; //P
             mat.mat[2][2] = 1.0f; //P
             mat.mat[1][1] = 1.0f; //P
@@ -35,9 +35,9 @@ void SetSoParent(SO *self, SO *newParent, int arg2, int arg3)
             if (node != 0) {
                 do {
                     MATRIX4 product;
-                    __ml__FRC7MATRIX4T0(&product, node, &mat);
+                    __ml__FRC7MATRIX4T0(&product, &node->mat, &mat);
                     mat = product;
-                    node = node->next;
+                    node = node->pxfParent;
                 } while (node != 0);
             }
         }

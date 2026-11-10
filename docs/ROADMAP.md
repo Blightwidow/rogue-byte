@@ -56,11 +56,81 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      ee-gcc `sizeof(long)` is 8 and `sizeof(long long)` 16, and `long long` arithmetic fails ("unsupported wide integer operation");
      none of the 252 sources that declared `s64` as `long long` used it. `make elf` byte for byte, objdiff report unchanged.
      `make cleanup` fails on a new local fixed-width typedef in `src/`; `harvest.py` drafts include `types.h`.
-   - Start from the recovered layouts (`config/recovered/sly2_structs.h`, 157 structs, unverified) and the padded copies in `src/`;
-     a field enters the shared header when a matched function's code shows its offset and type.
-   - Pilot: one widely used class (`XF` or `SO`), its header with `static_assert` offset and `sizeof` checks (PS2 build only), then
-     the matched functions that declare it moved over and re-proved with `make elf` and `make unit`. Measure the cost per file
-     before converting the rest.
+   - A field enters a shared header when at least two matched functions read it at the same offset with the same type; the
+     recovered layouts (`config/recovered/sly2_structs.h`) are mostly `field_0x...` gaps and Sly 1's offsets do not carry over, so
+     the evidence is our own matched code. A local struct's name does not identify a class: the 28 local `XF` bodies describe at
+     least five different types (a 2D transform of six floats, an object with an act list at 0x90, one with a kind at 0x98...).
+   - Pilot done 2026-11-09: `include/so.h`, first a flat view (now the class below) of `SO`'s first 0x150 bytes with the nine fields two or more functions agree
+     on (`psoParent` 0x10, `proot` 0x14, `grfo` 0x28, `pxfLinear`/`pxfAngular`/`pxfRoot` 0x58-0x60, `pphys` 0xE8, `poxa` 0xEC, `grfso`
+     0x148), the unknown gaps named by offset, and offset checks the PS2 build enforces (a negative array size on a moved field;
+     gcc 2.95 has no `static_assert`). 21 of the 72 files that declared their own `SO` moved over (20 per-function sources, one
+     whole file): drop the local struct, include `so.h`, rename 0 to 3 fields. All 21 score 0 again (`try.py`, `make unit`), `make elf`
+     PASS, reports unchanged. Cost: one scripted pass and one hand fix (a same-named field of another struct), two compiles per file.
+   - Classes and virtuals done 2026-11-09: `include/lo.h` (`BASIC`, `LO`) and `include/so.h` (`SO : LO`) are real C++ classes.
+     Retail's class table (0x2BAAE8, `config/recovered/class_diff.tsv`) names them by their vtables: class 2 (0x50 bytes, 48 slots:
+     `InitLo`, `SetLoParent`, `UpdateLo`...) is `LO`, class 48 (0x150 bytes, 75 slots: `InitSo`, `UpdateSo`, `ProjectSoTransform`...) is
+     `SO`; Sly 2 has no separate `ALO` level. g++ 2.95 puts the vtable pointer after the own fields of the first class with a virtual
+     (measured: `struct LO : BASIC { virtual...; char lo[0x40]; }` puts it at 0x4C), so retail's pointer at 0xC makes the root class
+     (class 0, 0x10 bytes) 0xC bytes of fields plus the pointer; class 155, the other branch from the root, shares slots 1, 2, 4 and 5
+     with `LO`, so slots 1 to 6 are the root's. An entry is 8 bytes (delta, index, function) and slot n sits at 8 * n, so the 75
+     virtuals are declared in slot order, named after the function retail puts there (`Slot<n>` while unnamed), with a signature only
+     where a matched caller shows it. A real virtual call compiles to retail's sequence (`lw` vptr, `lh` delta, `lw` function, `jalr`,
+     `addu` in the delay slot): 15 matched functions now call through `pso->FIsLocked()`, `pso->Remove()`, `attached->SetParent(...)`
+     instead of `vt->fn((char *)pso + vt->delta)`, all scoring 0. The PS2 build checks `sizeof` (0x10, 0x50, 0x150) and every offset.
+   - Fields added by the same two-reader rule: `cgeom`/`ageom` 0xE0/0xE4 (two files call the element `GEOM`, two `PART`: one array
+     of 0xB0-byte elements, named `GEOM`), `uFade`/`duFade` 0x12C/0x130. The 0xEC conflict resolved: the two files that read
+     `pphys` at 0xEC read `pcontact` at +0x6C of the object, next to `owner` +0x60, `first` +0x64 and `pmqList` +0x68 of the
+     `poxa` readers: one `OXA`, misnamed.
+   - Derived classes and children (2026-11-09): every function was mapped to the classes whose vtable holds it, which ties a matched
+     function to its class without trusting local names. `include/slotso.h`: `SLOTSO`, class 96 (0x250 bytes, derived from `SO`:
+     `UpdateSlotSo` is its slot 16, `AccelSlotSoRotation` 70, `FAbsorbSlotSoWkr` 75); 3 of its files moved, two of them with virtual
+     calls on the derived object (slots 29 and 31). The child list: `SO::ploChildFirst` 0x64 and `LO::ploNext` 0x24, walked by three
+     matched functions that call their own slot on each child (slots 20, 26, 27, recursive virtuals). A field needs one reader when
+     the reader is a method of the class, two when the class is only guessed from a local name, and never contradicts another
+     reader (the rule is at the top of `include/lo.h`).
+   - `DL` (2026-11-09): `include/dl.h` holds `DL`, `DLE` and `DLI`, named after Sly 1's decomp (CC0) and laid out from Sly 2's own
+     code; retail's mangled `InitDl__FP2DLi` and `ClearDle__FP3DLE` show the types existed. The whole `dl` module (`InitDl` to
+     `CPvDl`, 10 functions) now compiles from them, and so does the iterator helper five functions had copied word for word
+     (`PushDli`, `PvFirst`, `PvStep`, `PopDli` around the iterator list `g_2dd2fc` that `RemoveDlEntry` fixes up), now one inline set
+     in the header. `SO::dlChild` (0x64) is a `DL`, which brought `InitSo` over. The children's link at 0x24 is not declared as a
+     `DLE`: its `prev` would be 0x28, where retail reads `grfo` with `ld` (noted in `lo.h`). 15 of the 16 files with their own `DL`
+     moved (`CloseFrame` defines its own `QW`).
+   - `XF` (2026-11-09): `include/xf.h`, 0x100 bytes (`func_00131B60` walks `ALO::axf` in steps of 0x100). Not in the class table.
+     Every field comes from functions that certainly hold an `XF` (through `SO::pxf*`, `ACT::pxf`, `SO` slot 51, `SetXfKind`'s
+     argument, or an `*Xf*` name). The matrices settled: Sly 1 splits each into `MATRIX3` + `VECTOR`; Sly 2's readers treat
+     `mat` (0x00) and `matWorld` (0x40) as one 4x4 `MATRIX4` each, row 3 being the position (`TranslateSoToPos` copies them with
+     quadword moves and writes row 3; `GetActvalPositionGoal` and `GetSoCpdefi` read rows 3 as quadwords). The shared `MATRIX4`
+     gained a quadword view of its rows (`union { float mat[4][4]; QW row[4]; }`): all 21 of its users stay byte for byte.
+     Then the act list 0x90, `dof` 0x94, `kind` 0x98 (signed; `SleepXf` matches with it too), `id` 0x9C, `pxfParent` 0xA0
+     (`Mount_SetState` and `func_0017ABC8` had it as an `int` passed to `ConvertXf*`), `generation` 0xA4, `vel` 0xB0, `posGoal`
+     0xC0, `velGoal` 0xD0, `accel` 0xF0. 0xA8 is a union by kind: a moving `XF` keeps its arrival time there
+     (`GetActvalPositionGoal`, `func_001C8918`), a mirrored one its `XFMIRROR` (`LoadXfMirrors`). 28 functions moved, two of
+     them inside whole files; one raw-offset cast went (`TranslateSoToPos`). The 5 local `XF`s left are other types the workers
+     also called `XF`: a 2D transform of six floats, and the segment type of `aseg`/`asega` (floats at 0x80, 0x84, pointers at
+     0x88, 0x8C, a short at 0x9A).
+   - `CRef` (2026-11-09): `include/cref.h`, Splice's script value, the most copied local type (456 files). Sly 1's names (`m_tagk`,
+     the `TAG` union); Sly 2's size, 8 bytes (`func_001239D8` reads `aref[1]` at 0x8); Sly 2's own tag values, each read from the
+     setter that writes it (`TAGK_S32` 0x15 ... `TAGK_Method` 0x22, `TAGK_Void` 0x24; the order is not Sly 1's). 304 of the copies
+     were generated Splice bindings with a 16-byte `CRef` inside a frame struct (`struct L { ...; int pad[2]; CRef ref; int a; }`):
+     padding that only sized the frame, which the matching rules do not allow, around explicit calls to the copy constructor and
+     the cleanup. Retail shows `CRef`'s special members: no default-constructor call, an out-of-line copy constructor (0x1291A8)
+     used to return a `CRef` by value, and an inline destructor calling `Decref` (0x129EC8) with `this` alone (an out-of-line one
+     would also pass g++'s in-charge flag, which retail's calls lack). With those members 244 bindings are real C++: they return
+     a `CRef` by value, discard `RefSetArgsFromSplice`'s result and let the compiler insert the copies and cleanups, and they
+     match (`config/matching/symbol_addrs.txt` gains the members' mangled names for the scorer's call check). 9 more set their
+     result with a setter (`CRef ref = RefSetArgsFromSplice(...); ref.SetBasic(...); return ref;`), which schedules as retail only
+     when the setters return `CRef &` (retail's setters end with `return this`). 6 hand-written sources read a returned `CRef`
+     as a temporary (`RefGetGameSaveValue(key, ...).m_tag.m_n`), the compiler's cleanup replacing their explicit one. With the
+     36 sources that only take `CRef` pointers: 295 files. Still local (195 files): bindings outside the templates, 39 bindings
+     whose result `CRef` sits between their other locals (retail's frame keeps its address in a saved register; a plain
+     initializer cannot place it there), and hand-written sources with other cleanup patterns; each needs its calls rewritten as
+     the compiler's.
+   - Status: 46 of the 72 files that declared their own `SO` use the shared classes, and 20 hand-written vtable calls are real
+     virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
+     `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float
+     constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
+     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `CRef`'s special members
+     (the 46 sources and the 39 bindings), the class table's other families, and the `aseg` segment type.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

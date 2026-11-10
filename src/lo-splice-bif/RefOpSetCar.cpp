@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CFrame;
 extern "C" CRef *RefOpSetCarOrCdr(CRef *, int, CRef *, CFrame *, int);
 extern "C" CRef *RefOpSetCar(CRef *prefReturn, int carg, CRef *aref, CFrame *pframe)

@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct ACT { int kind; char pad4[8]; int priority; ACT *next; };
-struct XF { char pad[0x90]; ACT *first; };
+#include "xf.h"
 struct XFREF { char pad[0x20]; int alo; XF *xf; };
 extern "C" void RemoveXfAct(int, XF *, ACT *);
 extern "C" void FreeAct(ACT *);
@@ -10,7 +10,7 @@ extern "C" void WakeXf(int, XF *);
 
 ACT *func_001F8910(XFREF *ref, int kind, int xfk, int priority)
 {
-    ACT *act = ref->xf->first;
+    ACT *act = ref->xf->pactFirst;
     if (act) {
         do {
             if (act->kind == kind) {
@@ -23,7 +23,7 @@ ACT *func_001F8910(XFREF *ref, int kind, int xfk, int priority)
                     act->priority = priority;
                     ResortXfActList(ref->alo, ref->xf);
                 }
-                if (act == ref->xf->first) {
+                if (act == ref->xf->pactFirst) {
                     SetXfKind(ref->alo, ref->xf, xfk);
                     WakeXf(ref->alo, ref->xf);
                 }

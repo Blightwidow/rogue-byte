@@ -1,4 +1,4 @@
-struct DL { void *pfirst; void *plast; int ibDle; };
+#include "dl.h"
 struct SVT { char pad0[8]; short d8; short i8; void (*fn8)(char *); };
 struct OWNER { char pad[0x50]; int crec; char *arec; };
 struct SEQNODE {

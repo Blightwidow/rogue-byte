@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CPair { int field0; int field4; CRef ref; CPair *next; };
 struct CFrame;
 extern "C" {
@@ -26,7 +26,7 @@ void RefEvalApply(CRef *, CPair *, CFrame *);
 // A `goto copy` form scored 5.
 extern "C" CRef *RefEval(CRef *pref, CPair *ppair, CFrame *pframe)
 {
-    switch (ppair->ref.tagk) {
+    switch (ppair->ref.m_tagk) {
     default:
         CRef_CopyConstruct(pref, &ppair->ref);
         break;
@@ -34,8 +34,8 @@ extern "C" CRef *RefEval(CRef *pref, CPair *ppair, CFrame *pframe)
         RefEvalSymbol(pref, ppair, pframe);
         break;
     case 0x1F: {
-        CPair *head = (CPair *)ppair->ref.n;
-        switch (head->ref.tagk) {
+        CPair *head = (CPair *)ppair->ref.m_tag.m_n;
+        switch (head->ref.m_tagk) {
         case 1:
             RefEvalSet(pref, ppair, pframe);
             break;

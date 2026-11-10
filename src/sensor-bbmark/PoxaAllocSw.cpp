@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct SO { char pad[0x14]; int proot; };
+#include "so.h"
 struct OBR { int obrf; void *poxa; void *ps; };
 struct POXA { char pad0[0x10]; float gMin[3]; char pad1[0x34 - 0x1C]; char dl[0x2C]; void *pso; };
 struct SW { char pad0[0x2C]; char dlRoots[0x3CD0 - 0x2C]; int cobr; OBR *aobr[3]; char pad1[0x3CE0 - 0x3CE0 + 0]; };

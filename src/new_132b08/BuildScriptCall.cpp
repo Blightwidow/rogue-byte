@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 struct CPair { int cref; int pad4; CRef ref; CPair *next; };
 struct SLOTHEAP;
 extern "C" {
@@ -19,14 +19,14 @@ extern "C" CPair **BuildScriptCall(CPair **ppairOut, void *pbasic, unsigned oid,
     CPair *handle;
     PairHandle_Init(&handle, PpairNew());
     bevy_splice_value_list_ref(&handle->ref, PpairNew());
-    CPair *list = (CPair *)handle->ref.n;
+    CPair *list = (CPair *)handle->ref.m_tag.m_n;
     CRef_SetSymid(&list->ref, oid);
     CPair *created = PpairNew();
     PairHandle_Assign(&list->next, created);
     CPair *object = list->next;
     CRef_SetBasic(&object->ref, pbasic);
-    if (prefArgs != 0 && prefArgs->tagk != 0)
-        PairHandle_Assign(&object->next, (CPair *)prefArgs->n);
+    if (prefArgs != 0 && prefArgs->m_tagk != 0)
+        PairHandle_Assign(&object->next, (CPair *)prefArgs->m_tag.m_n);
     PairHandle_Init(ppairOut, handle);
     CPair *ppair = handle;
     if (ppair != 0) {

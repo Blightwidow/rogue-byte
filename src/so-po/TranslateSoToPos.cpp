@@ -1,18 +1,15 @@
 #include "sly2.h"
-struct M4 { QW row[4]; };
-struct VT { char pad[0x90]; short delta; short index; void (*fn)(void *); };
-struct XF { char pad0[0x30]; QW rowLocal3; char pad1[0x40 - 0x40]; };
-struct XFN { M4 local; M4 world; char pad[0xA4 - 0x80]; int generation; };
+#include "xf.h"
 struct G_1F40A0 { char pad[0x3D58]; int counter; };
 extern G_1F40A0 B_003DD490;
 struct PHYS { char pad[0xDC]; int link; };
-struct SO { char pad0[0xC]; VT *vt; char pad1[0x58 - 0x10]; XFN *plinear; int pad2; XFN *proot; char pad3[0xE8 - 0x64]; PHYS *pphys; };
+#include "so.h"
 extern "C" {
-void InvertMatrix4Affine(M4 *, M4 *);
-void __ml__FRC7MATRIX4T0(M4 *, const M4 *, const M4 *);
+void InvertMatrix4Affine(MATRIX4 *, MATRIX4 *);
+void __ml__FRC7MATRIX4T0(MATRIX4 *, const MATRIX4 *, const MATRIX4 *);
 void *__as__6VECTORG9VU_VECTOR(void *, QW);
 void DiscardSoXps(SO *);
-void WakeXf(SO *, XFN *);
+void WakeXf(SO *, XF *);
 void func_001F3900(SO *);
 QW PosLoWorld(SO *);
 void *PpathzoneFindPos(QW, int);
@@ -20,10 +17,10 @@ void func_001F37C8(SO *, void *);
 }
 extern "C" void TranslateSoToPos(SO *pso, QW pos)
 {
-    if (pso->plinear == 0)
+    if (pso->pxfLinear == 0)
         return;
-    struct LOCALS { M4 target, rootInLinear, parent, a, b, c, d, e; } l;
-    M4 *pworld = &pso->proot->world;
+    struct LOCALS { MATRIX4 target, rootInLinear, parent, a, b, c, d, e; } l;
+    MATRIX4 *pworld = &pso->pxfRoot->matWorld;
     __as__6VECTORG9VU_VECTOR(&l.target.row[3], pos);
     l.target.row[0] = pworld->row[0];
     l.target.row[1] = pworld->row[1];
@@ -32,13 +29,13 @@ extern "C" void TranslateSoToPos(SO *pso, QW pos)
     ((float *)&l.target)[11] = 0;
     ((float *)&l.target)[3] = 0;
     ((float *)&l.target)[15] = 1.0f;
-    M4 *pa = &l.a;
-    InvertMatrix4Affine(&l.b, &pso->plinear->world);
-    __ml__FRC7MATRIX4T0(pa, &l.b, &pso->proot->world);
+    MATRIX4 *pa = &l.a;
+    InvertMatrix4Affine(&l.b, &pso->pxfLinear->matWorld);
+    __ml__FRC7MATRIX4T0(pa, &l.b, &pso->pxfRoot->matWorld);
     l.rootInLinear = l.a;
-    XFN *pparent = *(XFN **)((char *)pso->plinear + 0xA0);
+    XF *pparent = pso->pxfLinear->pxfParent;
     if (pparent != 0) {
-        l.parent = pparent->world;
+        l.parent = pparent->matWorld;
     } else {
         float *pp = (float *)&l.parent;
         memset(pp, 0, 0x40);
@@ -47,20 +44,20 @@ extern "C" void TranslateSoToPos(SO *pso, QW pos)
         pp[5] = 1.0f;
         ((float *)&l.parent)[0] = 1.0f;
     }
-    M4 *pc = &l.c;
+    MATRIX4 *pc = &l.c;
     InvertMatrix4Affine(&l.d, &l.parent);
     __ml__FRC7MATRIX4T0(pc, &l.d, &l.target);
     InvertMatrix4Affine(&l.e, &l.rootInLinear);
     __ml__FRC7MATRIX4T0(&l.b, pc, &l.e);
     l.a = l.b;
-    XFN *pxf = pso->plinear;
-    __as__6VECTORG9VU_VECTOR(&pxf->local.row[3], l.b.row[3]);
-    ((float *)&pxf->local)[15] = 1.0f;
+    XF *pxf = pso->pxfLinear;
+    __as__6VECTORG9VU_VECTOR(&pxf->mat.row[3], l.b.row[3]);
+    ((float *)&pxf->mat)[15] = 1.0f;
     int gen = ++B_003DD490.counter;
-    pso->plinear->generation = gen;
-    pso->vt->fn((char *)pso + pso->vt->delta);
+    pso->pxfLinear->generation = gen;
+    pso->UpdateXfWorldHierarchy();
     DiscardSoXps(pso);
-    WakeXf(pso, pso->plinear);
+    WakeXf(pso, pso->pxfLinear);
     func_001F3900(pso);
     void *pregion = 0;
     if (pso->pphys != 0)

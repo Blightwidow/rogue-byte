@@ -3,8 +3,7 @@ extern "C" int FIgnoreSoIntersection();
 extern "C" int FIsGuardInSgs(void *, int);
 extern "C" char *GoalStack_PgoalFind(void *, int);
 extern "C" int IMax(int, int);
-struct VT { char pad[0x1F0]; short delta; short index; int (*fn)(void *); };
-struct SO { char pad[0xC]; VT *vt; };
+#include "so.h"
 int func_00206380(char *guard, SO *so)
 {
     int r = FIgnoreSoIntersection();
@@ -12,7 +11,7 @@ int func_00206380(char *guard, SO *so)
     int keep;
     char *goal;
     if (FIsGuardInSgs(guard, 7)) {
-        keep = so->vt->fn((char *)so + so->vt->delta);
+        keep = so->FIsLocked();
         goto chk;
     }
     if (FIsGuardInSgs(guard, 0x17)) {

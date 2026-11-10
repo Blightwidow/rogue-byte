@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct ALO;
-struct XF { char pad[0x98]; unsigned short kind; short sub; };
+#include "xf.h"
 void SetXfKind(ALO *, XF *, int);
 void SleepXf(ALO *alo, XF *xf)
 {

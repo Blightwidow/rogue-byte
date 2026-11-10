@@ -1,11 +1,5 @@
-struct SO;
-struct SOX { char pad[0x60]; SO *owner; };
-struct SOVT { char pad[0x1A8]; short delta; short index; SOX *(*alloc)(void *); };
-struct SO {
-    char pad0[0xC]; SOVT *vptr;
-    char pad1[0x18]; unsigned long grfo;
-    char pad2[0xEC - 0x30]; SOX *poxa;
-};
+#include "so.h"
+struct OXA { char pad[0x60]; SO *owner; };
 extern "C" {
 extern char B_003DD490;
 SO *func_001F2798(SO *);
@@ -19,7 +13,7 @@ void RecalcSoLocked(SO *pso)
 {
     if (((pso->grfo >> 60) & 1) == 0) return;
     SO *apso[64];
-    if ((SOX *)func_001F2798(pso) != (SOX *)pso->poxa->owner) {
+    if ((OXA *)func_001F2798(pso) != (OXA *)pso->poxa->owner) {
         int count = CploFindSwObjectsByClass(&B_003DD490, 1, 0x30, pso, 0x40, apso);
         for (int index = 0; index < count; index++) {
             SO *member = apso[index];
@@ -28,7 +22,7 @@ void RecalcSoLocked(SO *pso)
             if (root == member->poxa->owner) continue;
             RemoveSoGeomsFromOxa(member);
             if (root->poxa == 0) {
-                root->poxa = root->vptr->alloc((char *)root + root->vptr->delta);
+                root->poxa = root->PoxaAlloc();
                 RecalcSwOxfFilterForObject(&B_003DD490, root);
             }
             member->poxa = root->poxa;

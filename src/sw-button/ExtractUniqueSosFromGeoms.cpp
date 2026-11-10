@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct SO { char p0[0x148]; unsigned long grfso; };
+#include "so.h"
 struct SOGEOM { int unk0; SO *psoOwner; };
 struct ALLOCREQ { int cb; int align; };
 extern "C" void *PvAllocStackImpl__Fi(ALLOCREQ *);

@@ -2,13 +2,10 @@ struct OXA {
     char pad[0x70];
     long flags;
 };
-struct SO {
-    char pad[0xEC];
-    OXA *oxa;
-};
+#include "so.h"
 extern "C" int GetSoNoXpsAll(SO *so)
 {
-    if (so->oxa == 0)
+    if (so->poxa == 0)
         return 1;
-    return (int)(so->oxa->flags >> 2) & 1;
+    return (int)(so->poxa->flags >> 2) & 1;
 }

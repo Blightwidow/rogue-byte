@@ -1,4 +1,4 @@
-struct CRef { int tagk; int n; };
+#include "cref.h"
 extern "C" CRef *CRef_ConstructBasic(CRef *, int);
 extern "C" int B_003E0FA0;
 extern "C" CRef *func_00123B00(CRef *pref)

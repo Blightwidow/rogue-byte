@@ -11,7 +11,7 @@ struct VT { short delta; short index; void *(*fn)(void *, int); };
 
 struct ALO { char pad0[0xC]; char *vt; };
 
-struct XF { char pad0[0xA8]; void *pxfMirror; };
+#include "xf.h"
 
 struct XFMIRROR { XF *pxfSource; XF *pxfTarget; int fPosition; int fRotation; };
 
@@ -47,7 +47,7 @@ extern "C" void LoadXfMirrors(ALO *palo, Bis *pbis)
         pmirror->pxfTarget = ReadXf(palo, pbis);
         pmirror->fPosition = S8Read__18CBinaryInputStream(pbis);
         pmirror->fRotation = S8Read__18CBinaryInputStream(pbis);
-        pmirror->pxfTarget->pxfMirror = pmirror;
+        pmirror->pxfTarget->pxfmirror = pmirror;
         SetXfKind(palo, pmirror->pxfTarget, 0xF);
     }
 }

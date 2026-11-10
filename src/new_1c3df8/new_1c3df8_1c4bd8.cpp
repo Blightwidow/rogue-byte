@@ -4,7 +4,7 @@
 #include "sly2.h"
 #include "m2c_macros.h"
 
-struct SO { char pad[0x28]; unsigned long grfo; };
+#include "so.h"
 
 struct SW;
 

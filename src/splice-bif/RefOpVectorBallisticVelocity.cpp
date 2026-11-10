@@ -3,7 +3,7 @@
 struct CRef { int tagk; union { int n; float g; QW *pv; }; };
 struct CPair { int cref; int pad4; CRef ref; CPair *next; };
 struct PHYS { char pad[0x80]; QW dvGravity; };
-struct SO { char pad[0xE8]; PHYS *pphys; };
+#include "so.h"
 struct CFrame;
 extern "C" {
 void SetTag__4CRef4TAGK(CRef *, int);

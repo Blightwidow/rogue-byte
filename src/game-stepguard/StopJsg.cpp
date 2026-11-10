@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct DL { void *pfirst; void *plast; int ibDle; };
-struct DLI { DL *pdl; char *ppv; int ibDle; DLI *pdliNext; };
+#include "dl.h"
 struct JSG;
 struct JVT { char pad[0x18]; short delta; short index; void (*fn)(char *, int, int, int, int, int); };
 struct JSG {
@@ -19,21 +18,6 @@ struct JSG {
     int fLatched;
     int fPendingCut;
 };
-extern DLI *g_2dd2fc;
-inline void PushDli(DLI *it, DL *list)
-{
-    it->pdl = list;
-    it->ppv = (char *)list;
-    it->ibDle = list->ibDle;
-    it->pdliNext = g_2dd2fc;
-    g_2dd2fc = it;
-}
-inline char *PvStep(DLI *it)
-{
-    char *item = *(char **)it->ppv;
-    it->ppv = item + it->ibDle;
-    return item;
-}
 extern "C" {
 void StopSeqnode(void *);
 void func_001E0120(JSG *);
@@ -54,7 +38,7 @@ void StopJsg(JSG *pjsg)
     DLI dli;
     PushDli(&dli, &pjsg->dlSeqnode);
     char *pseqnode;
-    for (pseqnode = PvStep(&dli); pseqnode != 0; pseqnode = PvStep(&dli))
+    for (pseqnode = (char *)PvStep(&dli); pseqnode != 0; pseqnode = (char *)PvStep(&dli))
         StopSeqnode(pseqnode);
     func_001E0120(pjsg);
     if (pjsg->fLatched != 0) {
@@ -66,5 +50,5 @@ void StopJsg(JSG *pjsg)
             pjsg->grf = (int)grf & -3;
     }
     pjsg->vt->fn((char *)pjsg + pjsg->vt->delta, 6, 0, 0, 0, 0);
-    g_2dd2fc = dli.pdliNext;
+    PopDli(&dli);
 }

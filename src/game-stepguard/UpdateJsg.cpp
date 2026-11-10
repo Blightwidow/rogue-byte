@@ -1,5 +1,4 @@
-struct DL { void *pfirst; void *plast; int ibDle; };
-struct DLI { DL *pdl; char *ppv; int ibDle; DLI *pdliNext; };
+#include "dl.h"
 struct JSG { char pad0[0x40]; unsigned grf; char pad1[0x18]; DL dlSeqnode; char pad2[8]; float tRun; int fRunning; };
 extern "C" {
 void UpdateLo(JSG *);
@@ -9,22 +8,7 @@ void StopJsg(JSG *);
 }
 extern float g_2ddf10;
 extern float g_2dded4;
-extern DLI *g_2dd2fc;
 
-inline void PushDli(DLI *it, DL *list)
-{
-    it->pdl = list;
-    it->ppv = (char *)list;
-    it->ibDle = list->ibDle;
-    it->pdliNext = g_2dd2fc;
-    g_2dd2fc = it;
-}
-inline char *PvStep(DLI *it)
-{
-    char *item = *(char **)it->ppv;
-    it->ppv = item + it->ibDle;
-    return item;
-}
 // Retail computes &pjsg->dlSeqnode once in $v0 for the iterator stores (ppv at 4, pdl at 0, both kept) and copies it
 // to $s1 for FIsDlEmpty after the loop: the address is written out at both uses and CSE joins them. A named local for
 // the list let the ppv = list store die and changed the setup order (score 14). The tRun update is one whole-expression
@@ -41,9 +25,9 @@ void UpdateJsg(JSG *pjsg, float dt)
 
     DLI dli;
     PushDli(&dli, &pjsg->dlSeqnode);
-    for (char *pseqnode = PvStep(&dli); pseqnode != 0; pseqnode = PvStep(&dli))
+    for (char *pseqnode = (char *)PvStep(&dli); pseqnode != 0; pseqnode = (char *)PvStep(&dli))
         RunSeqnode(pseqnode);
     if (FIsDlEmpty__FP2DL(&pjsg->dlSeqnode) != 0)
         StopJsg(pjsg);
-    g_2dd2fc = dli.pdliNext;
+    PopDli(&dli);
 }

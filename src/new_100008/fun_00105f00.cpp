@@ -1,22 +1,16 @@
 #include "sly2.h"
-struct CRef { int tagk; int pad[3]; };
+#include "cref.h"
+CRef RefSetArgsFromSplice(int cref, CRef *aref, const void *aotyp, ...);
 struct BASIC;
-extern "C" void *RefSetArgsFromSplice__FiP4CRefP4OTYPe(CRef *, int, CRef *, const int *, ...);
-extern "C" void CRef_Destruct(CRef *);
-extern "C" void SetTag__4CRef4TAGK(CRef *, int);
-extern "C" void CRef_CopyConstruct(CRef *, CRef *);
 extern "C" void func_00170BE0(BASIC *, int);
 
-extern "C" CRef *RefFunc170BE0(CRef *result, BASIC *object, int count, CRef *args)
+extern "C" CRef RefFunc170BE0(BASIC *object, int count, CRef *args)
 {
     int aotyp[1] = {6};
     int value;
+    RefSetArgsFromSplice(1, args, aotyp, &value);
     CRef refResult;
-    RefSetArgsFromSplice__FiP4CRefP4OTYPe(&refResult, 1, args, aotyp, &value);
-    CRef_Destruct(&refResult);
-    SetTag__4CRef4TAGK(&refResult, 0x24);
+    refResult.SetTag(TAGK_Void);
     func_00170BE0(object, value);
-    CRef_CopyConstruct(result, &refResult);
-    CRef_Destruct(&refResult);
-    return result;
+    return refResult;
 }

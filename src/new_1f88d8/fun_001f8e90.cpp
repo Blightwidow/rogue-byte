@@ -3,7 +3,7 @@ struct PHYS { char pad0[0xA0]; int ctTorque; char pad1[0x1C]; int ctForce; };
 struct SO;
 struct NODE { void *pxp; NODE *next; int unk8; SO *pso; };
 struct OXA { char pad[0x64]; NODE *first; };
-struct SO { char pad0[0xE8]; PHYS *pphys; OXA *poxa; char pad1[0x58]; unsigned long grfso; };
+#include "so.h"
 extern "C" void func_001F8E90(SW *psw, SO *pso, int *pcso, SO **apso)
 {
     pso->grfso |= 0x8000000UL;

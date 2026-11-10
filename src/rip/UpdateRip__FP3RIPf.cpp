@@ -2,16 +2,8 @@
 extern "C" float g_2dded0;
 extern "C" void RemoveRip(void *);
 
-struct VT1 { char pad[0x248]; short delta; short index; int (*fn)(void *, QW); };
 struct VT2 { char pad[0x38]; short delta; short index; void (*fn)(void *, int); };
-struct SO {
-    char pad0[0xC];
-    VT1 *vt;
-    char pad1[0x28 - 0x10];
-    unsigned long grf;
-    char pad2[0xE8 - 0x30];
-    int pphys;
-};
+#include "so.h"
 struct GRP { char pad[0x150]; int kind; };
 struct RIP {
     char pad0[8];
@@ -42,9 +34,8 @@ void UpdateRip(RIP *rip, float dt)
     if (touch->pphys == 0)
         return;
     int touching = 0;
-    if ((int)(touch->grf >> 60) & 1) {
-        VT1 *vt = touch->vt;
-        if (vt->fn((char *)touch + vt->delta, rip->pos) != 0)
+    if ((int)(touch->grfo >> 60) & 1) {
+        if (touch->Slot73(rip->pos) != 0)
             touching = 1;
     }
     VT2 *vt2 = rip->vt;
