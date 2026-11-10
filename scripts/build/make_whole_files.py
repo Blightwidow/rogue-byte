@@ -268,11 +268,29 @@ def rename(text, name, new_name):
     return ''.join(pieces)
 
 
+def leading_comments_length(item):
+    """Length of the whitespace and comments in front of an item's first code character."""
+    index = 0
+    while index < len(item):
+        if item[index].isspace():
+            index += 1
+        elif item.startswith('//', index):
+            newline = item.find('\n', index)
+            index = len(item) if newline < 0 else newline + 1
+        elif item.startswith('/*', index):
+            close = item.find('*/', index + 2)
+            index = len(item) if close < 0 else close + 2
+        else:
+            break
+    return index
+
+
 def flatten_extern_c(text):
     """`text` with each top-level `extern "C" { }` block opened into items of its own, so that the merge compares (and renames) the
     declarations inside it one by one: a function declaration or definition and an `extern` variable declaration take the `extern "C"`
-    prefix (the same linkage); a variable definition keeps a block of its own (with the prefix alone it would become a declaration); a type,
-    a comment or a preprocessor line goes out as it is (linkage does not apply to it)."""
+    prefix (the same linkage), written after the item's leading comments; a variable definition keeps a block of its own (with the prefix
+    alone it would become a declaration); a `static` item, a type, a comment or a preprocessor line goes out as it is (linkage does not
+    apply to it, and `extern "C" static` is not valid)."""
     pieces = []
     for item in split_items(text):
         code = code_only(item).strip()
@@ -283,11 +301,11 @@ def flatten_extern_c(text):
         for part in split_items(inner):
             kind, _ = classify(part)
             part_code = code_only(part).strip()
-            if kind in ('function', 'declaration') and part_code:
+            if kind in ('function', 'declaration') and part_code and not re.match(r'static\b', part_code):
                 is_function = kind == 'function' or '(' in part_code.split('=', 1)[0]
                 if part_code.startswith('extern') or is_function:
-                    lead = part[:len(part) - len(part.lstrip())]
-                    body = part.lstrip()
+                    lead_length = leading_comments_length(part)
+                    lead, body = part[:lead_length], part[lead_length:]
                     body = body if body.startswith('extern "C"') else 'extern "C" ' + re.sub(r'^extern\s+(?!")', '', body)
                     pieces.append(lead + body)
                 else:

@@ -1,20 +1,38 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK AppendSlEntry(M2C_UNK *, s32);              /* extern */
-M2C_UNK ClearSl(s32);                               /* extern */
-M2C_UNK ClearSle(s32);                              /* extern */
-M2C_UNK CopyAb__FPvT0Ui(s32, void *, s32);          /* extern */
-extern M2C_UNK B_003E159C;
+struct CLASSINFO {
+    char pad[0xC];
+    s32 cb;
+    s32 (*pfnCreate)();
+};
 
-s32 func_001ED850(void *arg0) {
+struct OBJVTBL {
+    char pad[0x30];
+    s16 delta;
+    char pad2[2];
+    struct CLASSINFO *(*pfnClassInfo)(char *);
+};
+
+struct OBJ {
+    char pad[0xC];
+    struct OBJVTBL *pvtbl;
+};
+
+s32 AppendSlEntry(s32 *, s32);              /* extern */
+s32 ClearSl(s32);                               /* extern */
+s32 ClearSle(s32);                              /* extern */
+s32 CopyAb__FPvT0Ui(s32, void *, s32);          /* extern */
+extern s32 B_003E159C;
+
+s32 func_001ED850(struct OBJ *pobj) {
     s32 temp_v0;
-    void *temp_v0_2;
-    void *temp_v1;
+    struct CLASSINFO *pclassinfo;
+    struct OBJVTBL *pvtbl;
 
-    temp_v1 = M2C_FIELD(arg0, void **, 0xC);
-    temp_v0_2 = M2C_FIELD(temp_v1, void *(**)(void *), 0x34)(arg0 + M2C_FIELD(temp_v1, s16 *, 0x30));
-    temp_v0 = M2C_FIELD(temp_v0_2, s32 (**)(), 0x10)();
-    CopyAb__FPvT0Ui(temp_v0, arg0, M2C_FIELD(temp_v0_2, s32 *, 0xC));
+    pvtbl = pobj->pvtbl;
+    pclassinfo = pvtbl->pfnClassInfo((char *)pobj + pvtbl->delta);
+    temp_v0 = pclassinfo->pfnCreate();
+    CopyAb__FPvT0Ui(temp_v0, pobj, pclassinfo->cb);
     ClearSl(temp_v0 + 0x34);
     ClearSle(temp_v0 + 0x40);
     AppendSlEntry(&B_003E159C, temp_v0);

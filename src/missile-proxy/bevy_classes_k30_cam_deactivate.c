@@ -1,15 +1,25 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK DeactivateCplcy(void *, s32, void *);       /* extern */
-M2C_UNK SetResetFlag__FP2CM(M2C_UNK *);             /* extern */
-extern M2C_UNK B_002DDF40;
+struct CMLIKE {
+    char pad[0x120];
+    s32 fReset;
+};
 
-void bevy_classes_k30_cam_deactivate(void *arg0, s32 arg1, void *arg2) {
-    if (M2C_FIELD(arg0, s32 *, 0x10) == arg2) {
-        if (M2C_FIELD(arg2, s32 *, 0x120) != 0) {
+struct K30CAM {
+    char pad[0x10];
+    struct CMLIKE *pcm;
+};
+
+s32 DeactivateCplcy(void *, s32, void *);       /* extern */
+s32 SetResetFlag__FP2CM(s32 *);             /* extern */
+extern s32 B_002DDF40;
+
+void bevy_classes_k30_cam_deactivate(struct K30CAM *pk30cam, s32 arg1, struct CMLIKE *pcm) {
+    if (pk30cam->pcm == pcm) {
+        if (pcm->fReset != 0) {
             SetResetFlag__FP2CM(&B_002DDF40);
         }
-        M2C_FIELD(arg0, s32 *, 0x10) = 0;
+        pk30cam->pcm = 0;
     }
-    DeactivateCplcy(arg0, arg1, arg2);
+    DeactivateCplcy(pk30cam, arg1, pcm);
 }

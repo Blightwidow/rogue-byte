@@ -1,10 +1,22 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 CidGetBasic(void *arg0) {
-    s16 temp_a1;
-    void *temp_v1;
+struct VTBLENTRY {
+    char pad[0x30];
+    s16 delta;
+    char pad2[2];
+    char *(*pfn)(char *, s16);
+};
 
-    temp_v1 = M2C_FIELD(arg0, void **, 0xC);
-    temp_a1 = M2C_FIELD(temp_v1, s16 *, 0x30);
-    return M2C_FIELD(M2C_FIELD(temp_v1, void *(**)(void *, s16), 0x34)(arg0 + temp_a1, temp_a1), s32 *, 4);
+struct BASICOBJ {
+    char pad[0xC];
+    struct VTBLENTRY *pvtbl;
+};
+
+s32 CidGetBasic(struct BASICOBJ *pbasic) {
+    struct VTBLENTRY *pvtbl;
+    s16 delta;
+
+    pvtbl = pbasic->pvtbl;
+    delta = pvtbl->delta;
+    return *(s32 *)(pvtbl->pfn((char *)pbasic + delta, delta) + 4);
 }

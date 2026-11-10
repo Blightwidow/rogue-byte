@@ -1,21 +1,27 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-void func_001F3590();                            /* extern */
-void func_001F68A8(s8 *, M2C_UNK);             /* extern */
+struct BrkTarget {
+    char pad0[0xD4];
+    f32 field_0xD4;
+    f32 field_0xD8;
+};
 
-void func_00228BB0(s8 *arg0) {
-    s8 *temp_v0;
+struct BrkOwner {
+    char pad0[0xE8];
+    BrkTarget *field_0xE8;
+};
+
+void func_001F3590();
+void func_001F68A8(BrkOwner *, s32);
+
+void func_00228BB0(BrkOwner *owner) {
+    BrkTarget *target;
 
     func_001F3590();
-    func_001F68A8(arg0, 1);
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xE8);
-    M2C_FIELD(temp_v0, f32 *, 0xD8) = 1.0f;
-    M2C_FIELD(temp_v0, f32 *, 0xD4) = 1.0f;
+    func_001F68A8(owner, 1);
+    target = owner->field_0xE8;
+    target->field_0xD8 = 1.0f;
+    target->field_0xD4 = 1.0f;
 }
 
 }

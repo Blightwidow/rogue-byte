@@ -1,17 +1,27 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 FIsGuardInSgs(s32, M2C_UNK);                    /* extern */
-M2C_UNK HandleStepguardMessage();                   /* extern */
-M2C_UNK func_00154038(s32, s32, M2C_UNK);           /* extern */
+struct GUARDREF {
+    char pad[0xF64];
+    s32 sgsGuard;
+};
 
-void func_0014B218(s32 arg0, s32 arg1, void *arg2) {
-    void *temp_v0;
+struct MSGARGS {
+    struct GUARDREF *pguard;
+    s32 value;
+};
+
+s32 FIsGuardInSgs(s32, s32);                    /* extern */
+s32 HandleStepguardMessage();                   /* extern */
+s32 func_00154038(s32, s32, s32);           /* extern */
+
+void func_0014B218(s32 arg0, s32 arg1, struct MSGARGS *pmsgargs) {
+    struct GUARDREF *pguard;
 
     HandleStepguardMessage();
     if ((FIsGuardInSgs(arg0, 0x24) == 0) && (arg1 == 0xB)) {
-        temp_v0 = M2C_FIELD(arg2, void **, 0);
-        if (temp_v0 == arg0) {
-            func_00154038(M2C_FIELD(temp_v0, s32 *, 0xF64), M2C_FIELD(arg2, s32 *, 4), 1);
+        pguard = pmsgargs->pguard;
+        if ((s32)pguard == arg0) {
+            func_00154038(pguard->sgsGuard, pmsgargs->value, 1);
         }
     }
 }

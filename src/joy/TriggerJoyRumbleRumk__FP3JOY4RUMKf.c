@@ -1,9 +1,17 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK TriggerRumbleRumk__FP6RUMBLE4RUMKf(void *); /* extern */
+struct JOY {
+    char pad[0x100C];
+    s32 field_0x100C;
+    s32 field_0x1010;
+    char pad2[0xD4];
+    s32 field_0x10E8;
+};
 
-void TriggerJoyRumbleRumk__FP3JOY4RUMKf(void *arg0) {
-    if ((M2C_FIELD(arg0, s32 *, 0x10E8) != 0) && (M2C_FIELD(arg0, s32 *, 0x1010) >= 3) && (M2C_FIELD(arg0, s32 *, 0x100C) == 3)) {
-        TriggerRumbleRumk__FP6RUMBLE4RUMKf(arg0 + 0x10CC);
+s32 TriggerRumbleRumk__FP6RUMBLE4RUMKf(void *); /* extern */
+
+void TriggerJoyRumbleRumk__FP3JOY4RUMKf(struct JOY *pjoy) {
+    if ((pjoy->field_0x10E8 != 0) && (pjoy->field_0x1010 >= 3) && (pjoy->field_0x100C == 3)) {
+        TriggerRumbleRumk__FP6RUMBLE4RUMKf((char *)pjoy + 0x10CC);
     }
 }

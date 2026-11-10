@@ -1,10 +1,22 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK SetLoPosMat(s32, s32);                      /* extern */
+struct LOVTBL {
+    char pad[0xF8];
+    s16 deltaMat;
+    char pad2[2];
+    s32 (*pfnMat)(char *);
+};
 
-void SetLoPosMatFromLo(s32 arg0, void *arg1) {
-    void *temp_v1;
+struct LOOBJ {
+    char pad[0xC];
+    struct LOVTBL *pvtbl;
+};
 
-    temp_v1 = M2C_FIELD(arg1, void **, 0xC);
-    SetLoPosMat(arg0, M2C_FIELD(temp_v1, s32 (**)(void *), 0xFC)(arg1 + M2C_FIELD(temp_v1, s16 *, 0xF8)));
+s32 SetLoPosMat(s32, s32);                      /* extern */
+
+void SetLoPosMatFromLo(s32 arg0, struct LOOBJ *plo) {
+    struct LOVTBL *pvtbl;
+
+    pvtbl = plo->pvtbl;
+    SetLoPosMat(arg0, pvtbl->pfnMat((char *)plo + pvtbl->deltaMat));
 }

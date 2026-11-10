@@ -1,7 +1,13 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-void FreeSlotheapPv(void *arg0, M2C_UNK *arg1) {
-    M2C_FIELD(arg0, s32 *, 0x10) = (s32) (M2C_FIELD(arg0, s32 *, 0x10) - 1);
-    *arg1 = M2C_FIELD(arg0, M2C_UNK **, 0xC);
-    M2C_FIELD(arg0, M2C_UNK **, 0xC) = arg1;
+struct SLOTHEAP {
+    char pad[0xC];
+    void **ppvFree;
+    s32 cpvUsed;
+};
+
+void FreeSlotheapPv(struct SLOTHEAP *pslotheap, void **ppv) {
+    pslotheap->cpvUsed = pslotheap->cpvUsed - 1;
+    *ppv = pslotheap->ppvFree;
+    pslotheap->ppvFree = ppv;
 }

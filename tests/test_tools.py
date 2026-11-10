@@ -340,6 +340,14 @@ class MakeWholeFilesTests(unittest.TestCase):
         text = make_whole_files.flatten_extern_c('extern "C" {\nint h;\n}\n')
         self.assertEqual(code_items(text), ['extern "C" { int h; }'])
 
+    def test_extern_c_block_leaves_a_static_function_unprefixed(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nstatic inline int f(int x) { return x; }\n}\n')
+        self.assertEqual(code_items(text), ['static inline int f(int x) { return x; }'])
+
+    def test_extern_c_prefix_goes_after_leading_comments(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\n// note\nvoid f(void);\n}\n')
+        self.assertIn('// note\nextern "C" void f(void);', text)
+
     def test_rename_mode_separates_a_differing_declaration_inside_extern_c(self):
         sources = {'module/First.cpp': 'void g(int *);\nvoid First() { g(0); }\n',
                    'module/Second.cpp': 'extern "C" {\nvoid g(char *);\n}\nvoid Second() { g(0); }\n'}

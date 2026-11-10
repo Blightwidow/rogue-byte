@@ -1,25 +1,26 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-struct _m2c_stack_InitBrk {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-M2C_UNK InitSo();                                   /* extern */
-void InitBrk(s8 *arg0) {
-    s32 temp_a2;
+struct BrkObject {
+    char pad0[0x40];
+    s32 *field_0x40;
+    char pad44[0x180 - 0x44];
+    s32 field_0x180;
+    s32 field_0x184;
+    s32 field_0x188;
+};
+
+s32 InitSo();
+void InitBrk(BrkObject *brk) {
+    s32 *temp_a2;
     InitSo();
-    temp_a2 = M2C_FIELD(arg0, s32 *, 0x40);
-    M2C_FIELD(arg0, s32 *, 0x180) = 1;
-    M2C_FIELD(arg0, s32 *, 0x184) = -0xA;
-    M2C_FIELD(arg0, s32 *, 0x188) = 0x2000;
-    if ((temp_a2 ^ 1) & 1) {
-        *(s32 *)temp_a2 = (s32) (*(s32 *)temp_a2 | 2);
+    temp_a2 = brk->field_0x40;
+    brk->field_0x180 = 1;
+    brk->field_0x184 = -0xA;
+    brk->field_0x188 = 0x2000;
+    if (((s32)temp_a2 ^ 1) & 1) {
+        *temp_a2 = *temp_a2 | 2;
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_a2 | 2);
+    brk->field_0x40 = (s32 *)((s32)temp_a2 | 2);
 }
 }

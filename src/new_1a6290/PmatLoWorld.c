@@ -1,10 +1,22 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-void PmatLoWorld(void *arg0) {
-    s16 temp_a1;
-    void *temp_v1;
+struct LOVTBL {
+    char pad[0xF8];
+    s16 deltaMat;
+    char pad2[2];
+    s32 (*pfnMat)(char *, s16);
+};
 
-    temp_v1 = M2C_FIELD(arg0, void **, 0xC);
-    temp_a1 = M2C_FIELD(temp_v1, s16 *, 0xF8);
-    M2C_FIELD(temp_v1, M2C_UNK (**)(void *, s16), 0xFC)(arg0 + temp_a1, temp_a1);
+struct LOOBJ {
+    char pad[0xC];
+    struct LOVTBL *pvtbl;
+};
+
+void PmatLoWorld(struct LOOBJ *plo) {
+    s16 delta;
+    struct LOVTBL *pvtbl;
+
+    pvtbl = plo->pvtbl;
+    delta = pvtbl->deltaMat;
+    pvtbl->pfnMat((char *)plo + delta, delta);
 }
