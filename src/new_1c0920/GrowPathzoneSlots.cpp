@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct EP { float g; short fMin; short islot; };
 struct PZ { char pad[0xFC]; int cslot; int cep; EP *aepX; EP *aepY; int *aslot; };
 extern "C" {

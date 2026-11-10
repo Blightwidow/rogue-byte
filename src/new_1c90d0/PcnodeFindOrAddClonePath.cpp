@@ -12,7 +12,7 @@ struct CNODE {
     SL slChild;
     int field24;
 };
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 
 extern "C" {
 void *PvAllocSwClearImpl__Fi(ALLOCREQ *preq);
@@ -47,7 +47,7 @@ again:
     }
     ALLOCREQ req;
     req.cb = count * sizeof(CNODE);
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     CNODE *acnode = (CNODE *)PvAllocSwClearImpl__Fi(&req);
     CNODE *pcnodeLast = pcnodeParent;
     for (int index = 0; index < count; index++) {

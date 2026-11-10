@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 // One render tree entry (0x20 bytes). Its signed 4-bit field at bit 32 of the doubleword at +0x10 is the entry's state:
 // AddSphereToRenderTree reads it with dsll 28 / dsra32 28 and treats -1 as a free entry; RemoveAloFromRenderTree frees one
 // by or-ing 0xF << 32 in.

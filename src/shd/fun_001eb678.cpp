@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct U4 { char b[4]; };
 struct TEX { char pad[6]; unsigned char cframe; };
 struct SHD { int oid; char pad4; unsigned char b5; unsigned char b6; char pad7; U4 color; char pad0c[12]; TEX *atex; };

@@ -1,3 +1,4 @@
+#include "bentley.h"
 #include "types.h"
 typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
 #define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
@@ -7,7 +8,7 @@ typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C
 extern "C" {
 s32 func_001409B8();                                /* extern */
 
-s32 func_00135E40(s8 *arg0) {
+s32 func_00135E40(BENTLEY *pbentley) {
     s32 result;
     s32 temp_a0;
     s32 temp_v0;
@@ -16,7 +17,7 @@ s32 func_00135E40(s8 *arg0) {
     temp_v0 = func_001409B8();
     var_v0 = temp_v0;
     if (temp_v0 == -1) {
-        temp_a0 = M2C_FIELD(arg0, s32 *, 0x13D0);
+        temp_a0 = pbentley->state;
         if (temp_a0 != 5) {
             if (temp_a0 < 6) {
                 if (temp_a0 != 1) {

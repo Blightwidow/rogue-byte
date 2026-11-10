@@ -3,7 +3,7 @@
 struct CRV { char pad[0xE4]; int closed; };
 struct PATHZONE;
 struct CRVRANGES { CRV *pcrv; int cRange; void *pvRange; int cRange2; char ab[0x80]; int cpathzone; void *pvPathzone; int stamp; };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" float g_2c367c;
 extern "C" float SMinCrv(CRV *);
 extern "C" float SMaxCrv(CRV *);

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct BENTLEY { char pad[0xEC]; void *poxa; char pad2[0x16F0 - 0xF0]; QW posTarget; };
+#include "bentley.h"
 struct LSG { QW pos; char rest[0x50]; };
 extern "C" char B_002DDF40;
 extern "C" char B_003DD490;

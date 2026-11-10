@@ -1,8 +1,8 @@
 #include "sly2.h"
+#include "jt.h"
 struct CRefX_161A58 { int tagk; union { float g; int n; }; int p2; int p3; };
 struct TASK_161A58 { char pad[0xF0]; int fF0; int fF4; int fF8; };
 struct JOB_161A58 { char pad[0x64]; int event; };
-struct LOOTOBJ_161A58 { char pad[0x11A8]; int loot; };
 struct CID_161A58 { char pad[8]; int f8; char pad2[0x2C]; int f38; };
 struct SW_161A58 {
     char pad[0x3B0C];
@@ -60,11 +60,11 @@ void ApplyPendingSave();
 void CRef_Destruct(CRefX_161A58 *);
 void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
-int CploFindSwObjectsByClass(SW_161A58 *, int, int, int, int, LOOTOBJ_161A58 **);
+int CploFindSwObjectsByClass(SW_161A58 *, int, int, int, int, JT **);
 void EnterTask(int);
 int IEpisodeCurrent();
 void JobMgr_Construct(JOBMGR_161A58 *);
-int LootId(int);
+int LootId(LOOT *);
 void OrderTasks(int *, TASK_161A58 ***);
 void *PloFindSwObject_thunk(SW_161A58 *, int, int, void *);
 void PostTaskJobEvent(int);
@@ -76,7 +76,7 @@ void SetSwCurrentJob(SW_161A58 *, void *);
 void SetSwCurrentTask(SW_161A58 *, void *);
 void SetSwRestartTask(SW_161A58 *, void *);
 void StartJob(JOB_161A58 *);
-void func_00143AF0(LOOTOBJ_161A58 *, int);
+void func_00143AF0(JT *, int);
 void func_00165280(JOBMGR_161A58 *);
 void func_001AB630(GAME_161A58 *);
 }
@@ -101,12 +101,12 @@ extern "C" void bevy_game_app_job_level_loaded(JOBMGR_161A58 *pjobmgr, int msg)
     switch (msg) {
     case 1:
         if (FCidEqual_161A58(&B_003E1088, &RO_002A37E8)) {
-            LOOTOBJ_161A58 *apobj[3];
+            JT *apobj[3];
             int cobj = CploFindSwObjectsByClass(&B_003DD490, 5, 0x34, 0, 3, apobj);
             for (int index = 0; index < cobj; index++) {
-                LOOTOBJ_161A58 *pobj = apobj[index];
-                if (pobj->loot != 0)
-                    func_00143AF0(pobj, LootId(pobj->loot));
+                JT *pobj = apobj[index];
+                if (pobj->plootHeld != 0)
+                    func_00143AF0(pobj, LootId(pobj->plootHeld));
             }
         }
         break;

@@ -1,14 +1,13 @@
 #include "sly2.h"
 struct GUARD { char pad[0xFE0]; GUARD *pnext; };
-struct VT { char pad[0x2F8]; short delta; short index; void (*fn)(void *, int, GUARD *, int, GUARD *); };
-struct JT { char pad0[0xC]; VT *vptr; char pad1[0x10E0 - 0x10]; int fBusy; };
+#include "jt.h"
 extern "C" int func_00208E70(GUARD *, JT *, float *);
 extern "C" GUARD *B_003E1444;
 extern "C" const float RO_FLT_002A4D18;
 
 extern "C" void UpdateJtFocus(JT *pjt)
 {
-    if (pjt->fBusy != 0) return;
+    if (pjt->fFocusBusy != 0) return;
     float sBest = RO_FLT_002A4D18;
     GUARD *pguardBest = 0;
     GUARD *pguardNear = 0;
@@ -30,6 +29,5 @@ extern "C" void UpdateJtFocus(JT *pjt)
             pguardBest = pguard;
         }
     }
-    VT *vt = pjt->vptr;
-    vt->fn((char *)pjt + vt->delta, prioNear, pguardNear, prioBest, pguardBest);
+    pjt->SetFocus(prioNear, pguardNear, prioBest, pguardBest);
 }

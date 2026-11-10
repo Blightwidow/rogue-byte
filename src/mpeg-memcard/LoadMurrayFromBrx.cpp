@@ -1,18 +1,16 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
-struct SET { int pad0; void *a; void *b; void *c; };
-struct MURRAY {
-    char pad[0x15F0]; void *p15F0; void *p15F4; void *p15F8; void *p15FC; char pad2[0x1610 - 0x1600]; SET *setA; SET *setB;
-};
+#include "alloc.h"
+struct IKLIMB { int pad0; void *a; void *b; void *c; };
+#include "murray.h"
 extern "C" {
 extern char D_002C0270[];
 void LoadStepFromBrx(MURRAY *, Bis *);
 void SetSoProperties(MURRAY *, int, void *);
 void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 void *func_001F4C58(MURRAY *, int, int);
-void InitIkLimb(SET *);
+void InitIkLimb(IKLIMB *);
 }
 extern "C" void LoadMurrayFromBrx(MURRAY *murray, Bis *bis)
 {
@@ -21,20 +19,20 @@ extern "C" void LoadMurrayFromBrx(MURRAY *murray, Bis *bis)
     ALLOCREQ req;
     req.cb = 0xE0;
     req.cbAlign = 0x10;
-    murray->setA = (SET *)PvAllocSwClearImpl__Fi(&req);
-    murray->setA->a = func_001F4C58(murray, 0x200, 6);
-    murray->setA->b = func_001F4C58(murray, 0x201, 6);
-    murray->setA->c = func_001F4C58(murray, 0x202, 1);
-    InitIkLimb(murray->setA);
+    murray->pikLimbA = (IKLIMB *)PvAllocSwClearImpl__Fi(&req);
+    murray->pikLimbA->a = func_001F4C58(murray, 0x200, 6);
+    murray->pikLimbA->b = func_001F4C58(murray, 0x201, 6);
+    murray->pikLimbA->c = func_001F4C58(murray, 0x202, 1);
+    InitIkLimb(murray->pikLimbA);
     req.cb = 0xE0;
     req.cbAlign = 0x10;
-    murray->setB = (SET *)PvAllocSwClearImpl__Fi(&req);
-    murray->setB->a = func_001F4C58(murray, 0x203, 6);
-    murray->setB->b = func_001F4C58(murray, 0x204, 6);
-    murray->setB->c = func_001F4C58(murray, 0x205, 1);
-    InitIkLimb(murray->setB);
-    murray->p15F0 = murray->setA->c;
-    murray->p15F4 = func_001F4C58(murray, 0x202, 6);
-    murray->p15F8 = murray->setB->c;
-    murray->p15FC = func_001F4C58(murray, 0x205, 6);
+    murray->pikLimbB = (IKLIMB *)PvAllocSwClearImpl__Fi(&req);
+    murray->pikLimbB->a = func_001F4C58(murray, 0x203, 6);
+    murray->pikLimbB->b = func_001F4C58(murray, 0x204, 6);
+    murray->pikLimbB->c = func_001F4C58(murray, 0x205, 1);
+    InitIkLimb(murray->pikLimbB);
+    murray->field_0x15F0 = murray->pikLimbA->c;
+    murray->field_0x15F4 = func_001F4C58(murray, 0x202, 6);
+    murray->field_0x15F8 = murray->pikLimbB->c;
+    murray->field_0x15FC = func_001F4C58(murray, 0x205, 6);
 }

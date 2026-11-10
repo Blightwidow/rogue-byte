@@ -1,7 +1,7 @@
 #include "sly2.h"
-struct MURRAY { char pad0[0x58]; int xf1; int xf2; char pad1[0x190 - 0x60]; QW goalVelocity; };
+#include "murray.h"
 extern "C" {
-void SetXfKind(void *, int, int);
+void SetXfKind(void *, XF *, int);
 void ResetRunBlendFootsteps(void *);
 void RetractAsegaHandle(void *);
 void RetractSmaRef(void *);
@@ -19,8 +19,8 @@ void SetMurrayCarryState(MURRAY *m, int carrys)
     if (carrys == old)
         return;
     if (old == 0) {
-        SetXfKind(m, m->xf1, 2);
-        SetXfKind(m, m->xf2, 2);
+        SetXfKind(m, m->pxfLinear, 2);
+        SetXfKind(m, m->pxfAngular, 2);
     } else if (old >= 0) {
         if (old < 3) {
             void *pah = F(void *, m, 0x1030);
@@ -36,10 +36,10 @@ void SetMurrayCarryState(MURRAY *m, int carrys)
     F(float, m, 0x145C) = g_2dded0.time;
     switch (carrys) {
     case 0:
-        SetXfKind(m, m->xf1, 1);
-        SetXfKind(m, m->xf2, 1);
+        SetXfKind(m, m->pxfLinear, 1);
+        SetXfKind(m, m->pxfAngular, 1);
         psm = F(void *, m, 0x1510);
-        m->goalVelocity = g_2a2dd0;
+        m->velGoal = g_2a2dd0;
         break;
     case 1:
         paseg = F(void *, m, 0x1464);

@@ -1,9 +1,9 @@
-struct JT { char pad[0x12FC]; int *pnPower; int nMax; };
+#include "jt.h"
 void SetJtPower(JT *pjt, int nPower)
 {
     int *pn = pjt->pnPower;
     if (pn) {
-        int nMax = pjt->nMax;
+        int nMax = pjt->nPowerMax;
         *pn = nPower < nMax ? nPower : nMax;
     }
 }

@@ -1,31 +1,23 @@
 struct CLOCKT { float t; };
 extern "C" CLOCKT g_2dded0;
-typedef void (*SLOTFN)(void *, int);
-struct VT { char pad0[0x320]; short d320; short i320; SLOTFN f320; char pad1[0x330 - 0x328]; short d330; short i330; SLOTFN f330; };
 struct SLOT { int gadget; int state; float t; };
-struct JT { char pad[0xC]; VT *vt; };
+#include "jt.h"
 
 void SetJtGadgetSlotState(JT *jt, SLOT *slot, int state)
 {
     if (slot->state == state)
         return;
-    if (slot->state == 1) {
-        VT *vt = jt->vt;
-        vt->f330((char *)jt + vt->d330, slot->gadget);
-    }
+    if (slot->state == 1)
+        jt->Slot102(slot->gadget);
     slot->state = state;
     slot->t = g_2dded0.t;
     switch (state) {
-    case 2: {
-        VT *vt = jt->vt;
-        vt->f320((char *)jt + vt->d320, slot->gadget);
+    case 2:
+        jt->UseGadget(slot->gadget);
         slot->state = 0;
         return;
-    }
-    case 1: {
-        VT *vt = jt->vt;
-        vt->f320((char *)jt + vt->d320, slot->gadget);
+    case 1:
+        jt->UseGadget(slot->gadget);
         break;
-    }
     }
 }

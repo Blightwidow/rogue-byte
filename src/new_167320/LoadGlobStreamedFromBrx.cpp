@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct BIS;
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct REC { char pad0[1]; char count; char pad2[0xA]; int base; };
 struct ENTRY { int n0; int n4; int n8; char pad[0x50 - 0xC]; };
 struct REC2 { char pad0[0x18]; ENTRY *arr; };
@@ -9,7 +9,7 @@ struct L {
     char vifs[0x30];
     int frame0;
     char pad44[0xC];
-    REQ req;
+    ALLOCREQ req;
     char pad58[8];
 };
 extern "C" {
@@ -22,7 +22,7 @@ unsigned U8Read__18CBinaryInputStream(BIS *);
 int U16Read__18CBinaryInputStream(BIS *);
 int S16Read__18CBinaryInputStream(BIS *);
 int S32Read__18CBinaryInputStream(BIS *);
-void *PvAllocSwClearImpl__Fi(REQ *);
+void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 void UnpackHelper__4VIFS3UPKiiPiPPUi(void *, int, int, int, int, UNP **);
 void AddVifStcycl__4VIFSii(void *, int, int);
 void VIFS_AddVifUnpackFromStream(void *, int, int, BIS *, int);
@@ -42,10 +42,10 @@ extern char VU1_START_0[];
 extern char D_00001910[];
 extern char D_00001A68[];
 }
-static inline void *PvAllocSwClear(REQ *preq, int cb)
+static inline void *PvAllocSwClear(ALLOCREQ *preq, int cb)
 {
-    preq->size = cb;
-    preq->align = 0x10;
+    preq->cb = cb;
+    preq->cbAlign = 0x10;
     return PvAllocSwClearImpl__Fi(preq);
 }
 extern "C" void LoadGlobStreamedFromBrx(char *glob, REC *rec, REC2 *rec2, int unused, int arg4, int arg5, BIS *stream)

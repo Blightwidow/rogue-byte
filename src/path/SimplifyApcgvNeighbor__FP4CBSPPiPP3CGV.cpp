@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CBSP;
 struct CGV { QW pos; };
 extern "C" {

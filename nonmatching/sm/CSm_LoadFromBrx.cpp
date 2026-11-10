@@ -1,4 +1,4 @@
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct Stream_1EFAC0;
 struct VT_1EFAC0 { char pad[0x48]; short delta; short unused; void (*fn)(void *); };
 struct Plo_1EFAC0 { char pad[0xC]; VT_1EFAC0 *vt; char pad2[0x18 - 0x10]; int id; };
@@ -42,8 +42,8 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
     }
     index = 0;
     self->nodeCount = U8Read__18CBinaryInputStream(stream);
-    request.size = self->nodeCount * 8;
-    request.align = 0x10;
+    request.cb = self->nodeCount * 8;
+    request.cbAlign = 0x10;
     self->nodes = (Node_1EFAC0 *)PvAllocSwImpl__Fi(&request);
     if (self->nodeCount > 0) {
         do {
@@ -73,8 +73,8 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
     int allFlags = 0;
     self->edgeCount = U8Read__18CBinaryInputStream(stream);
     index = 0;
-    request.size = self->edgeCount * 0x18;
-    request.align = 0x10;
+    request.cb = self->edgeCount * 0x18;
+    request.cbAlign = 0x10;
     self->edges = (Edge_1EFAC0 *)PvAllocStackClearImpl__Fi(&request);
     if (self->edgeCount > 0) {
         int offset = 0;
@@ -120,8 +120,8 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
             offset += 0x18;
         } while (index < self->edgeCount);
     }
-    request.size = self->edgeCount * 0x18;
-    request.align = 0x10;
+    request.cb = self->edgeCount * 0x18;
+    request.cbAlign = 0x10;
     self->edges = (Edge_1EFAC0 *)PvAllocSwCopyImpl__FiPv(&request, self->edges);
     LoadOptionsFromBrx__FPvP18CBinaryInputStream(self, stream);
     int groupCount = 0;
@@ -176,8 +176,8 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
         bit *= 2;
         bitTest = bit & allFlags;
     } while (bit < 0x1001);
-    request.size = groupCount * 8;
-    request.align = 0x10;
+    request.cb = groupCount * 8;
+    request.cbAlign = 0x10;
     index = 0;
     self->groupCount = groupCount;
     self->groups = (Group_1EFAC0 *)PvAllocSwImpl__Fi(&request);
@@ -185,9 +185,9 @@ extern "C" void CSm_LoadFromBrx(Sm_1EFAC0 *self, Stream_1EFAC0 *stream) {
         do {
             Group_1EFAC0 *group = &self->groups[index];
             group->mask = masks[index];
-            request.align = 0x10;
+            request.cbAlign = 0x10;
             int nodeCount = self->nodeCount;
-            request.size = nodeCount * nodeCount;
+            request.cb = nodeCount * nodeCount;
             group->matrix = (signed char *)PvAllocSwImpl__Fi(&request);
             for (int row = 0; row < self->nodeCount; row++) {
                 for (int column = 0; column < self->nodeCount; column++) {

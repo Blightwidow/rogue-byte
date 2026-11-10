@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct IKLIMB { int xf0; int pxfUpper; int pxfLower; int pxfEnd; char pad[0xA0 - 0x10]; QW posTarget; QW posEffector; char pad2[0xE0 - 0xC0]; };
 struct VT { short delta; short index; int (*fn)(void *, int); };
 struct ALO { char pad[0xC]; char *vt; char pad1[0x148 - 0x10]; unsigned long flags; };

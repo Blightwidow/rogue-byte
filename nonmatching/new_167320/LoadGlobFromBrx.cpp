@@ -6,7 +6,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct RGBA { u8 r, g, b, a; };
 struct VEC3 { float x, y, z; };
 struct UV { float u, v; };
@@ -348,8 +348,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
 
     pglob->count = U8Read__18CBinaryInputStream(pbis);
     ALLOCREQ *preq = &u80.req;
-    u80.req.size = pglob->count * 0x50;
-    preq->align = 0x10;
+    u80.req.cb = pglob->count * 0x50;
+    preq->cbAlign = 0x10;
     pglobi->aweights = (char *)PvAllocSwClearImpl__Fi(preq);
     for (int iweight = 0; iweight < pglob->count; iweight++) {
         int *pweight = (int *)(pglobi->aweights + iweight * 0x50);
@@ -389,8 +389,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         lb.uC0.obj.count = U8Read__18CBinaryInputStream(pbis);
         lb.uC0.obj.field14 = U8Read__18CBinaryInputStream(pbis);
         lb.uC0.obj.field18 = U8Read__18CBinaryInputStream(pbis);
-        u80.req.size = 0xB0;
-        preq->align = 0x10;
+        u80.req.cb = 0xB0;
+        preq->cbAlign = 0x10;
         OBJ_16A000 *pobj = (OBJ_16A000 *)PvAllocSwCopyImpl__FiPv(preq, &lb.uC0.obj);
         pobj->field0 = *(int *)pglobset;
         pobj->grf = pobj->count;
@@ -417,11 +417,11 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         AllocStack__4DMASi(&lb.uC0.s.vifsBatch, 0x2000);
         AddDmaCnt__4DMAS(&lb.uC0.s.vifsBatch);
     }
-    u80.req.size = csubglob * 4;
-    preq->align = 0x10;
+    u80.req.cb = csubglob * 4;
+    preq->cbAlign = 0x10;
     acsm = (int *)PvAllocStackClearImpl__Fi(preq);
-    u80.req.size = csubglob * 4;
-    preq->align = 0x10;
+    u80.req.cb = csubglob * 4;
+    preq->cbAlign = 0x10;
     aasm = (SUBMESH_16A000 **)PvAllocStackClearImpl__Fi(preq);
 
     for (int isubglob = 0; isubglob < csubglob; isubglob++) {
@@ -442,8 +442,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         int ism;
         u8 *pipos;
         csm = U8Read__18CBinaryInputStream(pbis);
-        u80.req.size = csm << 6;
-        u80.req.align = 0x10;
+        u80.req.cb = csm << 6;
+        u80.req.cbAlign = 0x10;
         asm_ = (SUBMESH_16A000 *)PvAllocStackClearImpl__Fi((ALLOCREQ *)&u80);
         acsm[isubglob] = csm;
         aasm[isubglob] = asm_;
@@ -504,8 +504,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
                 }
                 if (psm->grf & 0x20) {
                     ALLOCREQ *preqSm = &lb.uC0.s.uF0.req;
-                    lb.uC0.s.uF0.req.size = psm->cvtx << 2;
-                    preqSm->align = 0x10;
+                    lb.uC0.s.uF0.req.cb = psm->cvtx << 2;
+                    preqSm->cbAlign = 0x10;
                     psm->aipos = (int *)PvAllocStackClearImpl__Fi(preqSm);
                 }
                 cvtx += psm->cvtx;
@@ -527,20 +527,20 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         int cqwFog = cvtx + 0x1F;
         CStackFrame_16A000 frame2;
         int cpos = U8Read__18CBinaryInputStream(pbis);
-        u80.req.size = cpos * 0xC;
-        u80.req.align = 0x10;
+        u80.req.cb = cpos * 0xC;
+        u80.req.cbAlign = 0x10;
         apos = (VEC3 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         CBinaryInputStream_Read_thunk(pbis, cpos * 0xC, apos);
-        u80.req.size = cpos * 8;
-        u80.req.align = 0x10;
+        u80.req.cb = cpos * 8;
+        u80.req.cbAlign = 0x10;
         auv = (UV *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         CBinaryInputStream_Read_thunk(pbis, cpos * 8, auv);
-        u80.req.size = cpos * 0xC;
-        u80.req.align = 0x10;
+        u80.req.cb = cpos * 0xC;
+        u80.req.cbAlign = 0x10;
         anormal = (VEC3 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         CBinaryInputStream_Read_thunk(pbis, cpos * 0xC, anormal);
-        u80.req.size = cpos * 4;
-        u80.req.align = 0x10;
+        u80.req.cb = cpos * 4;
+        u80.req.cbAlign = 0x10;
         argba = (RGBA *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         CBinaryInputStream_Read_thunk(pbis, cpos * 4, argba);
         for (RGBA *prgba = argba; prgba < argba + cpos; prgba++)
@@ -558,8 +558,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
             int cweightAlloc = 4;
             if (pglob->count <= 3)
                 cweightAlloc = pglob->count;
-            u80.req.size = cweightAlloc * cpos;
-            u80.req.align = 0x10;
+            u80.req.cb = cweightAlloc * cpos;
+            u80.req.cbAlign = 0x10;
             aweight = (u8 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
             int cweightRead = 4;
             if (pglob->count <= 3)
@@ -569,15 +569,15 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
             aweight = 0;
         }
 
-        u80.req.size = cvtx;
-        u80.req.align = 0x10;
+        u80.req.cb = cvtx;
+        u80.req.cbAlign = 0x10;
         u8 *aipos = (u8 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         bitMask = 1;
         CBinaryInputStream_Read_thunk(pbis, cvtx, aipos);
         int cbBits = (cqwFog / 32) * 4;
         fAll = 0;
-        u80.req.size = cbBits;
-        u80.req.align = 0x10;
+        u80.req.cb = cbBits;
+        u80.req.cbAlign = 0x10;
         u32 *abits = (u32 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
         CBinaryInputStream_Read_thunk(pbis, cbBits, abits);
         pbits = abits;
@@ -596,8 +596,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         if (pglob->count == 0 && !(pglob->grf & 1) && lb.fog.ifog == -1) {
             apair = 0;
         } else if (pglob->grf & 8) {
-            u80.req.size = cvtx * 0x14;
-            u80.req.align = 0x10;
+            u80.req.cb = cvtx * 0x14;
+            u80.req.cbAlign = 0x10;
             u8 *pipos = aipos;
             apair = (PAIR_16A000 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
             PAIR_16A000 *ppair = apair;
@@ -615,11 +615,11 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
             }
         } else {
             int cbFirst = cpos * 4;
-            u80.req.size = cbFirst;
-            u80.req.align = 0x10;
+            u80.req.cb = cbFirst;
+            u80.req.cbAlign = 0x10;
             PAIR_16A000 **appairFirst = (PAIR_16A000 **)PvAllocStackClearImpl__Fi((ALLOCREQ *)&u80);
-            u80.req.size = cvtx * 0x14;
-            u80.req.align = 0x10;
+            u80.req.cb = cvtx * 0x14;
+            u80.req.cbAlign = 0x10;
             apair = (PAIR_16A000 *)PvAllocStackImpl__Fi((ALLOCREQ *)&u80);
             u8 *pipos = aipos + cvtx;
             PAIR_16A000 *ppair = apair;
@@ -786,8 +786,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
             }
             if (pglobi->pobj != 0) {
                 int qwObj = pdesc->weight;
-                u80.req.size = 0x1C;
-                u80.req.align = 0x10;
+                u80.req.cb = 0x1C;
+                u80.req.cbAlign = 0x10;
                 SLE_16A000 *psle = (SLE_16A000 *)PvAllocSwClearImpl__Fi((ALLOCREQ *)&u80);
                 AppendSlEntry(&pglobi->pobj->sl, psle);
                 psle->cvtx = psm->cvtx;
@@ -1048,8 +1048,8 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
             AddDmaRet__4DMAS(&lb.uC0.s.vifsBatch);
             u32 cqwBatch = (lb.uC0.s.vifsBatch.end - lb.uC0.s.vifsBatch.start) >> 4;
             pcmparam->cqw = cqwBatch;
-            u80.req.size = cqwBatch << 4;
-            preq->align = 0x10;
+            u80.req.cb = cqwBatch << 4;
+            preq->cbAlign = 0x10;
             pglob->pdma = PvAllocSwCopyImpl__FiPv(preq, (void *)lb.uC0.s.vifsBatch.start);
         }
     }
@@ -1070,15 +1070,15 @@ extern "C" void LoadGlobFromBrx(GLOBSET_16A000 *pglobset, GLOB_16A000 *pglob, GL
         int csmTotal = 0;
         for (int isubglob = 0; isubglob < csubglob; isubglob++)
             csmTotal += acsm[isubglob];
-        u80.req.size = 0x10;
-        preq->align = 0x10;
+        u80.req.cb = 0x10;
+        preq->cbAlign = 0x10;
         SAVED_16A000 *psaved = (SAVED_16A000 *)PvAllocSwClearImpl__Fi(preq);
         psaved->next = pglobset->psavedFirst;
         pglobset->psavedFirst = psaved;
         psaved->pglob = pglob;
         psaved->csm = csmTotal;
-        u80.req.size = csmTotal << 5;
-        preq->align = 0x10;
+        u80.req.cb = csmTotal << 5;
+        preq->cbAlign = 0x10;
         psaved->asm_ = (SAVEDSM_16A000 *)PvAllocSwImpl__Fi(preq);
         SAVEDSM_16A000 *psavedsm = psaved->asm_;
         for (int isubglob = 0; isubglob < csubglob; isubglob++) {

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 #include "sw.h"
-struct JT { char pad[0xF20]; int binocPhase; char pad2[0xF3C - 0xF24]; float gValue; };
+#include "jt.h"
 extern "C" {
 extern SW B_003DD490;
 extern const char RO_STR_002A8AB8[];
@@ -27,10 +27,10 @@ void BindTextBinocReadout(char *pchzDest)
     float gValue;
     switch (pjt->binocPhase) {
     case 0:
-        gValue = g_2de3b8 * pjt->gValue;
+        gValue = g_2de3b8 * pjt->field_0xF3C;
         break;
     case 1:
-        gValue = g_2de514 * pjt->gValue;
+        gValue = g_2de514 * pjt->field_0xF3C;
         break;
     }
     if (FIsBasicDerivedFrom(pjt, 0x35) != 0) {

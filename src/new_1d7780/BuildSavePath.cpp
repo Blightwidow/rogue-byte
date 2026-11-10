@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SAVEPATH { int csym; unsigned short *asymid; };
 extern "C" {
 void *PvAllocStackImpl__Fi(ALLOCREQ *);

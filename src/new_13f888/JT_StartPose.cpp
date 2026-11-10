@@ -1,6 +1,5 @@
 #include "sly2.h"
-struct VT { char pad[0x2C0]; short delta; short index; void (*fn)(void *, int); };
-struct JT { char pad0[0xC]; VT *vptr; char pad1[0x1030 - 0x10]; void *handleAseg; void *refSm; };
+#include "jt.h"
 struct SW;
 extern "C" SW B_003DD490;
 extern "C" void JT_EndPose(JT *);
@@ -20,14 +19,12 @@ extern "C" void JT_StartPose(JT *pjt, int oid, int grfapl, int iPose)
     void *plo = PloFindSwObject_thunk(&B_003DD490, 1, oid, pjt);
     if (plo == 0) return;
     if (FIsBasicDerivedFrom(plo, 0x6D)) {
-        VT *vt = pjt->vptr;
-        vt->fn((char *)pjt + vt->delta, iPose);
-        RetractSmaRef(&pjt->refSm);
-        ApplyAsegToHandle(plo, pjt, grfapl, &pjt->handleAseg, 0.0f, 1.0f);
+        pjt->SetMode(iPose);
+        RetractSmaRef(&pjt->field_0x1034);
+        ApplyAsegToHandle(plo, pjt, grfapl, &pjt->field_0x1030, 0.0f, 1.0f);
     } else if (FIsBasicDerivedFrom(plo, 0x6F)) {
-        VT *vt = pjt->vptr;
-        vt->fn((char *)pjt + vt->delta, iPose);
-        RetractAsegaHandle(&pjt->handleAseg);
-        func_001F1448(plo, pjt, -1, grfapl, &pjt->refSm);
+        pjt->SetMode(iPose);
+        RetractAsegaHandle(&pjt->field_0x1030);
+        func_001F1448(plo, pjt, -1, grfapl, &pjt->field_0x1034);
     }
 }

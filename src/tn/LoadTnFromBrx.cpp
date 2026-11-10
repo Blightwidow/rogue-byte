@@ -1,4 +1,4 @@
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct PA { int size; int align; int cplo; unsigned long **aplo; };
 struct TN {
     char pad[0xE4]; char geom[0x18]; char bspc[0xF0 - 0xFC + 0x18 + 0x0];
@@ -14,8 +14,8 @@ void CBinaryInputStream_ReadGeom(void *, void *);
 void CBinaryInputStream_ReadBspc(void *, void *, void *);
 void *CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
-void *PvAllocStackImpl__Fi(REQ *);
-void *PvAllocSwCopyImpl__FiPv(REQ *, void *);
+void *PvAllocStackImpl__Fi(ALLOCREQ *);
+void *PvAllocSwCopyImpl__FiPv(ALLOCREQ *, void *);
 void func_00221818(void *, int);
 void func_00221940(void *);
 void LoadOptionsFromBrx__FPvP18CBinaryInputStream(void *, void *);
@@ -33,15 +33,15 @@ extern "C" void LoadTnFromBrx(TNX *tn, void *bis)
     CBinaryInputStream_ReadGeom(bis, geom);
     CBinaryInputStream_ReadBspc(bis, geom, &tn->bspc);
     CStackFrame_Construct(frame);
-    REQ *req = (REQ *)&pa;
-    req->size = 0x240;
-    req->align = align;
+    ALLOCREQ *req = (ALLOCREQ *)&pa;
+    req->cb = 0x240;
+    req->cbAlign = align;
     tn->steps = (int)PvAllocStackImpl__Fi(req);
     func_00221818(tn, 0x30);
     LoadOptionsFromBrx__FPvP18CBinaryInputStream(tn, bis);
     func_00221940(tn);
-    req->size = tn->stepCount * 0x90;
-    req->align = align;
+    req->cb = tn->stepCount * 0x90;
+    req->cbAlign = align;
     void *world = PvAllocSwCopyImpl__FiPv(req, (void *)tn->steps);
     tn->stepsFixed = 1;
     tn->steps = (int)world;

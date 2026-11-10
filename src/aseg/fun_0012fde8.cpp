@@ -1,4 +1,4 @@
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct NODE { float x; float y; int value; };
 struct OWNER { char pad[0xB0]; NODE *node; };
 extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);

@@ -1,11 +1,11 @@
 #include "sly2.h"
 struct BIS;
-struct REQ { int size; int align; };
+#include "alloc.h"
 extern "C" void LoadLoFromBrx(void *, BIS *);
 extern "C" int S8Read__18CBinaryInputStream(BIS *);
 extern "C" float F32Read__18CBinaryInputStream(BIS *);
 extern "C" unsigned U32Read__18CBinaryInputStream(BIS *);
-extern "C" void *PvAllocSwClearImpl__Fi(REQ *);
+extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 extern "C" void func_00118458(BIS *, void *);
 extern "C" void AppendSlEntry(void *, void *);
 extern "C" void LoadMovieDictionary(void *, BIS *, void *, void *, void *);
@@ -25,9 +25,9 @@ void LoadBlotFromBrx(BLOT *blot, BIS *stream)
     blot->f_bc = U32Read__18CBinaryInputStream(stream);
     if (streamed) {
         blot->state = 0;
-        REQ request;
-        request.size = 0x50;
-        request.align = 0x10;
+        ALLOCREQ request;
+        request.cb = 0x50;
+        request.cbAlign = 0x10;
         blot->alloc = B_003E1C70;
         void *record = PvAllocSwClearImpl__Fi(&request);
         blot->record = record;

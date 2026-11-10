@@ -4,101 +4,70 @@ struct VT48 { char pad[0x48]; short delta; short index; void (*fn)(void *); };
 struct OBJ { char pad[0xC]; VT48 *vptr; };
 struct OBJ40 { char pad[0xC]; VT *vptr; };
 struct HOME { char pad[8]; void *pos; float yaw; };
-struct SENSOR { char pad[0xE0]; void *owner; int f; };
-struct GUARD {
-    char pad0[0xEC];
-    int fEC;
-    char padF0[0x17C];
-    char goalstack[4];
-    char pad270[0x80];
-    HOME *fHome;
-    char pad2F4[0xC];
-    QW fPos;
-    float fYaw;
-    char pad314[0x24];
-    int f338;
-    int f33C;
-    int f340;
-    int f344;
-    char pad348[0x14C];
-    int f494;
-    void *fHurt;
-    void *fDamage;
-    char pad4A0[0x9D8];
-    int fE78;
-    char padE7C[0x8];
-    int fE84;
-    int fE88;
-    char padE8C[0xD8];
-    SENSOR *fSensor;
-    char padF68[0x68];
-    char fPath[4];
-    char padFD4[0x14];
-    unsigned fFlags;
-    OBJ *fObj;
-};
+struct SENSOR { char pad[0xE0]; void *owner; struct OXA *f; };
+#include "stepguard.h"
 extern "C" {
-void func_001CB518(GUARD *, void *);
+void func_001CB518(STEPGUARD *, void *);
 void GoalStack_Clear(void *);
 void func_00209778(void *);
-void SetGuardGrfsgs(GUARD *, int);
+void SetGuardGrfsgs(STEPGUARD *, int);
 void func_0020CE40(void *);
 void func_0020D1C8(void *);
 void EnableFallCheck(void *);
-QW PosLoWorld(GUARD *);
-float RadYawSo(GUARD *);
-void SetStepRadTarget(GUARD *, float);
+QW PosLoWorld(STEPGUARD *);
+float RadYawSo(STEPGUARD *);
+void SetStepRadTarget(STEPGUARD *, float);
 int GrfsgsFromSgs(int);
-void *PguardanimBestMatch(GUARD *, int);
-void func_00153EF8(SENSOR *, GUARD *, int);
-void func_001F1A40(GUARD *);
-void func_001F1CF8(GUARD *);
-OBJ40 *func_00205438(GUARD *, int);
-void func_001A58D0(SENSOR *, GUARD *, int);
+void *PguardanimBestMatch(STEPGUARD *, int);
+void func_00153EF8(SENSOR *, STEPGUARD *, int);
+void func_001F1A40(STEPGUARD *);
+void func_001F1CF8(STEPGUARD *);
+OBJ40 *func_00205438(STEPGUARD *, int);
+void func_001A58D0(SENSOR *, STEPGUARD *, int);
 extern int g_2e1e40, g_2f7900, g_2dd5bc, B_002DD648;
 }
-void OnGuardAdd(GUARD *guard, void *pool)
+void OnGuardAdd(STEPGUARD *guard, void *pool)
 {
     func_001CB518(guard, pool);
-    void *home = &guard->fPos;
-    guard->f33C = guard->f338;
-    guard->fE88 = guard->fE84;
-    guard->f344 = guard->f340;
-    GoalStack_Clear(guard->goalstack);
-    func_00209778(guard->fPath);
+    void *home = &guard->posHome;
+    guard->field_0x33C = guard->field_0x338;
+    guard->field_0xE88 = guard->field_0xE84;
+    guard->field_0x344 = guard->field_0x340;
+    GoalStack_Clear(((char *)guard + 0x26C));
+    func_00209778(&guard->field_0xFD0);
     SetGuardGrfsgs(guard, 0);
-    func_0020CE40(guard->fHurt);
-    func_0020D1C8(guard->fDamage);
-    EnableFallCheck(guard->fHurt);
-    guard->fPos = PosLoWorld(guard);
-    guard->fYaw = RadYawSo(guard);
-    guard->fHome->pos = home;
-    guard->fHome->yaw = guard->fYaw;
-    SetStepRadTarget(guard, guard->fYaw);
-    guard->fFlags = 0;
+    func_0020CE40(guard->field_0x498);
+    func_0020D1C8(guard->field_0x49C);
+    EnableFallCheck(guard->field_0x498);
+    guard->posHome = PosLoWorld(guard);
+    guard->radHome = RadYawSo(guard);
+    guard->phome->pos = home;
+    guard->phome->yaw = guard->radHome;
+    SetStepRadTarget(guard, guard->radHome);
+    guard->grf = 0;
     if (PguardanimBestMatch(guard, GrfsgsFromSgs(9)))
-        guard->fFlags |= 2;
+        guard->grf |= 2;
     else
-        guard->fE78 = 2;
+        guard->field_0xE78 = 2;
     if (PguardanimBestMatch(guard, GrfsgsFromSgs(8)))
-        guard->fFlags |= 4;
+        guard->grf |= 4;
     if (PguardanimBestMatch(guard, GrfsgsFromSgs(0xF)))
-        guard->fFlags |= 1;
+        guard->grf |= 1;
     if (PguardanimBestMatch(guard, GrfsgsFromSgs(0x11)))
-        guard->fFlags |= 8;
-    func_00153EF8(guard->fSensor, guard, g_2e1e40);
-    func_00153EF8(guard->fSensor, guard, g_2f7900);
-    func_00153EF8(guard->fSensor, guard, g_2dd5bc);
-    func_00153EF8(guard->fSensor, guard, B_002DD648);
-    if (guard->f494) {
+        guard->grf |= 8;
+    func_00153EF8(guard->psensor, guard, g_2e1e40);
+    func_00153EF8(guard->psensor, guard, g_2f7900);
+    func_00153EF8(guard->psensor, guard, g_2dd5bc);
+    func_00153EF8(guard->psensor, guard, B_002DD648);
+    if (guard->prig) {
         func_001F1A40(guard);
         func_001F1CF8(guard);
     }
-    if (guard->fObj)
-        guard->fObj->vptr->fn((char *)guard->fObj + guard->fObj->vptr->delta);
+    if (guard->field_0xFEC)
+        guard->field_0xFEC->Remove();
     OBJ40 *goal = func_00205438(guard, 0x9C);
     goal->vptr->fn((char *)goal + goal->vptr->delta);
-    func_001A58D0(guard->fSensor, guard, 0xF);
-    guard->fSensor->owner = guard;
-    guard->fSensor->f = guard->fEC;
+    func_001A58D0(guard->psensor, guard, 0xF);
+    guard->psensor->owner = guard;
+    guard->psensor->f = guard->poxa;
 }

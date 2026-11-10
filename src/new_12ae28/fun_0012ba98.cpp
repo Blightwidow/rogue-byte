@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct KEY2 { float pos[3]; float t; float vec[4]; };
 struct ACRB2 { int pad0; int ckey; KEY2 *akey; };
 extern "C" {

@@ -1,4 +1,4 @@
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct NODE { char pad[0x124]; int index; };
 struct ITEM { char pad[0x124]; NODE *pnode; int flag; };
 struct ADJ { int count; int *aitem; };
@@ -9,14 +9,14 @@ extern "C" void *PvAllocStackClearImpl__Fi(ALLOCREQ *);
 extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);
 static inline void *PvAllocStackClear(ALLOCREQ *preq, int cb)
 {
-    preq->size = cb;
-    preq->align = 0x10;
+    preq->cb = cb;
+    preq->cbAlign = 0x10;
     return PvAllocStackClearImpl__Fi(preq);
 }
 static inline void *PvAllocSw(ALLOCREQ *preq, int cb)
 {
-    preq->align = 0x10;
-    preq->size = cb;
+    preq->cbAlign = 0x10;
+    preq->cb = cb;
     return PvAllocSwImpl__Fi(preq);
 }
 extern "C" void BuildPzgraphAdjacency(PZG *pzg)

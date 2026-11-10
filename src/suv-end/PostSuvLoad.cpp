@@ -5,12 +5,12 @@ struct EMITB {
     char pad3[0x94]; int oidA; int oidB; int oidC; int oidSpline;
 };
 struct EMITTER { char pad[0xE4]; EMITB *emitb; };
-struct REQ { int size; int align; };
+#include "alloc.h"
 extern "C" {
 void PostLoLoad(EMITTER *);
 void *PloFindSwObject_thunk(void *, int, int, void *);
 void func_002590F0(EMITTER *, int);
-void *PvAllocSwCopyImpl__FiPv(REQ *, void *);
+void *PvAllocSwCopyImpl__FiPv(ALLOCREQ *, void *);
 extern char B_003DD490[];
 extern char D_002CE4B8[];
 }
@@ -52,10 +52,10 @@ void PostSuvLoad(EMITTER *emitter)
         emitter->emitb->ref = D_002CE4B8;
     if (memcmp(emitter->emitb->ref, apv, 0x14) != 0) {
         func_002590F0(emitter, 1);
-        REQ req;
-        REQ *preq = &req;
-        preq->size = 0x14;
-        preq->align = 0x10;
+        ALLOCREQ req;
+        ALLOCREQ *preq = &req;
+        preq->cb = 0x14;
+        preq->cbAlign = 0x10;
         emitter->emitb->ref = PvAllocSwCopyImpl__FiPv(preq, apv);
     }
 }

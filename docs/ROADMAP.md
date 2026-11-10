@@ -151,6 +151,43 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `AddSoLoHierarchy` tests bit 0 to tell them apart). `LO` slots 8 (`Add`), 25 (`SetCloneId`) and 37 gained their
      signatures, so `InstantiateClone`, `InitCloneSets`, `SolveSw`, `func_001CDA80` and `AddSoLoHierarchy` call them as
      virtuals; `SO` 0x70 is where `AddSoLoHierarchy`'s walk of `dlChild` stops.
+   - `ALLOCREQ` (2026-11-10): `include/alloc.h`, the size and alignment the world's and the stack's allocators take by address
+     (`PvAllocSwImpl`, `PvAllocStackImpl` and their `Clear`/`Copy` forms), copied as `ALLOCREQ` or `REQ` with three spellings of
+     its fields in 114 sources. All moved: 83 matched per-function sources and 5 whole files (`make unit`), each scoring 0, and 26
+     unmatched drafts at their old scores. Two other local `REQ`s are different types and stay.
+   - The player (2026-11-10): `include/po.h` (`PO`, class 50, 0x180 bytes), `include/step.h` (`STEP`, 51, 0x2C0), `include/jt.h`
+     (`JT`, 52, 0x1320) and `include/sly.h` (`SLY`, 53, 0x2060). `JT` has no factory: `InitBentley` calls `InitJt`, and Sly (53),
+     Murray (54, 0x1B00) and Bentley (55, 0x1880) derive from it. Four player vtables were found by the slot that holds
+     `SetJtFocus`: `JT`'s own at 0x2CBE68 (its slots 88 to 92, 94 and 103 point to one stub, `func_0023C820`), Sly's at 0x2D2E98
+     (`InitSly`, `LoadSlyFromBrx`), Murray's at 0x2D44C8 and Bentley's at 0x2CB230. The class table itself records none of
+     53's or 54's, which is why `JT`'s methods were first misread as Sly's. A field is read or set by a method of the class
+     (`InitJt` sets 20, the vtable slot is listed), by a function that calls one of `JT`'s own slots on the object (88 and up
+     exist only in the player family), by one whose other fields agree with those, or by two readers that agree. The local
+     `JT`s showed how far apart the guesses had gone: `UpdateJtBounds` declared 17 bounds where three fit before Sly's state at
+     0x18C8 (read by five Sly methods), and `UpdateBentleyActive` read `InitJt`'s float at 0x1020 as an int. Slots 88, 93, 95, 99,
+     100 and 102 have signatures, and 7 functions call them as virtuals. 29 matched sources use the headers (14 by script, 6
+     with virtual calls, 9 from raw offsets such as `*(int *)(pjt + 0x18C8)` to members), all scoring 0. A second pass added
+     the held loot (0x11A8, five readers, one of them collecting class-52 objects), the gadget slots (0x1180, read by
+     `PostJtLoad`'s callee through slot 103), the carried object (0x9A0, after a class-52 test), and Sly's step-aseg table
+     (0x1720, slot 90) and cane target (0x18C0): 9 more sources moved, and `SpendJtGadgetPower` got its name back from an
+     old field rename. 24 sources still declare a local `JT`-like struct: single readers (0x18D8, 0x1854, 0x218), Sly's or
+     Murray's range from a function not known to hold either, Bentley's own fields, and other types (a world at offset 0).
+     `include/murray.h` (`MURRAY`, 54) and `include/bentley.h` (`BENTLEY`, 55) followed, from their vtables (0x2D44C8, 0x2CB230):
+     `InitMurray` and `InitBentley` set most of their fields, and the two set the same values in `JT` (0x1000, 0x1098 to 0x10B4),
+     which made those `JT` fields. Bentley's six gadget entries are a `BENTLEYSLOT` array at 0x1824. `LO` gained `oid` (0x18),
+     `STEP` the goal velocity (0x190), the jump time (0x20C) and the default animation (0x268, slot 90's fallback in Murray and
+     Bentley). 32 sources moved, among them both inits, `UpdateMurrayActive` and `UpdateBentleyActive` (slot 99 called as
+     `FCanUseGadget`). 9 still declare a local copy: single readers (0x1AD0, 0x16D8), hand-written vtable calls on Bentley or
+     on the carried object, layouts the converter cannot read (a union, `SetMurrayLiftState`), and one whose field at 0x150
+     contradicts `PO`'s controller.
+   - Guards and goals (2026-11-10): `include/stepguard.h` (`STEPGUARD`, class 56, 0x1010 bytes, Sly 1's name; derived from
+     `STEP`, no vtable of its own like `JT`) and `include/goal.h` (`GOAL`, class 155, 0x30 bytes, the root's other branch).
+     `STEPGUARD`'s methods are the slot functions its eleven subclasses (57 to 67) share and `STEP` does not; it adds slots 88
+     and 89. `GOAL`'s own methods prove its actor at 0x10 (a `STEP`: `Goal_FillVjoy` reads its heading) and its child at 0x18.
+     14 sources moved to `STEPGUARD` (`PostGuardLoad`, `OnGuardAdd` and `UpdateGuard` among them, with virtual calls) and 43 to
+     `GOAL`: a local goal layout becomes a local subclass, `struct GOAL_<address> : GOAL`, keeping its fields from 0x30 until
+     the subclasses (GoalBrain, GoalAnim, GoalHit and about fifty more) get headers. 10 unmatched drafts moved at their scores.
+     48 local guard layouts remain: most belong to functions no method or second reader confirms yet.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

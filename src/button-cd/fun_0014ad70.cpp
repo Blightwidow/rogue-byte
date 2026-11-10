@@ -1,7 +1,13 @@
 struct PATH { char pad0[0x58]; char *anode; };
-struct GOAL { char pad0[0x38]; PATH *path; int inodeCur; int inodeTarget; };
-extern "C" void func_0014AE38(GOAL *, int);
-void func_0014AD70(GOAL *goal)
+#include "goal.h"
+struct GOAL_14AD70 : GOAL {
+    char pad_30[0x8];
+    PATH *path;
+    int inodeCur;
+    int inodeTarget;
+};
+extern "C" void func_0014AE38(GOAL_14AD70 *, int);
+void func_0014AD70(GOAL_14AD70 *goal)
 {
     int inodeCur = goal->inodeCur;
     int kind;

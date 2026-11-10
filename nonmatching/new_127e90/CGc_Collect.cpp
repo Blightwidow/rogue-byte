@@ -65,7 +65,7 @@ struct SLOTHEAP {
     void *freeList;
     int slotCount;
 };
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct STACKFRAME { int field0; int field4; int field8; int fieldC; };
 
 extern "C" {
@@ -99,8 +99,8 @@ extern int g_2dd598;
 
 // Retail: the three mark stacks are sized from each slot heap's count at +0x10
 // (read as a struct member, which keeps every array store ahead of its count
-// store and the next load), the request is filled as request.size plus
-// prequest->align like LoadCoinFromBrx, and the next link is decoded with
+// store and the next load), the request is filled as request.cb plus
+// prequest->cbAlign like LoadCoinFromBrx, and the next link is decoded with
 // "index == 0 && pool == 0 ? 0 : chunk + index", the index a 13-bit field of
 // a short (its shift and mask land in two registers, the pool's in one).
 // Retail's frame is 0xC0: STACKFRAME at sp+0, the request at sp+0x10 and a
@@ -123,16 +123,16 @@ extern "C" void CGc_Collect(GC *gc)
     ALLOCREQ request;
     ALLOCREQ *prequest = &request;
 
-    request.size = B_004520F8.slotCount * 4;
-    prequest->align = align;
+    request.cb = B_004520F8.slotCount * 4;
+    prequest->cbAlign = align;
     gc->frames = (Node **)PvAllocStackImpl__Fi(prequest);
     gc->frameCount = 0;
-    request.size = B_004520A8.slotCount * 4;
-    prequest->align = align;
+    request.cb = B_004520A8.slotCount * 4;
+    prequest->cbAlign = align;
     gc->procs = (Node **)PvAllocStackImpl__Fi(prequest);
     gc->procCount = 0;
-    request.size = B_00452120.slotCount * 4;
-    prequest->align = align;
+    request.cb = B_00452120.slotCount * 4;
+    prequest->cbAlign = align;
     gc->pairs = (Node **)PvAllocStackImpl__Fi(prequest);
     gc->pairCount = 0;
 

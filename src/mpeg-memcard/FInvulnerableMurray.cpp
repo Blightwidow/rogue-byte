@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct MURRAY { char pad[0x13D0]; int state; };
+#include "murray.h"
 int FInvulnerableJt(void *, int);
 extern "C" int func_00194640(void *, int);
 int FInvulnerableMurray(MURRAY *pmurray, int grftak)

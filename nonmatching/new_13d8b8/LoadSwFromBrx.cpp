@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct Bis;
 struct RGBA {
     unsigned char r, g, b, a;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct JT { char pad[0x18]; };
+#include "jt.h"
 extern "C" void SetJtState(JT *, int, int);
 void SetJtStateFromKind(JT *pjt, unsigned int nKind)
 {

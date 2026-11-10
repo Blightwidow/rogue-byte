@@ -5,7 +5,7 @@
 #include "m2c_macros.h"
 #include "include_asm.h"
 
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 
 struct PLOARRAY { int unk0; int cploMax; int cplo; int *aplo; };
 

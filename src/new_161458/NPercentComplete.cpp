@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct TASK { char pad0[0x54]; int state; char pad1[0x48]; int dependents; };
 extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
@@ -17,8 +17,8 @@ int NPercentComplete(void)
     ALLOCREQ req;
     ALLOCREQ *preq = &req;
     int align = 0x10;
-    preq->size = B_003DD490.ctask << 2;
-    preq->align = align;
+    preq->cb = B_003DD490.ctask << 2;
+    preq->cbAlign = align;
     TASK **tasks = (TASK **)PvAllocStackClearImpl__Fi(preq);
     int found = CploFindSwObjectsByClass(&B_003DD490, 5, 0x85, 0, B_003DD490.ctask, tasks);
     for (int i = 0; i < found; i++) {

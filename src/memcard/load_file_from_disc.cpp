@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct SAVE;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CFileLocation { unsigned a; unsigned b; unsigned c; unsigned d; char pad[0x100]; void Clear(); int Set(const unsigned *record)
     {
         if (record == 0) return 0;

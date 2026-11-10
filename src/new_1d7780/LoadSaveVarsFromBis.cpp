@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SAVEVARS { int crec; void *arec; char symtab[1]; };
 extern char g_2dd590[];
 extern char B_003D4A60[];

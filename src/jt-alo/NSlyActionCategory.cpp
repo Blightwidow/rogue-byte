@@ -1,11 +1,12 @@
+#include "sly.h"
 extern "C" {
-int func_00143C78(char *, char *);
-int NSlyActionCategory(char *arg0) {
+int func_00143C78(JT *, void *);
+int NSlyActionCategory(SLY *arg0) {
     int result;
-    if (*(int *)(arg0 + 0x204) != 0) {
+    if (arg0->field_0x204 != 0) {
         result = 0;
     } else {
-        switch (*(int *)(arg0 + 0x18C8)) {
+        switch (arg0->jts) {
         case 13:
         case 14:
             result = 1;

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 void *PvAllocSwImpl(int);
 void *PvAllocSwAlign16(void *, int cb)
 {

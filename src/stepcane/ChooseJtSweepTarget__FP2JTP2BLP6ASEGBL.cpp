@@ -1,10 +1,10 @@
 #include "sly2.h"
-struct JT { char pad0[0x1A8]; float heading; char pad1[0x18C0 - 0x1AC]; void *target; char pad2[4]; int jts; };
+#include "sly.h"
 struct BL { float w0; char pad[8]; float w3; };
 extern "C" void ReblendAsegbl(void *);
 extern "C" void SetStepRadTargetDir(void *, QW);
 extern "C" void FixStepAngularVelocity__FP4STEP(void *);
-extern "C" void ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(JT *, int, void *, float, float, void **, QW *, float);
+extern "C" void ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(JT *, int, void *, float, float, TARGET **, QW *, float);
 extern "C" char D_002BF4C0[];
 static inline float GClamp(float g, float lo, float hi)
 {
@@ -14,11 +14,11 @@ static inline float GClamp(float g, float lo, float hi)
         return hi;
     return g;
 }
-extern "C" void ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL(JT *pjt, BL *pbl, void *pasegbl)
+extern "C" void ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL(SLY *pjt, BL *pbl, void *pasegbl)
 {
-    struct { QW vecDir; void *ptarget; } l;
+    struct { QW vecDir; TARGET *ptarget; } l;
     float radMax = pjt->jts == 0 ? 3.15f : 1.6f;
-    ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(pjt, 2, D_002BF4C0, pjt->heading, 0.15f, &l.ptarget, &l.vecDir, radMax);
+    ChooseJtAttackTarget__FP2JTiP6VECTORffPP6TARGETT2(pjt, 2, D_002BF4C0, pjt->radHeading, 0.15f, &l.ptarget, &l.vecDir, radMax);
     float blend;
     if (l.ptarget != 0)
         blend = GClamp((*((float *)&l.vecDir + 2) - -50.0f) * 0.009090909f, 0.0f, 1.0f);
@@ -27,7 +27,7 @@ extern "C" void ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL(JT *pjt, BL *pbl, void *p
     pbl->w3 = blend;
     pbl->w0 = 1.0f - blend;
     ReblendAsegbl(pasegbl);
-    pjt->target = l.ptarget;
+    pjt->ptarget = l.ptarget;
     if (l.ptarget != 0 && pjt->jts == 0) {
         SetStepRadTargetDir(pjt, l.vecDir);
         FixStepAngularVelocity__FP4STEP(pjt);

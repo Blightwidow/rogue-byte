@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 struct CBIS;
 struct PZENTRY { QW *ppos; short iA; short iB; };
 struct PZGRAPH { int cent; PZENTRY *aent; int cvec; QW *avec; int cint; int *aint; int *aintClear; };
@@ -17,16 +17,16 @@ void LoadPzgraphFromBrx(PZGRAPH *pzg, int cent, CBIS *pcbis)
     pzg->cvec = U32Read__18CBinaryInputStream(pcbis);
     pzg->cint = U32Read__18CBinaryInputStream(pcbis);
     req.cb = pzg->cent * 8;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     pzg->aent = (PZENTRY *)PvAllocSwImpl__Fi(&req);
     req.cb = pzg->cvec * 16;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     pzg->avec = (QW *)PvAllocSwImpl__Fi(&req);
     req.cb = pzg->cint * 4;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     pzg->aintClear = (int *)PvAllocSwClearImpl__Fi(&req);
     req.cb = pzg->cint * 4;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     pzg->aint = (int *)PvAllocSwImpl__Fi(&req);
     for (int ient = 0; ient < pzg->cent; ient++) {
         PZENTRY *pent = &pzg->aent[ient];

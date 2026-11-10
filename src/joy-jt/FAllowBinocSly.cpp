@@ -1,6 +1,7 @@
-int FAllowBinocSly(char *pjt)
+#include "sly.h"
+int FAllowBinocSly(SLY *pjt)
 {
-    switch (*(int *)(pjt + 0x18C8)) {
+    switch (pjt->jts) {
     case 0: return 1;
     case 1: return 1;
     case 5: return 1;

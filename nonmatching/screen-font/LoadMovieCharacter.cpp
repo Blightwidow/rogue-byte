@@ -4,7 +4,7 @@ struct Bis;
 struct BLOT { char pad[0xC4]; SLOTHEAP *heap; };
 struct B4 { char b[4]; };
 struct M3 { QW r[3]; };
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 struct PRIM { int w0; int w4; int colour; unsigned char cvtx; char p0[3]; int cslot; unsigned char b14; char p1[3]; short *axy; unsigned char hasBytes; char p2[3]; unsigned char *abyte; };
 struct BATCH { int cprim; int cslot; int cvtx; PRIM *pfirst; PRIM *pend; };
 struct CHAR { int id; int kind; void *owner; int pad0; union { struct { unsigned short cprim; unsigned short cbatch; int cvtxTotal; int cqw; int pk; } shape; float f[13]; int i[13]; } u; };
@@ -187,10 +187,10 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
     case 1: {
         pchar->u.shape.cprim = U16Read__18CBinaryInputStream(pbis);
                 l.a.req.cb = pchar->u.shape.cprim * 0x24;
-        l.a.req.align = 0x10;
+        l.a.req.cbAlign = 0x10;
         PRIM *aprim = (PRIM *)PvAllocStackClearImpl__Fi(&l.a.req);
         l.a.req.cb = pchar->u.shape.cprim * 0x14;
-        l.a.req.align = 0x10;
+        l.a.req.cbAlign = 0x10;
         BATCH *abatch = (BATCH *)PvAllocStackClearImpl__Fi(&l.a.req);
         for (int iprim = 0; iprim < pchar->u.shape.cprim; iprim++) {
             PRIM *pprim = aprim + iprim;
@@ -201,10 +201,10 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
             pprim->hasBytes = U8Read__18CBinaryInputStream(pbis);
             pprim->cslot = pprim->cvtx + 2;
             l.a.req.cb = pprim->cvtx << 2;
-            l.a.req.align = 0x10;
+            l.a.req.cbAlign = 0x10;
             pprim->axy = (short *)PvAllocStackClearImpl__Fi(&l.a.req);
             l.a.req.cb = pprim->cvtx;
-            l.a.req.align = 0x10;
+            l.a.req.cbAlign = 0x10;
             pprim->abyte = (unsigned char *)PvAllocStackClearImpl__Fi(&l.a.req);
             for (int ivtx = 0; ivtx < pprim->cvtx; ivtx++) {
                 short *pxy = (short *)((char *)pprim->axy + ivtx * 4);

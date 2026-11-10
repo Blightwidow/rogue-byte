@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 extern "C" char D_002CA8A0;
 extern "C" char D_002CA8C0;

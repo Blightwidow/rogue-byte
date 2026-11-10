@@ -1,7 +1,8 @@
-extern "C" void func_002046F0(char *, int);
-int FFaceSlyAimTarget(char *self)
+#include "sly.h"
+extern "C" void func_002046F0(void *, TARGET *);
+int FFaceSlyAimTarget(SLY *self)
 {
-    int target = *(int *)(self + 0x18C0);
+    TARGET *target = self->ptarget;
     if (target) {
         func_002046F0(self, target);
         return 1;

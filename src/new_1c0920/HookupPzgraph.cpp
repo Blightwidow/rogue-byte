@@ -2,7 +2,7 @@
 #include "sly2.h"
 struct LO { char pad[0x124]; int ipathzone; char pad2[0x150 - 0x128]; int ipzlink; };
 struct PZGRAPH { char pad[0x10]; int cpathzone; int *aoidPathzone; LO **appathzone; int pad2; int cplink; LO **applink; int pad3; int fHookedUp; };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" char B_003DD490[];
 extern "C" LO *PloFindSwObject_thunk(void *, int, int, LO *);
 extern "C" int CploFindSwObjectsByClass(void *, int, int, LO *, int, LO **);

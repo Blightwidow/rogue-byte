@@ -1,3 +1,4 @@
+#include "sly.h"
 #include "sly2.h"
 extern "C" {
 struct ACT { int pad[3]; int field; };
@@ -32,7 +33,7 @@ struct SLOT { int gadget; int pool; int plo; };
 // (emitter id in the branch delay slot). Written as one block with a goto to a
 // shared label, the argument moves before SpendJtGadgetPower and SetClockRate
 // schedule in the other order; two full case bodies give retail's order.
-extern "C" void UseSlyGadget(char *psly, int gadget)
+extern "C" void UseSlyGadget(SLY *psly, int gadget)
 {
     B_002DEB30.field = gadget;
     bevy_camera_follow_activity(&B_002DEB30, 0x3C, psly);
@@ -43,7 +44,7 @@ extern "C" void UseSlyGadget(char *psly, int gadget)
         B_003E1BEC = -1.0f;
         void *emitter = NewEmitter(0x67);
         SetEmitterUnpositioned(emitter, 0);
-        VirtualRefPtr_Assign(psly + 0x2044, emitter);
+        VirtualRefPtr_Assign((char *)psly + 0x2044, emitter);
         return;
     }
     case 42: {
@@ -52,7 +53,7 @@ extern "C" void UseSlyGadget(char *psly, int gadget)
         B_003E1BEC = 0.7f;
         void *emitter = NewEmitter(0x66);
         SetEmitterUnpositioned(emitter, 0);
-        VirtualRefPtr_Assign(psly + 0x2044, emitter);
+        VirtualRefPtr_Assign((char *)psly + 0x2044, emitter);
         return;
     }
     case 33:
@@ -61,19 +62,19 @@ extern "C" void UseSlyGadget(char *psly, int gadget)
         return;
     case 27:
         SpendJtGadgetPower(psly, gadget);
-        SetJmpBodyState(psly + 0x2C0, 0x13, 0);
+        SetJmpBodyState((char *)psly + 0x2C0, 0x13, 0);
         return;
     case 26:
     case 37:
     case 38:
     case 41: {
         SLOT *pslot = (SLOT *)func_0018D6F8(psly, gadget);
-        if ((unsigned)(*(int *)(psly + 0x11B4) - 4) < 3) {
-            CarryThrow_SetState(psly + 0x11B0, 7);
+        if ((unsigned)(psly->field_0x11B4 - 4) < 3) {
+            CarryThrow_SetState((char *)psly + 0x11B0, 7);
             return;
         }
         if (pslot->plo != 0) {
-            StartAttach(psly + 0x4C0, 0xB, pslot->plo, 0);
+            StartAttach((char *)psly + 0x4C0, 0xB, pslot->plo, 0);
             return;
         }
         char *pnew = (char *)PloLeaseCloneObject(pslot->pool, 0);
@@ -84,20 +85,20 @@ extern "C" void UseSlyGadget(char *psly, int gadget)
             *(void **)(pnew + 0x16C) = psly;
             func_0018D698(psly, pslot, pnew);
         }
-        *(void **)(psly + 0x11C0) = pnew;
+        *(void **)((char *)psly + 0x11C0) = pnew;
         GrfbtnJtGadget(psly, gadget);
         SetJtState(psly, 0x17, -1);
-        CarryThrow_SetState(psly + 0x11B0, 4);
+        CarryThrow_SetState((char *)psly + 0x11B0, 4);
         return;
     }
     case 34:
     case 35:
-        *(int *)(psly + 0x9BC) = gadget;
+        psly->field_0x9BC = gadget;
         if (gadget == 35)
-            *(int *)(psly + 0x130C) = *(int *)(psly + 0x1FE0);
+            psly->field_0x130C = psly->field_0x1FE0;
         else
-            *(int *)(psly + 0x130C) = *(int *)(psly + 0x1FE4);
-        StartAttach(psly + 0x4C0, 0xB, 0, 0);
+            psly->field_0x130C = psly->field_0x1FE4;
+        StartAttach((char *)psly + 0x4C0, 0xB, 0, 0);
         return;
     case 24:
         SpendJtGadgetPower(psly, gadget);
@@ -113,19 +114,19 @@ extern "C" void UseSlyGadget(char *psly, int gadget)
         return;
     case 40:
         SpendJtGadgetPower(psly, gadget);
-        StartAttach(psly + 0x4C0, 2, 0, 0);
+        StartAttach((char *)psly + 0x4C0, 2, 0, 0);
         return;
     case 31: {
-        int expl = *(int *)(psly + 0x204C);
+        int expl = psly->field_0x204C;
         if (expl != 0)
             ExplodeExpl(expl);
         SpendJtGadgetPower(psly, gadget);
-        SetJmpState(psly + 0x2C0, 9, 0, 0);
+        SetJmpState((char *)psly + 0x2C0, 9, 0, 0);
         return;
     }
     case 30:
         SpendJtGadgetPower(psly, gadget);
-        SetJmpState(psly + 0x2C0, 0xE, 0, 0);
+        SetJmpState((char *)psly + 0x2C0, 0xE, 0, 0);
         return;
     default:
         func_00141D38(psly, gadget);

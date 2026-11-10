@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct EVT_12F590 { float t; int type; void *pv; void *pv2; };
 struct EVDATA0_12F590 { int n0; int n1; int n2; int n3; float g4; float g5; float g6; };
 struct EVDATA20_12F590 { int n0; int n1; float g; };

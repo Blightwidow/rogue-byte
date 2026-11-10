@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct TASK { char pad[0x94]; int cprereq; char pad2[0xFC - 0x98]; int visit; };
 #include "sw.h"
 extern "C" int CStackFrame_Construct(void *);
@@ -13,13 +13,13 @@ void OrderTasks(int *pctask, TASK ***paptask)
     *pctask = 0;
     ALLOCREQ req;
     int align = 0x10;
-    req.size = B_003DD490.ctask << 2;
-    *paptask = (TASK **)PvAllocStackClearImpl__Fi((req.align = align, &req));
+    req.cb = B_003DD490.ctask << 2;
+    *paptask = (TASK **)PvAllocStackClearImpl__Fi((req.cbAlign = align, &req));
     char frame[16];
     CStackFrame_Construct(frame);
     int bytes = B_003DD490.ctask << 2;
-    req.align = align;
-    req.size = bytes;
+    req.cbAlign = align;
+    req.cb = bytes;
     TASK **all = (TASK **)PvAllocStackClearImpl__Fi(&req);
     int found = CploFindSwObjectsByClass(&B_003DD490, 5, 0x85, 0, B_003DD490.ctask, all);
     for (int i = 0; i < found; i++)

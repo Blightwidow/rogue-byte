@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct EMITMESH;
 struct CBinaryInputStream;
 struct EMITB { char pad0[0x10]; int emitok; char pad1[0x1C]; EMITMESH *pemitmesh; };
@@ -13,8 +13,8 @@ extern "C" void LoadEmitblipColorsFromBrx(EMITTER *, CBinaryInputStream *);
 extern "C" void LoadEmitterFromBrx(EMITTER *pemitter, CBinaryInputStream *pbis)
 {
     ALLOCREQ allocreq;
-    allocreq.size = 0x100;
-    allocreq.align = 0x10;
+    allocreq.cb = 0x100;
+    allocreq.cbAlign = 0x10;
     void *pvEmitb = PvAllocSwImpl__Fi(&allocreq);
     pemitter->pemitb = (EMITB *)pvEmitb;
     InitEmitb(pvEmitb);

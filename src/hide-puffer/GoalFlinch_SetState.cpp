@@ -1,11 +1,19 @@
 #include "sly2.h"
 struct Sma { int kind; int pad4; int oid; };
 struct Guard { char pad0[0xE7C]; float lo; float hi; };
-struct Goal { char pad0[0x10]; Guard *guard; char pad14[0x2C]; Sma *sma; char pad44[0xC]; int state; float stateF; float timer; };
+#include "goal.h"
+struct GOAL_17A5B0 : GOAL {
+    char pad_30[0x10];
+    Sma *sma;
+    char pad_44[0xC];
+    int state;
+    float stateF;
+    float timer;
+};
 extern "C" float g_2dded0;
 extern "C" float GRandInRange(float, float);
 extern "C" void SetSmaGoal__FP3SMA3OID(int, int);
-extern "C" void GoalFlinch_SetState(Goal *goal, int state)
+extern "C" void GoalFlinch_SetState(GOAL_17A5B0 *goal, int state)
 {
     if (state == goal->state)
         return;
@@ -16,7 +24,7 @@ extern "C" void GoalFlinch_SetState(Goal *goal, int state)
         if (goal->sma->kind == 1)
             SetSmaGoal__FP3SMA3OID(goal->sma->oid, 0x44);
         float base = g_2dded0;
-        Guard *guard = goal->guard;
+        Guard *guard = ((Guard *)goal->pstep);
         goal->timer = base + GRandInRange(guard->lo, guard->hi);
         break;
     }

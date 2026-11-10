@@ -1,14 +1,14 @@
 #include "sly2.h"
 #include "so.h"
 struct SOGEOM { int unk0; SO *psoOwner; };
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 extern "C" void *PvAllocStackImpl__Fi(ALLOCREQ *);
 void ExtractUniqueSosFromGeoms(int cgeom, SOGEOM **ageom, int *pcso, SO ***papso)
 {
     int cso = 0;
     ALLOCREQ req;
     req.cb = cgeom << 2;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     SO **apso = (SO **)PvAllocStackImpl__Fi(&req);
     for (int igeom = 0; igeom < cgeom; igeom++) {
         SO *pso = ageom[igeom]->psoOwner;

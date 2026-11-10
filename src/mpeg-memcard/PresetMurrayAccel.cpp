@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct JT { char pad[4]; };
-struct MURRAY { char pad[0x13D0]; int state; };
+#include "jt.h"
+#include "murray.h"
 extern "C" void AddSoGravityAcceleration(MURRAY *);
 extern "C" void PresetStepAccel(MURRAY *);
 extern "C" void bevy_player_p18_gadget_glide_force(void *);

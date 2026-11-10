@@ -15,7 +15,7 @@ struct ALO { char pad0[0xC]; char *vt; };
 
 struct XFMIRROR { XF *pxfSource; XF *pxfTarget; int fPosition; int fRotation; };
 
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 
 extern char D_002C44F0;
 

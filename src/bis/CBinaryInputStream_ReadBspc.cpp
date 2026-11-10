@@ -3,7 +3,7 @@ struct CBinaryInputStream { int pad; unsigned U16Read(); unsigned U32Read(); };
 struct BSPNODE { unsigned pbspNeg; unsigned pbspPos; unsigned psurf; };
 struct BSPC { int cbsp; int unk4; int unk8; BSPNODE *absp; };
 struct GEOM { char pad[0xC]; char *psurf; };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 extern "C" char D_002BBAF0;
 

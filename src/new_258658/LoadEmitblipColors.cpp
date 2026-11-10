@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct Blip { char pad[0xC]; int colorRanges; char pad2[0xC]; int *table; };
 struct Emitb { char pad[0xC0]; Blip blip; };
 struct B4 { char b[4]; };
