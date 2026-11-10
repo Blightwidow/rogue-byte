@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct JT { char pad[4]; };
+#include "jt.h"
 struct MURRAY { char pad[0x13D0]; int state; };
 extern "C" void AddSoGravityAcceleration(MURRAY *);
 extern "C" void PresetStepAccel(MURRAY *);

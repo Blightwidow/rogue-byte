@@ -155,6 +155,20 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      (`PvAllocSwImpl`, `PvAllocStackImpl` and their `Clear`/`Copy` forms), copied as `ALLOCREQ` or `REQ` with three spellings of
      its fields in 114 sources. All moved: 83 matched per-function sources and 5 whole files (`make unit`), each scoring 0, and 26
      unmatched drafts at their old scores. Two other local `REQ`s are different types and stay.
+   - The player (2026-11-10): `include/po.h` (`PO`, class 50, 0x180 bytes), `include/step.h` (`STEP`, 51, 0x2C0), `include/jt.h`
+     (`JT`, 52, 0x1320) and `include/sly.h` (`SLY`, 53, 0x2060). `JT` has no factory: `InitBentley` calls `InitJt`, and Sly (53),
+     Murray (54, 0x1B00) and Bentley (55, 0x1880) derive from it. Four player vtables were found by the slot that holds
+     `SetJtFocus`: `JT`'s own at 0x2CBE68 (its slots 88 to 92, 94 and 103 point to one stub, `func_0023C820`), Sly's at 0x2D2E98
+     (`InitSly`, `LoadSlyFromBrx`), Murray's at 0x2D44C8 and Bentley's at 0x2CB230. The class table itself records none of
+     53's or 54's, which is why `JT`'s methods were first misread as Sly's. A field is read or set by a method of the class
+     (`InitJt` sets 20, the vtable slot is listed), by a function that calls one of `JT`'s own slots on the object (88 and up
+     exist only in the player family), by one whose other fields agree with those, or by two readers that agree. The local
+     `JT`s showed how far apart the guesses had gone: `UpdateJtBounds` declared 17 bounds where three fit before Sly's state at
+     0x18C8 (read by five Sly methods), and `UpdateBentleyActive` read `InitJt`'s float at 0x1020 as an int. Slots 88, 93, 95, 99,
+     100 and 102 have signatures, and 7 functions call them as virtuals. 29 matched sources use the headers (14 by script, 6
+     with virtual calls, 9 from raw offsets such as `*(int *)(pjt + 0x18C8)` to members), all scoring 0. 37 still declare a
+     local `JT`: some read fields no certain reader confirms yet (0x11A8, 0x1720, 0x18D8...), some read Sly's range from a
+     function not known to hold a Sly, and some local `JT`s are other types (a world at offset 0).
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

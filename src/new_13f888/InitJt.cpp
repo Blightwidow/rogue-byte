@@ -1,3 +1,4 @@
+#include "jt.h"
 extern "C" {
 void InitStep(void *);
 void InitJmp(void *, void *);
@@ -12,33 +13,33 @@ void SetAloInteract(void *, int, int);
 }
 // The `0x12F0 = 0x10F0 = 1` chain is two plain stores: 0x10F0 before the 0x10D4/0x10D8 float chain, 0x12F0 after the 0x1144 store. The
 // scheduler keeps a store that needs no constant register last in source order, which puts 0x10F0 before 0x10D8 as in retail.
-void InitJt(char *jt)
+void InitJt(JT *pjt)
 {
-    InitStep(jt);
-    InitJmp(jt + 0x2C0, jt);
-    InitAttach(jt + 0x4C0, jt);
-    func_0019F3E8(jt + 0x9E0, jt);
-    InitJtZap(jt + 0xDF0, jt);
-    bevy_player_p15_binoc_default(jt + 0xF00, jt);
-    CarryThrow_Init(jt + 0x11B0, jt);
-    InitJtPipe(jt + 0xF50, jt);
-    func_00144638(jt + 0xFD0, jt);
-    *(float *)(jt + 0x103C) = 20.0f;
-    *(float *)(jt + 0x1048) = 125.0f;
-    *(int *)(jt + 0x10F0) = 1;
-    *(float *)(jt + 0x10D4) = *(float *)(jt + 0x10D8) = 1.0f;
-    *(float *)(jt + 0x1138) = 1.5f;
-    *(float *)(jt + 0x113C) = 2.5f;
-    *(float *)(jt + 0x1140) = 3.0f;
-    *(float *)(jt + 0x1144) = 5.0f;
-    *(int *)(jt + 0x12F0) = 1;
-    *(float *)(jt + 0x1020) = 100.0f;
-    *(int *)(jt + 0x1300) = 100;
-    *(float *)(jt + 0x1304) = -60.0f;
-    *(int *)(jt + 0x10EC) = -1;
-    *(int *)(jt + 0x10E4) = -1;
-    *(int *)(jt + 0x1318) = -1;
-    *(int *)(jt + 0x10C8) = -1;
-    SetAloInteract(jt, 0x3FFFFFF, 0);
-    SetAloInteract(jt, 0x10FF00, 8);
+    InitStep(pjt);
+    InitJmp((char *)pjt + 0x2C0, pjt);
+    InitAttach((char *)pjt + 0x4C0, pjt);
+    func_0019F3E8((char *)pjt + 0x9E0, pjt);
+    InitJtZap((char *)pjt + 0xDF0, pjt);
+    bevy_player_p15_binoc_default((char *)pjt + 0xF00, pjt);
+    CarryThrow_Init((char *)pjt + 0x11B0, pjt);
+    InitJtPipe((char *)pjt + 0xF50, pjt);
+    func_00144638((char *)pjt + 0xFD0, pjt);
+    pjt->field_0x103C = 20.0f;
+    pjt->field_0x1048 = 125.0f;
+    pjt->field_0x10F0 = 1;
+    pjt->field_0x10D4 = pjt->field_0x10D8 = 1.0f;
+    pjt->field_0x1138 = 1.5f;
+    pjt->field_0x113C = 2.5f;
+    pjt->field_0x1140 = 3.0f;
+    pjt->field_0x1144 = 5.0f;
+    pjt->fGadgetsAllowed = 1;
+    pjt->field_0x1020 = 100.0f;
+    pjt->nPowerMax = 100;
+    pjt->field_0x1304 = -60.0f;
+    pjt->focusMode = -1;
+    pjt->focusKind = -1;
+    pjt->sidDefault = -1;
+    pjt->field_0x10C8 = -1;
+    SetAloInteract(pjt, 0x3FFFFFF, 0);
+    SetAloInteract(pjt, 0x10FF00, 8);
 }

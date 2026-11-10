@@ -1,4 +1,4 @@
-struct JT { char pad[0x12F0]; int flag; };
+#include "jt.h"
 struct JMP { JT *pjt; int jtbs; char pad[0x1C - 8]; int jmps; char pad2[0x2C - 0x20]; int pending; };
 extern "C" int FActiveCplcy(void *);
 extern "C" char B_002DE2E0[];
@@ -22,7 +22,7 @@ extern "C" int FJmpAllowsGadget(JMP *pjmp, int gadget)
     case 3: {
         value = 0;
         if (pjmp->jmps == 0x11) {
-            if (pjmp->pjt->flag != 0) {
+            if (pjmp->pjt->fGadgetsAllowed != 0) {
                 if ((g_2dfbc0 & 2) != 0)
                     value = FActiveCplcy(B_002DE2E0) == 0;
             }

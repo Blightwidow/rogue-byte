@@ -1,3 +1,4 @@
+#include "jt.h"
 extern "C" {
 void UpdateStep(void *, float);
 void UpdateJtGadgets(void *);
@@ -24,25 +25,25 @@ extern char B_003DA0F0;
 }
 struct VT { short pad0[0x70 / 2]; short delta; short idx; void (*fn)(void *, void *); };
 struct Obj { char pad[0xC]; VT *vt; };
-void UpdateJt(char *jt, float dt)
+void UpdateJt(JT *jt, float dt)
 {
     UpdateStep(jt, dt);
     UpdateJtGadgets(jt);
-    if (FButtonPressedWithin(*(void **)(jt + 0x150), 0x200, 0.0f))
+    if (FButtonPressedWithin(jt->pjoy, 0x200, 0.0f))
         func_00140338(jt);
-    if (*(int *)(jt + 0xDF4) == -1) {
-        char *sub = jt + 0xFD0;
+    if (jt->zapState == -1) {
+        char *sub = (char *)jt + 0xFD0;
         func_00144640(sub);
         if (!func_001449C8(sub)) {
-            int count = *(int *)(jt + 0x270);
+            int count = jt->field_0x270;
             if (count > 0) {
                 int last = count - 1;
-                Obj *top = *(Obj **)(jt + (last << 2) + 0x274);
-                top->vt->fn((char *)top + top->vt->delta, *(void **)(jt + 0x150));
+                Obj *top = *(Obj **)((char *)jt + (last << 2) + 0x274);
+                top->vt->fn((char *)top + top->vt->delta, jt->pjoy);
             } else {
-                void *seq = *(void **)(jt + 0x1084);
+                void *seq = *(void **)((char *)jt + 0x1084);
                 if (seq)
-                    UpdateSeqnodeVjoy(seq, *(void **)(jt + 0x150));
+                    UpdateSeqnodeVjoy(seq, jt->pjoy);
             }
         }
     }
@@ -50,17 +51,17 @@ void UpdateJt(char *jt, float dt)
     UpdateJtWater(jt);
     func_00140750(jt);
     UpdateJtLookRig(jt);
-    int asega = *(int *)(jt + 0xEFC);
+    int asega = jt->field_0xEFC;
     if (asega && FAsegaGone(asega))
-        ReleaseAsegaHandle(jt + 0xEFC);
+        ReleaseAsegaHandle((char *)jt + 0xEFC);
     if (!FActiveCplcy(&B_002DE2E0)) {
-        char *joy = *(char **)(jt + 0x150);
+        char *joy = (char *)jt->pjoy;
         if (*(int *)(joy + 0x80) == 1 && GrfbtnVjoyPressedWithin(joy, 0x100, 0.0f)
             && (B_002DFC00.grf & 0x108) == 0x100) {
             ConsumeJoyButton(&B_002DFC00, 0x100);
             GadgetMenu_Open(&B_003DA0F0);
         }
     }
-    if (!func_001449C8(jt + 0xFD0))
-        GoalStack_Update(jt + 0x26C);
+    if (!func_001449C8((char *)jt + 0xFD0))
+        GoalStack_Update((char *)jt + 0x26C);
 }

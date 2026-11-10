@@ -15,7 +15,7 @@ struct SNDMIX {
         AMB *apamb[8];
     };
 };
-struct JT { char pad0[0x4C8]; int f4C8; char pad4CC[0x10C8 - 0x4CC]; int f10C8; char pad10CC[0x10EC - 0x10CC]; int jts; };
+#include "jt.h"
 extern char B_003DD490[];
 extern float g_2ddf10;
 extern "C" {
@@ -46,15 +46,15 @@ void UpdateSndMix(SNDMIX *psm)
         psm->imix = 0;
     } else if (PpoSwFocus(B_003DD490) != 0 && FIsBasicDerivedFrom(PpoSwFocus(B_003DD490), 0x34) != 0) {
         JT *pjt = PpoSwFocus(B_003DD490);
-        int jts = pjt->jts;
+        int jts = pjt->focusMode;
         if (jts == 3) {
             psm->imix = 0;
         } else if (jts == 4) {
             psm->imix = 2;
-        } else if (pjt->f10C8 != -1) {
+        } else if (pjt->field_0x10C8 != -1) {
             psm->imix = 0;
         } else {
-            int x = pjt->f4C8;
+            int x = pjt->attachKind;
             if (x >= 0 && (x < 3 || x == 0xD))
                 psm->imix = 0;
         }

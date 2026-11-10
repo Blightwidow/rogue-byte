@@ -6,7 +6,7 @@ void SetJtPower(JT *, int);
 extern GADGET D_002BCD00[];
 extern float g_2dded0;
 }
-struct JT { char pad[0x1304]; float field_0x1304; };
+#include "jt.h"
 
 extern "C" void SpendJfield_0x1304Power(JT *jt, int gadget)
 {

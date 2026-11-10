@@ -1,4 +1,4 @@
-struct JT { char pad[0x12F0]; int flag; };
+#include "jt.h"
 struct ATTACH { JT *pjt; int pad; int kind; };
 extern "C" int FActiveCplcy(void *);
 extern "C" char B_002DE2E0[];
@@ -14,7 +14,7 @@ extern "C" int FAttachAllowsGadget(ATTACH *pattach, int gadget)
         case 0xd:
             {
                 int allowed = 0;
-                if (pattach->pjt->flag != 0) {
+                if (pattach->pjt->fGadgetsAllowed != 0) {
                     if ((g_2dfbc0 & 2) != 0)
                         allowed = FActiveCplcy(B_002DE2E0) == 0;
                 }

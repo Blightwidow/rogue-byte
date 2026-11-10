@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct JT { char pad0[0x1A8]; float heading; char pad1[0x10E4 - 0x1AC]; int focusKind; int pad10e8; int focusMode; };
+#include "jt.h"
 struct BINOC { JT *jt; char pad[0x20 - 4]; int mode; char pad1[0x3C - 0x24]; float camera; };
 struct BLOT { char pad[0x58]; int state; };
 struct HUD { BINOC *binoc; int state; BLOT *blotA; int pad0c; BLOT *blotCur; void *recon; };
@@ -62,6 +62,6 @@ extern "C" void UpdateBinocHud(HUD *hud)
     store:
         D_002BF920 = hud->binoc->jt->focusKind;
     }
-    SeekBlotLabel(hud->blotA, 0x352, (hud->binoc->jt->heading + 3.14159274f) * 0.159154937f);
+    SeekBlotLabel(hud->blotA, 0x352, (hud->binoc->jt->radHeading + 3.14159274f) * 0.159154937f);
     SeekBlotLabel(hud->blotA, 0x351, hud->binoc->camera);
 }
