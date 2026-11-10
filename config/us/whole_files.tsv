@@ -18,9 +18,12 @@ start	end	file
 0x1262E0	0x126438	splice-bif-splice-eval/splice_bif_splice_eval_1262e0.c
 0x1281B0	0x128B60	new_127e90/bevy_splice_eval_reset_file.cpp
 0x128B60	0x128CB8	new_127e90/new_127e90_128b60.c
+0x128CB8	0x128F70	new_127e90/PpairClone_file.cpp
 0x128F70	0x1291A8	new_127e90/PprocClone_file.cpp
 0x12A3D8	0x12A980	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c
+0x12A980	0x12AE18	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp
 0x12AE18	0x12B0E8	cat/StartupCatalog_file.c
+0x12B0E8	0x12B3B0	new_12ae28/new_12ae28_12b0e8.cpp
 0x12F0F0	0x12F248	proxy-aseg/proxy_aseg_12f0f0.c
 0x131F70	0x1320C8	asega-bas/asega_bas_131f70.c
 0x132570	0x132B00	bas/__18CBinaryAsyncStreamPv_file.cpp
@@ -38,12 +41,14 @@ start	end	file
 0x147410	0x147E20	new_144b58/SetWipeState_file.cpp
 0x148300	0x148620	new_147f40/StaticInitSwSlotheaps_3_file.c
 0x14B660	0x14B7F8	unsorted/unsorted_14b660.cpp
+0x14BA30	0x14BEA8	unsorted/unsorted_14ba30.cpp
 0x14C548	0x14C6A0	new_14bff8/new_14bff8_14c548.c
 0x14FAC8	0x14FCA8	cm-tn/cm_tn_14fac8.cpp
 0x151BF0	0x1520C8	rip-game/ActivateCplookat_file.c
 0x1539A8	0x153B08	rip-game/rip_game_1539a8.c
 0x153B08	0x153D58	rip-game/rip_game_153b08.cpp
 0x154770	0x154A60	new_154180/StaticInitSensorSight_file.c
+0x154A60	0x1553F0	difficulty/OnDifficultyGameLoad_file.cpp
 0x155D90	0x1564E8	crv-lo/guardposts_file.c
 0x156918	0x157200	new_1569b8/SpawnSwHitFx_file.cpp
 0x1578F8	0x157A50	dmas-dzg/dmas_dzg_1578f8.c
@@ -56,6 +61,7 @@ start	end	file
 0x16F148	0x16F2D0	new_167320/new_167320_16f148.cpp
 0x172F10	0x173158	new_1715f0/new_1715f0_172f10.cpp
 0x174490	0x174898	new_1715f0/new_1715f0_174490.cpp
+0x17EE78	0x17F090	new_17dd70/new_17dd70_17ee78.cpp
 0x1829D8	0x182C70	pzo-hide/Swarm_AbsorbTouch_file.cpp
 0x1845A0	0x1848A8	hide-splice-gc/PmemberFromLo_file.cpp
 0x1848A8	0x184F50	hide-splice-gc/CBinaryInputStream_ConstructFromBuffer_file.cpp
@@ -71,7 +77,9 @@ start	end	file
 0x1A2DA0	0x1A3020	ub-light/ub_light_1a2da0.cpp
 0x1A3020	0x1A3260	ub-light/ub_light_1a3020.cpp
 0x1A3B80	0x1A4E08	light-stepguard/RemoveLightFromSw_file.cpp
+0x1A4FB0	0x1A5270	light-stepguard/PentryAddBootQueue_file.cpp
 0x1A7890	0x1A7C18	stepguard-sw/stepguard_sw_1a7890.cpp
+0x1A7E10	0x1AA978	sw/FreeSwMqList_file.cpp
 0x1AE7D0	0x1AE928	new_1ae678/new_1ae678_1ae7d0.c
 0x1B1DB8	0x1B2820	ac-rog/InitMissile_file.cpp
 0x1B4140	0x1B4438	mpeg/Finish_file.cpp
@@ -84,8 +92,10 @@ start	end	file
 0x1C8918	0x1C8CC0	new_1c76d0/new_1c76d0_1c8918.cpp
 0x1C93E0	0x1C9940	new_1c90d0/DrawLoadingLogo_file.cpp
 0x1CBEB0	0x1CC158	new_1c90d0/new_1c90d0_1cbeb0.cpp
+0x1CD5F0	0x1CDCD0	game/OnGameLoad_file.cpp
 0x1D57A8	0x1D6848	new_1d54b8/InitRenderNodeStack_file.cpp
 0x1D7A30	0x1D7B88	new_1d7780/save_file.c
+0x1D84B0	0x1D93D8	new_1d7780/SnapshotSaveData_file.cpp
 0x1DEDB0	0x1DFAD8	game-stepguard/game_stepguard_1dedb0.cpp
 0x1E9828	0x1EA568	new_1e7a28/RemeasureRopeSim_file.cpp
 0x1EE978	0x1EEC60	shdanim/SjisFromAsciiChar_file.cpp
@@ -93,6 +103,7 @@ start	end	file
 0x1F1900	0x1F2108	sm-so/sm_so_1f1900.cpp
 0x1FF690	0x1FF7E8	button-spliceobj/button_spliceobj_1ff690.c
 0x1FF7E8	0x1FFCF8	button-spliceobj/InitSwRootFrame_file.cpp
+0x201620	0x201D78	sprbuf/SaveSprBuf_file.cpp
 0x205910	0x205E70	step-rwm/step_rwm_205910.c
 0x20D5D0	0x20D9D0	stream/__5OSTRMi_file.cpp
 0x210CF0	0x210EB0	po-screen/StaticInitSw_file.cpp

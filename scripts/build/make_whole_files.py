@@ -268,13 +268,42 @@ def rename(text, name, new_name):
     return ''.join(pieces)
 
 
+def flatten_extern_c(text):
+    """`text` with each top-level `extern "C" { }` block opened into items of its own, so that the merge compares (and renames) the
+    declarations inside it one by one: a function declaration or definition and an `extern` variable declaration take the `extern "C"`
+    prefix (the same linkage); a variable definition keeps a block of its own (with the prefix alone it would become a declaration); a type,
+    a comment or a preprocessor line goes out as it is (linkage does not apply to it)."""
+    pieces = []
+    for item in split_items(text):
+        code = code_only(item).strip()
+        if not re.match(r'extern\s*"C"\s*\{', code):
+            pieces.append(item)
+            continue
+        inner = item[item.index('{', item.index('extern')) + 1:item.rindex('}')]
+        for part in split_items(inner):
+            kind, _ = classify(part)
+            part_code = code_only(part).strip()
+            if kind in ('function', 'declaration') and part_code:
+                is_function = kind == 'function' or '(' in part_code.split('=', 1)[0]
+                if part_code.startswith('extern') or is_function:
+                    lead = part[:len(part) - len(part.lstrip())]
+                    body = part.lstrip()
+                    body = body if body.startswith('extern "C"') else 'extern "C" ' + re.sub(r'^extern\s+(?!")', '', body)
+                    pieces.append(lead + body)
+                else:
+                    pieces.append('\nextern "C" {\n' + part.strip('\n') + '\n}\n')
+            else:
+                pieces.append(part)
+    return ''.join(piece if piece.endswith('\n') else piece + '\n' for piece in pieces)
+
+
 def clean_text(text):
     """The mechanical cleanups a whole file takes from its per-function sources: M2C_UNK as the s32 it is, tabs as four spaces, no trailing
-    whitespace, no SPDX line (the whole file has one)."""
+    whitespace, no SPDX line (the whole file has one), and every `extern "C" { }` block opened into its items (flatten_extern_c)."""
     text = re.sub(r'\bM2C_UNK(?:32)?\b', 's32', text)
     lines = [line.replace('\t', '    ').rstrip() for line in text.split('\n')]
     lines = [line for line in lines if 'SPDX-License-Identifier' not in line]
-    return '\n'.join(lines).strip('\n') + '\n'
+    return flatten_extern_c('\n'.join(lines).strip('\n') + '\n')
 
 
 # ---------------------------------------------------------------- building one whole file

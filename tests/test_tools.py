@@ -3,6 +3,7 @@
 """Regression tests for the scripts that need neither the game nor the compiler: `python3 -m unittest discover -s tests -v`."""
 import json
 import os
+import re
 import sys
 import struct
 import unittest
@@ -314,6 +315,11 @@ class CompileUnitTests(unittest.TestCase):
         self.assertIn('\t.word\t0x46000344', compile_unit.splat_for_ps2eeas(lines).split('\n'))
 
 
+def code_items(text):
+    return [re.sub(r'\s+', ' ', make_whole_files.code_only(item)).strip() for item in make_whole_files.split_items(text)
+            if make_whole_files.code_only(item).strip()]
+
+
 class MakeWholeFilesTests(unittest.TestCase):
     MANIFEST = {0x100000: ('First', 8, 'module/First.cpp'), 0x100010: ('Second', 8, 'module/Second.cpp'),
                 0x100020: ('Third', 8, 'module/Third.c')}
@@ -325,6 +331,21 @@ class MakeWholeFilesTests(unittest.TestCase):
         items = make_whole_files.split_items('#include "a.h"\nstruct S { int a; };\nint f(S *s) { return s->a; }\nextern int g;\n')
         self.assertEqual([make_whole_files.classify(item) for item in items],
                          [('preprocessor', '#include "a.h"'), ('type', 'S'), ('function', 'f'), ('declaration', 'g')])
+
+    def test_extern_c_block_opens_into_prefixed_declarations(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nvoid f(int);\nextern int g;\n}\n')
+        self.assertEqual(code_items(text), ['extern "C" void f(int);', 'extern "C" int g;'])
+
+    def test_extern_c_block_keeps_a_variable_definition_in_a_block(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nint h;\n}\n')
+        self.assertEqual(code_items(text), ['extern "C" { int h; }'])
+
+    def test_rename_mode_separates_a_differing_declaration_inside_extern_c(self):
+        sources = {'module/First.cpp': 'void g(int *);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'extern "C" {\nvoid g(char *);\n}\nvoid Second() { g(0); }\n'}
+        _, text, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                           read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('declaration g -> g_100010', notes)
 
     def test_semicolon_in_a_comment_does_not_end_an_item(self):
         self.assertEqual(len(make_whole_files.split_items('/* a; b */ extern int g;\n')), 1)

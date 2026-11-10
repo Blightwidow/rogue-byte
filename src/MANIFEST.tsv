@@ -1168,9 +1168,9 @@ address	name	size	file	whole_file	symbol
 0X128B40	gc__static_initialization_and_destruction_0_thunk	32	new_127e90/bevy_splice_eval_reset_file.cpp	new_127e90/bevy_splice_eval_reset_file.cpp	gc__static_initialization_and_destruction_0_thunk
 0X128B60	func_00128B60	308	new_127e90/new_127e90_128b60.c	new_127e90/new_127e90_128b60.c	func_00128B60
 0X128C98	StaticInitSlotheaps_128b60_thunk	32	new_127e90/new_127e90_128b60.c	new_127e90/new_127e90_128b60.c	StaticInitSlotheaps_128b60_thunk
-0X128CB8	PpairClone	352	new_127e90/PpairClone.cpp		
-0X128E18	pair__static_initialization_and_destruction_0	308	new_127e90/pair__static_initialization_and_destruction_0.c		
-0X128F50	pair__static_initialization_and_destruction_0_thunk	32	new_127e90/pair__static_initialization_and_destruction_0_thunk.c		
+0X128CB8	PpairClone	352	new_127e90/PpairClone_file.cpp	new_127e90/PpairClone_file.cpp	PpairClone
+0X128E18	pair__static_initialization_and_destruction_0	308	new_127e90/PpairClone_file.cpp	new_127e90/PpairClone_file.cpp	pair__static_initialization_and_destruction_0
+0X128F50	pair__static_initialization_and_destruction_0_thunk	32	new_127e90/PpairClone_file.cpp	new_127e90/PpairClone_file.cpp	pair__static_initialization_and_destruction_0_thunk
 0X128F70	PprocClone	224	new_127e90/PprocClone_file.cpp	new_127e90/PprocClone_file.cpp	PprocClone
 0X129050	proc__static_initialization_and_destruction_0	308	new_127e90/PprocClone_file.cpp	new_127e90/PprocClone_file.cpp	proc__static_initialization_and_destruction_0
 0X129188	proc__static_initialization_and_destruction_0_thunk	32	new_127e90/PprocClone_file.cpp	new_127e90/PprocClone_file.cpp	proc__static_initialization_and_destruction_0_thunk
@@ -1211,19 +1211,19 @@ address	name	size	file	whole_file	symbol
 0X12A3B8	StaticInitializeRefSlotheaps_thunk	32	splice-ref-splice-sidebag/StaticInitializeRefSlotheaps_thunk.c		
 0X12A828	StaticInitializeSidebagSlotheaps	308	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c	StaticInitializeSidebagSlotheaps
 0X12A960	StaticInitializeSidebagSlotheaps_thunk	32	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c	splice-ref-splice-sidebag/StaticInitializeSidebagSlotheaps_file.c	StaticInitializeSidebagSlotheaps_thunk
-0X12A980	CSidebag_RefAddBinding	236	splice-ref-splice-sidebag/CSidebag_RefAddBinding.cpp		
-0X12AA70	CSidebag_RefSetBinding	184	splice-ref-splice-sidebag/CSidebag_RefSetBinding.cpp		
-0X12AB28	FFindBinding__8CSidebagiP4CRef	80	splice-sidebag/FFindBinding__8CSidebagiP4CRef.cpp		
-0X12AB78	PsidebagClone	324	new_12ab78/PsidebagClone.cpp		
-0X12ACC0	StaticInitSlotheaps_12acc0	308	new_12ab78/StaticInitSlotheaps_12acc0.c		
-0X12ADF8	func_0012ADF8	32	new_12ab78/fun_0012adf8.c		
+0X12A980	CSidebag_RefAddBinding	236	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	CSidebag_RefAddBinding
+0X12AA70	CSidebag_RefSetBinding	184	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	CSidebag_RefSetBinding
+0X12AB28	FFindBinding__8CSidebagiP4CRef	80	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	FFindBinding__8CSidebagiP4CRef
+0X12AB78	PsidebagClone	324	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	PsidebagClone
+0X12ACC0	StaticInitSlotheaps_12acc0	308	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	StaticInitSlotheaps_12acc0
+0X12ADF8	func_0012ADF8	32	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp	func_0012ADF8
 0X12AE18	StartupCatalog__Fv	16	cat/StartupCatalog_file.c	cat/StartupCatalog_file.c	StartupCatalog__Fv
 0X12AE28	ShutdownCatalog	132	cat/StartupCatalog_file.c	cat/StartupCatalog_file.c	ShutdownCatalog
 0X12AEB0	StaticInitSlotheaps_12aeb0	532	cat/StartupCatalog_file.c	cat/StartupCatalog_file.c	StaticInitSlotheaps_12aeb0
 0X12B0C8	func_0012B0C8	32	cat/StartupCatalog_file.c	cat/StartupCatalog_file.c	func_0012B0C8
-0X12B0E8	func_0012B0E8	364	new_12ae28/fun_0012b0e8.cpp		
-0X12B258	StaticInitSlotheaps_12b258	308	new_12ae28/StaticInitSlotheaps_12b258.c		
-0X12B390	func_0012B390	32	new_12ae28/fun_0012b390.c		
+0X12B0E8	func_0012B0E8	364	new_12ae28/new_12ae28_12b0e8.cpp	new_12ae28/new_12ae28_12b0e8.cpp	func_0012B0E8
+0X12B258	StaticInitSlotheaps_12b258	308	new_12ae28/new_12ae28_12b0e8.cpp	new_12ae28/new_12ae28_12b0e8.cpp	StaticInitSlotheaps_12b258
+0X12B390	func_0012B390	32	new_12ae28/new_12ae28_12b0e8.cpp	new_12ae28/new_12ae28_12b0e8.cpp	func_0012B390
 0X12B3B0	PacrNew	320	new_12ae28/PacrNew.cpp		
 0X12B4F0	func_0012B4F0	8	new_12ae28/fun_0012b4f0.c		
 0X12B4F8	LoadAcrcFromBrx	36	new_12ae28/LoadAcrcFromBrx.c		
@@ -1751,13 +1751,13 @@ address	name	size	file	whole_file	symbol
 0X14B7D8	GlobalCtor_14b7d8	32	unsorted/unsorted_14b660.cpp	unsorted/unsorted_14b660.cpp	GlobalCtor_14b7d8
 0X14B9C0	FValidCdMmode__Fv	60	cd/FValidCdMmode__Fv.c		
 0X14BA00	SetCdMmode__Fv	44	cd/SetCdMmode__Fv.c		
-0X14BA30	func_0014BA30	8	unsorted/fun_0014ba30.c		
-0X14BA38	UpdateCd__Fv	372	cd/UpdateCd__Fv.cpp		
-0X14BBB0	CdPath__FPcT0i	196	cd/CdPath__FPcT0i.cpp		
-0X14BC78	ReadCdDirect__FUiUiPv	180	cd/ReadCdDirect__FUiUiPv.cpp		
-0X14BD30	FCdCompleted__Fi	32	cd/FCdCompleted__Fi.c		
-0X14BD50	StaticInitSlotheaps_14bd50	308	new_14bd50/StaticInitSlotheaps_14bd50.c		
-0X14BE88	func_0014BE88	32	new_14bd50/fun_0014be88.c		
+0X14BA30	func_0014BA30	8	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	func_0014BA30
+0X14BA38	UpdateCd__Fv	372	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	UpdateCd__Fv
+0X14BBB0	CdPath__FPcT0i	196	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	CdPath__FPcT0i
+0X14BC78	ReadCdDirect__FUiUiPv	180	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	ReadCdDirect__FUiUiPv
+0X14BD30	FCdCompleted__Fi	32	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	FCdCompleted__Fi
+0X14BD50	StaticInitSlotheaps_14bd50	308	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	StaticInitSlotheaps_14bd50
+0X14BE88	func_0014BE88	32	unsorted/unsorted_14ba30.cpp	unsorted/unsorted_14ba30.cpp	func_0014BE88
 0X14BEA8	AddCode	100	new_14bd50/AddCode.cpp		
 0X14BF18	UnmarkAll__10CSplotheap	48	splice-splotheap/UnmarkAll__10CSplotheap.cpp		
 0X14BF48	_MatchCodes__FP3JOYUs	176	joy/_MatchCodes__FP3JOYUs.cpp		
@@ -1902,15 +1902,15 @@ address	name	size	file	whole_file	symbol
 0X154568	FFilterSensorSight	132	new_154180/FFilterSensorSight.cpp		
 0X154908	StaticInitSensorSight	308	new_154180/StaticInitSensorSight_file.c	new_154180/StaticInitSensorSight_file.c	StaticInitSensorSight
 0X154A40	GlobalCtorSensorSight	32	new_154180/StaticInitSensorSight_file.c	new_154180/StaticInitSensorSight_file.c	GlobalCtorSensorSight
-0X154A60	OnDifficultyGameLoad__FP10DIFFICULTY	32	difficulty/OnDifficultyGameLoad__FP10DIFFICULTY.cpp		
-0X154A80	func_00154A80	16	new_154a80/fun_00154a80.cpp		
-0X154C90	GetSuck	248	new_154a80/GetSuck.cpp		
-0X154D88	AddSuck	60	sw/AddSuck.c		
-0X154DC8	ChangeSuck__FfP10DIFFICULTY	68	difficulty/ChangeSuck__FfP10DIFFICULTY.cpp		
-0X154E10	OnDifficultyBreak	1048	difficulty-crv/OnDifficultyBreak.cpp		
-0X155228	SFromCrvlU__FP4CRVLf	108	crv/SFromCrvlU__FP4CRVLf.cpp		
-0X155298	difficulty__static_initialization_and_destruction_0	308	crv-lo/difficulty__static_initialization_and_destruction_0.c		
-0X1553D0	difficulty__static_initialization_and_destruction_0_thunk	32	crv-lo/difficulty__static_initialization_and_destruction_0_thunk.c		
+0X154A60	OnDifficultyGameLoad__FP10DIFFICULTY	32	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	OnDifficultyGameLoad
+0X154A80	func_00154A80	16	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	func_00154A80
+0X154C90	GetSuck	248	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	GetSuck
+0X154D88	AddSuck	60	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	AddSuck
+0X154DC8	ChangeSuck__FfP10DIFFICULTY	68	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	ChangeSuck__FfP10DIFFICULTY
+0X154E10	OnDifficultyBreak	1048	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	OnDifficultyBreak
+0X155228	SFromCrvlU__FP4CRVLf	108	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	SFromCrvlU__FP4CRVLf
+0X155298	difficulty__static_initialization_and_destruction_0	308	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	difficulty__static_initialization_and_destruction_0
+0X1553D0	difficulty__static_initialization_and_destruction_0_thunk	32	difficulty/OnDifficultyGameLoad_file.cpp	difficulty/OnDifficultyGameLoad_file.cpp	difficulty__static_initialization_and_destruction_0_thunk
 0X1553F0	func_001553F0	96	crv-lo/fun_001553f0.cpp		
 0X155450	PostLoadGuardPosts	220	crv-lo/PostLoadGuardPosts.cpp		
 0X155530	AddGuardPost	48	crv-lo/AddGuardPost.cpp		
@@ -2450,10 +2450,10 @@ address	name	size	file	whole_file	symbol
 0X17EC80	func_0017EC80	48	new_17dd70/fun_0017ec80.c		
 0X17ECB0	func_0017ECB0	60	new_17dd70/fun_0017ecb0.c		
 0X17ECF0	func_0017ECF0	388	new_17dd70/fun_0017ecf0.cpp		
-0X17EE78	func_0017EE78	60	new_17dd70/fun_0017ee78.cpp		
-0X17EEB8	func_0017EEB8	128	new_17dd70/fun_0017eeb8.cpp		
-0X17EF38	func_0017EF38	308	new_17dd70/fun_0017ef38.c		
-0X17F070	StaticInitSlotheapsAlo_thunk	32	new_17dd70/StaticInitSlotheapsAlo_thunk.c		
+0X17EE78	func_0017EE78	60	new_17dd70/new_17dd70_17ee78.cpp	new_17dd70/new_17dd70_17ee78.cpp	func_0017EE78
+0X17EEB8	func_0017EEB8	128	new_17dd70/new_17dd70_17ee78.cpp	new_17dd70/new_17dd70_17ee78.cpp	func_0017EEB8
+0X17EF38	func_0017EF38	308	new_17dd70/new_17dd70_17ee78.cpp	new_17dd70/new_17dd70_17ee78.cpp	func_0017EF38
+0X17F070	StaticInitSlotheapsAlo_thunk	32	new_17dd70/new_17dd70_17ee78.cpp	new_17dd70/new_17dd70_17ee78.cpp	StaticInitSlotheapsAlo_thunk
 0X17F090	func_0017F090	124	new_17dd70/fun_0017f090.cpp		
 0X17F110	func_0017F110	40	new_17dd70/fun_0017f110.c		
 0X17F138	func_0017F138	56	new_17dd70/fun_0017f138.cpp		
@@ -2796,12 +2796,12 @@ address	name	size	file	whole_file	symbol
 0X1A4E08	StartBootQueue	92	light-stepguard/StartBootQueue.cpp		
 0X1A4E70	FBootQueueHasEntries	16	light-stepguard/FBootQueueHasEntries.c		
 0X1A4E80	RunNextBootQueueEntry	300	light-stepguard/RunNextBootQueueEntry.cpp		
-0X1A4FB0	PentryAddBootQueue	112	light-stepguard/PentryAddBootQueue.cpp		
-0X1A5020	AddBootQueueMovie	76	light-stepguard/AddBootQueueMovie.cpp		
-0X1A5078	AddBootQueueLevel	108	light-stepguard/AddBootQueueLevel.cpp		
-0X1A50F8	AddBootQueueCardCheck	28	light-stepguard/AddBootQueueCardCheck.cpp		
-0X1A5118	func_001A5118	308	light-stepguard/fun_001a5118.c		
-0X1A5250	func_001A5250	32	light-stepguard/fun_001a5250.c		
+0X1A4FB0	PentryAddBootQueue	112	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	PentryAddBootQueue
+0X1A5020	AddBootQueueMovie	76	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	AddBootQueueMovie
+0X1A5078	AddBootQueueLevel	108	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	AddBootQueueLevel
+0X1A50F8	AddBootQueueCardCheck	28	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	AddBootQueueCardCheck
+0X1A5118	func_001A5118	308	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	func_001A5118
+0X1A5250	func_001A5250	32	light-stepguard/PentryAddBootQueue_file.cpp	light-stepguard/PentryAddBootQueue_file.cpp	func_001A5250
 0X1A5270	InitLo	300	light-stepguard/InitLo.cpp		
 0X1A53A0	func_001A53A0	64	light-stepguard/fun_001a53a0.c		
 0X1A53E0	func_001A53E0	104	light-stepguard/fun_001a53e0.cpp		
@@ -2870,13 +2870,13 @@ address	name	size	file	whole_file	symbol
 0X1A7970	StartupAll	336	stepguard-sw/stepguard_sw_1a7890.cpp	stepguard-sw/stepguard_sw_1a7890.cpp	StartupAll
 0X1A7AC0	StaticInitSlotheaps_1a7ac0	308	stepguard-sw/stepguard_sw_1a7890.cpp	stepguard-sw/stepguard_sw_1a7890.cpp	StaticInitSlotheaps_1a7ac0
 0X1A7BF8	GlobalCtorSlotheaps_1a7bf8	32	stepguard-sw/stepguard_sw_1a7890.cpp	stepguard-sw/stepguard_sw_1a7890.cpp	GlobalCtorSlotheaps_1a7bf8
-0X1A7E10	FreeSwMqList__FP2SWP2MQ	76	sw/FreeSwMqList__FP2SWP2MQ.cpp		
-0X1A80D8	ClsgClipSoAllEdges	284	sw-mark/ClsgClipSoAllEdges.cpp		
-0X1A9FE0	PrependMqList	64	mark-memcard/PrependMqList.cpp		
-0X1AA020	CloneMqList	140	mark-memcard/CloneMqList.cpp		
-0X1AA0B0	MarkSoCustomContacts	296	mark-memcard/MarkSoCustomContacts.cpp		
-0X1AA820	StaticInitMark	308	mark-memcard/StaticInitMark.c		
-0X1AA958	GlobalCtorMark	32	mark-memcard/GlobalCtorMark.c		
+0X1A7E10	FreeSwMqList__FP2SWP2MQ	76	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	FreeSwMqList__FP2SWP2MQ
+0X1A80D8	ClsgClipSoAllEdges	284	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	ClsgClipSoAllEdges
+0X1A9FE0	PrependMqList	64	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	PrependMqList
+0X1AA020	CloneMqList	140	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	CloneMqList
+0X1AA0B0	MarkSoCustomContacts	296	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	MarkSoCustomContacts
+0X1AA820	StaticInitMark	308	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	StaticInitMark
+0X1AA958	GlobalCtorMark	32	sw/FreeSwMqList_file.cpp	sw/FreeSwMqList_file.cpp	GlobalCtorMark
 0X1AA978	func_001AA978	64	mark-memcard/fun_001aa978.c		
 0X1AA9B8	ConvertMcDirEntry	400	memcard/ConvertMcDirEntry.c		
 0X1AAB48	ClassifyMcStart	32	memcard/ClassifyMcStart.cpp		
@@ -3399,11 +3399,11 @@ address	name	size	file	whole_file	symbol
 0X1CD308	func_001CD308	400	new_1c90d0/fun_001cd308.cpp		
 0X1CD498	StaticInitSlotheaps_1cd498	308	new_1c90d0/StaticInitSlotheaps_1cd498.c		
 0X1CD5D0	func_001CD5D0	32	new_1c90d0/fun_001cd5d0.c		
-0X1CD998	OnGameLoad__FP4GAME	68	game/OnGameLoad__FP4GAME.cpp		
-0X1CD9E0	func_001CD9E0	160	new_1cd9e0/fun_001cd9e0.cpp		
-0X1CDA80	func_001CDA80	244	new_1cd9e0/fun_001cda80.cpp		
-0X1CDB78	StaticInitSlotheaps_1cdb78	308	new_1cd9e0/StaticInitSlotheaps_1cdb78.c		
-0X1CDCB0	func_001CDCB0	32	new_1cd9e0/fun_001cdcb0.c		
+0X1CD998	OnGameLoad__FP4GAME	68	game/OnGameLoad_file.cpp	game/OnGameLoad_file.cpp	OnGameLoad__FP4GAME
+0X1CD9E0	func_001CD9E0	160	game/OnGameLoad_file.cpp	game/OnGameLoad_file.cpp	func_001CD9E0
+0X1CDA80	func_001CDA80	244	game/OnGameLoad_file.cpp	game/OnGameLoad_file.cpp	func_001CDA80
+0X1CDB78	StaticInitSlotheaps_1cdb78	308	game/OnGameLoad_file.cpp	game/OnGameLoad_file.cpp	StaticInitSlotheaps_1cdb78
+0X1CDCB0	func_001CDCB0	32	game/OnGameLoad_file.cpp	game/OnGameLoad_file.cpp	func_001CDCB0
 0X1CDCD0	PripgNew	248	new_1cd9e0/PripgNew.cpp		
 0X1CDDC8	Pripg_InitSo	168	new_1cd9e0/Pripg_InitSo.cpp		
 0X1CDE70	SetRipgEmitb__FP4RIPGP5EMITB	12	rip/SetRipgEmitb__FP4RIPGP5EMITB.c		
@@ -3517,19 +3517,19 @@ address	name	size	file	whole_file	symbol
 0X1D7D30	FSaveDataMatchesLayout	112	new_1d7780/FSaveDataMatchesLayout.cpp		
 0X1D7DA0	FFindSaveVar	224	new_1d7780/FFindSaveVar.cpp		
 0X1D7E80	PvFindSaveVar	88	new_1d7780/PvFindSaveVar.cpp		
-0X1D84B0	SnapshotSaveData	336	new_1d7780/SnapshotSaveData.cpp		
-0X1D8600	InitSymtab	64	new_1d7780/InitSymtab.cpp		
-0X1D8640	NHashPchz	80	new_1d7780/NHashPchz.cpp		
-0X1D8690	AddSymtabEntry	144	new_1d7780/AddSymtabEntry.cpp		
-0X1D8720	SymidFindSymtab	160	new_1d7780/SymidFindSymtab.cpp		
-0X1D87C0	BuildSavePath	268	new_1d7780/BuildSavePath.cpp		
-0X1D88D0	PsavepathNew	216	new_1d7780/PsavepathNew.cpp		
-0X1D89A8	PsavepathNewStack	144	new_1d7780/PsavepathNewStack.cpp		
-0X1D8A38	func_001D8A38	228	new_1d7780/fun_001d8a38.cpp		
-0X1D8C10	PvFindSaveVarPath	184	splice-pair/PvFindSaveVarPath.cpp		
-0X1D8CC8	PpathConcatStack	184	splice-pair-jump/PpathConcatStack.cpp		
-0X1D9280	StaticInitSlotheaps_1d9280	308	splice-pair-jump/StaticInitSlotheaps_1d9280.c		
-0X1D93B8	GlobalCtorSlotheaps_1d93b8	32	splice-pair-jump/GlobalCtorSlotheaps_1d93b8.c		
+0X1D84B0	SnapshotSaveData	336	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	SnapshotSaveData
+0X1D8600	InitSymtab	64	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	InitSymtab
+0X1D8640	NHashPchz	80	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	NHashPchz
+0X1D8690	AddSymtabEntry	144	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	AddSymtabEntry
+0X1D8720	SymidFindSymtab	160	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	SymidFindSymtab
+0X1D87C0	BuildSavePath	268	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	BuildSavePath
+0X1D88D0	PsavepathNew	216	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	PsavepathNew
+0X1D89A8	PsavepathNewStack	144	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	PsavepathNewStack
+0X1D8A38	func_001D8A38	228	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	func_001D8A38
+0X1D8C10	PvFindSaveVarPath	184	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	PvFindSaveVarPath
+0X1D8CC8	PpathConcatStack	184	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	PpathConcatStack
+0X1D9280	StaticInitSlotheaps_1d9280	308	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	StaticInitSlotheaps_1d9280
+0X1D93B8	GlobalCtorSlotheaps_1d93b8	32	new_1d7780/SnapshotSaveData_file.cpp	new_1d7780/SnapshotSaveData_file.cpp	GlobalCtorSlotheaps_1d93b8
 0X1D93D8	StartupJmt__Fv	44	jump/StartupJmt__Fv.cpp		
 0X1D9408	CGc_Shutdown	276	jump-splice-spliceutils/CGc_Shutdown.cpp		
 0X1D9520	ShutdownSplice__Fv	152	splice-spliceutils/ShutdownSplice__Fv.c		
@@ -4230,9 +4230,9 @@ address	name	size	file	whole_file	symbol
 0X2013D8	func_002013D8	240	new_2013d8/fun_002013d8.cpp		
 0X2014C8	func_002014C8	308	new_2013d8/fun_002014c8.c		
 0X201600	func_00201600	32	new_2013d8/fun_00201600.c		
-0X2017A0	SaveSprBuf__FPve	500	sprbuf/SaveSprBuf__FPve.cpp		
-0X201998	func_00201998	88	sprbuf/fun_00201998.cpp		
-0X201D58	func_00201D58	32	sprbuf/fun_00201d58.c		
+0X2017A0	SaveSprBuf__FPve	500	sprbuf/SaveSprBuf_file.cpp	sprbuf/SaveSprBuf_file.cpp	SaveSprBuf__FPve
+0X201998	func_00201998	88	sprbuf/SaveSprBuf_file.cpp	sprbuf/SaveSprBuf_file.cpp	func_00201998
+0X201D58	func_00201D58	32	sprbuf/SaveSprBuf_file.cpp	sprbuf/SaveSprBuf_file.cpp	func_00201D58
 0X201D78	func_00201D78	80	sprbuf-stepguard/fun_00201d78.cpp		
 0X201DC8	func_00201DC8	192	sprbuf-stepguard/fun_00201dc8.cpp		
 0X201E88	HideReconLinks	120	sprbuf-stepguard/HideReconLinks.cpp		
