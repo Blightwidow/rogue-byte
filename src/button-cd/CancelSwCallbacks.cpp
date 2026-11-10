@@ -2,7 +2,7 @@
 struct SLOTHEAP;
 struct PMF { short delta; short index; int pfn; };
 struct CB { unsigned plo; PMF pmf; int nArg; CB *pnext; };
-struct SW { char pad[0x3C90]; char slotheap[0x18]; CB *pcbFirst; int pcbLast; };
+#include "sw.h"
 extern "C" void FreeSlotheapPv(SLOTHEAP *, void *);
 
 extern "C" void CancelSwCallbacks(SW *psw, unsigned grf, unsigned plo, PMF pmf, int nArg)
@@ -30,7 +30,7 @@ extern "C" void CancelSwCallbacks(SW *psw, unsigned grf, unsigned plo, PMF pmf, 
                 goto next;
         }
         *pplink = pcb->pnext;
-        FreeSlotheapPv((SLOTHEAP *)psw->slotheap, pcb);
+        FreeSlotheapPv((SLOTHEAP *)&psw->slotheapCb, pcb);
         goto advance;
     next:
         pplink = &pcb->pnext;

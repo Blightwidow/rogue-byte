@@ -129,8 +129,28 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      virtual calls (`make elf` PASS, reports unchanged, every converted function links from C). The other 26: `func_001F3CC8` needs
      `GLOBSET` (0x80); derived classes with one matched file each (classes 85, 87, 103, 107); `SLOTSO`'s init function (unnamed float
      constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
-     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: `CRef`'s special members
-     (the 46 sources and the 39 bindings), the class table's other families, and the `aseg` segment type.
+     0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: the class table's other
+     families (`GUARD`, `JT`, `GOAL`...), the `CRef` remainder, and the `aseg` segment type.
+   - `SW` (2026-11-10): `include/sw.h`, the world, class 1 of the class table (0x4790 bytes, derived from the root class; Sly 1's
+     derives from `LO`, Sly 2's does not). The game keeps one, a static global at 0x3DD490 that 440 matched files reach, and the
+     `*Sw*` functions take its address, so a field there needs one reader. 61 fields from 0x150 to 0x4774: the job and task
+     pointers (`SetSwCurrentJob`, `SetSwCurrentTask`, `SetSwRestartTask`), the camera focus (`SetSwFocusBase`/`Override`), the
+     clone sets, the slot heaps of timed calls, callbacks, message queues, hit effects, ripples and workers, and the save paths,
+     named after the strings retail hands `PsavepathNew` for each (`dt`, `loot/ccoin`, `flags/lang`, `flags/nMixerMode`...;
+     `ApplyOptionsFromSave` reads them in the same order). `SLOTHEAP` (Sly 1's name) is 0x18 bytes in Sly 2: heaps sit back to
+     back at that stride; `PblipgNew` reads its free slot (0xC) and fixed size (0x14). All 55 linked files with their own
+     `SW` moved, all scoring 0, `make elf` PASS, reports unchanged. 14 of the 18 unmatched drafts with their own `SW` moved
+     too, each at its old score (save paths typed `SAVEPATH *`, `StepStgSwitch`'s object renamed: it is a Splice-callable
+     switch, not the world). Left: three that disagree on the 0x30-byte target entries at 0x4680 (offset 0 an int or a
+     pointer, 0x14 an int or a float) with no matched reader to decide, and `ExpireSwWkrs`, one word worse with `dl.h`'s
+     `PushDli` (its draft stores the fields in another order). The last 20 settled more:
+     the world's search scope (0x3F0C) and `LO::pscope` (0x3C) are pointers to one 0x28-byte `SCOPE` (`AllocSwBuffers` allocates
+     the world's; `RefOpFindNearestObject` picks either, `InitCloneSets` writes its 0x24), the load request at 0x3BF4 is a
+     0x4C-byte `LOADREQ` whose first word two functions read as signed flags, and the table at 0x3F14 holds `GRFENTRY`
+     pairs (flags, `LO *`), with `LO` 0x40 holding the flags until the object enters it and its entry after (`AddSwGrfEntry`;
+     `AddSoLoHierarchy` tests bit 0 to tell them apart). `LO` slots 8 (`Add`), 25 (`SetCloneId`) and 37 gained their
+     signatures, so `InstantiateClone`, `InitCloneSets`, `SolveSw`, `func_001CDA80` and `AddSoLoHierarchy` call them as
+     virtuals; `SO` 0x70 is where `AddSoLoHierarchy`'s walk of `dlChild` stops.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct SW { char pad[0x4640]; int flag; };
+#include "sw.h"
 extern SW B_003DD490;
 struct BLOT;
 struct JOBENT { int oid; void *plo; };

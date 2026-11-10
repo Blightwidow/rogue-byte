@@ -143,6 +143,9 @@ class CleanupTests(unittest.TestCase):
     def test_warns_on_local_lo(self):
         self.assertEqual(len(self.warnings_for('struct LO { int x; };')), 1)
 
+    def test_warns_on_local_sw(self):
+        self.assertEqual(len(self.warnings_for('struct SW { int scope; };')), 1)
+
     def test_shared_header_may_define_so(self):
         self.assertEqual(check_cleanup.warn_lines({'include/so.h': [(1, 'struct SO {')]}), [])
 

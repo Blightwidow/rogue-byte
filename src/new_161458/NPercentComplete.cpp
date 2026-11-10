@@ -5,7 +5,7 @@ extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
 extern "C" void *PvAllocStackClearImpl__Fi(ALLOCREQ *);
 extern "C" int CploFindSwObjectsByClass(void *, int, int, int, int, void *);
-struct SW { char pad[0x3AFC]; int count; };
+#include "sw.h"
 extern "C" SW B_003DD490;
 static inline int Clamp(int v, int lo, int hi) { if (v < lo) return lo; if (v > hi) return hi; return v; }
 int NPercentComplete(void)
@@ -17,10 +17,10 @@ int NPercentComplete(void)
     ALLOCREQ req;
     ALLOCREQ *preq = &req;
     int align = 0x10;
-    preq->size = B_003DD490.count << 2;
+    preq->size = B_003DD490.ctask << 2;
     preq->align = align;
     TASK **tasks = (TASK **)PvAllocStackClearImpl__Fi(preq);
-    int found = CploFindSwObjectsByClass(&B_003DD490, 5, 0x85, 0, B_003DD490.count, tasks);
+    int found = CploFindSwObjectsByClass(&B_003DD490, 5, 0x85, 0, B_003DD490.ctask, tasks);
     for (int i = 0; i < found; i++) {
         TASK *task = tasks[i];
         if (task->dependents != 0) {

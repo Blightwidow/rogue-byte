@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct TASK { char pad[0x7C]; struct JOB *job; };
-struct SW { char pad0[0x3B14]; TASK *restartTask; char pad1[0x170]; int spawn; int spawnArg; };
+#include "sw.h"
 struct JOBVTBL { char pad[0x18]; short delta; short index; void (*fn)(void *, int, int, int, int, int); };
 struct JOB { char pad0[0xC]; JOBVTBL *vtbl; char pad1[0x7C]; int ctoggle; void *atoggle; int canim; void *aanim; char pad2[0x54]; int cause; };
 struct DESC { char pad0[8]; int idA; char pad1[0x2C]; int idB; };
@@ -28,14 +28,14 @@ static inline int FSameDesc(DESC *descA, DESC *descB)
 void StopJob(JOB *job)
 {
     SetSwCurrentJob(&B_003DD490, 0);
-    TASK *restart = B_003DD490.restartTask;
+    TASK *restart = B_003DD490.ptaskRestart;
     if (restart != 0 && restart->job != 0 && restart->job == job)
         SetSwRestartTask(&B_003DD490, 0);
     DESC *hub = PdescHubOfCurrentEpisode();
     DESC *level = PdescFromLevelRow(IdCurrentLevel());
     if (FSameDesc(hub, level)) {
-        B_003DD490.spawn = 0x189;
-        B_003DD490.spawnArg = -1;
+        B_003DD490.field_0x3C88 = 0x189;
+        B_003DD490.field_0x3C8C = -1;
     }
     if (FJobRunning(job)) {
         bevy_camera_follow_activity(&B_002DEB30, 0x22, job);

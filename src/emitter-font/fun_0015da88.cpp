@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
 struct TARGET { char pad[0x128]; int stage; };
-struct SW { char pad[0x4774]; TARGET *target; };
+#include "sw.h"
 extern SW B_003DD490;
 extern "C" char *PchzStringFromId(SW *, int);
 extern "C" char *strcpy(char *, const char *);
 extern "C" void func_0015DA88(char *dest, int flag)
 {
-    TARGET *target = B_003DD490.target;
+    TARGET *target = B_003DD490.ptarget;
     if (target == 0)
         return;
     int stage;

@@ -10,14 +10,14 @@ struct CRef {
     ~CRef() { CRef_Destruct(this); }
     CRef &operator=(const CRef &);
 };
-struct SW { char pad[0x3B20]; int ppath; };
+#include "sw.h"
 extern "C" {
-CRef RefSetGameSaveValue(int, const CRef &, void *);
+CRef RefSetGameSaveValue(SAVEPATH *, const CRef &, void *);
 void ShowCoinBlot(SW *);
 extern SW B_003DD490;
 extern char B_003D4A60[];
 }
-static inline void SetSaveInt(int path, int number, void *key)
+static inline void SetSaveInt(SAVEPATH *path, int number, void *key)
 {
     CRef value(0x15, number);
     CRef copy(value);
@@ -25,6 +25,6 @@ static inline void SetSaveInt(int path, int number, void *key)
 }
 void SetGameCoins(void *pvUnused, int ccoin)
 {
-    SetSaveInt(B_003DD490.ppath, ccoin, B_003D4A60);
+    SetSaveInt(B_003DD490.psavepathCcoin, ccoin, B_003D4A60);
     ShowCoinBlot(&B_003DD490);
 }

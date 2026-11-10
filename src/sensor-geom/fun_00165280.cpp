@@ -2,7 +2,7 @@
 struct CRefX { int tagk; int n; int pad[2]; };
 struct TASK { char pad0[0x18]; int oid; char pad1c[0x7C - 0x1C]; TASK *pparent; char pad80[0xB8 - 0x80]; int fB8; char padBC[4]; int fC0; char padC4[0xF0 - 0xC4]; int fF0; int fF4; int fF8; };
 struct JOBMGR { char pad0[0x10]; int fieldA; int fieldB; int oid; };
-struct SW { char pad[0x3BF4]; int flags; char pad3BF8[0x3C38 - 0x3BF8]; int fieldC; int fieldD; };
+#include "sw.h"
 struct CTaskHold {
     TASK *pother;
     TASK *ptask;
@@ -46,7 +46,7 @@ void func_001D8B20(CRefX *, CRefX *, const char *, int);
 }
 extern "C" void func_00165280(JOBMGR *self)
 {
-    if (!(B_003DD490.flags & 8))
+    if (!(B_003DD490.loadreq.grf & 8))
         return;
     char frame[0x10];
     int ctask;
@@ -79,9 +79,9 @@ extern "C" void func_00165280(JOBMGR *self)
         CTaskHold hold(ptask, 3);
         ApplyTaskState(ptask, -1);
     }
-    B_003DD490.fieldC = pjob->fB8;
-    B_003DD490.fieldD = -1;
-    B_003DD490.flags = (B_003DD490.flags & ~8) | 4;
+    B_003DD490.loadreq.field_0x44 = pjob->fB8;
+    B_003DD490.loadreq.field_0x48 = -1;
+    B_003DD490.loadreq.grf = (B_003DD490.loadreq.grf & ~8) | 4;
     }
     CStackFrame_Destructor(frame, 2);
 }

@@ -4,7 +4,7 @@ struct GUARD { char pad[0xC]; VT *vt; char pad2[0xFBC - 0x10]; int mode; };
 struct GUARD2 { char pad[0x1010]; int cunk; };
 struct GOAL { char pad[0x10]; GUARD *pguard; char pad2[0x1C]; int kindRunning; };
 struct CMD { int kind; char pad[0xC]; int arg; float g; char pad2[0x58]; };
-struct SW { int x; };
+#include "sw.h"
 extern SW B_003DD490;
 extern "C" {
 int FIsBasicDerivedFrom(void *, int);

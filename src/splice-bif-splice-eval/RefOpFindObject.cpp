@@ -1,14 +1,13 @@
 #include "sly2.h"
 struct CRef { int tagk; int n; };
 struct CFrame;
-struct SW { char pad[0x3F0C]; int scope; };
-struct LO { char pad[0x3C]; int scope; };
+#include "sw.h"
 struct CPair { int pad0; int pad4; CRef ref; };
 extern SW B_003DD490;
 extern "C" void CRef_CopyConstruct(CRef *, CRef *);
 extern "C" void CRef_Destruct(CRef *);
 extern "C" int CRef_SetBasic(CRef *, int);
-extern "C" int PloFindSwObject(SW *, int, int, LO *, int);
+extern "C" int PloFindSwObject(SW *, int, int, LO *, SCOPE *);
 
 CRef *RefOpFindObject(CRef *pref, int carg, CRef *aref, CFrame *pframe)
 {
@@ -25,12 +24,12 @@ CRef *RefOpFindObject(CRef *pref, int carg, CRef *aref, CFrame *pframe)
     if (basis != 0)
         grffso = 1;
     int id = aref[0].n;
-    int scope;
+    SCOPE *pscope;
     if (scopeObject != 0)
-        scope = scopeObject->scope;
+        pscope = scopeObject->pscope;
     else
-        scope = psw->scope;
-    int found = PloFindSwObject(psw, grffso, id, basis, scope);
+        pscope = psw->pscopeDefault;
+    int found = PloFindSwObject(psw, grffso, id, basis, pscope);
     CRef_SetBasic(&refResult, found);
     CRef_CopyConstruct(pref, &refResult);
     CRef_Destruct(&refResult);

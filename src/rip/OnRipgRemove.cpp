@@ -1,7 +1,7 @@
 #include "sly2.h"
 #include "dl.h"
 struct RIPG { char pad[0x10]; int parent; char pad1[0xEC - 0x14]; int poxa; char pad2[0x15C - 0xF0]; DL rips; };
-struct SW { char pad[0x403C]; char slotheap[1]; };
+#include "sw.h"
 struct SWX { char pad[0x406C]; RIPG *group; };
 extern SWX B_003DD490;
 extern "C" void RemoveRip(char *);

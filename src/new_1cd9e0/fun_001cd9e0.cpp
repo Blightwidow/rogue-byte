@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct SO { char pad[0x40]; unsigned *grf; char pad1[0xCC - 0x44]; int stamp; };
-struct SW { char pad[0x3D5C]; int frame; };
+#include "sw.h"
 extern "C" {
 int CploFindSwObjectsByClass(SW *, int, int, void *, int, SO **);
 void func_001681F8(void *);

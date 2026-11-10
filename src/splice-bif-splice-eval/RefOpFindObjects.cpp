@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 struct CRef { int tagk; int n; CRef &operator=(const CRef &); };
 struct CPair { int pad0; int pad4; CRef ref; };
-struct LO { char pad[0x3C]; int scope; };
-struct SW { char pad[0x3F0C]; int scope; };
+#include "sw.h"
 struct CFrame;
 extern SW B_003DD490;
 extern "C" {
 void CRef_Destruct(CRef *);
 CRef *CRef_CopyConstruct(CRef *, CRef *);
-int CploFindSwObjects(SW *, int, int, LO *, int, int, int *);
+int CploFindSwObjects(SW *, int, int, LO *, SCOPE *, int, int *);
 void RefFromAplo(CRef *, int, int *);
 }
 extern "C" CRef *RefOpFindObjects(CRef *pret, int carg, CRef *aref, CFrame *pframe)
@@ -26,13 +25,13 @@ extern "C" CRef *RefOpFindObjects(CRef *pret, int carg, CRef *aref, CFrame *pfra
     if (basis != 0)
         grffso = 1;
     int id = aref[0].n;
-    int scope;
+    SCOPE *pscope;
     if (scopeObject != 0)
-        scope = scopeObject->scope;
+        pscope = scopeObject->pscope;
     else
-        scope = psw->scope;
+        pscope = psw->pscopeDefault;
     int aplo[0x40];
-    int cplo = CploFindSwObjects(psw, grffso, id, basis, scope, 0x40, aplo);
+    int cplo = CploFindSwObjects(psw, grffso, id, basis, pscope, 0x40, aplo);
     CRef refList;
     RefFromAplo(&refList, cplo, aplo);
     refResult = refList;

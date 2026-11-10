@@ -1,9 +1,8 @@
 #include "sly2.h"
-struct SLOTHEAP { int pad; int cFree; int pad2; int pad3; int pvFree; };
+#include "sw.h"
 struct BLIPG;
 struct VT { char pad[0x38]; short delta; short index; void (*fn)(void *); char pad2[0x18]; short delta2; short index2; void (*fn2)(void *); char pad3[0x18]; short delta3; short index3; void (*fn3)(void *); };
 struct BLIPG { int unk0; int unk4; int unk8; VT *vptr; };
-struct SW { char pad[0x407C]; int pvFree; int pad2; int cSlotMax; };
 extern char D_002CB5D8;
 void *memset(void *, int, unsigned int);
 extern "C" {
@@ -13,11 +12,11 @@ void AppendSlEntry(void *, void *);
 }
 BLIPG *PblipgNew(SW *psw)
 {
-    if (psw->pvFree == 0) {
-        if (psw->cSlotMax != 0)
+    if (psw->slotheapBlipg.pslotFree == 0) {
+        if (psw->slotheapBlipg.cslotMax != 0)
             return 0;
     }
-    BLIPG *pblipg = (BLIPG *)PvAllocSlotheapImpl((char *)psw + 0x4070);
+    BLIPG *pblipg = (BLIPG *)PvAllocSlotheapImpl(&psw->slotheapBlipg);
     memset(pblipg, 0, 0x460);
     pblipg->unk0 = 0;
     pblipg->unk4 = 0;

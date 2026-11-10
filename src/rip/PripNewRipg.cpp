@@ -1,6 +1,6 @@
 struct RIPG { char pad[0x15C]; int dl; };
 struct RIP { int pad0, pad1; RIPG *pripg; };
-struct SW { char pad[0x4054]; int slotheap; };
+#include "sw.h"
 void AddRipRef(RIP *);
 extern "C" {
 RIPG *PripgNew(void *, int);
@@ -17,7 +17,7 @@ RIP *PripNewRipg(SW *psw, int ript, RIPG *pripg)
         if (pripg == 0)
             return 0;
     }
-    void *pvSlot = PvAllocSlotheapImpl(&psw->slotheap);
+    void *pvSlot = PvAllocSlotheapImpl(&psw->slotheapRip);
     if (pvSlot != 0) {
         RIP *prip = ConstructRipOfType(pvSlot, ript);
         prip->pripg = pripg;

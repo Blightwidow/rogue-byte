@@ -1,10 +1,10 @@
 #include "sly2.h"
 struct TASK { char pad[0x18]; int oid; };
-struct SW { char pad[0x3B10]; TASK *taskCurrent; TASK *taskRestart; };
+#include "sw.h"
 extern int B_002DEB44;
 void SetSwCurrentTask(SW *psw, TASK *ptask)
 {
-    psw->taskCurrent = ptask;
+    psw->ptaskCurrent = ptask;
     if (ptask)
         B_002DEB44 = ptask->oid;
     else

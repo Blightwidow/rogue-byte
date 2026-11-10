@@ -1,7 +1,8 @@
 #include "sly2.h"
 struct CRefX { int tagk; int n; int pad[2]; };
-struct TASK { char pad0[0x18]; int oid; char pad1c[0x7C - 0x1C]; TASK *pjob; char pad80[0xB8 - 0x80]; int fB8; int fBC; int fC0; char padC4[0xF0 - 0xC4]; int fF0; int fF4; int fF8; };
-struct SW { char pad[0x3B0C]; TASK *pcurjob; char pad3B10[0x3E38 - 0x3B10]; int level; };
+struct JOB;
+struct TASK { char pad0[0x18]; int oid; char pad1c[0x7C - 0x1C]; JOB *pjob; char pad80[0xB8 - 0x80]; int fB8; int fBC; int fC0; char padC4[0xF0 - 0xC4]; int fF0; int fF4; int fF8; };
+#include "sw.h"
 struct CTaskHold {
     TASK *pother;
     TASK *ptask;
@@ -30,12 +31,13 @@ struct CTaskHold {
         }
     }
 };
+struct JOB : TASK { };
 struct CJobHold {
-    TASK *pjob;
-    TASK *pother;
+    JOB *pjob;
+    JOB *pother;
     int saveF0;
     int saveF4;
-    CJobHold(TASK *job, int value)
+    CJobHold(JOB *job, int value)
     {
         pjob = job;
         pother = 0;
@@ -62,11 +64,11 @@ extern "C" {
 extern SW B_003DD490;
 extern const char RO_002A5238[];
 void CRef_Destruct(CRefX *);
-void EndJob(TASK *);
+void EndJob(JOB *);
 int IdCurrentLevel(int);
 int PdescFromLevelRow(int);
 void RequestTransition(SW *, int, int, int, int, int);
-void SetCurrentJob(TASK *);
+void SetCurrentJob(JOB *);
 void SetTaskState(TASK *, int);
 void SwitchCurrentTask(TASK *);
 void func_001D8B20(CRefX *, CRefX *, const char *, int);
@@ -74,10 +76,10 @@ void RestartAtTask(TASK *task)
 {
     CTaskHold holdTask(task, 2);
     CJobHold holdJob(task->pjob, 2);
-    if (task->pjob != B_003DD490.pcurjob) {
-        if (B_003DD490.pcurjob != 0) {
-            CJobHold holdCur(B_003DD490.pcurjob, 2);
-            EndJob(B_003DD490.pcurjob);
+    if (task->pjob != B_003DD490.pjobCurrent) {
+        if (B_003DD490.pjobCurrent != 0) {
+            CJobHold holdCur(B_003DD490.pjobCurrent, 2);
+            EndJob(B_003DD490.pjobCurrent);
         }
         if (task->pjob != 0)
             SetCurrentJob(task->pjob);
@@ -98,7 +100,7 @@ void RestartAtTask(TASK *task)
     int row = task->fB8;
     if (row == -1)
         row = 0x189;
-    if (B_003DD490.level != 0 && (task->fBC == -1 || task->fBC == IdCurrentLevel(B_003DD490.level)))
+    if (B_003DD490.field_0x3E38 != 0 && (task->fBC == -1 || task->fBC == IdCurrentLevel(B_003DD490.field_0x3E38)))
         mode = 0x24;
     RequestTransition(&B_003DD490, PdescFromLevelRow(task->fBC), row, -1, mode, 0x30A);
 }

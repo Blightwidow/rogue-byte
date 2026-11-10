@@ -22,7 +22,7 @@ does. Every borrowed name keeps its source visible in the data and is checked ag
 
 | Project | License | What is used here |
 | :--- | :--- | :--- |
-| [TheOnlyZac/sly1](https://github.com/TheOnlyZac/sly1) (Sly 1 decompilation) | CC0 1.0 | Symbols, class tree and field offsets in `config/sly1/`; Sly 2 names derived from them in `config/recovered/`; the names of `DL`, `DLE` and `DLI` and their fields in `include/dl.h` of `XF`'s matrices `mat` and `matWorld` in `include/xf.h`, and of `CRef`, `TAG` and the `TAGK` kinds in `include/cref.h` (Sly 2's own tag values) (layouts measured on Sly 2's own code). Names follow Sucker Punch's own. |
+| [TheOnlyZac/sly1](https://github.com/TheOnlyZac/sly1) (Sly 1 decompilation) | CC0 1.0 | Symbols, class tree and field offsets in `config/sly1/`; Sly 2 names derived from them in `config/recovered/`; the names of `DL`, `DLE` and `DLI` and their fields in `include/dl.h` of `XF`'s matrices `mat` and `matWorld` in `include/xf.h`, and of `CRef`, `TAG` and the `TAGK` kinds in `include/cref.h` (Sly 2's own tag values), and of `SLOTHEAP` in `include/sw.h` (Sly 2's own size) (layouts measured on Sly 2's own code). Names follow Sucker Punch's own. |
 | [Campfirecrucifix/sly2-bevy-of-thieves](https://github.com/Campfirecrucifix/sly2-bevy-of-thieves) (Rust port) | MIT | Function and global names from its address comments, `config/recovered/bevy_*.tsv`. Copyright its authors. |
 | SlyMods wiki (slymods.info) | CC BY-SA 4.0 | SEQ opcode names in `config/recovered/slymods_jsg_opcodes.tsv` and the notes in `docs/game/slymods-crosscheck.md`. These files stay under CC BY-SA 4.0; credit to the SlyMods wiki contributors. |
 

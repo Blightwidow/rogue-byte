@@ -14,7 +14,7 @@ struct CM {
 extern "C" {
 extern char B_002DFC00[];
 extern char B_002E0D00[];
-struct SW { char pad[0x3E38]; int fStereo; };
+#include "sw.h"
 extern SW B_003DD490;
 extern char D_002BD810[];
 void ResetCmAdjust__FP2CMP2SOP6CPDEFI(CM *, void *);
@@ -73,6 +73,6 @@ extern "C" void UpdateCmLast(CM *pcm)
         SetCmFov(pcm, pcm->radFovTarget);
     }
     pcm->fCut = 0;
-    if (B_003DD490.fStereo != 0)
+    if (B_003DD490.field_0x3E38 != 0)
         pcm->sStereo = GSmooth__FfffP3SMPPf(pcm->sStereo, pcm->sStereoTarget, B_FLT_002DDEE0, D_002BD810, 0);
 }

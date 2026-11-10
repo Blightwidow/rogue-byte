@@ -1,10 +1,9 @@
 #include "sly2.h"
-struct SCOPE { char pad[0x3C]; void *value; };
-struct OBJ { char pad[0xC]; SCOPE *pscope; };
-struct CRef { int tagk; int n; int pad8; SCOPE *pscope; };
-struct SW { char pad[0x3F0C]; void *pdefault; };
+#include "sw.h"
+struct OBJ { char pad[0xC]; LO *plo; };
+struct CRef { int tagk; int n; int pad8; LO *plo; };
 extern SW B_003DD490;
-extern "C" void *PloFindSwObject(SW *, int, int, SCOPE *, void *);
+extern "C" void *PloFindSwObject(SW *, int, int, LO *, SCOPE *);
 extern "C" CRef *CRef_SetBasic(CRef *, void *);
 extern "C" void CRef_CopyConstruct(CRef *, CRef *);
 extern "C" void CRef_Destruct(CRef *);
@@ -13,20 +12,20 @@ CRef *RefOpFindNearestObject(CRef *result, int count, CRef *args, void *frame)
 {
     CRef refResult;
     refResult.tagk = -1;
-    SCOPE *pscope = args[0].pscope;
-    SCOPE *pfound;
+    LO *ploContext = args[0].plo;
+    LO *pfound;
     if (args[1].tagk != 0)
-        pfound = ((OBJ *)args[1].n)->pscope;
+        pfound = ((OBJ *)args[1].n)->plo;
     else
-        pfound = pscope;
+        pfound = ploContext;
     SW *psw = &B_003DD490;
     int oid = args[0].n;
-    void *pvScope;
+    SCOPE *pscope;
     if (pfound != 0)
-        pvScope = pfound->value;
+        pscope = pfound->pscope;
     else
-        pvScope = psw->pdefault;
-    CRef_SetBasic(&refResult, PloFindSwObject(psw, 4, oid, pscope, pvScope));
+        pscope = psw->pscopeDefault;
+    CRef_SetBasic(&refResult, PloFindSwObject(psw, 4, oid, ploContext, pscope));
     CRef_CopyConstruct(result, &refResult);
     CRef_Destruct(&refResult);
     return result;

@@ -1,7 +1,7 @@
 struct CRef { int tagk; float g; int p2; int p3; };
 struct JB { char pad[0x100C]; int a; int b; };
 struct SLOTHOLDER { char pad[0x8000 + 0x7D54]; int pslot; };
-struct SW { char pad[0x3B1C]; int ppathDt; };
+#include "sw.h"
 extern JB B_002DFC00;
 extern SLOTHOLDER B_002E65E0;
 extern SW B_003DD490;
@@ -9,7 +9,7 @@ extern "C" const char RO_002A7A70[];
 extern "C" char *strcpy(char *, const char *);
 extern "C" char *strcat(char *, const char *);
 extern "C" void CRef_Destruct(CRef *);
-extern "C" void RefGetGameSaveValue(CRef *, int, int);
+extern "C" void RefGetGameSaveValue(CRef *, SAVEPATH *, int);
 extern "C" int func_001A2C98();
 const char *PchzStringFromId(void *, int);
 
@@ -22,7 +22,7 @@ extern "C" void GetTitlePromptText(char *pchz)
     float tPlayed = 0.0f;
     if (B_002E65E0.pslot != 0) {
         CRef refDt;
-        RefGetGameSaveValue(&refDt, B_003DD490.ppathDt, B_002E65E0.pslot);
+        RefGetGameSaveValue(&refDt, B_003DD490.psavepathDt, B_002E65E0.pslot);
         tPlayed = refDt.g;
         CRef_Destruct(&refDt);
     }

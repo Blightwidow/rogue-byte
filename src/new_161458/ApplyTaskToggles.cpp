@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct TOGGLEREC { int oid; int oidParent; unsigned grfState; int nLevelRow; };
-struct SW { char pad[0x3AFC]; int count; };
+#include "sw.h"
 struct S8 { char b[8]; };
 struct S16 { char b[16]; };
 struct S32 { char b[32]; };
