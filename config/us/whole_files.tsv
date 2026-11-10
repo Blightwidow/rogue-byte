@@ -15,6 +15,7 @@ start	end	file
 0x11AFE0	0x11B1A8	dzg-jsg/HashSz_file.cpp
 0x11B1A8	0x11B300	dzg-jsg/dzg_jsg_11b1a8.c
 0x11B300	0x11CCA8	jsg/FInvertMatrix3_file.cpp
+0x11CCA8	0x11CF60	util-alo/CreateSlotheapSwAlign_file.cpp
 0x11E198	0x11F440	util-splice-bif/bif_file.c
 0x1258F0	0x126188	splice-bif-splice-eval/splice_bif_splice_eval_1258f0.cpp
 0x126188	0x1262E0	splice-bif-splice-eval/splice_bif_splice_eval_126188.c
@@ -28,6 +29,7 @@ start	end	file
 0x12A980	0x12AE18	splice-ref-splice-sidebag/splice_ref_splice_sidebag_12a980.cpp
 0x12AE18	0x12B0E8	cat/StartupCatalog_file.c
 0x12B0E8	0x12B3B0	new_12ae28/new_12ae28_12b0e8.cpp
+0x12E600	0x12EB48	missile/InitAccmiss_file.cpp
 0x12EB48	0x12F0F0	missile-proxy/missile_proxy_12eb48.cpp
 0x12F0F0	0x12F248	proxy-aseg/proxy_aseg_12f0f0.c
 0x131F70	0x1320C8	asega-bas/asega_bas_131f70.c
@@ -48,6 +50,7 @@ start	end	file
 0x147410	0x147E20	new_144b58/SetWipeState_file.cpp
 0x148300	0x148620	new_147f40/StaticInitSwSlotheaps_3_file.c
 0x148F20	0x149A50	alarm-button/FAbsorbButtonWkr_file.cpp
+0x14B1A0	0x14B660	button-cd/button_cd_14b1a0.cpp
 0x14B660	0x14B7F8	unsorted/unsorted_14b660.cpp
 0x14BA30	0x14BEA8	unsorted/unsorted_14ba30.cpp
 0x14BFF8	0x14C548	new_14bff8/UpdateCodes_file.cpp
@@ -61,6 +64,7 @@ start	end	file
 0x154A60	0x1553F0	difficulty/OnDifficultyGameLoad_file.cpp
 0x155D90	0x1564E8	crv-lo/guardposts_file.c
 0x156918	0x157200	new_1569b8/SpawnSwHitFx_file.cpp
+0x157200	0x1578F8	dmas/StartupDma_file.cpp
 0x1578F8	0x157A50	dmas-dzg/dmas_dzg_1578f8.c
 0x157FA0	0x1585D8	dmas-dzg/dmas_dzg_157fa0.c
 0x1585D8	0x159118	dmas-dzg/InitDzg_file.cpp
@@ -72,6 +76,7 @@ start	end	file
 0x165E38	0x166270	sensor-geom/ApplyPendingSave_file.cpp
 0x166270	0x166920	geom/CedgeFindAtPos_file.cpp
 0x166920	0x167310	gifs/__4GIFS_file.cpp
+0x167870	0x16F148	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp
 0x16F148	0x16F2D0	new_167320/new_167320_16f148.cpp
 0x172F10	0x173158	new_1715f0/new_1715f0_172f10.cpp
 0x174490	0x174898	new_1715f0/new_1715f0_174490.cpp
@@ -82,6 +87,7 @@ start	end	file
 0x184F50	0x185130	hnd/InitHnd_file.cpp
 0x185E30	0x186610	binoc-joy/binoc_joy_185e30.cpp
 0x186610	0x187030	binoc-joy/binoc_joy_186610.cpp
+0x187150	0x188488	joy/InitJoy_file.cpp
 0x18E330	0x18E540	jt-alo/UpdateAllGuardLightStates_file.cpp
 0x18F740	0x18F908	stepcane/ChooseJtSmashTarget_file.cpp
 0x190BE0	0x191090	stephang/GetJtHangHeading_file.cpp
@@ -96,6 +102,7 @@ start	end	file
 0x1A3020	0x1A3260	ub-light/ub_light_1a3020.cpp
 0x1A3B80	0x1A4E08	light-stepguard/RemoveLightFromSw_file.cpp
 0x1A4FB0	0x1A5270	light-stepguard/PentryAddBootQueue_file.cpp
+0x1A53E0	0x1A7518	light-stepguard/light_stepguard_1a53e0.cpp
 0x1A7890	0x1A7C18	stepguard-sw/stepguard_sw_1a7890.cpp
 0x1A7E10	0x1AA978	sw/FreeSwMqList_file.cpp
 0x1ACCC8	0x1AE150	memcard-memory/memcard_memory_1accc8.cpp
@@ -118,6 +125,7 @@ start	end	file
 0x1C93E0	0x1C9940	new_1c90d0/DrawLoadingLogo_file.cpp
 0x1CB9B0	0x1CBEB0	new_1c90d0/Pipe_AddLoGrfEntry_file.cpp
 0x1CBEB0	0x1CC158	new_1c90d0/new_1c90d0_1cbeb0.cpp
+0x1CD098	0x1CD5F0	new_1c90d0/Carry_Attach_file.cpp
 0x1CD5F0	0x1CDCD0	game/OnGameLoad_file.cpp
 0x1D0BF8	0x1D1370	rip/FBounceLeaf_file.cpp
 0x1D57A8	0x1D6848	new_1d54b8/InitRenderNodeStack_file.cpp
@@ -127,6 +135,7 @@ start	end	file
 0x1DEDB0	0x1DFAD8	game-stepguard/game_stepguard_1dedb0.cpp
 0x1E9828	0x1EA568	new_1e7a28/RemeasureRopeSim_file.cpp
 0x1ED3A8	0x1ED7A8	new_1ed1a8/new_1ed1a8_1ed3a8.c
+0x1ED7A8	0x1EE978	new_1ed1a8/new_1ed1a8_1ed7a8.cpp
 0x1EE978	0x1EEC60	shdanim/SjisFromAsciiChar_file.cpp
 0x1EF850	0x1EFA90	shdanim-sm/shdanim_sm_1ef850.cpp
 0x1EFA90	0x1F1768	shdanim-sm/InitSm_file.cpp
@@ -158,5 +167,7 @@ start	end	file
 0x227350	0x2275B8	new_2271f8/new_2271f8_227350.cpp
 0x227940	0x227BB8	new_2271f8/new_2271f8_227940.cpp
 0x227BB8	0x227FE8	new_2271f8/new_2271f8_227bb8.cpp
+0x228B48	0x229EF0	break-mat/InitBrk_file.cpp
 0x22A908	0x22B040	so-wr/so_wr_22a908.c
 0x22B040	0x22B720	so-wr/so_wr_22b040.cpp
+0x231100	0x2319E8	alo-lo/InitXfm_file.cpp

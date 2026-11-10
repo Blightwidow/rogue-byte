@@ -40,6 +40,7 @@ ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 SCRATCH = os.path.join(ROOT, 'work', 'boundaries', 'whole_build')
 HEADER = '// SPDX-License-Identifier: GPL-3.0-or-later\n'
 CLEANUP_LEFT = re.compile(r'M2C_FIELD\b|/\* Error|\b(?:unk_[0-9A-Fa-f]+|phi_[a-z0-9_]+|saved_reg_\w+)\b')
+MANGLED = re.compile(r'^(?:__[a-z]{2,3}__\w+|__\d+[A-Za-z_]\w*|\w+?__(?:F|C?\d+[A-Za-z_])\w*)$')  # a g++ 2.95 mangled function name
 GENERIC_NAME = re.compile(r'^(?:func|fun|sub|FUN)_[0-9A-Fa-f]+$|[0-9A-Fa-f]{6,}')
 
 
@@ -370,12 +371,16 @@ class Merge:
         self.defined = {}  # name -> normalized text of its first struct-like or function definition
         self.declared = {}  # name -> (normalized text, address of the source) of its first declaration or function definition
 
-    def declare_definitions(self, text, address):
-        """Records the function definitions of `text` as the first declarations of their names (rename_declarations)."""
+    def declare_definitions(self, text, address, source_is_c=False):
+        """Records the function definitions of `text` as the first declarations of their names (rename_declarations), with their linkage:
+        a C++ declaration of a function another source defines with C linkage (or the reverse) names another function."""
+        source_linkage = 'C' if self.language == 'c' or (source_is_c and self.wrap_c) else 'C++'
         for item in split_items(text):
             kind, name = classify(item)
             if kind == 'function' and name:
-                self.declared.setdefault(name, (normalized(item.split('{', 1)[0]), address))
+                head = normalized(item.split('{', 1)[0])
+                linkage = 'C' if re.match(r'extern\s*"C"', head) else source_linkage
+                self.declared.setdefault(name, (linkage + ' ' + re.sub(r'^extern\s*(?:"C"\s*)?', '', head), address))
 
     def absorb(self, address, text, source_is_c):
         """The chunk a per-function source adds at its function's place: its includes are collected, an item written before is dropped, a
@@ -397,13 +402,23 @@ class Merge:
             self.notes.append(f'{clash} -> {new_name}')
             text = rename(text, clash, new_name)
         if self.rename_declarations:
+            source_linkage = 'C' if self.language == 'c' or (source_is_c and self.wrap_c) else 'C++'
             for item in split_items(text):
                 kind, name = classify(item)
                 if kind != 'declaration' or not name or '::' in name:
                     continue
-                key = re.sub(r'^extern\s*(?:"C"\s*)?', '', normalized(item)).rstrip(';').strip()
+                code = normalized(item)
+                linkage = 'C' if re.match(r'extern\s*"C"', code) else source_linkage
+                key = linkage + ' ' + re.sub(r'^extern\s*(?:"C"\s*)?', '', code).rstrip(';').strip()
+                if linkage == 'C' and self.language == 'c++' and MANGLED.match(name):
+                    # a C declaration spelled with a C++ mangled name is the same symbol as the C++ declaration it mangles (g++ 2.95 also
+                    # reads a name opening with `__` as an operator): it takes a name of its own, the link finds the callee by call site
+                    new_name = f'c{address:X}{name}' if name.startswith('__') else f'{name}_{address:X}'
+                    self.notes.append(f'declaration {name} -> {new_name}')
+                    text = rename(text, name, new_name)
+                    continue
                 first = self.declared.setdefault(name, (key, address))
-                if first[1] != address and first[0] != key and re.sub(r'^extern\s*(?:"C"\s*)?', '', first[0]) != key:
+                if first[1] != address and first[0] != key:
                     self.notes.append(f'declaration {name} -> {name}_{address:X}')
                     text = rename(text, name, f'{name}_{address:X}')
         kept = []
@@ -426,6 +441,27 @@ class Merge:
         return chunk
 
 
+HEADER_DEFINED = '<defined by a shared header>'
+
+
+def header_types(names, directory=None):
+    """The struct, class and union names that the shared headers `names` (and the headers of include/ they include in turn) define with a
+    body: a per-function source that defines one of them locally takes the address suffix in a whole file holding that header, since one
+    unit cannot hold both definitions."""
+    directory = directory or os.path.join(ROOT, 'include')
+    found, pending, seen = set(), list(names), set()
+    while pending:
+        name = pending.pop()
+        path = os.path.join(directory, name)
+        if name in seen or not os.path.isfile(path):
+            continue
+        seen.add(name)
+        text = code_only(open(path).read())
+        pending += re.findall(r'^\s*#\s*include\s*"([^"]+)"', text, flags=re.M)
+        found.update(re.findall(r'\b(?:struct|class|union)\s+(\w+)\s*(?::[^{;]*)?\{', text))
+    return found
+
+
 def build_whole_file(start, end, functions, matched, read_source=None, language=None, wrap_c=True, rename_declarations=False):
     """(language, text, notes) of the whole file over [start, end): `functions` are the retail function starts in the range (build/splat),
     `matched` src/MANIFEST.tsv. `read_source(path)` returns a per-function source's text (default: from src/). The language is C when every
@@ -438,11 +474,16 @@ def build_whole_file(start, end, functions, matched, read_source=None, language=
     if language is None:
         language = 'c' if sources and all(path.endswith('.c') for _, path in sources) else 'c++'
     merge = Merge(language, wrap_c, rename_declarations)
+    includes_used = set()
+    for address, path in sources:
+        includes_used.update(re.findall(r'^\s*#\s*include\s*"([^"]+)"', read_source(path), flags=re.M))
+    for name in header_types(includes_used):
+        merge.defined.setdefault(name, HEADER_DEFINED)
     body = []
     if rename_declarations:
         for address in functions:
             if address in matched:
-                merge.declare_definitions(clean_text(read_source(matched[address][2])), address)
+                merge.declare_definitions(clean_text(read_source(matched[address][2])), address, matched[address][2].endswith('.c'))
     for address in functions:
         if address not in matched:
             body.append(f'INCLUDE_ASM({address:#X});\n')

@@ -1,9 +1,11 @@
-#include "m2c_macros.h"
+#include "types.h"
+
+typedef struct RefCellS32 { s32 tag; s32 value; } RefCellS32;
 
 s32 IEpisodeCurrent();                              /* extern */
 
-void *RefOpIEpisodeCurrent(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 4) = IEpisodeCurrent();
-    M2C_FIELD(arg0, s32 *, 0) = 0x15;
-    return arg0;
+RefCellS32 *RefOpIEpisodeCurrent(RefCellS32 *ref) {
+    ref->value = IEpisodeCurrent();
+    ref->tag = 0x15;
+    return ref;
 }

@@ -6,6 +6,7 @@ import os
 import re
 import sys
 import struct
+import tempfile
 import unittest
 
 HERE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts')
@@ -347,6 +348,42 @@ class MakeWholeFilesTests(unittest.TestCase):
     def test_extern_c_prefix_goes_after_leading_comments(self):
         text = make_whole_files.flatten_extern_c('extern "C" {\n// note\nvoid f(void);\n}\n')
         self.assertIn('// note\nextern "C" void f(void);', text)
+
+    def test_header_types_follows_includes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with open(os.path.join(directory, 'outer.h'), 'w') as handle:
+                handle.write('#include "inner.h"\nstruct OUTER;\nclass KEPT : public INNER { int x; };\n')
+            with open(os.path.join(directory, 'inner.h'), 'w') as handle:
+                handle.write('struct INNER { int y; };\n')
+            self.assertEqual(make_whole_files.header_types({'outer.h'}, directory), {'KEPT', 'INNER'})
+
+    def test_local_struct_named_like_a_shared_header_type_is_renamed(self):
+        sources = {'module/First.cpp': 'struct SO { int x; };\nvoid First(SO *so) { so->x = 0; }\n',
+                   'module/Second.cpp': '#include "so.h"\nvoid Second() { }\n'}
+        _, _, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                        read_source=sources.__getitem__)
+        self.assertIn('SO -> SO_100000', notes)
+
+    def test_rename_mode_separates_a_declaration_with_other_linkage(self):
+        sources = {'module/First.cpp': 'extern "C" float g(float);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'float g(float);\nvoid Second() { g(0); }\n'}
+        _, _, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                        read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('declaration g -> g_100010', notes)
+
+    def test_rename_mode_separates_a_c_declaration_of_a_mangled_name(self):
+        sources = {'module/First.cpp': 'float g(float);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'extern "C" float g__Ff(float);\nvoid Second() { g__Ff(0); }\n'}
+        _, text, _ = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                       read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('g__Ff_100010(0)', text)
+
+    def test_rename_mode_prefixes_a_mangled_operator_name(self):
+        sources = {'module/First.cpp': 'void First() { }\n',
+                   'module/Second.cpp': 'extern "C" int __as__4CRefRC4CRef(int, void *);\nvoid Second() { __as__4CRefRC4CRef(0, 0); }\n'}
+        _, text, _ = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                       read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('c100010__as__4CRefRC4CRef(0, 0)', text)
 
     def test_rename_mode_separates_a_differing_declaration_inside_extern_c(self):
         sources = {'module/First.cpp': 'void g(int *);\nvoid First() { g(0); }\n',

@@ -1,27 +1,19 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-struct _m2c_stack_RefOpClqEvaluate {
-    /* 0x00 */ char pad0[4];
-    /* 0x04 */ f32 sp4;                             /* inferred */
-    /* 0x08 */ char pad8[0x38];
-};                                                  /* size = 0x40 */
-#define sp4 (*(f32 *)(sp + 0x04))
-M2C_UNK CRef_Destruct(s8 *);                      /* extern */
-M2C_UNK CRef_RefCoerceF32(s8 *, s32);             /* extern */
-s8 *RefOpClqEvaluate(s8 *arg0, s8 *arg1, s8 *arg2) {
-    s8 sp[0x10] __attribute__((aligned(16)));
-    s8 *temp_s0;
-    temp_s0 = M2C_FIELD(arg2, s8 **, 4);
-    CRef_RefCoerceF32(sp, (int)(arg2 + 8));
-    M2C_FIELD(arg0, f32 *, 4) = (f32) (M2C_FIELD(temp_s0, f32 *, 0) + (sp4 * (M2C_FIELD(temp_s0, f32 *, 4) + (sp4 * M2C_FIELD(temp_s0, f32 *, 8)))));
-    M2C_FIELD(arg0, s32 *, 0) = 0x16;
-    CRef_Destruct(sp);
+struct RefCell { s32 tag; f32 value; };
+struct ClqCoefficients { f32 field_0x0; f32 field_0x4; f32 field_0x8; };
+struct RefClqArgs { s32 tag; ClqCoefficients *clq; RefCell coerce; };
+void CRef_Destruct(s8 *);
+void CRef_RefCoerceF32(s8 *, RefCell *);
+RefCell *RefOpClqEvaluate(RefCell *arg0, s8 *arg1, RefClqArgs *arg2) {
+    union { s8 bytes[0x10]; struct { s32 tag; f32 value; } cell; } local __attribute__((aligned(16)));
+    ClqCoefficients *clq;
+    clq = arg2->clq;
+    CRef_RefCoerceF32(local.bytes, &arg2->coerce);
+    arg0->value = (f32) (clq->field_0x0 + (local.cell.value * (clq->field_0x4 + (local.cell.value * clq->field_0x8))));
+    arg0->tag = 0x16;
+    CRef_Destruct(local.bytes);
     return arg0;
 }
 }

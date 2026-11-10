@@ -1,9 +1,11 @@
-#include "m2c_macros.h"
+#include "types.h"
+
+typedef struct RefCell { s32 tag; f32 value; } RefCell;
 
 extern f32 g_2dded0;
 
-void *func_00123A08(void *arg0) {
-    M2C_FIELD(arg0, f32 *, 4) = (f32) g_2dded0;
-    M2C_FIELD(arg0, s32 *, 0) = 0x16;
+RefCell *func_00123A08(RefCell *arg0) {
+    arg0->value = g_2dded0;
+    arg0->tag = 0x16;
     return arg0;
 }

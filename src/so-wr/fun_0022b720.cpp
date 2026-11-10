@@ -1,29 +1,33 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+#include "lo.h"
+
+struct ALO : LO {
+    f32 field_0x50;
+    char pad54[8];
+    s32 field_0x5C;
+    char pad60[0x6E0 - 0x60];
+    s32 field_0x6E0;
+    char pad6E4[0x8F0 - 0x6E4];
+    char field_0x8F0[0xA0];
+};
+
 extern "C" {
-struct _m2c_stack_func_0022B720 {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-void InitLo();
-void InitSl(s8 *, M2C_UNK);
-void func_001A6CA8(s8 *, M2C_UNK);
-void func_0022B720(s8 *arg0) {
-    s32 temp_v1;
-    InitLo();
-    M2C_FIELD(arg0, s32 *, 0x5C) = -1;
-    M2C_FIELD(arg0, s32 *, 0x6E0) = -1;
-    M2C_FIELD(arg0, f32 *, 0x50) = -1.0f;
-    InitSl(arg0 + 0x8F0, 0xA0);
-    func_001A6CA8(arg0, 1);
-    temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
-    if ((temp_v1 ^ 1) & 1) {
-        *(s32 *)temp_v1 = (s32) (*(s32 *)temp_v1 | 2);
+void InitLo(LO *);
+void InitSl(char *, s32);
+void func_001A6CA8(ALO *, s32);
+void func_0022B720(ALO *alo) {
+    s32 flags;
+    InitLo(alo);
+    alo->field_0x5C = -1;
+    alo->field_0x6E0 = -1;
+    alo->field_0x50 = -1.0f;
+    InitSl(alo->field_0x8F0, 0xA0);
+    func_001A6CA8(alo, 1);
+    flags = (s32)alo->grfSw;
+    if ((flags ^ 1) & 1) {
+        *(s32 *)flags = *(s32 *)flags | 2;
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_v1 | 2);
+    alo->grfSw = (u32)(flags | 2);
 }
 }
