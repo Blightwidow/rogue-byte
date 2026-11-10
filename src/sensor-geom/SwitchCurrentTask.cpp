@@ -2,7 +2,7 @@
 struct TASK { char pad[0xF4]; int cause; int arg; };
 struct JOBX { char pad[0xF0]; int f0; int f4; };
 #include "sw.h"
-struct SCOPE { JOBX *job; TASK *task; int savedCause; int savedArg; };
+struct JOBSCOPE { JOBX *job; TASK *task; int savedCause; int savedArg; };
 extern SW B_003DD490;
 extern "C" int FIsCurrentTask(TASK *);
 extern "C" void LeaveTaskIfCurrent(TASK *);
@@ -13,7 +13,7 @@ void SwitchCurrentTask(TASK *task)
         return;
     TASK *old = B_003DD490.ptaskCurrent;
     if (old != 0) {
-        SCOPE scope;
+        JOBSCOPE scope;
         scope.job = 0;
         scope.task = old;
         int c = task->cause;

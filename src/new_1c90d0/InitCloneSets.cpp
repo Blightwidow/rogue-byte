@@ -1,11 +1,7 @@
 #include "sly2.h"
-struct VTE { short delta; short index; void *fn; };
-struct XFLO { char pad[0x24]; int flag; };
-struct VTLO { char pad0[0xC8]; VTE setCloneId; };
-struct LO { char pad[0xC]; VTLO *vt; char pad10[0x2C]; XFLO *xf; };
+#include "sw.h"
 struct ALLOCREQ { int cb; int cbAlign; };
 struct CLONESET { int cpalo; LO **apalo; int cclone; int icloneFree; char pad10[4]; int value; int *aoidClone; char pad1c[0x64 - 0x1C]; char *amat; char *axf; char pad6c[0]; };
-struct SW { char pad[0x3F04]; int cset; CLONESET *acloneSet; };
 struct MAT { VECTOR pos; VECTOR row[3]; };
 struct ROWS3 { VECTOR row[3]; };
 struct XFC { VECTOR pos; float mat[16]; };
@@ -27,8 +23,8 @@ void InitCloneSets(SW *sw) {
     int iset = 0;
     int iclone, index;
     LO *lo;
-    while (iset < sw->cset) {
-        CLONESET *set = sw->acloneSet + iset;
+    while (iset < sw->ccloneset) {
+        CLONESET *set = sw->acloneset + iset;
         int next = iset + 1;
         if (set->icloneFree < set->cclone) {
             iclone = set->icloneFree;
@@ -39,8 +35,8 @@ void InitCloneSets(SW *sw) {
                 while (index < set->cpalo) {
                     lo = set->apalo[iclone * set->cpalo + index];
                     index++;
-                    ((void (*)(void *, unsigned, int))lo->vt->setCloneId.fn)((char *)lo + lo->vt->setCloneId.delta, cloneid, 1);
-                    lo->xf->flag = 1;
+                    lo->SetCloneId(cloneid, 1);
+                    lo->pscope->field_0x24 = 1;
                 }
                 iclone++;
             } while (iclone < set->cclone);

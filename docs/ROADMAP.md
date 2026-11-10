@@ -138,11 +138,15 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      clone sets, the slot heaps of timed calls, callbacks, message queues, hit effects, ripples and workers, and the save paths,
      named after the strings retail hands `PsavepathNew` for each (`dt`, `loot/ccoin`, `flags/lang`, `flags/nMixerMode`...;
      `ApplyOptionsFromSave` reads them in the same order). `SLOTHEAP` (Sly 1's name) is 0x18 bytes in Sly 2: heaps sit back to
-     back at that stride. 35 of the 55 linked files with their own `SW` moved, all scoring 0, `make elf` PASS, reports unchanged.
-     Left: six whose local `LO` holds what `lo.h` lacks (a field at 0x3C, hand-written vtable calls on slots 8, 10, 25, 37), three
-     sharing a table at 0x3F14 whose element type differs in each, a load request at 0x3BF4 that two others read as flags, one
-     reading the scope at 0x3F0C as a pointer, one with its own `QW`, one whose `SW` is another type, and single fields (0x3C88,
-     0x3D1C, 0x4020, 0x406C, 0x45CC). 18 unmatched drafts keep theirs.
+     back at that stride; `PblipgNew` reads its free slot (0xC) and fixed size (0x14). All 55 linked files with their own
+     `SW` moved, all scoring 0, `make elf` PASS, reports unchanged; the 18 left are unmatched drafts. The last 20 settled more:
+     the world's search scope (0x3F0C) and `LO::pscope` (0x3C) are pointers to one 0x28-byte `SCOPE` (`AllocSwBuffers` allocates
+     the world's; `RefOpFindNearestObject` picks either, `InitCloneSets` writes its 0x24), the load request at 0x3BF4 is a
+     0x4C-byte `LOADREQ` whose first word two functions read as signed flags, and the table at 0x3F14 holds `GRFENTRY`
+     pairs (flags, `LO *`), with `LO` 0x40 holding the flags until the object enters it and its entry after (`AddSwGrfEntry`;
+     `AddSoLoHierarchy` tests bit 0 to tell them apart). `LO` slots 8 (`Add`), 25 (`SetCloneId`) and 37 gained their
+     signatures, so `InstantiateClone`, `InitCloneSets`, `SolveSw`, `func_001CDA80` and `AddSoLoHierarchy` call them as
+     virtuals; `SO` 0x70 is where `AddSoLoHierarchy`'s walk of `dlChild` stops.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

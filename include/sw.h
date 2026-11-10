@@ -24,13 +24,34 @@ struct BSPNODE;
 struct TARGET;
 struct SAVEPATH;
 struct CB;
+struct NODE;
+struct PZGRAPH;
+
+/* A level load request (SetSwLoadRequest copies one, 0x4C bytes, into the world). func_00165280 and func_0020E180 test and set
+   bits 4 and 8 of its first word; func_00165280 also writes 0x44 and 0x48. */
+struct LOADREQ {
+    /* 0x00 */ s32 grf;      /* signed: func_00165280 clears bit 8 with an addiu of -9 */
+    u8 unknown_0x4[0x40];
+    /* 0x44 */ s32 field_0x44;
+    /* 0x48 */ s32 field_0x48;
+};
+
+/* An entry of the world's table at 0x3F14: flags and an object (AddSwGrfEntry adds one; SolveSw and func_001CDA80 walk them and
+   call LO slots 17 and 19 on the object). */
+struct GRFENTRY {
+    u32 grf;
+    struct LO *plo;
+};
 
 /* A slot heap: a pool of same-sized slots (Sly 1's name, sly1 include/slotheap.h, CC0). Sly 2's is 0x18 bytes: the world keeps
    pairs of them back to back (slotheapRipg 0x403C and slotheapRip 0x4054, PripgNew and PripNewRipg), and a field follows
-   each one 0x18 bytes on (pcbFirst after the callbacks' heap at 0x3C90, dlWkr after slotheapWkr). Its fields are not
-   read through the world yet. */
+   each one 0x18 bytes on (pcbFirst after the callbacks' heap at 0x3C90, dlWkr after slotheapWkr). PblipgNew reads two fields
+   of the blip groups' heap before it allocates: no free slot and a fixed size means no new group. */
 struct SLOTHEAP {
-    u8 unknown_0x0[0x18];
+    u8 unknown_0x0[0xC];
+    /* 0x0C */ void *pslotFree;       /* PblipgNew */
+    u8 unknown_0x10[0x4];
+    /* 0x14 */ s32 cslotMax;          /* PblipgNew: nonzero when the heap may not grow */
 };
 
 struct SW : BASIC {
@@ -66,18 +87,26 @@ struct SW : BASIC {
     /* 0x3B54 */ struct SAVEPATH *psavepathAutosaveWarned; /* "flags/fAutosaveWarned" */
     /* 0x3B58 */ struct SAVEPATH *apsavepathEpisodeDt[9]; /* "episode/<name>/dt" per episode */
     /* 0x3B7C */ struct SAVEPATH *apsavepathEpisodePercent[9]; /* "episode/<name>/percent_complete" per episode */
-    u8 unknown_0x3BA0[0xF0];
+    u8 unknown_0x3BA0[0x50];
+    /* 0x3BF0 */ s32 fLoadPending; /* SetSwLoadRequest sets it with the request */
+    /* 0x3BF4 */ LOADREQ loadreq; /* SetSwLoadRequest copies one in whole */
+    u8 unknown_0x3C40[0x48];
+    /* 0x3C88 */ s32 field_0x3C88; /* func_00162A60 sets it to 0x189 when it restarts a task */
+    /* 0x3C8C */ s32 field_0x3C8C; /* func_00162A60 sets it to -1 with 0x3C88 */
     /* 0x3C90 */ SLOTHEAP slotheapCb; /* the callbacks, func_00149B58 */
     /* 0x3CA8 */ struct CB *pcbFirst; /* func_00149B58 */
     /* 0x3CAC */ struct CB *pcbLast; /* func_00149B58 */
     u8 unknown_0x3CB0[0x20];
     /* 0x3CD0 */ s32 cobr; /* PoxaAllocSw */
     /* 0x3CD4 */ struct OBR *aobr[3]; /* one per axis, PoxaAllocSw */
-    u8 unknown_0x3CE0[0x60];
+    u8 unknown_0x3CE0[0x3C];
+    /* 0x3D1C */ struct NODE *pnodeFirst; /* func_001F8F80 walks the list through NODE::pnext */
+    u8 unknown_0x3D20[0x20];
     /* 0x3D40 */ SLOTHEAP slotheapMq; /* CloneMqList */
     /* 0x3D58 */ s32 generation; /* func_00190D10 increments it */
     /* 0x3D5C */ s32 frame; /* func_001CD9E0 compares an SO stamp with it */
-    u8 unknown_0x3D60[0x8];
+    /* 0x3D60 */ s32 field_0x3D60; /* func_001CDA80 counts its runs */
+    /* 0x3D64 */ s32 frameLast; /* func_001CDA80 copies frame here when the two differ */
     /* 0x3D68 */ s32 idHitfxLast; /* func_00156548 increments it for each new hit effect */
     u8 unknown_0x3D6C[0x4];
     /* 0x3D70 */ s32 stamp; /* func_001C1968 */
@@ -90,15 +119,22 @@ struct SW : BASIC {
     /* 0x3F00 */ struct PO *ppoFocusOverride; /* SetSwFocusBase, SetSwFocusOverride */
     /* 0x3F04 */ s32 ccloneset; /* InitCloneSets */
     /* 0x3F08 */ struct CLONESET *acloneset; /* InitCloneSets, InstantiateClone */
-    /* 0x3F0C */ s32 scope; /* the default find scope: func_00124150, func_001241E8, func_001242B8, func_00124578 */
-    u8 unknown_0x3F10[0xEC];
+    /* 0x3F0C */ struct SCOPE *pscopeDefault; /* used when the context object has none: RefOpFindObject, func_001241E8, func_00124578, RefOpFindNearestObject; AllocSwBuffers allocates it */
+    u8 unknown_0x3F10[0x4];
+    /* 0x3F14 */ s32 cgrfentry; /* AddSwGrfEntry, SolveSw, func_001CDA80 */
+    /* 0x3F18 */ s32 cgrfentryDead; /* AddSwGrfEntry compacts the table when they pass a tenth */
+    /* 0x3F1C */ s32 *pigrfentryRunning; /* the loop index of the walk in progress, which AddSwGrfEntry fixes up (SolveSw, func_001CDA80) */
+    /* 0x3F20 */ GRFENTRY *agrfentry; /* AddSwGrfEntry, SolveSw, func_001CDA80 */
+    u8 unknown_0x3F24[0xD8];
     /* 0x3FFC */ DL dlHitfx; /* func_00156548 */
     /* 0x4008 */ SLOTHEAP slotheapHitfx; /* func_00156548 */
-    u8 unknown_0x4020[0x1C];
+    /* 0x4020 */ struct BASIC *phitfxdef; /* func_0017A7F8 hands it to PhitfxSpawn, whose Splice binding passes a BASIC */
+    u8 unknown_0x4024[0x18];
     /* 0x403C */ SLOTHEAP slotheapRipg; /* PripgNew */
     /* 0x4054 */ SLOTHEAP slotheapRip; /* PripNewRipg */
     /* 0x406C */ struct PRIPG *pripgCached; /* PripgNew */
-    u8 unknown_0x4070[0xA8];
+    /* 0x4070 */ SLOTHEAP slotheapBlipg; /* PblipgNew */
+    u8 unknown_0x4088[0x90];
     /* 0x4118 */ SLOTHEAP slotheapWkr; /* ExpireSwWkrs */
     /* 0x4130 */ DL dlWkr; /* ExpireSwWkrs */
     u8 unknown_0x413C[0x41C];
@@ -106,7 +142,9 @@ struct SW : BASIC {
     /* 0x455C */ struct BSPNODE *abspnode; /* func_0013E0E0 */
     /* 0x4560 */ s32 cregion; /* func_0013E0E0 */
     /* 0x4564 */ void *aregion; /* func_0013E0E0 (0x20-byte elements) */
-    u8 unknown_0x4568[0xD0];
+    u8 unknown_0x4568[0x64];
+    /* 0x45CC */ struct PZGRAPH *ppzgraph; /* AddSoLoHierarchy */
+    u8 unknown_0x45D0[0x68];
     /* 0x4638 */ void *ppool; /* func_0013CF38 */
     u8 unknown_0x463C[0x4];
     /* 0x4640 */ s32 field_0x4640; /* func_00210BE0, func_00211EC0 test it */
@@ -124,6 +162,8 @@ struct SW : BASIC {
 
 #if defined(__mips__)
 SLY2_SIZE_CHECK(SLOTHEAP, 0x18);
+SLY2_SIZE_CHECK(LOADREQ, 0x4C);
+SLY2_SIZE_CHECK(GRFENTRY, 0x8);
 SLY2_SIZE_CHECK(SW, 0x4790);
 SLY2_OFFSET_CHECK(SW, state, 0x150);
 SLY2_OFFSET_CHECK(SW, pblockCur, 0x39E8);
@@ -150,14 +190,21 @@ SLY2_OFFSET_CHECK(SW, psavepathReverseAim, 0x3B50);
 SLY2_OFFSET_CHECK(SW, psavepathAutosaveWarned, 0x3B54);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodeDt, 0x3B58);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodePercent, 0x3B7C);
+SLY2_OFFSET_CHECK(SW, fLoadPending, 0x3BF0);
+SLY2_OFFSET_CHECK(SW, loadreq, 0x3BF4);
+SLY2_OFFSET_CHECK(SW, field_0x3C88, 0x3C88);
+SLY2_OFFSET_CHECK(SW, field_0x3C8C, 0x3C8C);
 SLY2_OFFSET_CHECK(SW, slotheapCb, 0x3C90);
 SLY2_OFFSET_CHECK(SW, pcbFirst, 0x3CA8);
 SLY2_OFFSET_CHECK(SW, pcbLast, 0x3CAC);
 SLY2_OFFSET_CHECK(SW, cobr, 0x3CD0);
 SLY2_OFFSET_CHECK(SW, aobr, 0x3CD4);
+SLY2_OFFSET_CHECK(SW, pnodeFirst, 0x3D1C);
 SLY2_OFFSET_CHECK(SW, slotheapMq, 0x3D40);
 SLY2_OFFSET_CHECK(SW, generation, 0x3D58);
 SLY2_OFFSET_CHECK(SW, frame, 0x3D5C);
+SLY2_OFFSET_CHECK(SW, field_0x3D60, 0x3D60);
+SLY2_OFFSET_CHECK(SW, frameLast, 0x3D64);
 SLY2_OFFSET_CHECK(SW, idHitfxLast, 0x3D68);
 SLY2_OFFSET_CHECK(SW, stamp, 0x3D70);
 SLY2_OFFSET_CHECK(SW, gs, 0x3EA0);
@@ -167,18 +214,25 @@ SLY2_OFFSET_CHECK(SW, ppoFocusBase, 0x3EFC);
 SLY2_OFFSET_CHECK(SW, ppoFocusOverride, 0x3F00);
 SLY2_OFFSET_CHECK(SW, ccloneset, 0x3F04);
 SLY2_OFFSET_CHECK(SW, acloneset, 0x3F08);
-SLY2_OFFSET_CHECK(SW, scope, 0x3F0C);
+SLY2_OFFSET_CHECK(SW, pscopeDefault, 0x3F0C);
+SLY2_OFFSET_CHECK(SW, cgrfentry, 0x3F14);
+SLY2_OFFSET_CHECK(SW, cgrfentryDead, 0x3F18);
+SLY2_OFFSET_CHECK(SW, pigrfentryRunning, 0x3F1C);
+SLY2_OFFSET_CHECK(SW, agrfentry, 0x3F20);
 SLY2_OFFSET_CHECK(SW, dlHitfx, 0x3FFC);
 SLY2_OFFSET_CHECK(SW, slotheapHitfx, 0x4008);
+SLY2_OFFSET_CHECK(SW, phitfxdef, 0x4020);
 SLY2_OFFSET_CHECK(SW, slotheapRipg, 0x403C);
 SLY2_OFFSET_CHECK(SW, slotheapRip, 0x4054);
 SLY2_OFFSET_CHECK(SW, pripgCached, 0x406C);
+SLY2_OFFSET_CHECK(SW, slotheapBlipg, 0x4070);
 SLY2_OFFSET_CHECK(SW, slotheapWkr, 0x4118);
 SLY2_OFFSET_CHECK(SW, dlWkr, 0x4130);
 SLY2_OFFSET_CHECK(SW, cbspnode, 0x4558);
 SLY2_OFFSET_CHECK(SW, abspnode, 0x455C);
 SLY2_OFFSET_CHECK(SW, cregion, 0x4560);
 SLY2_OFFSET_CHECK(SW, aregion, 0x4564);
+SLY2_OFFSET_CHECK(SW, ppzgraph, 0x45CC);
 SLY2_OFFSET_CHECK(SW, ppool, 0x4638);
 SLY2_OFFSET_CHECK(SW, field_0x4640, 0x4640);
 SLY2_OFFSET_CHECK(SW, fGuardsFrozen, 0x4748);

@@ -23,6 +23,8 @@
 #include "types.h"
 
 struct SO;
+struct SCOPE;
+struct GRFENTRY;
 
 struct BASIC {
     u8 unknown_0x0[0xC];
@@ -35,9 +37,16 @@ struct BASIC {
     virtual void Slot6();               /*  6: func_00113A30 (LO), func_00113D10 (SO) */
 };
 
+/* A search scope, 0x28 bytes: AllocSwBuffers allocates the world's default (SW::pscopeDefault) at that size, sets words 0x0 and
+   0x8 to -1 and initialises a list at 0x18; an LO points at its own (LO::pscope), which PloFindSwObject takes in its place. */
+struct SCOPE {
+    u8 unknown_0x0[0x24];
+    /* 0x24 */ s32 field_0x24;         /* InitCloneSets sets it to 1 on each clone's scope */
+};
+
 struct LO : BASIC {
     virtual void Init();                /*  7: InitLo, InitSo */
-    virtual void Slot8();
+    virtual void Add();                 /*  8: AddLo; InstantiateClone calls it without arguments */
     virtual void Remove();              /*  9: RemoveLo; called without arguments (UpdateSo, InitFragile) */
     virtual void SetParent(struct LO *ploParent, void *pv, int grf); /* 10: SetLoParent, SetSoParent; func_001CD308 and
                                            Carry_Attach pass a pointer second */
@@ -55,7 +64,8 @@ struct LO : BASIC {
     virtual void RemoveAloHierarchy();  /* 22: RemoveAloHierarchy */
     virtual void Slot23();
     virtual void Slot24();
-    virtual void SetCloneId();          /* 25: ALO_SetCloneId (SO) */
+    virtual void SetCloneId(u32 cloneid, int grf); /* 25: LO_SetCloneId, ALO_SetCloneId (SO); InstantiateClone and
+                                           InitCloneSets pass MakeCloneId's result and 1 */
     virtual void Slot26(void *pv);      /* 26: func_001CB4E0, func_001CB518 (SO); func_001CB518 calls it on each child */
     virtual void Slot27(void *pv);      /* 27: func_001CB5C8, func_001CB5D0 (SO); func_001CB5D0 calls it on each child */
     virtual void CReturnZero();         /* 28: CReturnZeroLo */
@@ -67,7 +77,7 @@ struct LO : BASIC {
     virtual QW Slot34();                /* 34: MatchSoOtherObject */
     virtual void Slot35(QW vec);        /* 35: MatchSoOtherObject passes slot 33's result */
     virtual void Slot36(QW vec);        /* 36: MatchSoOtherObject passes slot 34's result */
-    virtual void Slot37();
+    virtual void Slot37(void *pmat);    /* 37: func_001A6450, func_001F4010 (SO); InstantiateClone passes the clone's matrix */
     virtual void SetPosMatFromLo();     /* 38: SetLoPosMatFromLo */
     virtual void SetPosMatFromXf();     /* 39: SetLoPosMatFromXf */
     virtual void CloneVirtual();        /* 40: CloneLoVirtual */
@@ -87,7 +97,17 @@ struct LO : BASIC {
                                        list has ibDle 0x24 (InitSo), but this is not declared as a DLE: its prev would be 0x28,
                                        and retail reads grfo there as 64 bits (ld 0x28 in RecalcSoLocked, func_001C4BD8) */
     /* 0x28 */ u64 grfo;               /* RecalcSoLocked, func_001C4BD8, UpdateRip */
-    u8 unknown_0x30[0x20];
+    u8 unknown_0x30[0xC];
+    /* 0x3C */ struct SCOPE *pscope;   /* what PloFindSwObject searches when this object is the context: RefOpFindObject,
+                                       func_001241E8, func_00124578, RefOpFindNearestObject; InitCloneSets sets its 0x24 */
+    /* 0x40: flags until AddSwGrfEntry enters the object in the world's table (include/sw.h), then its entry, which keeps the
+       flags; AddSwGrfEntry tests bit 0x40 first and repoints it when it compacts the table. SolveSw and func_001CDA80 call
+       LO slots on the entries' objects, so the object is an LO. */
+    union {
+        u32 grfSw;
+        struct GRFENTRY *pgrfentry;
+    };
+    u8 unknown_0x44[0xC];
 };
 
 /* Retail's layout, checked by the PS2 build: a field or a size that moves fails to compile. */
@@ -101,5 +121,8 @@ SLY2_OFFSET_CHECK(LO, psoParent, 0x10);
 SLY2_OFFSET_CHECK(LO, proot, 0x14);
 SLY2_OFFSET_CHECK(LO, ploNext, 0x24);
 SLY2_OFFSET_CHECK(LO, grfo, 0x28);
+SLY2_OFFSET_CHECK(LO, pscope, 0x3C);
+SLY2_OFFSET_CHECK(LO, pgrfentry, 0x40);
+SLY2_SIZE_CHECK(SCOPE, 0x28);
 #endif
 #endif

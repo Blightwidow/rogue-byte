@@ -8,7 +8,6 @@ extern "C" void InitZpr__FP3ZPR3ZPKP2LO(ZPR *, int, int);
 extern "C" void func_001BE398(void *, ZPR *);
 extern "C" void bevy_camera_follow_activity(void *, int, int);
 extern "C" char B_002DEB30[];
-struct SW { char pad0[0x3BF4]; unsigned flags; };
 void AllocSwBuffers(char *sw)
 {
     REQ req;

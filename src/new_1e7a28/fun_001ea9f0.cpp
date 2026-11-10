@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+#include "sw.h"
 struct GIFS { char pad[0x30]; };
-struct QW;
 struct VECTOR { float x, y, z, w; } __attribute__((aligned(16)));
 struct CLR {
     int rgba;
@@ -10,7 +10,6 @@ struct CLR {
 };
 // steer-ok: a helper call keeps fold from re-associating scaled * (alpha * 128) into (scaled * 128) * alpha, as retail's operand order shows
 static inline int ScaleAlpha(float scale, float alpha) { return (int)(scale * alpha); }
-struct SW { char pad0[0x3EA0]; unsigned long gs; };
 extern "C" {
 void __4GIFS(GIFS *);
 void AllocStatic__4DMASiP2QW(GIFS *, int, QW *);

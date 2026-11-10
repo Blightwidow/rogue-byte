@@ -45,7 +45,8 @@ struct SO : LO {
     /* 0x5C */ struct XF *pxfAngular;  /* the same functions */
     /* 0x60 */ struct XF *pxfRoot;     /* GetSoCpdefi, func_001F4898, func_001F4930 */
     /* 0x64 */ DL dlChild;             /* InitSo: InitDl(&dlChild, 0x24); func_001CB518, func_001CB5D0, func_001F3CC8 walk it */
-    u8 unknown_0x70[0x5C];
+    /* 0x70 */ struct LO *ploChildEnd; /* AddSoLoHierarchy (slot 11 of SO) walks dlChild until it meets this */
+    u8 unknown_0x74[0x58];
     /* 0xCC */ s32 islot;              /* func_001CB518 (SO's slot 26) sets it to -1 */
     u8 unknown_0xD0[0x10];
     /* 0xE0 */ s32 cgeom;              /* ProjectSoTransform, RemoveSoGeomFromOxa (elements of 0xB0 bytes) */
@@ -69,6 +70,7 @@ SLY2_OFFSET_CHECK(SO, pxfLinear, 0x58);
 SLY2_OFFSET_CHECK(SO, pxfAngular, 0x5C);
 SLY2_OFFSET_CHECK(SO, pxfRoot, 0x60);
 SLY2_OFFSET_CHECK(SO, dlChild, 0x64);
+SLY2_OFFSET_CHECK(SO, ploChildEnd, 0x70);
 SLY2_OFFSET_CHECK(SO, field_0x13C, 0x13C);
 SLY2_OFFSET_CHECK(SO, islot, 0xCC);
 SLY2_OFFSET_CHECK(SO, cgeom, 0xE0);
