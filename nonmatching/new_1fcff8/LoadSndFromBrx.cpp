@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct BIS;
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct B8 { char b[8]; };
 struct OIDB { B8 q[8]; };
 struct OIDV { int pad0[2]; int w8; char pad[0x38 - 0xC]; int w38; int w3C; };
@@ -41,24 +41,24 @@ int U8Read__18CBinaryInputStream(BIS *);
 float F32Read__18CBinaryInputStream(BIS *);
 int CBinaryInputStream_Read_thunk(BIS *, int, void *);
 void func_00118458(BIS *, void *);
-void *PvAllocSwClearImpl__Fi(REQ *);
-void *PvAllocSwImpl__Fi(REQ *);
+void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
+void *PvAllocSwImpl__Fi(ALLOCREQ *);
 void *NewStreamAmb(void *, int);
 void func_00259B48(void *, void *);
 void snd_UnloadBank(int);
 int snd_FlushSoundCommands(void);
 extern int B_002E1E54;
 }
-static inline void *AllocClear(REQ *request, int size)
+static inline void *AllocClear(ALLOCREQ *request, int size)
 {
-    request->size = size;
-    request->align = 0x10;
+    request->cb = size;
+    request->cbAlign = 0x10;
     return PvAllocSwClearImpl__Fi(request);
 }
-static inline void *AllocPlain(REQ *request, int size)
+static inline void *AllocPlain(ALLOCREQ *request, int size)
 {
-    request->size = size;
-    request->align = 0x10;
+    request->cb = size;
+    request->cbAlign = 0x10;
     return PvAllocSwImpl__Fi(request);
 }
 static inline int OidEqual(const OIDV *a, const OIDV *b)
@@ -70,7 +70,7 @@ static inline int OidEqual(const OIDV *a, const OIDV *b)
 void LoadSndFromBrx(SNDOBJ *snd, BIS *stream)
 {
     OIDB oid;
-    REQ req;
+    ALLOCREQ req;
     OIDB tmp;
     func_00118458(stream, &oid);
     if (!OidEqual((OIDV *)&oid, (OIDV *)&snd->oid)) {
@@ -130,8 +130,8 @@ void LoadSndFromBrx(SNDOBJ *snd, BIS *stream)
             }
         }
         ent->count = S32Read__18CBinaryInputStream(stream);
-        req.size = ent->count * 8;
-        req.align = 0x10;
+        req.cb = ent->count * 8;
+        req.cbAlign = 0x10;
         ent->data = PvAllocSwImpl__Fi(&req);
         CBinaryInputStream_Read_thunk(stream, ent->count * 8, ent->data);
         ent->next = snd->ents;

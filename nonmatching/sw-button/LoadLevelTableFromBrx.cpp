@@ -1,5 +1,5 @@
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct ROW { unsigned char b[64]; };
 struct CNT { int c; short *p; };
 extern "C" {

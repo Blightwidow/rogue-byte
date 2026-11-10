@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct VT { short delta; short index; void *(*fn)(void *, int); };
 struct XFREC {
     float m[16]; char pad40[0x54];

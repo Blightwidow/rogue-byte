@@ -1,4 +1,4 @@
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct Stream_1EB2F0;
 struct Shd_1EB2F0;
 struct Tex_1EB2F0 { char pad0[6]; unsigned char tag; char pad1; Shd_1EB2F0 *owner; char pad2[0x14 - 0xC]; };
@@ -23,8 +23,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
     if (textureIndex >= 0) {
         shd->texture28 = B_003DD004[textureIndex];
     }
-    request.align = 0x10;
-    request.size = shd->texCount * sizeof(Tex_1EB2F0);
+    request.cbAlign = 0x10;
+    request.cb = shd->texCount * sizeof(Tex_1EB2F0);
     shd->textures = (Tex_1EB2F0 *)PvAllocSwClearImpl__Fi(&request);
     for (int index = 0; index < shd->texCount; index++) {
         Tex_1EB2F0 *texture = &shd->textures[index];
@@ -50,8 +50,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         shd->partCount = 4;
         break;
     }
-    request.align = 0x10;
-    request.size = shd->partCount * 8;
+    request.cbAlign = 0x10;
+    request.cb = shd->partCount * 8;
     Part_1EB2F0 *parts = (Part_1EB2F0 *)PvAllocSwClearImpl__Fi(&request);
     shd->parts = parts;
     Part_1EB2F0 *cursor;
@@ -62,8 +62,8 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
     case 6: {
         int vertices = shd->textures->owner->tag24 + 8;
         parts[0].count = vertices;
-        request.size = vertices * 0x10;
-        request.align = 0x10;
+        request.cb = vertices * 0x10;
+        request.cbAlign = 0x10;
         parts[0].memory = PvAllocSwClearImpl__Fi(&request);
         return;
     }
@@ -77,46 +77,46 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         int vertices = extra + 6;
         cursor = &parts[1];
         parts[0].count = vertices;
-        request.size = vertices * 0x10;
-        request.align = 0x10;
+        request.cb = vertices * 0x10;
+        request.cbAlign = 0x10;
         parts[0].memory = PvAllocSwClearImpl__Fi(&request);
         parts[1].count = 6;
-        request.size = 0x60;
-        request.align = 0x10;
+        request.cb = 0x60;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         parts[2].count = 8;
         cursor = &parts[2];
-        request.size = 0x80;
-        request.align = 0x10;
+        request.cb = 0x80;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         parts[3].count = 4;
         cursor = &parts[3];
-        request.size = 0x40;
-        request.align = 0x10;
+        request.cb = 0x40;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         return;
     }
     case 2:
         parts[0].count = 5;
         cursor = &parts[1];
-        request.size = 0x50;
-        request.align = 0x10;
+        request.cb = 0x50;
+        request.cbAlign = 0x10;
         parts[0].memory = PvAllocSwClearImpl__Fi(&request);
         parts[1].count = 5;
-        request.size = 0x50;
-        request.align = 0x10;
+        request.cb = 0x50;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         return;
     case 1: {
         cursor = &parts[1];
         int vertices = shd->textures->owner->tag24 + 8;
         parts[0].count = vertices;
-        request.size = vertices * 0x10;
-        request.align = 0x10;
+        request.cb = vertices * 0x10;
+        request.cbAlign = 0x10;
         parts[0].memory = PvAllocSwClearImpl__Fi(&request);
         parts[1].count = vertices;
-        request.size = vertices * 0x10;
-        request.align = 0x10;
+        request.cb = vertices * 0x10;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         return;
     }
@@ -125,18 +125,18 @@ extern "C" void LoadShdFromBrx(Stream_1EB2F0 *stream, Shd_1EB2F0 *shd) {
         int vertices = shd->textures->owner->tag24 + 8;
         parts[0].count = vertices;
         int bytes = vertices * 0x10;
-        request.size = bytes;
-        request.align = 0x10;
+        request.cb = bytes;
+        request.cbAlign = 0x10;
         parts[0].memory = PvAllocSwClearImpl__Fi(&request);
         parts[1].count = vertices;
-        request.size = bytes;
-        request.align = 0x10;
+        request.cb = bytes;
+        request.cbAlign = 0x10;
         cursor->memory = PvAllocSwClearImpl__Fi(&request);
         cursor = &parts[2];
         if (!(shd->flags & 0x20)) {
             parts[2].count = vertices;
-            request.size = bytes;
-            request.align = 0x10;
+            request.cb = bytes;
+            request.cbAlign = 0x10;
             cursor->memory = PvAllocSwClearImpl__Fi(&request);
         return;
         }

@@ -1,5 +1,5 @@
 typedef void *va_list;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SAVEPATH { int csym; void *asymid; };
 extern "C" {
 int CStackFrame_Construct(void *);

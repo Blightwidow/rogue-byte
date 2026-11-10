@@ -6,7 +6,7 @@
 
 struct Bis;
 
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 
 struct REC { char *name; int a; int b; int c; char blk[0x40]; };
 

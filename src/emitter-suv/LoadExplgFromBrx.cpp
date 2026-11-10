@@ -3,7 +3,7 @@ struct VEntry { short delta; short index; void (*fn)(void *); };
 struct LO { char pad0[0xC]; VEntry *vptr; char pad1[0x18]; unsigned long grfo; };
 struct EXPLG { char pad[0xE0]; int cexpl; LO **apexpl; };
 struct PLOARRAY { int a; int b; int cplo; LO **aplo; };
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 extern "C" void LoadXfmFromBrx(EXPLG *, void *);
 extern "C" void CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);
@@ -22,8 +22,8 @@ void LoadExplgFromBrx(EXPLG *pexplg, void *pbis)
     InitPloarray(&ploarray);
     LoadPloarrayFromBrx(pexplg, pbis, &ploarray);
     ALLOCREQ *preq = &req;
-    preq->size = ploarray.cplo * 4;
-    preq->align = 0x10;
+    preq->cb = ploarray.cplo * 4;
+    preq->cbAlign = 0x10;
     pexplg->apexpl = (LO **)PvAllocSwClearImpl__Fi(preq);
     for (int iplo = 0; iplo < ploarray.cplo; iplo++) {
         LO *plo = ploarray.aplo[iplo];

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct OBJ { char pad0[0x20]; int flags; char pad24[0x44 - 0x24]; int count44; void **ptr48; };
 struct BITS { unsigned lo : 13; unsigned start : 9; unsigned end : 9; unsigned hi : 1; };
 struct DST { int f0; int f4; int f8; BITS bits; void *p10; int f14; void *p18; int f1c; OBJ *pobj; int f24; };
@@ -73,25 +73,25 @@ void ClearSle(void *);
 void CopyAb__FPvT0Ui(void *, void *, unsigned);
 void CopyGlobDmaChain(SRC *, DST *, int, void *, int, void *, void *);
 void PrependSlEntry(void *, void *);
-void *PvAllocSwCopyImpl__FiPv(REQ *, void *);
+void *PvAllocSwCopyImpl__FiPv(ALLOCREQ *, void *);
 void func_001EC740(int, int, int, void *, void *);
 OBJ *func_001ED850(OBJ *);
 }
 
 extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
 {
-    REQ req;
+    ALLOCREQ req;
     self->pparent = parent;
-    req.size = self->cdst * 0x28;
-    req.align = 0x10;
+    req.cb = self->cdst * 0x28;
+    req.cbAlign = 0x10;
     self->pdst = (DST *)PvAllocSwCopyImpl__FiPv(&req, self->pdst);
     self->f58 = 0;
     int index = 0;
     if (self->cobj > 0) {
         do {
             if (((OBJ *)self->pobj[index])->flags & 4) {
-                req.size = self->cobj * 4;
-                req.align = 0x10;
+                req.cb = self->cobj * 4;
+                req.cbAlign = 0x10;
                 self->pobj = (void **)PvAllocSwCopyImpl__FiPv(&req, self->pobj);
                 break;
             }
@@ -102,8 +102,8 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
         DST *pdst = &self->pdst[index];
         SRC *psrc = (SRC *)((char *)self->psrc + index * 0x14);
         parent->emit(arg, &pdst->f4);
-        req.size = psrc->count * 0x50;
-        req.align = 0x10;
+        req.cb = psrc->count * 0x50;
+        req.cbAlign = 0x10;
         pdst->p18 = PvAllocSwCopyImpl__FiPv(&req, pdst->p18);
         for (int ient = 0; ient < psrc->count; ient++)
             parent->emit(arg, (char *)pdst->p18 + ient * 0x50 + 0xC);
@@ -126,8 +126,8 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
             if (psrc->flags & 1) {
                 cdma = psrc->f10;
                 pold = pdst->p10;
-                req.size = cdma * 0x10;
-                req.align = 0x10;
+                req.cb = cdma * 0x10;
+                req.cbAlign = 0x10;
                 pnew = PvAllocSwCopyImpl__FiPv(&req, pold);
                 pdst->p10 = pnew;
             } else {
@@ -136,8 +136,8 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                     cdma = pdst->pobj->count44;
                     if (fresh != 0) {
                         pold = pnew;
-                        req.size = cdma * 0x10;
-                        req.align = 0x10;
+                        req.cb = cdma * 0x10;
+                        req.cbAlign = 0x10;
                         pdst->pobj->ptr48 = (void **)PvAllocSwCopyImpl__FiPv(&req, pold);
                         pnew = pdst->pobj->ptr48;
                     }

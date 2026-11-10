@@ -1,4 +1,4 @@
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct PLO { char pad[0x50]; int count; void *array; };
 extern "C" { extern char B_003DD490[]; void PostLoLoad(void *);
 int CploFindSwObjectsByClass(void *, int, int, int, int, void *);

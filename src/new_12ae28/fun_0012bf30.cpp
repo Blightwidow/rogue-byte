@@ -6,7 +6,7 @@ struct CBinaryInputStream {
     int U8Read();
     float F32Read();
 };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct ACRAXIS {
     int vtbl;
     int ckey;

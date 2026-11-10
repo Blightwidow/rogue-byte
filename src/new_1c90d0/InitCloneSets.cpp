@@ -1,6 +1,6 @@
 #include "sly2.h"
 #include "sw.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CLONESET { int cpalo; LO **apalo; int cclone; int icloneFree; char pad10[4]; int value; int *aoidClone; char pad1c[0x64 - 0x1C]; char *amat; char *axf; char pad6c[0]; };
 struct MAT { VECTOR pos; VECTOR row[3]; };
 struct ROWS3 { VECTOR row[3]; };

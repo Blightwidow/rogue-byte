@@ -151,6 +151,10 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `AddSoLoHierarchy` tests bit 0 to tell them apart). `LO` slots 8 (`Add`), 25 (`SetCloneId`) and 37 gained their
      signatures, so `InstantiateClone`, `InitCloneSets`, `SolveSw`, `func_001CDA80` and `AddSoLoHierarchy` call them as
      virtuals; `SO` 0x70 is where `AddSoLoHierarchy`'s walk of `dlChild` stops.
+   - `ALLOCREQ` (2026-11-10): `include/alloc.h`, the size and alignment the world's and the stack's allocators take by address
+     (`PvAllocSwImpl`, `PvAllocStackImpl` and their `Clear`/`Copy` forms), copied as `ALLOCREQ` or `REQ` with three spellings of
+     its fields in 114 sources. All moved: 83 matched per-function sources and 5 whole files (`make unit`), each scoring 0, and 26
+     unmatched drafts at their old scores. Two other local `REQ`s are different types and stay.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

@@ -1,4 +1,4 @@
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 struct CBIS;
 extern "C" int B_003E1C54;
 extern "C" int B_003E1C30;
@@ -20,7 +20,7 @@ void func_0020F640(void *gsb, CBIS *bis)
         ALLOCREQ req;
         ALLOCREQ *preq = &req;
         req.cb = B_003E1C30;
-        preq->align = 0x10;
+        preq->cbAlign = 0x10;
         void *p = PvAllocStackImpl__Fi(preq);
         CBinaryInputStream_Read_thunk(bis, B_003E1C30, p);
         func_001EA568(p);

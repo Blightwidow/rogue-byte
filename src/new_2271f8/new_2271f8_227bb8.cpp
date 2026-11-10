@@ -11,7 +11,7 @@ INCLUDE_ASM(0X227C90);
 
 struct BSP;
 
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 
 struct VOLUME { char pad0[0xE4]; int cnode; int unkE8; BSP *pbsp; };
 
@@ -44,7 +44,7 @@ extern "C" int func_00227D20(VOLUME *pvolume, QW pos, float radius)
     cnode = clamped;
     ALLOCREQ *preq = &req;
     preq->cb = clamped * 12;
-    preq->align = 0x10;
+    preq->cbAlign = 0x10;
     pscratch = PvAllocStackImpl__Fi(preq);
     QW posLocal = ConvertAloPos(0, pvolume, pos);
     int result = PruneBsp__FP3BSPP6VECTORfPP3BSP(pvolume->pbsp, (BSP *)0x7FFFFFFF, posLocal, radius, &cnode, &pscratch);

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SLOTHEAP { int cb; int c; int cbAlign; char *pvFree; int cAlloc; char *pvBlock; };
 extern "C" char *PvAllocSwImpl__Fi(ALLOCREQ *);
 

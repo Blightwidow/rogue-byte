@@ -1,4 +1,4 @@
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct JSG { char pad0[0x50]; int cjsge; int ajsge; int cjsgeMax; char pad1[0x20]; int fPendingCut; };
 extern "C" {
 int CStackFrame_Construct(void *);

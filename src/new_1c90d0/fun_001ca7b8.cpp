@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CFrame { int cref; };
 struct OPT { int a; int b; CFrame *pframe; int d; int e; int f; };
 union U { ALLOCREQ req; CFrame *clone; };

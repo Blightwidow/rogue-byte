@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SET { int pad0; void *a; void *b; void *c; };
 struct MURRAY {
     char pad[0x15F0]; void *p15F0; void *p15F4; void *p15F8; void *p15FC; char pad2[0x1610 - 0x1600]; SET *setA; SET *setB;

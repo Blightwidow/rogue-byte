@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct DL { char *first; char *last; int offset; };
 struct DLI { DL *list; char *current; int offset; DLI *next; };
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct Hit { QW point; char pad0[0x10]; QW normal; char pad1[0x10]; float weight; char pad2[0x1C]; };
 struct RVT { char pad[0x40]; short delta; short index; int (*fn)(char *, char *, QW, QW); };
 struct Rip { char pad0[0x14]; float created; char pad1[0x70 - 0x18]; QW edgeB; QW edgeA; char pad2[0xEC - 0x90]; RVT *vt; };
@@ -61,8 +61,8 @@ extern "C" void BounceRipgRips__FP4RIPG(Ripg *ripg)
             if (!(item->flags & (0x8000L << 34))) {
                 count = item->count < 0x1555 ? item->count : 0x1555;
                 ALLOCREQ req;
-                req.size = count * 0xC;
-                req.align = 0x10;
+                req.cb = count * 0xC;
+                req.cbAlign = 0x10;
                 pruned = PvAllocStackImpl__Fi(&req);
                 World *world = ripg->world;
                 if (PruneBsp__FP3BSPP6VECTORfPP3BSP(item->bsp, 0x7FFFFFFF, world->pos, &count, &pruned, world->radius) != 2) {

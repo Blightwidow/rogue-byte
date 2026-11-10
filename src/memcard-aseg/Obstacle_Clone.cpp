@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct QB { char b[8]; };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct OBSTACLE { char pad[0xE8]; int cpos; char pad2[0x1D0 - 0xEC]; QB link; char pad4[8]; QB state; char pad5[4]; void *pplanes; };
 extern "C" void CloneCrv(OBSTACLE *, OBSTACLE *);
 extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);

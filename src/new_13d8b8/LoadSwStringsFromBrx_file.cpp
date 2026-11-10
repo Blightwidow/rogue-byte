@@ -7,7 +7,7 @@
 
 INCLUDE_ASM(0X13DA18);
 
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 
 struct STRING13DF80 { int id; char text[4]; };
 

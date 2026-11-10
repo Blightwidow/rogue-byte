@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" int B_003DCFF0;
 extern "C" char *B_003DCFF4;
 extern "C" int B_003DCF98;

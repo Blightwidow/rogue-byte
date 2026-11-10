@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SLOT { int sfxid; float sStart; float sFull; float uVolume; };
 struct PROXY { char pad[0xE4]; int csnd; void *asnd; void *aref; int cslot; SLOT *aslot; };
 extern "C" void PostLoLoad(PROXY *);

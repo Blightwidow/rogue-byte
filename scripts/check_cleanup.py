@@ -23,7 +23,7 @@ SOURCE_RULES = (  # src/ only: include/types.h is where these live
 )
 
 SOURCE_WARNING_RULES = (  # src/ only: the shared header defines it
-    (re.compile(r'\bstruct\s+(SO|LO|BASIC|SLOTSO|DL|DLE|DLI|XF|CRef|SW|SLOTHEAP)\s*\{'), 'a local copy of a shared type: include its header from include/ (add the field there, see the rule in lo.h)'),
+    (re.compile(r'\bstruct\s+(SO|LO|BASIC|SLOTSO|DL|DLE|DLI|XF|CRef|SW|SLOTHEAP|ALLOCREQ)\s*\{'), 'a local copy of a shared type: include its header from include/ (add the field there, see the rule in lo.h)'),
 )
 
 WARNING_RULES = (  # the tie-break rule (docs/PRESERVATION_AND_PORT.md): printed, never fail the check

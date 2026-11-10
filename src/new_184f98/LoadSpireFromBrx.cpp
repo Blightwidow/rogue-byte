@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct SPIRE { char pad[0xE0]; int cvert; char *avert; int ctri; int *atri; int *aneighbor; };
 extern "C" {
 void LoadXfmBaseFromBrx(SPIRE *, Bis *);

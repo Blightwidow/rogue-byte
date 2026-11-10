@@ -1,4 +1,4 @@
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct VT { char pad0[8]; short delta; short unused; void (*fn)(void *, void *); };
 struct OBJ { VT *vt; };
 struct ENTRY {
@@ -40,8 +40,8 @@ void CAseg_LoadFromBrx(ASEG *aseg, void *bis) {
     int index = 0;
     aseg->duration = F32Read__18CBinaryInputStream(bis);
     aseg->entryCount = S16Read__18CBinaryInputStream(bis);
-    request.size = aseg->entryCount * 8;
-    request.align = 0x10;
+    request.cb = aseg->entryCount * 8;
+    request.cbAlign = 0x10;
     aseg->entries = (ENTRY *)PvAllocSwImpl__Fi(&request);
     if (aseg->entryCount > 0) {
         do {
@@ -75,8 +75,8 @@ void CAseg_LoadFromBrx(ASEG *aseg, void *bis) {
     int *countC = &aseg->eventsC.count;
     void **arrayC = &aseg->eventsC.array;
     aseg->recordCount = count;
-    request.size = count * 0xC;
-    request.align = 0x10;
+    request.cb = count * 0xC;
+    request.cbAlign = 0x10;
     aseg->records = (RECORD *)PvAllocSwClearImpl__Fi(&request);
     if (aseg->recordCount > 0) {
         do {

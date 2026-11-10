@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct BSPN { BSPN *neg; BSPN *pos; int psurf; };
 struct GEOM { int cbsp; int cbspFull; int pad; BSPN *absn; };
 struct BSPC { int pad[3]; int *plane; };

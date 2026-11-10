@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CBinaryInputStream;
 struct WARP { char pad0[0x144]; int desc; int cdesc; int *adesc; };
 extern "C" void LoadVolumeFromBrx(WARP *, CBinaryInputStream *);

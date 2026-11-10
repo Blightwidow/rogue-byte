@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 void *memset(void *, int, unsigned int);
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct CRV { char pad0[0x60]; float mat[16]; char pad1[0x40]; int crvk; int fClosed; char pad2[4]; float *mpicvu; void *mpicvs; void *mpipos; };
 extern "C" CRV *PloNew(int, void *, int, int);
 extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);

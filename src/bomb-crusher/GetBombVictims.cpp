@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct GEOM { int unk0; char *pso; int unk8; int kind; char pad[0x64]; int bsp; };
 struct VICTIMS { int cgeom; GEOM **ageom; int cpso; };
 extern "C" {

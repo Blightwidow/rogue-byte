@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct Bis;
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct Acr { int pad0; int ckey; float *at; float *apg[3]; float pad[2]; VECTOR def; };
 extern "C" {
 void ReadVector__18CBinaryInputStreamP6VECTOR(Bis *s, VECTOR *v);

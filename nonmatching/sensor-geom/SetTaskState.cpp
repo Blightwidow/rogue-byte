@@ -1,5 +1,5 @@
 struct CRefX { int tagk; int n; int pad[2]; };
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct TASK {
     char pad0[0x54]; int state; char pad58[0x7C - 0x58]; int notified; char pad80[0x94 - 0x80]; int cprereq;
     char pad98[0xA0 - 0x98]; int cdep; TASK **adep; char padA8[0xF0 - 0xA8]; int fF0; int fF4; int fF8;
@@ -75,8 +75,8 @@ extern "C" void SetTaskState(TASK *self, int state)
         {
             ALLOCREQ req;
             int align = 0x10;
-            req.size = B_003E0F8C << 2;
-            aptask = (TASK **)PvAllocStackClearImpl__Fi((req.align = align, &req));
+            req.cb = B_003E0F8C << 2;
+            aptask = (TASK **)PvAllocStackClearImpl__Fi((req.cbAlign = align, &req));
         }
         self->fF0 = state;
         CollectTaskPrerequisites(self, mode, &ctask, aptask);

@@ -1,4 +1,4 @@
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct GLOB { char pad[0x10]; int cqw; };
 struct GLOBI { char pad[0x10]; int chain; int data; };
 extern "C" void *PvAllocSwCopyImpl__FiPv(ALLOCREQ *, void *);
@@ -7,8 +7,8 @@ void CopyGlobDmaChain(GLOB *pglob, GLOBI *pglobi, int cqw, char *source, int rel
     pglob->cqw = cqw;
     ALLOCREQ req;
     int align = 0x10;
-    req.size = cqw << 4;
-    char *chain = (char *)PvAllocSwCopyImpl__FiPv((req.align = align, &req), source);
+    req.cb = cqw << 4;
+    char *chain = (char *)PvAllocSwCopyImpl__FiPv((req.cbAlign = align, &req), source);
     pglobi->chain = (int)chain;
     pglobi->data = pglobi->data + ((int)chain - (int)source);
     if (relocate != 0) {

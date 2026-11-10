@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 struct PALETTE { char pad0[4]; unsigned char kind; char pad5[0x1B]; };
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 extern "C" int B_003DCFF8;
 extern "C" PALETTE *B_003DCFFC;
 extern "C" int B_003DCF9C;

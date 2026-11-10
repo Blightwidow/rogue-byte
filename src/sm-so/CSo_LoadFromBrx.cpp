@@ -1,5 +1,5 @@
 struct Bis;
-struct ALLOCREQ { int size; int align; };
+#include "alloc.h"
 struct VT { short delta; short index; void *(*fn)(void *, int); };
 struct GEOM { int word[6]; };
 struct SOREC {
@@ -44,8 +44,8 @@ extern "C" void CSo_LoadFromBrx(SO *pso, Bis *pbis)
     VT *vtA = (VT *)(pso->vtable + 0x1F8);
     int extra = ((int (*)(void *))vtA->fn)((char *)pso + vtA->delta);
     int count = S16Read__18CBinaryInputStream(pbis);
-    req.size = (count + extra) * 0xB0;
-    req.align = 0x10;
+    req.cb = (count + extra) * 0xB0;
+    req.cbAlign = 0x10;
     pso->recordCount = count;
     pso->records = (SOREC *)PvAllocSwClearImpl__Fi(&req);
     if (pso->recordCount > 0) {
@@ -89,8 +89,8 @@ extern "C" void CSo_LoadFromBrx(SO *pso, Bis *pbis)
     }
     AddSoGeomsToOxa(pso);
     if (pso->recordCount > 0) {
-        req.size = 0xE0;
-        req.align = 0x10;
+        req.cb = 0xE0;
+        req.cbAlign = 0x10;
         MOMINT *momint = (MOMINT *)PvAllocSwClearImpl__Fi(&req);
         pso->momint = momint;
         momint->field_d0 = F32Read__18CBinaryInputStream(pbis);

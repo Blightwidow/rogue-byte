@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 struct CPair { int pad0; int pad4; int tagk; int n; CPair *next; };
 struct SAVEPATH { int c; short *as; };
-struct ALLOCREQ { int cb; int align; };
+#include "alloc.h"
 extern "C" void *PvAllocStackImpl__Fi(ALLOCREQ *);
 extern "C" void ConvertListToSavePath(CPair *plist, SAVEPATH *ppath)
 {
@@ -16,7 +16,7 @@ extern "C" void ConvertListToSavePath(CPair *plist, SAVEPATH *ppath)
         return;
     }
     req.cb = ppath->c << 1;
-    req.align = 0x10;
+    req.cbAlign = 0x10;
     ppath->as = (short *)PvAllocStackImpl__Fi(&req);
     int index = 0;
     for (ppair = plist; ppair != 0; ppair = ppair->next) {

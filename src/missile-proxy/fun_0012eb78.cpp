@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct ALLOCREQ { int cb; int cbAlign; };
+#include "alloc.h"
 struct LO { char pad[0xE4]; int cxfm; void *axfm; int unkEC; int cvec; void *avec; };
 extern "C" void *CStackFrame_Construct(void *);
 extern "C" void CStackFrame_Destructor(void *, int);

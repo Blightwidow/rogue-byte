@@ -2,7 +2,7 @@
 struct BIS;
 struct CM;
 struct FGFN;
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct GLOB { char pad0[1]; signed char cweight; char pad2[0xA]; int base; };
 struct ENTRY { int n0; int n4; int n8; char pad[0x50 - 0xC]; };
 struct GLOBI { char pad0[0x18]; ENTRY *aentry; };
@@ -11,7 +11,7 @@ struct L {
     char vifs[0x30];
     int frame0;
     char pad44[0xC];
-    REQ req;
+    ALLOCREQ req;
     char pad58[8];
     struct { int w0; unsigned pqwStart; int w8; unsigned pqwCur; char pad10[0x20]; } gifs;
     int frame1;
@@ -30,7 +30,7 @@ void Reset__4DMAS(void *);
 unsigned U8Read__18CBinaryInputStream(BIS *);
 int S16Read__18CBinaryInputStream(BIS *);
 int S32Read__18CBinaryInputStream(BIS *);
-void *PvAllocSwClearImpl__Fi(REQ *);
+void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 void UnpackHelper__4VIFS3UPKiiPiPPUi(void *, int, int, int, int, void *);
 void BuildCmFgfn__FP2CMfP4FGFN(CM *, float, FGFN *);
 void AddPrimPack__4GIFSiiUl(void *, int, int, unsigned long);
@@ -55,10 +55,10 @@ extern char VU1_START_0[];
 extern char D_00000738[];
 extern char D_000007F0[];
 }
-static inline void *PvAllocSwClear(REQ *preq, int cb)
+static inline void *PvAllocSwClear(ALLOCREQ *preq, int cb)
 {
-    preq->size = cb;
-    preq->align = 0x10;
+    preq->cb = cb;
+    preq->cbAlign = 0x10;
     return PvAllocSwClearImpl__Fi(preq);
 }
 extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, float *pr, int arg4, int arg5, BIS *pbis)

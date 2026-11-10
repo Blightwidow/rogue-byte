@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct REQ { int size; int align; };
+#include "alloc.h"
 struct CGV;
 struct CGVL { CGV *pcgv; int unk; };
 struct CGV { VECTOR pos; int ccgvl; CGVL *acgvl; int pad[2]; };
@@ -14,8 +14,8 @@ struct GLOBALS { char pad[0x3D70]; int cpathzone; };
 extern CGVDEF D_002C0C10[];
 extern CGFDEF D_002C0C90[];
 extern GLOBALS B_003DD490;
-extern "C" void *PvAllocSwClearImpl__Fi(REQ *);
-extern "C" void *PvAllocSwImpl__Fi(REQ *);
+extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
+extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);
 void HookupCg(CG *);
 
 // Sqrt: sqrt.s with an early-clobber output (=&f). Measured on every sqrt.s user (16 sources): none gets worse, six get closer, two reach 0 (a third holds VU0 asm and stays out);
@@ -33,12 +33,12 @@ static inline float SqrtF(float value)
 // acgvl[j].pcgv directly swaps $a0/$a1 (score 2).
 void SetupDefaultPathzone(PATHZONE *ppathzone)
 {
-    REQ req;
+    ALLOCREQ req;
     int i;
     int j;
     ppathzone->cg.ccgv = 4;
-    req.size = 0x80;
-    req.align = 0x10;
+    req.cb = 0x80;
+    req.cbAlign = 0x10;
     ppathzone->cg.acgv = (CGV *)PvAllocSwClearImpl__Fi(&req);
     for (i = 0; i < ppathzone->cg.ccgv; i++) {
         CGVDEF *pdef = &D_002C0C10[i];
@@ -46,8 +46,8 @@ void SetupDefaultPathzone(PATHZONE *ppathzone)
         pcgv->pos = pdef->pos;
         int ccgv = pdef->ccgv;
         pcgv->ccgvl = ccgv;
-        req.size = ccgv * 8 + 8;
-        req.align = 0x10;
+        req.cb = ccgv * 8 + 8;
+        req.cbAlign = 0x10;
         pcgv->acgvl = (CGVL *)PvAllocSwImpl__Fi(&req);
         for (j = 0; j < pcgv->ccgvl; j++) {
             CGVL *pcgvl = &pcgv->acgvl[j];
@@ -55,8 +55,8 @@ void SetupDefaultPathzone(PATHZONE *ppathzone)
         }
     }
     ppathzone->cg.ccgf = 2;
-    req.size = 0x18;
-    req.align = 0x10;
+    req.cb = 0x18;
+    req.cbAlign = 0x10;
     ppathzone->cg.acgf = (CGF *)PvAllocSwClearImpl__Fi(&req);
     int icgf;
     for (icgf = 0; icgf < ppathzone->cg.ccgf; icgf++) {
@@ -66,8 +66,8 @@ void SetupDefaultPathzone(PATHZONE *ppathzone)
             *ppcgv++ = &ppathzone->cg.acgv[*picgv++];
     }
     ppathzone->cg.ccge = 1;
-    req.size = 0x10;
-    req.align = 0x10;
+    req.cb = 0x10;
+    req.cbAlign = 0x10;
     CGE *pcge = (CGE *)PvAllocSwClearImpl__Fi(&req);
     ppathzone->cg.acge = pcge;
     float g = SqrtF(2.0f) * 0.5f;
