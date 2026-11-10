@@ -1,14 +1,23 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK __4DMAS();                                  /* extern */
-extern M2C_UNK D_002CF508;
+extern void *__4DMAS();
+extern char D_002CF508[];
 
-void *__4GIFS(void *arg0) {
+struct GIFS {
+    char pad0[0x14];
+    s32 field_0x14;
+    char *field_0x18;
+    s32 field_0x1C;
+    s32 field_0x20;
+    s32 field_0x24;
+};
+
+struct GIFS *__4GIFS(struct GIFS *gifs) {
     __4DMAS();
-    M2C_FIELD(arg0, s32 *, 0x14) = 1;
-    M2C_FIELD(arg0, M2C_UNK **, 0x18) = &D_002CF508;
-    M2C_FIELD(arg0, s32 *, 0x1C) = 0;
-    M2C_FIELD(arg0, s32 *, 0x20) = 0;
-    M2C_FIELD(arg0, s32 *, 0x24) = 0;
-    return arg0;
+    gifs->field_0x14 = 1;
+    gifs->field_0x18 = D_002CF508;
+    gifs->field_0x1C = 0;
+    gifs->field_0x20 = 0;
+    gifs->field_0x24 = 0;
+    return gifs;
 }

@@ -1,13 +1,18 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK RemovePathzoneObstacle(s32, void *);        /* extern */
+typedef struct OBSTACLE {
+    char pad0[0x1DC];
+    s32 field_0x1DC;
+} OBSTACLE;
 
-void Obstacle_RemoveFromPathzone(void *arg0) {
-    s32 temp_a0;
+void RemovePathzoneObstacle(s32, OBSTACLE *);
 
-    temp_a0 = M2C_FIELD(arg0, s32 *, 0x1DC);
-    if (temp_a0 != 0) {
-        RemovePathzoneObstacle(temp_a0, arg0);
-        M2C_FIELD(arg0, s32 *, 0x1DC) = 0;
+void Obstacle_RemoveFromPathzone(OBSTACLE *obstacle) {
+    s32 pathzone;
+
+    pathzone = obstacle->field_0x1DC;
+    if (pathzone != 0) {
+        RemovePathzoneObstacle(pathzone, obstacle);
+        obstacle->field_0x1DC = 0;
     }
 }

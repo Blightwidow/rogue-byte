@@ -1,22 +1,22 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-void AppendDlEntry(s32, s8 *);
-s32 FFindDlEntry(M2C_UNK *, s8 *);
-void Obstacle_RemoveFromPathzone(s8 *);
-void RemoveDlEntry(M2C_UNK *, s8 *);
-extern M2C_UNK B_003E1A4C;
+struct OBSTACLE {
+    char pad0[0x1D8];
+    s32 field_0x1D8;
+};
 
-void Obstacle_JoinGroup(s8 *arg0, s32 arg1) {
-    M2C_FIELD(arg0, s32 *, 0x1D8) = arg1;
-    AppendDlEntry(arg1 + 0x1C4, arg0);
-    Obstacle_RemoveFromPathzone(arg0);
-    if (FFindDlEntry(&B_003E1A4C, arg0) != 0) {
-        RemoveDlEntry(&B_003E1A4C, arg0);
+void AppendDlEntry(s32, OBSTACLE *);
+s32 FFindDlEntry(s32 *, OBSTACLE *);
+void Obstacle_RemoveFromPathzone(OBSTACLE *);
+void RemoveDlEntry(s32 *, OBSTACLE *);
+extern s32 B_003E1A4C;
+
+void Obstacle_JoinGroup(OBSTACLE *obstacle, s32 group) {
+    obstacle->field_0x1D8 = group;
+    AppendDlEntry(group + 0x1C4, obstacle);
+    Obstacle_RemoveFromPathzone(obstacle);
+    if (FFindDlEntry(&B_003E1A4C, obstacle) != 0) {
+        RemoveDlEntry(&B_003E1A4C, obstacle);
     }
 }
 

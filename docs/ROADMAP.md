@@ -211,6 +211,11 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    C++ sources, and 328 of their 348 C sources already compile and match as C++ inside `extern "C"` unchanged; what stops them
    is clashes between sources in one unit (prototypes and types the first source declares differently) and 20 C sources with
    C-only idioms (`void *` arithmetic, pointer-integer comparison).
+   The merger then opened `extern "C" { }` blocks into their items, so a differing declaration inside one is compared and
+   renamed like any other: 11 more files proved, and 37 more matched byte for byte but for m2c leftovers. 89 of their 90
+   sources were rewritten with struct members at score 0 and 23 of those files proved: 143 whole files, 925 matched
+   functions. Left: 26 with their own `.rodata`, 2 with per-function flags, 22 that do not compile as one unit, 14 waiting on
+   m2c leftovers, 2 that compile with different bytes.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from

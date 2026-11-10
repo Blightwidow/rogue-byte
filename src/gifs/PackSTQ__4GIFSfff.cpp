@@ -1,21 +1,21 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+
+struct GIFS {
+    char pad0[0xC];
+    f32 *cursor;
+};
+
 extern "C" {
-void CheckReg__4GIFSii(s8 *, M2C_UNK, M2C_UNK);        /* extern */
+void CheckReg__4GIFSii(GIFS *gifs, s32 a, s32 b);
 
-void PackSTQ__4GIFSfff(s8 *arg0, f32 fparg0, f32 fparg1, f32 fparg2) {
-    s8 *temp_v0;
+void PackSTQ__4GIFSfff(GIFS *gifs, f32 s, f32 t, f32 q) {
+    f32 *quad;
 
-    CheckReg__4GIFSii(arg0, 1, 2);
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
-    M2C_FIELD(temp_v0, f32 *, 0) = fparg0;
-    M2C_FIELD(temp_v0, f32 *, 4) = fparg1;
-    M2C_FIELD(temp_v0, f32 *, 8) = fparg2;
+    CheckReg__4GIFSii(gifs, 1, 2);
+    quad = gifs->cursor;
+    gifs->cursor = quad + 4;
+    quad[0] = s;
+    quad[1] = t;
+    quad[2] = q;
 }
-
 }

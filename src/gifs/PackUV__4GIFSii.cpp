@@ -1,20 +1,20 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+
+struct GIFS {
+    char pad0[0xC];
+    s32 *cursor;
+};
+
 extern "C" {
-void CheckReg__4GIFSii(s8 *, M2C_UNK, M2C_UNK);        /* extern */
+void CheckReg__4GIFSii(GIFS *gifs, s32 a, s32 b);
 
-void PackUV__4GIFSii(s8 *arg0, s32 arg1, s32 arg2) {
-    s8 *temp_v0;
+void PackUV__4GIFSii(GIFS *gifs, s32 u, s32 v) {
+    s32 *quad;
 
-    CheckReg__4GIFSii(arg0, 1, 3);
-    temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-    M2C_FIELD(arg0, s8 **, 0xC) = (s8 *) (temp_v0 + 0x10);
-    M2C_FIELD(temp_v0, s32 *, 0) = arg1;
-    M2C_FIELD(temp_v0, s32 *, 4) = arg2;
+    CheckReg__4GIFSii(gifs, 1, 3);
+    quad = gifs->cursor;
+    gifs->cursor = quad + 4;
+    quad[0] = u;
+    quad[1] = v;
 }
-
 }

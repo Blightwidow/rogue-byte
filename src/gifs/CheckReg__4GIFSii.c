@@ -1,5 +1,10 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-void CheckReg__4GIFSii(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 0x24) = (s32) (M2C_FIELD(arg0, s32 *, 0x24) + 1);
+struct GIFS {
+    char pad0[0x24];
+    s32 field_0x24;
+};
+
+void CheckReg__4GIFSii(struct GIFS *gifs) {
+    gifs->field_0x24 = gifs->field_0x24 + 1;
 }
