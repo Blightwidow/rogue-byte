@@ -1,24 +1,25 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
 #define NULL 0
 extern "C" {
-struct _m2c_stack_func_001D4E68 {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
-M2C_UNK InitSo();                                   /* extern */
-void func_001D4E68(s8 *arg0) {
-    s32 temp_a1;
+struct SoObject {
+    char pad0[0x40];
+    s32 field_0x40;
+    char pad44[0x150 - 0x44];
+    s32 field_0x150;
+    char pad154[0x15C - 0x154];
+    s32 field_0x15C;
+};
+s32 InitSo();
+void func_001D4E68(SoObject *object) {
+    s32 flags;
     InitSo();
-    temp_a1 = M2C_FIELD(arg0, s32 *, 0x40);
-    M2C_FIELD(arg0, s32 *, 0x15C) = 0x1E;
-    M2C_FIELD(arg0, s32 *, 0x150) = -1;
-    if ((temp_a1 ^ 1) & 1) {
-        *(s32 *)temp_a1 = (s32) (*(s32 *)temp_a1 | 2);
+    flags = object->field_0x40;
+    object->field_0x15C = 0x1E;
+    object->field_0x150 = -1;
+    if ((flags ^ 1) & 1) {
+        *(s32 *)flags = (s32) (*(s32 *)flags | 2);
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_a1 | 2);
+    object->field_0x40 = (s32) (flags | 2);
 }
 }

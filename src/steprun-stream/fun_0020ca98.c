@@ -1,5 +1,10 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 func_0020CA98(void *arg0) {
-    return M2C_FIELD(arg0, s32 *, 0x24) == 0;
+struct FlagObject {
+    char pad0[0x24];
+    s32 field_0x24;
+};
+
+s32 func_0020CA98(struct FlagObject *object) {
+    return object->field_0x24 == 0;
 }

@@ -1,16 +1,22 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
 extern "C" {
-void SetAmmopickupState(void *, M2C_UNK);
+struct AmmopickupObject {
+    char pad0[0x58];
+    struct AmmopickupTarget *field_0x58;
+    char pad5C[0x150 - 0x5C];
+    s32 field_0x150;
+};
+struct AmmopickupTarget {
+    char pad0[0x98];
+    s16 field_0x98;
+};
+void SetAmmopickupState(void *, s32);
 void UpdateSo();
 
-void UpdateAmmopickup(void *arg0) {
+void UpdateAmmopickup(AmmopickupObject *object) {
     UpdateSo();
-    if ((M2C_FIELD(arg0, s32 *, 0x150) == 0) && (M2C_FIELD(M2C_FIELD(arg0, void **, 0x58), s16 *, 0x98) == 3)) {
-        SetAmmopickupState(arg0, 1);
+    if ((object->field_0x150 == 0) && (object->field_0x58->field_0x98 == 3)) {
+        SetAmmopickupState(object, 1);
     }
 }
 

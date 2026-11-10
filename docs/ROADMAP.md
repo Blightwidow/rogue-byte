@@ -205,6 +205,12 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
    (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files are held back (`exclusion`) until objdiff can; landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
    cuts inside a span.
+   Stage 7 (2026-11-10): 26 more files build whole (109 files, 463 matched functions). Re-proving the 98 left showed 30 that
+   already matched byte for byte but were refused for m2c leftovers: 44 of their 45 per-function sources were rewritten with
+   struct members (local structs, `field_0xOFF`) at score 0, and 26 files then proved. The other 72 still fail: 67 mix C and
+   C++ sources, and 328 of their 348 C sources already compile and match as C++ inside `extern "C"` unchanged; what stops them
+   is clashes between sources in one unit (prototypes and types the first source declares differently) and 20 C sources with
+   C-only idioms (`void *` arithmetic, pointer-integer comparison).
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from

@@ -1,11 +1,17 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK PostSoLoad();                               /* extern */
-M2C_UNK SetAmmopickupState(void *, M2C_UNK);        /* extern */
-M2C_UNK func_001F1448(s32, void *, M2C_UNK, M2C_UNK, void *); /* extern */
+struct AmmopickupObject {
+    char pad0[0x160];
+    s32 field_0x160;
+    char field_0x164[4];
+};
 
-void PostAmmopickupLoad(void *arg0) {
+s32 PostSoLoad();
+s32 SetAmmopickupState(void *, s32);
+s32 func_001F1448(s32, void *, s32, s32, void *);
+
+void PostAmmopickupLoad(struct AmmopickupObject *object) {
     PostSoLoad();
-    func_001F1448(M2C_FIELD(arg0, s32 *, 0x160), arg0, -1, 0, (char *)arg0 + 0x164);
-    SetAmmopickupState(arg0, 0);
+    func_001F1448(object->field_0x160, object, -1, 0, object->field_0x164);
+    SetAmmopickupState(object, 0);
 }
