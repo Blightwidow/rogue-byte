@@ -152,6 +152,9 @@ class CleanupTests(unittest.TestCase):
     def test_warns_on_local_jt(self):
         self.assertEqual(len(self.warnings_for('struct JT { int jts; };')), 1)
 
+    def test_warns_on_local_bentley(self):
+        self.assertEqual(len(self.warnings_for('struct BENTLEY { int state; };')), 1)
+
     def test_shared_header_may_define_so(self):
         self.assertEqual(check_cleanup.warn_lines({'include/so.h': [(1, 'struct SO {')]}), [])
 

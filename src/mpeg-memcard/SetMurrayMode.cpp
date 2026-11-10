@@ -1,18 +1,18 @@
-struct MURRAY1B7E40 { char pad0[0x2C4]; int state; char pad1[0x13F0 - 0x2C8]; int flag13F0; };
-extern "C" void SetMurrayState(MURRAY1B7E40 *, int);
-extern "C" void ReleaseMurrayObject(MURRAY1B7E40 *);
+#include "murray.h"
+extern "C" void SetMurrayState(MURRAY *, int);
+extern "C" void ReleaseMurrayObject(MURRAY *);
 
-extern "C" void SetMurrayMode(MURRAY1B7E40 *murray, unsigned mode)
+extern "C" void SetMurrayMode(MURRAY *murray, unsigned mode)
 {
     switch (mode) {
     case 0:
-        if (murray->flag13F0 != 0)
+        if (murray->ploCarried != 0)
             SetMurrayState(murray, 5);
         else
             SetMurrayState(murray, 0);
         break;
     case 1: {
-        int state = murray->state;
+        int state = murray->field_0x2C4;
         if (state < 0x11) {
             if (state >= 0xF)
                 goto set2;

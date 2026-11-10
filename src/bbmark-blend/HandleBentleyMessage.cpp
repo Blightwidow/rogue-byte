@@ -2,9 +2,7 @@ struct VT { char pad[0x260]; short delta; short idx; void (*fn)(void *, int); };
 struct GOBJ { char pad0[0xC]; VT *vt; char pad1[0x14C]; int gadget; };
 struct POOL { int pad; int *ppool; };
 struct SLOT { int plo; int pad; int unk8; };
-struct BENTLEY {
-    char pad0[0x1030]; int idOwn;
-};
+#include "bentley.h"
 extern "C" {
 void HandleJtMessage(void *, int, int *);
 void *PloLeaseCloneObject(int, int);

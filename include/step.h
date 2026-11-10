@@ -14,27 +14,38 @@ struct STEP : PO {
     virtual void Slot85();              /* 85: func_002040F8, func_00143C78 (JT) */
     virtual void FLethalHit();          /* 86: func_00205D08, JT_FLethalHit */
     virtual void Slot87();              /* 87: func_00205D10 */
-    u8 unknown_0x180[0x28];
+    u8 unknown_0x180[0x10];
+    /* 0x190 */ QW velGoal; /* SetMurrayCarryState, func_001B5D30 (two readers) */
+    u8 unknown_0x1A0[0x8];
     /* 0x1A8 */ f32 radHeading; /* ChooseJtSweepTarget, UpdateBinocHud (two readers) */
     u8 unknown_0x1AC[0x58];
     /* 0x204 */ s32 field_0x204; /* func_00143C78 (JT slot 85) */
     /* 0x208 */ struct SO *psoSurface; /* what it stands on: func_00141588 (JT slot 97), UpdateJtStand */
-    u8 unknown_0x20C[0x2C];
+    /* 0x20C */ f32 tJump; /* UpdateBentleyActive (from UpdateBentley, Bentley slot 16) */
+    u8 unknown_0x210[0x10];
+    /* 0x220 */ f32 field_0x220; /* InitMurray (Murray slot 7) sets 50 */
+    u8 unknown_0x224[0x14];
     /* 0x238 */ f32 field_0x238; /* func_00141588 */
     u8 unknown_0x23C[0xC];
     /* 0x248 */ f32 field_0x248; /* func_00141588 */
-    u8 unknown_0x24C[0x24];
+    u8 unknown_0x24C[0x1C];
+    /* 0x268 */ void *pasegDefault; /* the fallback of SetMurrayAnimBase and func_00135D80 (slot 90 of Murray and Bentley) */
+    u8 unknown_0x26C[0x4];
     /* 0x270 */ s32 field_0x270; /* UpdateJt (JT slot 16) */
     u8 unknown_0x274[0x4C];
 };
 
 #if defined(__mips__)
 SLY2_SIZE_CHECK(STEP, 0x2C0);
+SLY2_OFFSET_CHECK(STEP, velGoal, 0x190);
 SLY2_OFFSET_CHECK(STEP, radHeading, 0x1A8);
 SLY2_OFFSET_CHECK(STEP, field_0x204, 0x204);
 SLY2_OFFSET_CHECK(STEP, psoSurface, 0x208);
+SLY2_OFFSET_CHECK(STEP, tJump, 0x20C);
+SLY2_OFFSET_CHECK(STEP, field_0x220, 0x220);
 SLY2_OFFSET_CHECK(STEP, field_0x238, 0x238);
 SLY2_OFFSET_CHECK(STEP, field_0x248, 0x248);
+SLY2_OFFSET_CHECK(STEP, pasegDefault, 0x268);
 SLY2_OFFSET_CHECK(STEP, field_0x270, 0x270);
 #endif
 #endif

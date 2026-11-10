@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct GEOM { char pad[0x10]; unsigned long flags; };
 struct XP { GEOM *pgeom; char pad[0x3C]; };
-struct BENTLEY { char pad[0x13D0]; int state; };
+#include "bentley.h"
 void AdjustJtZapNewXp(void *, XP *);
 void func_0019E9C8(void *, XP *);
 void AdjustStepNewXp(BENTLEY *, XP *, int);

@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct STEP; struct BLRUN; struct ASEG;
-struct MURRAY { char pad[0x18]; int oid; };
+#include "murray.h"
 extern const QW RO_002A2DE0;
 extern "C" void PostJtLoad();
 extern "C" void PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL(char *);
@@ -26,6 +26,6 @@ extern "C" void PostMurrayLoad(MURRAY *murray)
     InitJtLookRig(murray, 0x16);
     void *sound = func_001F4C58(murray, murray->oid, 0xC);
     if (sound != 0)
-        *(int *)(base + 0x1ACC) = func_0012DC18(murray, sound, 0, 7, 2, RO_002A2DE0);
+        murray->field_0x1ACC = func_0012DC18(murray, sound, 0, 7, 2, RO_002A2DE0);
     SetMurrayState(murray, 0);
 }

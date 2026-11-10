@@ -42,9 +42,13 @@ struct JT : STEP {
     virtual const char *Slot103();      /* 103: LoadJtGadgetSlots reads the name it returns */
     virtual void Slot104();             /* 104: func_00141E30 */
     virtual void Slot105();             /* 105: func_00141E70, UpdateBentleyGadgetGlob */
-    u8 unknown_0x2C0[0x1C];
+    u8 unknown_0x2C0[0x4];
+    /* 0x2C4 */ s32 field_0x2C4; /* in the JMP: SetMurrayMode (Murray slot 88) */
+    u8 unknown_0x2C8[0x14];
     /* 0x2DC */ s32 jmpState; /* the jump state, in the JMP InitJt starts at 0x2C0: FInvulnerableJt (slot 76), func_00143C78 (85), func_00141588 (97) */
-    u8 unknown_0x2E0[0x1E8];
+    u8 unknown_0x2E0[0xF8];
+    /* 0x3D8 */ f32 field_0x3D8; /* InitBentley (Bentley slot 7) sets -70 */
+    u8 unknown_0x3DC[0xEC];
     /* 0x4C8 */ s32 attachKind; /* in the attachment InitJt starts at 0x4C0: func_00143C78 (85); func_00211420, UpdateSndMix */
     /* 0x4CC */ s32 field_0x4CC; /* func_0018A428 (Sly slot 50) */
     u8 unknown_0x4D0[0x50];
@@ -66,17 +70,32 @@ struct JT : STEP {
     u8 unknown_0xF40[0x10];
     /* 0xF50 */ s32 field_0xF50; /* in the pipe state InitJt starts at 0xF50: func_00141588 (97); func_0018A428 */
     /* 0xF54 */ s32 field_0xF54; /* func_00141588 (97); func_0018A428 */
-    u8 unknown_0xF58[0xC8];
+    u8 unknown_0xF58[0xA8];
+    /* 0x1000 */ s32 field_0x1000; /* InitMurray sets 4, InitBentley 2 */
+    u8 unknown_0x1004[0x1C];
     /* 0x1020 */ f32 field_0x1020; /* InitJt sets 100 */
     u8 unknown_0x1024[0xC];
     /* 0x1030 */ void *field_0x1030; /* JT_StartPose (which calls slot 88, so holds a JT) */
     /* 0x1034 */ void *field_0x1034; /* JT_StartPose, UpdateJtStand */
     u8 unknown_0x1038[0x4];
     /* 0x103C */ f32 field_0x103C; /* InitJt sets 20 */
-    u8 unknown_0x1040[0x8];
+    /* 0x1040 */ s32 field_0x1040; /* InitBentley sets 0 */
+    u8 unknown_0x1044[0x4];
     /* 0x1048 */ f32 field_0x1048; /* InitJt sets 125; func_00141588 */
     /* 0x104C */ f32 field_0x104C; /* func_00141588 */
-    u8 unknown_0x1050[0x78];
+    u8 unknown_0x1050[0x30];
+    /* 0x1080 */ f32 field_0x1080; /* GetMurrayCpdefi (Murray slot 50) */
+    u8 unknown_0x1084[0x14];
+    /* 0x1098 */ f32 field_0x1098; /* InitMurray and InitBentley set -100 */
+    /* 0x109C */ f32 field_0x109C; /* InitMurray and InitBentley set 100 */
+    /* 0x10A0 */ f32 field_0x10A0; /* InitMurray and InitBentley set 50 */
+    /* 0x10A4 */ f32 field_0x10A4; /* InitMurray and InitBentley set -10 */
+    /* 0x10A8 */ f32 field_0x10A8; /* InitMurray and InitBentley set 250 */
+    /* 0x10AC */ s32 field_0x10AC; /* InitMurray and InitBentley set 0 */
+    /* 0x10B0 */ f32 field_0x10B0; /* InitMurray and InitBentley set 1 */
+    /* 0x10B4 */ f32 field_0x10B4; /* InitMurray and InitBentley set 4500 */
+    /* 0x10B8 */ void *field_0x10B8; /* PostBentleyLoad (Bentley slot 15) */
+    u8 unknown_0x10BC[0xC];
     /* 0x10C8 */ s32 field_0x10C8; /* InitJt sets -1; UpdateSndMix */
     u8 unknown_0x10CC[0x8];
     /* 0x10D4 */ f32 field_0x10D4; /* InitJt sets 1 */
@@ -114,7 +133,9 @@ struct JT : STEP {
 #if defined(__mips__)
 SLY2_SIZE_CHECK(GADGETSLOT, 0xC);
 SLY2_SIZE_CHECK(JT, 0x1320);
+SLY2_OFFSET_CHECK(JT, field_0x2C4, 0x2C4);
 SLY2_OFFSET_CHECK(JT, jmpState, 0x2DC);
+SLY2_OFFSET_CHECK(JT, field_0x3D8, 0x3D8);
 SLY2_OFFSET_CHECK(JT, attachKind, 0x4C8);
 SLY2_OFFSET_CHECK(JT, field_0x4CC, 0x4CC);
 SLY2_OFFSET_CHECK(JT, field_0x520, 0x520);
@@ -127,12 +148,24 @@ SLY2_OFFSET_CHECK(JT, binocPhase, 0xF20);
 SLY2_OFFSET_CHECK(JT, field_0xF3C, 0xF3C);
 SLY2_OFFSET_CHECK(JT, field_0xF50, 0xF50);
 SLY2_OFFSET_CHECK(JT, field_0xF54, 0xF54);
+SLY2_OFFSET_CHECK(JT, field_0x1000, 0x1000);
 SLY2_OFFSET_CHECK(JT, field_0x1020, 0x1020);
 SLY2_OFFSET_CHECK(JT, field_0x1030, 0x1030);
 SLY2_OFFSET_CHECK(JT, field_0x1034, 0x1034);
 SLY2_OFFSET_CHECK(JT, field_0x103C, 0x103C);
+SLY2_OFFSET_CHECK(JT, field_0x1040, 0x1040);
 SLY2_OFFSET_CHECK(JT, field_0x1048, 0x1048);
 SLY2_OFFSET_CHECK(JT, field_0x104C, 0x104C);
+SLY2_OFFSET_CHECK(JT, field_0x1080, 0x1080);
+SLY2_OFFSET_CHECK(JT, field_0x1098, 0x1098);
+SLY2_OFFSET_CHECK(JT, field_0x109C, 0x109C);
+SLY2_OFFSET_CHECK(JT, field_0x10A0, 0x10A0);
+SLY2_OFFSET_CHECK(JT, field_0x10A4, 0x10A4);
+SLY2_OFFSET_CHECK(JT, field_0x10A8, 0x10A8);
+SLY2_OFFSET_CHECK(JT, field_0x10AC, 0x10AC);
+SLY2_OFFSET_CHECK(JT, field_0x10B0, 0x10B0);
+SLY2_OFFSET_CHECK(JT, field_0x10B4, 0x10B4);
+SLY2_OFFSET_CHECK(JT, field_0x10B8, 0x10B8);
 SLY2_OFFSET_CHECK(JT, field_0x10C8, 0x10C8);
 SLY2_OFFSET_CHECK(JT, field_0x10D4, 0x10D4);
 SLY2_OFFSET_CHECK(JT, field_0x10D8, 0x10D8);

@@ -172,6 +172,14 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      (0x1720, slot 90) and cane target (0x18C0): 9 more sources moved, and `SpendJtGadgetPower` got its name back from an
      old field rename. 24 sources still declare a local `JT`-like struct: single readers (0x18D8, 0x1854, 0x218), Sly's or
      Murray's range from a function not known to hold either, Bentley's own fields, and other types (a world at offset 0).
+     `include/murray.h` (`MURRAY`, 54) and `include/bentley.h` (`BENTLEY`, 55) followed, from their vtables (0x2D44C8, 0x2CB230):
+     `InitMurray` and `InitBentley` set most of their fields, and the two set the same values in `JT` (0x1000, 0x1098 to 0x10B4),
+     which made those `JT` fields. Bentley's six gadget entries are a `BENTLEYSLOT` array at 0x1824. `LO` gained `oid` (0x18),
+     `STEP` the goal velocity (0x190), the jump time (0x20C) and the default animation (0x268, slot 90's fallback in Murray and
+     Bentley). 32 sources moved, among them both inits, `UpdateMurrayActive` and `UpdateBentleyActive` (slot 99 called as
+     `FCanUseGadget`). 9 still declare a local copy: single readers (0x1AD0, 0x16D8), hand-written vtable calls on Bentley or
+     on the carried object, layouts the converter cannot read (a union, `SetMurrayLiftState`), and one whose field at 0x150
+     contradicts `PO`'s controller.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.

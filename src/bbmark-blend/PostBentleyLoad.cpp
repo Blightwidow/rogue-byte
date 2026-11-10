@@ -8,12 +8,12 @@ extern "C" void InitLookRig(void *, BENTLEY *, QW, float, float);
 extern "C" void InitJtLookRig(BENTLEY *, int);
 extern "C" void SetBentleyState(BENTLEY *, int);
 extern QW D_002BC920;
-struct BENTLEY { char pad[0x10B8]; void *unk10B8; };
+#include "bentley.h"
 void PostBentleyLoad(BENTLEY *b)
 {
     char *c = (char *)b;
     PostJtLoad(b);
-    b->unk10B8 = func_001F4C58(b, 0xB, 1);
+    b->field_0x10B8 = func_001F4C58(b, 0xB, 1);
     BuildPlainBlend(b, c + 0x13E0, c + 0x14E0);
     BuildPlainBlend(b, c + 0x14F0, c + 0x15F0);
     PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL(c + 0x1320);

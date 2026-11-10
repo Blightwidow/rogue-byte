@@ -1,7 +1,7 @@
 #include "sly2.h"
-struct MURRAY { char pad0[0x58]; int xf1; int xf2; char pad1[0x190 - 0x60]; QW goalVelocity; };
+#include "murray.h"
 extern "C" {
-void SetXfKind(void *, int, int);
+void SetXfKind(void *, XF *, int);
 void ResetRunBlendFootsteps(void *);
 void RetractAsegaHandle(void *);
 void RetractSmaRef(void *);
@@ -18,8 +18,8 @@ extern "C" void func_001B5D30(MURRAY *m, int focus)
     if (focus == F(int, m, 0x17F4))
         return;
     if (F(int, m, 0x17F4) == 0) {
-        SetXfKind(m, m->xf1, 2);
-        SetXfKind(m, m->xf2, 2);
+        SetXfKind(m, m->pxfLinear, 2);
+        SetXfKind(m, m->pxfAngular, 2);
     }
     F(int, m, 0x17F4) = focus;
     void *paseg = 0;
@@ -28,10 +28,10 @@ extern "C" void func_001B5D30(MURRAY *m, int focus)
     F(float, m, 0x17F8) = g_2dded0.time;
     switch (focus) {
     case 0:
-        SetXfKind(m, m->xf1, 1);
-        SetXfKind(m, m->xf2, 1);
+        SetXfKind(m, m->pxfLinear, 1);
+        SetXfKind(m, m->pxfAngular, 1);
         psm = F(void *, m, 0x16E0);
-        m->goalVelocity = g_2a2dd0;
+        m->velGoal = g_2a2dd0;
         break;
     case 2:
         paseg = F(void *, m, 0x17F0);

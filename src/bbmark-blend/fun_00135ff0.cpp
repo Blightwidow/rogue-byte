@@ -1,5 +1,5 @@
-struct BENTLEY_135FF0 { char pad[0x13D0]; int state; };
-extern "C" int func_00135FF0(BENTLEY_135FF0 *pbentley)
+#include "bentley.h"
+extern "C" int func_00135FF0(BENTLEY *pbentley)
 {
     switch (pbentley->state) {
     case 0:

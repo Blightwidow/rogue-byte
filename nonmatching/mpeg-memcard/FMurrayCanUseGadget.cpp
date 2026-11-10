@@ -1,4 +1,4 @@
-struct MURRAY { char pad[0x13D0]; int state; };
+#include "murray.h"
 extern "C" int bevy_player_p15_binoc_active(MURRAY *m);
 extern "C" int FJmpAllowsGadget(void *p, int gadget);
 extern "C" int FAttachAllowsGadget(void *p, int gadget);
