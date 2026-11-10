@@ -4,7 +4,7 @@ struct TASK {
     char pad0[0x54]; int state; char pad58[0x7C - 0x58]; int notified; char pad80[0x94 - 0x80]; int cprereq;
     char pad98[0xA0 - 0x98]; int cdep; TASK **adep; char padA8[0xF0 - 0xA8]; int fF0; int fF4; int fF8;
 };
-struct SW { char pad[0x3B7C]; int pathSlot; };
+#include "sw.h"
 struct CTaskHold {
     TASK *pother;
     TASK *ptask;

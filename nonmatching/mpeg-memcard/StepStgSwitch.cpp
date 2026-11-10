@@ -10,15 +10,15 @@ struct VT { char pad[0x40]; short delta0; short padA; void (*fn0)(void *); short
 struct OBJ { char pad[0xC]; VT *vt; };
 struct ENT { int kind; int arg; };
 struct NODE { int id; int unused; int count; ENT *ents; };
-struct SW { char pad[0x158]; int flag; int cur; int count; NODE *nodes; };
+struct STGSWITCH { char pad[0x158]; int flag; int cur; int count; NODE *nodes; };
 extern "C" {
 OBJ *PloFindSwObject_thunk(void *, int, int, void *);
-void func_001F6978(SW *, int, OBJ *);
-void func_001F69F8(SW *, int, OBJ *);
-void func_001F6AC8(SW *, int, OBJ *);
-void func_001F6B48(SW *, int, OBJ *);
+void func_001F6978(STGSWITCH *, int, OBJ *);
+void func_001F69F8(STGSWITCH *, int, OBJ *);
+void func_001F6AC8(STGSWITCH *, int, OBJ *);
+void func_001F6B48(STGSWITCH *, int, OBJ *);
 extern char B_003DD490[];
-void StepStgSwitch(SW *sw, int id)
+void StepStgSwitch(STGSWITCH *sw, int id)
 {
     int target = sw->cur;
     if (id == 0x609) {

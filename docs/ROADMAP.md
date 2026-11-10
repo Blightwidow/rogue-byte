@@ -139,7 +139,11 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      named after the strings retail hands `PsavepathNew` for each (`dt`, `loot/ccoin`, `flags/lang`, `flags/nMixerMode`...;
      `ApplyOptionsFromSave` reads them in the same order). `SLOTHEAP` (Sly 1's name) is 0x18 bytes in Sly 2: heaps sit back to
      back at that stride; `PblipgNew` reads its free slot (0xC) and fixed size (0x14). All 55 linked files with their own
-     `SW` moved, all scoring 0, `make elf` PASS, reports unchanged; the 18 left are unmatched drafts. The last 20 settled more:
+     `SW` moved, all scoring 0, `make elf` PASS, reports unchanged. 14 of the 18 unmatched drafts with their own `SW` moved
+     too, each at its old score (save paths typed `SAVEPATH *`, `StepStgSwitch`'s object renamed: it is a Splice-callable
+     switch, not the world). Left: three that disagree on the 0x30-byte target entries at 0x4680 (offset 0 an int or a
+     pointer, 0x14 an int or a float) with no matched reader to decide, and `ExpireSwWkrs`, one word worse with `dl.h`'s
+     `PushDli` (its draft stores the fields in another order). The last 20 settled more:
      the world's search scope (0x3F0C) and `LO::pscope` (0x3C) are pointers to one 0x28-byte `SCOPE` (`AllocSwBuffers` allocates
      the world's; `RefOpFindNearestObject` picks either, `InitCloneSets` writes its 0x24), the load request at 0x3BF4 is a
      0x4C-byte `LOADREQ` whose first word two functions read as signed flags, and the table at 0x3F14 holds `GRFENTRY`

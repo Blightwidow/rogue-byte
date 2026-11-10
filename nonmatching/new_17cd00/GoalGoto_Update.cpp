@@ -1,10 +1,10 @@
 #include "sly2.h"
 struct GUARD { char pad[0xFE8]; unsigned grf; };
-struct GRAPH { char pad[0x28]; int stamp; };
+struct PZGRAPH { char pad[0x28]; int stamp; };
 struct GOAL { char pad0[0x10]; GUARD *guard; char pad1[4]; GOAL *child; char pad2[0x30 - 0x1C]; int state; char pad3[0x80 - 0x34]; int snap0; int snap1; char pad4[0x90 - 0x88]; QW snapPos; float tPlan; int stamp; };
 struct FOLLOW { char pad[0x30]; void *crv; float s; };
 struct POSREC { char pad[8]; float z; };
-struct SW { char pad[0x45CC]; GRAPH *graph; };
+#include "sw.h"
 struct GG { char pad[0x218]; POSREC *rec; };
 extern "C" SW B_003DD490;
 extern "C" float g_2dded0;
@@ -34,7 +34,7 @@ extern "C" void GoalGoto_Update(GOAL *goal)
             GOAL *follow = goal->child;
             if (previous == 2 && GoalFollowCrv_FAtEnd(follow)) {
                 GoalGoto_SetState(goal, 3);
-            } else if (D_FLT_002BE758 < g_2dded0 - goal->tPlan || goal->stamp != B_003DD490.graph->stamp) {
+            } else if (D_FLT_002BE758 < g_2dded0 - goal->tPlan || goal->stamp != B_003DD490.ppzgraph->stamp) {
                 GoalGoto_Replan(goal);
             } else if (func_001792E8(follow)) {
                 float ahead = ((FOLLOW *)follow)->s + D_FLT_002BE75C;

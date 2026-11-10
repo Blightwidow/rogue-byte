@@ -110,7 +110,9 @@ struct SW : BASIC {
     /* 0x3D68 */ s32 idHitfxLast; /* func_00156548 increments it for each new hit effect */
     u8 unknown_0x3D6C[0x4];
     /* 0x3D70 */ s32 stamp; /* func_001C1968 */
-    u8 unknown_0x3D74[0x12C];
+    u8 unknown_0x3D74[0xC4];
+    /* 0x3E38 */ s32 field_0x3E38; /* AllocSwBuffers sets it when the load request has bit 0x20; UpdateCmLast, RestartAtTask test it */
+    u8 unknown_0x3E3C[0x64];
     /* 0x3EA0 */ u64 gs; /* a GS register value, func_001EA9F0 */
     u8 unknown_0x3EA8[0x10];
     /* 0x3EB8 */ s32 clo; /* func_001C4AF8 */
@@ -207,6 +209,7 @@ SLY2_OFFSET_CHECK(SW, field_0x3D60, 0x3D60);
 SLY2_OFFSET_CHECK(SW, frameLast, 0x3D64);
 SLY2_OFFSET_CHECK(SW, idHitfxLast, 0x3D68);
 SLY2_OFFSET_CHECK(SW, stamp, 0x3D70);
+SLY2_OFFSET_CHECK(SW, field_0x3E38, 0x3E38);
 SLY2_OFFSET_CHECK(SW, gs, 0x3EA0);
 SLY2_OFFSET_CHECK(SW, clo, 0x3EB8);
 SLY2_OFFSET_CHECK(SW, aplo, 0x3EBC);
