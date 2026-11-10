@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 struct JOB { char pad[0x64]; int startTask; int endTask; };
-struct SW { char pad[0x3B0C]; JOB *current; };
+#include "sw.h"
 extern "C" {
 extern SW B_003DD490;
 int CploFindSwObjectsByClass(SW *, int, int, int, int, JOB **);
@@ -17,9 +17,9 @@ void UpdateCurrentJob()
         if (FTaskComplete(job->startTask) && !FTaskComplete(job->endTask))
             newJob = job;
     }
-    if (newJob != B_003DD490.current) {
-        if (B_003DD490.current != 0)
-            StopJobIfCurrent(B_003DD490.current);
+    if (newJob != B_003DD490.pjobCurrent) {
+        if (B_003DD490.pjobCurrent != 0)
+            StopJobIfCurrent(B_003DD490.pjobCurrent);
         if (newJob != 0)
             SetCurrentJob(newJob);
     }

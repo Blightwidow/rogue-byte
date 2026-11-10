@@ -3,7 +3,7 @@ extern char B_003DD490[];
 }
 extern "C" void RemovePathzoneEndpoints(int, void *, int);
 
-struct SW { char pad[0x3D70]; int stamp; };
+#include "sw.h"
 extern SW B_003DD490_sw;
 static inline int NextStamp(SW *sw) { return ++sw->stamp; }
 

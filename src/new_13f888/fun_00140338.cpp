@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct SW { char pad[0x4754]; float tL3; };
+#include "sw.h"
 struct G2 { char pad[0x4A4]; int cL3; };
 extern "C" SW B_003DD490;
 extern "C" G2 B_002DDF40;

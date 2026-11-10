@@ -11,7 +11,7 @@ struct SAVE {
 struct UL { long v; } __attribute__((packed));
 struct MENU { char pad[0x44]; int phase; };
 extern "C" {
-struct SW { char pad[0x3B1C]; void *pdat; };
+#include "sw.h"
 extern SW B_003DD490;
 extern MENU B_002E6550;
 extern char B_002E65A0[];
@@ -57,7 +57,7 @@ void SetSaveState(SAVE *psave, int nState)
         for (int islot = 0; islot < 3; islot++) {
             SLOT *pslot = &psave->aslot[islot];
             CRef ref;
-            RefGetGameSaveValue(&ref, B_003DD490.pdat, pslot);
+            RefGetGameSaveValue(&ref, B_003DD490.psavepathDt, pslot);
             float dt = ref.g;
             CRef_Destruct(&ref);
             if (dt != 0.0f) {

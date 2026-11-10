@@ -1,6 +1,6 @@
 struct VT { char pad[0xC0]; short delta; short idx; void (*fn)(void *); };
 struct OBJ { char pad[0xC]; VT *vt; char pad2[0x10]; OBJ *next; };
-struct SW { char pad[0x3038]; };
+#include "sw.h"
 extern "C" void SetSwFocusOverride(void *, int);
 void func_002102A0(SW *psw)
 {

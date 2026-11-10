@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
-struct SW { char pad[1]; };
+#include "sw.h"
 struct JT { char pad[0xF20]; int binocPhase; char pad2[0xF3C - 0xF24]; float gValue; };
 extern "C" {
 extern SW B_003DD490;

@@ -1,6 +1,6 @@
 #include "sly2.h"
 struct ANIMREC { int nState; int oid; int oidSel; int oidAnim; int fGated; int nLevelRow; };
-struct SW { char pad[0x3AFC]; int count; };
+#include "sw.h"
 struct SMA;
 extern "C" SW B_003DD490;
 extern "C" int IdCurrentLevel(void);

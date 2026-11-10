@@ -1,7 +1,7 @@
 #include "sly2.h"
 struct LOOT { char pad[0x15C]; void *pguard; };
 struct GUARD { char pad[0x194]; LOOT *ploot; };
-struct SW { char pad[0x4638]; void *ppool; };
+#include "sw.h"
 extern "C" SW B_003DD490;
 int IdlootCrfodb(GUARD *);
 LOOT *PloLeaseCloneObject(void *, int);

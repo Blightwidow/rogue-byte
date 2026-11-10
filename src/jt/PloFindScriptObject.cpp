@@ -1,5 +1,5 @@
 struct Script { char pad[0x34]; int context; };
-struct SW { char pad[4]; };
+#include "sw.h"
 extern "C" SW B_003DD490;
 extern "C" void *PloFindSwObject_thunk(SW *, int, int, int);
 void PloFindScriptObject(Script *script, int oid)
