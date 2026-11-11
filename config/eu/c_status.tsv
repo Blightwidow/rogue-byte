@@ -1923,6 +1923,7 @@ us_address	name	other_address	pair	score	addresses
 0x1559F8	func_001559F8	0X155A20	same	0	ok
 0x155A38	func_00155A38	0X155A60	same	0	ok
 0x155A68	func_00155A68	0X155A90	same	0	ok
+0x155AE0	func_00155AE0	0X155B08	same	0	ok
 0x156390	guardposts__static_initialization_and_destruction_0	0X1563B8	same	0	ok
 0x1564C8	guardposts__static_initialization_and_destruction_0_thunk	0X1564F0	same	0	ok
 0x1564E8	func_001564E8	0X156510	same	0	ok
@@ -2327,6 +2328,7 @@ us_address	name	other_address	pair	score	addresses
 0x1757D0	func_001757D0	0X175758	same	0	ok
 0x175810	FGoalNoticeDone	0X175798	gap	0	ok
 0x175820	func_00175820	0X1757A8	identical	0	ok
+0x175D00	func_00175D00	0X175C88	same	0	ok
 0x175FF0	func_00175FF0	0X175F78	same	0	ok
 0x176060	func_00176060	0X175FE8	same	0	ok
 0x176458	GoalNotice_SetState	0X1763E0	same	0	ok
@@ -2668,8 +2670,10 @@ us_address	name	other_address	pair	score	addresses
 0x191090	InitAttach	0X191018	same	0	ok
 0x1910F8	LoadAttach	0X191080	same	0	ok
 0x1928F8	StartAttach	0X192880	same	0	ok
+0x193C98	MatchJtXmgRail__FP2JTP3XMGP6ACTADJ	0X193C20	same	0	ok
 0x1940B0	SetJtHfdk__FP2JT4HFDK	0X194038	same	0	ok
 0x194118	ResetJtDynamicTunnel__FP2JT	0X1940A0	same	0	ok
+0x1942F0	func_001942F0	0X194278	same	0	ok
 0x194558	FAttachAllowsGadget	0X1944E0	same	0	ok
 0x194640	func_00194640	0X1945C8	identical	0	ok
 0x194F48	func_00194F48	0X194ED0	identical	0	ok
@@ -4045,6 +4049,7 @@ us_address	name	other_address	pair	score	addresses
 0x1F6AC8	func_001F6AC8	0X1F7288	same	0	ok
 0x1F6B48	func_001F6B48	0X1F7308	same	0	ok
 0x1F6BC8	func_001F6BC8	0X1F7388	identical	0	ok
+0x1F70C0	CloneCloth	0X1F7880	same	0	ok
 0x1F7410	func_001F7410	0X1F7BD0	same	0	ok
 0x1F7530	PaloFindWkrAbsorber	0X1F7CF0	same	0	ok
 0x1F7588	FAbsorbSoWkr	0X1F7D48	gap	0	ok
@@ -4883,6 +4888,7 @@ us_address	name	other_address	pair	score	addresses
 0x230598	WakeXf	0X230DB8	same	0	ok
 0x230630	SleepXf	0X230E50	same	0	ok
 0x2309E8	PredictXfTransform	0X231208	same	0	ok
+0x230A98	PredictXfTransformAdjust	0X2312B8	same	0	ok
 0x230CD0	func_00230CD0	0X2314F0	same	0	ok
 0x230CF0	SnapAsega	0X231510	same	0	ok
 0x230FA8	alo__static_initialization_and_destruction_0	0X2317C8	same	0	ok

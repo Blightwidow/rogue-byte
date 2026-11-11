@@ -5,6 +5,7 @@
 #include "types.h"
 #include "m2c_macros.h"
 #include "include_asm.h"
+#include "vu0inline.h"
 
 INCLUDE_ASM(0X230710);
 
@@ -25,7 +26,55 @@ extern "C" void PredictXfTransform(void *pa0, void *pa1, float t, float *pm0, fl
     PredictXfTransformAdjust(pa0, pa1, t, pm0, pm1);
 }
 
-INCLUDE_ASM(0X230A98);
+struct PREDNODE { char pad[0xA0]; PREDNODE *pnext; };
+
+extern "C" void PredictXfLocal(PREDNODE *, MATRIX4 *, MATRIX4 *, float);
+
+MATRIX4 operator*(const MATRIX4 &, const MATRIX4 &);
+
+static inline void AddMatrix(MATRIX4 *sum, const MATRIX4 &first, const MATRIX4 &second)
+{
+    for (int row = 0; row < 4; row++)
+        sum->row[row] = VectorAdd(first.row[row], second.row[row]);
+}
+
+void PredictXfTransformAdjust(PREDNODE *pfirst, PREDNODE *plast, MATRIX4 *pmatA, MATRIX4 *pmatB, float dt)
+{
+    MATRIX4 local;
+    MATRIX4 delta;
+    MATRIX4 matA;
+    MATRIX4 matB;
+    if (pmatB != 0)
+        matB = *pmatB;
+    else
+        memset(&matB, 0, sizeof(MATRIX4));
+    if (pmatA != 0) {
+        matA = *pmatA;
+    } else {
+        float *pelement = &matA.mat[0][0];
+        memset(pelement, 0, sizeof(MATRIX4));
+        pelement[15] = 1.0f;
+        pelement[10] = 1.0f;
+        pelement[5] = 1.0f;
+        matA.mat[0][0] = 1.0f;
+    }
+    for (PREDNODE *pnode = pfirst; pnode != plast; pnode = pnode->pnext) {
+        PredictXfLocal(pnode, &local, &delta, dt);
+        {
+            MATRIX4 sum;
+            AddMatrix(&sum, local * matB, delta * matA);
+            matB = sum;
+        }
+        {
+            MATRIX4 product = local * matA;
+            matA = product;
+        }
+    }
+    if (pmatA != 0)
+        *pmatA = matA;
+    if (pmatB != 0)
+        *pmatB = matB;
+}
 
 extern "C" void PredictXfTransformAdjust_230CD0(void *, void *, float, void *, void *);
 

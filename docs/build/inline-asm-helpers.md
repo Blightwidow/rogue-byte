@@ -125,6 +125,18 @@ Findings:
   `sync`/`ei` helpers may be volatile.
 - Side findings: `po.h` slot 76 (`FInvulnerable`) takes an `int` argument retail passes; `func_00252608` belongs on the Sony compiler list.
 
+## Matching waves (2026-11-11)
+
+- MMI functions (wave 1): 4 matched with include/ps2inline.h; `FloatFromWord` added (a lone `mtc1`), so `pextuw` and `mtc1` can sit
+  apart as retail places them.
+- VU0 functions up to 1,000 bytes (wave 2): 8 matched; `VectorSub` and `SquaredLength` (the ACC chain) moved from the drafts into
+  include/vu0inline.h. A function using the VU0 helpers is listed in config/us/vu0_regs.txt; inside a whole file the flag becomes the
+  file's (its start is listed) when the whole file proves with it (`make_whole_files.py --land`). Two VU0 matches wait on their whole
+  file's merge (`func_00155D90` in a C file that cannot include the C++ class headers; `GetSeqnodeObjectPosRad`, a callee declared with
+  another argument type).
+- Candidates still in drafts (each reproduced retail in one function or in near misses only): `SquaredLengthXy`, `SqrtX`,
+  `VectorScaleX`, `QuadFromFloat`, `ScaleAddX`, `TransformByRows`, `DotProduct`, `VectorFromWord`.
+
 ## Open questions
 
 - Which cutoff: 5% (sly1's top) or 10%?
