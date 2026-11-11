@@ -243,6 +243,23 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    them over 1 KB). First global defined in C (2026-11-09): `src/crv-lo/data_2bdce0.cpp` defines `g_2bdce0` and `g_2bdcf0` as `float[4]` (retail's two 16-byte vectors; the earlier "8 bytes short" was the wrong type), listed in `config/us/data_files.tsv`; `link_image.py` links its `.data` at retail's address (`.dd_<address>`) and checks the bytes, `make_objdiff.py` counts it (data 8,375 -> 8,407 bytes). Remaining: `.bss`, more regions, the list feeding the report per global. The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
    sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
    Data regions are typed with the shared headers of item 1, not with new per-file structs.
+   `.rodata` from C (2026-11-11): `make_data_files.py --section rodata` writes the `.rodata` pieces as `extern const` globals
+   (this compiler places them in `.rodata`; every symbol is made local, the names resolve through the link script as for
+   `.data`) and leaves out what a compiled object may own (`build/image/owned_rodata.tsv`, written by `link_image.py`: a
+   function's or a whole file's literals and jump tables), the jump tables of unmatched functions (code labels) and plain word
+   arrays over 64 elements, which need a type from the code that reads them. Ruled 2026-11-11 (Theo): a plain word array over
+   64 elements is typed data only with `// data-ok: typed from <reader>` (`check_source.py`, run over every data file by
+   `make repo-check`); the generator now leaves such a label out, and a byte array over 64 elements other than a string, and
+   cuts its group around it. The 96 KB table at 0x262380 is typed by hand from its reader `PeopidFind`: `include/splopt.h`,
+   12,010 `SPLOPT`s in 199 class runs indexed by `ARYSPLOPT RO_00279AD0[199]` (a file carrying `make_data_files.HAND_TYPED`
+   is kept when the tool rewrites). 23 more tables typed by hand from their readers (2026-11-11): the property lists of
+   `SetSoProperties` (`include/soproperty.h`; Sly's, Bentley's, Murray's and three more), the loading logo's mesh
+   (`include/loadinglogo.h`), the gadget menu pages (`include/gadgetmenu.h`), the rumble patterns, the shop's loot rows, the
+   epsel label rows, the sm-so drop tables, `UpdateCd`'s CRC-32 table, `PostScriptMessage`'s argument index, CD RPC buffers
+   and an SDK float table; tails no code reads stay assembly. Data 20.36% -> 33.86% (342,533 bytes). Left: 5 word arrays no
+   reader types (3 SDK blocks copied wholesale to kernel addresses, the 128 KB bitmap `D_0027A790` whose pixels nothing
+   reads, `D_002BCD04`, whose label sits 4 bytes inside its 32-byte records), 151 jump tables of unmatched functions (11 KB),
+   6 SDK byte tables (2 KB), 20 groups where Splat's labels split a word, and the 9 KB compiled objects own.
 4. **Port-facing metadata, no code change.** A layer column in `src/MANIFEST.tsv` and the registry (game logic, engine, platform:
    GS, VIF and DMA, IOP, memory card, pad, VU microcode); JSON exports of symbols, the class tree, vtable layouts and struct offsets
    generated from the headers; hardware access behind named macros or inlines only where retail's bytes are identical. Depends on 1.

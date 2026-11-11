@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""make_data_files.py: writes typed C++ for the `.data` pieces of the image (config/us/pieces.tsv `data/...`) and proves each one against
-retail before it is listed in config/us/data_files.tsv (docs/ROADMAP.md item 3, docs/contributing/exceptions.md "Game data defined in source").
+"""make_data_files.py: writes typed C++ for the `.data` pieces of the image (config/us/pieces.tsv `data/...`), or with --section rodata for the
+`.rodata` pieces (`rodata/...`, as `extern const` globals), and proves each one against retail before it is listed in config/us/data_files.tsv
+(docs/ROADMAP.md item 3, docs/contributing/exceptions.md "Game data defined in source"). In .rodata it leaves out what a compiled object may own
+(build/image/owned_rodata.tsv, from link_image.py), jump tables of unmatched functions and plain word arrays over 64 elements (untyped).
 
 A piece is one retail data region that Splat cut at symbol boundaries (build/splat/asm/data/data/<piece>.data.s). The source defines one global per
 Splat label, spanning the label's bytes up to the next label (retail's padding is part of the object before it, as the 16-byte vectors showed):
@@ -44,10 +46,19 @@ def retail_bytes(address, size):
         return handle.read(size)
 
 
-def pieces():
-    """[(name, start, size)] of the data pieces."""
+def pieces(section='data'):
+    """[(name, start, size)] of the pieces of one section ('data' or 'rodata')."""
     rows = [line.rstrip('\n').split('\t') for line in open(os.path.join('config', 'us', 'pieces.tsv'))]
-    return [(name, int(start, 16), int(size)) for name, start, size in rows if name.startswith('data/')]
+    return [(name, int(start, 16), int(size)) for name, start, size in rows if name.startswith(section + '/')]
+
+
+def owned_ranges():
+    """[(start, end)] of the .rodata that compiled objects may own (a function's or a whole file's literals and jump tables), as
+    scripts/build/link_image.py wrote it on its last run (build/image/owned_rodata.tsv, after `make elf`): a .rodata label inside one stays theirs."""
+    path = os.path.join('build', 'image', 'owned_rodata.tsv')
+    if not os.path.isfile(path):
+        raise SystemExit('build/image/owned_rodata.tsv is missing: run make elf first')
+    return [(int(low, 16), int(high, 16)) for low, high in (line.rstrip('\n').split('\t') for line in list(open(path))[1:])]
 
 
 def known_names():
@@ -73,7 +84,7 @@ def known_names():
 def parse_piece(name):
     """[{name, address, items: [(address, directive, argument)]}] of a piece's Splat assembly."""
     labels = []
-    path = os.path.join(SPLAT, 'asm', 'data', name + '.data.s')
+    path = os.path.join(SPLAT, 'asm', 'data', name + '.' + name.split('/')[0] + '.s')
     for line in open(path):
         label = re.match(r'^glabel (\S+)', line)
         if label:
@@ -112,6 +123,8 @@ def build_runs(label, end, names, functions):
         following = items[index + 1][0] if index + 1 < len(items) else end
         size = following - address
         data = retail_bytes(address, size)
+        if directive == '.word' and argument.startswith('.L'):
+            return 'a jump table (its entries are code labels)'
         if directive == '.word' and size == 4:
             word = struct.unpack('<I', data)[0]
             pointer = POINTER.match(argument)
@@ -147,7 +160,22 @@ def build_runs(label, end, names, functions):
     return grouped
 
 
+HAND_TYPED = 'Typed by hand (make_data_files.py keeps this file)'
 WORD_ARRAY_LIMIT = 64  # as BYTE_DUMP_LIMIT in scripts/matching/check_source.py, for a run of plain `unsigned int`
+BYTE_DUMP_LIMIT = 64  # as in scripts/matching/check_source.py: a longer byte array (not a string) is a dump
+
+
+def untyped(runs):
+    """Why a label's runs would be a dump rather than typed data (docs/contributing/exceptions.md "Game data defined in source"), or None: a
+    plain word array over WORD_ARRAY_LIMIT elements (its type has to come from the code that reads it) or a byte array over BYTE_DUMP_LIMIT."""
+    for kind, elements, size, targets in runs:
+        if kind == 'w4' and not targets and len(elements) > WORD_ARRAY_LIMIT:
+            return f'a plain word array over {WORD_ARRAY_LIMIT} elements needs a type from the code that reads it'
+        if kind == 'byte' and len(elements) > BYTE_DUMP_LIMIT:
+            return f'a byte array over {BYTE_DUMP_LIMIT} elements is a dump'
+    return None
+
+
 CTYPE = {'w4': 'unsigned int', 'float': 'float', 'short': 'short', 'byte': 'unsigned char', 'str': 'char'}
 
 
@@ -171,16 +199,26 @@ def natural_alignment(runs, size):
     return max({'w4': 4, 'float': 4, 'short': 2, 'byte': 1, 'str': 1}[run[0]] for run in runs)
 
 
-def groups_of(name, start, size, names, functions):
+def groups_of(name, start, size, names, functions, owned=None):
     """[(start, size, labels)]: the piece cut where the compiler's layout would leave retail's (one source, one object per group, linked at its own
-    address): retail packs some aggregates at 4 where this compiler aligns them to 8. A string that cannot be typed returns the reason instead."""
+    address): retail packs some aggregates at 4 where this compiler aligns them to 8. A string that cannot be typed returns the reason instead.
+    With `owned` (the .rodata pass), a label inside an owned range or one that cannot be typed is left to its owner or the assembly, and the
+    groups are cut around it; the second value lists those labels with the reason."""
     labels = parse_piece(name)
     if not labels or labels[0]['address'] != start:
         return 'the first label is not at the start of the piece'
-    groups, current, origin, offset = [], [], start, 0
+    groups, current, origin, offset, skipped = [], [], start, 0, []
     for index, label in enumerate(labels):
         end = labels[index + 1]['address'] if index + 1 < len(labels) else start + size
         runs = build_runs(label, end, names, functions)
+        if owned is not None:
+            why = 'owned by a compiled object' if any(low < end and label['address'] < high for low, high in owned) else (runs if isinstance(runs, str) else untyped(runs))
+            if why:
+                skipped.append((label['name'], label['address'], end - label['address'], why))
+                if current:
+                    groups.append((origin, label['address'] - origin, current))
+                current, origin, offset = [], end, 0
+                continue
         if isinstance(runs, str):
             return f'{label["name"]}: {runs}'
         alignment = natural_alignment(runs, end - label['address'])
@@ -189,14 +227,19 @@ def groups_of(name, start, size, names, functions):
             groups.append((origin, label['address'] - origin, current))
             current, origin, offset = [], label['address'], 0
             expected = 0
+        if not current:
+            origin, offset = label['address'], 0
         current.append(label)
         offset = label['address'] - origin + (end - label['address'])
-    groups.append((origin, start + size - origin, current))
-    return groups
+    if current:
+        groups.append((origin, start + size - origin, current))
+    return (groups, skipped) if owned is not None else groups
 
 
-def make_source(name, start, size, names, functions, allow_pointers=True, labels=None):
-    """(text, why not): the C++ source of a group of labels (a whole piece when `labels` is None)."""
+def make_source(name, start, size, names, functions, allow_pointers=True, labels=None, section='data'):
+    """(text, why not): the C++ source of a group of labels (a whole piece when `labels` is None). For .rodata every global is `const` (with
+    `extern`, so it keeps external linkage in C++), which this compiler places in .rodata."""
+    constant = section == 'rodata'
     labels = labels if labels is not None else parse_piece(name)
     if not labels or labels[0]['address'] != start:
         return None, 'the first label is not at the start of the piece'
@@ -226,11 +269,12 @@ def make_source(name, start, size, names, functions, allow_pointers=True, labels
             merged = [elements for run in runs for elements in run[1]]
             runs = [['w4', merged, sum(run[2] for run in runs), set().union(*(run[3] for run in runs))]]
         marker = f"// data-ok: retail's bytes at {label['address']:#X}"
-        if any(run[0] == 'w4' and not run[3] and len(run[1]) > WORD_ARRAY_LIMIT for run in runs):  # not ruled yet: see the TODO text
-            marker = ('// TODO: a plain word array over %d elements is not ruled as typed data yet (docs/contributing/exceptions.md "Game data defined in\n'
-                      '// source"); its type is Splat\'s guess, not recovered from the code that reads it\n' % WORD_ARRAY_LIMIT) + marker
+        if untyped(runs):
+            return None, f'{label["name"]}: {untyped(runs)}'
         if len(runs) == 1:
             declaration, initializer = member(runs[0][0], runs[0][1], runs[0][2], label['name'], has_pointer)
+            if constant:
+                declaration = 'extern ' + (declaration.replace('void *', 'void *const ', 1) if declaration.startswith('void *') else 'const ' + declaration)
             bodies.append(f'{marker}\n{declaration} = {initializer};')
         else:
             members, values = [], []
@@ -238,10 +282,10 @@ def make_source(name, start, size, names, functions, allow_pointers=True, labels
                 declaration, initializer = member(run[0], run[1], run[2], f'm{number}', bool(run[3]))
                 members.append(f'    {declaration};')
                 values.append(f'    {initializer}')
-            bodies.append(f'{marker}\nstruct {{\n' + '\n'.join(members) + f'\n}} {label["name"]} = {{\n' + ',\n'.join(values) + '\n};')
+            bodies.append(f'{marker}\n{"extern const " if constant else ""}struct {{\n' + '\n'.join(members) + f'\n}} {label["name"]} = {{\n' + ',\n'.join(values) + '\n};')
         seen.add(label['name'])
     lines = ['// SPDX-License-Identifier: GPL-3.0-or-later',
-             f'// Retail .data {start:#X}-{start + size:#X} (piece {name}), one global per Splat label: written by scripts/build/make_data_files.py,',
+             f'// Retail .{section} {start:#X}-{start + size:#X} (piece {name}), one global per Splat label: written by scripts/build/make_data_files.py,',
              '// listed in config/us/data_files.tsv (link_image.py links it at its address and checks the bytes).', '']
     for target in sorted(externs):
         lines.append(f'extern "C" void {target}();' if externs[target] else f'extern char {target}[];')
@@ -253,8 +297,9 @@ def make_source(name, start, size, names, functions, allow_pointers=True, labels
     return '\n'.join(lines) + '\n', None
 
 
-def prove(path, name, start, size, names):
-    """None when the object's .data is retail's bytes (relocated words checked as symbol address + addend), else the cause."""
+def prove(path, name, start, size, names, section_name='data'):
+    """None when the object's .data (.rodata for section 'rodata') is retail's bytes (relocated words checked as symbol address + addend), else
+    the cause."""
     from elftools.elf.elffile import ELFFile
     import compile_unit
     os.makedirs(SCRATCH, exist_ok=True)
@@ -264,16 +309,16 @@ def prove(path, name, start, size, names):
         return 'compile: ' + message.strip().replace('\n', ' ')[:200]
     with open(stem + '.o', 'rb') as handle:
         elf = ELFFile(handle)
+        own = '.' + section_name
         for section in elf.iter_sections():
-            if section.name in ('.rodata', '.bss', '.sdata', '.sbss', '.sdata2') and section['sh_size']:
+            if section.name in ('.data', '.rodata', '.bss', '.sdata', '.sbss', '.sdata2') and section.name != own and section['sh_size']:
                 return f'the object has a {section.name}'
-        data = elf.get_section_by_name('.data')
+        data = elf.get_section_by_name(own)
         if data is None or not size <= data['sh_size'] <= size + 7 or data.data()[size:].strip(b'\0'):  # the compiler pads the section to 8: link_image trims it
             return f'size {0 if data is None else data["sh_size"]:#x}, retail {size:#x}'
         content = data.data()[:size]
-        relocations = elf.get_section_by_name('.rel.data')
+        relocations = elf.get_section_by_name('.rel' + own)
         symbols = elf.get_section_by_name('.symtab')
-        by_name = {symbol.name: symbol['st_value'] for symbol in symbols.iter_symbols() if isinstance(symbol['st_shndx'], int) and symbol['st_shndx'] == elf.get_section_index('.data')}
         masked = {}
         for relocation in (relocations.iter_relocations() if relocations else []):
             symbol = symbols.get_symbol(relocation['r_info_sym'])
@@ -304,10 +349,15 @@ def main():
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--report')
     parser.add_argument('--jobs', type=int, default=os.cpu_count())
+    parser.add_argument('--section', choices=('data', 'rodata'), default='data',
+                        help='rodata: const globals for the .rodata pieces, leaving out what compiled objects own (needs make elf) and jump tables')
+    parser.add_argument('--skipped', help='rodata: write the labels left out, with the reason, to this file')
     arguments = parser.parse_args()
     labels, functions = known_names()
     names = {name: address for address, name in labels.items()}
-    chosen = [piece for piece in pieces() if not arguments.only or piece[0] == arguments.only]
+    chosen = [piece for piece in pieces(arguments.section) if not arguments.only or piece[0] == arguments.only]
+    owned = owned_ranges() if arguments.section == 'rodata' else []  # .data: no compiled object owns any; the untyped labels are still left out
+    skipped_labels = []
     if arguments.list:
         for name, start, size in chosen:
             print(f'{name}\t{start:#X}\t{size}')
@@ -316,19 +366,21 @@ def main():
 
     def work(piece):
         name, start, size = piece
-        groups = groups_of(name, start, size, names, functions)
+        groups = groups_of(name, start, size, names, functions, owned)
         if isinstance(groups, str):
             return [((name, start, size), None, groups)]
+        groups, skipped = groups
+        skipped_labels.extend(skipped)
         found = []
         for origin, length, labels in groups:
-            file = name if len(groups) == 1 else f'{name}_{origin:06x}'
-            text, why = make_source(name, origin, length, names, functions, not arguments.no_pointers, labels)
+            file = name if len(groups) == 1 and origin == start else f'{name}_{origin:06x}'
+            text, why = make_source(name, origin, length, names, functions, not arguments.no_pointers, labels, arguments.section)
             if text is None:
                 found.append(((file, origin, length), None, why))
                 continue
             path = os.path.join(SCRATCH, file.replace('/', '__') + '.cpp')
             open(path, 'w').write(text)
-            found.append(((file, origin, length), text, prove(path, file, origin, length, names)))
+            found.append(((file, origin, length), text, prove(path, file, origin, length, names, arguments.section)))
         return found
 
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
@@ -337,12 +389,19 @@ def main():
     report = [f'{piece[0]}\t{piece[1]:#X}\t{piece[2]}\t{"proved" if why is None else "failed"}\t{why or ""}' for piece, _, why in results]
     if arguments.report:
         open(arguments.report, 'w').write('piece\tstart\tsize\tstatus\tcause\n' + '\n'.join(report) + '\n')
-    print(f'{len(proved)} of {len(results)} data groups proved ({len(chosen)} pieces), {sum(piece[2] for piece, _ in proved)} of {sum(piece[2] for piece in chosen)} bytes')
+    print(f'{len(proved)} of {len(results)} {arguments.section} groups proved ({len(chosen)} pieces), {sum(piece[2] for piece, _ in proved)} of {sum(piece[2] for piece in chosen)} bytes')
+    if arguments.skipped:
+        open(arguments.skipped, 'w').write('label\taddress\tsize\treason\n' + ''.join(f'{label}\t{address:#X}\t{size}\t{why}\n' for label, address, size, why in sorted(skipped_labels, key=lambda row: row[1])))
     if arguments.write:
         existing = [line.rstrip('\n').split('\t') for line in list(open(DATA_LIST))[1:]]
-        kept = [row for row in existing if not row[2].startswith('data/')] if not arguments.only else [row for row in existing if not row[2].startswith(arguments.only + '.') and not row[2].startswith(arguments.only + '_')]
-        rows = list(kept)
+        kept = [row for row in existing if not row[2].startswith(arguments.section + '/')] if not arguments.only else [row for row in existing if not row[2].startswith(arguments.only + '.') and not row[2].startswith(arguments.only + '_')]
+        # a file typed by hand (HAND_TYPED in its text: a table typed from the code that reads it) stays, and so does its row
+        hand = [row for row in existing if row[2].startswith(arguments.section + '/') and row not in kept
+                and os.path.isfile(os.path.join('src', row[2])) and HAND_TYPED in open(os.path.join('src', row[2])).read()]
+        rows = list(kept) + hand
         for (name, start, size), text in proved:
+            if any(int(row[0], 16) < start + size and start < int(row[1], 16) for row in hand):
+                continue
             file = name + '.cpp'
             os.makedirs(os.path.dirname(os.path.join('src', file)), exist_ok=True)
             open(os.path.join('src', file), 'w').write(text)

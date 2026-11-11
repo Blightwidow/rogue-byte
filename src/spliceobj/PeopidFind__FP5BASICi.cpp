@@ -1,6 +1,5 @@
 #include "sly2.h"
-struct SPLOPT { int optid; void *peopid; };
-struct ARYSPLOPT { int csplopt; SPLOPT *asplopt; };
+#include "splopt.h"
 extern ARYSPLOPT RO_00279AD0[];
 struct CLASSINFO { int pad; int cid; };
 struct BASIC { char pad[0xC]; struct VT *vptr; };

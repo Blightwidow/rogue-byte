@@ -74,7 +74,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
                         implicit=['include/sly2.h', 'include/m2c_macros.h', 'include/include_asm.h', os.path.join(SPLAT_OUTPUT, 'undefined_syms_auto.txt')],
                         variables={'assembler': options(start)})
             units.append(unit)
-        # data files (config/us/data_files.tsv): a source that defines game data (docs/contributing/exceptions.md); link_image.py links its .data
+        # data files (config/us/data_files.tsv): a source that defines game data (docs/contributing/exceptions.md); link_image.py links its .data or .rodata
         data_list = os.path.join(ROOT, 'config', 'us', 'data_files.tsv')
         for line in (list(open(data_list))[1:] if os.path.isfile(data_list) else []):
             start_text, _, source = line.rstrip('\n').split('\t')

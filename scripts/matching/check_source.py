@@ -70,6 +70,9 @@ BYTE_DUMP_LIMIT = 64  # a byte-sized array longer than this is a dump of retail'
 ELEMENT_SIZES = {'char': 1, 'u8': 1, 's8': 1, 'short': 2, 'u16': 2, 's16': 2, 'int': 4, 'float': 4, 'u32': 4, 's32': 4, 'f32': 4, 'long': 8, 'double': 8, 'u64': 8, 's64': 8, 'f64': 8}
 DATA_DEFINITION = re.compile(r'^\s*(?:static\s+)?(?:(?:const|unsigned|signed)\s+)*(\w+)\s+(\w+)\s*(?:\[\s*(\w*)\s*\])?\s*=\s*(.*)$', re.DOTALL)
 DATA_OK = re.compile(r'data-ok:\s*\S')
+WORD_ARRAY_LIMIT = 64  # a plain integer word array longer than this needs its type from a reader: docs/contributing/exceptions.md "Game data defined in source"
+PLAIN_WORDS = {'int', 'u32', 's32'}  # `unsigned int` and `signed int` reach here as `int`
+TYPED_FROM = re.compile(r'data-ok:\s*typed from\s+\S')
 
 
 def initializer_count(initializer):
@@ -97,7 +100,9 @@ def data_definitions(text):
     defined in C only where its initial value reproduces retail's bytes at its address (`make elf` proves that); docs/contributing/exceptions.md
     ("Game data defined in source") allows it, and each definition carries `// data-ok: <reason>` on its first line or the line above. A definition
     without the marker, or a byte-sized array (`char`, `u8`, `s8`) of more than BYTE_DUMP_LIMIT elements (a dump, not typed data), is banned:
-    the source can never match as written."""
+    the source can never match as written. A plain integer word array (`int`, `unsigned int`, `u32`, `s32`) of more than WORD_ARRAY_LIMIT elements
+    is banned too unless its marker names the code that shows the type (`// data-ok: typed from <reader>`): without one it is a dump in words.
+    An `extern` declaration with an initializer is a definition (the form a `const` global takes to keep external linkage in C++)."""
     lines = text.split('\n')
     clean = strip_comments(text).split('\n')
     found, stack, head, number = [], [], '', 0
@@ -106,6 +111,8 @@ def data_definitions(text):
         line = clean[number]
         number += 1
         top = all(entry == 'linkage' for entry in stack)
+        if re.match(r'\s*extern\s+(?!"C)(?!.*\bstruct\b)', line) and '=' in line:
+            line = re.sub(r'^(\s*)extern\s+', r'\1', line, count=1)
         if top and not statement and line.strip() and not line.lstrip().startswith(('#', 'static', 'extern', 'typedef', 'struct', 'union', 'class', 'enum', 'template')):
             before = line.split('=', 1)[0]
             if '=' in line and '(' not in before and DATA_DEFINITION.match(line):
@@ -123,8 +130,12 @@ def data_definitions(text):
                     elements = (int(length) if length and length.isdigit() else initializer_count(initializer)) if length is not None else 1
                     if not marker:
                         found.append((start, 'banned', f'data definition without `// data-ok: <reason>`: {name}'))
-                    elif size == 1 and elements > BYTE_DUMP_LIMIT:
+                    elif size == 1 and elements > BYTE_DUMP_LIMIT and not initializer.lstrip().startswith('"'):  # a string literal is typed
                         found.append((start, 'banned', f'byte array of {elements} elements, over the {BYTE_DUMP_LIMIT}-element limit (a dump, not typed data): {name}'))
+                    elif type_name in PLAIN_WORDS and length is not None and elements > WORD_ARRAY_LIMIT and not (
+                            TYPED_FROM.search(lines[start - 1]) or (start > 1 and TYPED_FROM.search(lines[start - 2]))):
+                        found.append((start, 'banned', f'plain word array of {elements} elements, over the {WORD_ARRAY_LIMIT}-element limit, with no '
+                                                       f'`// data-ok: typed from <reader>` (a dump in words): {name}'))
                 number = max(number, index)
                 line = ''
         for character in line:

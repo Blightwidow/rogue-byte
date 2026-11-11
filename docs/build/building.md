@@ -80,7 +80,7 @@ Rodata and data are per-symbol assembly (306 of the 335 pieces; the rest stay ra
 rodata comes from the compiled objects.
 
 objdiff (`make objdiff`) pairs each function of a unit's retail assembly with the compiled one by name and counts
-matched code per unit; the "Data" category adds a unit per retail data section (`data/rodata`, `data/data`, `data/vutext`, `data/irx`, from `work/elf/SCUS_973.16`; sizes only, no bytes reach the report) with an empty compiled side, and `data/rodata-c`: the rodata that compiled C objects own (their own jump tables and literals, the `.ro_<address>` sections of the linked image), which is the only data counted as matched (8,375 of 1,011,732 bytes, 2026-11-08). objdiff counts a data section as matched only when all of it matches, so the C-owned ranges are a unit of their own; its numbers are in `site/data/objdiff-report.json` and on the progress page. Windows: use WSL.
+matched code per unit; the "Data" category adds a unit per retail data section (`data/rodata`, `data/data`, `data/vutext`, `data/irx`, from `work/elf/SCUS_973.16`; sizes only, no bytes reach the report) with an empty compiled side, and `data/rodata-c`: the rodata that compiled C objects own (their own jump tables and literals, the `.ro_<address>` sections of the linked image), plus the `.data` and `.rodata` pieces defined in C (`config/us/data_files.tsv`, `make_data_files.py`), which is the data counted as matched (317,573 of 1,011,732 bytes, 2026-11-11). objdiff counts a data section as matched only when all of it matches, so the C-owned ranges are a unit of their own; its numbers are in `site/data/objdiff-report.json` and on the progress page. Windows: use WSL.
 The compiler is run on Linux with wibo (32-bit), on macOS with wibo-macos.
 
 
