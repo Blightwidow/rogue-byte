@@ -1,7 +1,8 @@
 # Blockers that are compiled C: what sly1-decomp found and what it means here
 
-Written 2026-11-08; pilot 2026-11-11 (below). Status: **not adopted**. Today's rule stays in [AGENTS.md](../../AGENTS.md) and [vu0-mmi.md](vu0-mmi.md) until the
-steps in "What we need to do" are done. This page records the issue, how the two projects differ, and why the roadmap carries it.
+Written 2026-11-08; pilot 2026-11-11 (below). Status: **adopted 2026-11-11** (maintainer): the inline kind at the 5% cutoff, counted as
+to-do; shared one-instruction helpers in `include/ps2inline.h` and `include/vu0inline.h`; no `"memory"` clobber; `volatile` only on the
+barriers (`sync`, `ei`). The rest of this page records the issue, how the two projects differ, and the pilot.
 
 ## The issue
 

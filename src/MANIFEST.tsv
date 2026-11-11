@@ -1592,6 +1592,7 @@ address	name	size	file	whole_file	symbol
 0X142860	ReleaseJtLookHold	8	new_13f888/ReleaseJtLookHold.c		
 0X142868	func_00142868	20	new_13f888/fun_00142868.cpp		
 0X143090	SetJtLookLimits	56	new_13f888/SetJtLookLimits.cpp		
+0X1430C8	func_001430C8	260	new_13f888/fun_001430c8.cpp		
 0X1431D0	func_001431D0	76	new_13f888/fun_001431d0.c		
 0X1432E0	GiveJtLoot	160	new_13f888/GiveJtLoot.cpp		
 0X143380	DropJtLoot	68	new_13f888/DropJtLoot.cpp		
@@ -5143,6 +5144,7 @@ address	name	size	file	whole_file	symbol
 0X252358	func_00252358	52	sdk/fun_00252358.c		
 0X252390	func_00252390	8	sdk/fun_00252390.c		
 0X252398	func_00252398	188	sdk/fun_00252398.c		
+0X252608	func_00252608	380	sdk/fun_00252608.c		
 0X253478	func_00253478	160	sdk/fun_00253478.c		
 0X253C80	func_00253C80	160	sdk/fun_00253c80.c		
 0X253D20	func_00253D20	324	sdk/fun_00253d20.c		

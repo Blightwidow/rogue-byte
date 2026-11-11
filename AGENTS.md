@@ -49,9 +49,12 @@ counts as matched.
 - **Plain C++.** No inline assembly in functions, no register pins, no artificial barriers. The one exception is the square root
   (`sqrt.s`): retail's bare instruction behaves as an inline-assembly helper that no C form reproduces; a function computes a bare
   square root through one shared `Sqrt` helper (`asm volatile("sqrt.s %0, %1" : "=&f"(r) : "f"(x))`, the early-clobber measured on every
-  user: docs/contributing/exceptions.md) and nothing else writes inline assembly. A function that needs VU0 macro code, MMI,
-  a lane move to an FP register or COP0 stays in `nonmatching/` at the score it reaches without it. No matched source holds inline asm (the 236 that did went back to unmatched on 2026-11-04); `scripts/matching/record.py` scans every
-  new match for it.
+  user: docs/contributing/exceptions.md). Since 2026-11-11 the other instructions GCC cannot emit (MMI such as `pextuw`, `prot3w`,
+  `pextlw`, `pcpyld`; a lane move from a quadword to an FP register; `sync`; VU0 macro instructions) come from the shared helpers of
+  `include/ps2inline.h` and `include/vu0inline.h`: one such instruction each (plus the move it needs), reused across functions, never
+  one function's own code, no register pins, no `"memory"` clobber, and `volatile` only on a barrier (`sync`, `ei`)
+  (docs/build/inline-asm-helpers.md; `make repo-check` enforces it). A new helper goes into those headers, measured on more than one
+  function. A matched source includes them and writes no inline asm of its own; `scripts/matching/record.py` scans every new match for it.
   `volatile` is one only where it stops the compiler. It is allowed where it is what the original had: a hardware register at a
   fixed address (`*(volatile u32*)0x10002010`) or through a pointer to a register block (a DMA channel's), and data shared with
   hardware, an interrupt handler or another thread (a library's semaphore ids and state flags, a field an interrupt handler sets),
@@ -62,7 +65,8 @@ counts as matched.
 - **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant (a chunk nothing reaches that never
   transfers control, so not a function) (`config/us/blockers.tsv`, from `make blockers`), stays
   original assembly: it is left out of the work queues, counts as finished in the reports apart from the exact C, and is never matched with asm
-  (docs/build/vu0-mmi.md).
+  (docs/build/vu0-mmi.md). Not a blocker: a function with the compiler's frame whose VU0, MMI and system instructions are at most 5% of it
+  (`config/us/inline_functions.tsv`, same command): compiled C that needs the shared helpers, in the work queues and counted as to-do.
 - **An unused local only as a type the original plausibly declared.** GCC 2.95 gives an unused struct local a stack slot, so retail's
   frames show where the original declared one. A padding array (`s32 scratch[4];`), an invented type or a field that exists only to
   size the frame is not allowed.

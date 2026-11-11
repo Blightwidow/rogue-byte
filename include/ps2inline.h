@@ -1,0 +1,69 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Shared inline-assembly helpers for the instructions GCC cannot emit (ruled 2026-11-11, docs/build/inline-asm-helpers.md): each wraps
+   one such instruction (plus the register move it needs), reused across retail's functions, never one function's own code. No
+   register pins and no "memory" clobber; only the barriers (`sync`, `ei`) are volatile, so they do not move. A matched source includes
+   this header and writes no asm of its own (scripts/matching/record.py). VU0 macro instructions: include/vu0inline.h. C and C++.
+
+   A quadword held in a 128-bit register (a vector returned or passed by value) is a QW (include/types.h): GCC cannot shift it (no
+   TImode shifts) and a union or struct goes through memory, so a lane comes out through these helpers. Measured in the pilot of
+   2026-11-11: one instruction per helper lets the scheduler place each as retail does (LaneX after RotateWords3 matched 0x1430C8). */
+#ifndef SLY2_PS2INLINE_H
+#define SLY2_PS2INLINE_H
+#include "types.h"
+
+/* lane 0 (x) of a quadword as a float: mtc1 reads the register's low word */
+static inline float LaneX(QW q)
+{
+    float f;
+    asm("mtc1 %1, %0" : "=f"(f) : "r"(q));
+    return f;
+}
+
+/* lane 2 (z) of a quadword as a float: pextuw puts word 2 low, mtc1 moves it */
+static inline float LaneZ(QW q)
+{
+    float f;
+    u32 word;
+    asm("pextuw %1, $0, %2\n\tmtc1 %1, %0" : "=f"(f), "=&r"(word) : "r"(q));
+    return f;
+}
+
+/* word 2 of a quadword in a general register (pextuw with $zero): the caller moves it where it needs it */
+static inline u32 LaneWordZ(QW q)
+{
+    u32 word;
+    asm("pextuw %0, $0, %1" : "=r"(word) : "r"(q));
+    return word;
+}
+
+/* prot3w: rotate the three low words, word 1 lands in word 0 (LaneX(RotateWords3(q)) is lane y) */
+static inline QW RotateWords3(QW q)
+{
+    QW rotated;
+    asm("prot3w %0, %1" : "=r"(rotated) : "r"(q));
+    return rotated;
+}
+
+/* pextlw: interleave the low words of two registers, `low` in word 0 and `high` in word 1 */
+static inline QW InterleaveLowWords(float high, float low)
+{
+    QW packed;
+    asm("pextlw %0, %1, %2" : "=r"(packed) : "r"(high), "r"(low));
+    return packed;
+}
+
+/* pcpyld: `high`'s low doubleword above `low`'s low doubleword */
+static inline QW JoinLowDoublewords(float high, QW low)
+{
+    QW joined;
+    asm("pcpyld %0, %1, %2" : "=r"(joined) : "r"(high), "r"(low));
+    return joined;
+}
+
+/* sync: a memory barrier, volatile so that it stays where it is */
+static inline void MemoryBarrier(void)
+{
+    asm volatile("sync");
+}
+
+#endif

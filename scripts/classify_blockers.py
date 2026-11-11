@@ -16,7 +16,12 @@ A function is a blocker when its code holds an instruction C has no form for and
 
 Such a function stays assembly: it is built from the original assembly, never counted as matched, and left out of the work queues
 (list_functions.py, claim.py). Read from the split (`make elf` first); names, addresses and sizes only. With --check it exits 1 when
-the committed table is stale. See docs/build/vu0-mmi.md."""
+the committed table is stale. See docs/build/vu0-mmi.md.
+
+Not a blocker, though it holds such an instruction: a function with the compiler's frame (`addiu $sp,$sp,-N` in its first six
+instructions and `+N` in its last eight) whose VU0, MMI and system instructions are at most INLINE_SHARE of its instructions, and that
+is not hand-written. It is compiled C that needs a shared inline-assembly helper (include/ps2inline.h) for those instructions, so it is
+work to do like any unmatched function; config/us/inline_functions.tsv lists them (docs/build/inline-asm-helpers.md, ruled 2026-11-11)."""
 import os
 import re
 import struct
@@ -24,6 +29,8 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 TABLE = os.path.join(ROOT, 'config', 'us', 'blockers.tsv')
+INLINE_TABLE = os.path.join(ROOT, 'config', 'us', 'inline_functions.tsv')
+INLINE_SHARE = 0.05  # sly1-decomp's top cutoff for its inline kind (its commit 623ebf38); adopted here 2026-11-11 (docs/build/inline-asm-helpers.md)
 HANDWRITTEN = os.path.join(ROOT, 'config', 'us', 'handwritten_asm.txt')
 ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 INSTRUCTION = re.compile(r'^\s*/\*[^*]*\*/\s+(\w[\w.]*)')
@@ -99,6 +106,27 @@ def mnemonics_of(lines):
     return found
 
 
+FRAME_OPEN = re.compile(r'\baddiu\s+\$sp, \$sp, -0x[0-9A-Fa-f]+\s*$')
+FRAME_CLOSE = re.compile(r'\baddiu\s+\$sp, \$sp, 0x[0-9A-Fa-f]+\s*$')
+
+
+def special_share(mnemonics):
+    """The share of a function's instructions that are VU0, MMI or system instructions."""
+    special = sum(1 for mnemonic in mnemonics if VU.match(mnemonic) or MMI.match(mnemonic) or SYSTEM.match(mnemonic))
+    return special / len(mnemonics) if mnemonics else 0.0
+
+
+def framed(lines):
+    """True when the function opens and closes the compiler's stack frame (first six and last eight instructions)."""
+    code = [line for line in lines if INSTRUCTION.match(line)]
+    return any(FRAME_OPEN.search(line) for line in code[:6]) and any(FRAME_CLOSE.search(line) for line in code[-8:])
+
+
+def is_inline(lines, mnemonics):
+    """True for compiled C that only needs shared helpers: framed, and at most INLINE_SHARE special instructions."""
+    return framed(lines) and special_share(mnemonics) <= INLINE_SHARE
+
+
 def handwritten():
     if not os.path.exists(HANDWRITTEN):
         return set()
@@ -113,14 +141,18 @@ def build():
     _, units = read_units('build/splat')
     hand = handwritten()
     references = referenced_addresses()
-    rows = []
+    rows, inline = [], []
     for unit in units:
         mnemonics = mnemonics_of(unit['lines'])
-        kind = (kind_of(mnemonics) or ('handwritten' if unit['address'] in hand else None)
+        special = kind_of(mnemonics)
+        if special and unit['address'] not in hand and is_inline(unit['lines'], mnemonics):
+            inline.append((unit['address'], unit['name'], unit['end'] - unit['address'], special))
+            continue
+        kind = (special or ('handwritten' if unit['address'] in hand else None)
                 or ('remnant' if unit['address'] not in references and not transfers_control(mnemonics) else None))
         if kind:
             rows.append((unit['address'], unit['name'], unit['end'] - unit['address'], kind))
-    return sorted(rows)
+    return sorted(rows), sorted(inline)
 
 
 def render(rows):
@@ -149,19 +181,25 @@ def names():
 
 
 def main():
-    text = render(build())
+    blockers, inline = build()
+    text, inline_text = render(blockers), render(inline)
     if '--check' in sys.argv:
         current = open(TABLE, encoding='utf-8').read() if os.path.exists(TABLE) else ''
-        print('ok: config/us/blockers.tsv is current' if current == text else 'stale: run python3 scripts/classify_blockers.py')
-        return 0 if current == text else 1
+        current_inline = open(INLINE_TABLE, encoding='utf-8').read() if os.path.exists(INLINE_TABLE) else ''
+        fresh = current == text and current_inline == inline_text
+        print('ok: config/us/blockers.tsv and inline_functions.tsv are current' if fresh else 'stale: run python3 scripts/classify_blockers.py')
+        return 0 if fresh else 1
     with open(TABLE, 'w', encoding='utf-8') as handle:
         handle.write(text)
+    with open(INLINE_TABLE, 'w', encoding='utf-8') as handle:
+        handle.write(inline_text)
     counts = {}
     for line in text.split('\n')[1:]:
         if line:
             kind = line.split('\t')[3]
             counts[kind] = counts.get(kind, 0) + 1
     print(f'{sum(counts.values())} blockers: ' + ', '.join(f'{kind} {count}' for kind, count in sorted(counts.items())))
+    print(f'{len(inline)} inline (compiled C needing a shared helper, {sum(row[2] for row in inline)} bytes): config/us/inline_functions.tsv')
     return 0
 
 

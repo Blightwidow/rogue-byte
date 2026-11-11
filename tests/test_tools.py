@@ -1178,6 +1178,25 @@ class ParkTests(unittest.TestCase):
 
 
 class BlockerTests(unittest.TestCase):
+    @staticmethod
+    def lines(instructions):
+        return [f'    /* 0 0 0 */  {instruction}' for instruction in instructions]
+
+    def framed_function(self, special, plain):
+        return self.lines(['addiu      $sp, $sp, -0x20'] + special + ['lw         $v0, 0x0($a0)'] * plain + ['jr         $ra', 'addiu      $sp, $sp, 0x20'])
+
+    def test_a_framed_function_with_few_special_instructions_is_inline(self):
+        lines = self.framed_function(['pextuw     $v1, $zero, $v0'], 40)
+        self.assertTrue(classify_blockers.is_inline(lines, classify_blockers.mnemonics_of(lines)))
+
+    def test_a_framed_function_over_the_cutoff_stays_a_blocker(self):
+        lines = self.framed_function(['vadd.xyzw  $vf1, $vf2, $vf3'] * 5, 20)
+        self.assertFalse(classify_blockers.is_inline(lines, classify_blockers.mnemonics_of(lines)))
+
+    def test_a_frameless_function_stays_a_blocker(self):
+        lines = self.lines(['pextuw     $v1, $zero, $v0'] + ['lw         $v0, 0x0($a0)'] * 40 + ['jr         $ra', 'nop'])
+        self.assertFalse(classify_blockers.is_inline(lines, classify_blockers.mnemonics_of(lines)))
+
     def test_vu_instructions_are_a_blocker(self):
         self.assertEqual(classify_blockers.kind_of(['lw', 'lqc2', 'jr']), 'vu')
         self.assertEqual(classify_blockers.kind_of(['vmulax.xyz', 'jr']), 'vu')
