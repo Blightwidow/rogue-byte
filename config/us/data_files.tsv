@@ -2,6 +2,7 @@ start	end	file
 0X262380	0X279AD0	rodata/start.cpp
 0X279AD0	0X27A10C	rodata/spliceobj.cpp
 0X27A10C	0X27A1D8	rodata/new_132b08.cpp
+0X27A1D8	0X27A254	rodata/new_132b08_27a1d8.cpp
 0X27A778	0X27A790	rodata/puffer-slotheap_27a778.cpp
 0X29A790	0X2A2900	rodata/puffer-slotheap_29a790.cpp
 0X2A2D00	0X2A2D30	rodata/mat.cpp
@@ -9,6 +10,7 @@ start	end	file
 0X2A2DE0	0X2A2DF0	rodata/bomb-crusher.cpp
 0X2A2DF0	0X2A2E50	rodata/util-splice-bif.cpp
 0X2A2E50	0X2A2E68	rodata/cd.cpp
+0X2A2E68	0X2A3268	rodata/cd_2a2e68.cpp
 0X2A37E8	0X2A3828	rodata/new_161458.cpp
 0X2A3828	0X2A3868	rodata/sensor-geom.cpp
 0X2A3868	0X2A38E8	rodata/light-stepguard.cpp
@@ -140,6 +142,7 @@ start	end	file
 0X2AA9D8	0X2AA9E8	rodata/sdk_2aa7b0_2aa9d8.cpp
 0X2AA9F8	0X2AAA10	rodata/sdk_2aa7b0_2aa9f8.cpp
 0X2AAAB0	0X2AAB28	rodata/sdk_2aa7b0_2aaab0.cpp
+0X2AAB28	0X2AACD0	rodata/sdk_2aa7b0_2aab28.cpp
 0X2AAD98	0X2AAE18	rodata/sdk_2aa7b0_2aad98.cpp
 0X2AB220	0X2AB230	rodata/sdk_2aa7b0_2ab220.cpp
 0X2AB330	0X2AB3C8	rodata/sdk_2aa7b0_2ab330.cpp
@@ -150,6 +153,7 @@ start	end	file
 0X2AB940	0X2ABBFC	rodata/sdk_2aa7b0_2ab940.cpp
 0X2ABBFC	0X2ABC08	rodata/sdk_2aa7b0_2abbfc.cpp
 0X2ABC08	0X2ABC98	rodata/sdk_2aa7b0_2abc08.cpp
+0X2ABC98	0X2ABFB0	rodata/sdk_2aa7b0_2abc98.cpp
 0X2ABFB0	0X2AC170	rodata/sdk_2aa7b0_2abfb0.cpp
 0X2AC1E8	0X2AC290	rodata/sdk_2aa7b0_2ac1e8.cpp
 0X2AC2A8	0X2AC3C0	rodata/sdk_2aa7b0_2ac2a8.cpp
@@ -365,6 +369,7 @@ start	end	file
 0X2BBB70	0X2BBB90	data/splice-bif_120f80.cpp
 0X2BBB90	0X2BC380	data/splice-eval-splice-frame.cpp
 0X2BC380	0X2BC390	data/new_12d508.cpp
+0X2BC390	0X2BC918	data/bbmark-blend_2bc390.cpp
 0X2BC920	0X2BC934	data/bbmark-blend_2bc920.cpp
 0X2BC934	0X2BC940	data/bbmark-blend_2bc934.cpp
 0X2BC940	0X2BC9C0	data/bbmark-blend_2bc940.cpp
@@ -372,6 +377,7 @@ start	end	file
 0X2BC9C8	0X2BC9D0	data/blip-light.cpp
 0X2BC9D0	0X2BC9E0	data/bomb.cpp
 0X2BC9E0	0X2BC9F0	data/bomb-crusher.cpp
+0X2BC9F0	0X2BCC6C	data/new_13f888_2bc9f0.cpp
 0X2BCC6C	0X2BCCB8	data/new_13f888_2bcc6c.cpp
 0X2BCCB8	0X2BCD04	data/new_13f888_2bccb8.cpp
 0X2BD260	0X2BD2C4	data/new_13f888_2bd260_2bd260.cpp
@@ -405,6 +411,8 @@ start	end	file
 0X2BDDE8	0X2BDDF0	data/dzg_158668.cpp
 0X2BDDF0	0X2BDEB0	data/new_258658.cpp
 0X2BDEB0	0X2BDEC0	data/emitter_1591b0.cpp
+0X2BDEC0	0X2BDEC8	data/emitter_15c690_2bdec0.cpp
+0X2BDED0	0X2BE080	data/emitter_15c690_2bded0.cpp
 0X2BE080	0X2BE338	data/emitter-font.cpp
 0X2BE338	0X2BE540	data/font_15f000.cpp
 0X2BE540	0X2BE590	data/new_167320.cpp
@@ -427,6 +435,7 @@ start	end	file
 0X2BE900	0X2BE918	data/hide-splice-gc.cpp
 0X2BE918	0X2BE950	data/binoc-joy.cpp
 0X2BE950	0X2BE990	data/joy_187030.cpp
+0X2BE990	0X2BF1AC	data/joy-jt_2be990.cpp
 0X2BF1B0	0X2BF348	data/joy-jt_2bf1b0.cpp
 0X2BF348	0X2BF364	data/jt-alo_2bf348.cpp
 0X2BF364	0X2BF370	data/jt-alo_2bf364.cpp
@@ -476,6 +485,7 @@ start	end	file
 0X2BFD38	0X2C0248	data/smartguard-ac.cpp
 0X2C0248	0X2C0268	data/ac-rog.cpp
 0X2C0268	0X2C0270	data/mpeg.cpp
+0X2C0270	0X2C08DC	data/mpeg-memcard_2c0270.cpp
 0X2C08DC	0X2C08F0	data/mpeg-memcard_2c08dc.cpp
 0X2C08F0	0X2C0AB0	data/mpeg-memcard_2c08f0.cpp
 0X2C0AB0	0X2C0AC4	data/new_1bc198_2c0ab0.cpp
@@ -490,10 +500,14 @@ start	end	file
 0X2C0D70	0X2C0E94	data/new_1c3df8_2c0d70_2c0d70.cpp
 0X2C0E94	0X2C0EA0	data/new_1c3df8_2c0d70_2c0e94.cpp
 0X2C0EA0	0X2C0EC8	data/new_1c3df8_2c0d70_2c0ea0.cpp
+0X2C0EC8	0X2C0FE8	data/new_1c76d0_2c0ec8.cpp
 0X2C0FE8	0X2C10B4	data/new_1c76d0_2c0fe8.cpp
 0X2C10B4	0X2C10C8	data/new_1c76d0_2c10b4.cpp
 0X2C10C8	0X2C10D0	data/new_1c76d0_2c10c8.cpp
+0X2C10D0	0X2C1740	data/new_1c90d0_2c10d0.cpp
+0X2C1740	0X2C19BC	data/new_1c90d0_2c1740.cpp
 0X2C19C0	0X2C1BD8	data/new_1c90d0_2c19c0.cpp
+0X2C1BD8	0X2C1EC0	data/new_1c90d0_2c1bd8.cpp
 0X2C1EC0	0X2C1EF4	data/new_1c90d0_2c1ec0.cpp
 0X2C1EF4	0X2C1F00	data/new_1c90d0_2c1ef4.cpp
 0X2C1F00	0X2C1F20	data/dmas-dzg_2c1f00.cpp
@@ -505,19 +519,25 @@ start	end	file
 0X2C2030	0X2C2114	data/rip-rumble_2c2030.cpp
 0X2C2114	0X2C2128	data/rip-rumble_2c2114.cpp
 0X2C2128	0X2C2260	data/rip-rumble_2c2128.cpp
+0X2C2260	0X2C2D8C	data/rumble_2c2260.cpp
 0X2C2D8C	0X2C2D90	data/rumble_2c2d8c.cpp
 0X2C2D90	0X2C2DE8	data/new_1d7780.cpp
+0X2C2DE8	0X2C3028	data/splice-gc-wipe_2c2de8.cpp
+0X2C3028	0X2C3148	data/splice-gc-wipe_2c3028.cpp
 0X2C3148	0X2C3254	data/splice-gc-wipe_2c3148.cpp
 0X2C3254	0X2C3258	data/game_1da770.cpp
 0X2C3258	0X2C3264	data/new_13f888_2c3258.cpp
 0X2C3264	0X2C3268	data/game-stepguard_2c3264_2c3264.cpp
 0X2C3268	0X2C3288	data/game-stepguard_2c3264_2c3268.cpp
+0X2C3288	0X2C3588	data/game-stepguard_2c3264_2c3288.cpp
 0X2C3588	0X2C3620	data/game-stepguard_2c3264_2c3588.cpp
 0X2C3620	0X2C3658	data/splice-ref-crv.cpp
 0X2C3658	0X2C3690	data/new_1e7a28.cpp
 0X2C3690	0X2C36A0	data/new_1ed1a8.cpp
 0X2C36A0	0X2C3738	data/shdanim_1ee480.cpp
 0X2C3738	0X2C3748	data/sm-so_2c3738.cpp
+0X2C3748	0X2C3964	data/sm-so_2c3748.cpp
+0X2C3968	0X2C3B84	data/sm-so_2c3968.cpp
 0X2C3B90	0X2C3BA0	data/sm-so_2c3b90.cpp
 0X2C3BA0	0X2C3C40	data/po-so.cpp
 0X2C3C40	0X2C3C58	data/new_1fcff8.cpp
@@ -568,7 +588,10 @@ start	end	file
 0X2C5DE0	0X2C67A4	data/sdk_2c49d4_2c5de0.cpp
 0X2C67A4	0X2C67C0	data/sdk_2c49d4_2c67a4.cpp
 0X2C67C0	0X2C6840	data/sdk_2c49d4_2c67c0.cpp
+0X2C6840	0X2C6858	data/sdk_2c49d4_2c6840.cpp
 0X2C7840	0X2C7940	data/sdk_2c49d4_2c7840.cpp
+0X2C7940	0X2C7D80	data/sdk_2c49d4_2c7940.cpp
+0X2C7D80	0X2C81C0	data/sdk_2c49d4_2c7d80.cpp
 0X2C81C0	0X2C830C	data/sdk_2c49d4_2c81c0.cpp
 0X2C830C	0X2C8358	data/sdk_2c49d4_2c830c.cpp
 0X2C8914	0X2C8940	data/sdk_2c49d4_2c8914.cpp

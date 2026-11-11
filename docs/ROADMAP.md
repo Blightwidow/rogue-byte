@@ -252,11 +252,14 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    `make repo-check`); the generator now leaves such a label out, and a byte array over 64 elements other than a string, and
    cuts its group around it. The 96 KB table at 0x262380 is typed by hand from its reader `PeopidFind`: `include/splopt.h`,
    12,010 `SPLOPT`s in 199 class runs indexed by `ARYSPLOPT RO_00279AD0[199]` (a file carrying `make_data_files.HAND_TYPED`
-   is kept when the tool rewrites). Data 20.36% -> 31.91% (322,869 bytes: `.data` 170,132 of 199,088 after 22 untyped word
-   arrays, 27 KB, went back to assembly; `.rodata` 144,434 in 159 of 179 groups). Left: plain word arrays waiting for their
-   readers (22 in `.data`, 27 KB; 5 in `.rodata`, 136 KB, among them `D_0027A790` 128 KB in `puffer-slotheap`, which nothing
-   reads by name), 151 jump tables of unmatched functions (11 KB), 6 byte tables (2 KB, SDK lookup tables), 20 groups where
-   Splat's labels split a word, and the 9 KB compiled objects own.
+   is kept when the tool rewrites). 23 more tables typed by hand from their readers (2026-11-11): the property lists of
+   `SetSoProperties` (`include/soproperty.h`; Sly's, Bentley's, Murray's and three more), the loading logo's mesh
+   (`include/loadinglogo.h`), the gadget menu pages (`include/gadgetmenu.h`), the rumble patterns, the shop's loot rows, the
+   epsel label rows, the sm-so drop tables, `UpdateCd`'s CRC-32 table, `PostScriptMessage`'s argument index, CD RPC buffers
+   and an SDK float table; tails no code reads stay assembly. Data 20.36% -> 33.86% (342,533 bytes). Left: 5 word arrays no
+   reader types (3 SDK blocks copied wholesale to kernel addresses, the 128 KB bitmap `D_0027A790` whose pixels nothing
+   reads, `D_002BCD04`, whose label sits 4 bytes inside its 32-byte records), 151 jump tables of unmatched functions (11 KB),
+   6 SDK byte tables (2 KB), 20 groups where Splat's labels split a word, and the 9 KB compiled objects own.
 4. **Port-facing metadata, no code change.** A layer column in `src/MANIFEST.tsv` and the registry (game logic, engine, platform:
    GS, VIF and DMA, IOP, memory card, pad, VU microcode); JSON exports of symbols, the class tree, vtable layouts and struct offsets
    generated from the headers; hardware access behind named macros or inlines only where retail's bytes are identical. Depends on 1.
