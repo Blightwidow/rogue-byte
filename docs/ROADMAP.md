@@ -274,7 +274,12 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    - A worker that meets a permanent blocker reports
      one line of what it computes (`SKIP wall <semantics>`); the lead records it in `config/us/blocker_notes.tsv`, with a note on
      PS2 FPU behaviour (no denormals, infinities or NaNs) where the result depends on it.
-6. Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
+6. Done 2026-11-11 (maintainer ruling, PR #45 and the waves after it): framed blockers with at most 5% VU0, MMI and system
+   instructions are inline functions (`config/us/inline_functions.tsv`, 75 found), counted as to-do and matched with the shared helpers of
+   `include/ps2inline.h` and `include/vu0inline.h`; code fell from 80.25% to 74.42% when they stopped counting as finished, and 24 of
+   them matched since (75.22%). Left: 51, among them the largest VU0 functions and near misses at 2 to 25 that stop on GCC internals.
+   The text below is the plan as it was written.
+   Reclassify the permanent blockers that are compiled C, as sly1-decomp did on 2026-11-07: shared inline-assembly helpers for
    VU0, MMI and `max.s`/`min.s`, an **inline** kind counted as to-do, not finished. We will need to do this to keep the report
    honest and match about 106 to 258 of the 853 blockers that are not remnants. First a compile pilot on about 10 functions, then the rule change in
    AGENTS.md; the headline falls by about 1.7 to 4.2 points. See [build/inline-asm-helpers.md](build/inline-asm-helpers.md).
