@@ -203,7 +203,7 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    no per-function copy of them (276 files, 223 KB, left `src/`; `src/MANIFEST.tsv` gives them `whole_file` and `symbol`); objdiff cuts each one
    out of the whole object and PAL reads it there at its offset (both reports unchanged); a new match inside a whole file lands by replacing its
    `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
-   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files are held back (`exclusion`) until objdiff can; landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
+   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files were held back (`exclusion`) until objdiff could (stage 8); landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
    cuts inside a span.
    Stage 7 (2026-11-10): 26 more files build whole (109 files, 463 matched functions). Re-proving the 98 left showed 30 that
    already matched byte for byte but were refused for m2c leftovers: 44 of their 45 per-function sources were rewritten with
@@ -217,7 +217,11 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    functions. Three more merger fixes (a `static` item in an `extern "C"` block keeps no prefix; a local struct named like a
    shared header's type takes the address suffix; in the rename mode a declaration's linkage is compared, and a C declaration
    of a mangled name takes a name of its own) and 122 more rewritten sources (m2c leftovers, C-only idioms) brought it to 172
-   whole files, 1343 matched functions. Left: 26 with their own `.rodata`, 2 with per-function flags, 6 that do not compile as
+   whole files, 1343 matched functions. Stage 8 (2026-11-11): `cut_function` carries the whole object's `.rodata` into the
+   cut of a function that reads it (a jump table entry into the function is rebased), so `make_objdiff.py` cuts those
+   functions too and `exclusion` no longer holds back a file for its own `.rodata`: 178 whole files, 1374 matched
+   functions, reports unchanged. Left: 20 files with their own `.rodata` that now fail on their sources (12 m2c leftovers,
+   7 C that does not compile as C++ in one unit, 1 size), 2 with per-function flags, 6 that do not compile as
    one unit (two sources define one class differently: `TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`; a C source's `char` extern
    against a typed one; a missing prototype), 2 waiting on a source that scores above 0 typed (0x153128, 0x1D4FA0), 1 that
    compiles with a different size.
