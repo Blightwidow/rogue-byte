@@ -54,6 +54,8 @@ def source_symbol(text, name):
     for candidate in defined:
         if candidate in (name, plain) or candidate.endswith('::' + plain) or candidate.replace('::', '_') == plain:
             return candidate
+    if defined and all('::' in candidate for candidate in defined):  # only inline members: the code is the file's static initializer
+        return '__static_initialization_and_destruction_0'
     return defined[-1] if defined else name
 
 

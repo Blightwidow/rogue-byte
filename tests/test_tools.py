@@ -662,6 +662,10 @@ class WholeFileRecordTests(unittest.TestCase):
     def test_source_symbol_falls_back_to_the_last_definition(self):
         self.assertEqual(export_src.source_symbol('int Helper() { return 1; }\nint Real() { return 0; }\n', 'func_00100000'), 'Real')
 
+    def test_source_symbol_of_globals_only_is_the_static_initializer(self):
+        source = 'struct H { int n; H(const H &h); };\ninline H::H(const H &h) { n = h.n; }\nextern H T;\nH B_002DD548(T);\n'
+        self.assertEqual(export_src.source_symbol(source, 'InitStaticBitmapB'), '__static_initialization_and_destruction_0')
+
     def test_check_unit_reads_the_first_four_manifest_columns(self):
         import tempfile
         with tempfile.NamedTemporaryFile('w', suffix='.tsv', delete=False) as handle:

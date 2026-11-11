@@ -28,6 +28,7 @@ UNITS = os.path.join('build', 'units')
 # trim_object writes a copy only for the objects that need one in this link, and make_objdiff.py prefers a copy when it exists: clear the
 # copies of an earlier link first, or an object that no longer needs trimming is read stale from there
 shutil.rmtree(os.path.join(BUILD, 'trimmed'), ignore_errors=True)
+shutil.rmtree(os.path.join(BUILD, 'byname'), ignore_errors=True)
 RETAIL = os.path.join('work', 'elf', 'SCUS_973.16')
 TEXT_START, TEXT_END, FILE_OFFSET_OF_TEXT = 0x100000, 0x259DF0, 0x80
 RODATA_START, RODATA_END = 0x262380, 0x2AC864
@@ -150,10 +151,11 @@ def trim_data(object_path, size, section_name='.data'):
     open(trimmed, 'wb').write(blob)
     return trimmed
 
-def inspect(object_path):
-    """(text size, undefined symbol names) of an object, or None when it cannot stand in for assembly: a relocation
-    into a section other than .text means the function uses its own data (jump table, literal), which the image
-    keeps elsewhere."""
+def inspect(object_path, by_name=None):
+    """(text size, undefined symbol names, own rodata size) of an object, or None when it cannot stand in for assembly: a
+    relocation into a section other than .text means the function uses its own data (jump table, literal), which the image
+    keeps elsewhere. With a `by_name` set (whole files only), a relocation against a .bss object the file defines under a
+    retail address name (B_002DD548) is allowed and its name added to the set: link_whole_data() resolves it to that address."""
     with open(object_path, 'rb') as handle:
         elf = ELFFile(handle)
         text = elf.get_section_by_name('.text')
@@ -171,10 +173,22 @@ def inspect(object_path):
                 section_name = elf.get_section(symbol['st_shndx']).name
                 if section_name == '.rodata':
                     uses_rodata = True
+                elif by_name is not None and section_name in ('.bss', '.sbss') and ADDRESS_NAME.match(symbol.name):
+                    by_name.add(symbol.name)
                 elif section_name != '.text':
                     return None
         rodata = elf.get_section_by_name('.rodata')
         return text['sh_size'], undefined, (rodata['sh_size'] if uses_rodata and rodata else 0)
+
+def link_whole_data(start, object_path, names):
+    """A whole file that defines game objects (a C++ file's globals, built by its static initializer) keeps them in .bss, which
+    retail spreads over its own .bss and .rodata. Each object the code refers to is named after its retail address, so a copy of the
+    object with those names global is linked with the names assigned their addresses (definitions()); the file's .bss itself is
+    placed where nothing is loaded. Returns the copy's path."""
+    copy = os.path.join(BUILD, 'byname', f'whole_{start:06X}_{os.path.basename(object_path)}')
+    os.makedirs(os.path.dirname(copy), exist_ok=True)
+    subprocess.check_call([BINUTILS + '-objcopy', *[f'--globalize-symbol={name}' for name in sorted(names)], object_path, copy])
+    return copy
 
 def derive_rodata_base(address, object_path):
     """Where the object's own .rodata (jump tables, literals) sits in the retail image: the hi/lo pairs against the
@@ -328,7 +342,8 @@ print(f'{len(candidates)} of {len(functions)} functions have a usable object', f
 wholes = {}  # start -> (end, object path, undefined names)
 for start, end, file in whole_files():
     object_path = os.path.join(UNITS, file + '.o')
-    found = inspect(object_path) if os.path.isfile(object_path) else None
+    by_name = set()
+    found = inspect(object_path, by_name) if os.path.isfile(object_path) else None
     if start not in by_address or (end not in by_address and end != TEXT_END) or found is None or found[0] != end - start:
         print(f'whole file {file}: not linked ({"no object" if not os.path.isfile(object_path) else "range, size or own data"}), its functions come from assembly', flush=True)
         continue
@@ -339,7 +354,9 @@ for start, end, file in whole_files():
         if rodata_base is None or not RODATA_START <= rodata_base < RODATA_END:
             print(f'whole file {file}: not linked (no single base for its own rodata), its functions come from assembly', flush=True)
             continue
-    wholes[start] = (end, object_path, found[1], rodata_size, rodata_base)
+    if by_name:
+        object_path = link_whole_data(start, object_path, by_name)
+    wholes[start] = (end, object_path, found[1], rodata_size, rodata_base, by_name)
 
 # data files (config/us/data_files.tsv): an object whose .data (a .data piece) or .rodata (a .rodata piece: const globals) is retail's bytes at
 # [start, end), linked there instead of the assembly piece.
@@ -424,6 +441,8 @@ def definitions(swapped, active, defined):
                 derived.setdefault(name, derive_addresses(address, object_path, {name}).get(name))
                 if derived[name] is not None:
                     lines.append(f'{name} = 0x{derived[name]:X};')
+    for start in sorted(active):  # a whole file's own objects, at the address their names give (link_whole_data)
+        lines += [f'{name} = 0x{ADDRESS_NAME.match(name).group(2)};' for name in sorted(wholes[start][5]) if name not in seen]
     lines += [line.rstrip('\n') for line in open(os.path.join(SPLAT, 'undefined_syms_auto.txt'))]
     return lines
 
@@ -462,6 +481,7 @@ def build(swapped, active, raw_pieces):
     sections = [f'    .t_{address:06X} 0x{address:X} : SUBALIGN(1) {{ */{os.path.basename(path)}(.text) }}'
                 for address, path in sorted(placed)]
     sections += [f'    .nl_{address:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(candidates[address][0])}(.rodata) }}' for address in sorted(swapped & retargeted)]
+    sections += [f'    .nb_{start:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(wholes[start][1])}(.bss .sbss) }}' for start in sorted(active) if wholes[start][5]]
     # rodata and data are linked as pieces (config/us/pieces.tsv); a function's own rodata goes where the retail image
     # has it, so the pieces are cut around those holes
     holes = sorted([(candidates[address][3], candidates[address][3] + candidates[address][2], address)
