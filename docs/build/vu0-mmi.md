@@ -3,8 +3,9 @@
 Sly 2's vector code uses the R5900's VU0 macro mode (`lqc2`, `sqc2`, `qmtc2`, `qmfc2`, `vadd`, `vmul`, `vmadd`...) and its multimedia
 instructions (MMI: `pextuw`, `pcpyld`, `prot3w`...). GCC 2.95.3 for the EE has no C form for them. This page records what that costs,
 what was tried, and the decision (2026-11-04): these functions are **permanent blockers**, as in sly1-decomp. Rules: [AGENTS.md](../../AGENTS.md); the earlier allowances:
-[contributing/exceptions.md](../contributing/exceptions.md). Open question on whether some blockers are really compiled C:
-[inline-asm-helpers.md](inline-asm-helpers.md).
+[contributing/exceptions.md](../contributing/exceptions.md). Since 2026-11-11 a function with the compiler's frame whose VU0, MMI and
+system instructions are at most 5% of it is not a blocker: it is compiled C matched with the shared helpers of `include/ps2inline.h` and
+`include/vu0inline.h`, listed in `config/us/inline_functions.tsv` and counted as to-do ([inline-asm-helpers.md](inline-asm-helpers.md)).
 
 ## The size of it
 

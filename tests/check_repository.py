@@ -10,6 +10,7 @@ needs no disc and no compiler.
 2. Every source file starts with the GPL-3.0-or-later SPDX line.
 3. LICENSE is the GNU General Public License.
 """
+import re
 import sys
 from pathlib import Path
 
@@ -18,6 +19,8 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 sys.path.insert(0, str(ROOT / 'scripts' / 'matching'))
 import proprietary  # noqa: E402
 import check_source  # noqa: E402
+
+INLINE_HEADERS = {'ps2inline.h', 'vu0inline.h'}
 
 SPDX = 'SPDX-License-Identifier: GPL-3.0-or-later'
 NEEDS_SPDX = {'.py', '.sh', '.c', '.cpp', '.h', '.hpp', '.s', '.inc', '.ld'}
@@ -41,6 +44,21 @@ def main():
         for number, kind, message in check_source.data_definitions((ROOT / source).read_text(encoding='utf-8')):
             if kind == 'banned':
                 errors.append(f'{source}:{number}: {message}')
+    # inline asm in include/ (docs/build/inline-asm-helpers.md, ruled 2026-11-11): only the shared helper headers, no "memory"
+    # clobber, and volatile only on a barrier (sync, ei)
+    for header in sorted((ROOT / 'include').glob('*.h')):
+        text = header.read_text(encoding='utf-8')
+        for number, line in enumerate(text.split('\n'), 1):
+            code = line.split('//')[0]
+            if not re.search(r'\basm\b\s*(volatile\s*)?\(', code):
+                continue
+            where = f'include/{header.name}:{number}'
+            if header.name not in INLINE_HEADERS:
+                errors.append(f'{where}: inline asm outside {" and ".join(sorted(INLINE_HEADERS))}')
+            if '"memory"' in code:
+                errors.append(f'{where}: a "memory" clobber (a barrier the ruling does not allow)')
+            if re.search(r'\basm\s+volatile\b', code) and not re.search(r'"\s*(sync|ei)\b', code):
+                errors.append(f'{where}: volatile asm that is not a barrier (sync, ei)')
     if 'GNU GENERAL PUBLIC LICENSE' not in (ROOT / 'LICENSE').read_text(encoding='utf-8')[:200].upper():
         errors.append('LICENSE: not the GNU General Public License')
     for error in errors:

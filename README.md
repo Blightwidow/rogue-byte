@@ -18,12 +18,12 @@ A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Suc
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 <!-- progress:begin (scripts/readme_progress.py) -->
-| Version | Code | of which exact C | Functions | Blocked for C |
-| :--- | ---: | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 80.25% (1125476 of 1402480 bytes) | 49.97% | 6354 of 6825 | 1015 functions, 30.28% |
-| PAL `SCES_525.29` | 78.78% (1104932 of 1402480 bytes) | 48.51% | 6268 of 6825 | 1015 functions, 30.28% |
+| Version | Code | of which exact C | Functions | Blocked for C | C with inline assembly to match |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| NTSC-U `SCUS_973.16` | 74.42% (1043688 of 1402480 bytes) | 50.02% | 6281 of 6825 | 940 functions, 24.40% | 73 functions, 5.84% |
+| PAL `SCES_525.29` | 72.95% (1023144 of 1402480 bytes) | 48.55% | 6195 of 6825 | 940 functions, 24.40% | 73 functions, 5.84% |
 
-A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C.
+A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C. Compiled C that needs a shared inline-assembly helper for an instruction GCC cannot emit (`config/us/inline_functions.tsv`, [docs/build/inline-asm-helpers.md](docs/build/inline-asm-helpers.md)) is work to do; the last column counts those not matched yet.
 <!-- progress:end -->
 
 Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).

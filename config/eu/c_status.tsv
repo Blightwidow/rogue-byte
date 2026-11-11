@@ -1592,6 +1592,7 @@ us_address	name	other_address	pair	score	addresses
 0x142860	ReleaseJtLookHold	0X142878	gap	0	ok
 0x142868	func_00142868	0X142880	gap	0	ok
 0x143090	SetJtLookLimits	0X1430A8	identical	0	ok
+0x1430C8	func_001430C8	0X1430E0	same	0	ok
 0x1431D0	func_001431D0	0X1431E8	same	0	ok
 0x1432E0	GiveJtLoot	0X1432F8	same	0	ok
 0x143380	DropJtLoot	0X143398	same	0	ok
@@ -5143,6 +5144,7 @@ us_address	name	other_address	pair	score	addresses
 0x252358	func_00252358	0X252DA8	same	0	ok
 0x252390	func_00252390	0X252DE0	gap	0	ok
 0x252398	func_00252398	0X252DE8	same	0	ok
+0x252608	func_00252608	0X253058	same	0	ok
 0x253478	func_00253478	0X253EC8	same	0	ok
 0x253C80	func_00253C80	0X2546D0	same	0	ok
 0x253D20	func_00253D20	0X254770	same	0	ok
