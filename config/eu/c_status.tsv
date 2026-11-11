@@ -822,6 +822,7 @@ us_address	name	other_address	pair	score	addresses
 0x114670	PvtGetCidC6	0X114670	gap	0	ok
 0x114680	CreateSharedSlotheaps_114680	0X114680	same	0	ok
 0x1147B8	CreateSharedSlotheaps_114680_thunk	0X1147B8	identical	0	ok
+0x1147D8	InitStaticBitmapA	0X1147D8	gap	11	ok
 0x114AC0	InitStaticBitmapA_thunk	0X114AC0	identical	0	ok
 0x1168F8	InitStaticBitmapB_thunk	0X1168F8	identical	0	ok
 0x116918	PvAllocSlotheapClearImpl__FP8SLOTHEAP	0X116918	same	0	ok
