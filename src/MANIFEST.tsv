@@ -824,7 +824,8 @@ address	name	size	file	whole_file	symbol
 0X1147B8	CreateSharedSlotheaps_114680_thunk	32	puffer-slotheap/PvtGetCidC6_file.c	puffer-slotheap/PvtGetCidC6_file.c	CreateSharedSlotheaps_114680_thunk
 0X1147D8	InitStaticBitmapA	740	puffer-slotheap/InitStaticBitmapA_thunk_file.c	puffer-slotheap/InitStaticBitmapA_thunk_file.c	InitStaticBitmapA
 0X114AC0	InitStaticBitmapA_thunk	32	puffer-slotheap/InitStaticBitmapA_thunk_file.c	puffer-slotheap/InitStaticBitmapA_thunk_file.c	InitStaticBitmapA_thunk
-0X1168F8	InitStaticBitmapB_thunk	32	puffer-slotheap/InitStaticBitmapB_thunk_file.c	puffer-slotheap/InitStaticBitmapB_thunk_file.c	InitStaticBitmapB_thunk
+0X114AE0	InitStaticBitmapB	7704	puffer-slotheap/InitStaticBitmapB_file.cpp	puffer-slotheap/InitStaticBitmapB_file.cpp	__static_initialization_and_destruction_0
+0X1168F8	InitStaticBitmapB_thunk	32	puffer-slotheap/InitStaticBitmapB_file.cpp	puffer-slotheap/InitStaticBitmapB_file.cpp	InitStaticBitmapB_thunk
 0X116918	PvAllocSlotheapClearImpl__FP8SLOTHEAP	84	slotheap/PvAllocSlotheapClearImpl_file.cpp	slotheap/PvAllocSlotheapClearImpl_file.cpp	PvAllocSlotheapClearImpl__FP8SLOTHEAP
 0X116970	PvAllocCopyImpl	100	slotheap/PvAllocSlotheapClearImpl_file.cpp	slotheap/PvAllocSlotheapClearImpl_file.cpp	PvAllocCopyImpl
 0X1169D8	PchzAllocCopyImpl	84	slotheap/PvAllocSlotheapClearImpl_file.cpp	slotheap/PvAllocSlotheapClearImpl_file.cpp	PchzAllocCopyImpl
@@ -1845,6 +1846,7 @@ address	name	size	file	whole_file	symbol
 0X150728	func_00150728	84	tn-rip/fun_00150728.c		
 0X150780	bevy_classes_k30_cam_150780	116	tn-rip/bevy_classes_k30_cam_150780.cpp		
 0X150938	bevy_classes_k30_cam_activate_2	236	tn-rip/bevy_classes_k30_cam_activate_2.cpp		
+0X150A28	bevy_classes_k30_cam_update	956	tn-rip/bevy_classes_k30_cam_update.cpp		
 0X150DE8	bevy_classes_k30_cam_reset	56	tn-rip/bevy_classes_k30_cam_reset.c		
 0X150E20	bevy_classes_k30_cam_set	60	tn-rip/bevy_classes_k30_cam_set.c		
 0X150E60	func_00150E60	60	tn-rip/fun_00150e60.c		

@@ -824,6 +824,7 @@ us_address	name	other_address	pair	score	addresses
 0x1147B8	CreateSharedSlotheaps_114680_thunk	0X1147B8	identical	0	ok
 0x1147D8	InitStaticBitmapA	0X1147D8	gap	11	ok
 0x114AC0	InitStaticBitmapA_thunk	0X114AC0	identical	0	ok
+0x114AE0	InitStaticBitmapB	0X114AE0	same	0	ok
 0x1168F8	InitStaticBitmapB_thunk	0X1168F8	identical	0	ok
 0x116918	PvAllocSlotheapClearImpl__FP8SLOTHEAP	0X116918	same	0	ok
 0x116970	PvAllocCopyImpl	0X116970	same	0	ok
@@ -1845,6 +1846,7 @@ us_address	name	other_address	pair	score	addresses
 0x150728	func_00150728	0X150750	same	0	ok
 0x150780	bevy_classes_k30_cam_150780	0X1507A8	same	0	ok
 0x150938	bevy_classes_k30_cam_activate_2	0X150960	same	0	ok
+0x150A28	bevy_classes_k30_cam_update	0X150A50	same	0	ok
 0x150DE8	bevy_classes_k30_cam_reset	0X150E10	same	0	ok
 0x150E20	bevy_classes_k30_cam_set	0X150E48	same	0	ok
 0x150E60	func_00150E60	0X150E88	same	0	ok
