@@ -188,12 +188,18 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `GOAL`: a local goal layout becomes a local subclass, `struct GOAL_<address> : GOAL`, keeping its fields from 0x30 until
      the subclasses (GoalBrain, GoalAnim, GoalHit and about fifty more) get headers. 10 unmatched drafts moved at their scores.
      48 local guard layouts remain: most belong to functions no method or second reader confirms yet.
+   - Status (2026-11-11): open. Next types, in order of what they unblock: `TIMEDCALL`, `CLONESET`, `NODE` and `TAGK` (each
+     defined differently by two sources of one retail file, so 4 files cannot build whole, item 2); the goal subclasses; the
+     classes the data regions of item 3 need. Left over: 24 local `JT`-like structs, 9 Murray/Bentley copies, 48 guard layouts.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
 2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
+   Status (2026-11-11): 195 of 209 files whole, 1723 matched functions built in them; the 14 left are a tail picked up along
+   the way (details at the end of this item), and the 826 low-confidence boundaries are checked as item 3's first stage,
+   since a wrong boundary puts data in the wrong file. Item 3 is next.
    Stage 1 (2026-11-08): the constructor list at 0x2C85C0 gives 209 verified file ends (210 `_GLOBAL_$I$` wrappers, each after its
    `__static_initialization_and_destruction_0`; the linker builds the list, SN's compiler writes no `.ctors`); `modules.tsv` groupings straddle
    them (139 of 209 spans hold several modules). Stage 2: `src/memory-bez/ary.cpp` (0x116CA0-0x117030, 11 functions, two from `INCLUDE_ASM`)
