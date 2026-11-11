@@ -915,12 +915,12 @@ address	name	size	file	whole_file	symbol
 0X11A3C0	CPvDl__FP2DL	48	crout-dl/InitSl_file.cpp	crout-dl/InitSl_file.cpp	CPvDl__FP2DL
 0X11A3F8	StaticInitSlotheaps_11a3f8	308	crout-dl/InitSl_file.cpp	crout-dl/InitSl_file.cpp	StaticInitSlotheaps_11a3f8
 0X11A530	func_0011A530	32	crout-dl/InitSl_file.cpp	crout-dl/InitSl_file.cpp	func_0011A530
-0X11A550	func_0011A550	360	dl-dzg/fun_0011a550.cpp		
-0X11A6B8	ClearDzgSolution__FP3DZG	184	dzg/ClearDzgSolution__FP3DZG.cpp		
-0X11A770	EnforceDzgDz__FP3DZGP2DZ	1160	dzg/EnforceDzgDz__FP3DZGP2DZ.cpp		
-0X11AD30	SolveInequalities	344	dzg-jsg/SolveInequalities.cpp		
-0X11AE88	StaticInitSlotheaps_11ae88	308	dzg-jsg/StaticInitSlotheaps_11ae88.c		
-0X11AFC0	func_0011AFC0	32	dzg-jsg/fun_0011afc0.c		
+0X11A550	func_0011A550	360	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	func_0011A550
+0X11A6B8	ClearDzgSolution__FP3DZG	184	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	ClearDzgSolution
+0X11A770	EnforceDzgDz__FP3DZGP2DZ	1160	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	EnforceDzgDz__FP3DZGP2DZ
+0X11AD30	SolveInequalities	344	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	SolveInequalities
+0X11AE88	StaticInitSlotheaps_11ae88	308	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	StaticInitSlotheaps_11ae88
+0X11AFC0	func_0011AFC0	32	dl-dzg/dl_dzg_11a550.cpp	dl-dzg/dl_dzg_11a550.cpp	func_0011AFC0
 0X11AFE0	HashSz	96	dzg-jsg/HashSz_file.cpp	dzg-jsg/HashSz_file.cpp	HashSz
 0X11B050	StaticInitSlotheaps_11b050	308	dzg-jsg/HashSz_file.cpp	dzg-jsg/HashSz_file.cpp	StaticInitSlotheaps_11b050
 0X11B188	func_0011B188	32	dzg-jsg/HashSz_file.cpp	dzg-jsg/HashSz_file.cpp	func_0011B188
@@ -1147,9 +1147,9 @@ address	name	size	file	whole_file	symbol
 0X127068	RefEvalLambda	296	splice-eval-splice-frame/RefEvalLambda.cpp		
 0X127190	RefEvalProcBody	152	splice-eval-splice-frame/RefEvalProcBody.cpp		
 0X127228	RefEvalBegin	184	splice-eval-splice-frame/RefEvalBegin.cpp		
-0X127838	RefEval	388	splice-eval-splice-frame/RefEval.cpp		
-0X1279C0	StaticInitSpliceFrameSlotheaps	308	splice-eval-splice-frame/StaticInitSpliceFrameSlotheaps.c		
-0X127AF8	GlobalInitSpliceFrameSlotheaps	32	splice-eval-splice-frame/GlobalInitSpliceFrameSlotheaps.c		
+0X127838	RefEval	388	splice-eval-splice-frame/RefEval_file.cpp	splice-eval-splice-frame/RefEval_file.cpp	RefEval
+0X1279C0	StaticInitSpliceFrameSlotheaps	308	splice-eval-splice-frame/RefEval_file.cpp	splice-eval-splice-frame/RefEval_file.cpp	StaticInitSpliceFrameSlotheaps
+0X127AF8	GlobalInitSpliceFrameSlotheaps	32	splice-eval-splice-frame/RefEval_file.cpp	splice-eval-splice-frame/RefEval_file.cpp	GlobalInitSpliceFrameSlotheaps
 0X127B18	bevy_splice_frame_set_parent	36	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	bevy_splice_frame_set_parent
 0X127B40	CFrame_AddParent	48	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	CFrame_AddParent
 0X127B70	CFrame_RemoveParent	144	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp	CFrame_RemoveParent
@@ -2012,26 +2012,26 @@ address	name	size	file	whole_file	symbol
 0X15D880	SetEpselHint	116	emitter-font/SetEpselHint.cpp		
 0X15D8F8	FormatEpselPercent	196	emitter-font/FormatEpselPercent.cpp		
 0X15D9C0	FormatEpselTime	200	emitter-font/FormatEpselTime.cpp		
-0X15DA88	func_0015DA88	160	emitter-font/fun_0015da88.cpp		
-0X15DB28	epsel__static_initialization_and_destruction_0	308	emitter-font/epsel__static_initialization_and_destruction_0.c		
-0X15DC60	func_0015DC60	32	emitter-font/fun_0015dc60.c		
+0X15DA88	func_0015DA88	160	emitter-font/emitter_font_15da88.cpp	emitter-font/emitter_font_15da88.cpp	func_0015DA88
+0X15DB28	epsel__static_initialization_and_destruction_0	308	emitter-font/emitter_font_15da88.cpp	emitter-font/emitter_font_15da88.cpp	epsel__static_initialization_and_destruction_0
+0X15DC60	func_0015DC60	32	emitter-font/emitter_font_15da88.cpp	emitter-font/emitter_font_15da88.cpp	func_0015DC60
 0X15DC80	InitFade	88	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	InitFade
 0X15DCD8	UpdateFade	108	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	UpdateFade
 0X15DD48	DrawFade	1168	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	DrawFade
 0X15E1D8	StartFade	76	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	StartFade
 0X15E228	fade__static_initialization_and_destruction_0	308	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	fade__static_initialization_and_destruction_0
 0X15E360	func_0015E360	32	emitter-font/InitFade_file.cpp	emitter-font/InitFade_file.cpp	func_0015E360
-0X15E380	PdlFromSwOid	36	emitter-font/PdlFromSwOid.cpp		
-0X15E3A8	PdlFromSwCid	20	emitter-font/PdlFromSwCid.cpp		
-0X15E3C0	func_0015E3C0	36	emitter-font/fun_0015e3c0.cpp		
-0X15E3E8	MatchSwObject	616	emitter-font/MatchSwObject.cpp		
-0X15E650	CploFindSwObjects_thunk	36	emitter-font/CploFindSwObjects_thunk.cpp		
-0X15E938	PloFindSwObject_thunk	28	emitter-font/PloFindSwObject_thunk.cpp		
-0X15E958	PloFindSwObject	48	emitter-font/PloFindSwObject.cpp		
-0X15E988	FIsCidDerivedFrom	64	emitter-font/FIsCidDerivedFrom.cpp		
-0X15ED78	PloFindSwObjectByClass	48	emitter-font/PloFindSwObjectByClass.cpp		
-0X15EDA8	font__static_initialization_and_destruction_0	308	emitter-font/font__static_initialization_and_destruction_0.c		
-0X15EEE0	font__static_initialization_and_destruction_0_thunk	32	emitter-font/font__static_initialization_and_destruction_0_thunk.c		
+0X15E380	PdlFromSwOid	36	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PdlFromSwOid
+0X15E3A8	PdlFromSwCid	20	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PdlFromSwCid
+0X15E3C0	func_0015E3C0	36	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	func_0015E3C0
+0X15E3E8	MatchSwObject	616	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	MatchSwObject
+0X15E650	CploFindSwObjects_thunk	36	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	CploFindSwObjects_thunk
+0X15E938	PloFindSwObject_thunk	28	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PloFindSwObject_thunk
+0X15E958	PloFindSwObject	48	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PloFindSwObject
+0X15E988	FIsCidDerivedFrom	64	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	FIsCidDerivedFrom
+0X15ED78	PloFindSwObjectByClass	48	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PloFindSwObjectByClass
+0X15EDA8	font__static_initialization_and_destruction_0	308	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	font__static_initialization_and_destruction_0
+0X15EEE0	font__static_initialization_and_destruction_0_thunk	32	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	font__static_initialization_and_destruction_0_thunk
 0X15EF00	StartupFont	44	emitter-font/StartupFont.cpp		
 0X15EF30	InitFonts	112	emitter-font/InitFonts.cpp		
 0X15EFA0	PfontFromCh	96	emitter-font/PfontFromCh.cpp		
@@ -3498,9 +3498,9 @@ address	name	size	file	whole_file	symbol
 0X1D6480	AllocRenderTreeNode	132	new_1d54b8/InitRenderNodeStack_file.cpp	new_1d54b8/InitRenderNodeStack_file.cpp	AllocRenderTreeNode
 0X1D66F0	StaticInitSlotheaps_1d66f0	308	new_1d54b8/InitRenderNodeStack_file.cpp	new_1d54b8/InitRenderNodeStack_file.cpp	StaticInitSlotheaps_1d66f0
 0X1D6828	func_001D6828	32	new_1d54b8/InitRenderNodeStack_file.cpp	new_1d54b8/InitRenderNodeStack_file.cpp	func_001D6828
-0X1D6A90	InitLaunch	112	vec-coin/InitLaunch.cpp		
-0X1D70E0	StaticInitSlotheaps_1d70e0	308	vec-coin/StaticInitSlotheaps_1d70e0.c		
-0X1D7218	func_001D7218	32	vec-coin/fun_001d7218.c		
+0X1D6A90	InitLaunch	112	vec-coin/InitLaunch_file.cpp	vec-coin/InitLaunch_file.cpp	InitLaunch
+0X1D70E0	StaticInitSlotheaps_1d70e0	308	vec-coin/InitLaunch_file.cpp	vec-coin/InitLaunch_file.cpp	StaticInitSlotheaps_1d70e0
+0X1D7218	func_001D7218	32	vec-coin/InitLaunch_file.cpp	vec-coin/InitLaunch_file.cpp	func_001D7218
 0X1D7238	InitHub	44	coin/InitHub_file.cpp	coin/InitHub_file.cpp	InitHub
 0X1D7268	PostHubLoad	60	coin/InitHub_file.cpp	coin/InitHub_file.cpp	PostHubLoad
 0X1D7418	SetHubPlayable	104	coin/InitHub_file.cpp	coin/InitHub_file.cpp	SetHubPlayable
@@ -4877,11 +4877,11 @@ address	name	size	file	whole_file	symbol
 0X230380	FXfKindDynamic	32	alo-lo/FXfKindDynamic.cpp		
 0X230598	WakeXf	148	alo-lo/WakeXf.cpp		
 0X230630	SleepXf	224	alo-lo/SleepXf.cpp		
-0X2309E8	PredictXfTransform	172	alo-lo/PredictXfTransform.cpp		
-0X230CD0	func_00230CD0	32	alo-lo/fun_00230cd0.cpp		
-0X230CF0	SnapAsega	696	alo-lo/SnapAsega.cpp		
-0X230FA8	alo__static_initialization_and_destruction_0	308	alo-lo/alo__static_initialization_and_destruction_0.c		
-0X2310E0	func_002310E0	32	alo-lo/fun_002310e0.c		
+0X2309E8	PredictXfTransform	172	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	PredictXfTransform
+0X230CD0	func_00230CD0	32	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	func_00230CD0
+0X230CF0	SnapAsega	696	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	SnapAsega
+0X230FA8	alo__static_initialization_and_destruction_0	308	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	alo__static_initialization_and_destruction_0
+0X2310E0	func_002310E0	32	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	func_002310E0
 0X231100	InitXfm	112	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	InitXfm
 0X231170	LoadXfmFromBrx	60	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	LoadXfmFromBrx
 0X2311B0	CloneXfm	112	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	CloneXfm

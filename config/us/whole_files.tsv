@@ -12,6 +12,7 @@ start	end	file
 0x119DA0	0x119EF8	crout-dl/crout_dl_119da0.c
 0x119EF8	0x11A050	crout-dl/crout_dl_119ef8.c
 0x11A050	0x11A550	crout-dl/InitSl_file.cpp
+0x11A550	0x11AFE0	dl-dzg/dl_dzg_11a550.cpp
 0x11AFE0	0x11B1A8	dzg-jsg/HashSz_file.cpp
 0x11B1A8	0x11B300	dzg-jsg/dzg_jsg_11b1a8.c
 0x11B300	0x11CCA8	jsg/FInvertMatrix3_file.cpp
@@ -20,6 +21,7 @@ start	end	file
 0x1258F0	0x126188	splice-bif-splice-eval/splice_bif_splice_eval_1258f0.cpp
 0x126188	0x1262E0	splice-bif-splice-eval/splice_bif_splice_eval_126188.c
 0x1262E0	0x126438	splice-bif-splice-eval/splice_bif_splice_eval_1262e0.c
+0x127838	0x127B18	splice-eval-splice-frame/RefEval_file.cpp
 0x127B18	0x128138	splice-eval-splice-frame/bevy_splice_frame_set_parent_file.cpp
 0x1281B0	0x128B60	new_127e90/bevy_splice_eval_reset_file.cpp
 0x128B60	0x128CB8	new_127e90/new_127e90_128b60.c
@@ -69,7 +71,9 @@ start	end	file
 0x157FA0	0x1585D8	dmas-dzg/dmas_dzg_157fa0.c
 0x1585D8	0x159118	dmas-dzg/InitDzg_file.cpp
 0x159118	0x15CD68	dzg-emitter/InitEmitb_file.cpp
+0x15DA88	0x15DC80	emitter-font/emitter_font_15da88.cpp
 0x15DC80	0x15E380	emitter-font/InitFade_file.cpp
+0x15E380	0x15EF00	emitter-font/PdlFromSwOid_file.cpp
 0x15F8A8	0x1603B8	font/PglyffFromCh_file.cpp
 0x1603B8	0x1607A0	new_160260/LoadXfMirrors_file.cpp
 0x160F98	0x1613A8	frm-splice-frame/frm_splice_frame_160f98.c
@@ -129,6 +133,7 @@ start	end	file
 0x1CD5F0	0x1CDCD0	game/OnGameLoad_file.cpp
 0x1D0BF8	0x1D1370	rip/FBounceLeaf_file.cpp
 0x1D57A8	0x1D6848	new_1d54b8/InitRenderNodeStack_file.cpp
+0x1D6848	0x1D7238	vec-coin/InitLaunch_file.cpp
 0x1D7238	0x1D7A30	coin/InitHub_file.cpp
 0x1D7A30	0x1D7B88	new_1d7780/save_file.c
 0x1D84B0	0x1D93D8	new_1d7780/SnapshotSaveData_file.cpp
@@ -170,4 +175,5 @@ start	end	file
 0x228B48	0x229EF0	break-mat/InitBrk_file.cpp
 0x22A908	0x22B040	so-wr/so_wr_22a908.c
 0x22B040	0x22B720	so-wr/so_wr_22b040.cpp
+0x230710	0x231100	alo-lo/PredictXfTransform_file.cpp
 0x231100	0x2319E8	alo-lo/InitXfm_file.cpp

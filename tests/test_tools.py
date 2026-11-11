@@ -570,6 +570,39 @@ class WholeFileRecordTests(unittest.TestCase):
         _, outside = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
         self.assertEqual(outside, {'Gamma': 0x20})
 
+    def whole_object_with_rodata(self):
+        import tempfile
+        folder = tempfile.mkdtemp()
+        self.addCleanup(__import__('shutil').rmtree, folder)
+        path = os.path.join(folder, 'whole.o')
+        # Beta reads .rodata through a hi/lo pair; .rodata holds a jump table entry into Beta (0x18) and one into Gamma (0x24)
+        symbols = [('', 0, 0, 3), ('', 0, 0, 3, 6), ('Alpha', 0x0, 16, 2), ('Beta', 0x10, 16, 2), ('Gamma', 0x20, 16, 2)]
+        code = b''.join(value.to_bytes(4, 'little') for value in range(1, 13))
+        rodata = (b''.join(value.to_bytes(4, 'little') for value in (0x18, 0x24, 0x3F800000, 0)), 16, [(0x0, 1, 2), (0x4, 1, 2)])
+        make_whole_files.write_object(path, code, symbols, 6, [(0x14, 2, 5), (0x18, 2, 6)], rodata=rodata)
+        return folder, path
+
+    def test_cut_points_a_rodata_read_at_the_carried_rodata(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object_with_rodata()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            elf = ELFFile(handle)
+            symbols = elf.get_section_by_name('.symtab')
+            found = [elf.get_section(symbols.get_symbol(relocation['r_info_sym'])['st_shndx']).name
+                     for relocation in elf.get_section_by_name('.rel.text').iter_relocations()]
+        self.assertEqual(found, ['.rodata', '.rodata'])
+
+    def test_cut_rebases_the_jump_table_entry_into_the_function_only(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object_with_rodata()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            elf = ELFFile(handle)
+            words = [int.from_bytes(elf.get_section_by_name('.rodata').data()[at:at + 4], 'little') for at in (0, 4)]
+            relocated = [relocation['r_offset'] for relocation in elf.get_section_by_name('.rel.rodata').iter_relocations()]
+        self.assertEqual((words, relocated), ([0x8, 0x24], [0x0]))
+
     def test_cut_at_no_function_raises(self):
         folder, path = self.whole_object()
         with self.assertRaises(ValueError):
