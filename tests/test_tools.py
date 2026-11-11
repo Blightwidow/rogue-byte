@@ -1949,8 +1949,17 @@ class DataDefinitionTests(unittest.TestCase):
     def test_a_definition_without_the_marker_is_banned(self):
         self.assertEqual(len(self.kinds('const float g_x = 1.5f;\n')), 1)
 
-    def test_a_large_typed_table_with_the_marker_is_allowed(self):
-        self.assertEqual(self.kinds('// data-ok: table\nconst int g_t[4000] = {0};\n'), [])
+    def test_a_large_table_typed_from_its_reader_is_allowed(self):
+        self.assertEqual(self.kinds('// data-ok: typed from PeopidFind\nconst int g_t[4000] = {0};\n'), [])
+
+    def test_a_long_plain_word_array_without_its_reader_is_banned(self):
+        self.assertIn('a dump in words', self.kinds('// data-ok: table\nconst unsigned int g_t[65] = {0};\n')[0])
+
+    def test_a_long_string_is_not_a_dump(self):
+        self.assertEqual(self.kinds('// data-ok: message\nconst char g_s[80] = "' + 'x' * 79 + '";\n'), [])
+
+    def test_an_extern_definition_is_checked(self):
+        self.assertEqual(len(self.kinds('extern const float g_x = 1.5f;\n')), 1)
 
     def test_a_long_byte_array_is_banned_as_a_dump(self):
         self.assertIn('a dump, not typed data', self.kinds('// data-ok: bytes\nconst unsigned char g_b[65] = {0};\n')[0])
@@ -1998,6 +2007,12 @@ class RodataFileTests(unittest.TestCase):
         label = {'name': 'D_002A0000', 'address': 0x2A0000, 'items': [(0x2A0000 + 4 * index, '.word', '0x00000001') for index in range(65)]}
         text, why = self.module.make_source('rodata/x', 0x2A0000, 260, {}, set(), labels=[label], section='rodata')
         self.assertEqual((text, why), (None, 'D_002A0000: a plain word array over 64 elements needs a type from the code that reads it'))
+
+    def test_a_long_byte_array_is_untyped(self):
+        self.assertEqual(self.module.untyped([('byte', ['0'] * 65, 65, set())]), 'a byte array over 64 elements is a dump')
+
+    def test_an_address_table_is_typed(self):
+        self.assertIsNone(self.module.untyped([('w4', ['0'] * 100, 400, {'Foo'})]))
 
     def test_an_owned_label_cuts_the_groups(self):
         labels = [{'name': f'D_{address:08X}', 'address': address, 'items': [(address, '.float', '1.0')]} for address in (0x2A0000, 0x2A0004, 0x2A0008)]

@@ -247,13 +247,16 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    (this compiler places them in `.rodata`; every symbol is made local, the names resolve through the link script as for
    `.data`) and leaves out what a compiled object may own (`build/image/owned_rodata.tsv`, written by `link_image.py`: a
    function's or a whole file's literals and jump tables), the jump tables of unmatched functions (code labels) and plain word
-   arrays over 64 elements, which need a type from the code that reads them. 151 of 176 groups prove (111,650 bytes, the
-   96 KB table at 0x262380 among them, typed by hand from its reader `PeopidFind`: `include/splopt.h`, 12,010
-   `SPLOPT`s in 199 class runs indexed by `ARYSPLOPT RO_00279AD0[199]`; a file carrying `make_data_files.HAND_TYPED` is
-   kept when the tool rewrites); data 20.36% -> 31.39%. Left in `.rodata`: 171 KB of plain word tables
-   (`D_0027A790` 128 KB and `D_0029A8D0` 32 KB in `puffer-slotheap`, nothing reads them by name: find their readers to type
-   them), 151 jump tables of unmatched functions (11 KB), 25 groups where Splat's labels split a word (the compiler pads
-   the first label's type), and the 9 KB compiled objects own.
+   arrays over 64 elements, which need a type from the code that reads them. Ruled 2026-11-11 (Theo): a plain word array over
+   64 elements is typed data only with `// data-ok: typed from <reader>` (`check_source.py`, run over every data file by
+   `make repo-check`); the generator now leaves such a label out, and a byte array over 64 elements other than a string, and
+   cuts its group around it. The 96 KB table at 0x262380 is typed by hand from its reader `PeopidFind`: `include/splopt.h`,
+   12,010 `SPLOPT`s in 199 class runs indexed by `ARYSPLOPT RO_00279AD0[199]` (a file carrying `make_data_files.HAND_TYPED`
+   is kept when the tool rewrites). Data 20.36% -> 31.91% (322,869 bytes: `.data` 170,132 of 199,088 after 22 untyped word
+   arrays, 27 KB, went back to assembly; `.rodata` 144,434 in 159 of 179 groups). Left: plain word arrays waiting for their
+   readers (22 in `.data`, 27 KB; 5 in `.rodata`, 136 KB, among them `D_0027A790` 128 KB in `puffer-slotheap`, which nothing
+   reads by name), 151 jump tables of unmatched functions (11 KB), 6 byte tables (2 KB, SDK lookup tables), 20 groups where
+   Splat's labels split a word, and the 9 KB compiled objects own.
 4. **Port-facing metadata, no code change.** A layer column in `src/MANIFEST.tsv` and the registry (game logic, engine, platform:
    GS, VIF and DMA, IOP, memory card, pad, VU microcode); JSON exports of symbols, the class tree, vtable layouts and struct offsets
    generated from the headers; hardware access behind named macros or inlines only where retail's bytes are identical. Depends on 1.

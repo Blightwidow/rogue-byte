@@ -68,7 +68,7 @@ counts as matched.
   size the frame is not allowed.
 - **Also not allowed**, because their only purpose is to steer the compiler: a callee declared with a return type or arguments it
   does not have, a variable that exists only to move a register (a typed local bound to a value the code reads and then uses is ordinary code), a local that only holds a global's address so a constant does not
-  fold, and source that defines game data without meeting docs/contributing/exceptions.md ("Game data defined in source": a global is defined in C only where its initial value reproduces retail's bytes at its address; the rest stays an `extern` at retail's address). The rulings are in
+  fold, and source that defines game data without meeting docs/contributing/exceptions.md ("Game data defined in source": a global is defined in C only where its initial value reproduces retail's bytes at its address, typed: no byte dump and no plain word array over 64 elements unless a reader shows its type, `// data-ok: typed from <reader>`; the rest stays an `extern` at retail's address). The rulings are in
   docs/contributing/matching.md ("Rulings"); docs/contributing/exceptions.md lists what is allowed and why.
 - **One flag set per source file** and one assembler for all game code, never per function or ad hoc per attempt: SN's `ps2eeas` 1.9.25.758 with its one short-loop constant
   changed from 6 to 5 (`tools/ps2eeas/Ps2EeAs-loop5.exe`, made by `setup.sh` from the pinned download, never committed; retail pads every short

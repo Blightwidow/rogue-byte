@@ -162,6 +162,20 @@ def build_runs(label, end, names, functions):
 
 HAND_TYPED = 'Typed by hand (make_data_files.py keeps this file)'
 WORD_ARRAY_LIMIT = 64  # as BYTE_DUMP_LIMIT in scripts/matching/check_source.py, for a run of plain `unsigned int`
+BYTE_DUMP_LIMIT = 64  # as in scripts/matching/check_source.py: a longer byte array (not a string) is a dump
+
+
+def untyped(runs):
+    """Why a label's runs would be a dump rather than typed data (docs/contributing/exceptions.md "Game data defined in source"), or None: a
+    plain word array over WORD_ARRAY_LIMIT elements (its type has to come from the code that reads it) or a byte array over BYTE_DUMP_LIMIT."""
+    for kind, elements, size, targets in runs:
+        if kind == 'w4' and not targets and len(elements) > WORD_ARRAY_LIMIT:
+            return f'a plain word array over {WORD_ARRAY_LIMIT} elements needs a type from the code that reads it'
+        if kind == 'byte' and len(elements) > BYTE_DUMP_LIMIT:
+            return f'a byte array over {BYTE_DUMP_LIMIT} elements is a dump'
+    return None
+
+
 CTYPE = {'w4': 'unsigned int', 'float': 'float', 'short': 'short', 'byte': 'unsigned char', 'str': 'char'}
 
 
@@ -198,7 +212,7 @@ def groups_of(name, start, size, names, functions, owned=None):
         end = labels[index + 1]['address'] if index + 1 < len(labels) else start + size
         runs = build_runs(label, end, names, functions)
         if owned is not None:
-            why = 'owned by a compiled object' if any(low < end and label['address'] < high for low, high in owned) else (runs if isinstance(runs, str) else None)
+            why = 'owned by a compiled object' if any(low < end and label['address'] < high for low, high in owned) else (runs if isinstance(runs, str) else untyped(runs))
             if why:
                 skipped.append((label['name'], label['address'], end - label['address'], why))
                 if current:
@@ -255,11 +269,8 @@ def make_source(name, start, size, names, functions, allow_pointers=True, labels
             merged = [elements for run in runs for elements in run[1]]
             runs = [['w4', merged, sum(run[2] for run in runs), set().union(*(run[3] for run in runs))]]
         marker = f"// data-ok: retail's bytes at {label['address']:#X}"
-        if constant and any(run[0] == 'w4' and not run[3] and len(run[1]) > WORD_ARRAY_LIMIT for run in runs):
-            return None, f'{label["name"]}: a plain word array over {WORD_ARRAY_LIMIT} elements needs a type from the code that reads it'
-        if any(run[0] == 'w4' and not run[3] and len(run[1]) > WORD_ARRAY_LIMIT for run in runs):  # not ruled yet: see the TODO text
-            marker = ('// TODO: a plain word array over %d elements is not ruled as typed data yet (docs/contributing/exceptions.md "Game data defined in\n'
-                      '// source"); its type is Splat\'s guess, not recovered from the code that reads it\n' % WORD_ARRAY_LIMIT) + marker
+        if untyped(runs):
+            return None, f'{label["name"]}: {untyped(runs)}'
         if len(runs) == 1:
             declaration, initializer = member(runs[0][0], runs[0][1], runs[0][2], label['name'], has_pointer)
             if constant:
@@ -345,7 +356,7 @@ def main():
     labels, functions = known_names()
     names = {name: address for address, name in labels.items()}
     chosen = [piece for piece in pieces(arguments.section) if not arguments.only or piece[0] == arguments.only]
-    owned = owned_ranges() if arguments.section == 'rodata' else None
+    owned = owned_ranges() if arguments.section == 'rodata' else []  # .data: no compiled object owns any; the untyped labels are still left out
     skipped_labels = []
     if arguments.list:
         for name, start, size in chosen:
@@ -358,9 +369,8 @@ def main():
         groups = groups_of(name, start, size, names, functions, owned)
         if isinstance(groups, str):
             return [((name, start, size), None, groups)]
-        if owned is not None:
-            groups, skipped = groups
-            skipped_labels.extend(skipped)
+        groups, skipped = groups
+        skipped_labels.extend(skipped)
         found = []
         for origin, length, labels in groups:
             file = name if len(groups) == 1 and origin == start else f'{name}_{origin:06x}'
