@@ -1600,6 +1600,7 @@ address	name	size	file	whole_file	symbol
 0X143BD8	func_00143BD8	156	new_13f888/fun_00143bd8.cpp		
 0X143C78	func_00143C78	128	new_13f888/fun_00143c78.cpp		
 0X143CF8	JT_TranslateToPos	40	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_TranslateToPos
+0X143D20	FJtLandsWithin	196	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	FJtLandsWithin
 0X143DE8	func_00143DE8	244	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	func_00143DE8
 0X143EE0	JT_StartPose	280	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_StartPose
 0X143FF8	JT_EndPose	64	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_EndPose
@@ -2552,6 +2553,7 @@ address	name	size	file	whole_file	symbol
 0X183A08	CloneHbsk__FP4HBSKT0	72	hide/CloneHbsk__FP4HBSKT0.cpp		
 0X183A50	FIgnoreHbskIntersection	172	hide/FIgnoreHbskIntersection.cpp		
 0X183B00	PresetHbskAccel__FP4HBSKf	124	hide/PresetHbskAccel__FP4HBSKf.cpp		
+0X183B80	SetHbskHbsks	644	hide-splice-gc/SetHbskHbsks.cpp		
 0X183E08	FAbsorbHbskWkr	252	hide-splice-gc/FAbsorbHbskWkr.cpp		
 0X183F08	func_00183F08	68	hide-splice-gc/fun_00183f08.c		
 0X183F50	func_00183F50	100	hide-splice-gc/fun_00183f50.cpp		
@@ -4164,6 +4166,7 @@ address	name	size	file	whole_file	symbol
 0X1FC740	ApplyStreamAmbParams	308	new_1fbf20/ApplyStreamAmbParams.cpp		
 0X1FC878	func_001FC878	304	new_1fbf20/fun_001fc878.cpp		
 0X1FC9A8	func_001FC9A8	8	new_1fbf20/fun_001fc9a8.c		
+0X1FC9B0	UpdateStreamAmbPositional	504	new_1fbf20/UpdateStreamAmbPositional.cpp		
 0X1FCBA8	OnStreamAmbStarted	132	new_1fbf20/OnStreamAmbStarted.cpp		
 0X1FCC30	func_001FCC30	96	new_1fbf20/fun_001fcc30.cpp		
 0X1FCC90	StreamAmb_AddRef	16	new_1fbf20/StreamAmb_AddRef.c		

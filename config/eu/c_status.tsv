@@ -1600,6 +1600,7 @@ us_address	name	other_address	pair	score	addresses
 0x143BD8	func_00143BD8	0X143C18	same	0	ok
 0x143C78	func_00143C78	0X143CB8	same	0	ok
 0x143CF8	JT_TranslateToPos	0X143D38	same	0	ok
+0x143D20	FJtLandsWithin	0X143D60	same	0	ok
 0x143DE8	func_00143DE8	0X143E28	same	0	ok
 0x143EE0	JT_StartPose	0X143F20	same	0	ok
 0x143FF8	JT_EndPose	0X144038	same	0	ok
@@ -2552,6 +2553,7 @@ us_address	name	other_address	pair	score	addresses
 0x183A08	CloneHbsk__FP4HBSKT0	0X183990	same	0	ok
 0x183A50	FIgnoreHbskIntersection	0X1839D8	same	0	ok
 0x183B00	PresetHbskAccel__FP4HBSKf	0X183A88	same	0	ok
+0x183B80	SetHbskHbsks	0X183B08	same	0	ok
 0x183E08	FAbsorbHbskWkr	0X183D90	same	0	ok
 0x183F08	func_00183F08	0X183E90	same	0	ok
 0x183F50	func_00183F50	0X183ED8	same	0	ok
@@ -4164,6 +4166,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FC740	ApplyStreamAmbParams	0X1FCF00	same	0	ok
 0x1FC878	func_001FC878	0X1FD038	same	0	ok
 0x1FC9A8	func_001FC9A8	0X1FD168	gap	0	ok
+0x1FC9B0	UpdateStreamAmbPositional	0X1FD170	same	0	ok
 0x1FCBA8	OnStreamAmbStarted	0X1FD368	same	0	ok
 0x1FCC30	func_001FCC30	0X1FD3F0	same	0	ok
 0x1FCC90	StreamAmb_AddRef	0X1FD450	gap	0	ok

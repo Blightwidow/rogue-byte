@@ -5,7 +5,7 @@
 #include "sly2.h"
 #include "jt.h"
 #include "m2c_macros.h"
-#include "include_asm.h"
+#include "ps2inline.h"
 
 extern "C" {
 typedef struct JT_VTABLE {
@@ -51,7 +51,26 @@ void JT_TranslateToPos(JT_143CF8 *jt) {
 }
 }
 
-INCLUDE_ASM(0X143D20);
+struct PHYS { char pad[0x88]; float gGravity; };
+
+extern "C" int FFindSurfaceAlongUp(QW *, int, int, float, float);
+
+QW PosLoWorld(void *);
+
+extern "C" int FJtLandsWithin(JT *pjt, float t)
+{
+    float z = pjt->field_0x248;
+    float vz = LaneZInGeneralRegister((pjt->GetVelocityVec()));
+    float half = t * 0.5f;
+    float dz = t * vz;
+    float acc = t * half * pjt->pphys->gGravity;
+    z = z + dz;
+    z = z + acc;
+    if (0.0f < z)
+        return 0;
+    QW pos = PosLoWorld(pjt);
+    return FFindSurfaceAlongUp(&pos, 0, 0, 0.0f, z);
+}
 
 struct VT {
     char p0[8]; short d8; short i8; void (*f8)(void *);
