@@ -7301,3 +7301,6 @@ func_00239558 = 0x00239558; // type:func source:boundary size:0x40
 func_001C7B10 = 0x001C7B10; // type:func source:boundary size:0x8
 RO_002C3DF0 = 0x002C3DF0; // source:provisional
 D_451E80 = 0x00451E80; // source:provisional (read by func_00252608)
+D_2DDF40 = 0x002DDF40; // source:provisional (read by FRenderRipPosMat)
+D_002BF3D4 = 0x002BF3D4; // source:provisional (read by bevy_player_p5_states_18bce0)
+D_002BF3D8 = 0x002BF3D8; // source:provisional (read by bevy_player_p5_states_18bce0)

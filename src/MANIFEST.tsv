@@ -1899,6 +1899,7 @@ address	name	size	file	whole_file	symbol
 0X154080	SetSensorEntryState	216	rip-game/SetSensorEntryState.cpp		
 0X154158	NGetSensorLoState	40	game/NGetSensorLoState.cpp		
 0X154180	PentryFindSensorLo	84	new_154180/PentryFindSensorLo.cpp		
+0X1541D8	NNextSensorState	848	new_154180/NNextSensorState.cpp		
 0X154528	FFilterSensorBasic	60	new_154180/FFilterSensorBasic.cpp		
 0X154568	FFilterSensorSight	132	new_154180/FFilterSensorSight.cpp		
 0X154908	StaticInitSensorSight	308	new_154180/StaticInitSensorSight_file.c	new_154180/StaticInitSensorSight_file.c	StaticInitSensorSight
@@ -3427,6 +3428,7 @@ address	name	size	file	whole_file	symbol
 0X1CEA88	TouchRip__FP3RIPi	32	rip/TouchRip__FP3RIPi.cpp		
 0X1CEAA8	ForceRipFade__FP3RIPf	96	rip/ForceRipFade__FP3RIPf.c		
 0X1CF268	UpdateRip__FP3RIPf	204	rip/UpdateRip__FP3RIPf.cpp		
+0X1CF338	FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3	476	rip/FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3.cpp		
 0X1CF518	RenderRip	84	rip/RenderRip.cpp		
 0X1CF570	OnRipRemoveNop	8	rip/OnRipRemoveNop.c		
 0X1CF578	SubscribeRipObject	72	rip/SubscribeRipObject.c		

@@ -69,6 +69,15 @@ static inline QW JoinLowDoublewords(float high, QW low)
     return joined;
 }
 
+/* mfc1 into a quadword: a float in the low word of a general register, from where GCC moves it to a VU0 register (qmtc2) or stores it
+   (FRenderRipPosMat; the scale of PresetJtAccelPipe and UpdateMurrayCarry) */
+static inline QW QuadFromFloat(float value)
+{
+    QW quad;
+    asm("mfc1 %0, %1" : "=r"(quad) : "f"(value));
+    return quad;
+}
+
 /* sync: a memory barrier, volatile so that it stays where it is */
 static inline void MemoryBarrier(void)
 {

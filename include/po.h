@@ -11,7 +11,7 @@ struct JOY;
 
 struct PO : SO {
     virtual int FInvulnerable(int grf); /* 76: FInvulnerablePo, FInvulnerableJt, FInvulnerableBentley, FInvulnerableMurray; UpdateGuardDamage passes the damage's flags */
-    virtual void Slot77();              /* 77: func_001C3ED0 */
+    virtual int NAlertLevel();          /* 77: func_001C3ED0 (PO), NGuardAlertLevel (STEPGUARD); NNextSensorState reads it */
     virtual void OnActive();            /* 78: OnPoActive, JT_OnPoActive */
     virtual void SetPlayable();         /* 79: SetPoPlayable */
     virtual void FIsAvailable();        /* 80: func_001C41B8, JT_FIsPoAvailable */

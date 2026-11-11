@@ -1899,6 +1899,7 @@ us_address	name	other_address	pair	score	addresses
 0x154080	SetSensorEntryState	0X1540A8	same	0	ok
 0x154158	NGetSensorLoState	0X154180	same	0	ok
 0x154180	PentryFindSensorLo	0X1541A8	identical	0	ok
+0x1541D8	NNextSensorState	0X154200	same	0	ok
 0x154528	FFilterSensorBasic	0X154550	same	0	ok
 0x154568	FFilterSensorSight	0X154590	identical	0	ok
 0x154908	StaticInitSensorSight	0X154930	same	0	ok
@@ -3427,6 +3428,7 @@ us_address	name	other_address	pair	score	addresses
 0x1CEA88	TouchRip__FP3RIPi	0X1CECF8	same	0	ok
 0x1CEAA8	ForceRipFade__FP3RIPf	0X1CED18	same	0	ok
 0x1CF268	UpdateRip__FP3RIPf	0X1CF4D8	same	0	ok
+0x1CF338	FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3	0X1CF5A8	same	0	ok
 0x1CF518	RenderRip	0X1CF788	same	0	ok
 0x1CF570	OnRipRemoveNop	0X1CF7E0	gap	0	ok
 0x1CF578	SubscribeRipObject	0X1CF7E8	same	0	ok
