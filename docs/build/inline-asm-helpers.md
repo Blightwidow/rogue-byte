@@ -1,6 +1,6 @@
 # Blockers that are compiled C: what sly1-decomp found and what it means here
 
-Written 2026-11-08. Status: **not adopted**. Today's rule stays in [AGENTS.md](../../AGENTS.md) and [vu0-mmi.md](vu0-mmi.md) until the
+Written 2026-11-08; pilot 2026-11-11 (below). Status: **not adopted**. Today's rule stays in [AGENTS.md](../../AGENTS.md) and [vu0-mmi.md](vu0-mmi.md) until the
 steps in "What we need to do" are done. This page records the issue, how the two projects differ, and why the roadmap carries it.
 
 ## The issue
@@ -88,6 +88,41 @@ The roadmap lists this as a step we will need to take. Order:
 6. **PAL.** Run `make pal` after each batch; commit `config/eu/` and `progress/eu/report.json`.
 
 Until step 2 is done, no function may use inline asm, and the memory note about lane-move asm being provisional still applies.
+
+## Pilot (2026-11-11, step 1)
+
+Ten framed blockers at 2% or less special instructions, about 12 compiles each by one worker per two functions (scratch only;
+nothing landed). Helpers were `static inline` wrappers of the instruction the compiler cannot emit, generic and reusable, no
+register pins. Plain C gives none of these instructions: a vector returned by value as a struct comes back through memory, a
+128-bit shift is "unsupported wide integer operation", and a union goes through the stack.
+
+| Function | Special | Before | Pilot | What is left |
+| :--- | :--- | ---: | ---: | :--- |
+| `func_001430C8` | `prot3w` | (none) | **0** | |
+| `func_00252608` (SDK) | `sync` | (none) | 0 instructions, 2 link words | a data symbol (`D_451E80`) missing from `symbol_addrs.txt`; needs the Sony compiler (not in `sony_gcc29.txt`) |
+| `UpdateRootSprite` | `prot3w` | 2 | 2 | one scheduling swap; the `prot3w` sits right only with a `"memory"` clobber (4 without) |
+| `UpdateGuardDamage` | `pextuw` | 75 | 2 | two instructions in the wrong order (the combined lane helper keeps `pextuw` and `mtc1` together) |
+| `FJtLandsWithin` | `pextuw` | 33 | 7 | FP register choice of a constant and the lane |
+| `Mount_Update` | `pextlw`, `pcpyld` | 59 | 23 | scheduling, two `mfc1` the compiler merges |
+| `func_001C0B50` | `pextuw` | (none) | 28 | loop shape, register allocation |
+| `UpdateJtWater` | `pextuw` | 51 | 33 | loop-invariant registers, one extra move |
+| `bevy_physics_motor_2048c8` | `pextuw` | 72 | 57 | register allocation, loop strength reduction |
+| `PredictAsegEffect` | `lqc2`, `vadd`, `sqc2` | 132 | 80 | frame size (two spilled addresses), register allocation |
+
+Findings:
+
+- In all ten, the helpers reproduce retail's special instructions exactly, in place. Every remaining difference is the compiler's
+  own register allocation and scheduling, the same kind of work as the open near misses. The audit's premise (these are compiled C)
+  holds for all ten.
+- They are not cheap: 1 of 10 at 0 (2 counting the SDK one, whose instructions all match). The plan's decision rule ("if most reach
+  score 0") is not met at this effort.
+- One instruction per helper works better than a pair: `LaneX` (`mtc1`) and `RotateWords3` (`prot3w`) as separate helpers let
+  the scheduler interleave and gave the match; a combined `prot3w`+`mtc1` or `pextuw`+`mtc1` helper fixes their order.
+- Helpers used: `LaneZ` (`pextuw`+`mtc1`), `LaneX` (`mtc1`), `RotateWords3` (`prot3w`), `InterleaveLowWords` (`pextlw`),
+  `JoinLowDoublewords` (`pcpyld`), `VectorAdd` (`vadd.xyzw`, `"j"` operands, the VU0 flag), `MemoryBarrier` (`sync`, volatile).
+- Rulings a rule change would need: whether a `"memory"` clobber on a non-`sync` helper is allowed (it acts as a barrier); whether
+  `sync`/`ei` helpers may be volatile.
+- Side findings: `po.h` slot 76 (`FInvulnerable`) takes an `int` argument retail passes; `func_00252608` belongs on the Sony compiler list.
 
 ## Open questions
 
