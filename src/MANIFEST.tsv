@@ -2631,6 +2631,7 @@ address	name	size	file	whole_file	symbol
 0X18A238	func_0018A238	64	jt-alo/fun_0018a238.c		
 0X18A278	ProjectJtTransform	100	jt-alo/ProjectJtTransform.cpp		
 0X18A2E0	UpdateJtBounds	108	jt-alo/UpdateJtBounds.cpp		
+0X18A350	func_0018A350	212	jt-alo/fun_0018a350.cpp		
 0X18A428	func_0018A428	192	jt-alo/fun_0018a428.cpp		
 0X18B2C0	UpdateJtBinocInput	132	jt-alo/UpdateJtBinocInput.cpp		
 0X18C060	BindJtStepAseg	188	jt-alo/BindJtStepAseg.cpp		
@@ -3456,6 +3457,7 @@ address	name	size	file	whole_file	symbol
 0X1D1940	OnVehicleActive	100	rip-rumble/OnVehicleActive.c		
 0X1D2150	func_001D2150	240	rip-rumble/fun_001d2150.cpp		
 0X1D2240	func_001D2240	144	rip-rumble/fun_001d2240.cpp		
+0X1D2420	func_001D2420	108	rip-rumble/fun_001d2420.cpp		
 0X1D2DD0	func_001D2DD0	68	rip-rumble/fun_001d2dd0.cpp		
 0X1D3E48	AddVehicleCustomXps	228	rip-rumble/AddVehicleCustomXps.cpp		
 0X1D3F30	NotifyVehicleXpEnded	120	rip-rumble/NotifyVehicleXpEnded.cpp		
@@ -3904,6 +3906,7 @@ address	name	size	file	whole_file	symbol
 0X1EF6F8	StaticInitSkySlotheaps	308	shdanim-sm/GoalStack_Init_file.cpp	shdanim-sm/GoalStack_Init_file.cpp	StaticInitSkySlotheaps
 0X1EF830	func_001EF830	32	shdanim-sm/GoalStack_Init_file.cpp	shdanim-sm/GoalStack_Init_file.cpp	func_001EF830
 0X1EF850	func_001EF850	116	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	func_001EF850
+0X1EF8C8	bevy_gfx_screen_C2d9500_v15	108	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	bevy_gfx_screen_C2d9500_v15
 0X1EF938	StaticInitSmSlotheaps	308	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	StaticInitSmSlotheaps
 0X1EFA70	func_001EFA70	32	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	func_001EFA70
 0X1EFA90	InitSm	48	shdanim-sm/InitSm_file.cpp	shdanim-sm/InitSm_file.cpp	InitSm
@@ -4463,6 +4466,7 @@ address	name	size	file	whole_file	symbol
 0X20D1A0	EnableFallCheck	12	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	EnableFallCheck
 0X20D1B0	func_0020D1B0	24	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	func_0020D1B0
 0X20D1C8	func_0020D1C8	44	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	func_0020D1C8
+0X20D1F8	UpdateGuardDamage	456	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	UpdateGuardDamage
 0X20D3C0	SetGuardDamageState	156	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	SetGuardDamageState
 0X20D460	SetGuardDamageSource	8	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	SetGuardDamageSource
 0X20D478	stream__static_initialization_and_destruction_0	308	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	stream__static_initialization_and_destruction_0

@@ -10,7 +10,7 @@
 struct JOY;
 
 struct PO : SO {
-    virtual int FInvulnerable();        /* 76: FInvulnerablePo, FInvulnerableJt */
+    virtual int FInvulnerable(int grf); /* 76: FInvulnerablePo, FInvulnerableJt, FInvulnerableBentley, FInvulnerableMurray; UpdateGuardDamage passes the damage's flags */
     virtual void Slot77();              /* 77: func_001C3ED0 */
     virtual void OnActive();            /* 78: OnPoActive, JT_OnPoActive */
     virtual void SetPlayable();         /* 79: SetPoPlayable */

@@ -32,8 +32,17 @@ static inline float LaneZ(QW q)
 static inline u32 LaneWordZ(QW q)
 {
     u32 word;
-    asm("pextuw %0, $0, %1" : "=r"(word) : "r"(q));
+    asm("pextuw %0, $0, %1" : "=&r"(word) : "r"(q));
     return word;
+}
+
+/* mtc1 from a 32-bit word: the word's bits as a float. Paired with LaneWordZ it lets the scheduler place pextuw and mtc1 apart, as
+   retail does when it extracts several lanes before moving them (0x184510, 0x18A350, 0x1E1238, 0x1E12E0, 0x1E57A0, 0x20D1F8, ...) */
+static inline float FloatFromWord(u32 word)
+{
+    float f;
+    asm("mtc1 %1, %0" : "=f"(f) : "r"(word));
+    return f;
 }
 
 /* prot3w: rotate the three low words, word 1 lands in word 0 (LaneX(RotateWords3(q)) is lane y) */

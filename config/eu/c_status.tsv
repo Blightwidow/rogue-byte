@@ -2631,6 +2631,7 @@ us_address	name	other_address	pair	score	addresses
 0x18A238	func_0018A238	0X18A1C0	same	0	ok
 0x18A278	ProjectJtTransform	0X18A200	same	0	ok
 0x18A2E0	UpdateJtBounds	0X18A268	same	0	ok
+0x18A350	func_0018A350	0X18A2D8	same	0	ok
 0x18A428	func_0018A428	0X18A3B0	same	0	ok
 0x18B2C0	UpdateJtBinocInput	0X18B248	same	0	ok
 0x18C060	BindJtStepAseg	0X18BFE8	same	0	ok
@@ -3456,6 +3457,7 @@ us_address	name	other_address	pair	score	addresses
 0x1D1940	OnVehicleActive	0X1D1BB0	same	0	ok
 0x1D2150	func_001D2150	0X1D23C0	same	0	ok
 0x1D2240	func_001D2240	0X1D24B0	same	0	ok
+0x1D2420	func_001D2420	0X1D2690	same	0	ok
 0x1D2DD0	func_001D2DD0	0X1D3040	same	0	ok
 0x1D3E48	AddVehicleCustomXps	0X1D40B8	same	0	ok
 0x1D3F30	NotifyVehicleXpEnded	0X1D41A0	same	0	ok
@@ -3904,6 +3906,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EF6F8	StaticInitSkySlotheaps	0X1EFEB8	same	0	ok
 0x1EF830	func_001EF830	0X1EFFF0	same	0	ok
 0x1EF850	func_001EF850	0X1F0010	same	0	ok
+0x1EF8C8	bevy_gfx_screen_C2d9500_v15	0X1F0088	same	0	ok
 0x1EF938	StaticInitSmSlotheaps	0X1F00F8	same	0	ok
 0x1EFA70	func_001EFA70	0X1F0230	same	0	ok
 0x1EFA90	InitSm	0X1F0250	same	0	ok
@@ -4463,6 +4466,7 @@ us_address	name	other_address	pair	score	addresses
 0x20D1A0	EnableFallCheck	0X20D960	gap	0	ok
 0x20D1B0	func_0020D1B0	0X20D970	identical	0	ok
 0x20D1C8	func_0020D1C8	0X20D988	same	0	ok
+0x20D1F8	UpdateGuardDamage	0X20D9B8	same	0	ok
 0x20D3C0	SetGuardDamageState	0X20DB80	same	0	ok
 0x20D460	SetGuardDamageSource	0X20DC20	gap	0	ok
 0x20D478	stream__static_initialization_and_destruction_0	0X20DC38	same	0	ok
