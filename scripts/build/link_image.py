@@ -12,6 +12,7 @@ import concurrent.futures
 import hashlib
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -24,6 +25,9 @@ SPLAT = os.path.join('build', 'splat')
 BUILD = os.path.join('build', 'image')
 RUNS = os.path.join(BUILD, 'runs')
 UNITS = os.path.join('build', 'units')
+# trim_object writes a copy only for the objects that need one in this link, and make_objdiff.py prefers a copy when it exists: clear the
+# copies of an earlier link first, or an object that no longer needs trimming is read stale from there
+shutil.rmtree(os.path.join(BUILD, 'trimmed'), ignore_errors=True)
 RETAIL = os.path.join('work', 'elf', 'SCUS_973.16')
 TEXT_START, TEXT_END, FILE_OFFSET_OF_TEXT = 0x100000, 0x259DF0, 0x80
 RODATA_START, RODATA_END = 0x262380, 0x2AC864
