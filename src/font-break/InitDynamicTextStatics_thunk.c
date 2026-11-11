@@ -1,6 +1,6 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK InitDynamicTextStatics(M2C_UNK, M2C_UNK);   /* extern */
+s32 InitDynamicTextStatics(s32, s32);
 
 void InitDynamicTextStatics_thunk(void) {
     InitDynamicTextStatics(1, 0xFFFF);

@@ -1,21 +1,49 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 FGadgetAcquired(s32);                           /* extern */
-s32 FGadgetOnSale(s32);                             /* extern */
+struct MenuVtable;
 
-void GadgetMenu_RefreshFlags(void *arg0) {
-    s32 temp_v0;
-    s32 var_s1;
-    void *temp_s0;
+struct Menu {
+    s32 field_0x0;
+    s32 field_0x4;
+    char pad_0x8[4];
+    struct MenuVtable *vtable;
+    char pad_0x10[8];
+    s32 field_0x18;
+    char pad_0x1C[4];
+    s32 field_0x20;
+    struct Menu *field_0x24;
+    s32 field_0x28;
+    f32 field_0x2C;
+    char pad_0x30[4];
+    f32 field_0x34;
+    char pad_0x38[8];
+    s32 field_0x40;
+    f32 field_0x44;
+    char pad_0x48[4];
+    s32 field_0x4C;
+    struct GadgetEntry *field_0x50;
+};
 
-    var_s1 = 0;
-    if (M2C_FIELD(arg0, s32 *, 0x4C) > 0) {
+struct GadgetEntry {
+    s32 field_0x0;
+    char pad_0x4[0x18];
+    s32 field_0x1C;
+};
+
+s32 FGadgetAcquired(s32);
+s32 FGadgetOnSale(s32);
+
+void GadgetMenu_RefreshFlags(struct Menu *menu) {
+    s32 index;
+    struct GadgetEntry *entry;
+
+    index = 0;
+    if (menu->field_0x4C > 0) {
         do {
-            temp_v0 = var_s1 << 5;
-            var_s1 += 1;
-            temp_s0 = M2C_FIELD(arg0, s32 *, 0x50) + temp_v0;
-            M2C_FIELD(temp_s0, s32 *, 0x1C) = (s32) ((M2C_FIELD(temp_s0, s32 *, 0x1C) & ~2) | ((FGadgetOnSale(M2C_FIELD(temp_s0, s32 *, 0)) & 1) * 2));
-            M2C_FIELD(temp_s0, s32 *, 0x1C) = (s32) ((M2C_FIELD(temp_s0, s32 *, 0x1C) & ~4) | ((FGadgetAcquired(M2C_FIELD(temp_s0, s32 *, 0)) & 1) * 4));
-        } while (var_s1 < M2C_FIELD(arg0, s32 *, 0x4C));
+            entry = &menu->field_0x50[index];
+            index += 1;
+            entry->field_0x1C = (entry->field_0x1C & ~2) | ((FGadgetOnSale(entry->field_0x0) & 1) * 2);
+            entry->field_0x1C = (entry->field_0x1C & ~4) | ((FGadgetAcquired(entry->field_0x0) & 1) * 4);
+        } while (index < menu->field_0x4C);
     }
 }

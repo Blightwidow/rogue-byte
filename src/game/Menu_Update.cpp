@@ -1,17 +1,42 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-extern "C" {
-void Menu_SetDialog(void *, M2C_UNK, M2C_UNK);
-void func_001D9870();
-extern f32 g_2ddf0c;
 
-void Menu_Update(void *arg0) {
+extern "C" {
+struct MenuVtable;
+
+struct Menu {
+    s32 field_0x0;
+    s32 field_0x4;
+    char pad_0x8[4];
+    struct MenuVtable *vtable;
+    char pad_0x10[8];
+    s32 field_0x18;
+    char pad_0x1C[4];
+    s32 field_0x20;
+    struct Menu *field_0x24;
+    s32 field_0x28;
+    f32 field_0x2C;
+    char pad_0x30[4];
+    f32 field_0x34;
+    char pad_0x38[8];
+    s32 field_0x40;
+    f32 field_0x44;
+    char pad_0x48[4];
+    s32 field_0x4C;
+    struct GadgetEntry *field_0x50;
+};
+
+void Menu_SetDialog(struct Menu *, s32, s32);
+void func_001D9870(void);
+struct FloatGlobal {
+    f32 value;
+};
+
+extern struct FloatGlobal g_2ddf0c;
+
+void Menu_Update(struct Menu *menu) {
     func_001D9870();
-    if (M2C_FIELD(arg0, f32 *, 0x34) <= g_2ddf0c) {
-        Menu_SetDialog(arg0, -1, -1);
+    if (menu->field_0x34 <= g_2ddf0c.value) {
+        Menu_SetDialog(menu, -1, -1);
     }
 }
 

@@ -1,26 +1,32 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
+
 extern "C" {
-struct _m2c_stack_InitWarp {
-    /* 0x00 */ char pad0[0x20];
-};                                                  /* size = 0x20 */
+struct WARP {
+    char pad0[0x40];
+    s32 field_0x40;
+    char pad44[0x13C - 0x44];
+    s32 state;
+    f32 field_0x140;
+    s32 levelDesc;
+    char pad148[0x150 - 0x148];
+    s32 field_0x150;
+    s32 field_0x154;
+};
+
 void InitXfm();
-void func_001A6CA8(s8 *, M2C_UNK);
-void InitWarp(s8 *arg0) {
-    s32 temp_v1;
+void func_001A6CA8(WARP *, s32);
+
+void InitWarp(WARP *warp) {
+    s32 flags;
     InitXfm();
-    M2C_FIELD(arg0, s32 *, 0x150) = 0x189;
-    M2C_FIELD(arg0, s32 *, 0x154) = -1;
-    func_001A6CA8(arg0, 0);
-    temp_v1 = M2C_FIELD(arg0, s32 *, 0x40);
-    if ((temp_v1 ^ 1) & 1) {
-        *(s32 *)temp_v1 = (s32) (*(s32 *)temp_v1 | 2);
+    warp->field_0x150 = 0x189;
+    warp->field_0x154 = -1;
+    func_001A6CA8(warp, 0);
+    flags = warp->field_0x40;
+    if ((flags ^ 1) & 1) {
+        *(s32 *)flags = (s32) (*(s32 *)flags | 2);
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (temp_v1 | 2);
+    warp->field_0x40 = (s32) (flags | 2);
 }
 }

@@ -1,6 +1,6 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK func_001CB7B0(M2C_UNK, M2C_UNK);            /* extern */
+void func_001CB7B0(s32, s32);
 
 void StaticInitCloneFile_thunk(void) {
     func_001CB7B0(1, 0xFFFF);

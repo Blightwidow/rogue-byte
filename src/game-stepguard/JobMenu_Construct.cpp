@@ -1,19 +1,40 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-extern "C" {
-f32 JobMenu_InitPage(void *);
-s32 Menu_Construct();
-extern M2C_UNK D_002D8468;
 
-void *JobMenu_Construct(void *arg0) {
-    Menu_Construct();
-    M2C_FIELD(arg0, s32 *, 0x20) = 0x4E0;
-    M2C_FIELD(arg0, M2C_UNK **, 0xC) = &D_002D8468;
-    JobMenu_InitPage(arg0);
-    return arg0;
+extern "C" {
+struct MenuVtable;
+
+struct Menu {
+    s32 field_0x0;
+    s32 field_0x4;
+    char pad_0x8[4];
+    struct MenuVtable *vtable;
+    char pad_0x10[8];
+    s32 field_0x18;
+    char pad_0x1C[4];
+    s32 field_0x20;
+    struct Menu *field_0x24;
+    s32 field_0x28;
+    f32 field_0x2C;
+    char pad_0x30[4];
+    f32 field_0x34;
+    char pad_0x38[8];
+    s32 field_0x40;
+    f32 field_0x44;
+    char pad_0x48[4];
+    s32 field_0x4C;
+    struct GadgetEntry *field_0x50;
+};
+
+struct Menu *Menu_Construct(struct Menu *);
+void JobMenu_InitPage(struct Menu *);
+extern struct MenuVtable D_002D8468;
+
+struct Menu *JobMenu_Construct(struct Menu *menu) {
+    Menu_Construct(menu);
+    menu->field_0x20 = 0x4E0;
+    menu->vtable = &D_002D8468;
+    JobMenu_InitPage(menu);
+    return menu;
 }
 
 }

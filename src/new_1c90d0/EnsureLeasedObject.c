@@ -1,7 +1,7 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK PloLeaseCloneObject(s32, M2C_UNK);          /* extern */
-s32 PloLeased();                                    /* extern */
+void PloLeaseCloneObject(s32, s32);
+s32 PloLeased();
 
 void EnsureLeasedObject(s32 arg0) {
     if (PloLeased() == 0) {

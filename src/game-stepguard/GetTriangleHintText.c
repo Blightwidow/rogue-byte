@@ -1,11 +1,11 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 PchzStringFromId(M2C_UNK *, M2C_UNK);           /* extern */
-M2C_UNK strcat(s32, M2C_UNK *);                     /* extern */
-M2C_UNK strcpy(s32, s32);                           /* extern */
-extern M2C_UNK B_003DD490;
+char *PchzStringFromId(s32 *, s32);
+char *strcat(char *, const char *);
+char *strcpy(char *, const char *);
+extern s32 B_003DD490;
 
-void GetTriangleHintText(s32 arg0) {
-    strcpy(arg0, PchzStringFromId(&B_003DD490, 0x40));
-    strcat(arg0, " : &2T&.");
+void GetTriangleHintText(char *text) {
+    strcpy(text, PchzStringFromId(&B_003DD490, 0x40));
+    strcat(text, " : &2T&.");
 }

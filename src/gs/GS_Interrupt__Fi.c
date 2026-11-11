@@ -1,23 +1,23 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK ClearFrameBuffers__Fv();                    /* extern */
-M2C_UNK FlushCache(M2C_UNK);                        /* extern */
-M2C_UNK SyncVBlank__Fv();                           /* extern */
-M2C_UNK sceGsSwapDBuff(M2C_UNK *, s32);              /* extern */
-M2C_UNK sceGsResetGraph(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
-M2C_UNK sceGsSetHalfOffset(M2C_UNK *, M2C_UNK, M2C_UNK, s16); /* extern */
-extern M2C_UNK B_002DEB80;
-extern M2C_UNK B_002DEBE0;
+s32 ClearFrameBuffers__Fv();
+s32 FlushCache(s32);
+s32 SyncVBlank__Fv();
+s32 sceGsSwapDBuff(s32 *, s32);
+s32 sceGsResetGraph(s32, s32, s32, s32);
+s32 sceGsSetHalfOffset(s32 *, s32, s32, s16);
+extern s32 B_002DEB80;
+extern s32 B_002DEBE0;
 extern s32 B_002DEDB4;
 extern s32 B_002DFB5C;
 extern s32 D_002BE594;
-extern M2C_UNK g_2decd0;
+extern s32 g_2decd0;
 extern s32 g_2dedb0;
 extern s32 g_2dedb8;
 extern s32 g_2dedbc;
 
 void GS_Interrupt__Fi(void) {
-    M2C_UNK *var_a0;
+    s32 *var_a0;
     s32 temp_a1;
     s32 temp_v1;
 

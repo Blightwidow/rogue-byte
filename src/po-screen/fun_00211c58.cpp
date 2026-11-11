@@ -1,21 +1,53 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-M2C_UNK Blot_Construct();                           /* extern */
-extern M2C_UNK D_002C9670;
+typedef struct BLOTMOVIE {
+    char pad0[0x44];
+    s32 field_0x44;
+    s32 field_0x48;
+} BLOTMOVIE;
 
-s8 *func_00211C58(s8 *arg0) {
-    Blot_Construct();
-    M2C_FIELD(arg0, s32 *, 0x110) = -1;
-    M2C_FIELD(arg0, M2C_UNK **, 0xC) = &D_002C9670;
-    M2C_FIELD(arg0, s32 *, 0x114) = -1;
-    M2C_FIELD(arg0, s32 *, 0x118) = -1;
-    M2C_FIELD(arg0, s32 *, 0x11C) = -1;
-    M2C_FIELD(arg0, s32 *, 0x120) = -1;
+typedef struct BLOT {
+    char pad0[0xC];
+    s32 *field_0xC;
+    char pad1[0x40];
+    s32 field_0x50;
+    s32 field_0x54;
+    s32 field_0x58;
+    f32 field_0x5C;
+    char pad2[4];
+    s32 field_0x64;
+    f32 field_0x68;
+    char pad3[0xC];
+    s32 field_0x78;
+    char pad4[4];
+    s16 field_0x80;
+    char pad5[2];
+    s32 field_0x84;
+    char pad6[0x20];
+    s32 field_0xA8;
+    char pad7[0x14];
+    BLOTMOVIE *field_0xC0;
+    char pad8[0x34];
+    s32 field_0xF8;
+    char field_0xFC[0x14];
+    s32 field_0x110;
+    s32 field_0x114;
+    s32 field_0x118;
+    s32 field_0x11C;
+    s32 field_0x120;
+} BLOT;
+
+s32 Blot_Construct(BLOT *);
+extern s32 D_002C9670;
+
+BLOT *func_00211C58(BLOT *arg0) {
+    Blot_Construct(arg0);
+    arg0->field_0x110 = -1;
+    arg0->field_0xC = &D_002C9670;
+    arg0->field_0x114 = -1;
+    arg0->field_0x118 = -1;
+    arg0->field_0x11C = -1;
+    arg0->field_0x120 = -1;
     return arg0;
 }
 
