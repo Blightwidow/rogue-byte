@@ -160,6 +160,7 @@ def build_runs(label, end, names, functions):
     return grouped
 
 
+HAND_TYPED = 'Typed by hand (make_data_files.py keeps this file)'
 WORD_ARRAY_LIMIT = 64  # as BYTE_DUMP_LIMIT in scripts/matching/check_source.py, for a run of plain `unsigned int`
 CTYPE = {'w4': 'unsigned int', 'float': 'float', 'short': 'short', 'byte': 'unsigned char', 'str': 'char'}
 
@@ -384,8 +385,13 @@ def main():
     if arguments.write:
         existing = [line.rstrip('\n').split('\t') for line in list(open(DATA_LIST))[1:]]
         kept = [row for row in existing if not row[2].startswith(arguments.section + '/')] if not arguments.only else [row for row in existing if not row[2].startswith(arguments.only + '.') and not row[2].startswith(arguments.only + '_')]
-        rows = list(kept)
+        # a file typed by hand (HAND_TYPED in its text: a table typed from the code that reads it) stays, and so does its row
+        hand = [row for row in existing if row[2].startswith(arguments.section + '/') and row not in kept
+                and os.path.isfile(os.path.join('src', row[2])) and HAND_TYPED in open(os.path.join('src', row[2])).read()]
+        rows = list(kept) + hand
         for (name, start, size), text in proved:
+            if any(int(row[0], 16) < start + size and start < int(row[1], 16) for row in hand):
+                continue
             file = name + '.cpp'
             os.makedirs(os.path.dirname(os.path.join('src', file)), exist_ok=True)
             open(os.path.join('src', file), 'w').write(text)

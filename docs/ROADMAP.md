@@ -248,7 +248,9 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    `.data`) and leaves out what a compiled object may own (`build/image/owned_rodata.tsv`, written by `link_image.py`: a
    function's or a whole file's literals and jump tables), the jump tables of unmatched functions (code labels) and plain word
    arrays over 64 elements, which need a type from the code that reads them. 151 of 176 groups prove (111,650 bytes, the
-   96 KB address table at 0x262380 among them); data 20.36% -> 31.39%. Left in `.rodata`: 171 KB of plain word tables
+   96 KB table at 0x262380 among them, typed by hand from its reader `PeopidFind`: `include/splopt.h`, 12,010
+   `SPLOPT`s in 199 class runs indexed by `ARYSPLOPT RO_00279AD0[199]`; a file carrying `make_data_files.HAND_TYPED` is
+   kept when the tool rewrites); data 20.36% -> 31.39%. Left in `.rodata`: 171 KB of plain word tables
    (`D_0027A790` 128 KB and `D_0029A8D0` 32 KB in `puffer-slotheap`, nothing reads them by name: find their readers to type
    them), 151 jump tables of unmatched functions (11 KB), 25 groups where Splat's labels split a word (the compiler pads
    the first label's type), and the 9 KB compiled objects own.
