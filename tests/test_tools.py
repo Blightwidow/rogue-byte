@@ -3,8 +3,10 @@
 """Regression tests for the scripts that need neither the game nor the compiler: `python3 -m unittest discover -s tests -v`."""
 import json
 import os
+import re
 import sys
 import struct
+import tempfile
 import unittest
 
 HERE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts')
@@ -314,6 +316,11 @@ class CompileUnitTests(unittest.TestCase):
         self.assertIn('\t.word\t0x46000344', compile_unit.splat_for_ps2eeas(lines).split('\n'))
 
 
+def code_items(text):
+    return [re.sub(r'\s+', ' ', make_whole_files.code_only(item)).strip() for item in make_whole_files.split_items(text)
+            if make_whole_files.code_only(item).strip()]
+
+
 class MakeWholeFilesTests(unittest.TestCase):
     MANIFEST = {0x100000: ('First', 8, 'module/First.cpp'), 0x100010: ('Second', 8, 'module/Second.cpp'),
                 0x100020: ('Third', 8, 'module/Third.c')}
@@ -325,6 +332,65 @@ class MakeWholeFilesTests(unittest.TestCase):
         items = make_whole_files.split_items('#include "a.h"\nstruct S { int a; };\nint f(S *s) { return s->a; }\nextern int g;\n')
         self.assertEqual([make_whole_files.classify(item) for item in items],
                          [('preprocessor', '#include "a.h"'), ('type', 'S'), ('function', 'f'), ('declaration', 'g')])
+
+    def test_extern_c_block_opens_into_prefixed_declarations(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nvoid f(int);\nextern int g;\n}\n')
+        self.assertEqual(code_items(text), ['extern "C" void f(int);', 'extern "C" int g;'])
+
+    def test_extern_c_block_keeps_a_variable_definition_in_a_block(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nint h;\n}\n')
+        self.assertEqual(code_items(text), ['extern "C" { int h; }'])
+
+    def test_extern_c_block_leaves_a_static_function_unprefixed(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\nstatic inline int f(int x) { return x; }\n}\n')
+        self.assertEqual(code_items(text), ['static inline int f(int x) { return x; }'])
+
+    def test_extern_c_prefix_goes_after_leading_comments(self):
+        text = make_whole_files.flatten_extern_c('extern "C" {\n// note\nvoid f(void);\n}\n')
+        self.assertIn('// note\nextern "C" void f(void);', text)
+
+    def test_header_types_follows_includes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with open(os.path.join(directory, 'outer.h'), 'w') as handle:
+                handle.write('#include "inner.h"\nstruct OUTER;\nclass KEPT : public INNER { int x; };\n')
+            with open(os.path.join(directory, 'inner.h'), 'w') as handle:
+                handle.write('struct INNER { int y; };\n')
+            self.assertEqual(make_whole_files.header_types({'outer.h'}, directory), {'KEPT', 'INNER'})
+
+    def test_local_struct_named_like_a_shared_header_type_is_renamed(self):
+        sources = {'module/First.cpp': 'struct SO { int x; };\nvoid First(SO *so) { so->x = 0; }\n',
+                   'module/Second.cpp': '#include "so.h"\nvoid Second() { }\n'}
+        _, _, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                        read_source=sources.__getitem__)
+        self.assertIn('SO -> SO_100000', notes)
+
+    def test_rename_mode_separates_a_declaration_with_other_linkage(self):
+        sources = {'module/First.cpp': 'extern "C" float g(float);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'float g(float);\nvoid Second() { g(0); }\n'}
+        _, _, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                        read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('declaration g -> g_100010', notes)
+
+    def test_rename_mode_separates_a_c_declaration_of_a_mangled_name(self):
+        sources = {'module/First.cpp': 'float g(float);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'extern "C" float g__Ff(float);\nvoid Second() { g__Ff(0); }\n'}
+        _, text, _ = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                       read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('g__Ff_100010(0)', text)
+
+    def test_rename_mode_prefixes_a_mangled_operator_name(self):
+        sources = {'module/First.cpp': 'void First() { }\n',
+                   'module/Second.cpp': 'extern "C" int __as__4CRefRC4CRef(int, void *);\nvoid Second() { __as__4CRefRC4CRef(0, 0); }\n'}
+        _, text, _ = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                       read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('c100010__as__4CRefRC4CRef(0, 0)', text)
+
+    def test_rename_mode_separates_a_differing_declaration_inside_extern_c(self):
+        sources = {'module/First.cpp': 'void g(int *);\nvoid First() { g(0); }\n',
+                   'module/Second.cpp': 'extern "C" {\nvoid g(char *);\n}\nvoid Second() { g(0); }\n'}
+        _, text, notes = make_whole_files.build_whole_file(0x100000, 0x100030, [0x100000, 0x100010], self.MANIFEST,
+                                                           read_source=sources.__getitem__, rename_declarations=True)
+        self.assertIn('declaration g -> g_100010', notes)
 
     def test_semicolon_in_a_comment_does_not_end_an_item(self):
         self.assertEqual(len(make_whole_files.split_items('/* a; b */ extern int g;\n')), 1)
@@ -503,6 +569,39 @@ class WholeFileRecordTests(unittest.TestCase):
         folder, path = self.whole_object()
         _, outside = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
         self.assertEqual(outside, {'Gamma': 0x20})
+
+    def whole_object_with_rodata(self):
+        import tempfile
+        folder = tempfile.mkdtemp()
+        self.addCleanup(__import__('shutil').rmtree, folder)
+        path = os.path.join(folder, 'whole.o')
+        # Beta reads .rodata through a hi/lo pair; .rodata holds a jump table entry into Beta (0x18) and one into Gamma (0x24)
+        symbols = [('', 0, 0, 3), ('', 0, 0, 3, 6), ('Alpha', 0x0, 16, 2), ('Beta', 0x10, 16, 2), ('Gamma', 0x20, 16, 2)]
+        code = b''.join(value.to_bytes(4, 'little') for value in range(1, 13))
+        rodata = (b''.join(value.to_bytes(4, 'little') for value in (0x18, 0x24, 0x3F800000, 0)), 16, [(0x0, 1, 2), (0x4, 1, 2)])
+        make_whole_files.write_object(path, code, symbols, 6, [(0x14, 2, 5), (0x18, 2, 6)], rodata=rodata)
+        return folder, path
+
+    def test_cut_points_a_rodata_read_at_the_carried_rodata(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object_with_rodata()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            elf = ELFFile(handle)
+            symbols = elf.get_section_by_name('.symtab')
+            found = [elf.get_section(symbols.get_symbol(relocation['r_info_sym'])['st_shndx']).name
+                     for relocation in elf.get_section_by_name('.rel.text').iter_relocations()]
+        self.assertEqual(found, ['.rodata', '.rodata'])
+
+    def test_cut_rebases_the_jump_table_entry_into_the_function_only(self):
+        from elftools.elf.elffile import ELFFile
+        folder, path = self.whole_object_with_rodata()
+        cut, _ = make_whole_files.cut_function(path, 0x10, os.path.join(folder, 'cut.o'))
+        with open(cut, 'rb') as handle:
+            elf = ELFFile(handle)
+            words = [int.from_bytes(elf.get_section_by_name('.rodata').data()[at:at + 4], 'little') for at in (0, 4)]
+            relocated = [relocation['r_offset'] for relocation in elf.get_section_by_name('.rel.rodata').iter_relocations()]
+        self.assertEqual((words, relocated), ([0x8, 0x24], [0x0]))
 
     def test_cut_at_no_function_raises(self):
         folder, path = self.whole_object()

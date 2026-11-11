@@ -1,6 +1,6 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK StaticInitBasic(M2C_UNK, M2C_UNK);          /* extern */
+void StaticInitBasic(s32, s32);
 
 void GlobalCtorBasic(void) {
     StaticInitBasic(1, 0xFFFF);

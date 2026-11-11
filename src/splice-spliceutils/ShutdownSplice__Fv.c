@@ -1,24 +1,26 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK FindHudLabelBlot(M2C_UNK *);                /* extern */
-M2C_UNK InitMeter(M2C_UNK *);                       /* extern */
-M2C_UNK JobMenu_PostLoad(M2C_UNK *);                /* extern */
-M2C_UNK MemcardMenu_PostLoad(M2C_UNK *);            /* extern */
-M2C_UNK Menu_PostLoad(M2C_UNK *);                   /* extern */
-M2C_UNK func_001A3020(M2C_UNK *);                   /* extern */
-M2C_UNK func_001AE928(M2C_UNK *);                   /* extern */
-M2C_UNK func_001DD690(M2C_UNK *);                   /* extern */
-extern M2C_UNK B_002E1E60;
-extern M2C_UNK B_002E6550;
-extern M2C_UNK B_002E65A0;
-extern M2C_UNK B_003D9E80;
-extern M2C_UNK B_003D9ED0;
-extern M2C_UNK B_003DA0C0;
-extern M2C_UNK B_003DA0F0;
-extern M2C_UNK B_003DA150;
-extern M2C_UNK B_003DA3C0;
-extern M2C_UNK B_003DA4F0;
-extern M2C_UNK B_003DA530;
+struct Menu;
+struct HudLabelBlot;
+void InitMeter(struct Menu *);
+void func_001AE928(s32 *);
+void func_001A3020(s32 *);
+void Menu_PostLoad(struct Menu *);
+void FindHudLabelBlot(struct HudLabelBlot *);
+void JobMenu_PostLoad(struct Menu *);
+void MemcardMenu_PostLoad(struct Menu *);
+void func_001DD690(struct Menu *);
+extern s32 B_002E1E60;
+extern struct Menu B_002E6550;
+extern struct Menu B_002E65A0;
+extern struct Menu B_003D9E80;
+extern s32 B_003D9ED0;
+extern struct HudLabelBlot B_003DA0C0;
+extern struct Menu B_003DA0F0;
+extern struct Menu B_003DA150;
+extern struct Menu B_003DA3C0;
+extern struct Menu B_003DA4F0;
+extern struct Menu B_003DA530;
 
 void ShutdownSplice__Fv(void) {
     InitMeter(&B_003D9E80);

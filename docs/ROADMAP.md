@@ -188,12 +188,18 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      `GOAL`: a local goal layout becomes a local subclass, `struct GOAL_<address> : GOAL`, keeping its fields from 0x30 until
      the subclasses (GoalBrain, GoalAnim, GoalHit and about fifty more) get headers. 10 unmatched drafts moved at their scores.
      48 local guard layouts remain: most belong to functions no method or second reader confirms yet.
+   - Status (2026-11-11): open. Next types, in order of what they unblock: `TIMEDCALL`, `CLONESET`, `NODE` and `TAGK` (each
+     defined differently by two sources of one retail file, so 4 files cannot build whole, item 2); the goal subclasses; the
+     classes the data regions of item 3 need. Left over: 24 local `JT`-like structs, 9 Murray/Bentley copies, 48 guard layouts.
    - Editing `include/` changes the scorer fingerprint: do it between waves, after `claim.py land`.
    - The tie-break rule ([contributing/code-cleanup.md](contributing/code-cleanup.md)) applies now: of two wordings that both
      score 0, the typed one lands. `make cleanup` warns on padding members, raw offset casts and hand-written vtable calls in added code.
 2. File boundaries found in retail, as sly1 does: the constructor list gives each file's end, shared static data and
    `.rodata` grouping give its start, and a file is proved by building it whole, with its unmatched functions
    included from assembly (`INCLUDE_ASM`). Replaces fixed windows of `src/` with real files. Wanted (Theo, 2026-11-06).
+   Status (2026-11-11): 195 of 209 files whole, 1723 matched functions built in them; the 14 left are a tail picked up along
+   the way (details at the end of this item), and the 826 low-confidence boundaries are checked as item 3's first stage,
+   since a wrong boundary puts data in the wrong file. Item 3 is next.
    Stage 1 (2026-11-08): the constructor list at 0x2C85C0 gives 209 verified file ends (210 `_GLOBAL_$I$` wrappers, each after its
    `__static_initialization_and_destruction_0`; the linker builds the list, SN's compiler writes no `.ctors`); `modules.tsv` groupings straddle
    them (139 of 209 spans hold several modules). Stage 2: `src/memory-bez/ary.cpp` (0x116CA0-0x117030, 11 functions, two from `INCLUDE_ASM`)
@@ -203,8 +209,29 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    no per-function copy of them (276 files, 223 KB, left `src/`; `src/MANIFEST.tsv` gives them `whole_file` and `symbol`); objdiff cuts each one
    out of the whole object and PAL reads it there at its offset (both reports unchanged); a new match inside a whole file lands by replacing its
    `INCLUDE_ASM` line and re-proving the range (`make_whole_files.py --land`, run by `record.py`). Matching stays per function in scratch
-   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files are held back (`exclusion`) until objdiff can; landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
+   (`data/matching/src/fn`, `try.py`). Stage 6 (2026-11-09): `link_image.py` links a whole file's own `.rodata` at retail's address and `make_whole_files.py` proves it (four more files convert and the image stays identical), but `make_objdiff.py` `cut_function` cannot cut a function that reads `.rodata`, so those files were held back (`exclusion`) until objdiff could (stage 8); landing them gains no data bytes anyway (their literals already count through the per-function objects). Still open: one flag set per file, counting per file instead of per module, and the 826 low-confidence
    cuts inside a span.
+   Stage 7 (2026-11-10): 26 more files build whole (109 files, 463 matched functions). Re-proving the 98 left showed 30 that
+   already matched byte for byte but were refused for m2c leftovers: 44 of their 45 per-function sources were rewritten with
+   struct members (local structs, `field_0xOFF`) at score 0, and 26 files then proved. The other 72 still fail: 67 mix C and
+   C++ sources, and 328 of their 348 C sources already compile and match as C++ inside `extern "C"` unchanged; what stops them
+   is clashes between sources in one unit (prototypes and types the first source declares differently) and 20 C sources with
+   C-only idioms (`void *` arithmetic, pointer-integer comparison).
+   The merger then opened `extern "C" { }` blocks into their items, so a differing declaration inside one is compared and
+   renamed like any other: 11 more files proved, and 37 more matched byte for byte but for m2c leftovers. 89 of their 90
+   sources were rewritten with struct members at score 0 and 23 of those files proved: 143 whole files, 925 matched
+   functions. Three more merger fixes (a `static` item in an `extern "C"` block keeps no prefix; a local struct named like a
+   shared header's type takes the address suffix; in the rename mode a declaration's linkage is compared, and a C declaration
+   of a mangled name takes a name of its own) and 122 more rewritten sources (m2c leftovers, C-only idioms) brought it to 172
+   whole files, 1343 matched functions. Stage 8 (2026-11-11): `cut_function` carries the whole object's `.rodata` into the
+   cut of a function that reads it (a jump table entry into the function is rebased), so `make_objdiff.py` cuts those
+   functions too and `exclusion` no longer holds back a file for its own `.rodata`: 178 whole files, 1374 matched
+   functions, reports unchanged. 206 more rewritten sources (m2c leftovers, C that did not compile as C++ in one unit) then
+   brought it to 195 whole files, 1723 matched functions. Left: 5 files whose sources declare one callee or global with
+   different types (gs, jump, po-screen, `PloFindSpawn`, so-wr: `InitMeter`, `CploFindSwObjectsByClass`, `UNoise`, ...),
+   4 where two sources define one class differently (`TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`: needs shared types), 2 that
+   compile with a different size (0x149A50, 0x14CC4C), 1 waiting on 0x153128 (score 0 typed only through a steering
+   local), 2 with per-function flags.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from

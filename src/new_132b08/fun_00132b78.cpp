@@ -1,21 +1,21 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-s32 PsidebagNew();                                  /* extern */
-M2C_UNK SidebagPtr_Assign(s8 *, s32);             /* extern */
-M2C_UNK func_00258178(s32);                         /* extern */
+struct SidebagOwner {
+    char pad0[4];
+    s32 field_0x4;
+};
 
-void func_00132B78(s8 *arg0) {
-    s8 *temp_s1;
+s32 PsidebagNew();
+s32 SidebagPtr_Assign(s32 *, s32);
+s32 func_00258178(s32);
 
-    temp_s1 = arg0 + 4;
-    if (M2C_FIELD(arg0, s32 *, 4) == 0) {
-        SidebagPtr_Assign(temp_s1, PsidebagNew());
-        func_00258178(M2C_FIELD(arg0, s32 *, 4));
+void func_00132B78(SidebagOwner *owner) {
+    s32 *sidebagSlot;
+
+    sidebagSlot = &owner->field_0x4;
+    if (owner->field_0x4 == 0) {
+        SidebagPtr_Assign(sidebagSlot, PsidebagNew());
+        func_00258178(owner->field_0x4);
     }
 }
 

@@ -1,19 +1,56 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK AppendDlEntry(M2C_UNK *, void *);           /* extern */
-s32 FFindDlEntry(M2C_UNK *, void *);                /* extern */
-M2C_UNK RemoveDlEntry(M2C_UNK *, void *);           /* extern */
-extern M2C_UNK B_003E1060;
+typedef struct BLOTMOVIE {
+    char pad0[0x44];
+    s32 field_0x44;
+    s32 field_0x48;
+} BLOTMOVIE;
 
-void SetBlotModal(void *arg0, s32 arg1) {
+typedef struct BLOT {
+    char pad0[0xC];
+    s32 *field_0xC;
+    char pad1[0x40];
+    s32 field_0x50;
+    s32 field_0x54;
+    s32 field_0x58;
+    f32 field_0x5C;
+    char pad2[4];
+    s32 field_0x64;
+    f32 field_0x68;
+    char pad3[0xC];
+    s32 field_0x78;
+    char pad4[4];
+    s16 field_0x80;
+    char pad5[2];
+    s32 field_0x84;
+    char pad6[0x20];
+    s32 field_0xA8;
+    char pad7[0x14];
+    BLOTMOVIE *field_0xC0;
+    char pad8[0x34];
+    s32 field_0xF8;
+    char field_0xFC[0x14];
+    s32 field_0x110;
+    s32 field_0x114;
+    s32 field_0x118;
+    s32 field_0x11C;
+    s32 field_0x120;
+} BLOT;
+
+s32 AppendDlEntry(s32 *, BLOT *);
+s32 FFindDlEntry(s32 *, BLOT *);
+s32 RemoveDlEntry(s32 *, BLOT *);
+extern s32 B_003E1060;
+
+void SetBlotModal(BLOT *arg0, s32 arg1) {
     s32 temp_v0;
 
-    temp_v0 = M2C_FIELD(arg0, s32 *, 0xA8);
+    temp_v0 = arg0->field_0xA8;
     if (temp_v0 != arg1) {
         if ((temp_v0 == 0) && (FFindDlEntry(&B_003E1060, arg0) != 0)) {
             RemoveDlEntry(&B_003E1060, arg0);
         }
-        M2C_FIELD(arg0, s32 *, 0xA8) = arg1;
+        arg0->field_0xA8 = arg1;
         if ((arg1 == 0) && (FFindDlEntry(&B_003E1060, arg0) == 0)) {
             AppendDlEntry(&B_003E1060, arg0);
         }

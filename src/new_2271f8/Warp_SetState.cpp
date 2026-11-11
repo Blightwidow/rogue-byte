@@ -1,24 +1,40 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-extern "C" {
-M2C_UNK SetHandsOff(M2C_UNK *, M2C_UNK);            /* extern */
-M2C_UNK func_001A6CA8(s8 *, M2C_UNK);                     /* extern */
-extern M2C_UNK B_003DD490;
-extern f32 g_2dded0;
 
-void Warp_SetState(s8 *arg0, s32 arg1) {
-    if (arg1 != M2C_FIELD(arg0, s32 *, 0x13C)) {
-        if (arg1 == 4) {
-            func_001A6CA8(arg0, 1);
+extern "C" {
+struct WARP {
+    char pad0[0x40];
+    s32 field_0x40;
+    char pad44[0x13C - 0x44];
+    s32 state;
+    f32 field_0x140;
+    s32 levelDesc;
+    char pad148[0x150 - 0x148];
+    s32 field_0x150;
+    s32 field_0x154;
+};
+struct WORLD {
+    char pad0[0x3C84];
+    WARP *field_0x3C84;
+};
+
+s32 SetHandsOff(WORLD *, s32);
+s32 func_001A6CA8(WARP *, s32);
+extern WORLD B_003DD490;
+struct CLOCK {
+    f32 t;
+    f32 dt;
+};
+extern CLOCK g_2dded0;
+
+void Warp_SetState(WARP *warp, s32 newState) {
+    if (newState != warp->state) {
+        if (newState == 4) {
+            func_001A6CA8(warp, 1);
             SetHandsOff(&B_003DD490, 3);
-            M2C_FIELD(&B_003DD490, s8 **, 0x3C84) = arg0;
+            B_003DD490.field_0x3C84 = warp;
         }
-        M2C_FIELD(arg0, s32 *, 0x13C) = arg1;
-        M2C_FIELD(arg0, f32 *, 0x140) = (f32) g_2dded0;
+        warp->state = newState;
+        warp->field_0x140 = g_2dded0.t;
     }
 }
 

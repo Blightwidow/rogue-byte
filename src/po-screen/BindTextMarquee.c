@@ -1,10 +1,10 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 PchzStringFromId(M2C_UNK *, s32);               /* extern */
-M2C_UNK strcpy(s32, s32);                           /* extern */
+char *PchzStringFromId(s32 *, s32);
+char *strcpy(char *, char *);
 extern s32 B_003DA0D8;
-extern M2C_UNK B_003DD490;
+extern s32 B_003DD490;
 
-void BindTextMarquee(s32 arg0) {
+void BindTextMarquee(char *arg0) {
     strcpy(arg0, PchzStringFromId(&B_003DD490, B_003DA0D8));
 }

@@ -1,6 +1,6 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK __static_initialization_and_destruction_0(M2C_UNK, M2C_UNK); /* extern */
+void __static_initialization_and_destruction_0(s32, s32);
 
 void func_001258D0(void) {
     __static_initialization_and_destruction_0(1, 0xFFFF);

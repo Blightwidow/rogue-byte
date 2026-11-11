@@ -1,6 +1,6 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK StaticInitSlotheaps_170850(M2C_UNK, M2C_UNK); /* extern */
+s32 StaticInitSlotheaps_170850(s32, s32);
 
 void StaticInitSlotheaps_170850_thunk(void) {
     StaticInitSlotheaps_170850(1, 0xFFFF);

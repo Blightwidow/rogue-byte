@@ -1,8 +1,20 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-s32 IcloneFromLease(void *arg0, s32 arg1) {
-    void *temp_a2;
+typedef struct LeaseTable {
+    char pad0[0xC];
+    s32 field_0xC;
+    char pad10[0x68 - 0x10];
+    s32 field_0x68;
+} LeaseTable;
 
-    temp_a2 = M2C_FIELD(arg0, void **, 0xE0);
-    return ((s32) ((arg1 - M2C_FIELD(temp_a2, s32 *, 0x68)) * 0xCCCCCCCD) >> 4) + M2C_FIELD(temp_a2, s32 *, 0xC);
+typedef struct LeaseOwner {
+    char pad0[0xE0];
+    LeaseTable *field_0xE0;
+} LeaseOwner;
+
+s32 IcloneFromLease(LeaseOwner *owner, s32 arg1) {
+    LeaseTable *table;
+
+    table = owner->field_0xE0;
+    return ((s32) ((arg1 - table->field_0x68) * 0xCCCCCCCD) >> 4) + table->field_0xC;
 }

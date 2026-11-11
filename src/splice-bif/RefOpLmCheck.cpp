@@ -1,29 +1,20 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
 extern "C" {
-struct _m2c_stack_RefOpLmCheck {
-    /* 0x00 */ char pad0[4];
-    /* 0x04 */ f32 sp4;                             /* inferred */
-    /* 0x08 */ char pad8[0x38];
-};                                                  /* size = 0x40 */
-#define sp4 (*(f32 *)(sp + 0x04))
+struct RefCell { s32 tag; s32 value; };
+struct RefLmArgs { s32 tag; s32 lm; RefCell coerce; };
 void CRef_Destruct(s8 *);
-s32 CRef_RefCoerceF32(s8 *, s32);
+s32 CRef_RefCoerceF32(s8 *, RefCell *);
 s32 FCheckLm__FP2LMf(s32, f32);
-s8 *RefOpLmCheck(s8 *arg0, s32 arg1, s8 *arg2) {
-    s8 sp[0x10] __attribute__((aligned(16)));
-    s32 temp_s0;
-    s32 temp_v0;
-    temp_s0 = M2C_FIELD(arg2, s32 *, 4);
-    CRef_RefCoerceF32(sp, (int)(arg2 + 8));
-    temp_v0 = FCheckLm__FP2LMf(temp_s0, sp4) != 0;
-    M2C_FIELD(arg0, s32 *, 0) = 0x17;
-    M2C_FIELD(arg0, s32 *, 4) = temp_v0;
-    CRef_Destruct(sp);
+RefCell *RefOpLmCheck(RefCell *arg0, s32 arg1, RefLmArgs *arg2) {
+    union { s8 bytes[0x10]; struct { s32 tag; f32 value; } cell; } local __attribute__((aligned(16)));
+    s32 lm;
+    s32 result;
+    lm = arg2->lm;
+    CRef_RefCoerceF32(local.bytes, &arg2->coerce);
+    result = FCheckLm__FP2LMf(lm, local.cell.value) != 0;
+    arg0->tag = 0x17;
+    arg0->value = result;
+    CRef_Destruct(local.bytes);
     return arg0;
 }
 }

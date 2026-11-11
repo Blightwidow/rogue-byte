@@ -1,21 +1,48 @@
 #include "types.h"
-typedef s32 M2C_UNK; typedef s8 M2C_UNK8; typedef s16 M2C_UNK16; typedef s32 M2C_UNK32; typedef s64 M2C_UNK64;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((s8 *)(expr) + (offset)))
-#define M2C_BITWISE(type, expr) ((type)(expr))
-#define M2C_ERROR(desc) (0)
-#define NULL 0
-extern "C" {
-void func_001DD888(s8 *arg0) {
-    s8 *temp_v0;
-    s8 *temp_a1;
-    s8 *temp_v0_2;
 
-    if (M2C_FIELD(arg0, s8 **, 0x24) != NULL) {
-        temp_v0 = M2C_FIELD(arg0, s8 **, 0xC);
-        M2C_FIELD(temp_v0, void (**)(s8 *), 0x5C)(arg0 + M2C_FIELD(temp_v0, s16 *, 0x58));
-        temp_a1 = M2C_FIELD(arg0, s8 **, 0x24);
-        temp_v0_2 = M2C_FIELD(temp_a1, s8 **, 0xC);
-        M2C_FIELD(temp_v0_2, void (**)(s8 *), 0x194)(temp_a1 + M2C_FIELD(temp_v0_2, s16 *, 0x190));
+extern "C" {
+struct MenuVtable;
+
+struct Menu {
+    s32 field_0x0;
+    s32 field_0x4;
+    char pad_0x8[4];
+    struct MenuVtable *vtable;
+    char pad_0x10[8];
+    s32 field_0x18;
+    char pad_0x1C[4];
+    s32 field_0x20;
+    struct Menu *field_0x24;
+    s32 field_0x28;
+    f32 field_0x2C;
+    char pad_0x30[4];
+    f32 field_0x34;
+    char pad_0x38[8];
+    s32 field_0x40;
+    f32 field_0x44;
+    char pad_0x48[4];
+    s32 field_0x4C;
+    struct GadgetEntry *field_0x50;
+};
+
+struct MenuVtable {
+    char pad_0x0[0x58];
+    s16 field_0x58;
+    char pad_0x5A[2];
+    void (*field_0x5C)(void *);
+    char pad_0x60[0x130];
+    s16 field_0x190;
+    char pad_0x192[2];
+    void (*field_0x194)(void *);
+};
+
+void func_001DD888(struct Menu *menu) {
+    struct Menu *linked;
+
+    if (menu->field_0x24 != 0) {
+        menu->vtable->field_0x5C((char *)menu + menu->vtable->field_0x58);
+        linked = menu->field_0x24;
+        linked->vtable->field_0x194((char *)linked + linked->vtable->field_0x190);
     }
 }
 

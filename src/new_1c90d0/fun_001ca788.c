@@ -1,7 +1,7 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK InitXfm();                                  /* extern */
-M2C_UNK func_001A6CA8(s32, M2C_UNK);                /* extern */
+void InitXfm();
+void func_001A6CA8(s32, s32);
 
 void func_001CA788(s32 arg0) {
     InitXfm();

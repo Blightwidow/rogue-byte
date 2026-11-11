@@ -1,18 +1,18 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK CreateSlotheapSwAlign(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK); /* extern */
+s32 CreateSlotheapSwAlign(s32 *, s32, s32, s32);
 extern s32 B_002DD2E0;
 extern s32 B_002DD2E4;
 extern s32 B_002DD2E8;
 extern s32 B_002DD2EC;
 extern s32 B_002DD2F0;
 extern s32 B_002DD2F4;
-extern M2C_UNK B_004520A8;
-extern M2C_UNK B_004520D0;
-extern M2C_UNK B_004520F8;
-extern M2C_UNK B_00452120;
-extern M2C_UNK B_00452148;
-extern M2C_UNK B_00452170;
+extern s32 B_004520A8;
+extern s32 B_004520D0;
+extern s32 B_004520F8;
+extern s32 B_00452120;
+extern s32 B_00452148;
+extern s32 B_00452170;
 
 void StaticInitSlotheaps_170850(s32 arg0, s32 arg1) {
     s32 temp_v0;

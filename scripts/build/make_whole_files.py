@@ -40,6 +40,7 @@ ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 SCRATCH = os.path.join(ROOT, 'work', 'boundaries', 'whole_build')
 HEADER = '// SPDX-License-Identifier: GPL-3.0-or-later\n'
 CLEANUP_LEFT = re.compile(r'M2C_FIELD\b|/\* Error|\b(?:unk_[0-9A-Fa-f]+|phi_[a-z0-9_]+|saved_reg_\w+)\b')
+MANGLED = re.compile(r'^(?:__[a-z]{2,3}__\w+|__\d+[A-Za-z_]\w*|\w+?__(?:F|C?\d+[A-Za-z_])\w*)$')  # a g++ 2.95 mangled function name
 GENERIC_NAME = re.compile(r'^(?:func|fun|sub|FUN)_[0-9A-Fa-f]+$|[0-9A-Fa-f]{6,}')
 
 
@@ -95,8 +96,8 @@ def object_data_use(object_path):
 
 
 def exclusion(functions, matched, swapped):
-    """Why a file cannot take the whole-file path as it is (None when it can): a matched function with its own .rodata or data (the link
-    sends those back to the per-function path), one in a per-function flag list, or one that does not link from C today."""
+    """Why a file cannot take the whole-file path as it is (None when it can): a matched function with its own data other than .rodata
+    (the link sends it back to the per-function path), one in a per-function flag list, or one that does not link from C today."""
     flagged = listed_addresses('move_movables.txt') | listed_addresses('vu0_regs.txt') | listed_addresses('sony_gcc29.txt')
     for address in functions:
         if address not in matched:
@@ -107,7 +108,7 @@ def exclusion(functions, matched, swapped):
         if not os.path.isfile(object_path):
             return f'no per-function object ({address:#X})'
         use = object_data_use(object_path)
-        if use:  # own .rodata links (link_image.py) and proves (compare_object) but make_objdiff.cut_function cannot cut it yet
+        if use == 'data':  # own .rodata links (link_image.py), proves (compare_object) and cuts (cut_function); other data does not yet
             return f'own {use} ({address:#X})'
         if address not in swapped:
             return f'not linked from C today ({address:#X})'
@@ -268,13 +269,60 @@ def rename(text, name, new_name):
     return ''.join(pieces)
 
 
+def leading_comments_length(item):
+    """Length of the whitespace and comments in front of an item's first code character."""
+    index = 0
+    while index < len(item):
+        if item[index].isspace():
+            index += 1
+        elif item.startswith('//', index):
+            newline = item.find('\n', index)
+            index = len(item) if newline < 0 else newline + 1
+        elif item.startswith('/*', index):
+            close = item.find('*/', index + 2)
+            index = len(item) if close < 0 else close + 2
+        else:
+            break
+    return index
+
+
+def flatten_extern_c(text):
+    """`text` with each top-level `extern "C" { }` block opened into items of its own, so that the merge compares (and renames) the
+    declarations inside it one by one: a function declaration or definition and an `extern` variable declaration take the `extern "C"`
+    prefix (the same linkage), written after the item's leading comments; a variable definition keeps a block of its own (with the prefix
+    alone it would become a declaration); a `static` item, a type, a comment or a preprocessor line goes out as it is (linkage does not
+    apply to it, and `extern "C" static` is not valid)."""
+    pieces = []
+    for item in split_items(text):
+        code = code_only(item).strip()
+        if not re.match(r'extern\s*"C"\s*\{', code):
+            pieces.append(item)
+            continue
+        inner = item[item.index('{', item.index('extern')) + 1:item.rindex('}')]
+        for part in split_items(inner):
+            kind, _ = classify(part)
+            part_code = code_only(part).strip()
+            if kind in ('function', 'declaration') and part_code and not re.match(r'static\b', part_code):
+                is_function = kind == 'function' or '(' in part_code.split('=', 1)[0]
+                if part_code.startswith('extern') or is_function:
+                    lead_length = leading_comments_length(part)
+                    lead, body = part[:lead_length], part[lead_length:]
+                    body = body if body.startswith('extern "C"') else 'extern "C" ' + re.sub(r'^extern\s+(?!")', '', body)
+                    pieces.append(lead + body)
+                else:
+                    pieces.append('\nextern "C" {\n' + part.strip('\n') + '\n}\n')
+            else:
+                pieces.append(part)
+    return ''.join(piece if piece.endswith('\n') else piece + '\n' for piece in pieces)
+
+
 def clean_text(text):
     """The mechanical cleanups a whole file takes from its per-function sources: M2C_UNK as the s32 it is, tabs as four spaces, no trailing
-    whitespace, no SPDX line (the whole file has one)."""
+    whitespace, no SPDX line (the whole file has one), and every `extern "C" { }` block opened into its items (flatten_extern_c)."""
     text = re.sub(r'\bM2C_UNK(?:32)?\b', 's32', text)
     lines = [line.replace('\t', '    ').rstrip() for line in text.split('\n')]
     lines = [line for line in lines if 'SPDX-License-Identifier' not in line]
-    return '\n'.join(lines).strip('\n') + '\n'
+    return flatten_extern_c('\n'.join(lines).strip('\n') + '\n')
 
 
 # ---------------------------------------------------------------- building one whole file
@@ -323,12 +371,16 @@ class Merge:
         self.defined = {}  # name -> normalized text of its first struct-like or function definition
         self.declared = {}  # name -> (normalized text, address of the source) of its first declaration or function definition
 
-    def declare_definitions(self, text, address):
-        """Records the function definitions of `text` as the first declarations of their names (rename_declarations)."""
+    def declare_definitions(self, text, address, source_is_c=False):
+        """Records the function definitions of `text` as the first declarations of their names (rename_declarations), with their linkage:
+        a C++ declaration of a function another source defines with C linkage (or the reverse) names another function."""
+        source_linkage = 'C' if self.language == 'c' or (source_is_c and self.wrap_c) else 'C++'
         for item in split_items(text):
             kind, name = classify(item)
             if kind == 'function' and name:
-                self.declared.setdefault(name, (normalized(item.split('{', 1)[0]), address))
+                head = normalized(item.split('{', 1)[0])
+                linkage = 'C' if re.match(r'extern\s*"C"', head) else source_linkage
+                self.declared.setdefault(name, (linkage + ' ' + re.sub(r'^extern\s*(?:"C"\s*)?', '', head), address))
 
     def absorb(self, address, text, source_is_c):
         """The chunk a per-function source adds at its function's place: its includes are collected, an item written before is dropped, a
@@ -350,13 +402,23 @@ class Merge:
             self.notes.append(f'{clash} -> {new_name}')
             text = rename(text, clash, new_name)
         if self.rename_declarations:
+            source_linkage = 'C' if self.language == 'c' or (source_is_c and self.wrap_c) else 'C++'
             for item in split_items(text):
                 kind, name = classify(item)
                 if kind != 'declaration' or not name or '::' in name:
                     continue
-                key = re.sub(r'^extern\s*(?:"C"\s*)?', '', normalized(item)).rstrip(';').strip()
+                code = normalized(item)
+                linkage = 'C' if re.match(r'extern\s*"C"', code) else source_linkage
+                key = linkage + ' ' + re.sub(r'^extern\s*(?:"C"\s*)?', '', code).rstrip(';').strip()
+                if linkage == 'C' and self.language == 'c++' and MANGLED.match(name):
+                    # a C declaration spelled with a C++ mangled name is the same symbol as the C++ declaration it mangles (g++ 2.95 also
+                    # reads a name opening with `__` as an operator): it takes a name of its own, the link finds the callee by call site
+                    new_name = f'c{address:X}{name}' if name.startswith('__') else f'{name}_{address:X}'
+                    self.notes.append(f'declaration {name} -> {new_name}')
+                    text = rename(text, name, new_name)
+                    continue
                 first = self.declared.setdefault(name, (key, address))
-                if first[1] != address and first[0] != key and re.sub(r'^extern\s*(?:"C"\s*)?', '', first[0]) != key:
+                if first[1] != address and first[0] != key:
                     self.notes.append(f'declaration {name} -> {name}_{address:X}')
                     text = rename(text, name, f'{name}_{address:X}')
         kept = []
@@ -379,6 +441,27 @@ class Merge:
         return chunk
 
 
+HEADER_DEFINED = '<defined by a shared header>'
+
+
+def header_types(names, directory=None):
+    """The struct, class and union names that the shared headers `names` (and the headers of include/ they include in turn) define with a
+    body: a per-function source that defines one of them locally takes the address suffix in a whole file holding that header, since one
+    unit cannot hold both definitions."""
+    directory = directory or os.path.join(ROOT, 'include')
+    found, pending, seen = set(), list(names), set()
+    while pending:
+        name = pending.pop()
+        path = os.path.join(directory, name)
+        if name in seen or not os.path.isfile(path):
+            continue
+        seen.add(name)
+        text = code_only(open(path).read())
+        pending += re.findall(r'^\s*#\s*include\s*"([^"]+)"', text, flags=re.M)
+        found.update(re.findall(r'\b(?:struct|class|union)\s+(\w+)\s*(?::[^{;]*)?\{', text))
+    return found
+
+
 def build_whole_file(start, end, functions, matched, read_source=None, language=None, wrap_c=True, rename_declarations=False):
     """(language, text, notes) of the whole file over [start, end): `functions` are the retail function starts in the range (build/splat),
     `matched` src/MANIFEST.tsv. `read_source(path)` returns a per-function source's text (default: from src/). The language is C when every
@@ -391,11 +474,16 @@ def build_whole_file(start, end, functions, matched, read_source=None, language=
     if language is None:
         language = 'c' if sources and all(path.endswith('.c') for _, path in sources) else 'c++'
     merge = Merge(language, wrap_c, rename_declarations)
+    includes_used = set()
+    for address, path in sources:
+        includes_used.update(re.findall(r'^\s*#\s*include\s*"([^"]+)"', read_source(path), flags=re.M))
+    for name in header_types(includes_used):
+        merge.defined.setdefault(name, HEADER_DEFINED)
     body = []
     if rename_declarations:
         for address in functions:
             if address in matched:
-                merge.declare_definitions(clean_text(read_source(matched[address][2])), address)
+                merge.declare_definitions(clean_text(read_source(matched[address][2])), address, matched[address][2].endswith('.c'))
     for address in functions:
         if address not in matched:
             body.append(f'INCLUDE_ASM({address:#X});\n')
@@ -624,37 +712,49 @@ def function_symbols(object_path):
         return found
 
 
-def write_object(output, code, symbols, local_count, relocations, flags=0, alignment=8):
+def write_object(output, code, symbols, local_count, relocations, flags=0, alignment=8, rodata=None):
     """Writes a little-endian MIPS relocatable object with one .text (`code`), its .rel.text and a symbol table. `symbols` are (name, value,
     size, info) after the null symbol, all defined in .text except the ones whose info has a binding (info >> 4) and no type, which are
-    undefined; the first `local_count` entries (the null one included) are local. `relocations` are (offset, symbol index, type)."""
+    undefined; a fifth element, when present, is the symbol's section index (6 for .rodata). The first `local_count` entries (the null one
+    included) are local. `relocations` are (offset, symbol index, type). `rodata`, when given, is (bytes, alignment, relocations): a .rodata
+    section (index 6) and its .rel.rodata (index 7) after the five sections of an object without one."""
     import struct
     names = bytearray(b'\0')
     entries = [struct.pack('<IIIBBH', 0, 0, 0, 0, 0, 0)]
-    for name, value, size, info in symbols:
+    for symbol in symbols:
+        name, value, size, info = symbol[:4]
         position = len(names)
         names.extend(name.encode() + b'\0')
         undefined = info >> 4 and not info & 0xF
-        entries.append(struct.pack('<IIIBBH', position if name else 0, value, size, info, 0, 0 if undefined else 1))
-    relocation_bytes = b''.join(struct.pack('<II', place, index << 8 | kind) for place, index, kind in relocations)
-    section_names = b'\0.text\0.rel.text\0.symtab\0.strtab\0.shstrtab\0'
+        section = symbol[4] if len(symbol) > 4 else 1
+        entries.append(struct.pack('<IIIBBH', position if name else 0, value, size, info, 0, 0 if undefined else section))
+    pack_relocations = lambda items: b''.join(struct.pack('<II', place, index << 8 | kind) for place, index, kind in items)
+    relocation_bytes = pack_relocations(relocations)
+    section_names = b'\0.text\0.rel.text\0.symtab\0.strtab\0.shstrtab\0' + (b'.rodata\0.rel.rodata\0' if rodata else b'')
     blobs = [bytes(code), relocation_bytes, b''.join(entries), bytes(names), section_names]
+    if rodata:
+        blobs += [bytes(rodata[0]), pack_relocations(rodata[2])]
     positions, cursor = [], 52
     for blob in blobs:
         cursor = (cursor + 15) & ~15
         positions.append(cursor)
         cursor += len(blob)
+    section_count = 8 if rodata else 6
     section_table = (cursor + 3) & ~3
-    out = bytearray(section_table + 40 * 6)
-    out[:52] = struct.pack('<4sBBBB8sHHIIIIIHHHHHH', b'\x7fELF', 1, 1, 1, 0, bytes(8), 1, 8, 1, 0, 0, section_table, flags, 52, 0, 0, 40, 6, 5)
+    out = bytearray(section_table + 40 * section_count)
+    out[:52] = struct.pack('<4sBBBB8sHHIIIIIHHHHHH', b'\x7fELF', 1, 1, 1, 0, bytes(8), 1, 8, 1, 0, 0, section_table, flags, 52, 0, 0, 40, section_count, 5)
     for blob, position in zip(blobs, positions):
         out[position:position + len(blob)] = blob
-    out[section_table:] = b''.join([bytes(40),
-                                    struct.pack('<10I', 1, 1, 6, 0, positions[0], len(code), 0, 0, alignment, 0),
-                                    struct.pack('<10I', 7, 9, 0, 0, positions[1], len(relocation_bytes), 3, 1, 4, 8),
-                                    struct.pack('<10I', 17, 2, 0, 0, positions[2], len(blobs[2]), 4, local_count, 4, 16),
-                                    struct.pack('<10I', 25, 3, 0, 0, positions[3], len(names), 0, 0, 1, 0),
-                                    struct.pack('<10I', 33, 3, 0, 0, positions[4], len(section_names), 0, 0, 1, 0)])
+    headers = [bytes(40),
+               struct.pack('<10I', 1, 1, 6, 0, positions[0], len(code), 0, 0, alignment, 0),
+               struct.pack('<10I', 7, 9, 0, 0, positions[1], len(relocation_bytes), 3, 1, 4, 8),
+               struct.pack('<10I', 17, 2, 0, 0, positions[2], len(blobs[2]), 4, local_count, 4, 16),
+               struct.pack('<10I', 25, 3, 0, 0, positions[3], len(names), 0, 0, 1, 0),
+               struct.pack('<10I', 33, 3, 0, 0, positions[4], len(section_names), 0, 0, 1, 0)]
+    if rodata:
+        headers += [struct.pack('<10I', 43, 1, 2, 0, positions[5], len(blobs[5]), 0, 0, rodata[1], 0),
+                    struct.pack('<10I', 51, 9, 0, 0, positions[6], len(blobs[6]), 3, 6, 4, 8)]
+    out[section_table:] = b''.join(headers)
     os.makedirs(os.path.dirname(output) or '.', exist_ok=True)
     with open(output, 'wb') as handle:
         handle.write(out)
@@ -663,8 +763,12 @@ def write_object(output, code, symbols, local_count, relocations, flags=0, align
 def cut_function(object_path, offset, output):
     """(output, outside): a relocatable object holding only the function of the whole object that starts at `offset` (up to the next
     function, function_symbols()), with its relocations. Every other function it refers to becomes an undefined global name, so a call to
-    it reads as a call by name; `outside` maps those names to their offsets in the whole object (retail address = start + offset). Raises
-    ValueError when no function starts at `offset` or a relocation points into the object other than at a named .text symbol."""
+    it reads as a call by name; `outside` maps those names to their offsets in the whole object (retail address = start + offset). When the
+    function reads the object's own .rodata, the cut carries that whole section, as a per-function object carries its own: the code's
+    offsets into it stay as they are, and a jump table entry that points into the function points into the cut (one pointing elsewhere is
+    left as a plain word). Raises ValueError when no function starts at `offset` or a relocation points into the object other than at a
+    named .text symbol or its .rodata."""
+    import struct
     from elftools.elf.elffile import ELFFile
     functions = function_symbols(object_path)
     if offset not in functions:
@@ -673,6 +777,8 @@ def cut_function(object_path, offset, output):
         elf = ELFFile(handle)
         text = elf.get_section_by_name('.text')
         text_index = elf.get_section_index('.text')
+        rodata_section = elf.get_section_by_name('.rodata')
+        rodata_index = elf.get_section_index('.rodata') if rodata_section is not None else None
         end = next((value for value in sorted(functions) if value > offset), text['sh_size'])
         code = text.data()[offset:end]
         symbol_table = elf.get_section_by_name('.symtab')
@@ -681,13 +787,27 @@ def cut_function(object_path, offset, output):
         relocations = [(relocation['r_offset'], relocation['r_info_type'], relocation['r_info_sym'])
                        for relocation in (relocation_section.iter_relocations() if relocation_section else [])
                        if offset <= relocation['r_offset'] < end]
+        rodata_relocation_section = elf.get_section_by_name('.rel.rodata')
+        rodata_relocations = [(relocation['r_offset'], relocation['r_info_type'], relocation['r_info_sym'])
+                              for relocation in (rodata_relocation_section.iter_relocations() if rodata_relocation_section else [])]
+        rodata_bytes = bytearray(rodata_section.data()) if rodata_section is not None else None
+        rodata_alignment = rodata_section['sh_addralign'] if rodata_section is not None else 0
         flags, alignment = elf['e_flags'], text['sh_addralign']
+    uses_rodata = rodata_index is not None and any(symbols[number]['st_shndx'] == rodata_index for _, _, number in relocations)
     table, index_of, outside = [('', 0, 0, 3)], {}, {}  # after the null symbol: the .text section's
+    if uses_rodata:
+        table.append(('', 0, 0, 3, 6))  # the .rodata section's
     for number, symbol in enumerate(symbols):
         if symbol['st_shndx'] == text_index and symbol.name and offset <= symbol['st_value'] < end:
             index_of[number] = len(table) + 1
             kind = {'STT_FUNC': 2, 'STT_OBJECT': 1}.get(symbol['st_info']['type'], 0)
             table.append((symbol.name, symbol['st_value'] - offset, symbol['st_size'], kind))
+        elif uses_rodata and symbol['st_shndx'] == rodata_index:
+            if symbol['st_info']['type'] == 'STT_SECTION':
+                index_of[number] = 2
+            else:
+                index_of[number] = len(table) + 1
+                table.append((symbol.name, symbol['st_value'], symbol['st_size'], {'STT_OBJECT': 1}.get(symbol['st_info']['type'], 0), 6))
     local_count = len(table) + 1
     for place, kind, number in relocations:
         if number in index_of:
@@ -699,7 +819,21 @@ def cut_function(object_path, offset, output):
             raise ValueError(f'relocation at {place:#x} against {symbol.name or "a section"}: not a name')
         index_of[number] = len(table) + 1
         table.append((symbol.name, 0, 0, 0x10))  # an undefined global name
-    write_object(output, code, table, local_count, [(place - offset, index_of[number], kind) for place, kind, number in relocations], flags, alignment)
+    rodata = None
+    if uses_rodata:
+        kept = []
+        for place, kind, number in rodata_relocations:
+            symbol = symbols[number]
+            if kind != 2 or symbol['st_shndx'] != text_index:  # R_MIPS_32 into .text: a jump table entry
+                continue
+            word, = struct.unpack_from('<I', rodata_bytes, place)
+            target = word + (0 if symbol['st_info']['type'] == 'STT_SECTION' else symbol['st_value'])
+            if offset <= target < end:
+                struct.pack_into('<I', rodata_bytes, place, target - offset)
+                kept.append((place, 1, kind))
+        rodata = (rodata_bytes, rodata_alignment, kept)
+    write_object(output, code, table, local_count, [(place - offset, index_of[number], kind) for place, kind, number in relocations], flags,
+                 alignment, rodata)
     return output, outside
 
 

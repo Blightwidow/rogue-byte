@@ -1,9 +1,10 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-M2C_UNK Menu_Reset();                               /* extern */
-M2C_UNK ShopMenu_InitPage(s32);                     /* extern */
+struct Menu;
+void Menu_Reset(struct Menu *);
+void ShopMenu_InitPage(struct Menu *);
 
-void ShopMenu_Reset(s32 arg0) {
-    Menu_Reset();
-    ShopMenu_InitPage(arg0);
+void ShopMenu_Reset(struct Menu *menu) {
+    Menu_Reset(menu);
+    ShopMenu_InitPage(menu);
 }

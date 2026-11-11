@@ -1,8 +1,36 @@
-#include "m2c_macros.h"
+#include "types.h"
 
-extern f32 g_2ddf0c;
+struct MenuVtable;
 
-void GadgetMenu_InitPage(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 0x40) = -1;
-    M2C_FIELD(arg0, f32 *, 0x44) = (f32) g_2ddf0c;
+struct Menu {
+    s32 field_0x0;
+    s32 field_0x4;
+    char pad_0x8[4];
+    struct MenuVtable *vtable;
+    char pad_0x10[8];
+    s32 field_0x18;
+    char pad_0x1C[4];
+    s32 field_0x20;
+    struct Menu *field_0x24;
+    s32 field_0x28;
+    f32 field_0x2C;
+    char pad_0x30[4];
+    f32 field_0x34;
+    char pad_0x38[8];
+    s32 field_0x40;
+    f32 field_0x44;
+    char pad_0x48[4];
+    s32 field_0x4C;
+    struct GadgetEntry *field_0x50;
+};
+
+struct FloatGlobal {
+    f32 value;
+};
+
+extern struct FloatGlobal g_2ddf0c;
+
+void GadgetMenu_InitPage(struct Menu *menu) {
+    menu->field_0x40 = -1;
+    menu->field_0x44 = g_2ddf0c.value;
 }

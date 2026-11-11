@@ -1,9 +1,11 @@
-#include "m2c_macros.h"
+#include "types.h"
+
+typedef struct RefCellS32 { s32 tag; s32 value; } RefCellS32;
 
 s32 IdCurrentLevel();                               /* extern */
 
-void *RefOpIdCurrentLevel(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 4) = IdCurrentLevel();
-    M2C_FIELD(arg0, s32 *, 0) = 0x15;
-    return arg0;
+RefCellS32 *RefOpIdCurrentLevel(RefCellS32 *ref) {
+    ref->value = IdCurrentLevel();
+    ref->tag = 0x15;
+    return ref;
 }
