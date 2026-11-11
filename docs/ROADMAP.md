@@ -220,11 +220,12 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    whole files, 1343 matched functions. Stage 8 (2026-11-11): `cut_function` carries the whole object's `.rodata` into the
    cut of a function that reads it (a jump table entry into the function is rebased), so `make_objdiff.py` cuts those
    functions too and `exclusion` no longer holds back a file for its own `.rodata`: 178 whole files, 1374 matched
-   functions, reports unchanged. Left: 20 files with their own `.rodata` that now fail on their sources (12 m2c leftovers,
-   7 C that does not compile as C++ in one unit, 1 size), 2 with per-function flags, 6 that do not compile as
-   one unit (two sources define one class differently: `TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`; a C source's `char` extern
-   against a typed one; a missing prototype), 2 waiting on a source that scores above 0 typed (0x153128, 0x1D4FA0), 1 that
-   compiles with a different size.
+   functions, reports unchanged. 206 more rewritten sources (m2c leftovers, C that did not compile as C++ in one unit) then
+   brought it to 195 whole files, 1723 matched functions. Left: 5 files whose sources declare one callee or global with
+   different types (gs, jump, po-screen, `PloFindSpawn`, so-wr: `InitMeter`, `CploFindSwObjectsByClass`, `UNoise`, ...),
+   4 where two sources define one class differently (`TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`: needs shared types), 2 that
+   compile with a different size (0x149A50, 0x14CC4C), 1 waiting on 0x153128 (score 0 typed only through a steering
+   local), 2 with per-function flags.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
    file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from
