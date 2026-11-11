@@ -1962,5 +1962,51 @@ class DataDefinitionTests(unittest.TestCase):
         self.assertEqual(self.kinds('void f()\n{\n    float a = 1.0f;\n}\n'), [])
 
 
+
+class RodataFileTests(unittest.TestCase):
+    """make_data_files.py --section rodata: const globals, jump tables and owned ranges left out. Synthetic labels; retail bytes patched."""
+
+    def setUp(self):
+        import make_data_files
+        self.module = make_data_files
+        self.bytes = {}
+        original = make_data_files.retail_bytes
+        make_data_files.retail_bytes = lambda address, size: b''.join(self.bytes.get(address + offset, b'\0') for offset in range(size))
+        self.addCleanup(setattr, make_data_files, 'retail_bytes', original)
+
+    def put_word(self, address, value):
+        for offset, byte in enumerate(struct.pack('<I', value)):
+            self.bytes[address + offset] = bytes([byte])
+
+    def test_rodata_scalar_is_an_extern_const(self):
+        self.put_word(0x2A0000, 0x3FC00000)
+        label = {'name': 'D_002A0000', 'address': 0x2A0000, 'items': [(0x2A0000, '.float', '1.5')]}
+        text, _ = self.module.make_source('rodata/x', 0x2A0000, 4, {}, set(), labels=[label], section='rodata')
+        self.assertIn('extern const float D_002A0000 = 1.5f;', text)
+
+    def test_rodata_address_table_is_a_const_pointer_array(self):
+        self.put_word(0x2A0000, 0x100000)
+        label = {'name': 'D_002A0000', 'address': 0x2A0000, 'items': [(0x2A0000, '.word', 'Foo'), (0x2A0004, '.word', '0x00000000')]}
+        text, _ = self.module.make_source('rodata/x', 0x2A0000, 8, {'Foo': 0x100000}, {'Foo'}, labels=[label], section='rodata')
+        self.assertIn('extern void *const D_002A0000[2] = {(void *)Foo, 0};', text)
+
+    def test_a_jump_table_is_not_typed(self):
+        label = {'name': 'jtbl_002A0000', 'address': 0x2A0000, 'items': [(0x2A0000, '.word', '.L00131230')]}
+        self.assertEqual(self.module.build_runs(label, 0x2A0004, {}, set()), 'a jump table (its entries are code labels)')
+
+    def test_rodata_refuses_a_long_plain_word_array(self):
+        label = {'name': 'D_002A0000', 'address': 0x2A0000, 'items': [(0x2A0000 + 4 * index, '.word', '0x00000001') for index in range(65)]}
+        text, why = self.module.make_source('rodata/x', 0x2A0000, 260, {}, set(), labels=[label], section='rodata')
+        self.assertEqual((text, why), (None, 'D_002A0000: a plain word array over 64 elements needs a type from the code that reads it'))
+
+    def test_an_owned_label_cuts_the_groups(self):
+        labels = [{'name': f'D_{address:08X}', 'address': address, 'items': [(address, '.float', '1.0')]} for address in (0x2A0000, 0x2A0004, 0x2A0008)]
+        original = self.module.parse_piece
+        self.module.parse_piece = lambda name: labels
+        self.addCleanup(setattr, self.module, 'parse_piece', original)
+        groups, skipped = self.module.groups_of('rodata/x', 0x2A0000, 12, {}, set(), owned=[(0x2A0004, 0x2A0008)])
+        self.assertEqual(([(start, size) for start, size, _ in groups], [row[0] for row in skipped]),
+                         ([(0x2A0000, 4), (0x2A0008, 4)], ['D_002A0004']))
+
 if __name__ == '__main__':
     unittest.main()

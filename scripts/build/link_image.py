@@ -129,13 +129,13 @@ def trim_rodata(object_path):
     open(trimmed, 'wb').write(blob)
     return trimmed, size
 
-def trim_data(object_path, size):
-    """A copy of the object whose .data is `size` bytes: the compiler pads the section to its alignment (8), and the padding would overwrite the
-    retail bytes that follow the piece. Returns the path (unchanged when nothing is cut)."""
+def trim_data(object_path, size, section_name='.data'):
+    """A copy of the object whose .data (or .rodata) is `size` bytes: the compiler pads the section to its alignment (8), and the padding would
+    overwrite the retail bytes that follow the piece. Returns the path (unchanged when nothing is cut)."""
     with open(object_path, 'rb') as handle:
         elf = ELFFile(handle)
-        index = elf.get_section_index('.data')
-        current = elf.get_section_by_name('.data')['sh_size']
+        index = elf.get_section_index(section_name)
+        current = elf.get_section_by_name(section_name)['sh_size']
     if current <= size:
         return object_path
     blob = bytearray(open(object_path, 'rb').read())
@@ -337,10 +337,11 @@ for start, end, file in whole_files():
             continue
     wholes[start] = (end, object_path, found[1], rodata_size, rodata_base)
 
-# data files (config/us/data_files.tsv): an object whose .data is retail's bytes at [start, end), linked there instead of the assembly piece.
+# data files (config/us/data_files.tsv): an object whose .data (a .data piece) or .rodata (a .rodata piece: const globals) is retail's bytes at
+# [start, end), linked there instead of the assembly piece.
 # Unlike a function's own rodata it defines named globals (docs/contributing/exceptions.md "Game data defined in source"); a file whose
 # bytes differ from retail is not linked (its range stays assembly).
-data_files = {}  # start -> (end, object path)
+data_files = {}  # start -> (end, object path, section)
 data_list = os.path.join('config', 'us', 'data_files.tsv')
 for line in (list(open(data_list))[1:] if os.path.isfile(data_list) else []):
     start_text, end_text, file = line.rstrip('\n').split('\t')
@@ -350,13 +351,16 @@ for line in (list(open(data_list))[1:] if os.path.isfile(data_list) else []):
         print(f'data file {file}: not linked (no object)', flush=True)
         continue
     with open(object_path, 'rb') as handle:
-        section = ELFFile(handle).get_section_by_name('.data')
+        elf = ELFFile(handle)
+        data_section = elf.get_section_by_name('.data')
+        section_name = '.data' if data_section is not None and data_section['sh_size'] else '.rodata'
+        section = elf.get_section_by_name(section_name)
         content = section.data() if section is not None else b''
     # a word the object relocates (an address) is zero here and is resolved by the link: only the others are compared now, the whole range after it
     if len(content) < end - start or content[end - start:].strip(b'\0') or len(content) > end - start + 7:
-        print(f'data file {file}: not linked (its .data is {len(content):#x} bytes, retail\'s piece {end - start:#x})', flush=True)
+        print(f'data file {file}: not linked (its {section_name} is {len(content):#x} bytes, retail\'s piece {end - start:#x})', flush=True)
         continue
-    data_files[start] = (end, trim_data(object_path, end - start))
+    data_files[start] = (end, trim_data(object_path, end - start, section_name), section_name)
 
 def in_whole(address, active):
     return any(start <= address < wholes[start][0] for start in active)
@@ -483,7 +487,7 @@ def build(swapped, active, raw_pieces):
         return a, stem + '.o', '.data'
     with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
         pieces = list(pool.map(wrap, jobs))
-    pieces += [(start, data_files[start][1], '.data') if start in data_files else
+    pieces += [(start, data_files[start][1], data_files[start][2]) if start in data_files else
                (start, (wholes[address][1] if address in active else candidates[address][0]), '.rodata') for start, _, address in holes]
     rodata_sections = [f'    .{"dd" if piece[0] in data_files and piece[1] == data_files[piece[0]][1] else "ro"}_{piece[0]:06X} 0x{piece[0]:X} : SUBALIGN(1) {{ */{os.path.basename(piece[1])}({piece[2]}) }}'
                        for piece in sorted(pieces)]
@@ -497,6 +501,16 @@ def build(swapped, active, raw_pieces):
     subprocess.check_call([BINUTILS + '-objcopy', '-O', 'binary', os.path.join(BUILD, 'image.elf'), os.path.join(BUILD, 'image.bin')])
     return open(os.path.join(BUILD, 'image.bin'), 'rb').read(), {piece[0] for piece in pieces if piece[1].endswith('_asm.o')}
 
+# every range a compiled object may own in .rodata (a function's or a whole file's literals and jump tables): make_data_files.py --section rodata
+# leaves these to their objects. A data file that overlaps one anyway is not linked (its range stays assembly).
+owned = sorted([(candidates[address][3], candidates[address][3] + candidates[address][2]) for address in candidates if candidates[address][2]] +
+               [(wholes[start][4], wholes[start][4] + wholes[start][3]) for start in wholes if wholes[start][3]])
+with open(os.path.join(BUILD, 'owned_rodata.tsv'), 'w') as handle:
+    handle.write('start\tend\n' + ''.join(f'{low:#X}\t{high:#X}\n' for low, high in owned))
+for start in sorted(data_files):
+    if any(low < data_files[start][0] and start < high for low, high in owned):
+        print(f'data file at {start:#X}: not linked (it overlaps the rodata of a compiled object)', flush=True)
+        del data_files[start]
 active = set(wholes)
 swapped = {address for address in candidates if not in_whole(address, active)}
 differences = {}
@@ -517,7 +531,7 @@ for attempt in range(1, 12):
     bad_pieces = {piece_ranges[(start, end)] for start in asm_pieces for end in [start + next(size for _, begin, size in piece_list if begin == start)]
                   if image[start - TEXT_START:end - TEXT_START] != region[start - RODATA_START:end - RODATA_START]}
     raw_pieces |= bad_pieces
-    failing_data = {start for start, (end, _) in data_files.items()
+    failing_data = {start for start, (end, _, _) in data_files.items()
                     if image[start - TEXT_START:end - TEXT_START] != retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + end - TEXT_START]}
     for start in sorted(failing_data):
         actual, expected = image[start - TEXT_START:data_files[start][0] - TEXT_START], retail[FILE_OFFSET_OF_TEXT + start - TEXT_START:FILE_OFFSET_OF_TEXT + data_files[start][0] - TEXT_START]

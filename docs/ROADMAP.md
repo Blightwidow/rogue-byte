@@ -243,6 +243,15 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    them over 1 KB). First global defined in C (2026-11-09): `src/crv-lo/data_2bdce0.cpp` defines `g_2bdce0` and `g_2bdcf0` as `float[4]` (retail's two 16-byte vectors; the earlier "8 bytes short" was the wrong type), listed in `config/us/data_files.tsv`; `link_image.py` links its `.data` at retail's address (`.dd_<address>`) and checks the bytes, `make_objdiff.py` counts it (data 8,375 -> 8,407 bytes). Remaining: `.bss`, more regions, the list feeding the report per global. The real work is whole data regions per file (labels to the next label, typed from what retail's code does), `.data` and `.bss`
    sections placed at retail's address (`-fdata-sections`), and a list of the defined globals feeding the report, as sly1-decomp does. Depends on 2.
    Data regions are typed with the shared headers of item 1, not with new per-file structs.
+   `.rodata` from C (2026-11-11): `make_data_files.py --section rodata` writes the `.rodata` pieces as `extern const` globals
+   (this compiler places them in `.rodata`; every symbol is made local, the names resolve through the link script as for
+   `.data`) and leaves out what a compiled object may own (`build/image/owned_rodata.tsv`, written by `link_image.py`: a
+   function's or a whole file's literals and jump tables), the jump tables of unmatched functions (code labels) and plain word
+   arrays over 64 elements, which need a type from the code that reads them. 151 of 176 groups prove (111,650 bytes, the
+   96 KB address table at 0x262380 among them); data 20.36% -> 31.39%. Left in `.rodata`: 171 KB of plain word tables
+   (`D_0027A790` 128 KB and `D_0029A8D0` 32 KB in `puffer-slotheap`, nothing reads them by name: find their readers to type
+   them), 151 jump tables of unmatched functions (11 KB), 25 groups where Splat's labels split a word (the compiler pads
+   the first label's type), and the 9 KB compiled objects own.
 4. **Port-facing metadata, no code change.** A layer column in `src/MANIFEST.tsv` and the registry (game logic, engine, platform:
    GS, VIF and DMA, IOP, memory card, pad, VU microcode); JSON exports of symbols, the class tree, vtable layouts and struct offsets
    generated from the headers; hardware access behind named macros or inlines only where retail's bytes are identical. Depends on 1.
