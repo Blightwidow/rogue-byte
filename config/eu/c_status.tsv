@@ -973,6 +973,7 @@ us_address	name	other_address	pair	score	addresses
 0x11E178	func_0011E178	0X11E178	identical	0	ok
 0x11F2E8	bif__static_initialization_and_destruction_0	0X11F2E8	same	0	ok
 0x11F420	bif__GLOBAL__I_slotheaps	0X11F420	identical	0	ok
+0x11FEC8	RefOpDiv	0X11FEC8	same	0	ok
 0x1202D0	RefOpPrint	0X1202D0	identical	0	ok
 0x120300	RefOpPrintFrame	0X120300	identical	0	ok
 0x120330	RefOpPrintSidebag	0X120330	identical	0	ok
@@ -2575,6 +2576,7 @@ us_address	name	other_address	pair	score	addresses
 0x1843C0	func_001843C0	0X184348	same	0	ok
 0x1844A0	AttachZone_OnAdd	0X184428	same	0	ok
 0x1844D8	AttachZone_OnRemove	0X184460	same	0	ok
+0x184510	AttachZone_GetAimPos	0X184498	same	0	ok
 0x184670	PmemberFromLo	0X1845F8	identical	0	ok
 0x184750	StaticInitSlotheaps_184750	0X1846D8	same	0	ok
 0x184888	StaticInitSlotheaps_184750_thunk	0X184810	same	0	ok
@@ -3721,6 +3723,8 @@ us_address	name	other_address	pair	score	addresses
 0x1E1128	AddSeqRecordSetEyes	0X1E18E8	same	0	ok
 0x1E1178	AddSeqRecordSoundEffect	0X1E1938	same	0	ok
 0x1E1208	AddSeqRecordStopSoundEffect	0X1E19C8	same	0	ok
+0x1E1238	AddSeqRecordConfrontCamera	0X1E19F8	same	0	ok
+0x1E12E0	AddSeqRecordEndConfrontCamera	0X1E1AA0	same	0	ok
 0x1E1388	AddSeqRecordRevokeConfrontCamera	0X1E1B48	same	0	ok
 0x1E13B8	AddSeqRecordShowBinoc	0X1E1B78	same	0	ok
 0x1E1408	AddSeqRecordHideBinoc	0X1E1BC8	same	0	ok
@@ -4643,6 +4647,7 @@ us_address	name	other_address	pair	score	addresses
 0x217FE0	SeekSpriteInstanceFraction	0X218800	same	0	ok
 0x218038	func_00218038	0X218858	same	0	ok
 0x218060	SeekSpriteInstanceTime	0X218880	same	0	ok
+0x218220	UpdateRootSprite	0X218A40	same	4	ok
 0x2183E8	UpdateSpriteInstance	0X218C08	same	0	ok
 0x2185D0	func_002185D0	0X218DF0	same	0	ok
 0x2185F8	func_002185F8	0X218E18	same	0	ok

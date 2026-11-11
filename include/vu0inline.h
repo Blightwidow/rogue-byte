@@ -41,4 +41,22 @@ static inline QW SqrtX(QW v)
     return root;
 }
 
+/* vmulx.xyzw: every lane of `v` times lane x of `s` (s from VectorFromFloat or QuadFromFloat for a float). The scale is the first
+   input operand, as GCC then allocates retail's registers (RefOpDiv) */
+static inline QW VectorScaleX(QW v, QW s)
+{
+    QW scaled;
+    asm("vmulx.xyzw %0, %2, %1x" : "=j"(scaled) : "j"(s), "j"(v));
+    return scaled;
+}
+
+/* qmtc2.ni: a float's bits into lane x of a VU0 register; GCC moves the float to a general register itself (mfc1) first
+   (RefOpDiv, UpdateWipe) */
+static inline QW VectorFromFloat(float value)
+{
+    QW quad;
+    asm("qmtc2.ni %1, %0" : "=j"(quad) : "r"(value));
+    return quad;
+}
+
 #endif

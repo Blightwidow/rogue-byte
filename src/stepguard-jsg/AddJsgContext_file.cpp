@@ -6,6 +6,8 @@
 #include "m2c_macros.h"
 #include "dl.h"
 #include "include_asm.h"
+#include "vu0inline.h"
+#include "ps2inline.h"
 
 struct ITEM { char pad[0x10]; int value; };
 
@@ -546,9 +548,33 @@ extern "C" void AddSeqRecordStopSoundEffect(void *jsg, int value)
     *(int *)((char *)PjsgeAllocJsg_1E1208(jsg, 55, 1) + 0x10) = value;
 }
 
-INCLUDE_ASM(0X1E1238);
+struct JSGE_1E1238 { char pad[0x10]; QW position; float radiansX, radiansY, radiansZ, pad2; float field_0x30; char pad3[0xC]; float field_0x40; int field_0x44; };
 
-INCLUDE_ASM(0X1E12E0);
+void AddSeqRecordConfrontCamera(JSG *pjsg, QW position, QW degrees, int field44, float field30, float field40)
+{
+    JSGE_1E1238 *pjsge = (JSGE_1E1238 *)PjsgeAllocJsg(pjsg, 0x38, 1);
+    pjsge->field_0x44 = field44;
+    pjsge->position = position;
+    pjsge->field_0x30 = field30;
+    pjsge->field_0x40 = field40;
+    pjsge->radiansX = LaneX(degrees) * 0.017453294f;
+    pjsge->radiansY = LaneYInGeneralRegister((degrees)) * 0.017453294f;
+    pjsge->radiansZ = LaneZInGeneralRegister(degrees) * 0.017453294f;
+}
+
+struct JSGE_1E12E0 { char pad[0x10]; QW position; float radiansX, radiansY, radiansZ, pad2; float field_0x30; char pad3[0xC]; int field_0x40; int field_0x44; };
+
+void AddSeqRecordEndConfrontCamera(JSG *pjsg, QW position, QW degrees, int field40, int field44, float field30)
+{
+    JSGE_1E12E0 *pjsge = (JSGE_1E12E0 *)PjsgeAllocJsg(pjsg, 0x39, 1);
+    pjsge->field_0x44 = field44;
+    pjsge->position = position;
+    pjsge->field_0x30 = field30;
+    pjsge->field_0x40 = field40;
+    pjsge->radiansX = LaneX(degrees) * 0.017453294f;
+    pjsge->radiansY = LaneYInGeneralRegister((degrees)) * 0.017453294f;
+    pjsge->radiansZ = LaneZInGeneralRegister(degrees) * 0.017453294f;
+}
 
 extern "C" void *PjsgeAllocJsg_1E1388(void *, int, int);
 

@@ -32,7 +32,7 @@ struct BASIC {
     virtual void OnAdd();               /*  1: OnLoAdd */
     virtual void Slot2();               /*  2: func_00132B08 */
     virtual void HandleSpliceEvent(int event, int argument0, int argument1, int argument2, int argument3); /*  3: HandleLoSpliceEvent (LO); SetHbskHbsks passes five words */
-    virtual void PostMessage();         /*  4: PostLoMessage */
+    virtual void PostMessage(int msgid, void *pv); /*  4: PostLoMessage (LO *, int, void *); UpdateWater passes a message id and its data */
     virtual void HandleMessage();       /*  5: HandleLoMessage */
     virtual void Slot6();               /*  6: func_00113A30 (LO), func_00113D10 (SO) */
 };
