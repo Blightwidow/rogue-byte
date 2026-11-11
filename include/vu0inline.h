@@ -32,4 +32,13 @@ static inline QW SquaredLength(QW v)
     return v;
 }
 
+/* the square root of lane x, in lane x: vsqrt writes Q, vwaitq waits for it, vaddq.x copies it out (Q, like ACC, has no C form, so the
+   three stay together). With SquaredLength and LaneX it is the distance between two points (BuildJtTargetList, WakeSoWater) */
+static inline QW SqrtX(QW v)
+{
+    QW root;
+    asm("vsqrt $Q, %1x\n\tvwaitq\n\tvaddq.x %0, $vf0, $Q" : "=j"(root) : "j"(v));
+    return root;
+}
+
 #endif

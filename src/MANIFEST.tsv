@@ -2367,6 +2367,7 @@ address	name	size	file	whole_file	symbol
 0X179E80	func_00179E80	120	hide-puffer/fun_00179e80.cpp		
 0X179EF8	func_00179EF8	120	hide-puffer/fun_00179ef8.cpp		
 0X179F70	func_00179F70	44	hide-puffer/fun_00179f70.cpp		
+0X179FA0	GoalJump_Activate	1072	hide-puffer/GoalJump_Activate.cpp		
 0X17A3D0	func_0017A3D0	44	hide-puffer/fun_0017a3d0.c		
 0X17A400	func_0017A400	100	hide-puffer/fun_0017a400.cpp		
 0X17A4B0	func_0017A4B0	52	hide-puffer/fun_0017a4b0.cpp		
@@ -2679,6 +2680,7 @@ address	name	size	file	whole_file	symbol
 0X1942F0	func_001942F0	472	new_1942f0/fun_001942f0.cpp		
 0X194558	FAttachAllowsGadget	228	new_1942f0/FAttachAllowsGadget.cpp		
 0X194640	func_00194640	68	new_1942f0/fun_00194640.cpp		
+0X194A40	BuildJtTargetList	1284	new_1942f0/BuildJtTargetList.cpp		
 0X194F48	func_00194F48	36	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00194F48
 0X195608	func_00195608	196	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00195608
 0X1956D0	PloSpawnTargetIndicator	236	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	PloSpawnTargetIndicator

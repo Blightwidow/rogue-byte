@@ -2367,6 +2367,7 @@ us_address	name	other_address	pair	score	addresses
 0x179E80	func_00179E80	0X179E08	same	0	ok
 0x179EF8	func_00179EF8	0X179E80	same	0	ok
 0x179F70	func_00179F70	0X179EF8	same	0	ok
+0x179FA0	GoalJump_Activate	0X179F28	same	0	ok
 0x17A3D0	func_0017A3D0	0X17A358	same	0	ok
 0x17A400	func_0017A400	0X17A388	same	0	ok
 0x17A4B0	func_0017A4B0	0X17A438	same	0	ok
@@ -2679,6 +2680,7 @@ us_address	name	other_address	pair	score	addresses
 0x1942F0	func_001942F0	0X194278	same	0	ok
 0x194558	FAttachAllowsGadget	0X1944E0	same	0	ok
 0x194640	func_00194640	0X1945C8	identical	0	ok
+0x194A40	BuildJtTargetList	0X1949C8	same	1	ok
 0x194F48	func_00194F48	0X194ED0	identical	0	ok
 0x195608	func_00195608	0X195590	same	0	ok
 0x1956D0	PloSpawnTargetIndicator	0X195658	same	0	ok
