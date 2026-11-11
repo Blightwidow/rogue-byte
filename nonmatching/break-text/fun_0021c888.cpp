@@ -53,13 +53,13 @@ void func_0021C888(Owner_21C888 *self, void *stream)
             seg->row[1] = act->row[1];
             seg->row[2] = act->row[2];
             Xf_21C888 *xf = PvAllocAct(0x20);
-            xf->kind = 3;
-            xf->vtable = D_002DB338;
-            xf->owner = self;
             xf->slot = -1;
-            xf->act = seg->act;
-            xf->seg = seg;
+            xf->kind = 3;
+            xf->owner = self;
             xf->flags = 0x10;
+            xf->act = seg->act;
+            xf->vtable = D_002DB338;
+            xf->seg = seg;
             InsertXfAct(self, seg->act, xf);
             *(Seg_21C888 **)((char *)seg->act + 0xA8) = seg;
         }

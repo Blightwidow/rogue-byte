@@ -11,12 +11,12 @@ void sprbuf__static_initialization_and_destruction_0(int arg0, int arg1) {
         SPRBUF_2019F0 *slot = B_003DD2C0;
         SPRBUF_2019F0 buffer;
         memset(&buffer, 0, 0x50);
-        buffer.word[0] = (int)B_003DD380 | 0x20000000;
         buffer.word[1] = 0x70000000;
+        buffer.word[0] = (int)B_003DD380 | 0x20000000;
         *slot = buffer;
         memset(&buffer, 0, 0x50);
-        buffer.word[0] = (int)B_003DD400 | 0x20000000;
         buffer.word[1] = 0x70002000;
+        buffer.word[0] = (int)B_003DD400 | 0x20000000;
         slot++;
         *slot = buffer;
         if (++B_002DD2E0 == 1) CreateSlotheapSwAlign(B_004520A8, 0x14, 0x2000, 0x10);

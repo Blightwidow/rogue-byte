@@ -1143,6 +1143,7 @@ us_address	name	other_address	pair	score	addresses
 0x126758	RefEvalIf__FP5CPairP6CFrame	0X126758	identical	0	ok
 0x126840	RefEvalOr__FP5CPairP6CFrame	0X126840	identical	0	ok
 0x126928	RefEvalAnd__FP5CPairP6CFrame	0X126928	identical	0	ok
+0x126A18	RefEvalCond__FP5CPairP6CFrame	0X126A18	identical	0	ok
 0x126DB8	RefEvalLet	0X126DB8	same	0	ok
 0x126F78	RefEvalWhile__FP5CPairP6CFrame	0X126F78	identical	0	ok
 0x127068	RefEvalLambda	0X127068	same	0	ok
@@ -3000,6 +3001,7 @@ us_address	name	other_address	pair	score	addresses
 0x1AF608	PauseMenu_Pop	0X1AF780	same	0	ok
 0x1AF660	PauseMenu_Close	0X1AF7D8	same	0	ok
 0x1AF6A0	func_001AF6A0	0X1AF818	same	0	ok
+0x1AFB88	PauseMenu_ApplyOption		none		
 0x1AFF88	PauseMenu_CancelOption	0X1B0148	same	0	ok
 0x1B0078	func_001B0078	0X1B0238	same	0	ok
 0x1B0108	func_001B0108	0X1B02C8	same	0	ok
@@ -3335,6 +3337,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C8030	PostClueLoad	0X1C8298	same	0	ok
 0x1C8090	PpathVaultFlag	0X1C82F8	same	0	ok
 0x1C8110	FVaultOpen	0X1C8378	same	0	ok
+0x1C8188	SetVaultOpen		none		
 0x1C8280	func_001C8280	0X1C84F0	same	0	ok
 0x1C82F0	func_001C82F0	0X1C8560	same	0	ok
 0x1C8918	func_001C8918	0X1C8B88	same	0	ok
@@ -3532,6 +3535,8 @@ us_address	name	other_address	pair	score	addresses
 0x1D7D30	FSaveDataMatchesLayout	0X1D7FA8	identical	0	ok
 0x1D7DA0	FFindSaveVar	0X1D8018	identical	0	ok
 0x1D7E80	PvFindSaveVar	0X1D80F8	same	0	ok
+0x1D7ED8	RefGetSaveValue	0X1D8150	same	0	ok
+0x1D80C8	RefSetSaveValue	0X1D8340	same	0	ok
 0x1D84B0	SnapshotSaveData	0X1D8728	same	0	ok
 0x1D8600	InitSymtab	0X1D8878	same	0	ok
 0x1D8640	NHashPchz	0X1D88B8	same	0	ok
@@ -4240,6 +4245,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FFCD8	func_001FFCD8	0X200498	same	0	ok
 0x1FFCF8	PeopidFind__FP5BASICi	0X2004B8	same	0	ok
 0x1FFD98	RefGetPeopid	0X200558	same	0	ok
+0x200598	RefSetPeopid	0X200D58	same	0	ok
 0x200BA0	RefGetOption	0X201360	same	0	ok
 0x200C28	RefSetOption__FP5BASICiP4CRef	0X2013E8	same	0	ok
 0x200CA8	RefAddOption__FP5BASICiP4CRef	0X201468	identical	0	ok
