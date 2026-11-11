@@ -15,7 +15,7 @@ struct SemaParams {
 
 extern "C" void CreateSema(SemaParams *);
 
-extern "C" void memset(SemaParams *, s32, s32);
+extern "C" void *memset(void *, int, unsigned int);
 
 extern "C" void NewSema(s32 arg0, s32 arg1) {
     SemaParams params __attribute__((aligned(16)));

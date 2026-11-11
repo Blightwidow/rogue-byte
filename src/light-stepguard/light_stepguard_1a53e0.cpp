@@ -696,7 +696,7 @@ int func_001A6AF8(Node *start, Node *target)
 extern "C" {
 extern float D_002C44F0[];
 
-void *memset(void *, int, int);
+extern "C" void *memset(void *, int, unsigned int);
 
 float *func_001A6B30(int unused, float *matrix) {
     if (matrix != 0) {

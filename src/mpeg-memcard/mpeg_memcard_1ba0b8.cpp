@@ -226,7 +226,7 @@ extern "C" void GoalBrain_SetCommand(s32, s8 *);
 
 extern "C" s32 func_00205458_1BA980(GoalBrainOwner *, s32);
 
-extern "C" void *memset(void *, s32, s32);
+extern "C" void *memset(void *, int, unsigned int);
 
 extern "C" void func_001BA980(GoalBrainOwner *owner, s32 value) {
     s8 command[0x70] __attribute__((aligned(16)));
