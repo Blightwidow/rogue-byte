@@ -15,6 +15,7 @@
 #include "sly2.h"
 
 enum TAGK {
+    TAGK_Nil = -1, /* no value: RefOpDiv and the RefOp functions set a result's tag to -1 (addiu -1) before filling it */
     TAGK_S32 = 0x15,
     TAGK_F32 = 0x16,
     TAGK_Bool = 0x17,

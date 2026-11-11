@@ -5,6 +5,8 @@
 #include "types.h"
 #include "m2c_macros.h"
 #include "include_asm.h"
+#include "po.h"
+#include "ps2inline.h"
 
 extern float g_2dded0;
 
@@ -75,7 +77,54 @@ void func_0020D1C8(Guard *guard)
     SetGuardDamageState_20D1C8(guard, 0);
 }
 
-INCLUDE_ASM(0X20D1F8);
+struct SRC_DAMAGE : SO { char pad[0x188 - sizeof(SO)]; int grftak; };
+
+struct GUARDDAMAGE { PO *pguard; int state; float tState; SRC_DAMAGE *psrc; int fActive; };
+
+extern "C" QW PosLoWorld(void *);
+
+extern "C" void SetGuardDamageState(GUARDDAMAGE *, int);
+
+extern "C" float g_2dded0;
+
+extern "C" float D_002C3E58;
+
+void UpdateGuardDamage(GUARDDAMAGE *pdamage)
+{
+    if (pdamage->fActive == 0)
+        return;
+    int stateCheck;
+    do {
+        stateCheck = pdamage->state;
+        switch (stateCheck) {
+        case 0: {
+            int fHit = 0;
+            SRC_DAMAGE *psrc = pdamage->psrc;
+            if (psrc != 0) {
+                if (psrc->Slot73(PosLoWorld(pdamage->pguard)) != 0) {
+                    if (FloatFromWord(LaneWordZ(pdamage->pguard->GetVelocityVec())) < 0.0f)
+                        fHit = 1;
+                }
+                if (fHit != 0)
+                    SetGuardDamageState(pdamage, 1);
+            }
+            break;
+        }
+        case 1:
+            if (pdamage->psrc == 0) {
+                SetGuardDamageState(pdamage, 0);
+            } else if (g_2dded0 - pdamage->tState > D_002C3E58) {
+                if (pdamage->pguard->FInvulnerable(pdamage->psrc->grftak) == 0)
+                    SetGuardDamageState(pdamage, 2);
+            }
+            break;
+        case 2:
+            if (pdamage->psrc == 0 || pdamage->pguard->FInvulnerable(pdamage->psrc->grftak) != 0)
+                SetGuardDamageState(pdamage, 0);
+            break;
+        }
+    } while (pdamage->state != stateCheck);
+}
 
 struct SRC { char pad[0x184]; int ndamage; int grftak; };
 

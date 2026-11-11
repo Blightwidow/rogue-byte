@@ -38,7 +38,7 @@ struct SO : LO {
     virtual void Slot72(void *pwater, float dt); /* 72: AddWaterExternalAccelerations */
     virtual int Slot73(QW pos);         /* 73: UpdateRip */
     virtual void Slot74();              /* 74: func_001F7410; func_001F7950 calls it without arguments */
-    virtual void FAbsorbWkr();          /* 75: FAbsorbSoWkr */
+    virtual int FAbsorbWkr(void *pzpd);  /* 75: FAbsorbSoWkr (SO, a ZPD); ZapTakeDamage passes the object's ZPD */
 
     u8 unknown_0x50[0x8];
     /* 0x58 */ struct XF *pxfLinear;   /* Carry_Attach, ProjectSoTransform, func_001F8F80, func_001CD308 */

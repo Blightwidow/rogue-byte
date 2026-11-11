@@ -973,6 +973,7 @@ address	name	size	file	whole_file	symbol
 0X11E178	func_0011E178	32	util/RadNormalize_file.cpp	util/RadNormalize_file.cpp	func_0011E178
 0X11F2E8	bif__static_initialization_and_destruction_0	308	util-splice-bif/bif_file.c	util-splice-bif/bif_file.c	bif__static_initialization_and_destruction_0
 0X11F420	bif__GLOBAL__I_slotheaps	32	util-splice-bif/bif_file.c	util-splice-bif/bif_file.c	bif__GLOBAL__I_slotheaps
+0X11FEC8	RefOpDiv	1032	util-splice-bif/RefOpDiv.cpp		
 0X1202D0	RefOpPrint	44	util-splice-bif/RefOpPrint.cpp		
 0X120300	RefOpPrintFrame	44	util-splice-bif/RefOpPrintFrame.cpp		
 0X120330	RefOpPrintSidebag	60	util-splice-bif/RefOpPrintSidebag.cpp		
@@ -1600,6 +1601,7 @@ address	name	size	file	whole_file	symbol
 0X143BD8	func_00143BD8	156	new_13f888/fun_00143bd8.cpp		
 0X143C78	func_00143C78	128	new_13f888/fun_00143c78.cpp		
 0X143CF8	JT_TranslateToPos	40	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_TranslateToPos
+0X143D20	FJtLandsWithin	196	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	FJtLandsWithin
 0X143DE8	func_00143DE8	244	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	func_00143DE8
 0X143EE0	JT_StartPose	280	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_StartPose
 0X143FF8	JT_EndPose	64	new_13f888/JT_TranslateToPos_file.cpp	new_13f888/JT_TranslateToPos_file.cpp	JT_EndPose
@@ -1899,6 +1901,7 @@ address	name	size	file	whole_file	symbol
 0X154080	SetSensorEntryState	216	rip-game/SetSensorEntryState.cpp		
 0X154158	NGetSensorLoState	40	game/NGetSensorLoState.cpp		
 0X154180	PentryFindSensorLo	84	new_154180/PentryFindSensorLo.cpp		
+0X1541D8	NNextSensorState	848	new_154180/NNextSensorState.cpp		
 0X154528	FFilterSensorBasic	60	new_154180/FFilterSensorBasic.cpp		
 0X154568	FFilterSensorSight	132	new_154180/FFilterSensorSight.cpp		
 0X154908	StaticInitSensorSight	308	new_154180/StaticInitSensorSight_file.c	new_154180/StaticInitSensorSight_file.c	StaticInitSensorSight
@@ -1923,6 +1926,7 @@ address	name	size	file	whole_file	symbol
 0X1559F8	func_001559F8	60	crv-lo/fun_001559f8.c		
 0X155A38	func_00155A38	48	crv-lo/fun_00155a38.c		
 0X155A68	func_00155A68	116	crv-lo/fun_00155a68.cpp		
+0X155AE0	func_00155AE0	688	crv-lo/fun_00155ae0.cpp		
 0X156390	guardposts__static_initialization_and_destruction_0	308	crv-lo/guardposts_file.c	crv-lo/guardposts_file.c	guardposts__static_initialization_and_destruction_0
 0X1564C8	guardposts__static_initialization_and_destruction_0_thunk	32	crv-lo/guardposts_file.c	crv-lo/guardposts_file.c	guardposts__static_initialization_and_destruction_0_thunk
 0X1564E8	func_001564E8	96	crv-lo/fun_001564e8.cpp		
@@ -2327,6 +2331,7 @@ address	name	size	file	whole_file	symbol
 0X1757D0	func_001757D0	60	new_1715f0/fun_001757d0.c		
 0X175810	FGoalNoticeDone	16	new_1715f0/FGoalNoticeDone.c		
 0X175820	func_00175820	128	new_1715f0/fun_00175820.cpp		
+0X175D00	func_00175D00	752	new_1715f0/fun_00175d00.cpp		
 0X175FF0	func_00175FF0	112	new_1715f0/fun_00175ff0.c		
 0X176060	func_00176060	56	new_1715f0/fun_00176060.cpp		
 0X176458	GoalNotice_SetState	636	new_1715f0/GoalNotice_SetState.cpp		
@@ -2363,6 +2368,7 @@ address	name	size	file	whole_file	symbol
 0X179E80	func_00179E80	120	hide-puffer/fun_00179e80.cpp		
 0X179EF8	func_00179EF8	120	hide-puffer/fun_00179ef8.cpp		
 0X179F70	func_00179F70	44	hide-puffer/fun_00179f70.cpp		
+0X179FA0	GoalJump_Activate	1072	hide-puffer/GoalJump_Activate.cpp		
 0X17A3D0	func_0017A3D0	44	hide-puffer/fun_0017a3d0.c		
 0X17A400	func_0017A400	100	hide-puffer/fun_0017a400.cpp		
 0X17A4B0	func_0017A4B0	52	hide-puffer/fun_0017a4b0.cpp		
@@ -2549,6 +2555,7 @@ address	name	size	file	whole_file	symbol
 0X183A08	CloneHbsk__FP4HBSKT0	72	hide/CloneHbsk__FP4HBSKT0.cpp		
 0X183A50	FIgnoreHbskIntersection	172	hide/FIgnoreHbskIntersection.cpp		
 0X183B00	PresetHbskAccel__FP4HBSKf	124	hide/PresetHbskAccel__FP4HBSKf.cpp		
+0X183B80	SetHbskHbsks	644	hide-splice-gc/SetHbskHbsks.cpp		
 0X183E08	FAbsorbHbskWkr	252	hide-splice-gc/FAbsorbHbskWkr.cpp		
 0X183F08	func_00183F08	68	hide-splice-gc/fun_00183f08.c		
 0X183F50	func_00183F50	100	hide-splice-gc/fun_00183f50.cpp		
@@ -2569,6 +2576,7 @@ address	name	size	file	whole_file	symbol
 0X1843C0	func_001843C0	44	hide-splice-gc/fun_001843c0.c		
 0X1844A0	AttachZone_OnAdd	52	hide-splice-gc/AttachZone_OnAdd.c		
 0X1844D8	AttachZone_OnRemove	52	hide-splice-gc/AttachZone_OnRemove.c		
+0X184510	AttachZone_GetAimPos	144	hide-splice-gc/AttachZone_GetAimPos.cpp		
 0X184670	PmemberFromLo	220	hide-splice-gc/PmemberFromLo_file.cpp	hide-splice-gc/PmemberFromLo_file.cpp	PmemberFromLo
 0X184750	StaticInitSlotheaps_184750	308	hide-splice-gc/PmemberFromLo_file.cpp	hide-splice-gc/PmemberFromLo_file.cpp	StaticInitSlotheaps_184750
 0X184888	StaticInitSlotheaps_184750_thunk	32	hide-splice-gc/PmemberFromLo_file.cpp	hide-splice-gc/PmemberFromLo_file.cpp	StaticInitSlotheaps_184750_thunk
@@ -2631,6 +2639,7 @@ address	name	size	file	whole_file	symbol
 0X18A238	func_0018A238	64	jt-alo/fun_0018a238.c		
 0X18A278	ProjectJtTransform	100	jt-alo/ProjectJtTransform.cpp		
 0X18A2E0	UpdateJtBounds	108	jt-alo/UpdateJtBounds.cpp		
+0X18A350	func_0018A350	212	jt-alo/fun_0018a350.cpp		
 0X18A428	func_0018A428	192	jt-alo/fun_0018a428.cpp		
 0X18B2C0	UpdateJtBinocInput	132	jt-alo/UpdateJtBinocInput.cpp		
 0X18C060	BindJtStepAseg	188	jt-alo/BindJtStepAseg.cpp		
@@ -2667,10 +2676,13 @@ address	name	size	file	whole_file	symbol
 0X191090	InitAttach	100	new_190c58/InitAttach.cpp		
 0X1910F8	LoadAttach	176	new_190c58/LoadAttach.cpp		
 0X1928F8	StartAttach	304	new_190c58/StartAttach.cpp		
+0X193C98	MatchJtXmgRail__FP2JTP3XMGP6ACTADJ	332	stephide/MatchJtXmgRail__FP2JTP3XMGP6ACTADJ.cpp		
 0X1940B0	SetJtHfdk__FP2JT4HFDK	104	stephide/SetJtHfdk__FP2JT4HFDK.cpp		
 0X194118	ResetJtDynamicTunnel__FP2JT	84	stephide/ResetJtDynamicTunnel__FP2JT.cpp		
+0X1942F0	func_001942F0	472	new_1942f0/fun_001942f0.cpp		
 0X194558	FAttachAllowsGadget	228	new_1942f0/FAttachAllowsGadget.cpp		
 0X194640	func_00194640	68	new_1942f0/fun_00194640.cpp		
+0X194A40	BuildJtTargetList	1284	new_1942f0/BuildJtTargetList.cpp		
 0X194F48	func_00194F48	36	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00194F48
 0X195608	func_00195608	196	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	func_00195608
 0X1956D0	PloSpawnTargetIndicator	236	unsorted/unsorted_194f48.cpp	unsorted/unsorted_194f48.cpp	PloSpawnTargetIndicator
@@ -3422,6 +3434,7 @@ address	name	size	file	whole_file	symbol
 0X1CEA88	TouchRip__FP3RIPi	32	rip/TouchRip__FP3RIPi.cpp		
 0X1CEAA8	ForceRipFade__FP3RIPf	96	rip/ForceRipFade__FP3RIPf.c		
 0X1CF268	UpdateRip__FP3RIPf	204	rip/UpdateRip__FP3RIPf.cpp		
+0X1CF338	FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3	476	rip/FRenderRipPosMat__FP3RIPP2CMP6VECTORP7MATRIX3.cpp		
 0X1CF518	RenderRip	84	rip/RenderRip.cpp		
 0X1CF570	OnRipRemoveNop	8	rip/OnRipRemoveNop.c		
 0X1CF578	SubscribeRipObject	72	rip/SubscribeRipObject.c		
@@ -3456,6 +3469,7 @@ address	name	size	file	whole_file	symbol
 0X1D1940	OnVehicleActive	100	rip-rumble/OnVehicleActive.c		
 0X1D2150	func_001D2150	240	rip-rumble/fun_001d2150.cpp		
 0X1D2240	func_001D2240	144	rip-rumble/fun_001d2240.cpp		
+0X1D2420	func_001D2420	108	rip-rumble/fun_001d2420.cpp		
 0X1D2DD0	func_001D2DD0	68	rip-rumble/fun_001d2dd0.cpp		
 0X1D3E48	AddVehicleCustomXps	228	rip-rumble/AddVehicleCustomXps.cpp		
 0X1D3F30	NotifyVehicleXpEnded	120	rip-rumble/NotifyVehicleXpEnded.cpp		
@@ -3709,6 +3723,8 @@ address	name	size	file	whole_file	symbol
 0X1E1128	AddSeqRecordSetEyes	80	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordSetEyes
 0X1E1178	AddSeqRecordSoundEffect	144	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordSoundEffect
 0X1E1208	AddSeqRecordStopSoundEffect	48	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordStopSoundEffect
+0X1E1238	AddSeqRecordConfrontCamera	164	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordConfrontCamera
+0X1E12E0	AddSeqRecordEndConfrontCamera	164	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordEndConfrontCamera
 0X1E1388	AddSeqRecordRevokeConfrontCamera	48	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordRevokeConfrontCamera
 0X1E13B8	AddSeqRecordShowBinoc	80	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordShowBinoc
 0X1E1408	AddSeqRecordHideBinoc	32	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordHideBinoc
@@ -3904,6 +3920,7 @@ address	name	size	file	whole_file	symbol
 0X1EF6F8	StaticInitSkySlotheaps	308	shdanim-sm/GoalStack_Init_file.cpp	shdanim-sm/GoalStack_Init_file.cpp	StaticInitSkySlotheaps
 0X1EF830	func_001EF830	32	shdanim-sm/GoalStack_Init_file.cpp	shdanim-sm/GoalStack_Init_file.cpp	func_001EF830
 0X1EF850	func_001EF850	116	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	func_001EF850
+0X1EF8C8	bevy_gfx_screen_C2d9500_v15	108	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	bevy_gfx_screen_C2d9500_v15
 0X1EF938	StaticInitSmSlotheaps	308	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	StaticInitSmSlotheaps
 0X1EFA70	func_001EFA70	32	shdanim-sm/shdanim_sm_1ef850.cpp	shdanim-sm/shdanim_sm_1ef850.cpp	func_001EFA70
 0X1EFA90	InitSm	48	shdanim-sm/InitSm_file.cpp	shdanim-sm/InitSm_file.cpp	InitSm
@@ -4042,6 +4059,7 @@ address	name	size	file	whole_file	symbol
 0X1F6AC8	func_001F6AC8	124	so/fun_001f6ac8.cpp		
 0X1F6B48	func_001F6B48	124	so/fun_001f6b48.cpp		
 0X1F6BC8	func_001F6BC8	64	so/fun_001f6bc8.cpp		
+0X1F70C0	CloneCloth	568	so-sm/CloneCloth.cpp		
 0X1F7410	func_001F7410	288	so-sm/fun_001f7410.cpp		
 0X1F7530	PaloFindWkrAbsorber	84	so-sm/PaloFindWkrAbsorber.cpp		
 0X1F7588	FAbsorbSoWkr	12	so-sm/FAbsorbSoWkr.cpp		
@@ -4154,6 +4172,7 @@ address	name	size	file	whole_file	symbol
 0X1FC740	ApplyStreamAmbParams	308	new_1fbf20/ApplyStreamAmbParams.cpp		
 0X1FC878	func_001FC878	304	new_1fbf20/fun_001fc878.cpp		
 0X1FC9A8	func_001FC9A8	8	new_1fbf20/fun_001fc9a8.c		
+0X1FC9B0	UpdateStreamAmbPositional	504	new_1fbf20/UpdateStreamAmbPositional.cpp		
 0X1FCBA8	OnStreamAmbStarted	132	new_1fbf20/OnStreamAmbStarted.cpp		
 0X1FCC30	func_001FCC30	96	new_1fbf20/fun_001fcc30.cpp		
 0X1FCC90	StreamAmb_AddRef	16	new_1fbf20/StreamAmb_AddRef.c		
@@ -4463,6 +4482,7 @@ address	name	size	file	whole_file	symbol
 0X20D1A0	EnableFallCheck	12	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	EnableFallCheck
 0X20D1B0	func_0020D1B0	24	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	func_0020D1B0
 0X20D1C8	func_0020D1C8	44	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	func_0020D1C8
+0X20D1F8	UpdateGuardDamage	456	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	UpdateGuardDamage
 0X20D3C0	SetGuardDamageState	156	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	SetGuardDamageState
 0X20D460	SetGuardDamageSource	8	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	SetGuardDamageSource
 0X20D478	stream__static_initialization_and_destruction_0	308	steprun-stream/SetFallCheckState_file.cpp	steprun-stream/SetFallCheckState_file.cpp	stream__static_initialization_and_destruction_0
@@ -4627,6 +4647,7 @@ address	name	size	file	whole_file	symbol
 0X217FE0	SeekSpriteInstanceFraction	88	font-break/SeekSpriteInstanceFraction.cpp		
 0X218038	func_00218038	40	font-break/fun_00218038.cpp		
 0X218060	SeekSpriteInstanceTime	448	font-break/SeekSpriteInstanceTime.cpp		
+0X218220	UpdateRootSprite	456	font-break/UpdateRootSprite.cpp		
 0X2183E8	UpdateSpriteInstance	484	font-break/UpdateSpriteInstance.cpp		
 0X2185D0	func_002185D0	40	font-break/fun_002185d0.cpp		
 0X2185F8	func_002185F8	60	font-break/fun_002185f8.cpp		
@@ -4879,6 +4900,7 @@ address	name	size	file	whole_file	symbol
 0X230598	WakeXf	148	alo-lo/WakeXf.cpp		
 0X230630	SleepXf	224	alo-lo/SleepXf.cpp		
 0X2309E8	PredictXfTransform	172	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	PredictXfTransform
+0X230A98	PredictXfTransformAdjust	564	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	PredictXfTransformAdjust
 0X230CD0	func_00230CD0	32	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	func_00230CD0
 0X230CF0	SnapAsega	696	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	SnapAsega
 0X230FA8	alo__static_initialization_and_destruction_0	308	alo-lo/PredictXfTransform_file.cpp	alo-lo/PredictXfTransform_file.cpp	alo__static_initialization_and_destruction_0

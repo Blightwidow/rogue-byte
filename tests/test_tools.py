@@ -507,11 +507,16 @@ class WholeFileRecordTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.insert('void Second() {}\n', address=0x100018)
 
-    def land(self, prove_result):
+    def land(self, prove_result, vu0_listed=False, folder_out=None):
         import tempfile
         folder = tempfile.mkdtemp()
         self.addCleanup(__import__('shutil').rmtree, folder)
         os.makedirs(os.path.join(folder, 'src', 'm'))
+        if vu0_listed:
+            os.makedirs(os.path.join(folder, 'config', 'us'))
+            open(os.path.join(folder, 'config', 'us', 'vu0_regs.txt'), 'w').write('# list\n0x100010\n')
+        if folder_out is not None:
+            folder_out.append(folder)
         whole_path, source = os.path.join(folder, 'src', 'm', 'a.cpp'), os.path.join(folder, '100010.cpp')
         open(whole_path, 'w').write(self.WHOLE)
         open(source, 'w').write('void Second() {}\n')
@@ -527,6 +532,17 @@ class WholeFileRecordTests(unittest.TestCase):
     def test_land_writes_the_file_when_the_range_proves(self):
         (ok, _, _), text = self.land(None)
         self.assertTrue(ok and 'void Second() {}' in text)
+
+    def test_land_gives_the_whole_file_the_vu0_flag_of_its_function(self):
+        folders = []
+        (ok, _, _), _ = self.land(None, vu0_listed=True, folder_out=folders)
+        listed = open(os.path.join(folders[0], 'config', 'us', 'vu0_regs.txt')).read().split()
+        self.assertEqual((ok, listed[-1]), (True, '0x100000'))
+
+    def test_land_leaves_the_vu0_list_when_the_range_differs(self):
+        folders = []
+        self.land('bytes differ at 0X100014', vu0_listed=True, folder_out=folders)
+        self.assertEqual(open(os.path.join(folders[0], 'config', 'us', 'vu0_regs.txt')).read(), '# list\n0x100010\n')
 
     def test_land_leaves_the_file_when_the_range_differs(self):
         (ok, message, _), text = self.land('bytes differ at 0X100014')

@@ -32,8 +32,34 @@ static inline float LaneZ(QW q)
 static inline u32 LaneWordZ(QW q)
 {
     u32 word;
-    asm("pextuw %0, $0, %1" : "=r"(word) : "r"(q));
+    asm("pextuw %0, $0, %1" : "=&r"(word) : "r"(q));
     return word;
+}
+
+/* lane 2 (z) as a float held in a general register: pextuw only. GCC emits the mtc1 itself where the float is needed, so it schedules
+   that move by its latency as retail does (FJtLandsWithin, UpdateStreamAmbPositional, SetHbskHbsks); LaneZ keeps the two together */
+static inline float LaneZInGeneralRegister(QW q)
+{
+    float z;
+    asm("pextuw %0, $0, %1" : "=r"(z) : "r"(q));
+    return z;
+}
+
+/* lane 1 (y) as a float held in a general register: prot3w only, the mtc1 left to GCC as for LaneZInGeneralRegister */
+static inline float LaneYInGeneralRegister(QW q)
+{
+    float y;
+    asm("prot3w %0, %1" : "=r"(y) : "r"(q));
+    return y;
+}
+
+/* mtc1 from a 32-bit word: the word's bits as a float. Paired with LaneWordZ it lets the scheduler place pextuw and mtc1 apart, as
+   retail does when it extracts several lanes before moving them (0x184510, 0x18A350, 0x1E1238, 0x1E12E0, 0x1E57A0, 0x20D1F8, ...) */
+static inline float FloatFromWord(u32 word)
+{
+    float f;
+    asm("mtc1 %1, %0" : "=f"(f) : "r"(word));
+    return f;
 }
 
 /* prot3w: rotate the three low words, word 1 lands in word 0 (LaneX(RotateWords3(q)) is lane y) */
@@ -58,6 +84,15 @@ static inline QW JoinLowDoublewords(float high, QW low)
     QW joined;
     asm("pcpyld %0, %1, %2" : "=r"(joined) : "r"(high), "r"(low));
     return joined;
+}
+
+/* mfc1 into a quadword: a float in the low word of a general register, from where GCC moves it to a VU0 register (qmtc2) or stores it
+   (FRenderRipPosMat; the scale of PresetJtAccelPipe and UpdateMurrayCarry) */
+static inline QW QuadFromFloat(float value)
+{
+    QW quad;
+    asm("mfc1 %0, %1" : "=r"(quad) : "f"(value));
+    return quad;
 }
 
 /* sync: a memory barrier, volatile so that it stays where it is */
