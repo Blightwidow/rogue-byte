@@ -5022,6 +5022,7 @@ address	name	size	file	whole_file	symbol
 0X238D70	func_00238D70	256	sdk/fun_00238d70.cpp		
 0X238E70	func_00238E70	140	sdk/fun_00238e70.c		
 0X238F00	sceSifLoadFileReset	56	sdk/sceSifLoadFileReset.cpp		
+0X238F38	func_00238F38	520	sdk/fun_00238f38.cpp		
 0X239140	sceSifLoadModule	28	sdk/sceSifLoadModule.cpp		
 0X239198	func_00239198	340	sdk/fun_00239198.cpp		
 0X2392F0	sceSifSyncIop	80	sdk/sceSifSyncIop.c		
@@ -5112,6 +5113,7 @@ address	name	size	file	whole_file	symbol
 0X240B68	sceGsGetIMR	28	sdk/sceGsGetIMR.cpp		
 0X240B88	checkModelVersion	160	sdk/checkModelVersion.cpp		
 0X240FB0	sceGszbufaddr	200	sdk/sceGszbufaddr.c		
+0X241078	sceGsSetDefDrawEnv	484	sdk/sceGsSetDefDrawEnv.c		
 0X2413E0	func_002413E0	40	sdk/fun_002413e0.cpp		
 0X241408	memclr	52	sdk/memclr.cpp		
 0X241440	sceDmaGetChan	40	sdk/sceDmaGetChan.cpp		
@@ -5123,6 +5125,7 @@ address	name	size	file	whole_file	symbol
 0X241DF0	func_00241DF0	152	sdk/fun_00241df0.cpp		
 0X241E88	sceCdSync	160	sdk/sceCdSync.cpp		
 0X241F28	func_00241F28	108	sdk/fun_00241f28.cpp		
+0X2425F0	func_002425F0	544	sdk/fun_002425f0.cpp		
 0X242810	sceCdGetReadPos	48	sdk/sceCdGetReadPos.c		
 0X242A20	sceCdGetDiskType	152	sdk/sceCdGetDiskType.c		
 0X242AB8	func_00242AB8	36	sdk/fun_00242ab8.cpp		
@@ -5166,6 +5169,7 @@ address	name	size	file	whole_file	symbol
 0X2458F0	atan2f	296	sdk/atan2f.cpp		
 0X245A18	fmodf	316	sdk/fmodf.c		
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
+0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp		
 0X249888	__kernel_sinf	260	sdk/__kernel_sinf.cpp		
 0X249C28	fabs	52	sdk/fabs.cpp		
@@ -5211,6 +5215,7 @@ address	name	size	file	whole_file	symbol
 0X252398	func_00252398	188	sdk/fun_00252398.c		
 0X252608	func_00252608	380	sdk/fun_00252608.c		
 0X253478	func_00253478	160	sdk/fun_00253478.c		
+0X253518	func_00253518	416	sdk/fun_00253518.c		
 0X253C80	func_00253C80	160	sdk/fun_00253c80.c		
 0X253D20	func_00253D20	324	sdk/fun_00253d20.c		
 0X253FA8	func_00253FA8	232	sdk/fun_00253fa8.c		

@@ -5022,6 +5022,7 @@ us_address	name	other_address	pair	score	addresses
 0x238D70	func_00238D70	0X239D38	same	0	ok
 0x238E70	func_00238E70	0X239E38	same	0	ok
 0x238F00	sceSifLoadFileReset	0X239EC8	same	0	ok
+0x238F38	func_00238F38	0X239F00	same	0	ok
 0x239140	sceSifLoadModule	0X23A108	same	0	ok
 0x239198	func_00239198	0X23A160	same	0	ok
 0x2392F0	sceSifSyncIop	0X23A2B8	same	0	ok
@@ -5112,6 +5113,7 @@ us_address	name	other_address	pair	score	addresses
 0x240B68	sceGsGetIMR	0X241528	same	0	ok
 0x240B88	checkModelVersion	0X241548	same	0	ok
 0x240FB0	sceGszbufaddr	0X241970	same	0	ok
+0x241078	sceGsSetDefDrawEnv	0X241A38	same	0	ok
 0x2413E0	func_002413E0	0X241DA0	identical	0	ok
 0x241408	memclr	0X241DC8	identical	0	ok
 0x241440	sceDmaGetChan	0X241E00	same	0	ok
@@ -5123,6 +5125,7 @@ us_address	name	other_address	pair	score	addresses
 0x241DF0	func_00241DF0	0X2427B0	same	0	ok
 0x241E88	sceCdSync	0X242848	same	0	ok
 0x241F28	func_00241F28	0X2428E8	same	0	ok
+0x2425F0	func_002425F0	0X242FB0	same	0	ok
 0x242810	sceCdGetReadPos	0X2431D0	same	0	ok
 0x242A20	sceCdGetDiskType	0X2433E0	same	0	ok
 0x242AB8	func_00242AB8	0X243478	same	0	ok
@@ -5166,6 +5169,7 @@ us_address	name	other_address	pair	score	addresses
 0x2458F0	atan2f	0X246338	same	0	ok
 0x245A18	fmodf	0X246460	same	0	ok
 0x246060	sqrtf	0X246AA8	same	0	ok
+0x2488C8	__ieee754_rem_pio2f	0X249310	same	0	ok
 0x248DE0	__kernel_cosf	0X249828	identical	0	ok
 0x249888	__kernel_sinf	0X24A2D0	identical	0	ok
 0x249C28	fabs	0X24A670	identical	0	ok
@@ -5211,6 +5215,7 @@ us_address	name	other_address	pair	score	addresses
 0x252398	func_00252398	0X252DE8	same	0	ok
 0x252608	func_00252608	0X253058	same	0	ok
 0x253478	func_00253478	0X253EC8	same	0	ok
+0x253518	func_00253518	0X253F68	same	0	ok
 0x253C80	func_00253C80	0X2546D0	same	0	ok
 0x253D20	func_00253D20	0X254770	same	0	ok
 0x253FA8	func_00253FA8	0X2549F8	same	0	ok

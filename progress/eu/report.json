@@ -1,13 +1,13 @@
 {
  "measures": {
-  "fuzzy_match_percent": 75.268523,
+  "fuzzy_match_percent": 75.479291,
   "total_code": "1402488",
-  "matched_code": "1055632",
-  "matched_code_percent": 75.268523,
+  "matched_code": "1058588",
+  "matched_code_percent": 75.479291,
   "total_data": "1038916",
   "total_functions": 6826,
-  "matched_functions": 6253,
-  "matched_functions_percent": 91.605626,
+  "matched_functions": 6258,
+  "matched_functions_percent": 91.678875,
   "complete_code": "249908",
   "complete_code_percent": 17.818905,
   "total_units": 434,
@@ -43454,7 +43454,7 @@
     {
      "name": ".text",
      "size": "151048",
-     "fuzzy_match_percent": 35.501298,
+     "fuzzy_match_percent": 37.458291,
      "metadata": {}
     }
    ],
@@ -45465,9 +45465,9 @@
     {
      "name": "func_00238F38",
      "size": "520",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "30032",
-     "fuzzy_match_percent": 0.0
+     "address": "30032"
     },
     {
      "name": "sceSifLoadModule",
@@ -46692,9 +46692,9 @@
     {
      "name": "sceGsSetDefDrawEnv",
      "size": "484",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "63120",
-     "fuzzy_match_percent": 0.0
+     "address": "63120"
     },
     {
      "name": "sceGsSetDefClear",
@@ -46909,9 +46909,9 @@
     {
      "name": "func_002425F0",
      "size": "544",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "68616",
-     "fuzzy_match_percent": 0.0
+     "address": "68616"
     },
     {
      "name": "sceCdGetReadPos",
@@ -47427,9 +47427,9 @@
     {
      "name": "__ieee754_rem_pio2f",
      "size": "992",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "93920",
-     "fuzzy_match_percent": 0.0
+     "address": "93920"
     },
     {
      "name": "__ieee754_sqrtf",
@@ -48204,9 +48204,9 @@
     {
      "name": "func_00253518",
      "size": "416",
+     "fuzzy_match_percent": 100.0,
      "metadata": {},
-     "address": "138032",
-     "fuzzy_match_percent": 0.0
+     "address": "138032"
     },
     {
      "name": "func_002536B8",
@@ -48790,14 +48790,14 @@
     ]
    },
    "measures": {
-    "fuzzy_match_percent": 35.501298,
+    "fuzzy_match_percent": 37.458291,
     "total_code": "151048",
-    "matched_code": "53624",
-    "matched_code_percent": 35.501298,
+    "matched_code": "56580",
+    "matched_code_percent": 37.458291,
     "matched_data_percent": 100.0,
     "total_functions": 759,
-    "matched_functions": 593,
-    "matched_functions_percent": 78.129117,
+    "matched_functions": 598,
+    "matched_functions_percent": 78.787879,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
@@ -64586,14 +64586,14 @@
    "id": "sdk",
    "name": "Sony SDK",
    "measures": {
-    "fuzzy_match_percent": 35.501298,
+    "fuzzy_match_percent": 37.458291,
     "total_code": "151048",
-    "matched_code": "53624",
-    "matched_code_percent": 35.501298,
+    "matched_code": "56580",
+    "matched_code_percent": 37.458291,
     "matched_data_percent": 100.0,
     "total_functions": 759,
-    "matched_functions": 593,
-    "matched_functions_percent": 78.129117,
+    "matched_functions": 598,
+    "matched_functions_percent": 78.787879,
     "complete_code": "0",
     "complete_code_percent": 0.0,
     "complete_data_percent": 100.0,
