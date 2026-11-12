@@ -5,7 +5,7 @@ extern M2C_UNK D_002BBB10;
 extern M2C_UNK D_002BBB20;
 
 s32 PruneBsp__FP3BSPP6VECTORfPP3BSP(void *arg0, u32 arg1, s128 arg2, s32 *arg3, f32 fparg0) {
-    char sp[0x400];
+    char sp[0x60];
     M2C_UNK sp10;
     s128 sp20;
     f32 temp_v0;

@@ -23,7 +23,7 @@ extern f32 g_2dded0;
 extern f32 g_2dded4;
 
 void CarryThrow_Update(void *arg0) {
-    char sp[0x400];
+    char sp[0x60];
     M2C_UNK sp8;
     f32 sp0;
     f32 sp4;

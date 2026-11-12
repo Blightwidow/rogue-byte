@@ -53,7 +53,7 @@ extern void *g_2e1e40;
 extern void *g_2f7900;
 
 void ExecuteSwLoadRequest(void *arg0) {
-    char sp[0x400];
+    char sp[0x1C0];
     M2C_UNK sp0;
     M2C_UNK sp1E4;
     M2C_UNK sp38;

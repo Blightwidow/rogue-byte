@@ -7,7 +7,7 @@ void *PchnFindAseg(void *, s32, M2C_UNK, M2C_UNK);  /* extern */
 M2C_UNK ReblendAsegbl(void *);                      /* extern */
 
 void PostStepLoadRun__FP4STEPP5BLRUNPP6ASEGBL(void *arg0) {
-    char sp[0x400];
+    char sp[0x30];
     M2C_UNK sp10;
     M2C_UNK sp30;
     void *sp34;

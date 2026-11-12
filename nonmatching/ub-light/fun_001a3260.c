@@ -8,7 +8,7 @@ extern void *B_003E04F8;
 extern s128 g_2a2dc0;
 
 void func_001A3260(void) {
-    char sp[0x400];
+    char sp[0x40];
     M2C_UNK sp50;
     M2C_UNK sp60;
     s128 sp40;

@@ -7,7 +7,7 @@ s32 PvAllocStackClearImpl__Fi(s32 *, M2C_UNK);      /* extern */
 M2C_UNK *PvAllocStackImpl__Fi(s32 *);               /* extern */
 
 void FindPathAStar__FP2CGP3CGVT1iPiPP3CGV(s32 *arg0, s32 arg1, s32 arg2) {
-    char sp[0x400];
+    char sp[0x40];
     M2C_UNK sp20;
     s32 sp30;
     M2C_UNK *sp40;

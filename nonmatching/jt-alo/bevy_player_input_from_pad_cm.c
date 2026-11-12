@@ -40,7 +40,7 @@ extern s128 g_2a2dd0;
 
 void bevy_player_input_from_pad_cm(void *arg0) {
     M2C_UNK jtbl_002A5A10;
-    char sp[0x400];
+    char sp[0x10];
     f32 temp_f3;
     s32 temp_a0;
     s32 temp_a1;

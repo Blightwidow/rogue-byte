@@ -12,7 +12,7 @@ extern s32 B_003E0F9C;
 extern M2C_UNK D_002BDC00;
 
 void OnDifficultyEvent(void *arg0, s32 arg1, void *arg2) {
-    char sp[0x400];
+    char sp[0x30];
     s32 sp10;
     s32 sp20;
     s32 sp30;

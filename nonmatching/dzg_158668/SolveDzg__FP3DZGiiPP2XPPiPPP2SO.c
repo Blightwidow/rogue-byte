@@ -1,6 +1,6 @@
 #include "m2c_macros.h"
 
-M2C_UNK AppendDlEntry(void *, void *);              /* extern */
+void AppendDlEntry(void *, void *);              /* extern */
 M2C_UNK EnforceDzgDz__FP3DZGP2DZ(void *, void *);   /* extern */
 M2C_UNK FillDzgDz(void *, s32, void *, s32);        /* extern */
 M2C_UNK RemoveDlEntry(void *, void *);              /* extern */
@@ -8,7 +8,7 @@ s32 func_00158958(void *, void *);                  /* extern */
 extern void *g_2dd2fc;
 
 void SolveDzg__FP3DZGiiPP2XPPiPPP2SO(void *arg0, s32 arg1) {
-    char sp[0x400];
+    char sp[0x20];
     void **sp4;
     s32 sp8;
     void *spC;
@@ -44,8 +44,8 @@ void SolveDzg__FP3DZGiiPP2XPPiPPP2SO(void *arg0, s32 arg1) {
                 M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (M2C_FIELD(arg0, s32 *, 0x3C) + 1);
             }
             temp_a0 = *sp4;
-            var_s0 = temp_a0;
             sp4 = temp_a0 + sp8;
+            var_s0 = temp_a0;
         } while (var_s0 != NULL);
     }
     EnforceDzgDz__FP3DZGP2DZ(arg0, NULL);

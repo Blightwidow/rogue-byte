@@ -2289,6 +2289,7 @@ address	name	size	file	whole_file	symbol
 0X171F58	func_00171F58	72	new_1715f0/fun_00171f58.cpp		
 0X171FA0	func_00171FA0	48	new_1715f0/fun_00171fa0.c		
 0X171FD0	func_00171FD0	72	new_1715f0/fun_00171fd0.c		
+0X172320	SetSearchState	560	new_1715f0/SetSearchState.cpp		
 0X172550	func_00172550	16	new_1715f0/fun_00172550.c		
 0X172560	func_00172560	128	new_1715f0/fun_00172560.cpp		
 0X1725E0	SetSearchGoal	120	new_1715f0/SetSearchGoal.cpp		
@@ -4946,6 +4947,7 @@ address	name	size	file	whole_file	symbol
 0X2317E0	LoadPloarrayFromBrx	172	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	LoadPloarrayFromBrx
 0X231890	func_00231890	308	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	func_00231890
 0X2319C8	func_002319C8	32	alo-lo/InitXfm_file.cpp	alo-lo/InitXfm_file.cpp	func_002319C8
+0X231C48	snd_FlushSoundCommands	556	sdk/snd_FlushSoundCommands.cpp		
 0X231E90	snd_GotReturns__Fv	168	sdk/snd_GotReturns__Fv.cpp		
 0X231F38	func_00231F38	100	sdk/fun_00231f38.cpp		
 0X232188	snd_ResolveBankXREFS	44	sdk/snd_ResolveBankXREFS.cpp		
@@ -4966,6 +4968,7 @@ address	name	size	file	whole_file	symbol
 0X232500	func_00232500	32	sdk/fun_00232500.cpp		
 0X232520	func_00232520	72	sdk/fun_00232520.cpp		
 0X232568	snd_AutoVol	60	sdk/snd_AutoVol.cpp		
+0X2325E0	func_002325E0	600	sdk/fun_002325e0.cpp		
 0X232BB8	snd_PostMessage__Fv	64	sdk/snd_PostMessage__Fv.cpp		
 0X232D80	snd_StreamSafeCheckCDIdle	40	sdk/snd_StreamSafeCheckCDIdle.cpp		
 0X232DA8	snd_StreamSafeCdSync	192	sdk/snd_StreamSafeCdSync.cpp		
@@ -4978,11 +4981,13 @@ address	name	size	file	whole_file	symbol
 0X233018	func_00233018	36	sdk/fun_00233018.cpp		
 0X233048	func_00233048	64	sdk/fun_00233048.cpp		
 0X233088	func_00233088	72	sdk/fun_00233088.cpp		
+0X2330D0	func_002330D0	80	sdk/fun_002330d0.cpp		
 0X233130	func_00233130	64	sdk/fun_00233130.cpp		
 0X233800	AtoiPchz	40	sdk/AtoiPchz.cpp		
 0X2338C0	qsort	2524	sdk/qsort.c		
 0X2342A0	rand	48	sdk/rand.cpp		
 0X2342D0	StricmpPchz	124	sdk/StricmpPchz.c		
+0X234350	func_00234350	556	sdk/fun_00234350.c		
 0X234580	func_00234580	52	sdk/fun_00234580.cpp		
 0X2345B8	func_002345B8	32	sdk/fun_002345b8.c		
 0X2352B0	func_002352B0	216	sdk/fun_002352b0.c		
@@ -5119,6 +5124,7 @@ address	name	size	file	whole_file	symbol
 0X2413E0	func_002413E0	40	sdk/fun_002413e0.cpp		
 0X241408	memclr	52	sdk/memclr.cpp		
 0X241440	sceDmaGetChan	40	sdk/sceDmaGetChan.cpp		
+0X241468	sceDmaReset	220	sdk/sceDmaReset.cpp		
 0X241728	func_00241728	104	sdk/fun_00241728.cpp		
 0X2417A0	func_002417A0	72	sdk/fun_002417a0.cpp		
 0X2417F0	func_002417F0	56	sdk/fun_002417f0.cpp		
@@ -5166,11 +5172,14 @@ address	name	size	file	whole_file	symbol
 0X244EF8	fabsf	28	sdk/fabsf.c		
 0X244F18	floorf	228	sdk/floorf.cpp		
 0X2450F0	tanf	136	sdk/tanf.c		
+0X2452C0	pow	1072	sdk/pow.cpp		
 0X2456F0	acosf	252	sdk/acosf.cpp		
 0X2457F0	asinf	252	sdk/asinf.cpp		
 0X2458F0	atan2f	296	sdk/atan2f.cpp		
 0X245A18	fmodf	316	sdk/fmodf.c		
+0X245B58	PowF_245b58	1288	sdk/PowF_245b58.c		
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
+0X246300	__ieee754_pow	3368	sdk/__ieee754_pow.cpp		
 0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp		
 0X248F38	__kernel_rem_pio2f	2380	sdk/__kernel_rem_pio2f.c		
@@ -5188,6 +5197,7 @@ address	name	size	file	whole_file	symbol
 0X24A820	func_0024A820	64	sdk/fun_0024a820.cpp		
 0X24A860	sceScfGetLanguage	96	sdk/sceScfGetLanguage.cpp		
 0X24A908	func_0024A908	204	sdk/fun_0024a908.c		
+0X24A9D8	sceMpegCreate	568	sdk/sceMpegCreate.cpp		
 0X24AC10	func_0024AC10	200	sdk/fun_0024ac10.c		
 0X24B530	func_0024B530	8	sdk/fun_0024b530.cpp		
 0X24B540	sceMpegGetPicture	72	sdk/sceMpegGetPicture.cpp		
@@ -5210,6 +5220,9 @@ address	name	size	file	whole_file	symbol
 0X24F8D0	func_0024F8D0	160	sdk/fun_0024f8d0.cpp		
 0X24FA38	func_0024FA38	84	sdk/fun_0024fa38.cpp		
 0X24FA90	func_0024FA90	64	sdk/fun_0024fa90.cpp		
+0X2505B0	func_002505B0	1160	sdk/fun_002505b0.cpp		
+0X250C58	func_00250C58	576	sdk/fun_00250c58.cpp		
+0X250E98	func_00250E98	812	sdk/fun_00250e98.cpp		
 0X2511C8	func_002511C8	1064	sdk/fun_002511c8.cpp		
 0X251790	func_00251790	1368	sdk/fun_00251790.cpp		
 0X251E60	func_00251E60	360	sdk/fun_00251e60.cpp		
@@ -5244,8 +5257,10 @@ address	name	size	file	whole_file	symbol
 0X254BC0	func_00254BC0	104	sdk/fun_00254bc0.c		
 0X254C28	func_00254C28	116	sdk/fun_00254c28.c		
 0X254ED8	func_00254ED8	20	sdk/fun_00254ed8.c		
+0X254F00	LinkPairNode	416	sdk/LinkPairNode.cpp		
 0X2550A0	func_002550A0	88	sdk/fun_002550a0.cpp		
 0X2550F8	UnlinkPairNode	336	sdk/UnlinkPairNode.cpp		
+0X255248	LinkVarbNode	408	sdk/LinkVarbNode.cpp		
 0X2553E0	InitVarbNode	88	sdk/InitVarbNode.cpp		
 0X255438	UnlinkVarbNode	336	sdk/UnlinkVarbNode.cpp		
 0X255588	LinkFrameNode	400	sdk/LinkFrameNode.cpp		
@@ -5416,3 +5431,4 @@ address	name	size	file	whole_file	symbol
 0X259D48	func_00259D48	12	unsorted/fun_00259d48.c		
 0X259D60	func_00259D60	12	unsorted/fun_00259d60.cpp		
 0X259D70	func_00259D70	12	unsorted/fun_00259d70.c		
+0X259D98	func_00259D98	16	suv-end/fun_00259d98.cpp		

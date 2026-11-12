@@ -7,7 +7,7 @@ s128 PosLoWorld(void *);                            /* extern */
 M2C_UNK PredictXfTransform(s32, M2C_UNK, void *, M2C_UNK, f32); /* extern */
 
 void LaunchMatch__FP5MATCH(void *arg0) {
-    char sp[0x400];
+    char sp[0x90];
     M2C_UNK sp90;
     M2C_UNK spA0;
     s128 sp40;

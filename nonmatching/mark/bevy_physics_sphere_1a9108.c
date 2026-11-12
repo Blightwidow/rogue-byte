@@ -8,7 +8,7 @@ s32 PruneBsp__FP3BSPP6VECTORfPP3BSP(); /* extern */
 s32 PvAllocStackImpl__Fi();                    /* extern */
 
 void bevy_physics_sphere_1a9108(s32 arg0, s32 arg1, s128 arg3) {
-    char sp[0x400];
+    char sp[0x10];
     M2C_UNK sp60;
     s32 sp10;
     s128 sp20;

@@ -6,7 +6,7 @@ M2C_UNK GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN(s32, void *, M2C_UNK); /* exter
 f32 atan2f(M2C_UNK, M2C_UNK);                       /* extern */
 
 void UpdateCptnClosestPoint(void *arg0) {
-    char sp[0x400];
+    char sp[0x10];
     M2C_UNK sp0;
     f32 var_f2;
     s32 temp_a0;

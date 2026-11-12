@@ -9,7 +9,7 @@ extern M2C_UNK B_003DD490;
 extern M2C_UNK g_2dea28;
 
 void func_001681F8(void *arg0) {
-    char sp[0x400];
+    char sp[0xA0];
     M2C_UNK sp70;
     M2C_UNK sp80;
     M2C_UNK sp90;

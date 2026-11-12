@@ -17,7 +17,7 @@ extern f32 g_2dded0;
 extern void *g_2f7900;
 
 void func_00136530(void *arg0, s32 arg1) {
-    char sp[0x400];
+    char sp[0x50];
     M2C_UNK sp50;
     M2C_UNK sp60;
     M2C_UNK sp70;
