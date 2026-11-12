@@ -1,7 +1,6 @@
 address	name	class	reason	evidence
 0x24B480	sceMpegInit	toolchain	store in a jal delay slot with its address in a register: Sony gcc fills a call slot only with a non-volatile store, which folds into lui $at; sw	2026-11-08 o08, s-pass: 8 forms, scores 2 to 35
 0x235780	func_00235780	toolchain	sb in the jr delay slot, same wall (non-volatile folds, volatile is never put in a slot)	2026-11-08 o03: 9 compiles, 25 probes
-0x241468	sceDmaReset	toolchain	sw to 0x1000E010 in the jal memclr slot, same wall	2026-11-08 p1: 5 compiles from a raw m2c draft
 0x24C4B0	func_0024C4B0	toolchain	hardware stores in delay slots (libmpeg), same wall; no other Sony gcc build changes it	docs/build/compiler-identification.md, libmpeg on other Sony builds
 0x24C670	func_0024C670	toolchain	hardware stores in delay slots (libmpeg), same wall	docs/build/compiler-identification.md
 0x2539D0	func_002539D0	toolchain	delay-slot store shape found by the o03 scan of retail	2026-11-08 o03 scan
@@ -18,7 +17,6 @@ address	name	class	reason	evidence
 0x1B9130	AdjustMurrayNewXp	tie	float compare keeps $v0 live across hit = 1; global alloc picks $a0	2026-11-08 q09: 19 compiles
 0x1533B0	JudgeRhythmPress	tie	strength reduction of the 36-byte stride: ee-gcc emits a real mult	2026-11-08 q07
 0x1AC008	WriteIconSys	tie	two scheduling spots; 750 permuter orders	2026-11-08 t06
-0x24A9D8	sceMpegCreate	tie	temps for work+0x1F8 and +0x260 swapped between $v0 and $v1; 17 compiles	2026-11-08 o12
 0x241A30	func_00241A30	tie	combine merges the call-result copy into the store; delay-slot scheduling of the 4th call	2026-11-08 o13
 0x1488D8	RunBtnAsegs	tie	base address order of the loop pointer built by loop.c	2026-11-08 u04: 18 compiles + permuter
 0x2577E0	SweepPairs	tie	index shift lands in the wrong register; the plain shift form scores 12	2026-11-08 u07
@@ -26,3 +24,4 @@ address	name	class	reason	evidence
 0x1B98A0	FMurrayCanUseGadget	tie	store-flag expansion of the call result before the branch	2026-11-08 u08: 21 compiles
 0x14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	tie	pcm and icpr priority in global alloc (15 vs 16 refs)	2026-11-08 u02: .lreg dumps
 0x170548	AllocZpr	tie	zpr and head swapped between $s2 and $s3: global alloc priority 0.48 (6 refs over 25 insns) against 0.44 (4 over 18); the search draft that scored 10 dropped the FlushZprPage(zpr) argument and linked the chunk to itself	2026-11-08 w02: 13 try.py runs and -dg/-dl dumps
+0x2540B0	func_002540B0	toolchain	three hardware stores (0x10002010 via $at) in jal delay slots, same wall as sceMpegInit; Sony gcc scores 13 as SN did	survey gp 2026-11-12: nonmatching draft re-scored under Sony gcc 2.9

@@ -9,6 +9,9 @@ A function is a blocker when its code holds an instruction C has no form for and
   mmi          a multimedia instruction (`pextuw`, `pcpyld`, `prot3w`, `ppacw`...)
   system       a COP0 or system instruction (`mfc0`, `mtc0`, `ei`, `di`, `sync`, `eret`, `cache`, `syscall`; not `break`, which the compiler emits for a division by zero)
   handwritten  listed in config/us/handwritten_asm.txt (spimdisasm marks hand-written assembly)
+  gp           `$gp` used as an ordinary register (retail never addresses data through `$gp`, so any instruction naming it is
+               one): swapped around an indirect call (Sony's ChangeGP idiom) or read as a value and stored. C reaches it only through
+               a register pin, which AGENTS.md bans (survey and ruling 2026-11-12, docs/build/vu0-mmi.md). Not final, like `mmi`
   remnant      not a function: nothing in retail reaches it (no `jal`, `j` or branch target, no data word, no `lui`+`addiu`/`ori` pair,
                not the entry point) and it has no control-transfer instruction (no return, jump, branch or call), so no compiled
                function can be it: an epilogue left behind (`addiu $sp,$sp,N; nop`) or one or two leftover instructions. Every
@@ -38,6 +41,12 @@ INSTRUCTION = re.compile(r'^\s*/\*[^*]*\*/\s+(\w[\w.]*)')
 VU = re.compile(r'^(lqc2|sqc2|qmtc2|qmfc2|cfc2|ctc2|v(?:add|sub|mul|madd|msub|max|mini|opmsub|opmula|div|sqrt|rsqrt|abs|ftoi|itof|clip|mr32|move|nop|ior|iaddi|lqi|sqi|callms|lq|sq)\w*)(?:\.\w+)?$')
 MMI = re.compile(r'^p(?:extuw|extlw|cpyld|cpyud|extub|extlb|extuh|extlh|ackw|rot3w|sllw|srlw|raw|addw|subw|maxw|minw|and|xor|nor|mfhl|mthl)$')
 SYSTEM = re.compile(r'^(mfc0|mtc0|ei|di|sync|eret|cache|syscall|tlbr|tlbwi|tlbwr|tlbp)$')  # not `break`: the compiler emits it for a division by zero
+GLOBAL_POINTER = re.compile(r'\$gp\b')
+
+
+def uses_global_pointer(lines):
+    """True when one of the function's instructions names `$gp` (an ordinary-register use: retail has no `$gp`-relative accesses)."""
+    return any(GLOBAL_POINTER.search(line) for line in lines if INSTRUCTION.match(line))
 
 
 def kind_of(mnemonics):
@@ -149,6 +158,7 @@ def build():
             inline.append((unit['address'], unit['name'], unit['end'] - unit['address'], special))
             continue
         kind = (special or ('handwritten' if unit['address'] in hand else None)
+                or ('gp' if uses_global_pointer(unit['lines']) else None)
                 or ('remnant' if unit['address'] not in references and not transfers_control(mnemonics) else None))
         if kind:
             rows.append((unit['address'], unit['name'], unit['end'] - unit['address'], kind))
@@ -182,6 +192,7 @@ def names():
 
 # Kinds that are final: the function stays original assembly for good, so the reports leave it out of the count (scripts/blockers_report.py).
 # `mmi` is not here: some of those functions may still become C through the shared helpers, so they stay counted as unmatched until a survey rules.
+# Nor is `gp`: compiled C that needs a register the rules forbid naming; counted as unmatched until a ruling on a shared form (2026-11-12).
 FINAL_KINDS = ('system', 'remnant', 'vu', 'handwritten')
 
 

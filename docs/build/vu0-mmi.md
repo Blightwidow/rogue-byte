@@ -67,7 +67,14 @@ original assembly as finished apart from the exact C:
   matched share of what C can express, and how many functions and bytes are left out (`progress/us/blockers.json`). Before that date they
   counted as finished and the README showed an "exact C" share apart (24.4% of the code, 941 functions).
 - The `mmi` kind is **not final yet**: some of those functions may become C through the shared helpers (`include/ps2inline.h`), so they stay
-  in the totals as unmatched until a survey rules. The same goes for the `$gp` swap and read functions, which are not a kind of their own.
+  in the totals as unmatched until a survey rules.
+- Since 2026-11-12 a sixth kind, `gp`, also **not final**: an instruction names `$gp`. Retail never addresses data through `$gp`, so every
+  such use is an ordinary-register one: Sony's ChangeGP idiom, `$gp` swapped to a callee's value around an indirect call and restored (8
+  functions), or `$gp` read as a value and stored in a callback or RPC record (5). 13 functions, 3,760 bytes, all in the SDK range; six
+  more that touch `$gp` keep a final kind (`system`, `handwritten`). No matched function reads or writes `$gp`, and the only C form found
+  is a register pin (`register void *g asm("$28")`, score 4 on 0x241BB8, and GCC then schedules the `$gp` load after the call), which
+  AGENTS.md bans. They are left out of the work queues and counted as unmatched until a ruling on one shared form or on making the kind
+  final. Survey: one line of semantics each in `config/us/blocker_notes.tsv`.
 - A function leaves the list only if its instructions change: the table is content-based, regenerated from the split.
 
 The other options (a narrow written asm exception like `Sqrt`, a compiler with VU0 builtins, plain-math rewrites for the port) are not
