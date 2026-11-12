@@ -82,7 +82,7 @@ def build(us_report, status, other_sections):
             copy = {'name': name, 'sections': [{'name': '.text', 'size': str(text_size), 'fuzzy_match_percent': percent(
                 sum(int(f['size']) for f in functions if f['fuzzy_match_percent'] == 100), text_size) if text_size else 100.0, 'metadata': {}}],
                 'functions': functions, 'metadata': dict(unit.get('metadata', {}))}
-            complete = (bool(functions) or bool(unit.get('metadata', {}).get('excluded_functions'))) and all(f['fuzzy_match_percent'] == 100 for f in functions)
+            complete = bool(unit.get('metadata', {}).get('complete')) if not functions else all(f['fuzzy_match_percent'] == 100 for f in functions)
             copy['metadata']['complete'] = complete
             summary = {'functions': [(int(f['size']), f['fuzzy_match_percent']) for f in functions], 'data': 0, 'matched_data': 0, 'complete': complete,
                        'categories': copy['metadata'].get('progress_categories', [])}

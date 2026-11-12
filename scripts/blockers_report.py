@@ -5,7 +5,7 @@
 unmatched, and the functions, bytes, units and categories are recomputed without them (`make objdiff` runs it on progress/us/report.json).
 The `mmi` kind is not final yet (shared helpers may turn some into C), so those functions stay in the count as the objdiff report has them.
 It also writes progress/<version>/blockers.json (how many functions and bytes were left out, and by kind) so the README can show them apart.
-A unit whose functions are all left out is complete.
+A unit whose functions are all left out is complete (its `complete` metadata, the one field objdiff's report schema allows for it).
 
 The measures are recomputed with scripts/pal_report.py `measures`; `--check` recomputes without any blockers and fails when that does not
 give the report's own numbers (a test of the aggregation, run by tests/test_tools.py on a sample). Names, addresses and sizes only."""
@@ -27,7 +27,7 @@ def summarise(unit):
     sized = [section for section in sections if section['name'] != '.text' and int(section.get('size', 0))]  # an empty section has no `size`
     data = sum(int(section['size']) for section in sized) if unit['name'].startswith('data/') else 0
     matched_data = sum(int(section['size']) for section in sized if section.get('fuzzy_match_percent') == 100) if data else 0
-    complete = bool(metadata.get('complete')) if data else (bool(functions) or bool(metadata.get('excluded_functions'))) and all(fuzzy == 100 for _, fuzzy in functions)
+    complete = bool(metadata.get('complete')) if data else (bool(metadata.get('complete')) if not functions else all(fuzzy == 100 for _, fuzzy in functions))
     return {'functions': functions, 'data': data, 'matched_data': matched_data, 'complete': complete, 'categories': metadata.get('progress_categories', [])}
 
 
@@ -63,7 +63,8 @@ def apply(report, excluded):
                 kept.append(function)
         if left:
             unit['functions'] = kept
-            unit.setdefault('metadata', {})['excluded_functions'] = left
+            if not kept:
+                unit.setdefault('metadata', {})['complete'] = True  # objdiff rejects unknown metadata fields: `complete` carries it
     recompute(report)
     return {'functions': count, 'bytes': size, 'kinds': kinds}
 

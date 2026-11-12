@@ -98,8 +98,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 39.170507,
@@ -275,8 +274,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 93.491124,
@@ -311,8 +309,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -947,8 +944,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 6
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 87.997303,
@@ -1040,8 +1036,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -1162,8 +1157,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -1960,8 +1954,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 93.48659,
@@ -2413,8 +2406,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 71.974903,
@@ -2449,8 +2441,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -2507,8 +2498,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -2643,8 +2633,7 @@
      "game",
      "sly1",
      "camera"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -2849,8 +2838,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 60.9538,
@@ -3089,8 +3077,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 42.826552,
@@ -3140,8 +3127,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -3517,8 +3503,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 52.307692,
@@ -3596,8 +3581,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -3672,8 +3656,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -3891,8 +3874,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 56.104651,
@@ -4361,8 +4343,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 70.483461,
@@ -4487,8 +4468,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -4545,8 +4525,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -5030,8 +5009,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 62.687396,
@@ -5390,8 +5368,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 78.07971,
@@ -5847,8 +5824,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 66.766467,
@@ -5950,8 +5926,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 42.965779,
@@ -6076,8 +6051,7 @@
      "game",
      "sly1",
      "camera"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -6286,8 +6260,7 @@
      "game",
      "sly1",
      "camera"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 32.954545,
@@ -6489,8 +6462,7 @@
      "game",
      "sly1",
      "camera"
-    ],
-    "excluded_functions": 14
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 36.824877,
@@ -7036,8 +7008,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 99.150743,
@@ -7352,8 +7323,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 86.829268,
@@ -7690,8 +7660,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -7931,8 +7900,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -8215,8 +8183,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -8315,8 +8282,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 82.579186,
@@ -8368,8 +8334,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 9.734513,
@@ -8871,8 +8836,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -8936,8 +8900,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -9155,8 +9118,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 11
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 55.797101,
@@ -9191,8 +9153,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -9755,8 +9716,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 42.538071,
@@ -9791,8 +9751,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -10043,8 +10002,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 46.046916,
@@ -11029,8 +10987,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 57.930328,
@@ -11499,8 +11456,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -11706,8 +11662,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 63.74502,
@@ -11985,8 +11940,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -12520,8 +12474,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 8
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 77.803468,
@@ -12739,8 +12692,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -13055,8 +13007,7 @@
      "game",
      "sly1",
      "av"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 91.290323,
@@ -13208,8 +13159,7 @@
      "game",
      "sly1",
      "av"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 84.640884,
@@ -13244,8 +13194,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -13344,8 +13293,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 6
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 84.976526,
@@ -13552,8 +13500,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -14083,8 +14030,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 29.357798,
@@ -14129,8 +14075,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -14225,8 +14170,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 0.0,
@@ -14802,8 +14746,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 65.540044,
@@ -15181,8 +15124,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 93.482688,
@@ -15347,8 +15289,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -15426,8 +15367,7 @@
      "game",
      "sly1",
      "camera"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -15524,8 +15464,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 0.0,
@@ -15610,8 +15549,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 35.987261,
@@ -15736,8 +15674,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 19
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 43.365253,
@@ -15780,8 +15717,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -16182,8 +16118,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 62.475149,
@@ -16923,8 +16858,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -17289,8 +17223,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 69.620253,
@@ -17417,8 +17350,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -17453,8 +17385,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -17695,8 +17626,7 @@
      "game",
      "sly1",
      "av"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 64.649243,
@@ -18474,8 +18404,7 @@
      "game",
      "sly1",
      "av"
-    ],
-    "excluded_functions": 18
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 67.524752,
@@ -24167,8 +24096,7 @@
      "game",
      "new",
      "script"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 99.830964,
@@ -24338,8 +24266,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -24374,8 +24301,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -24410,8 +24336,7 @@
      "game",
      "new",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -24561,8 +24486,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -24597,8 +24521,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -25226,8 +25149,7 @@
      "game",
      "new",
      "script"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 84.391534,
@@ -26401,8 +26323,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 12
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 64.34652,
@@ -26753,8 +26674,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 12
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 75.031368,
@@ -26860,8 +26780,7 @@
      "game",
      "new",
      "script"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 71.22905,
@@ -26918,8 +26837,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -27110,8 +27028,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -27189,8 +27106,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -27318,8 +27234,7 @@
      "game",
      "new",
      "ui"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -27496,8 +27411,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 75.0,
@@ -27575,8 +27489,7 @@
      "game",
      "new",
      "ui"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -28350,8 +28263,7 @@
      "game",
      "new",
      "script"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 24.027073,
@@ -29067,8 +28979,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 15
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 75.174252,
@@ -29279,8 +29190,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 62.830957,
@@ -29659,8 +29569,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 91.738066,
@@ -29717,8 +29626,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -29796,8 +29704,7 @@
      "game",
      "new",
      "ui"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -29925,8 +29832,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -29976,8 +29882,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 14.0,
@@ -30055,8 +29960,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 8
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 68.656716,
@@ -30218,8 +30122,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 9
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 33.229491,
@@ -30488,8 +30391,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -30567,8 +30469,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 39.935065,
@@ -30830,8 +30731,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -30972,8 +30872,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 9
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 63.2,
@@ -31310,8 +31209,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 81.05864,
@@ -31389,8 +31287,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -31811,8 +31708,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 9
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 93.677873,
@@ -32058,8 +31954,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 73.145161,
@@ -32592,8 +32487,7 @@
      "game",
      "new",
      "ui"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 56.7979,
@@ -32834,8 +32728,7 @@
      "game",
      "new",
      "av"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 27.341533,
@@ -33266,8 +33159,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -33457,8 +33349,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 8
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 66.366559,
@@ -33592,8 +33483,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 77.870564,
@@ -33748,8 +33638,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 16
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 90.402075,
@@ -34469,8 +34358,7 @@
      "game",
      "new",
      "camera"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -34534,8 +34422,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -34613,8 +34500,7 @@
      "game",
      "new",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 16.906475,
@@ -34876,8 +34762,7 @@
      "game",
      "new",
      "core"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -34990,8 +34875,7 @@
      "game",
      "new",
      "ui"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -35048,8 +34932,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -35190,8 +35073,7 @@
      "game",
      "new",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 62.399077,
@@ -35486,8 +35368,7 @@
      "game",
      "new",
      "graphics"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 93.439077,
@@ -35897,8 +35778,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -35987,8 +35867,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -36484,8 +36363,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 65.275631,
@@ -36570,8 +36448,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -37188,8 +37065,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -37667,8 +37543,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 14
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 78.383579,
@@ -37748,8 +37623,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -38100,8 +37974,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 67.735471,
@@ -38389,8 +38262,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 10
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -38504,8 +38376,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 46.907216,
@@ -38575,8 +38446,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -38837,8 +38707,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 13
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -39052,8 +38921,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 73.832924,
@@ -39505,8 +39373,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 94.543547,
@@ -39549,8 +39416,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -39657,8 +39523,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -40012,8 +39877,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 65.880218,
@@ -43698,8 +43562,7 @@
     "complete": false,
     "progress_categories": [
      "sdk"
-    ],
-    "excluded_functions": 245
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 38.764994,
@@ -44243,8 +44106,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 81.969536,
@@ -44384,8 +44246,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -44449,8 +44310,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -45151,8 +45011,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -45823,8 +45682,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 79.73352,
@@ -46341,8 +46199,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -46637,8 +46494,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 95.3958,
@@ -47024,8 +46880,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 85.607755,
@@ -47201,8 +47056,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 83.549223,
@@ -47387,8 +47241,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 42.839352,
@@ -47671,8 +47524,7 @@
      "game",
      "sly1",
      "av"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 62.625139,
@@ -48483,8 +48335,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 94.065282,
@@ -48969,8 +48820,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 10
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 66.13455,
@@ -49033,8 +48883,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 50.0,
@@ -50695,8 +50544,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 8
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 44.877955,
@@ -50825,8 +50673,7 @@
      "game",
      "sly1",
      "script"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 71.750256,
@@ -51526,8 +51373,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 97.343958,
@@ -51570,8 +51416,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -52517,8 +52362,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 10
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 83.46475,
@@ -52572,8 +52416,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -52681,8 +52524,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -53073,8 +52915,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 87.543253,
@@ -53194,8 +53035,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 49.586777,
@@ -53509,8 +53349,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -53616,8 +53455,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -53718,8 +53556,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 11.426684,
@@ -53799,8 +53636,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -53835,8 +53671,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -54138,8 +53973,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -54902,8 +54736,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 96.666667,
@@ -54938,8 +54771,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -55180,8 +55012,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 4
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 84.848485,
@@ -55231,8 +55062,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 34.634146,
@@ -55372,8 +55202,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -55679,8 +55508,7 @@
      "game",
      "sly1",
      "ui"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 87.402597,
@@ -55752,8 +55580,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -56077,8 +55904,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 82.799702,
@@ -56156,8 +55982,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -56332,8 +56157,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 9
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -56411,8 +56235,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -56808,8 +56631,7 @@
      "game",
      "sly1",
      "player"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 66.249021,
@@ -56844,8 +56666,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -56923,8 +56744,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -57044,8 +56864,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 5
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 59.14787,
@@ -57271,8 +57090,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 95.14218,
@@ -57307,8 +57125,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -57371,8 +57188,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 7
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 0.0,
@@ -57450,8 +57266,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 15.083799,
@@ -57508,8 +57323,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 2
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -57544,8 +57358,7 @@
      "game",
      "sly1",
      "core"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -57775,8 +57588,7 @@
      "game",
      "sly1",
      "graphics"
-    ],
-    "excluded_functions": 1
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,
@@ -58093,8 +57905,7 @@
      "game",
      "sly1",
      "objects"
-    ],
-    "excluded_functions": 3
+    ]
    },
    "measures": {
     "fuzzy_match_percent": 100.0,

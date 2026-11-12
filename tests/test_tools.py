@@ -1305,6 +1305,7 @@ class BlockerTests(unittest.TestCase):
         report = copy.deepcopy(self.REPORT)
         blockers_report.apply(report, {'f': 'vu', 'g': 'vu', 'h': 'vu'})
         self.assertTrue(report['units'][0]['metadata']['complete'])
+        self.assertNotIn('excluded_functions', report['units'][0]['metadata'])
 
     def test_recompute_without_blockers_keeps_the_totals(self):
         import copy
