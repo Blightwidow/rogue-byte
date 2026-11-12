@@ -87,7 +87,8 @@ struct SW : BASIC {
     /* 0x3B54 */ struct SAVEPATH *psavepathAutosaveWarned; /* "flags/fAutosaveWarned" */
     /* 0x3B58 */ struct SAVEPATH *apsavepathEpisodeDt[9]; /* "episode/<name>/dt" per episode */
     /* 0x3B7C */ struct SAVEPATH *apsavepathEpisodePercent[9]; /* "episode/<name>/percent_complete" per episode */
-    u8 unknown_0x3BA0[0x50];
+    u8 unknown_0x3BA0[0x4C];
+    /* 0x3BEC */ s32 cblotActive; /* SetBlotBlots counts the blots of 16 frames or more that enter state 2 and up */
     /* 0x3BF0 */ s32 fLoadPending; /* SetSwLoadRequest sets it with the request */
     /* 0x3BF4 */ LOADREQ loadreq; /* SetSwLoadRequest copies one in whole */
     u8 unknown_0x3C40[0x48];
@@ -110,11 +111,15 @@ struct SW : BASIC {
     /* 0x3D68 */ s32 idHitfxLast; /* func_00156548 increments it for each new hit effect */
     u8 unknown_0x3D6C[0x4];
     /* 0x3D70 */ s32 stamp; /* func_001C1968 */
-    u8 unknown_0x3D74[0xC4];
+    u8 unknown_0x3D74[0x14];
+    /* 0x3D88 */ DL dlAsega; /* UpdateSw walks it with UpdateAsega; Sw_Construct initialises it with ibDle 0x24 */
+    u8 unknown_0x3D94[0xA4];
     /* 0x3E38 */ s32 field_0x3E38; /* AllocSwBuffers sets it when the load request has bit 0x20; UpdateCmLast, RestartAtTask test it */
     u8 unknown_0x3E3C[0x64];
     /* 0x3EA0 */ u64 gs; /* a GS register value, func_001EA9F0 */
-    u8 unknown_0x3EA8[0x10];
+    u8 unknown_0x3EA8[0x4];
+    /* 0x3EAC */ void *pvjoyFirst; /* a list linked at 0x84: UpdateSw calls UpdateVjoy on each; Sw_Construct's InitSl gives the link */
+    u8 unknown_0x3EB0[0x8];
     /* 0x3EB8 */ s32 clo; /* func_001C4AF8 */
     /* 0x3EBC */ struct LO *aplo[16]; /* func_001C4AF8; at most 16 (the focus follows at 0x3EFC) */
     /* 0x3EFC */ struct PO *ppoFocusBase; /* SetSwFocusBase, SetSwFocusOverride */
@@ -122,7 +127,7 @@ struct SW : BASIC {
     /* 0x3F04 */ s32 ccloneset; /* InitCloneSets */
     /* 0x3F08 */ struct CLONESET *acloneset; /* InitCloneSets, InstantiateClone */
     /* 0x3F0C */ struct SCOPE *pscopeDefault; /* used when the context object has none: RefOpFindObject, func_001241E8, func_00124578, RefOpFindNearestObject; AllocSwBuffers allocates it */
-    u8 unknown_0x3F10[0x4];
+    /* 0x3F10 */ s32 field_0x3F10; /* Sw_Construct sets it to -2 */
     /* 0x3F14 */ s32 cgrfentry; /* AddSwGrfEntry, SolveSw, func_001CDA80 */
     /* 0x3F18 */ s32 cgrfentryDead; /* AddSwGrfEntry compacts the table when they pass a tenth */
     /* 0x3F1C */ s32 *pigrfentryRunning; /* the loop index of the walk in progress, which AddSwGrfEntry fixes up (SolveSw, func_001CDA80) */
@@ -192,6 +197,7 @@ SLY2_OFFSET_CHECK(SW, psavepathReverseAim, 0x3B50);
 SLY2_OFFSET_CHECK(SW, psavepathAutosaveWarned, 0x3B54);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodeDt, 0x3B58);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodePercent, 0x3B7C);
+SLY2_OFFSET_CHECK(SW, cblotActive, 0x3BEC);
 SLY2_OFFSET_CHECK(SW, fLoadPending, 0x3BF0);
 SLY2_OFFSET_CHECK(SW, loadreq, 0x3BF4);
 SLY2_OFFSET_CHECK(SW, field_0x3C88, 0x3C88);
@@ -210,7 +216,9 @@ SLY2_OFFSET_CHECK(SW, frameLast, 0x3D64);
 SLY2_OFFSET_CHECK(SW, idHitfxLast, 0x3D68);
 SLY2_OFFSET_CHECK(SW, stamp, 0x3D70);
 SLY2_OFFSET_CHECK(SW, field_0x3E38, 0x3E38);
+SLY2_OFFSET_CHECK(SW, dlAsega, 0x3D88);
 SLY2_OFFSET_CHECK(SW, gs, 0x3EA0);
+SLY2_OFFSET_CHECK(SW, pvjoyFirst, 0x3EAC);
 SLY2_OFFSET_CHECK(SW, clo, 0x3EB8);
 SLY2_OFFSET_CHECK(SW, aplo, 0x3EBC);
 SLY2_OFFSET_CHECK(SW, ppoFocusBase, 0x3EFC);
@@ -218,6 +226,7 @@ SLY2_OFFSET_CHECK(SW, ppoFocusOverride, 0x3F00);
 SLY2_OFFSET_CHECK(SW, ccloneset, 0x3F04);
 SLY2_OFFSET_CHECK(SW, acloneset, 0x3F08);
 SLY2_OFFSET_CHECK(SW, pscopeDefault, 0x3F0C);
+SLY2_OFFSET_CHECK(SW, field_0x3F10, 0x3F10);
 SLY2_OFFSET_CHECK(SW, cgrfentry, 0x3F14);
 SLY2_OFFSET_CHECK(SW, cgrfentryDead, 0x3F18);
 SLY2_OFFSET_CHECK(SW, pigrfentryRunning, 0x3F1C);

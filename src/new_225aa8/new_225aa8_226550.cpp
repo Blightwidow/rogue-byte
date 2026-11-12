@@ -58,7 +58,7 @@ void UpdateSw(SW *psw)
     if (g_2dded0[1] <= 0.0f) {
         UpdateSwPaused(psw);
     } else {
-        for (char *pvjoy = *(char **)((char *)psw + 0x3EAC); pvjoy != 0; pvjoy = *(char **)(pvjoy + 0x84))
+        for (char *pvjoy = (char *)psw->pvjoyFirst; pvjoy != 0; pvjoy = *(char **)(pvjoy + 0x84))
             UpdateVjoy(pvjoy);
         ExpireSwWkrs(psw);
         index = 0;
@@ -71,7 +71,7 @@ void UpdateSw(SW *psw)
         psw->pigrfentryRunning = 0;
         UpdateSwGuardsFrozen(psw);
         {
-            PushDli(&iteratorAsega, (DL *)((char *)psw + 0x3D88));
+            PushDli(&iteratorAsega, &psw->dlAsega);
             for (void *pv = PvStep(&iteratorAsega); pv != 0; pv = PvStep(&iteratorAsega))
                 UpdateAsega(pv);
         }

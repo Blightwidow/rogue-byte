@@ -18,15 +18,33 @@ A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Suc
 > `src/` reconstructs game code function by function: see [src/README.md](src/README.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 <!-- progress:begin (scripts/readme_progress.py) -->
-| Version | Code | of which exact C | Functions | Blocked for C | C with inline assembly to match |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 76.83% (1077520 of 1402480 bytes) | 52.43% | 6327 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
-| PAL `SCES_525.29` | 74.86% (1049956 of 1402480 bytes) | 50.46% | 6229 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
+| Version | Code matched | Functions matched | Original assembly, outside the count | C with inline assembly to match |
+| :--- | ---: | ---: | ---: | ---: |
+| NTSC-U `SCUS_973.16` | 70.62% (757596 of 1072704 bytes) | 5423 of 5938 | 888 functions, 329784 bytes | 50 functions, 6.54% |
+| PAL `SCES_525.29` | 67.93% (728740 of 1072704 bytes) | 5323 of 5938 | 888 functions, 329784 bytes | 50 functions, 6.54% |
 
-A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C. Compiled C that needs a shared inline-assembly helper for an instruction GCC cannot emit (`config/us/inline_functions.tsv`, [docs/build/inline-asm-helpers.md](docs/build/inline-asm-helpers.md)) is work to do; the last column counts those not matched yet.
+A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers that are final (a VU0 or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly for good, so they are left out of the totals above: they are neither matched nor unmatched, and the column before the last counts them. Functions with MMI instructions stay in the totals as unmatched until the shared helpers rule on them. Compiled C that needs a shared inline-assembly helper for an instruction GCC cannot emit (`config/us/inline_functions.tsv`, [docs/build/inline-asm-helpers.md](docs/build/inline-asm-helpers.md)) is work to do; the last column counts those not matched yet.
 <!-- progress:end -->
 
 Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
+
+## Versions
+
+Sly 2 shipped on several PS2 discs. The US release is the one the C is matched against; the European v2.01 release is checked
+against the same C. The others are not supported yet: they may be added later, as checks like PAL's (`make pal`).
+
+| Release | Disc serial | Executable | Status |
+| :--- | :--- | :--- | :--- |
+| USA | [SCUS-97316](http://redump.org/disc/4360/) | `SCUS_973.16` | matched: the reference, rebuilt byte for byte |
+| Europe, v2.01 | [SCES-52529](http://redump.org/disc/41730/) | `SCES_525.29` | checked: the same C against its code (`make pal`) |
+| Europe, v1.00 | [SCES-52529](http://redump.org/disc/10514/) | | potentially in the future |
+| Japan | [SCPS-15090](http://redump.org/disc/43937/) | | potentially in the future |
+| Korea | [SCKA-20044, SCKA-20074](http://redump.org/disc/115499/) | | potentially in the future |
+| USA, demo | [SCUS-97415](http://redump.org/disc/49354/) | | potentially in the future |
+| USA, demo | [SCUS-97457](http://redump.org/disc/57317/) | | potentially in the future |
+
+Disc entries link to [redump.org](http://redump.org), the preservation database of verified disc dumps. Only retail and demo discs are
+listed: prototypes are out of scope ([AGENTS.md](AGENTS.md) "Nothing from the prototype").
 
 ## Layout
 

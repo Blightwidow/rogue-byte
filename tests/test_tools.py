@@ -877,6 +877,26 @@ class ClaimTests(unittest.TestCase):
         self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\told\n2\tW1-a\t100000\t5\tdigest\tkept/b.cpp\tnow\n')
         self.assertEqual(claim.runs('W1'), {0x100000: [('W1-a', 5, 'kept/b.cpp')]})
 
+    def honest_paths(self, scored, flagged_paths):
+        saved = claim.flagged
+        claim.flagged = lambda path, name: path in flagged_paths
+        try:
+            return [entry[2] for _, entry in claim.honest(scored, 'f')]
+        finally:
+            claim.flagged = saved
+
+    def test_a_flagged_copy_loses_to_an_agreed_one(self):
+        scored = [(0, ('W1-a', 4, 'kept/wrong_call.cpp')), (1, ('W1-a', 9, 'kept/fixed.cpp'))]
+        self.assertEqual(self.honest_paths(scored, {'kept/wrong_call.cpp'}), ['kept/fixed.cpp'])
+
+    def test_flagged_copies_are_kept_when_none_agrees(self):
+        scored = [(0, ('W1-a', 4, 'kept/a.cpp')), (1, ('W1-a', 9, 'kept/b.cpp'))]
+        self.assertEqual(len(self.honest_paths(scored, {'kept/a.cpp', 'kept/b.cpp'})), 2)
+
+    def test_a_flagged_match_is_never_passed_over(self):
+        scored = [(0, ('W1-a', 0, 'kept/wrong_call.cpp')), (1, ('W1-a', 9, 'kept/fixed.cpp'))]
+        self.assertIn('kept/wrong_call.cpp', self.honest_paths(scored, {'kept/wrong_call.cpp'}))
+
     def test_a_run_with_no_fingerprint_is_ignored(self):
         self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\n')
         self.assertEqual(claim.runs('W1'), {})
@@ -1265,19 +1285,27 @@ class BlockerTests(unittest.TestCase):
         {'name': 'a', 'metadata': {'progress_categories': ['game']}, 'sections': [], 'functions': [
             {'name': 'f', 'size': '100', 'fuzzy_match_percent': 100.0}, {'name': 'g', 'size': '300'}, {'name': 'h', 'size': '100', 'fuzzy_match_percent': 40.0}]}]}
 
-    def test_a_blocker_counts_as_finished(self):
+    def test_a_final_blocker_leaves_the_count(self):
         import copy
         report = copy.deepcopy(self.REPORT)
-        counted = blockers_report.apply(report, {'g'})
-        self.assertEqual(counted, (1, 300))
-        self.assertEqual(report['measures']['matched_code'], '400')
-        self.assertEqual(report['measures']['matched_functions'], 2)
-        self.assertEqual(report['categories'][0]['measures']['matched_code'], '400')
+        left = blockers_report.apply(report, {'g': 'system'})
+        self.assertEqual(left, {'functions': 1, 'bytes': 300, 'kinds': {'system': 1}})
+        self.assertEqual((report['measures']['total_code'], report['measures']['matched_code']), ('200', '100'))
+        self.assertEqual((report['measures']['total_functions'], report['measures']['matched_functions']), (2, 1))
+        self.assertEqual(report['categories'][0]['measures']['total_code'], '200')
 
-    def test_a_function_already_matched_is_not_counted_again(self):
+    def test_a_blocker_left_in_the_report_stays_unmatched(self):
         import copy
         report = copy.deepcopy(self.REPORT)
-        self.assertEqual(blockers_report.apply(report, {'f'}), (0, 0))
+        self.assertEqual(blockers_report.apply(report, {})['functions'], 0)
+        self.assertEqual((report['measures']['total_code'], report['measures']['matched_code']), ('500', '100'))
+
+    def test_a_unit_of_only_final_blockers_is_complete(self):
+        import copy
+        report = copy.deepcopy(self.REPORT)
+        blockers_report.apply(report, {'f': 'vu', 'g': 'vu', 'h': 'vu'})
+        self.assertTrue(report['units'][0]['metadata']['complete'])
+        self.assertNotIn('excluded_functions', report['units'][0]['metadata'])
 
     def test_recompute_without_blockers_keeps_the_totals(self):
         import copy

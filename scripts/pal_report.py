@@ -21,7 +21,6 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import classify_blockers  # noqa: E402
 
 LAB = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 DEFAULT_OUT = os.path.join(LAB, 'progress', 'eu', 'report.json')
@@ -62,7 +61,6 @@ def measures(units):
 def build(us_report, status, other_sections):
     """The PAL report: `status` maps a function name to True when the same C reproduces the PAL code and its addresses."""
     units, summaries = [], []
-    blockers = classify_blockers.names()  # permanent blockers are original assembly: finished for PAL too, as in the US report
     for unit in us_report['units']:
         name = unit['name']
         if name.startswith('data/'):
@@ -78,13 +76,13 @@ def build(us_report, status, other_sections):
         else:
             functions = []
             for function in unit.get('functions', []):
-                fuzzy = 100.0 if status.get(function['name']) or function['name'] in blockers else 0.0
+                fuzzy = 100.0 if status.get(function['name']) else 0.0
                 functions.append(dict(function, fuzzy_match_percent=fuzzy))
             text_size = sum(int(function['size']) for function in functions)
             copy = {'name': name, 'sections': [{'name': '.text', 'size': str(text_size), 'fuzzy_match_percent': percent(
                 sum(int(f['size']) for f in functions if f['fuzzy_match_percent'] == 100), text_size) if text_size else 100.0, 'metadata': {}}],
                 'functions': functions, 'metadata': dict(unit.get('metadata', {}))}
-            complete = bool(functions) and all(f['fuzzy_match_percent'] == 100 for f in functions)
+            complete = bool(unit.get('metadata', {}).get('complete')) if not functions else all(f['fuzzy_match_percent'] == 100 for f in functions)
             copy['metadata']['complete'] = complete
             summary = {'functions': [(int(f['size']), f['fuzzy_match_percent']) for f in functions], 'data': 0, 'matched_data': 0, 'complete': complete,
                        'categories': copy['metadata'].get('progress_categories', [])}

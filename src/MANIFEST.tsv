@@ -1451,6 +1451,7 @@ address	name	size	file	whole_file	symbol
 0X136D28	InitLookRig	148	bbmark-blend/InitLookRig.cpp		
 0X136DC0	UpdateLookRig	272	bbmark-blend/UpdateLookRig.cpp		
 0X136ED0	HandleLookRigMessage	116	bbmark-blend/HandleLookRigMessage.cpp		
+0X136F48	SetLookRigState	624	bbmark-blend/SetLookRigState.cpp		
 0X1371B8	bevy_player_p25_default	16	bbmark-blend/bevy_player_p25_default.c		
 0X1371C8	bevy_player_p25_1371c8	76	bbmark-blend/bevy_player_p25_1371c8.cpp		
 0X137218	bevy_player_p25_137218	44	bbmark-blend/bevy_player_p25_137218.c		
@@ -2205,6 +2206,7 @@ address	name	size	file	whole_file	symbol
 0X16CAA0	LoadGlobStreamedFromBrx	1240	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	LoadGlobStreamedFromBrx
 0X16D698	func_0016D698	48	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D698
 0X16D6C8	func_0016D6C8	896	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D6C8
+0X16DA48	func_0016DA48	784	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016DA48
 0X16DD58	func_0016DD58	1100	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016DD58
 0X16E1A8	func_0016E1A8	128	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E1A8
 0X16E228	func_0016E228	112	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E228
@@ -2700,6 +2702,7 @@ address	name	size	file	whole_file	symbol
 0X1959C0	func_001959C0	60	new_1942f0/fun_001959c0.cpp		
 0X197370	StartJmpDirectionAseg	344	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	StartJmpDirectionAseg
 0X1974C8	PmqFirstOxaContact	52	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	PmqFirstOxaContact
+0X199298	func_00199298	364	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	func_00199298
 0X19AA58	GMeasureJumpRail__FP3MJRf	96	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpRail__FP3MJRf
 0X19AAB8	GMeasureJumpHpnt	128	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpHpnt
 0X19AB38	GMeasureJumpToHshape	128	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpToHshape
@@ -3081,6 +3084,7 @@ address	name	size	file	whole_file	symbol
 0X1B33F0	FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg	224	mpeg/FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg.cpp		
 0X1B34D0	FMpegBackground	56	mpeg/FMpegBackground.cpp		
 0X1B3508	func_001B3508	8	unsorted/fun_001b3508.c		
+0X1B3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	492	mpeg/BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii.cpp		
 0X1B3700	DrawMpegFrame	836	mpeg/DrawMpegFrame.cpp		
 0X1B3A48	QueueMovie	188	mpeg/QueueMovie.cpp		
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp		
@@ -3866,6 +3870,7 @@ address	name	size	file	whole_file	symbol
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp		
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp		
 0X1ECC28	FBuildUploadBitmapGifs__FiP3GSBP4GIFS	556	gs/FBuildUploadBitmapGifs__FiP3GSBP4GIFS.cpp		
+0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs/PqwVifsBitmapUpload__Fi.cpp		
 0X1ED278	FilterColorRgba8_1ed278	96	new_1ed1a8/FilterColorRgba8_1ed278.cpp		
 0X1ED3A8	InitIdHashTables_1ed3a8	156	new_1ed1a8/new_1ed1a8_1ed3a8.c	new_1ed1a8/new_1ed1a8_1ed3a8.c	InitIdHashTables_1ed3a8
 0X1ED448	ShutdownIdHashTables_1ed448	36	new_1ed1a8/new_1ed1a8_1ed3a8.c	new_1ed1a8/new_1ed1a8_1ed3a8.c	ShutdownIdHashTables_1ed448
@@ -4611,6 +4616,7 @@ address	name	size	file	whole_file	symbol
 0X2129E8	Blot_Hide	68	po-screen/Blot_Hide.cpp		
 0X212A30	func_00212A30	32	po-screen/fun_00212a30.c		
 0X212A50	SetTimerTimers__FP5TIMER6TIMERS	32	screen/SetTimerTimers__FP5TIMER6TIMERS.c		
+0X212A70	SetBlotBlots	476	screen-font/SetBlotBlots.cpp		
 0X212C50	UpdateBlotMovie	492	screen-font/UpdateBlotMovie.cpp		
 0X212E40	SeekBlotLabel	308	screen-font/SeekBlotLabel.cpp		
 0X212F80	func_00212F80	308	screen-font/fun_00212f80.cpp		
@@ -4958,17 +4964,23 @@ address	name	size	file	whole_file	symbol
 0X232468	snd_ContinueAllSoundsInGroup	48	sdk/snd_ContinueAllSoundsInGroup.cpp		
 0X232498	snd_SoundIsStillPlaying_CB	48	sdk/snd_SoundIsStillPlaying_CB.cpp		
 0X232500	func_00232500	32	sdk/fun_00232500.cpp		
+0X232520	func_00232520	72	sdk/fun_00232520.cpp		
 0X232568	snd_AutoVol	60	sdk/snd_AutoVol.cpp		
 0X232BB8	snd_PostMessage__Fv	64	sdk/snd_PostMessage__Fv.cpp		
 0X232D80	snd_StreamSafeCheckCDIdle	40	sdk/snd_StreamSafeCheckCDIdle.cpp		
 0X232DA8	snd_StreamSafeCdSync	192	sdk/snd_StreamSafeCdSync.cpp		
+0X232EE8	snd_PlaySoundVolPanPMPB	60	sdk/snd_PlaySoundVolPanPMPB.cpp		
 0X232F28	snd_ResetMovieSound	36	sdk/snd_ResetMovieSound.cpp		
 0X232F60	snd_CloseMovieSound	36	sdk/snd_CloseMovieSound.cpp		
+0X232F88	snd_InitMovieSound	56	sdk/snd_InitMovieSound.cpp		
 0X232FC0	func_00232FC0	36	sdk/fun_00232fc0.cpp		
 0X232FE8	func_00232FE8	44	sdk/fun_00232fe8.cpp		
 0X233018	func_00233018	36	sdk/fun_00233018.cpp		
 0X233048	func_00233048	64	sdk/fun_00233048.cpp		
+0X233088	func_00233088	72	sdk/fun_00233088.cpp		
+0X233130	func_00233130	64	sdk/fun_00233130.cpp		
 0X233800	AtoiPchz	40	sdk/AtoiPchz.cpp		
+0X2338C0	qsort	2524	sdk/qsort.c		
 0X2342A0	rand	48	sdk/rand.cpp		
 0X2342D0	StricmpPchz	124	sdk/StricmpPchz.c		
 0X234580	func_00234580	52	sdk/fun_00234580.cpp		
@@ -4977,9 +4989,13 @@ address	name	size	file	whole_file	symbol
 0X235388	func_00235388	236	sdk/fun_00235388.cpp		
 0X2357B8	func_002357B8	176	sdk/fun_002357b8.c		
 0X235868	func_00235868	52	sdk/fun_00235868.c		
+0X235B08	func_00235B08	3348	sdk/fun_00235b08.c		
 0X236820	func_00236820	88	unsorted/fun_00236820.c		
 0X236878	func_00236878	40	sdk/fun_00236878.cpp		
 0X2368A0	func_002368A0	40	sdk/fun_002368a0.cpp		
+0X2368C8	func_002368C8	76	sdk/fun_002368c8.c		
+0X236960	func_00236960	128	sdk/fun_00236960.cpp		
+0X2369E0	func_002369E0	128	sdk/fun_002369e0.cpp		
 0X236C00	func_00236C00	36	sdk/fun_00236c00.cpp		
 0X236C28	func_00236C28	168	sdk/fun_00236c28.c		
 0X236CD0	func_00236CD0	28	sdk/fun_00236cd0.cpp		
@@ -4995,6 +5011,7 @@ address	name	size	file	whole_file	symbol
 0X2374E0	func_002374E0	112	sdk/fun_002374e0.cpp		
 0X237558	func_00237558	136	sdk/fun_00237558.c		
 0X2375E0	func_002375E0	236	sdk/fun_002375e0.c		
+0X2376D0	func_002376D0	108	sdk/fun_002376d0.cpp		
 0X237AF8	func_00237AF8	84	sdk/fun_00237af8.cpp		
 0X237B50	func_00237B50	44	sdk/fun_00237b50.cpp		
 0X237B80	func_00237B80	12	sdk/fun_00237b80.c		
@@ -5004,8 +5021,10 @@ address	name	size	file	whole_file	symbol
 0X238C58	func_00238C58	112	sdk/fun_00238c58.cpp		
 0X238CC8	func_00238CC8	120	sdk/fun_00238cc8.cpp		
 0X238D40	func_00238D40	28	sdk/fun_00238d40.cpp		
+0X238D70	func_00238D70	256	sdk/fun_00238d70.cpp		
 0X238E70	func_00238E70	140	sdk/fun_00238e70.c		
 0X238F00	sceSifLoadFileReset	56	sdk/sceSifLoadFileReset.cpp		
+0X238F38	func_00238F38	520	sdk/fun_00238f38.cpp		
 0X239140	sceSifLoadModule	28	sdk/sceSifLoadModule.cpp		
 0X239198	func_00239198	340	sdk/fun_00239198.cpp		
 0X2392F0	sceSifSyncIop	80	sdk/sceSifSyncIop.c		
@@ -5084,6 +5103,7 @@ address	name	size	file	whole_file	symbol
 0X23F640	func_0023F640	72	sdk/fun_0023f640.c		
 0X23F688	func_0023F688	136	sdk/fun_0023f688.cpp		
 0X23F710	func_0023F710	316	sdk/fun_0023f710.cpp		
+0X23F938	func_0023F938	260	sdk/fun_0023f938.cpp		
 0X23FDD8	RegisterGlobalObject	40	sdk/RegisterGlobalObject.cpp		
 0X23FE00	func_0023FE00	120	sdk/fun_0023fe00.c		
 0X2401C8	func_002401C8	12	sdk/fun_002401c8.cpp		
@@ -5095,6 +5115,7 @@ address	name	size	file	whole_file	symbol
 0X240B68	sceGsGetIMR	28	sdk/sceGsGetIMR.cpp		
 0X240B88	checkModelVersion	160	sdk/checkModelVersion.cpp		
 0X240FB0	sceGszbufaddr	200	sdk/sceGszbufaddr.c		
+0X241078	sceGsSetDefDrawEnv	484	sdk/sceGsSetDefDrawEnv.c		
 0X2413E0	func_002413E0	40	sdk/fun_002413e0.cpp		
 0X241408	memclr	52	sdk/memclr.cpp		
 0X241440	sceDmaGetChan	40	sdk/sceDmaGetChan.cpp		
@@ -5103,9 +5124,14 @@ address	name	size	file	whole_file	symbol
 0X2417F0	func_002417F0	56	sdk/fun_002417f0.cpp		
 0X241830	func_00241830	152	sdk/fun_00241830.c		
 0X241C10	func_00241C10	120	sdk/fun_00241c10.cpp		
+0X241DF0	func_00241DF0	152	sdk/fun_00241df0.cpp		
 0X241E88	sceCdSync	160	sdk/sceCdSync.cpp		
 0X241F28	func_00241F28	108	sdk/fun_00241f28.cpp		
+0X2425F0	func_002425F0	544	sdk/fun_002425f0.cpp		
+0X242810	sceCdGetReadPos	48	sdk/sceCdGetReadPos.c		
+0X242A20	sceCdGetDiskType	152	sdk/sceCdGetDiskType.c		
 0X242AB8	func_00242AB8	36	sdk/fun_00242ab8.cpp		
+0X242AE0	sceCdGetError	152	sdk/sceCdGetError.c		
 0X242B78	sceCdBreak	184	sdk/sceCdBreak.c		
 0X242D08	scePadInit	320	sdk/scePadInit.cpp		
 0X242E90	func_00242E90	224	sdk/fun_00242e90.c		
@@ -5128,8 +5154,11 @@ address	name	size	file	whole_file	symbol
 0X244018	sceMcMkdir	52	sdk/sceMcMkdir.cpp		
 0X244050	sceMcClose	188	sdk/sceMcClose.cpp		
 0X2441C0	sceMcRead	276	sdk/sceMcRead.cpp		
+0X2442D8	sceMcWrite	376	sdk/sceMcWrite.c		
 0X244450	sceMcSync	196	sdk/sceMcSync.cpp		
 0X244518	func_00244518	88	unsorted/fun_00244518.c		
+0X244570	sceMcGetInfo	380	sdk/sceMcGetInfo.c		
+0X2446F0	sceMcGetDir	332	sdk/sceMcGetDir.cpp		
 0X244848	sceMcFormat	204	sdk/sceMcFormat.cpp		
 0X244918	sceMcDelete	284	sdk/sceMcDelete.cpp		
 0X244A58	sceMcGetEntSpace	268	sdk/sceMcGetEntSpace.cpp		
@@ -5142,7 +5171,9 @@ address	name	size	file	whole_file	symbol
 0X2458F0	atan2f	296	sdk/atan2f.cpp		
 0X245A18	fmodf	316	sdk/fmodf.c		
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
+0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp		
+0X248F38	__kernel_rem_pio2f	2380	sdk/__kernel_rem_pio2f.c		
 0X249888	__kernel_sinf	260	sdk/__kernel_sinf.cpp		
 0X249C28	fabs	52	sdk/fabs.cpp		
 0X249C60	func_00249C60	32	sdk/fun_00249c60.c		
@@ -5173,11 +5204,14 @@ address	name	size	file	whole_file	symbol
 0X24B9C8	func_0024B9C8	36	sdk/fun_0024b9c8.cpp		
 0X24C360	func_0024C360	192	sdk/fun_0024c360.cpp		
 0X24C420	func_0024C420	144	sdk/fun_0024c420.cpp		
+0X24CF40	func_0024CF40	1704	sdk/fun_0024cf40.cpp		
 0X24F770	SceMpegDemuxPss	32	sdk/SceMpegDemuxPss.cpp		
 0X24F8C0	func_0024F8C0	16	sdk/fun_0024f8c0.c		
 0X24F8D0	func_0024F8D0	160	sdk/fun_0024f8d0.cpp		
 0X24FA38	func_0024FA38	84	sdk/fun_0024fa38.cpp		
 0X24FA90	func_0024FA90	64	sdk/fun_0024fa90.cpp		
+0X2511C8	func_002511C8	1064	sdk/fun_002511c8.cpp		
+0X251790	func_00251790	1368	sdk/fun_00251790.cpp		
 0X251E60	func_00251E60	360	sdk/fun_00251e60.cpp		
 0X251FC8	func_00251FC8	384	sdk/fun_00251fc8.cpp		
 0X252230	func_00252230	140	sdk/fun_00252230.cpp		
@@ -5187,6 +5221,7 @@ address	name	size	file	whole_file	symbol
 0X252398	func_00252398	188	sdk/fun_00252398.c		
 0X252608	func_00252608	380	sdk/fun_00252608.c		
 0X253478	func_00253478	160	sdk/fun_00253478.c		
+0X253518	func_00253518	416	sdk/fun_00253518.c		
 0X253C80	func_00253C80	160	sdk/fun_00253c80.c		
 0X253D20	func_00253D20	324	sdk/fun_00253d20.c		
 0X253FA8	func_00253FA8	232	sdk/fun_00253fa8.c		

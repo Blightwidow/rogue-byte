@@ -61,14 +61,17 @@ original assembly as finished apart from the exact C:
 - A blocker stays **assembly**: it is built from the original assembly and is never matched in C. No inline asm, no exception.
 - It is **left out of the work queues**: `list_functions.py` skips it (`--blockers` shows it, `--status blocked` lists only them) and
   `claim.py init` skips it. `work/report.json` gives it the status `blocked`.
-- It **counts as finished** in the reports, shown apart from the exact C: `make objdiff` runs `scripts/blockers_report.py`, which sets the
-  blockers to 100% in `progress/us/report.json` and recomputes the measures; `pal_report.py` does the same for PAL. The README table
-  shows the code and function totals, the share that is exact C, and how many functions and bytes are blocked
-  (`progress/us/blockers.json`).
+- Since 2026-11-12 the **final** kinds (`system`, `remnant`, `vu`, `handwritten`) are **left out of the count**: they are neither matched nor
+  unmatched. `make objdiff` runs `scripts/blockers_report.py`, which removes them from `progress/us/report.json` and recomputes the code,
+  function, unit and category measures; `pal_report.py` builds from that report, so PAL leaves them out too. The README table shows the
+  matched share of what C can express, and how many functions and bytes are left out (`progress/us/blockers.json`). Before that date they
+  counted as finished and the README showed an "exact C" share apart (24.4% of the code, 941 functions).
+- The `mmi` kind is **not final yet**: some of those functions may become C through the shared helpers (`include/ps2inline.h`), so they stay
+  in the totals as unmatched until a survey rules. The same goes for the `$gp` swap and read functions, which are not a kind of their own.
 - A function leaves the list only if its instructions change: the table is content-based, regenerated from the split.
 
 The other options (a narrow written asm exception like `Sqrt`, a compiler with VU0 builtins, plain-math rewrites for the port) are not
 taken. Two facts are still unchecked: whether any toolchain build has VU0 builtins, and what `bin/ee-as.exe` does with a COP2 instruction
 in a delay slot.
 
-What counts as finished here is generous on purpose, like sly1's: the exact-C figure is the one to quote for matching progress.
+The matched percent is the one to quote for matching progress: it counts only C that rebuilds retail's bytes, over the code C can express.

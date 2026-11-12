@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "cref.h"
+struct CRefNil : CRef {
+    CRefNil() { m_tagk = TAGK_Nil; }
+    CRefNil &operator=(const CRef &ref) { CRef::operator=(ref); return *this; }
+};
 struct SAVEVARS;
 struct SAVEPATH;
 struct GLOBALS_1D8D80 { char pad0[0x3B2C]; SAVEPATH *akey[11]; };
 extern "C" {
 extern GLOBALS_1D8D80 B_003DD490;
 extern SAVEVARS B_003E0EA8;
-void *CStackFrame_Construct(void *, int);
+void CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 int FSaveDataMatchesLayout(SAVEVARS *, char *);
 CRef RefGetSaveValue(SAVEVARS *, SAVEPATH *, char *);
@@ -25,18 +29,19 @@ static inline void SetGameSaveValue(SAVEPATH *ppath, CRef ref, char *pbSave)
 extern "C" void ResetSaveKeepingOptions(char *pbSave, int fKeepOptions)
 {
     char frame[0x10];
-    CStackFrame_Construct(frame, fKeepOptions);
+    CStackFrame_Construct(frame);
     {
     GLOBALS_1D8D80 *pglobals = &B_003DD490;
     SAVEPATH *apath[11] = { pglobals->akey[0], pglobals->akey[7], pglobals->akey[10], pglobals->akey[8], pglobals->akey[9],
         pglobals->akey[1], pglobals->akey[2], pglobals->akey[3], pglobals->akey[4], pglobals->akey[5], pglobals->akey[6] };
-    CRef aref[11];
+    CRefNil aref[11];
     if (fKeepOptions) {
         if (!FSaveDataMatchesLayout(&B_003E0EA8, pbSave))
             fKeepOptions = 0;
         if (fKeepOptions) {
+            CRefNil *pref = aref;
             for (unsigned int index = 0; index < 11; index++)
-                aref[index] = GetSaveValue(apath[index], pbSave);
+                *pref++ = RefGetSaveValue(&B_003E0EA8, apath[index], pbSave);
         }
     }
     memset(pbSave, 0, 0x5400);

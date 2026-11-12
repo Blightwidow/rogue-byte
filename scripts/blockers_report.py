@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""blockers_report.py REPORT [--check]: counts the permanent blockers (config/us/blockers.tsv) as finished in an objdiff report, as
-sly1-decomp counts original assembly: every function of the table that is not at 100% is set to 100, and the measures of the units, the
-categories and the whole report are recomputed (`make objdiff` runs it on progress/us/report.json). It also writes
-progress/<version>/blockers.json (how many functions and bytes were counted) so the README can show them apart from the exact C.
+"""blockers_report.py REPORT [--check]: takes the final permanent blockers (config/us/blockers.tsv kinds `system`, `remnant`, `vu` and
+`handwritten`, classify_blockers.FINAL_KINDS) out of an objdiff report: they stay original assembly for good, so they are neither matched nor
+unmatched, and the functions, bytes, units and categories are recomputed without them (`make objdiff` runs it on progress/us/report.json).
+The `mmi` kind is not final yet (shared helpers may turn some into C), so those functions stay in the count as the objdiff report has them.
+It also writes progress/<version>/blockers.json (how many functions and bytes were left out, and by kind) so the README can show them apart.
+A unit whose functions are all left out is complete (its `complete` metadata, the one field objdiff's report schema allows for it).
 
 The measures are recomputed with scripts/pal_report.py `measures`; `--check` recomputes without any blockers and fails when that does not
 give the report's own numbers (a test of the aggregation, run by tests/test_tools.py on a sample). Names, addresses and sizes only."""
@@ -17,11 +19,6 @@ import classify_blockers  # noqa: E402
 import pal_report  # noqa: E402
 
 
-def blocker_names():
-    """The function names of config/us/blockers.tsv."""
-    return classify_blockers.names()
-
-
 def summarise(unit):
     """The input of pal_report.measures for one unit of an objdiff report."""
     metadata = unit.get('metadata', {})
@@ -30,7 +27,7 @@ def summarise(unit):
     sized = [section for section in sections if section['name'] != '.text' and int(section.get('size', 0))]  # an empty section has no `size`
     data = sum(int(section['size']) for section in sized) if unit['name'].startswith('data/') else 0
     matched_data = sum(int(section['size']) for section in sized if section.get('fuzzy_match_percent') == 100) if data else 0
-    complete = bool(metadata.get('complete')) if data else bool(functions) and all(fuzzy == 100 for _, fuzzy in functions)
+    complete = bool(metadata.get('complete')) if data else (bool(metadata.get('complete')) if not functions else all(fuzzy == 100 for _, fuzzy in functions))
     return {'functions': functions, 'data': data, 'matched_data': matched_data, 'complete': complete, 'categories': metadata.get('progress_categories', [])}
 
 
@@ -49,17 +46,27 @@ def recompute(report):
     return report
 
 
-def apply(report, names):
-    """Marks the functions of `names` at 100 and recomputes. Returns (functions counted, bytes counted): the ones that were below 100."""
+def apply(report, excluded):
+    """Takes the functions named in `excluded` ({name: kind}) out of the report and recomputes. Returns {'functions', 'bytes', 'kinds'} of what was left out."""
     count = size = 0
+    kinds = {}
     for unit in report['units']:
+        kept = []
+        left = 0
         for function in unit.get('functions', []):
-            if function['name'] in names and function.get('fuzzy_match_percent', 0.0) < 100:
-                function['fuzzy_match_percent'] = 100.0
+            if function['name'] in excluded:
+                left += 1
                 count += 1
                 size += int(function['size'])
+                kinds[excluded[function['name']]] = kinds.get(excluded[function['name']], 0) + 1
+            else:
+                kept.append(function)
+        if left:
+            unit['functions'] = kept
+            if not kept:
+                unit.setdefault('metadata', {})['complete'] = True  # objdiff rejects unknown metadata fields: `complete` carries it
     recompute(report)
-    return count, size
+    return {'functions': count, 'bytes': size, 'kinds': kinds}
 
 
 def main():
@@ -72,14 +79,14 @@ def main():
         after = {key: value for key, value in report['measures'].items() if key in before}
         print('ok' if before == after else f'differs: {before} against {after}')
         return 0 if before == after else 1
-    count, size = apply(report, blocker_names())
+    summary_counts = apply(report, classify_blockers.final_names())
     with open(path, 'w', encoding='utf-8') as handle:
         json.dump(report, handle)
     summary = os.path.join(os.path.dirname(path), 'blockers.json')
     with open(summary, 'w', encoding='utf-8') as handle:
-        json.dump({'functions': count, 'bytes': size}, handle)
+        json.dump(summary_counts, handle)
         handle.write('\n')
-    print(f'{count} blocker functions ({size} bytes) counted as finished in {path}')
+    print(f"{summary_counts['functions']} final blocker functions ({summary_counts['bytes']} bytes) left out of {path}")
     return 0
 
 

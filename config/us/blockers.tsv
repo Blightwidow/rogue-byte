@@ -674,6 +674,7 @@ address	name	size	kind
 0X232F50	func_00232F50	16	remnant
 0X233040	func_00233040	8	remnant
 0X233120	func_00233120	16	remnant
+0X233170	func_00233170	8	remnant
 0X233178	memcmp	320	mmi
 0X2332B8	memmove	440	mmi
 0X233470	func_00233470	456	mmi
