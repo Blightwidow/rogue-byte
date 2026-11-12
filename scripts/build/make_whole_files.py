@@ -817,7 +817,8 @@ def cut_function(object_path, offset, output):
         symbol = symbols[number]
         if symbol['st_shndx'] == text_index and symbol.name and symbol['st_info']['type'] != 'STT_SECTION':
             outside[symbol.name] = symbol['st_value']
-        elif symbol['st_shndx'] != 'SHN_UNDEF' or not symbol.name:
+        elif (symbol['st_shndx'] != 'SHN_UNDEF' or not symbol.name) and not re.match(r'^[A-Z]{1,3}_[0-9A-Fa-f]{8}$', symbol.name):
+            # an object the file defines under its retail address name (link_image.py link_whole_data) is cut as a name too
             raise ValueError(f'relocation at {place:#x} against {symbol.name or "a section"}: not a name')
         index_of[number] = len(table) + 1
         table.append((symbol.name, 0, 0, 0x10))  # an undefined global name

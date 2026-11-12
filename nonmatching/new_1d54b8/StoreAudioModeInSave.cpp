@@ -7,8 +7,8 @@ CRef *CRef_CopyConstruct(CRef *, CRef *);
 void CRef_Destruct(CRef *);
 }
 struct CRef {
-    int tagk;
     int n;
+    int tagk;
     int pad[2];
     CRef(int tag, int value) { tagk = tag; n = value; }
     CRef(CRef &other) { CRef_CopyConstruct(this, &other); }

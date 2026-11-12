@@ -134,8 +134,8 @@ void LoadSndFromBrx(SNDOBJ *snd, BIS *stream)
         req.cbAlign = 0x10;
         ent->data = PvAllocSwImpl__Fi(&req);
         CBinaryInputStream_Read_thunk(stream, ent->count * 8, ent->data);
-        ent->next = snd->ents;
         snd->ents = ent;
+        ent->next = snd->ents;
     }
     int nrec = S32Read__18CBinaryInputStream(stream);
     REC *rec = (REC *)AllocClear(&req, nrec * 0x48);

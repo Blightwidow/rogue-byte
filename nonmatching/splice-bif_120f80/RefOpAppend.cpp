@@ -6,7 +6,7 @@ struct CFrame;
 extern "C" {
 CPair *PpairNew(void);
 void PairHandle_Assign(CPair **, CPair *);
-void PpairClone(PairHandle *, CPair *, CFrame *, unsigned long);
+void PpairClone(PairHandle *, int, CFrame *, unsigned long);
 void CRef_Destruct(CRef *);
 void CPairPtr_Destructor(CPair **, int);
 void UnlinkPairNode(CPair *);
@@ -14,7 +14,7 @@ void FreeSlotheapPv(SLOTHEAP *, void *);
 void SetTag__4CRef4TAGK(CRef *, int);
 void CRef_ConstructPair(CRef *, CPair *);
 void CRef_CopyConstruct(CRef *, CRef *);
-void bevy_splice_value_list_ref(CRef *, CPair *);
+void bevy_splice_value_list_ref(CRef *);
 extern SLOTHEAP B_004520A8;
 }
 static inline void ReleasePair(CPair *held)
@@ -43,7 +43,7 @@ extern "C" CRef *RefOpAppend(CRef *pret, int carg, CRef *aref)
         if (node->ref.tagk == 0x1F) {
             copy.p = 0;
             if (node->next != 0) {
-                PpairClone(&clone, (CPair *)node->ref.n, 0, 0);
+                PpairClone(&clone, carg, 0, 0);
                 PairHandle_Assign(&copy.p, clone.p);
                 ReleasePair(clone.p);
             } else {
@@ -51,15 +51,14 @@ extern "C" CRef *RefOpAppend(CRef *pret, int carg, CRef *aref)
             }
             if (result.p == 0) {
                 PairHandle_Assign(&result.p, PpairNew());
-                bevy_splice_value_list_ref(&result.p->ref, copy.p);
+                bevy_splice_value_list_ref(&result.p->ref);
             } else {
                 PairHandle_Assign(&tail->next, copy.p);
             }
             tail = copy.p;
-            CPair *held = copy.p;
             while (tail->next != 0)
                 tail = tail->next;
-            ReleasePair(held);
+            ReleasePair(copy.p);
         }
     }
     if (result.p == 0) {

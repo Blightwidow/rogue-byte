@@ -35,7 +35,7 @@ void SetCmLookAt(void *, float, float, QW, QW);
 void SetCmPosMat(void *, M4x *);
 void SmoothMatrix(float, Rows *, Rows *, SMP *, Rows *, QW *);
 void UpdateCplcy();
-void __as__6VECTORG9VU_VECTOR(void *, QW);
+s32 __as__6VECTORG9VU_VECTOR(void *, QW);
 QW bevy_classes_k30_cam_150780(Cam *);
 QW bevy_classes_k30_cam_1507f8(Cam *);
 extern char B_002DDF40[];

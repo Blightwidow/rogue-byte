@@ -20,8 +20,8 @@ A work-in-progress, byte-matching decompilation of *Sly 2: Band of Thieves* (Suc
 <!-- progress:begin (scripts/readme_progress.py) -->
 | Version | Code | of which exact C | Functions | Blocked for C | C with inline assembly to match |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| NTSC-U `SCUS_973.16` | 75.22% (1054932 of 1402480 bytes) | 50.82% | 6303 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
-| PAL `SCES_525.29` | 73.63% (1032648 of 1402480 bytes) | 49.23% | 6215 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
+| NTSC-U `SCUS_973.16` | 76.30% (1070112 of 1402480 bytes) | 51.90% | 6317 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
+| PAL `SCES_525.29` | 74.46% (1044232 of 1402480 bytes) | 50.05% | 6221 of 6825 | 940 functions, 24.40% | 51 functions, 5.04% |
 
 A function counts when `make elf` links its C and the image still equals retail byte for byte; for PAL, when the same C also reproduces PAL's code. Permanent blockers (a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant that is not a function: `config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly and count as finished too, shown apart from the exact C. Compiled C that needs a shared inline-assembly helper for an instruction GCC cannot emit (`config/us/inline_functions.tsv`, [docs/build/inline-asm-helpers.md](docs/build/inline-asm-helpers.md)) is work to do; the last column counts those not matched yet.
 <!-- progress:end -->

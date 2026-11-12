@@ -37,10 +37,10 @@ int CQueueOutputIop_CbWrite(COut *self, int limit, char *data) {
         done += sent;
         int next = self->pos + sent;
         self->pos = next;
+        self->pos = next % self->size;
         self->total += sent;
         self->avail -= sent;
         self->played += sent;
-        self->pos = next % self->size;
         if (limit <= 0) break;
     }
     return done;

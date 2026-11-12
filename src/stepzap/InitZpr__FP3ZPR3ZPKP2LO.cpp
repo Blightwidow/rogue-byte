@@ -6,7 +6,7 @@ struct ZPR {
     s32 field_0x8;
 };
 
-void *memset(void *, s32, s32);
+extern "C" void *memset(void *, int, unsigned int);
 
 void InitZpr__FP3ZPR3ZPKP2LO(ZPR *zpr, s32 arg1, s32 arg2) {
     memset(zpr, 0, 0x630);

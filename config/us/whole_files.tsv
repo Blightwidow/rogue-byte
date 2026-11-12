@@ -1,7 +1,7 @@
 start	end	file
 0x114670	0x1147D8	puffer-slotheap/PvtGetCidC6_file.c
 0x1147D8	0x114AE0	puffer-slotheap/InitStaticBitmapA_thunk_file.c
-0x114AE0	0x116918	puffer-slotheap/InitStaticBitmapB_thunk_file.c
+0x114AE0	0x116918	puffer-slotheap/InitStaticBitmapB_file.cpp
 0x116918	0x116CA0	slotheap/PvAllocSlotheapClearImpl_file.cpp
 0x116CA0	0x117030	memory-bez/ary.cpp
 0x117030	0x1177A8	memory-bez/EvaluateBezierFloat_file.cpp

@@ -18,7 +18,7 @@ struct LOOT { char pad[0x194]; void *pbooty; };
 struct JT : BASE { char pad1[0x18 - 0x10]; int idSave; char pad2[0x11A8 - 0x1C]; BOOTY *ploot; };
 struct PLO { char pad[0x180]; int tag; };
 extern "C" {
-void CStackFrame_Construct(void *);
+void CStackFrame_Construct(JT *);
 void CStackFrame_Destructor(void *, int);
 CRef func_001D8B20(const CRef &, ...);
 CRef func_001D8A38(const char *, ...);
@@ -50,7 +50,7 @@ static inline void SetSaveInt(int path, int number)
 void UpdateJtLootSave(JT *self, int mode, LOOT *loot)
 {
     char frame[0x10];
-    CStackFrame_Construct(frame);
+    CStackFrame_Construct(self);
     switch (mode) {
     case 0: {
         CRef result = func_001D8B20(CRef(0x15, loot->pbooty != 0 ? LootId(loot->pbooty) : -1), self->GetKey(), RO_002A4DB0, 0);

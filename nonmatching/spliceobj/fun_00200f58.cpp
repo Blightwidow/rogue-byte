@@ -9,7 +9,7 @@ extern "C" {
 CPair *PpairNew(void);
 void PairHandle_Init(PairHandle *, CPair *);
 void PairHandle_Assign(PairHandle *, CPair *);
-void CRef_Destruct(RefT *);
+s32 CRef_Destruct(RefT *);
 void SetTag__4CRef4TAGK(RefT *, int);
 void CPairPtr_Destructor(CPair **, int);
 void UnlinkPairNode(CPair *);

@@ -51,15 +51,15 @@ void CMovieText_Draw(MT *pmt, ARGS *pargs, int arg2)
         pmt->f74 = pargs->z;
         pmt->f78 = pargs->w;
         pmt->i90 = pargs->i14;
-        pmt->i94 = arg2;
         pmt->i8C = pargs->i18;
+        pmt->i94 = arg2;
         COLOR4 color = pargs->color;
         CMovieText_SetBaseColor(pmt, &color);
         float rgf[8];
         memset(rgf, 0, 0x20);
         rgf[3] = pmt->f80 * pmt->f88;
-        rgf[0] = pmt->f7C * pmt->f88;
         rgf[4] = pmt->f6C;
+        rgf[0] = pmt->f7C * pmt->f88;
         rgf[5] = pmt->f70 + pmt->f84 * pmt->f80;
         float matrix[16];
         CMovieText_BuildGsMatrix(pmt, matrix, rgf);
@@ -82,8 +82,8 @@ void CMovieText_Draw(MT *pmt, ARGS *pargs, int arg2)
         g_2dea28.pb += 4;
         PKT *p = OnGameLoad__FP4GAME();
         p->a = 0x15;
-        p->c = (unsigned)tag & 0x0FFFFFFF;
         p->d = 0;
+        p->c = (unsigned)tag & 0x0FFFFFFF;
         p->b = (float)(pmt->i94 << 18);
     }
 }
