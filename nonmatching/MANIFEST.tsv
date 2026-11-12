@@ -77,7 +77,6 @@ address	name	size	file	score
 0X136118	UpdateBentleyGadget	384	bbmark-blend/UpdateBentleyGadget.c	61
 0X136530	func_00136530	680	bbmark-blend/fun_00136530.c	87
 0X136870	FBentleyCanUseGadget	440	bbmark-blend/FBentleyCanUseGadget.cpp	32
-0X136F48	SetLookRigState	624	bbmark-blend/SetLookRigState.cpp	65
 0X137248	PresetJtOrbitAccel	664	bbmark-blend/PresetJtOrbitAccel.c	194
 0X1375D0	bevy_player_p25_1375d0	432	bbmark-blend/bevy_player_p25_1375d0.c	103
 0X137A30	EnsureAsegBlendDynamic	1416	bbmark-blend/EnsureAsegBlendDynamic.cpp	73
@@ -127,7 +126,7 @@ address	name	size	file	score
 0X14C9F8	ClsgMergeAlsg	600	clip/ClsgMergeAlsg.cpp	74
 0X14CFE0	StaticInitClock	136	new_14cdb0/StaticInitClock.c	28
 0X14D240	TickReadCount	64	new_14d1d0/TickReadCount.c	10
-0X14D478	UpdateCmLast	472	cm_14d478/UpdateCmLast.cpp	47
+0X14D478	UpdateCmLast	472	cm_14d478/UpdateCmLast.cpp	37
 0X14DA08	BuildFrustrum	360	cm_14d478/BuildFrustrum.c	88
 0X14E1A8	SetCmLookAt	200	font-cm/SetCmLookAt.c	48
 0X14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	416	cm_14e270/SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv.cpp	9
@@ -196,7 +195,6 @@ address	name	size	file	score
 0X16A000	LoadGlobFromBrx	10464	new_167320/LoadGlobFromBrx.cpp	695
 0X16C8E0	func_0016C8E0	448	new_167320/fun_0016c8e0.cpp	98
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	159
-0X16DA48	func_0016DA48	784	new_167320/fun_0016da48.cpp	95
 0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	4
 0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	28
 0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
@@ -297,7 +295,6 @@ address	name	size	file	score
 0X196AA8	LimitJmpAccelByContacts	848	new_1942f0/LimitJmpAccelByContacts.c	219
 0X197500	UpdateJmpBodyState	2712	new_1942f0/UpdateJmpBodyState.c	563
 0X1991A0	func_001991A0	248	new_1942f0/fun_001991a0.c	54
-0X199298	func_00199298	368	new_1942f0/fun_00199298.cpp	31
 0X1995D8	BuildJmpEdgeProbes	512	jump/BuildJmpEdgeProbes.c	123
 0X1997D8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	504	jump/FCheckJtEdgeNormal__FP2JTP6VECTORT1.cpp	39
 0X19A098	FJtStuck	872	jump/FJtStuck.c	205
@@ -336,7 +333,7 @@ address	name	size	file	score
 0X1A64E8	SetSoProperties	480	new_1a6290/SetSoProperties.cpp	50
 0X1A6730	CLo_Clone	928	new_1a6290/CLo_Clone.cpp	85
 0X1A7050	ConvertLoMat	352	stepguard-sw/ConvertLoMat.c	82
-0X1A7630	func_001A7630	608	stepguard-sw/fun_001a7630.cpp	46
+0X1A7630	func_001A7630	608	stepguard-sw/fun_001a7630.cpp	19
 0X1A7C18	PxpAdd	504	stepguard-sw/PxpAdd.c	101
 0X1A7E60	RecalcSwXpPos	352	sw-mark/RecalcSwXpPos.c	69
 0X1A81F8	ClsgClipSoBspEdges	536	sw-mark/ClsgClipSoBspEdges.cpp	16
@@ -364,7 +361,6 @@ address	name	size	file	score
 0X1B2398	PosPredictMissileTarget	208	missile-mpeg/PosPredictMissileTarget.c	41
 0X1B2BE0	CQueueOutputIop_CbWrite	472	mpeg/CQueueOutputIop_CbWrite.cpp	13
 0X1B2FD8	CbWrite__15CQueueOutputIpuiPv	96	mpeg/CbWrite__15CQueueOutputIpuiPv.c	23
-0X1B3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	496	mpeg/BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii.cpp	50
 0X1B44D8	func_001B44D8	248	mpeg-memcard/fun_001b44d8.c	52
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.c	160
 0X1B5380	UpdateMurrayCarry	728	mpeg-memcard/UpdateMurrayCarry.c	108
@@ -464,7 +460,7 @@ address	name	size	file	score
 0X1D72A8	UpdateHub	368	new_1d7268/UpdateHub.cpp	77
 0X1D82B8	NPercentCompleteSaveData	504	new_1d7780/NPercentCompleteSaveData.cpp	65
 0X1D8B20	func_001D8B20	240	new_1d7780/fun_001d8b20.cpp	16
-0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	35
+0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	17
 0X1D8FF8	ApplyOptionsFromSave	648	splice-pair-jump/ApplyOptionsFromSave.cpp	19
 0X1D9968	InitMeter	456	splice-gc-wipe/InitMeter.cpp	73
 0X1D9B60	SetMeterState	664	splice-gc-wipe/SetMeterState.c	128
@@ -494,7 +490,6 @@ address	name	size	file	score
 0X1E9AC0	func_001E9AC0	368	new_1e7a28/fun_001e9ac0.c	81
 0X1E9C88	BuildCrvExcludedRanges	712	new_1e7a28/BuildCrvExcludedRanges.cpp	39
 0X1EA000	UpdateCrvExcludedRanges	944	new_1e7a28/UpdateCrvExcludedRanges.cpp	153
-0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs_1ec9d0/PqwVifsBitmapUpload__Fi.cpp	85
 0X1ED1A8	FilterColorRgba5551_1ed1a8	208	new_1ed1a8/FilterColorRgba5551_1ed1a8.cpp	42
 0X1ED2D8	GreyColor_1ed2d8	208	new_1ed1a8/GreyColor_1ed2d8.c	43
 0X1ED470	AddToIdTableA_1ed470	112	new_1ed1a8/AddToIdTableA_1ed470.cpp	17
@@ -519,7 +514,7 @@ address	name	size	file	score
 0X1F67E0	PsmaFindAlo	88	so_1f58f0/PsmaFindAlo.c	16
 0X1F6C08	EnsureSogeomLvo	752	so_1f58f0/EnsureSogeomLvo.c	158
 0X1F72F8	FPointInAloParts	280	so-sm/FPointInAloParts.c	77
-0X1F7598	PaloAbsorbWkr	552	so-sm/PaloAbsorbWkr.cpp	67
+0X1F7598	PaloAbsorbWkr	552	so-sm/PaloAbsorbWkr.cpp	28
 0X1F77C0	ExpireSwWkrs	224	so-sm/ExpireSwWkrs.cpp	12
 0X1F9240	func_001F9240	464	new_1f88d8/fun_001f9240.c	131
 0X1F9B20	AddSoGravityAcceleration	296	new_1f88d8/AddSoGravityAcceleration.c	75
@@ -583,7 +578,6 @@ address	name	size	file	score
 0X20F1C8	UpdateSwFog	240	sw-button/UpdateSwFog.c	40
 0X20F7E0	UpdateSwHudBlots	360	sw-button/UpdateSwHudBlots.cpp	27
 0X2124F0	PrepareBlotMovie	656	po-screen/PrepareBlotMovie.cpp	24
-0X212A70	SetBlotBlots	480	screen-font/SetBlotBlots.cpp	46
 0X2137F0	FBlotObscured	64	screen-font/FBlotObscured.c	12
 0X213F70	FStartSpriteLabelInstance	400	screen-font/FStartSpriteLabelInstance.c	88
 0X214100	FStartSpriteDepthInstance	432	screen-font/FStartSpriteDepthInstance.cpp	4
@@ -630,7 +624,7 @@ address	name	size	file	score
 0X229468	UGetWaterSubmerged	536	water-sw/UGetWaterSubmerged.c	113
 0X22A060	func_0022A060	448	so-wr/fun_0022a060.c	101
 0X22A908	func_0022A908	1504	so-wr/fun_0022a908.c	437
-0X22B220	ActivateWipe	512	so-wr/ActivateWipe.cpp	42
+0X22B220	ActivateWipe	512	so-wr/ActivateWipe.cpp	0
 0X22C8C0	BuildXfLocalMatrix	344	wr-vec/BuildXfLocalMatrix.c	77
 0X22CAD0	ConvertDeulToW__FP6VECTORN20	192	vec_22cad0/ConvertDeulToW__FP6VECTORN20.c	45
 0X22CB90	BuildXfAngularRateMatrix	112	vec-alo/BuildXfAngularRateMatrix.cpp	2

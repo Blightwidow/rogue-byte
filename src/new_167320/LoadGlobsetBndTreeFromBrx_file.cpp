@@ -613,9 +613,117 @@ extern "C" void func_0016D6C8(GIFS *pgifs, int flags, void **pcursor)
     PackAD__4GIFSll(pgifs, 0x41, ((0xE000L << 30) | 0x8000L) << 10);
 }
 
-INCLUDE_ASM(0X16DA48);
-
 struct GIFS { int pad0; unsigned start; int pad8; unsigned end; char pad10[0x20]; };
+
+extern "C" void AddDmaCall__4DMASP2QW_16DA48(void *, void *);
+
+extern "C" void AddDmaCnt__4DMAS_16DA48(void *);
+
+extern "C" void AddPrimList__4GIFSiUl_16DA48(GIFS *, int, unsigned long);
+
+extern "C" void AddPrimPack__4GIFSiiUl_16DA48(GIFS *, int, int, unsigned long);
+
+extern "C" void AddVifBaseOffset__4VIFSii_16DA48(void *, int, int);
+
+extern "C" void AddVifFlush__4VIFS_16DA48(void *);
+
+extern "C" void AddVifFlusha__4VIFS_16DA48(void *);
+
+extern "C" void AddVifMscal__4VIFSPv_16DA48(void *, void *);
+
+extern "C" void AddVifUnpack__4VIFS3UPKiPvi_16DA48(void *, int, int, void *, int);
+
+extern "C" void AllocStatic__4DMASiP2QW_16DA48(GIFS *, int, void *);
+
+extern "C" void EndDmaCnt__4DMAS_16DA48(void *);
+
+extern "C" void EndPrim__4GIFSi_16DA48(GIFS *, int);
+
+extern "C" void EnsureVu1Code__FP4VIFSPvT1_16DA48(void *, void *, void *);
+
+extern "C" void PackAD__4GIFSll_16DA48(GIFS *, long, long);
+
+extern "C" void UnpackHelper__4VIFS3UPKiiPiPPUi_16DA48(void *, int, int, int, int *, void **);
+
+extern "C" void c16DA48__4GIFS(GIFS *);
+
+extern "C" void func_0016D698_16DA48(int, GIFS *, void **);
+
+extern "C" void func_0016D6C8_16DA48(GIFS *, int, void **);
+
+extern "C" char B_002DF800[];
+
+extern "C" int B_003E12C8;
+
+extern "C" char RO_0025C1C0[];
+
+extern "C" char RO_0025E040[];
+
+extern "C" char D_00001AA0[];
+
+extern "C" int g_2deb70[2];
+
+extern "C" void func_0016DA48(void *arg0, int arg1, int arg2) {
+    GIFS gifs;
+    char buffer[0x1000] __attribute__((aligned(16)));
+    void *cursorStart;
+    void *cursor;
+    EnsureVu1Code__FP4VIFSPvT1_16DA48(arg0, RO_0025C1C0, RO_0025E040);
+    AddDmaCnt__4DMAS_16DA48(arg0);
+    if (arg2 != 7 && B_003E12C8 != 0) {
+        AddVifFlush__4VIFS_16DA48(arg0);
+        AddDmaCall__4DMASP2QW_16DA48(arg0, B_002DF800);
+        AddVifBaseOffset__4VIFSii_16DA48(arg0, 0x32, 0x1E7);
+    }
+    UnpackHelper__4VIFS3UPKiiPiPPUi_16DA48(arg0, 5, 5, 0x1B, 0, &cursorStart);
+    cursor = cursorStart;
+    c16DA48__4GIFS(&gifs);
+    AllocStatic__4DMASiP2QW_16DA48(&gifs, 0x100, buffer);
+    if (arg2 != 7) {
+        func_0016D6C8_16DA48(&gifs, 0x299, &cursor);
+    }
+    AddPrimPack__4GIFSiiUl_16DA48(&gifs, 0, 1, 0xE);
+    func_0016D698_16DA48(0, &gifs, &cursor);
+    if (arg1 == 7 || arg2 != 7) {
+        PackAD__4GIFSll_16DA48(&gifs, 0x4C, (long)(int)0x807F8000 << 17);
+    } else {
+        PackAD__4GIFSll_16DA48(&gifs, 0x4C, (long)(int)0x80FF0000 << 16);
+    }
+    PackAD__4GIFSll_16DA48(&gifs, 0x46, 0);
+    PackAD__4GIFSll_16DA48(&gifs, 0x47, 0x31001);
+    if (arg1 == 7) {
+        PackAD__4GIFSll_16DA48(&gifs, 1, (0x8000L << 17) | 0x7E00);
+    } else {
+        PackAD__4GIFSll_16DA48(&gifs, 1, (0x8000L << 17) | 0x3E00);
+    }
+    int notEight = arg1 ^ 8;
+    PackAD__4GIFSll_16DA48(&gifs, 0, 6);
+    int xyzB = 0x7200;
+    int xyzA = 0x7000;
+    AddPrimList__4GIFSiUl_16DA48(&gifs, 2, 0x55);
+    int remaining = 0x1E0;
+    do {
+        GIFS_ListXYZ(&gifs, xyzA, 0x7900, 0);
+        xyzA += 0x200;
+        GIFS_ListXYZ(&gifs, xyzB, 0x8700, 0);
+        remaining -= 0x20;
+        xyzB += 0x200;
+    } while (remaining >= 0);
+    if (arg1 == 8 && arg2 == 7) {
+        AddPrimPack__4GIFSiiUl_16DA48(&gifs, 0, 1, 0xE);
+        func_0016D698_16DA48(0, &gifs, &cursor);
+        PackAD__4GIFSll_16DA48(&gifs, 0x4C, (long)(int)0x807F8000 << 17);
+    }
+    EndPrim__4GIFSi_16DA48(&gifs, 1);
+    func_0016D698_16DA48(-1, &gifs, &cursor);
+    AddVifUnpack__4VIFS3UPKiPvi_16DA48(arg0, 0xC, (gifs.end - gifs.start) >> 4, (void *)gifs.start, 0x23);
+    AddVifFlusha__4VIFS_16DA48(arg0);
+    AddVifMscal__4VIFSPv_16DA48(arg0, D_00001AA0);
+    AddVifFlusha__4VIFS_16DA48(arg0);
+    EndDmaCnt__4DMAS_16DA48(arg0);
+    int byteOffset = notEight != 0 ? 0 : 4;
+    *(int *)((char *)g_2deb70 + byteOffset) = 1;
+}
 
 extern "C" void AddDmaCall__4DMASP2QW_16DD58(void *, void *);
 

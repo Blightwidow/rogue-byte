@@ -151,6 +151,25 @@ Read from two CC0 projects; each item says whether it applied here.
   integer `long`.
 - **Count progress in code bytes of committed sources**, not functions: a generated assembly file or an uncommitted source is not progress.
 
+## 2026-11-12: the early %hi before a save call (negative)
+
+SetGameCoins, SetClueFound, StoreAudioModeInSave and UpdateJtLootSave (about 1.8 KB, drafts at 9 to 13) stop on one thing: retail
+builds `%hi(B_003D4A60)` before a call and keeps it in a saved register across it, and the `%lo` sits at the use after the call. The
+same shape shows in CreateSwSavePaths and UpdateCmLast.
+
+- **The mechanism** (RTL dumps with `-da`): the address expands into `(set P (high sym))` and `(set Q (lo_sum P sym))`. When an earlier
+  `(high sym)` exists before the call and its `lo_sum` is dead, CSE1 reuses P for the use after the call, so P lives across it. No
+  later pass makes the split itself: combine does not move a non-constant `lo_sum` across a call, the scheduler does not move a pseudo
+  above one, local-alloc's equivalence needs `rtx_equal_p` (never true for a `lo_sum`), and the loop pass only runs in real loops
+  (`do { } while (0)` is a phony loop).
+- **Matched functions with the same output have a real second use** of the address: PauseMenu_ApplyOption (GCSE PRE from a later
+  `ApplyOptionsFromSave(&B_003D4A60)`), InitIdHashTables (the address on the left of `global = call()`).
+- **The only wording found** is an inline helper taking the address as a parameter it never uses; its dead copy leaves the `high`. It
+  gives 0 on all four, and it is not allowed: a variable that exists only to move a register (Theo, 2026-11-12). Not tried, and still
+  open: a real second use of the table the original might have had.
+- Also without effect: a `const` parameter, a `do { } while (0)` macro, PauseMenu_ApplyOption's by-value helpers, an inline member
+  passing `this`. Found on the way: UpdateJtLootSave's `CStackFrame_Construct` takes the frame (`$a0 = $sp`), not `self`.
+
 ## Tools and environment
 
 - **Slicing a memory-mapped file with an open end copies the rest of it**: `image[offset:]` on a 2.7 GB disc image made a scan run for

@@ -87,7 +87,8 @@ struct SW : BASIC {
     /* 0x3B54 */ struct SAVEPATH *psavepathAutosaveWarned; /* "flags/fAutosaveWarned" */
     /* 0x3B58 */ struct SAVEPATH *apsavepathEpisodeDt[9]; /* "episode/<name>/dt" per episode */
     /* 0x3B7C */ struct SAVEPATH *apsavepathEpisodePercent[9]; /* "episode/<name>/percent_complete" per episode */
-    u8 unknown_0x3BA0[0x50];
+    u8 unknown_0x3BA0[0x4C];
+    /* 0x3BEC */ s32 cblotActive; /* SetBlotBlots counts the blots of 16 frames or more that enter state 2 and up */
     /* 0x3BF0 */ s32 fLoadPending; /* SetSwLoadRequest sets it with the request */
     /* 0x3BF4 */ LOADREQ loadreq; /* SetSwLoadRequest copies one in whole */
     u8 unknown_0x3C40[0x48];
@@ -196,6 +197,7 @@ SLY2_OFFSET_CHECK(SW, psavepathReverseAim, 0x3B50);
 SLY2_OFFSET_CHECK(SW, psavepathAutosaveWarned, 0x3B54);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodeDt, 0x3B58);
 SLY2_OFFSET_CHECK(SW, apsavepathEpisodePercent, 0x3B7C);
+SLY2_OFFSET_CHECK(SW, cblotActive, 0x3BEC);
 SLY2_OFFSET_CHECK(SW, fLoadPending, 0x3BF0);
 SLY2_OFFSET_CHECK(SW, loadreq, 0x3BF4);
 SLY2_OFFSET_CHECK(SW, field_0x3C88, 0x3C88);

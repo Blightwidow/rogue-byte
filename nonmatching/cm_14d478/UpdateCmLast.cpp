@@ -12,8 +12,10 @@ struct CM {
     char pad31C[0x620 - 0x31C]; float sStereo; float sStereoTarget;
 };
 extern "C" {
-extern char B_002DFC00[];
-extern char B_002E0D00[];
+struct JOY;
+struct VJOYCONFIG;
+extern JOY B_002DFC00;
+extern VJOYCONFIG B_002E0D00;
 #include "sw.h"
 extern SW B_003DD490;
 extern char D_002BD810[];
@@ -54,23 +56,23 @@ extern "C" void UpdateCmLast(CM *pcm)
                     psoDone = 0;
                 }
                 VTE *entry = &pcplcy->vtable->entry;
-                char *pad = B_002DFC00;
+                void *pad = &B_002DFC00;
                 if (!(g_2dfbc0 & 1))
-                    pad = B_002E0D00;
+                    pad = &B_002E0D00;
                 pcplcyPrev = pcplcy;
                 entry->fn((char *)pcplcy + entry->delta, pcpdefi, pad);
             } while (pcm->ccpr > 0 && (pcplcy = pcm->pcplcy) != pcplcyPrev);
         }
     }
-    if (pcm->fCut == 0) {
+    if (pcm->fCut != 0) {
+        SetCmFov(pcm, pcm->radFovTarget);
+    } else {
         float target = pcm->radFovTarget;
         float current = pcm->radFov;
         if (target != current) {
             pcm->radFov = GSmoothA__FffffP4SMPAPf(current, pcm->dradFov, target, g_2dded4, &pcm->smpFov[0x2C - 0x2C], &pcm->dradFov);
             RecalcCmFrustrum__FP2CM(pcm);
         }
-    } else {
-        SetCmFov(pcm, pcm->radFovTarget);
     }
     pcm->fCut = 0;
     if (B_003DD490.field_0x3E38 != 0)

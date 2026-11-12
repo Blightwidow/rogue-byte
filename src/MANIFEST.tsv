@@ -1451,6 +1451,7 @@ address	name	size	file	whole_file	symbol
 0X136D28	InitLookRig	148	bbmark-blend/InitLookRig.cpp		
 0X136DC0	UpdateLookRig	272	bbmark-blend/UpdateLookRig.cpp		
 0X136ED0	HandleLookRigMessage	116	bbmark-blend/HandleLookRigMessage.cpp		
+0X136F48	SetLookRigState	624	bbmark-blend/SetLookRigState.cpp		
 0X1371B8	bevy_player_p25_default	16	bbmark-blend/bevy_player_p25_default.c		
 0X1371C8	bevy_player_p25_1371c8	76	bbmark-blend/bevy_player_p25_1371c8.cpp		
 0X137218	bevy_player_p25_137218	44	bbmark-blend/bevy_player_p25_137218.c		
@@ -2205,6 +2206,7 @@ address	name	size	file	whole_file	symbol
 0X16CAA0	LoadGlobStreamedFromBrx	1240	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	LoadGlobStreamedFromBrx
 0X16D698	func_0016D698	48	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D698
 0X16D6C8	func_0016D6C8	896	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D6C8
+0X16DA48	func_0016DA48	784	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016DA48
 0X16DD58	func_0016DD58	1100	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016DD58
 0X16E1A8	func_0016E1A8	128	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E1A8
 0X16E228	func_0016E228	112	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E228
@@ -2700,6 +2702,7 @@ address	name	size	file	whole_file	symbol
 0X1959C0	func_001959C0	60	new_1942f0/fun_001959c0.cpp		
 0X197370	StartJmpDirectionAseg	344	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	StartJmpDirectionAseg
 0X1974C8	PmqFirstOxaContact	52	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	PmqFirstOxaContact
+0X199298	func_00199298	364	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	func_00199298
 0X19AA58	GMeasureJumpRail__FP3MJRf	96	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpRail__FP3MJRf
 0X19AAB8	GMeasureJumpHpnt	128	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpHpnt
 0X19AB38	GMeasureJumpToHshape	128	new_1942f0/StartJmpDirectionAseg_file.cpp	new_1942f0/StartJmpDirectionAseg_file.cpp	GMeasureJumpToHshape
@@ -3081,6 +3084,7 @@ address	name	size	file	whole_file	symbol
 0X1B33F0	FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg	224	mpeg/FMpegDecodeVideo__FP7sceMpegP13sceMpegCbDataP5CMpeg.cpp		
 0X1B34D0	FMpegBackground	56	mpeg/FMpegBackground.cpp		
 0X1B3508	func_001B3508	8	unsorted/fun_001b3508.c		
+0X1B3510	BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii	492	mpeg/BuildMpegGifs__FP2QWP11sceIpuRGB32iiiii.cpp		
 0X1B3700	DrawMpegFrame	836	mpeg/DrawMpegFrame.cpp		
 0X1B3A48	QueueMovie	188	mpeg/QueueMovie.cpp		
 0X1B3B08	FPlayQueuedMovies	196	mpeg/FPlayQueuedMovies.cpp		
@@ -3866,6 +3870,7 @@ address	name	size	file	whole_file	symbol
 0X1ECB18	BuildBmpTex0__FP3BMPi	212	gs/BuildBmpTex0__FP3BMPi.cpp		
 0X1ECBF0	BuildBmpGifs__FP3BMPiP4GIFS	56	gs/BuildBmpGifs__FP3BMPiP4GIFS.cpp		
 0X1ECC28	FBuildUploadBitmapGifs__FiP3GSBP4GIFS	556	gs/FBuildUploadBitmapGifs__FiP3GSBP4GIFS.cpp		
+0X1ECE58	PqwVifsBitmapUpload__Fi	840	gs/PqwVifsBitmapUpload__Fi.cpp		
 0X1ED278	FilterColorRgba8_1ed278	96	new_1ed1a8/FilterColorRgba8_1ed278.cpp		
 0X1ED3A8	InitIdHashTables_1ed3a8	156	new_1ed1a8/new_1ed1a8_1ed3a8.c	new_1ed1a8/new_1ed1a8_1ed3a8.c	InitIdHashTables_1ed3a8
 0X1ED448	ShutdownIdHashTables_1ed448	36	new_1ed1a8/new_1ed1a8_1ed3a8.c	new_1ed1a8/new_1ed1a8_1ed3a8.c	ShutdownIdHashTables_1ed448
@@ -4611,6 +4616,7 @@ address	name	size	file	whole_file	symbol
 0X2129E8	Blot_Hide	68	po-screen/Blot_Hide.cpp		
 0X212A30	func_00212A30	32	po-screen/fun_00212a30.c		
 0X212A50	SetTimerTimers__FP5TIMER6TIMERS	32	screen/SetTimerTimers__FP5TIMER6TIMERS.c		
+0X212A70	SetBlotBlots	476	screen-font/SetBlotBlots.cpp		
 0X212C50	UpdateBlotMovie	492	screen-font/UpdateBlotMovie.cpp		
 0X212E40	SeekBlotLabel	308	screen-font/SeekBlotLabel.cpp		
 0X212F80	func_00212F80	308	screen-font/fun_00212f80.cpp		

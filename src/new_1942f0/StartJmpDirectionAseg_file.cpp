@@ -5,6 +5,8 @@
 #include "sly2.h"
 #include "jt.h"
 #include "include_asm.h"
+#include "so.h"
+#include "sw.h"
 
 INCLUDE_ASM(0X195FB8);
 
@@ -88,7 +90,70 @@ INCLUDE_ASM(0X197F98);
 
 INCLUDE_ASM(0X1991A0);
 
-INCLUDE_ASM(0X199298);
+struct MQSIDE { SO *pso; char pad[0x3C]; };
+
+struct MQ {
+    char pad0[8];
+    MQSIDE aside[2];
+    char pad2[0x14];
+    int kind;
+    char pad3[0xC];
+    MQ *next;
+};
+
+struct MQLINK {
+    MQ *pmqFirst;
+    MQLINK *next;
+    MQ **ppmqSlot;
+};
+
+struct MQHOLDER { char pad[0x64]; MQLINK *first; };
+
+struct MQLEVEL { char pad[0xEC]; MQHOLDER *pholder; };
+
+struct MQXPS { char pad[0x60]; SO *pso; };
+
+struct MQINFO { char pad[0xEC]; MQXPS *poxa; };
+
+struct MQROOT { char pad[4]; MQINFO *pinfo; };
+
+struct MQOWNER { MQLEVEL *plevel; char pad[0x18]; int kind; char pad2[0xA8]; MQROOT *proot; };
+
+extern SW B_003DD490;
+
+void FreeSwMqList(SW *, MQ *);
+
+void func_00199298(MQOWNER *powner)
+{
+    if (powner->kind != 0x11)
+        return;
+    MQXPS *poxa = powner->proot->pinfo->poxa;
+    if (poxa) {
+        SO *psoTarget = poxa->pso;
+        int fLocked = psoTarget->FIsLocked();
+        MQ *pmqFree = 0;
+        for (MQLINK *plink = powner->plevel->pholder->first; plink; plink = plink->next) {
+            MQ **ppmq = &plink->pmqFirst;
+            for (MQ *pmq = *ppmq; pmq; pmq = *ppmq) {
+                if (pmq->kind == 0xB) {
+                    ppmq = &pmq->next;
+                    continue;
+                }
+                int fOther = powner->plevel != (MQLEVEL *)pmq->aside[0].pso;
+                SO *pso = pmq->aside[1 - fOther].pso;
+                if (fLocked ? pso->FIsLocked() != 0 : pso == psoTarget) {
+                    *ppmq = pmq->next;
+                    pmq->next = pmqFree;
+                    pmqFree = pmq;
+                } else {
+                    ppmq = &pmq->next;
+                }
+            }
+            *plink->ppmqSlot = plink->pmqFirst;
+        }
+        FreeSwMqList(&B_003DD490, pmqFree);
+    }
+}
 
 INCLUDE_ASM(0X199408);
 
