@@ -12,8 +12,8 @@ extern "C" int S8Read__18CBinaryInputStream(void *);
 extern "C" int S16Read__18CBinaryInputStream(void *);
 extern "C" int U8Read__18CBinaryInputStream(void *);
 extern "C" float F32Read__18CBinaryInputStream(void *);
-extern "C" void ReadVector__18CBinaryInputStreamP6VECTOR(void *, void *);
-extern "C" void *PvAllocSwClearImpl__Fi(Req_21C888 *);
+extern "C" int ReadVector__18CBinaryInputStreamP6VECTOR(void *, void *);
+extern "C" void *PvAllocSwClearImpl__Fi(void);
 extern "C" Xf_21C888 *PvAllocAct(int);
 extern "C" void InsertXfAct(Owner_21C888 *, Act_21C888 *, Xf_21C888 *);
 extern "C" QW ConvertXfPos(Act_21C888 *, Act_21C888 *, QW);
@@ -29,7 +29,7 @@ void func_0021C888(Owner_21C888 *self, void *stream)
         int j;
         req.size = 0x50;
         req.align = 0x10;
-        Group_21C888 *group = (Group_21C888 *)PvAllocSwClearImpl__Fi(&req);
+        Group_21C888 *group = (Group_21C888 *)PvAllocSwClearImpl__Fi();
         group->kind = U8Read__18CBinaryInputStream(stream);
         group->f0 = F32Read__18CBinaryInputStream(stream);
         group->f1 = F32Read__18CBinaryInputStream(stream);
@@ -40,7 +40,7 @@ void func_0021C888(Owner_21C888 *self, void *stream)
         group->count = S8Read__18CBinaryInputStream(stream);
         req.size = group->count * 0x70;
         req.align = 0x10;
-        group->segs = (Seg_21C888 *)PvAllocSwClearImpl__Fi(&req);
+        group->segs = (Seg_21C888 *)PvAllocSwClearImpl__Fi();
         for (j = 0; j < group->count; j++) {
             Seg_21C888 *seg = &group->segs[j];
             seg->group = group;
@@ -73,8 +73,8 @@ void func_0021C888(Owner_21C888 *self, void *stream)
             } else {
                 value = ConvertXfVec(seg[-1].act, seg->act, seg[-1].start);
             }
-            seg->start = value;
             seg->end = ConvertXfPos(seg->act, 0, seg->start);
+            seg->start = value;
         }
     }
 }

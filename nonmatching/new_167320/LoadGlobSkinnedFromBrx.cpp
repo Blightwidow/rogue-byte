@@ -1,5 +1,5 @@
-#include "sly2.h"
-struct BIS;
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+#include "bis.h"
 struct CM;
 struct FGFN;
 #include "alloc.h"
@@ -22,14 +22,11 @@ struct L {
 extern "C" {
 void __4VIFS(void *);
 void __4GIFS(void *);
-void CStackFrame_Construct(void *);
+void *CStackFrame_Construct(void *);
 void CStackFrame_Destructor(void *, int);
 void AllocStack__4DMASi(void *, int);
 void AddDmaCnt__4DMAS(void *);
 void Reset__4DMAS(void *);
-unsigned U8Read__18CBinaryInputStream(BIS *);
-int S16Read__18CBinaryInputStream(BIS *);
-int S32Read__18CBinaryInputStream(BIS *);
 void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
 void UnpackHelper__4VIFS3UPKiiPiPPUi(void *, int, int, int, int, void *);
 void BuildCmFgfn__FP2CMfP4FGFN(CM *, float, FGFN *);
@@ -39,14 +36,14 @@ void PackRGBA__4GIFSUi(void *, unsigned);
 void PackXYZF__4GIFSiiii(void *, int, int, int, int);
 void EndPrim__4GIFSi(void *, int);
 void AddVifUnpack__4VIFS3UPKiPvi(void *, int, int, void *, int);
-void VIFS_AddVifUnpackFromStream(void *, int, int, BIS *, int);
+void VIFS_AddVifUnpackFromStream(void *, int, int, CBinaryInputStream *, int);
 void AddVifStrow__4VIFSP2QW(void *, void *);
 void AddVifStmask__4VIFSUi(void *, int);
 void AddVifMscal__4VIFSPv(void *, void *);
 void EndDmaCnt__4DMAS(void *);
 void AddDmaRet__4DMAS(void *);
 void DMAS_DetachCopyPermanent(void *, void *, void *, void *);
-void func_001699E8(void *, GLOB *, GLOBI *, int, int, int, int, int, BIS *);
+void func_001699E8(void *, GLOB *, GLOBI *, int, int, int, int, int, CBinaryInputStream *);
 extern CM B_002DDF40;
 extern char B_002DEB60[];
 extern unsigned g_2deb50;
@@ -61,7 +58,7 @@ static inline void *PvAllocSwClear(ALLOCREQ *preq, int cb)
     preq->cbAlign = 0x10;
     return PvAllocSwClearImpl__Fi(preq);
 }
-extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, float *pr, int arg4, int arg5, BIS *pbis)
+extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, float *pr, int arg4, int arg5, CBinaryInputStream *pbis)
 {
     L l;
     int count = 0;
@@ -71,12 +68,12 @@ extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, flo
     AddDmaCnt__4DMAS(l.vifs);
     UnpackHelper__4VIFS3UPKiiPiPPUi(l.vifs, 0xC, 1, 9, 0, &l.pfgfn);
     BuildCmFgfn__FP2CMfP4FGFN(&B_002DDF40, *pr, l.pfgfn);
-    pglob->cweight = U8Read__18CBinaryInputStream(pbis);
+    pglob->cweight = pbis->U8Read();
     pglobi->aentry = (ENTRY *)PvAllocSwClear(&l.req, pglob->cweight * sizeof(ENTRY));
     for (; count < pglob->cweight; count++) {
         ENTRY *pentry = &pglobi->aentry[count];
-        pentry->n0 = S32Read__18CBinaryInputStream(pbis);
-        pentry->n8 = S16Read__18CBinaryInputStream(pbis);
+        pentry->n0 = pbis->S32Read();
+        pentry->n8 = pbis->S16Read();
     }
     int base = 0x22;
     __4GIFS(&l.gifs);
@@ -105,9 +102,10 @@ extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, flo
         pglob->base = base;
         base = pglob->cweight * 4 + 0x22;
     }
-    int cpass = S16Read__18CBinaryInputStream(pbis);
-    {
-        for (int index = 0; index < cpass; index++) {
+    int index = 0;
+    int cpass = pbis->S16Read();
+    if (cpass > 0) {
+        do {
             CStackFrame_Construct(&l.frame1);
             UnpackHelper__4VIFS3UPKiiPiPPUi(l.vifs, 0xD, 3, 0xA, 0, &l.pdesc);
             memset(l.pdesc, 0, 0x18);
@@ -121,16 +119,16 @@ extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, flo
             }
             int cursor = base;
             l.pdesc->w[1] = cursor;
-            int cvtx = U8Read__18CBinaryInputStream(pbis);
+            int cvtx = pbis->U8Read();
             VIFS_AddVifUnpackFromStream(l.vifs, 8, cvtx, pbis, cursor);
             l.pdesc->w[4] = cursor;
             cursor += cvtx;
             l.pdesc->w[5] = cursor;
             if (pglob->cweight != 0) {
                 int slot;
-                int nweights = U8Read__18CBinaryInputStream(pbis);
+                int nweights = pbis->U8Read();
                 for (slot = 0; slot < nweights; slot++)
-                    l.pdesc->aweight[slot] = pglob->base + U8Read__18CBinaryInputStream(pbis) * 4;
+                    l.pdesc->aweight[slot] = pglob->base + pbis->U8Read() * 4;
                 for (; slot < 4; slot++)
                     l.pdesc->aweight[slot] = l.pdesc->aweight[0];
                 if (nweights < 4) {
@@ -143,7 +141,7 @@ extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, flo
                 if (nweights < 4)
                     AddVifStmask__4VIFSUi(l.vifs, 0);
             }
-            int cnormal = U8Read__18CBinaryInputStream(pbis);
+            int cnormal = pbis->U8Read();
             VIFS_AddVifUnpackFromStream(l.vifs, 0xE, cnormal, pbis, cursor);
             l.pdesc->w[6] = cursor;
             cursor += cnormal;
@@ -152,7 +150,8 @@ extern "C" void LoadGlobSkinnedFromBrx(void *pv, GLOB *pglob, GLOBI *pglobi, flo
             AddVifMscal__4VIFSPv(l.vifs, D_00000738);
             AddVifMscal__4VIFSPv(l.vifs, D_000007F0);
             CStackFrame_Destructor(&l.frame1, 2);
-        }
+            index++;
+        } while (index < cpass);
     }
     EndDmaCnt__4DMAS(l.vifs);
     AddDmaRet__4DMAS(l.vifs);

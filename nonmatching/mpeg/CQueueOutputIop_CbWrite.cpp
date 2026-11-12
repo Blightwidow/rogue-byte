@@ -5,7 +5,7 @@ struct COut {
 };
 extern "C" {
 int CQueueOutputIop_Deinterleave(COut *, int, char *);
-int CQueueOutputIop_SendToIop(COut *, int, char *, int);
+int CQueueOutputIop_SendToIop(COut *, int);
 int CQueueOutputIop_CbWrite(COut *self, int limit, char *data) {
     int done = 0;
     int want = limit;
@@ -25,13 +25,13 @@ int CQueueOutputIop_CbWrite(COut *self, int limit, char *data) {
             chunk = 0x400;
             int phase = (self->played / 1024 / self->channels) % 4;
             if (phase == 0) {
-                dest[1] = 6;
                 dest[0x11] = 2;
+                dest[1] = 6;
             } else if (phase == 3) {
                 dest[0x3F1] = phase;
             }
         }
-        int sent = CQueueOutputIop_SendToIop(self, chunk, dest, chunk);
+        int sent = CQueueOutputIop_SendToIop(self, chunk);
         want -= sent;
         if (sent == 0) break;
         done += sent;

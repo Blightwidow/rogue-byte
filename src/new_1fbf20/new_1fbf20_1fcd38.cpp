@@ -6,6 +6,8 @@
 #include "jt.h"
 #include "m2c_macros.h"
 #include "include_asm.h"
+#include "bis.h"
+#include "alloc.h"
 
 struct CLQ { float a; float b; float c; };
 
@@ -212,7 +214,161 @@ extern "C" int func_001FD0C0(void *pmgr, unsigned index)
     return D_002C3C40[index];
 }
 
-INCLUDE_ASM(0X1FD0E8);
+struct B8 { char b[8]; };
+
+struct OIDB { B8 q[8]; };
+
+struct OIDV { int pad0[2]; int w8; char pad[0x38 - 0xC]; int w38; int w3C; };
+
+struct ENT {
+    OIDB oid;
+    int ref40;
+    ENT *next;
+    int ref48;
+    int f4C;
+    float f50;
+    int count;
+    void *data;
+};
+
+struct SNDOBJ {
+    char pad0[0x18];
+    int nmap;
+    char pad1[0xA8 - 0x1C];
+    OIDB oid;
+    int bank;
+    ENT *ents;
+    REC *recs;
+    void *amb;
+    int nbank;
+    int *banks;
+    int *map;
+    char pad2[0x1D0 - 0x104];
+    int nstream;
+    int streams[6];
+    char pad3[0x228 - 0x1EC];
+    char ambTarget[1];
+};
+
+extern "C" void CBinaryInputStream_Read_thunk(CBinaryInputStream *, int, void *);
+
+extern "C" void func_00118458(CBinaryInputStream *, void *);
+
+extern "C" void *PvAllocSwClearImpl__Fi(ALLOCREQ *);
+
+extern "C" void *PvAllocSwImpl__Fi(ALLOCREQ *);
+
+extern "C" void *NewStreamAmb(void *, int);
+
+extern "C" void func_00259B48(void *, void *);
+
+extern "C" void snd_UnloadBank(int);
+
+extern "C" int snd_FlushSoundCommands(void);
+
+extern "C" int B_002E1E54;
+
+static inline void *AllocClear(ALLOCREQ *request, int size)
+{
+    request->cb = size;
+    request->cbAlign = 0x10;
+    return PvAllocSwClearImpl__Fi(request);
+}
+
+static inline void *AllocPlain(ALLOCREQ *request, int size)
+{
+    request->cb = size;
+    request->cbAlign = 0x10;
+    return PvAllocSwImpl__Fi(request);
+}
+
+static inline int OidEqual(const OIDV *a, const OIDV *b)
+{
+    if (a == b) return 1;
+    if (b == 0) return 0;
+    return (a->w8 ^ a->w38) == (b->w8 ^ b->w38);
+}
+
+extern "C" void LoadSndFromBrx(SNDOBJ *snd, CBinaryInputStream *stream)
+{
+    OIDB oid;
+    ALLOCREQ req;
+    OIDB tmp;
+    func_00118458(stream, &oid);
+    if (!OidEqual((OIDV *)&oid, (OIDV *)&snd->oid)) {
+        snd->oid = oid;
+        if (snd->bank != 0) {
+            snd_UnloadBank(snd->bank);
+            while (snd_FlushSoundCommands() != 0) {
+            }
+            snd->bank = 0;
+        }
+    }
+    snd->nbank = stream->S16Read();
+    snd->banks = (int *)AllocClear(&req, snd->nbank * 4);
+    for (int ibank = 0; ibank < snd->nbank; ibank++) {
+        int *slot = snd->banks + ibank;
+        *slot = stream->S8Read();
+    }
+    snd->nmap = stream->S16Read();
+    snd->map = (int *)AllocPlain(&req, snd->nmap * 4);
+    memset(snd->map, -1, snd->nmap * 4);
+    for (int imap = 0; imap < snd->nbank; imap++) {
+        snd->map[stream->S16Read()] = imap;
+    }
+    snd->nstream = stream->S16Read();
+    if (snd->nstream > 0) {
+        void *header = AllocClear(&req, 0x40);
+        snd->amb = header;
+        func_00118458(stream, header);
+        void *amb = NewStreamAmb(snd->amb, 4);
+        func_00259B48(snd->ambTarget, amb);
+    }
+    memset(snd->streams, -1, 0x18);
+    for (int istream = 0; istream < snd->nstream; istream++) {
+        snd->streams[istream] = stream->S16Read();
+    }
+    int ntrack = stream->U8Read();
+    int pick = 0;
+    for (int itrack = 0; itrack < ntrack; itrack++) {
+        pick = (stream->U8Read() ^ B_002E1E54) == 0 ? itrack : pick;
+    }
+    int cent = stream->S32Read();
+    ENT *aent = (ENT *)AllocClear(&req, cent * 0x5C);
+    int entIndex;
+    for (entIndex = 0; entIndex < cent; entIndex++) {
+        ENT *ent = aent + entIndex;
+        ent->ref40 = stream->S16Read();
+        ent->ref48 = stream->S16Read();
+        for (int index = 0; index < ntrack; index++) {
+            func_00118458(stream, &tmp);
+            int a = stream->S8Read();
+            float f = stream->F32Read();
+            if (index == pick) {
+                ent->oid = tmp;
+                ent->f4C = a;
+                ent->f50 = f;
+            }
+        }
+        ent->count = stream->S32Read();
+        ent->data = AllocPlain(&req, ent->count * 8);
+        CBinaryInputStream_Read_thunk(stream, ent->count * 8, ent->data);
+        ent->next = snd->ents;
+        snd->ents = ent;
+    }
+    int nrec = stream->S32Read();
+    REC *rec = (REC *)AllocClear(&req, nrec * 0x48);
+    if (nrec > 0) {
+        do {
+            nrec--;
+            rec->id = stream->S16Read();
+            func_00118458(stream, rec);
+            rec->next = snd->recs;
+            snd->recs = rec;
+            rec++;
+        } while (nrec != 0);
+    }
+}
 
 struct CFileLocation { unsigned a; unsigned b; int mode; char pad[0x104]; void Clear(); };
 
@@ -277,8 +433,6 @@ extern "C" int snd_FlushSoundCommands();
 extern "C" void ReplaceHitFx(int, QW, int, void *);
 
 extern "C" void func_00227788(void *);
-
-extern "C" void func_00259B48(void *, int);
 
 extern "C" void ResetSlotheap(void *);
 
@@ -722,9 +876,9 @@ extern "C" AMBREF func_001FE478_1FE150(SND_1FE150 *, int);
 
 extern "C" void StopAmb(AMB_1FE150 *, float);
 
-extern "C" int func_001FCFF8_1FE150(SND_1FE150 *, int);
+extern "C" void *func_001FCFF8_1FE150(SND_1FE150 *, int);
 
-extern "C" AMB_1FE150 *NewStreamAmb(int, int);
+extern "C" void *NewStreamAmb(void *, int);
 
 extern "C" void AddAmbSlotSource(AMB_1FE150 *, unsigned, int, float, const RANGE *);
 
@@ -743,10 +897,10 @@ extern "C" AMB_1FE150 *QueueStream(SND_1FE150 *snd, int id)
         VT *vt = taken.amb->vt;
         vt->wake((char *)taken.amb + vt->delta38);
     } else {
-        int rec = func_001FCFF8_1FE150(snd, id);
+        void *rec = func_001FCFF8_1FE150(snd, id);
         if (rec == 0 || snd->count == 8)
             return 0;
-        taken = NewStreamAmb(rec, 4);
+        taken = (AMB_1FE150 *)NewStreamAmb(rec, 4);
         RANGE range(2000.0f, 5000.0f);
         AddAmbSlotSource(taken.amb, 3, g_2dd5bc, 1.0f, &range);
         AddAmbSlotSource(taken.amb, 3, g_2f7900, 1.0f, &range);

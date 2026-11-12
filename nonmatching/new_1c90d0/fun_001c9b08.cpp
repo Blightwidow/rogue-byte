@@ -105,8 +105,8 @@ void func_001C9B08(SW_1C9B08 *psw, void *paloParent, int cid, int oid, int ispli
         for (int ioption = 0; ioption < plo->coption; ioption++) {
             OPTION_1C9B08 *poption = &plo->aoption[ioption];
             poption->kind = S32Read__18CBinaryInputStream(pbis);
-            poption->cid = S16Read__18CBinaryInputStream(pbis);
             int iblock = S16Read__18CBinaryInputStream(pbis);
+            poption->cid = S16Read__18CBinaryInputStream(pbis);
             if (iblock != -1)
                 poption->pframe = PframeFromSpliceBlock(psw, iblock, 0);
             if (poption->kind == 5) {
