@@ -65,7 +65,7 @@ counts as matched.
 - **Permanent blockers.** A function with a VU0, MMI or COP0 instruction, hand-written assembly, or a remnant (a chunk nothing reaches that never
   transfers control, so not a function) (`config/us/blockers.tsv`, from `make blockers`), stays
   original assembly: it is left out of the work queues, counts as finished in the reports apart from the exact C, and is never matched with asm
-  (docs/build/vu0-mmi.md). Not a blocker: a function with the compiler's frame whose VU0, MMI and system instructions are at most 5% of it
+  (docs/build/vu0-mmi.md). Not a blocker: a function with the compiler's frame whose VU0, MMI and system instructions are at most 10% of it
   (`config/us/inline_functions.tsv`, same command): compiled C that needs the shared helpers, in the work queues and counted as to-do.
 - **An unused local only as a type the original plausibly declared.** GCC 2.95 gives an unused struct local a stack slot, so retail's
   frames show where the original declared one. A padding array (`s32 scratch[4];`), an invented type or a field that exists only to

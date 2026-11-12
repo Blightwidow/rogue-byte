@@ -33,7 +33,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 TABLE = os.path.join(ROOT, 'config', 'us', 'blockers.tsv')
 INLINE_TABLE = os.path.join(ROOT, 'config', 'us', 'inline_functions.tsv')
-INLINE_SHARE = 0.05  # sly1-decomp's top cutoff for its inline kind (its commit 623ebf38); adopted here 2026-11-11 (docs/build/inline-asm-helpers.md)
+INLINE_SHARE = 0.10  # 0.05 (sly1-decomp's top cutoff, its commit 623ebf38) from 2026-11-11; 0.10 from 2026-11-12 after the 5-10% pilot (docs/build/inline-asm-helpers.md)
 HANDWRITTEN = os.path.join(ROOT, 'config', 'us', 'handwritten_asm.txt')
 ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 INSTRUCTION = re.compile(r'^\s*/\*[^*]*\*/\s+(\w[\w.]*)')

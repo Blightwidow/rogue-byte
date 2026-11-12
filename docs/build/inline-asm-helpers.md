@@ -1,6 +1,6 @@
 # Blockers that are compiled C: what sly1-decomp found and what it means here
 
-Written 2026-11-08; pilot 2026-11-11 (below). Status: **adopted 2026-11-11** (maintainer): the inline kind at the 5% cutoff, counted as
+Written 2026-11-08; pilot 2026-11-11 (below). Status: **adopted 2026-11-11** (maintainer): the inline kind at the 5% cutoff (10% since 2026-11-12, see "Cutoff raised to 10%"), counted as
 to-do; shared one-instruction helpers in `include/ps2inline.h` and `include/vu0inline.h`; no `"memory"` clobber; `volatile` only on the
 barriers (`sync`, `ei`). The rest of this page records the issue, how the two projects differ, and the pilot.
 
@@ -160,6 +160,34 @@ Findings:
 
 ## Open questions
 
-- Which cutoff: 5% (sly1's top) or 10%?
+- ~~Which cutoff: 5% (sly1's top) or 10%?~~ Decided 2026-11-12: 10% (below). 20% waits for a second pilot.
 - Should the inline kind be decided by tooling alone, or confirmed per function by a compile?
 - Do we adopt before the 80% target, or after, so the headline does not move twice?
+
+## Cutoff raised to 10% (2026-11-12)
+
+Maintainer ruling (Theo, 2026-11-12), after two scratch pilots (workers in a scratch folder, nothing landed, every score re-run by the
+lead with `try.py`, `TRY_VU0=1`; about 12 compiles per function at most):
+
+| Band (framed VU0, MMI, system share) | Functions tried | Score 0 | Others | Compiles per function |
+| :--- | ---: | ---: | :--- | ---: |
+| 5 to 10% (160 to 344 bytes) | 10 | 10 | | 3.3 |
+| 10 to 20% (408 to 632 bytes) | 10 | 2 | 1, 2, 5, 8, 35, 38, 46, 67 | 9 |
+
+- The 5 to 10% band meets the decision rule written above ("most reach score 0"): all ten matched with the helpers of
+  `include/vu0inline.h` that existed, and no new helper. The cutoff is now `INLINE_SHARE = 0.10` in `scripts/classify_blockers.py`.
+- The 10 to 20% band does not meet it. Its misses are the compiler's own choices around the vector code (frame shape, loop
+  rotation, strength reduction, scheduling), not missing helpers. It stays a blocker for now; a second pilot on fresh functions
+  decides 20%.
+- What fixed the near misses and held across functions: a QW local that is still needed after the vector op; a
+  `union VU_SCALE { QW q; VECTOR v; }` declared before it when retail stores the scalar quad on the stack; locals declared in
+  retail's stack order (a one-element `QW x[1]` for an in-memory slot); loop-invariant globals loaded into locals; an `unsigned`
+  loop counter; a `static inline` wrapper around a repeated constant compare (stops GCC keeping the constant in a saved FPR).
+- Helpers the pilots found that no file has yet (each needs more than one user before it lands): `DotProduct` (two-vector dot, the
+  `SquaredLength` instructions with two operands), `VectorMinXyz` and `VectorMaxXyz` (`vmini.xyz`, `vmax.xyz`), `CrossProduct`
+  (`vopmula.xyz` + `vopmsub.xyz`, ACC in one asm), `BlendX` (`vmulax.xyzw` + `vmaddx.xyzw`, two users), `ScaleByReciprocalX`
+  (`vdiv`, `vwaitq`, `vmulq.xyzw`, two users) and `TransformVector` (`vmulax.xyz`, `vmadday.xyz`, `vmaddz.xyz`).
+- Measured effect of the change (2026-11-12): inline functions 75 to 219 (180,184 bytes), final blockers 888 to 767 functions, 329,784 to
+  239,036 bytes left out. Headline code 72.52% to 66.86% (NTSC-U), 69.16% to 63.77% (PAL): the 144 functions (97 KB) enter the
+  denominator while the matched bytes stay the same, so the fall is about 5.7 points, more than the 2.5 first estimated from the 2026-11-08
+  audit (whose base was the old, smaller denominator).
