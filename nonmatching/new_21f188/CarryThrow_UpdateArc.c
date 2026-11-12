@@ -26,7 +26,7 @@ extern s128 g_2a2dc0;
 extern M2C_UNK g_2dded0;
 
 void CarryThrow_UpdateArc(void *arg0, s32 arg1) {
-    char sp[0x400];
+    char sp[0x10];
     M2C_UNK sp0;
     M2C_UNK sp208;
     M2C_UNK sp210;

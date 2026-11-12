@@ -3,7 +3,7 @@
 M2C_UNK GetPathPosFromS(void *, M2C_UNK);           /* extern */
 
 void func_001CBB58(s32 arg1, s32 arg2) {
-    char sp[0x400];
+    char sp[0x10];
     GetPathPosFromS(sp, 0);
     M2C_ERROR(/* unknown instruction: lqc2 $vf1, ($sp) */);
     if (arg2 != 0) {

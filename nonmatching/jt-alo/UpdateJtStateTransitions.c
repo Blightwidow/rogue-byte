@@ -36,7 +36,7 @@ extern s128 g_2a2da0;
 extern f32 g_2dded0;
 
 void UpdateJtStateTransitions(void *arg0) {
-    char sp[0x400];
+    char sp[0x80];
     M2C_UNK sp60;
     M2C_UNK sp70;
     s128 sp50;

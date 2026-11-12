@@ -3,7 +3,7 @@
 M2C_UNK func_002564B8(M2C_UNK *);                   /* extern */
 
 void *PcgtPointInCbspQuick__FP4CBSPP6VECTOR(void *arg0, u32 arg1, s128 arg2) {
-    char sp[0x400];
+    char sp[0x40];
     M2C_UNK sp10;
     s128 sp20;
     u32 temp_v1;

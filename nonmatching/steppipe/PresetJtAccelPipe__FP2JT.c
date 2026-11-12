@@ -9,7 +9,7 @@ extern s128 g_2a2dd0;
 extern M2C_UNK g_2dded0;
 
 void PresetJtAccelPipe__FP2JT(void *arg0) {
-    char sp[0x400];
+    char sp[0xB0];
     M2C_UNK sp0;
     M2C_UNK sp10;
     M2C_UNK sp20;

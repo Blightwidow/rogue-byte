@@ -12,7 +12,7 @@ extern f32 g_2c1f6c;
 extern f32 g_2dded0;
 
 s32 FBounceRip__FP3RIPP2SOP6VECTORT2(void *arg0, void *arg1, s128 arg2) {
-    char sp[0x400];
+    char sp[0xB0];
     f32 sp40;
     M2C_UNK sp44;
     s128 sp50;

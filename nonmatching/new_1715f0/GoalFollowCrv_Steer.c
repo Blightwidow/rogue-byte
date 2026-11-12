@@ -22,7 +22,7 @@ extern s128 g_2a2dd0;
 extern M2C_UNK g_2bbb60;
 
 void GoalFollowCrv_Steer(void *arg0) {
-    char sp[0x400];
+    char sp[0xC0];
     M2C_UNK spB0;
     M2C_UNK unksp48;
     M2C_UNK sp10;

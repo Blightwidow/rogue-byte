@@ -33,8 +33,8 @@ void func_001448F0(void *arg0) {
             M2C_ERROR(/* unknown instruction: vmaddz.x $vf1, $vf2, $vf1z */);
             M2C_ERROR(/* unknown instruction: vwaitq */);
             M2C_ERROR(/* unknown instruction: vaddq.x $vf1, $vf0, $q */);
-            M2C_FIELD(arg0, s32 *, 0x20) = (s32) M2C_ERROR(/* unknown instruction: qmfc2.ni $v0, $vf1 */);
             M2C_FIELD(arg0, f32 *, 0x24) = (f32) (g_2dded0 + D_FLT_002BD2D0);
+            M2C_FIELD(arg0, s32 *, 0x20) = (s32) M2C_ERROR(/* unknown instruction: qmfc2.ni $v0, $vf1 */);
         }
     }
 }

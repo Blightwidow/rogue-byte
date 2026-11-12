@@ -25,7 +25,7 @@ extern M2C_UNK g_2bf330;
 extern f32 g_2dded4;
 
 void UpdateJtBalance(void *arg0) {
-    char sp[0x400];
+    char sp[0x70];
     M2C_UNK sp40;
     M2C_UNK sp44;
     M2C_UNK sp60;

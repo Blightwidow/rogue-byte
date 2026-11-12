@@ -8,7 +8,7 @@ s128 PosLoWorld(void *);                            /* extern */
 M2C_UNK func_001A3B38(void *);                      /* extern */
 
 void RebuildLight(void *arg0) {
-    char sp[0x400];
+    char sp[0x10];
     M2C_UNK sp0;
     M2C_UNK sp4;
     M2C_UNK sp8;

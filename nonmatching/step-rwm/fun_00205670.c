@@ -5,7 +5,7 @@ M2C_UNK func_002057E8(void *);                      /* extern */
 extern s128 g_2a2dc0;
 
 s32 func_00205670(void *arg0, s128 arg1, s128 arg2, s32 arg3) {
-    char sp[0x400];
+    char sp[0xB0];
     M2C_UNK sp20;
     s128 sp60;
     f32 sp80;

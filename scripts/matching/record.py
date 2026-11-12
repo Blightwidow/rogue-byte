@@ -48,12 +48,13 @@ BANNED = [
     ('register pin', re.compile(r'\bregister\b[^;]*\basm\b|\basm\s*\(\s*"\$')),
 ]
 # An inline asm statement: `asm` where a statement starts. An asm label on a declaration (`CRef(const CRef &) asm("Name");`) is a rename, not code.
+BARE_DO_WHILE_ZERO = re.compile(r'\bwhile\s*\(\s*0\s*\)')  # AGENTS.md: `do { } while (0)` only as the body of a C macro
 ASM_STATEMENT = re.compile(r'(?:^|[;{}])\s*(?:__)?asm(?:__)?\b(?:\s+volatile\b)?\s*\(', re.MULTILINE)
 
 
 def scan(text):
-    """[(line number, what, line)] of the constructs AGENTS.md bans in a source: `volatile` on ordinary data, register pins, and inline asm
-    (the one shared `sqrt.s` helper is the only asm allowed)."""
+    """[(line number, what, line)] of the constructs AGENTS.md bans in a source: `volatile` on ordinary data, register pins, inline asm
+    (the one shared `sqrt.s` helper is the only asm allowed), and `do { } while (0)` outside the body of a C macro."""
     found = []
     lines = text.split('\n')
     for number, line in enumerate(lines, 1):
@@ -63,6 +64,11 @@ def scan(text):
                 continue
             if pattern.search(code):
                 found.append((number, what, line.strip()[:100]))
+    for number, line in enumerate(lines, 1):
+        code_line = line.split('//')[0].rstrip()
+        in_macro = code_line.lstrip().startswith('#') or code_line.endswith('\\') or (number > 1 and lines[number - 2].split('//')[0].rstrip().endswith('\\'))
+        if BARE_DO_WHILE_ZERO.search(code_line) and not in_macro:
+            found.append((number, 'do-while(0) outside a macro', line.strip()[:100]))
     code = '\n'.join(line.split('//')[0] for line in lines)
     for match in ASM_STATEMENT.finditer(code):
         if 'sqrt.s' not in code[match.start():match.start() + 200]:

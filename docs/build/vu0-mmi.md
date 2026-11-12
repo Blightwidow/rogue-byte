@@ -4,7 +4,7 @@ Sly 2's vector code uses the R5900's VU0 macro mode (`lqc2`, `sqc2`, `qmtc2`, `q
 instructions (MMI: `pextuw`, `pcpyld`, `prot3w`...). GCC 2.95.3 for the EE has no C form for them. This page records what that costs,
 what was tried, and the decision (2026-11-04): these functions are **permanent blockers**, as in sly1-decomp. Rules: [AGENTS.md](../../AGENTS.md); the earlier allowances:
 [contributing/exceptions.md](../contributing/exceptions.md). Since 2026-11-11 a function with the compiler's frame whose VU0, MMI and
-system instructions are at most 5% of it is not a blocker: it is compiled C matched with the shared helpers of `include/ps2inline.h` and
+system instructions are at most 10% of it (5% until 2026-11-12) is not a blocker: it is compiled C matched with the shared helpers of `include/ps2inline.h` and
 `include/vu0inline.h`, listed in `config/us/inline_functions.tsv` and counted as to-do ([inline-asm-helpers.md](inline-asm-helpers.md)).
 
 ## The size of it
@@ -67,7 +67,14 @@ original assembly as finished apart from the exact C:
   matched share of what C can express, and how many functions and bytes are left out (`progress/us/blockers.json`). Before that date they
   counted as finished and the README showed an "exact C" share apart (24.4% of the code, 941 functions).
 - The `mmi` kind is **not final yet**: some of those functions may become C through the shared helpers (`include/ps2inline.h`), so they stay
-  in the totals as unmatched until a survey rules. The same goes for the `$gp` swap and read functions, which are not a kind of their own.
+  in the totals as unmatched until a survey rules.
+- Since 2026-11-12 a sixth kind, `gp`, also **not final**: an instruction names `$gp`. Retail never addresses data through `$gp`, so every
+  such use is an ordinary-register one: Sony's ChangeGP idiom, `$gp` swapped to a callee's value around an indirect call and restored (8
+  functions), or `$gp` read as a value and stored in a callback or RPC record (5). 13 functions, 3,760 bytes, all in the SDK range; six
+  more that touch `$gp` keep a final kind (`system`, `handwritten`). No matched function reads or writes `$gp`, and the only C form found
+  is a register pin (`register void *g asm("$28")`, score 4 on 0x241BB8, and GCC then schedules the `$gp` load after the call), which
+  AGENTS.md bans. They are left out of the work queues and counted as unmatched until a ruling on one shared form or on making the kind
+  final. Survey: one line of semantics each in `config/us/blocker_notes.tsv`.
 - A function leaves the list only if its instructions change: the table is content-based, regenerated from the split.
 
 The other options (a narrow written asm exception like `Sqrt`, a compiler with VU0 builtins, plain-math rewrites for the port) are not

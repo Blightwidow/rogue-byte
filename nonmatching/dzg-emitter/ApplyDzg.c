@@ -6,7 +6,7 @@ s128 LimitVectorLength__FP6VECTORfT0();    /* extern */
 M2C_UNK PvAllocStackImpl__Fi();       /* extern */
 
 void ApplyDzg(void *arg0, f32 fparg0, f32 fparg1) {
-    char sp[0x400];
+    char sp[0x10];
     s32 sp10;
     u8 *temp_v0;
     s32 var_a0;

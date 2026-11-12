@@ -4,7 +4,7 @@ M2C_UNK Obstacle_UpdatePlanes();                    /* extern */
 M2C_UNK func_002564B8(M2C_UNK *);                   /* extern */
 
 s32 FObstacleContainsPos(void *arg0, s128 arg1) {
-    char sp[0x400];
+    char sp[0x10];
     M2C_UNK sp10;
     s128 sp20;
     s32 var_s0;

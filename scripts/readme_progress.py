@@ -49,7 +49,8 @@ def table():
             "PAL's code. Permanent blockers that are final (a VU0 or COP0 instruction, hand-written assembly, or a remnant that is not a function: "
             '`config/us/blockers.tsv`, [docs/build/vu0-mmi.md](docs/build/vu0-mmi.md)) stay original assembly for good, so they are left out of '
             'the totals above: they are neither matched nor unmatched, and the column before the last counts them. Functions with MMI instructions '
-            'stay in the totals as unmatched until the shared helpers rule on them. Compiled C that needs a shared inline-assembly helper for an '
+            'stay in the totals as unmatched until the shared helpers rule on them, and so do the SDK functions that use `$gp` as an ordinary '
+            'register (kind `gp`) until a ruling on them. Compiled C that needs a shared inline-assembly helper for an '
             'instruction GCC cannot emit (`config/us/inline_functions.tsv`, [docs/build/inline-asm-helpers.md](docs/build/inline-asm-helpers.md)) '
             'is work to do; the last column counts those not matched yet.')
     return '\n'.join(rows) + '\n\n' + note + '\n'

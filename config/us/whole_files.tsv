@@ -18,7 +18,7 @@ start	end	file
 0x11B300	0x11CCA8	jsg/FInvertMatrix3_file.cpp
 0x11CCA8	0x11CF60	util-alo/CreateSlotheapSwAlign_file.cpp
 0x11CF60	0x11E198	util/RadNormalize_file.cpp
-0x11E198	0x11F440	util-splice-bif/bif_file.c
+0x11E198	0x11F440	util-splice-bif/bif_file.cpp
 0x1258F0	0x126188	splice-bif-splice-eval/splice_bif_splice_eval_1258f0.cpp
 0x126188	0x1262E0	splice-bif-splice-eval/splice_bif_splice_eval_126188.c
 0x1262E0	0x126438	splice-bif-splice-eval/splice_bif_splice_eval_1262e0.c
@@ -53,7 +53,7 @@ start	end	file
 0x13DA18	0x13E368	new_13d8b8/LoadSwStringsFromBrx_file.cpp
 0x13F8A8	0x13FF70	new_13f888/AppendPloarray_file.cpp
 0x143CF8	0x144638	new_13f888/JT_TranslateToPos_file.cpp
-0x144638	0x144B28	new_13f888/new_13f888_144638.c
+0x144638	0x144B28	new_13f888/new_13f888_144638.cpp
 0x146E18	0x1471C0	new_144b58/new_144b58_146e18.cpp
 0x147410	0x147E20	new_144b58/SetWipeState_file.cpp
 0x148300	0x148620	new_147f40/StaticInitSwSlotheaps_3_file.c

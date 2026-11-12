@@ -4,7 +4,8 @@
 #include "sly2.h"
 #include "types.h"
 #include "m2c_macros.h"
-#include "include_asm.h"
+#include "vu0inline.h"
+#include "ps2inline.h"
 
 struct Guard { char pad[0x4A4]; int flag; };
 
@@ -65,7 +66,67 @@ void func_0014B218(s32 arg0, s32 arg1, struct MSGARGS *pmsgargs) {
 }
 }
 
-INCLUDE_ASM(0X14B290);
+struct Entry { char *object; int active; int pad[2]; };
+
+struct List { char pad[0xFC]; int count; Entry entry[1]; };
+
+struct Sgs { char pad[0x38C]; char *current; char *guard; char pad2[0xF64 - 0x394]; List *list; };
+
+extern "C" int FIsGuardInSgs(int, int);
+
+extern "C" int FIsBasicDerivedFrom(void *, int);
+
+extern "C" QW PosLoWorld(void *);
+
+extern "C" void *func_002082D0(void *);
+
+extern "C" float g_2bd4b0[3];
+
+extern "C" char *func_0014B290(Sgs *psgs)
+{
+    if (FIsGuardInSgs((int)psgs, 0x24) != 0)
+        return (char *)func_002082D0(psgs);
+    char *result = 0;
+    float bestDistance;
+    int bestRank;
+    QW origin;
+    int index;
+    char *guard = psgs->guard;
+    if (guard != 0) {
+        if ((int)(*(unsigned long *)(guard + 0x28) >> 60) & 1) {
+            result = guard;
+            goto done;
+        }
+    }
+    bestDistance = 3.4028235e38f;
+    bestRank = 0x3E7;
+    origin = PosLoWorld(psgs);
+    for (index = 0; index < psgs->list->count; index++) {
+        Entry *entry = (Entry *)((char *)psgs->list + 0x100 + index * 0x10);
+        if (entry->active != 0) {
+        int rank;
+        if (FIsBasicDerivedFrom(entry->object, 0x34) != 0)
+            rank = 0;
+        else if (FIsBasicDerivedFrom(entry->object, 0x3A) != 0)
+            rank = 1;
+        else
+            rank = 2;
+        QW position = PosLoWorld(entry->object);
+        char *objectNow = entry->object;
+        char *currentNow = psgs->current;
+        float distance = LaneX(SqrtX(SquaredLength(VectorSub(origin, position))));
+        if (objectNow == currentNow)
+            distance = g_2bd4b0[0] + distance * (g_2bd4b0[1] + distance * g_2bd4b0[2]);
+        if (rank < bestRank || (rank == bestRank && distance < bestDistance)) {
+            bestRank = rank;
+            bestDistance = distance;
+            result = entry->object;
+        }
+        }
+    }
+done:
+    return result;
+}
 
 extern "C" {
 s32 func_0014B460(void) {

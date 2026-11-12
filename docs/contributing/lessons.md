@@ -170,6 +170,79 @@ same shape shows in CreateSwSavePaths and UpdateCmLast.
 - Also without effect: a `const` parameter, a `do { } while (0)` macro, PauseMenu_ApplyOption's by-value helpers, an inline member
   passing `this`. Found on the way: UpdateJtLootSave's `CStackFrame_Construct` takes the frame (`$a0 = $sp`), not `self`.
 
+## 2026-11-12: wave A1, the never-attempted functions
+
+Every function `list_functions.py --status asm` still listed after #50: 184 (146 in the SDK range). `claim.py init` queued 158; it skips
+chunks that are not whole functions (13 with no return, 2 that open with the previous function's frame release), chunks under 16 bytes,
+the held `GetJoyXYDeflection` and functions the registry no longer has open. 15 workers (Haiku up to 400 bytes, Sonnet to 1,000, Opus
+above), 12 compiles each, then four follow-up agents on the shared causes. 18 matched in all, 3 more at 0 held back; code 70.62% to
+72.52%. Toolchain findings: [compiler-identification.md](../build/compiler-identification.md) "findings of wave A1"; helpers:
+[inline-asm-helpers.md](../build/inline-asm-helpers.md); the `gp` kind: [vu0-mmi.md](../build/vu0-mmi.md).
+
+- **Old kept sources are worth re-scoring first.** 154 of the 184 "never attempted" functions had a source in `work/matching/kept/`
+  from earlier waves, logged under an older toolchain fingerprint and so invisible to the tools. Re-scoring them took eleven seconds:
+  5 at 0, 21 at 1 to 10. Logging them under each wave's lead arm (`TRY_ARM=<wave>-lead`) let `claim.py land` adopt them even where no
+  worker improved on them.
+- **A score of 0 is not a match until the rules pass.** All five old zeros broke a rule: a padding `volatile`, inline asm, a bare
+  `do { } while (0)` (0x241B18) and a constant `|| 1` condition (0x23D468). `check_source.py` printed ok for the last two: the
+  constant condition is a `--review` warning by design, and the bare do-while had no check. record.py's `scan` now bans `while (0)`
+  outside a macro (0 hits in src/, include/ and nonmatching/); read `--review` output before landing.
+- **`adopt.py` keeps the lowest score, banned or not.** For a dozen VU0 functions it kept an old draft with inline asm or register pins
+  over the workers' clean rewrite, and the export then left the function out of nonmatching/ (so it still counted as untouched asm).
+  The clean rewrites were copied over by hand. A fix would make adopt skip a candidate `record.scan` flags.
+- **Two gaps in the export, fixed:** it skipped the whole SDK range and read only `.cpp` hand drafts. With both lifted, 795 of 1,259
+  unmatched functions have a published draft (was 675 of 901), fuzzy match 87.07% to 90.93%.
+- **`data/matching/include/` is the copy that counts.** try.py compiles against it, and the export copies it over `include/`: a helper
+  added to `include/vu0inline.h` alone is measured by nobody and lost at the next export. Edit `include/`, then copy.
+- **A registry source without its SPDX line loses it in src/.** `make land` rewrote `src/sdk/qsort.c` without the header its
+  registry copy (`data/matching/src/fn/2338C0.c`) lacked; six new matches had the same gap. Fix the registry copy, not only src/.
+- **Workers claim past their count.** One worker took a fourteenth function after `done` printed DONE and never touched it; another
+  claimed its last function and stopped. Both had no kept source. Check `claim.py status` for claimed functions with 0 runs.
+- **A match can wait on its whole file.** `StartNextSeqnodeRecord` (0x1E1E30, 6,752 bytes) scores 0, but `make_whole_files.py --land`
+  cannot merge it into `src/stepguard-jsg/AddJsgContext_file.cpp`: its `SEQNODE` has more fields than the one the file already holds,
+  the merge renames it, and the renamed type breaks a base-class reference (`Seqnode_1E1DB8 is not a base type`). Same state as
+  0x155D90, 0x1E4D40 and 0x200F58: one shared declaration across those sources would land all four.
+- **snd_GotReturns falls back on rodata.** 0x231E90 is matched but the image takes it from assembly ("rodata differs", its printf
+  string); it did so on `main` before the wave too.
+- **The VU0 flag moves code outside the VU0 block.** Under `-mvu0-use-vf0-15` (a function listed in `config/us/vu0_regs.txt`) the loop
+  optimizer hoists float constants into callee-saved FP registers and strength-reduces an index: UpdateWipe (0x1477D8) reproduces its
+  VU block instruction for instruction and still scores 90 (its old inline-asm draft compiled with the flag scores 105 too), and
+  JtbsChooseJtLanding (0x19B110) stops on the registers of its hoisted invariants. Read such a diff as the flag's, not the helper's.
+- **Worker misreports to check:** "needs a mult1 helper" (Sony's gcc emits it from C), "needs sony29" on functions already listed, and
+  string literals a worker guessed (0x243CB0: retail's strings are the `RO_STR_002AB7B0` family).
+- **Cost:** 3.86M worker tokens for the wave (about 241k per match), 0.72M for the follow-up (docs/costs.md, local).
+
+Near misses the wave left, by what still differs (drafts in nonmatching/; worker files under `work/matching/waves/A1*/`):
+
+| Function | Score | What differs |
+| :--- | ---: | :--- |
+| 0x235780 | 2 | `sb` in the `jr` slot (walls.tsv `toolchain`; re-run under Sony's gcc with a plain store) |
+| 0x236FD8 | 2 | retail keeps an explicit `sw $zero, 0x24` on the null path; ours folds it |
+| 0x23A228 | 2 | `sw callback = 0` before the count's `addiu`; retail the reverse |
+| 0x23A668 | 2 | a second `ld $ra` before `ld $s0` on the zero-return path |
+| 0x24B480 | 2 | both hardware pointers built with `lui`/`ori` before the `if` (walls.tsv) |
+| 0x23D468 | 2 | clean version: a `nop` after the exponent-0 `jr`/`sw` |
+| 0x23D808 | 4 | `sd frac` in the `bnel` slot before `cls = 3` (`__muldf3`) |
+| 0x13D1A8 | 5 | `lhu` into `$v1` and the constant 3 into `$a1`, reversed |
+| 0x241A30 | 5 | the `lui` for `D_002C6774` after the 0x6760 store (walls.tsv `tie`) |
+| 0x24F970 | 5 | the address of 0x10002010 in `$v0`, retail `$v1` (Sony's gcc) |
+| 0x241B18 | 6 | clean version: CSE hoists `lui s0, D_002C6760` above the `if` |
+| 0x1C0B50 | 6 | z's first float in `$f0` copied to `$f21`; the inner loop's base |
+| 0x254CA0 | 6 | `lq`/`sq` register choice (Sony's gcc) |
+| 0x188CC8 | matched | `SquaredLengthXy` (was 7) |
+| 0x24CD70 | 7 | a `$v0`/`$v1` swap at the loop tail |
+| 0x256AF0 | 8 | `pelem` copied into `$v1`; the subtract's register order |
+| 0x23A598 | 8 | one temporary's register (Sony's gcc) |
+| 0x13C560 | 8 | the message local's stack slot; one vtable load's position |
+| 0x238138 | 9 | a `$v0`/`$v1` swap; `slti`/`movz` against `slt`/`movn` |
+| 0x1EEE00 | 10 | retail reloads `cgoal` after the if/else |
+| 0x15A2C0 | 11 | two store-order differences |
+| 0x245000 | 11 | `return x - x` folds to 0.0 (retail `sub.s`) |
+
+The open drafts in the SDK range that need Sony's gcc to score near (not listed until they match): 0x235930, 0x2407A8, 0x240C38,
+0x2515F0, 0x237EA8, 0x2382B8, 0x2423D8, 0x238528, 0x23AE70, 0x240050, 0x239CD8, 0x240AE0, 0x241368, 0x2355E0, 0x242C30, 0x237740.
+Still untouched asm after the wave: the split fragments and stubs above, `GetJoyXYDeflection` (held) and 0x250A38 (no draft).
+
 ## Tools and environment
 
 - **Slicing a memory-mapped file with an open end copies the rest of it**: `image[offset:]` on a 2.7 GB disc image made a scan run for
