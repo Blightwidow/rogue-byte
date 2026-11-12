@@ -2765,6 +2765,7 @@ us_address	name	other_address	pair	score	addresses
 0x19E9D8	func_0019E9D8	0X19E960	same	0	ok
 0x19EA60	UpdateJtPipeLook	0X19E9E8	same	0	ok
 0x19EAA0	SetJtPipeHandFoot	0X19EA28	gap	0	ok
+0x19EAB0	SetJtPipeState	0X19EA38	same	0	ok
 0x19EEF0	func_0019EEF0	0X19EE78	same	0	ok
 0x19EF50	func_0019EF50	0X19EED8	same	0	ok
 0x19F088	func_0019F088	0X19F010	same	0	ok

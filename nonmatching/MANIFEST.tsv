@@ -313,7 +313,6 @@ address	name	size	file	score
 0X19D948	func_0019D948	304	cnvo-steppipe/fun_0019d948.cpp	19
 0X19DF70	PresetJtAccelPipe__FP2JT	416	steppipe/PresetJtAccelPipe__FP2JT.c	91
 0X19EA00	func_0019EA00	96	new_19e110/fun_0019ea00.c	20
-0X19EAB0	SetJtPipeState	1088	new_19e110/SetJtPipeState.c	173
 0X19F590	WarpJtToSafePoint	576	transition-jp/WarpJtToSafePoint.cpp	48
 0X19F7D0	ScoreSafePoint	808	jp/ScoreSafePoint.cpp	166
 0X19FC30	UpdateJtSafePoints	256	jp-stepzap/UpdateJtSafePoints.c	46
