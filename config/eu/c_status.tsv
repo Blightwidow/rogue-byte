@@ -2640,6 +2640,7 @@ us_address	name	other_address	pair	score	addresses
 0x188488	InitSly	0X188410	same	0	ok
 0x1885B8	LoadSlyFromBrx	0X188540	same	0	ok
 0x188608	PostSlyLoad	0X188590	same	0	ok
+0x188CC8	AdjustSlyNewXp	0X188C50	same	0	ok
 0x188F20	HandleSlyMessage	0X188EA8	same	0	ok
 0x189458	FFaceSlyAimTarget	0X1893E0	same	0	ok
 0x189488	GetSlyExposeMode	0X189410	same	0	ok
@@ -5111,6 +5112,7 @@ us_address	name	other_address	pair	score	addresses
 0x23F938	func_0023F938	0X2402F8	same	0	ok
 0x23FDD8	RegisterGlobalObject	0X240798	same	0	ok
 0x23FE00	func_0023FE00	0X2407C0	same	0	ok
+0x23FE78	func_0023FE78	0X240838	same	0	ok
 0x2401C8	func_002401C8	0X240B88	gap	0	ok
 0x240328	func_00240328	0X240CE8	gap	0	ok
 0x240600	sceGsPutDispEnv	0X240FC0	same	0	ok

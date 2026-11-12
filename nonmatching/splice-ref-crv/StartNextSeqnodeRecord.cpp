@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-/* StartNextSeqnodeRecord 0x1E1E30: score 49 with the default assembler (try.py picks GNU as here: an asm ends right before a branch).
-   Wall: retail has VU0 instructions in branch delay slots (GNU as only) and the mtc1/c.eq.s hazard nops (ps2eeas only).
-   The vadda operand text is in GNU as's order. */
+/* StartNextSeqnodeRecord 0x1E1E30 */
 #include "sly2.h"
 #include "vu0inline.h"
 
@@ -471,12 +469,11 @@ extern "C" void StartNextSeqnodeRecord(SEQNODE *pseqnode)
         if (FIsBasicDerivedFrom(pseqnode->psubject, 0x34) != 0) {
             LO *pjt = pseqnode->psubject;
             QW up = *(QW *)&g_2a2dc0;
-            QW height = VectorFromFloat(RF(pjt, 0x1048));
+            QW height = VectorFromWord(*(u32 *)((char *)pjt + 0x1048));
             VECTOR scale;
             *(QW *)&scale = height;
             QW posT2 = *(QW *)&pos;
-            /* retail: vadda.xyzw ACC, vf0, pos; vmaddx.xyzw result, up, heightx (no shared helper yet) */
-            QW result = VectorAdd(posT2, VectorScaleX(up, height));
+            QW result = ScaleAddX(posT2, up, height);
             RQ(pjt, 0x1060) = result;
             if (RI(prec, 0x14) == 0 && RI(pjt, 0x12F4) == 0) {
                 SetJmpState((char *)pjt + 0x2C0, 0xB, 0, 0);

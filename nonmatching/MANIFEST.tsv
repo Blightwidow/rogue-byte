@@ -203,6 +203,7 @@ address	name	size	file	score
 0X167F78	Vif1InterruptHandler	72	new_167320/Vif1InterruptHandler.c	6
 0X167FC0	UploadRelightLights	496	new_167320/UploadRelightLights.cpp	17
 0X1681F8	func_001681F8	728	new_167320/fun_001681f8.c	169
+0X169198	func_00169198	2032	new_167320/fun_00169198.cpp	430
 0X16A000	LoadGlobFromBrx	10464	new_167320/LoadGlobFromBrx.cpp	695
 0X16C8E0	func_0016C8E0	448	new_167320/fun_0016c8e0.cpp	98
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	159
@@ -274,7 +275,6 @@ address	name	size	file	score
 0X186930	InitIkLimb	288	binoc-joy/InitIkLimb.c	52
 0X186A50	SolveIkLimb	1160	binoc-joy/SolveIkLimb.c	274
 0X188960	PresetSlyAccel	872	joy-jt/PresetSlyAccel.cpp	188
-0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.c	45
 0X188E78	AdjustSlyXpVelocity	168	joy-jt/AdjustSlyXpVelocity.c	28
 0X189618	UpdateJtBalance	1576	joy-jt/UpdateJtBalance.c	322
 0X189C40	RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG	648	jt_189c40/RebuildJtXmg__FP2JTP3ALOfT1P6ACTADJP3XMG.c	158
@@ -448,6 +448,7 @@ address	name	size	file	score
 0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	74
 0X1CBB58	func_001CBB58	80	new_1c90d0/fun_001cbb58.c	15
 0X1CBBA8	func_001CBBA8	432	new_1c90d0/fun_001cbba8.c	99
+0X1CC5E8	func_001CC5E8	960	new_1c90d0/fun_001cc5e8.cpp	70
 0X1CCAC0	Carry_SetState	456	new_1c90d0/Carry_SetState.cpp	56
 0X1CCC88	func_001CCC88	1040	new_1c90d0/fun_001ccc88.c	226
 0X1CD5F0	FillScreenRect__FiiiiffffP4GIFS	400	render/FillScreenRect__FiiiiffffP4GIFS.cpp	29
@@ -492,7 +493,8 @@ address	name	size	file	score
 0X1DF908	AddLaserBeam	120	game-stepguard/AddLaserBeam.cpp	15
 0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.c	13
 0X1E1488	AddSeqRecordBinocPos	136	splice-ref-crv/AddSeqRecordBinocPos.c	30
-0X1E1E30	StartNextSeqnodeRecord	6752	splice-ref-crv/StartNextSeqnodeRecord.cpp	9
+0X1E1E30	StartNextSeqnodeRecord	6752	splice-ref-crv/StartNextSeqnodeRecord.cpp	0
+0X1E3890	FSeqnodeRecordDone	3232	splice-ref-crv/FSeqnodeRecordDone.cpp	242
 0X1E4D40	GetSeqnodeObjectPosRad	376	splice-ref-crv/GetSeqnodeObjectPosRad.cpp	0
 0X1E5280	DetachSeqnodeObject	240	splice-ref-crv/DetachSeqnodeObject.cpp	18
 0X1E57A0	StartSeqnodeCameraMove	760	splice-ref-crv/StartSeqnodeCameraMove.c	219
@@ -720,7 +722,6 @@ address	name	size	file	score
 0X23F2D8	func_0023F2D8	256	sdk/fun_0023f2d8.cpp	42
 0X23F850	func_0023F850	232	sdk/fun_0023f850.c	23
 0X23FA40	func_0023FA40	920	sdk/fun_0023fa40.cpp	82
-0X23FE78	func_0023FE78	472	sdk/fun_0023fe78.cpp	61
 0X240050	func_00240050	376	sdk/fun_00240050.c	103
 0X240460	sceGsResetGraph	400	sdk/sceGsResetGraph.cpp	76
 0X2407A8	sceGsSetDefDBuff	664	sdk/sceGsSetDefDBuff.c	89

@@ -18,7 +18,7 @@ struct ParseWorkspace {
     ParseResult head;
     long long trailer;
 };
-char *func_0023F850(void);
+char *func_0023F850(unsigned);
 unsigned func_0023F938(char *, ParseState *);
 unsigned func_0023FA40(unsigned, ParseResult *, ParseState *, unsigned *);
 int func_0023F240(unsigned, int *);
@@ -30,7 +30,7 @@ ParseResult *func_0023FE78(unsigned limit, ParseResult *output)
     int skipped;
     ParseState state;
     ParseWorkspace workspace;
-    char *chunk = func_0023F850();
+    char *chunk = func_0023F850(limit);
     if (chunk == 0)
         return 0;
     unsigned cursor = func_0023F938(chunk, &state);

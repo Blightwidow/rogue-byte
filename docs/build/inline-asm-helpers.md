@@ -140,6 +140,24 @@ Findings:
 - Candidates still in drafts (each reproduced retail in one function or in near misses only): `SquaredLengthXy`, `SqrtX`,
   `VectorScaleX`, `QuadFromFloat`, `ScaleAddX`, `TransformByRows`, `DotProduct`, `VectorFromWord`.
 
+## Follow-up after wave A1 (2026-11-12)
+
+- Added to include/vu0inline.h, each measured on two functions: `TransformPoint` (vmulax/vmadday/vmaddaz/vmaddw.xyz with vf0w: point
+  times a 4x4 matrix, w = 1), `ScaleAddX` (`vadda ACC, vf0, a` + `vmaddx`: a + b * s.x), `VectorFromWord` (`qmtc2` from a word loaded
+  with `lw`), `VectorMultiplyXy` (`vmul.xy`), `SumXyInX` (`vaddy.x`). `SquaredLength` takes its input as input only (it was `"+j"`), so
+  a caller can reuse the vector; its two matched users still score 0.
+- **Accumulator chains.** ACC and Q have no C form and cannot be asm operands, so an instruction that writes ACC (`vmula`, `vadda`,
+  `vmadda`) stays in one helper with the instruction that reads ACC into a VU0 register, as `SquaredLength` and `SqrtX` already did. No
+  ACC value crosses a helper boundary. This is how "one such instruction each" reads for a chain.
+- **Ruling (Theo, 2026-11-12): `SquaredLengthXy`, a pair without ACC or Q, is allowed as one helper.** `vmul.xy` then `vaddy.x` (x*x +
+  y*y in lane x) are adjacent in all four retail users (FSeqnodeRecordDone, GoalGoto_Replan, func_00173A68, AdjustSlyNewXp); as two
+  helpers GCC schedules a load between them (AdjustSlyNewXp scores 7 split, 0 with the pair). The ground for a pair is the same as for a
+  chain: retail always has the instructions together, and splitting them is what moves the bytes. A new pair needs the same evidence
+  (adjacent in every retail user, measured on more than one function).
+- Not added, one user each so far: `VectorDivideX` (`vdiv Q, vf0w, s.x`; `vwaitq`; `vmulq`), `ScaleAddScaleX` (`vmulax` + `vmaddx`),
+  `vmax`/`vmini` clamps. `vcallms` + `vmove` (RenderGlobsetTree) is not a helper candidate: the microprogram reads fixed VU registers
+  (vf10-vf17), which needs register pins.
+
 ## Open questions
 
 - Which cutoff: 5% (sly1's top) or 10%?

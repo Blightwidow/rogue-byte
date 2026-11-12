@@ -2640,6 +2640,7 @@ address	name	size	file	whole_file	symbol
 0X188488	InitSly	300	joy-jt/InitSly.cpp		
 0X1885B8	LoadSlyFromBrx	80	joy-jt/LoadSlyFromBrx.cpp		
 0X188608	PostSlyLoad	848	joy-jt/PostSlyLoad.cpp		
+0X188CC8	AdjustSlyNewXp	432	joy-jt/AdjustSlyNewXp.cpp		
 0X188F20	HandleSlyMessage	1336	joy-jt/HandleSlyMessage.cpp		
 0X189458	FFaceSlyAimTarget	44	joy-jt/FFaceSlyAimTarget.cpp		
 0X189488	GetSlyExposeMode	108	joy-jt/GetSlyExposeMode.cpp		
@@ -5111,6 +5112,7 @@ address	name	size	file	whole_file	symbol
 0X23F938	func_0023F938	260	sdk/fun_0023f938.cpp		
 0X23FDD8	RegisterGlobalObject	40	sdk/RegisterGlobalObject.cpp		
 0X23FE00	func_0023FE00	120	sdk/fun_0023fe00.c		
+0X23FE78	func_0023FE78	472	sdk/fun_0023fe78.cpp		
 0X2401C8	func_002401C8	12	sdk/fun_002401c8.cpp		
 0X240328	func_00240328	16	sdk/fun_00240328.cpp		
 0X240600	sceGsPutDispEnv	188	sdk/sceGsPutDispEnv.cpp		
