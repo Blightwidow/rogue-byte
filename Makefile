@@ -97,6 +97,7 @@ src: ## Publish the matched functions from data/matching/src into src/
 
 blockers: ## After `make elf`: config/us/blockers.tsv, the permanent blockers (VU0, MMI, COP0, hand-written) that stay assembly (docs/build/vu0-mmi.md)
 	python3 -I scripts/classify_blockers.py
+	.venv/bin/python scripts/classify_blockers.py --guard
 
 report: ## After `make elf`: work/report.json (every function with its status, git-ignored), the input of `make nonmatching` and list_functions.py
 	.venv/bin/python scripts/gen_progress_report.py
