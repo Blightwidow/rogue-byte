@@ -1978,6 +1978,7 @@ address	name	size	file	whole_file	symbol
 0X157A50	func_00157A50	72	unsorted/fun_00157a50.cpp		
 0X157A98	func_00157A98	72	unsorted/fun_00157a98.cpp		
 0X157AE0	SortRenderRecords	524	dmas-dzg/SortRenderRecords.cpp		
+0X157CF0	DrawPassSetupCamera	688	dmas-dzg/DrawPassSetupCamera.cpp		
 0X158480	StaticInitSlotheaps_158480	308	dmas-dzg/dmas_dzg_157fa0.c	dmas-dzg/dmas_dzg_157fa0.c	StaticInitSlotheaps_158480
 0X1585B8	func_001585B8	32	dmas-dzg/dmas_dzg_157fa0.c	dmas-dzg/dmas_dzg_157fa0.c	func_001585B8
 0X1585D8	InitDzg	144	dmas-dzg/InitDzg_file.cpp	dmas-dzg/InitDzg_file.cpp	InitDzg
@@ -2156,6 +2157,7 @@ address	name	size	file	whole_file	symbol
 0X165170	SendTaskEvent	104	sensor-geom/SendTaskEvent.cpp		
 0X1651D8	RestartAtTaskOid	168	sensor-geom/RestartAtTaskOid.cpp		
 0X165280	func_00165280	696	sensor-geom/fun_00165280.cpp		
+0X165538	RestartAtTask	620	sensor-geom/RestartAtTask.cpp		
 0X1657A8	PostTaskJobEvent	40	sensor-geom/PostTaskJobEvent.c		
 0X1657D0	ApplyTaskState	656	sensor-geom/ApplyTaskState.cpp		
 0X165A60	SetTaskStateCascade	220	sensor-geom/SetTaskStateCascade.cpp		
@@ -2202,6 +2204,7 @@ address	name	size	file	whole_file	symbol
 0X169EB8	CopyGlobDmaChain	324	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	CopyGlobDmaChain
 0X16CAA0	LoadGlobStreamedFromBrx	1240	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	LoadGlobStreamedFromBrx
 0X16D698	func_0016D698	48	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D698
+0X16D6C8	func_0016D6C8	896	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016D6C8
 0X16DD58	func_0016DD58	1100	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016DD58
 0X16E1A8	func_0016E1A8	128	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E1A8
 0X16E228	func_0016E228	112	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	new_167320/LoadGlobsetBndTreeFromBrx_file.cpp	func_0016E228
@@ -2947,6 +2950,7 @@ address	name	size	file	whole_file	symbol
 0X1ACC18	MemcardMenu_SetDir	32	memcard-memory/MemcardMenu_SetDir.c		
 0X1ACC38	func_001ACC38	72	memcard-memory/fun_001acc38.cpp		
 0X1ACC80	MemcardMenu_KindOfState	68	memcard-memory/MemcardMenu_KindOfState.cpp		
+0X1ACCC8	MemcardMenu_Update	788	memcard-memory/memcard_memory_1accc8.cpp	memcard-memory/memcard_memory_1accc8.cpp	MemcardMenu_Update
 0X1AD168	func_001AD168	232	memcard-memory/memcard_memory_1accc8.cpp	memcard-memory/memcard_memory_1accc8.cpp	func_001AD168
 0X1AD250	func_001AD250	208	memcard-memory/memcard_memory_1accc8.cpp	memcard-memory/memcard_memory_1accc8.cpp	func_001AD250
 0X1AD320	SlotItem_Load	192	memcard-memory/memcard_memory_1accc8.cpp	memcard-memory/memcard_memory_1accc8.cpp	SlotItem_Load
@@ -3151,6 +3155,7 @@ address	name	size	file	whole_file	symbol
 0X1BADB8	func_001BADB8	52	mpeg-memcard/fun_001badb8.c		
 0X1BADF0	func_001BADF0	232	mpeg-memcard/fun_001badf0.cpp		
 0X1BAED8	SetStgSwitchHitter	64	mpeg-memcard/SetStgSwitchHitter.cpp		
+0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp		
 0X1BB918	AddStgSwitchClass	52	mpeg-memcard/AddStgSwitchClass.cpp		
 0X1BB950	AddStgSwitchStage	104	mpeg-memcard/AddStgSwitchStage.cpp		
 0X1BB9B8	InitStgSwitchPreStage	96	mpeg-memcard/InitStgSwitchPreStage.cpp		
@@ -4782,8 +4787,9 @@ address	name	size	file	whole_file	symbol
 0X226310	FIgnoreTankIntersection	92	new_225aa8/UpdateTankFire_file.cpp	new_225aa8/UpdateTankFire_file.cpp	FIgnoreTankIntersection
 0X2263F8	StaticInitSlotheaps_2263f8	308	new_225aa8/UpdateTankFire_file.cpp	new_225aa8/UpdateTankFire_file.cpp	StaticInitSlotheaps_2263f8
 0X226530	func_00226530	32	new_225aa8/UpdateTankFire_file.cpp	new_225aa8/UpdateTankFire_file.cpp	func_00226530
-0X226960	StaticInitSlotheaps_226960	308	new_225aa8/new_225aa8_226550.c	new_225aa8/new_225aa8_226550.c	StaticInitSlotheaps_226960
-0X226A98	func_00226A98	32	new_225aa8/new_225aa8_226550.c	new_225aa8/new_225aa8_226550.c	func_00226A98
+0X226550	UpdateSw	624	new_225aa8/new_225aa8_226550.cpp	new_225aa8/new_225aa8_226550.cpp	UpdateSw
+0X226960	StaticInitSlotheaps_226960	308	new_225aa8/new_225aa8_226550.cpp	new_225aa8/new_225aa8_226550.cpp	StaticInitSlotheaps_226960
+0X226A98	func_00226A98	32	new_225aa8/new_225aa8_226550.cpp	new_225aa8/new_225aa8_226550.cpp	func_00226A98
 0X226AB8	StaticInitSlotheaps_226ab8	308	new_225aa8/new_225aa8_226ab8.c	new_225aa8/new_225aa8_226ab8.c	StaticInitSlotheaps_226ab8
 0X226BF0	func_00226BF0	32	new_225aa8/new_225aa8_226ab8.c	new_225aa8/new_225aa8_226ab8.c	func_00226BF0
 0X226C10	__4VIFS	68	vifs/__4VIFS_file.cpp	vifs/__4VIFS_file.cpp	__4VIFS

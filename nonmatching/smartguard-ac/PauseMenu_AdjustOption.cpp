@@ -6,7 +6,7 @@ void SetSndbankVolumeFactor(SB *, int, int, float);
 void SeekBlotLabel(int, int, float);
 int UpdateJoyNavX(int);
 int UpdateJoyNavY(int);
-int func_0023E1C8(float);
+unsigned int func_0023E1C8(float);
 extern GSR D_002DEB80;
 extern SB D_003DD040;
 extern float D_002F6468;
@@ -15,6 +15,20 @@ extern float D_002C01C8;
 extern float D_002C01CC;
 extern char g_2bbb60[];
 extern float g_2ddf10;
+}
+static inline float ClampFloat(float value, float low, float high)
+{
+    if (value < low) return low;
+    if (value > high) return high;
+    return value;
+}
+static inline long SetLowBits(long reg, long bits)
+{
+    return (reg & ~0xFFFL) | bits;
+}
+static inline long SetHighBits(long reg, long bits)
+{
+    return (reg & ~0x7FF000L) | (bits << 12);
 }
 struct PAD { char pad[0x10]; int nav; };
 struct PAUSE { char pad[8]; int label; };
@@ -48,22 +62,17 @@ void PauseMenu_AdjustOption(PAD *pad, PAUSE *menu, int *pkind)
         float stickX = (float)UpdateJoyNavX(pad->nav);
         float stickY = (float)UpdateJoyNavY(pad->nav);
         if (stickX != 0.0f || stickY != 0.0f) {
-            float x = D_002F6468 + stickX * D_002C01C8;
-            if (x < 424.0f) x = 424.0f;
-            else if (x > 848.0f) x = 848.0f;
-            D_002F6468 = x;
-            float y = D_002F646C + stickY * D_002C01CC;
-            if (y < 10.0f) y = 10.0f;
-            else if (y > 90.0f) y = 90.0f;
-            D_002F646C = y;
-            long lo = func_0023E1C8(D_002F6468) & 0xFFF;
-            long a = (D_002DEB80.r40 & ~0xFFFL) | lo;
-            long b = (D_002DEB80.r18 & ~0xFFFL) | lo;
+            D_002F6468 = ClampFloat(D_002F6468 + stickX * D_002C01C8, 424.0f, 848.0f);
+            D_002F646C = ClampFloat(D_002F646C + stickY * D_002C01CC, 10.0f, 90.0f);
+            float y = D_002F646C;
+            unsigned int lo = func_0023E1C8(D_002F6468) & 0xFFF;
+            long a = SetLowBits(D_002DEB80.r40, lo);
+            long b = SetLowBits(D_002DEB80.r18, lo);
             D_002DEB80.r40 = a;
             D_002DEB80.r18 = b;
-            long hi = func_0023E1C8(y) & 0x7FE;
-            D_002DEB80.r40 = (a & ~0x7FF000L) | (hi << 12);
-            D_002DEB80.r18 = (b & ~0x7FF000L) | (hi << 12);
+            unsigned int hi = func_0023E1C8(y) & 0x7FE;
+            D_002DEB80.r40 = SetHighBits(a, hi);
+            D_002DEB80.r18 = SetHighBits(b, hi);
         }
         break;
     }

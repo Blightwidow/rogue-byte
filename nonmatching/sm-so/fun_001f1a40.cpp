@@ -1,3 +1,4 @@
+#include "sw.h"
 struct Pair_1F1A40 { int weight; int value; };
 struct Row_1F1A40 { int min; int max; float chance; Pair_1F1A40 pairs[6]; };
 struct Item_1F1A40 { int type; int a4; int a8; int count; };
@@ -11,17 +12,17 @@ extern "C" int FTaskComplete(int);
 extern "C" float GRandInRange(float, float);
 extern "C" int IEpisodeCurrent();
 extern "C" int NRandInRange(int, int);
-extern "C" Target_1F1A40 *PloFindSwObject_thunk(void *, int, int, int);
+extern "C" Target_1F1A40 *PloFindSwObject_thunk(SW *, int, int, int);
 extern "C" void *memset(void *, int, unsigned);
-extern char B_003DD490[];
+extern SW B_003DD490;
 extern Row_1F1A40 D_002C3748[];
 extern Row_1F1A40 D_002C3968[];
 extern "C" void func_001F1A40(Obj_1F1A40 *self) {
     Item_1F1A40 saved;
     ClearPrizeSpewer(self->owner);
     if (self->busy == 0) {
-        int episode = IEpisodeCurrent();
-        int row_index = (~episode != 0) ? episode : 1;
+        int row_index = IEpisodeCurrent();
+        if (row_index == -1) row_index = 1;
         Row_1F1A40 *row;
         if (FIsBasicDerivedFrom(self, 0x3A) != 0) {
             row = D_002C3968 + row_index;
@@ -30,7 +31,7 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
         }
         memset(&saved, 0, 0x10);
         if (self->itemCount > 0) {
-            Target_1F1A40 *target = PloFindSwObject_thunk(B_003DD490, 4, self->items[0].type, self->owner);
+            Target_1F1A40 *target = PloFindSwObject_thunk(&B_003DD490, 4, self->items[0].type, self->owner);
             if (target != 0 && FIsBasicDerivedFrom(target, 0x5C) != 0) {
                 int task = target->task;
                 if (task != 0 && FTaskComplete(task) != 0) {
@@ -62,8 +63,8 @@ extern "C" void func_001F1A40(Obj_1F1A40 *self) {
                 unsigned index = 0;
                 goto cond;
             again:
-                index += 1;
                 roll -= pick->weight;
+                index += 1;
                 if (index >= 6U) goto finished;
                 pick = &row->pairs[index];
             cond:

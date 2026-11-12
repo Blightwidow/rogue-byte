@@ -73,35 +73,20 @@ extern "C" s32 CploFindSwObjectsByClass(void *world, u32 flags, s32 cid, Owner *
         }
         break;
     default:
-        sw = (Sw *)owner;
-        if (kind != 1) {
-            if (kind != 0 && kind < 6) {
-                if (kind >= 3) {
-                    sw = (Sw *)owner;
-                    goto numbered;
-                }
-                goto plain;
-            }
-            goto plain;
-        } else {
-        numbered:
+        if (kind == 1 || (kind != 0 && kind < 6 && kind >= 3)) {
+            s32 number = 0;
+            sw = (Sw *)owner;
             st.list = sw;
-            st.keep = flags & 0x200;
-            if (sw != 0) {
-                s32 number = 1;
-                do {
-                    SetIndex(sw, number);
-                    sw = sw->next10;
-                    number++;
-                } while (sw != 0);
+            for (; sw != 0; sw = sw->next10) {
+                number++;
+                SetIndex(sw, number);
             }
+            st.keep = flags & 0x200;
             st.limit = 0x7FFFFFFF;
-            goto done;
+        } else {
+            st.list = 0;
+            st.keep = flags & 0x200;
         }
-    plain:
-        st.list = 0;
-        st.keep = flags & 0x200;
-    done:
         for (s32 index = cid; index < 0xC7 && FIsCidDerivedFrom(index, cid) != 0; index++) {
             PdlFromSwCid(world, index);
             sw = *PdlFromSwCid(world, index);
@@ -110,8 +95,8 @@ extern "C" s32 CploFindSwObjectsByClass(void *world, u32 flags, s32 cid, Owner *
                 sw = sw->next20;
             }
         }
-        if (st.list != 0) {
-            sw = st.list;
+        sw = st.list;
+        if (sw != 0) {
             do {
                 SetIndex(sw, 0);
                 sw = sw->next10;

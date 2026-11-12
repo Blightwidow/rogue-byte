@@ -1,4 +1,5 @@
 #include "sly2.h"
+#include "sw.h"
 struct V3_157CF0 { char xy[8]; int z; };
 struct V4_157CF0 { V3_157CF0 v; float w; };
 struct Cam_157CF0 { char pad0[0x4C]; float nearPlane; float farPlane; char pad1[0x60 - 0x54]; QW view[4]; char pad2[0x140 - 0xA0]; QW proj[4]; };
@@ -18,7 +19,7 @@ extern char B_002DF010[];
 extern char B_002DF800[];
 extern char B_002DF940[];
 extern char B_002DFA80[];
-extern char B_003DD490[];
+extern SW B_003DD490;
 extern QW B_003E12B8;
 extern char D_002C1F00[];
 extern char D_002C1F10[];
@@ -26,7 +27,7 @@ extern void *g_2dea4c;
 void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
     V4_157CF0 params[2];
     QW mat[8];
-    if (*(int *)(B_003DD490 + 0x3E38) != 0) {
+    if (B_003DD490.field_0x3E38 != 0) {
         if (g_2dea4c == (void *)B_002DEA50) {
             AddDmaCall__4DMASP2QW(arg0, B_002DF940);
         } else {
@@ -47,17 +48,13 @@ void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
     params[1].v = *(V3_157CF0 *)D_002C1F10;
     params[1].w = -ratio / scale;
     AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, 2, params, 0);
-    QW *mat1;
-    if (*(int *)(B_003DD490 + 0x3E38) != 0) {
-        int mode;
+    if (B_003DD490.field_0x3E38 != 0) {
         if (g_2dea4c == (void *)B_002DEA50) {
-            mode = 1;
+            bevy_camera_cm_14f768(&B_002DDF40, 1, 0, mat, mat + 4);
         } else {
-            mode = 2;
+            bevy_camera_cm_14f768(&B_002DDF40, 2, 0, mat, mat + 4);
         }
-        mat1 = (QW *)bevy_camera_cm_14f768(&B_002DDF40, arg1, 0, mat, mat + 4);
     } else {
-        mat1 = mat + 4;
         char *proj = (char *)&B_002DDF40 + 0x140;
         char *view = (char *)&B_002DDF40 + 0x60;
         mat[0] = *(QW *)((char *)&B_002DDF40 + 0x140);
@@ -70,7 +67,7 @@ void DrawPassSetupCamera(char *arg0, int arg1, int arg2) {
         mat[7] = *(QW *)(view + 0x30);
     }
     AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, 4, mat, 2);
-    AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, 4, mat1, 6);
+    AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, 4, mat + 4, 6);
     AddVifUnpack__4VIFS3UPKiPvi(arg0, 0xC, 1, &B_003E12B8, 0xA);
     AddVifBaseOffset__4VIFSii(arg0, 0x32, 0x1E7);
     EndDmaCnt__4DMAS(arg0);
