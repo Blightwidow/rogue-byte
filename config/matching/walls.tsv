@@ -25,3 +25,12 @@ address	name	class	reason	evidence
 0x14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	tie	pcm and icpr priority in global alloc (15 vs 16 refs)	2026-11-08 u02: .lreg dumps
 0x170548	AllocZpr	tie	zpr and head swapped between $s2 and $s3: global alloc priority 0.48 (6 refs over 25 insns) against 0.44 (4 over 18); the search draft that scored 10 dropped the FlushZprPage(zpr) argument and linked the chunk to itself	2026-11-08 w02: 13 try.py runs and -dg/-dl dumps
 0x2540B0	func_002540B0	toolchain	three hardware stores (0x10002010 via $at) in jal delay slots, same wall as sceMpegInit; Sony gcc scores 13 as SN did	survey gp 2026-11-12: nonmatching draft re-scored under Sony gcc 2.9
+0x244B68	atanf	toolchain	retail has nop;nop before every div.s and never puts div.s in a delay slot (ee-gcc -mhandle-ee-div-pipeline-bug, only in Sony 2.96/3.2); 2.9-991111b has no such option	2026-11-12 toolchain follow-up: all 27 SDK div.s padded, cc1 template scan, 2.96 scores 192 on acosf
+0x247330	__ieee754_acosf	toolchain	same div.s pipeline-bug padding (nop;nop, no div.s in delay slots); 9 left once simulated	2026-11-12 toolchain follow-up
+0x247760	__ieee754_asinf	toolchain	same div.s pipeline-bug padding; draft also differs in polynomial scheduling and bc1f/bc1fl	2026-11-12 toolchain follow-up
+0x247DE8	__ieee754_fmodf	toolchain	same div.s pipeline-bug padding (its div.s sits in the j $31 slot under 2.9)	2026-11-12 toolchain follow-up
+0x249990	__kernel_tanf	toolchain	same div.s pipeline-bug padding (two div.s in b slots under 2.9)	2026-11-12 toolchain follow-up
+0x247B00	__ieee754_atan2f	toolchain	same div.s pipeline-bug padding	2026-11-12 toolchain follow-up: retail div.s scan
+0x248038	__ieee754_powf	toolchain	same div.s pipeline-bug padding	2026-11-12 toolchain follow-up: retail div.s scan
+0x248CA8	__ieee754_sqrtf	toolchain	same div.s pipeline-bug padding	2026-11-12 toolchain follow-up: retail div.s scan
+0x237BD8	func_00237BD8	tie	sched2 tie: sd s0 and sd s1 both priority 12 with 3 dependents, insn order picks s1; retail needs lui s0 above 11; callee signatures checked; C, 991111-01 and dtls13010 unchanged	2026-11-12 toolchain follow-up: sched2 dump
