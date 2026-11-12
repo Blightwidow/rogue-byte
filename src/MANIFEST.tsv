@@ -3768,6 +3768,7 @@ address	name	size	file	whole_file	symbol
 0X1E1408	AddSeqRecordHideBinoc	32	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordHideBinoc
 0X1E1428	AddSeqRecordBinocAnchor	44	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordBinocAnchor
 0X1E1458	AddSeqRecordBinocFocus	44	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordBinocFocus
+0X1E1488	AddSeqRecordBinocPos	132	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordBinocPos
 0X1E1510	AddSeqRecordBinocZoom	48	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordBinocZoom
 0X1E1540	AddSeqRecordBinocCut	32	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordBinocCut
 0X1E1560	AddSeqRecordWaitForButton	76	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AddSeqRecordWaitForButton
@@ -3804,6 +3805,7 @@ address	name	size	file	whole_file	symbol
 0X1E4530	DtSeqnodeRecord	368	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	DtSeqnodeRecord
 0X1E4EB8	SetSeqnodeDrive	104	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	SetSeqnodeDrive
 0X1E4F20	func_001E4F20	224	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	func_001E4F20
+0X1E5000	func_001E5000	224	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	func_001E5000
 0X1E50E0	SetSeqnodeHandsOff	192	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	SetSeqnodeHandsOff
 0X1E51A0	AttachSeqnodeObject	224	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	AttachSeqnodeObject
 0X1E5370	ReleaseSeqnodeAnim	104	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	ReleaseSeqnodeAnim

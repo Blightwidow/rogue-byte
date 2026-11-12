@@ -3768,6 +3768,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E1408	AddSeqRecordHideBinoc	0X1E1BC8	same	0	ok
 0x1E1428	AddSeqRecordBinocAnchor	0X1E1BE8	same	0	ok
 0x1E1458	AddSeqRecordBinocFocus	0X1E1C18	same	0	ok
+0x1E1488	AddSeqRecordBinocPos	0X1E1C48	same	0	ok
 0x1E1510	AddSeqRecordBinocZoom	0X1E1CD0	same	0	ok
 0x1E1540	AddSeqRecordBinocCut	0X1E1D00	same	0	ok
 0x1E1560	AddSeqRecordWaitForButton	0X1E1D20	same	0	ok
@@ -3804,6 +3805,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E4530	DtSeqnodeRecord	0X1E4CF0	same	0	ok
 0x1E4EB8	SetSeqnodeDrive	0X1E5678	same	0	ok
 0x1E4F20	func_001E4F20	0X1E56E0	same	0	ok
+0x1E5000	func_001E5000	0X1E57C0	same	0	ok
 0x1E50E0	SetSeqnodeHandsOff	0X1E58A0	same	0	ok
 0x1E51A0	AttachSeqnodeObject	0X1E5960	identical	0	ok
 0x1E5370	ReleaseSeqnodeAnim	0X1E5B30	same	0	ok

@@ -611,7 +611,20 @@ extern "C" void AddSeqRecordBinocFocus(void *jsg, int value)
     *(int *)((char *)PjsgeAllocJsg_1E1458(jsg, 62) + 0x10) = value;
 }
 
-INCLUDE_ASM(0X1E1488);
+struct JSGE_1E1488 { char pad[0x10]; QW pos; float rot[3]; char pad2[4]; float extra; };
+
+extern "C" void AddSeqRecordBinocPos(JSG *jsg, QW pos, QW rot, float extra)
+{
+    JSGE_1E1488 *item = (JSGE_1E1488 *)PjsgeAllocJsg(jsg, 0x3F, 1);
+    float x = LaneX(rot) * 0.017453294f;
+    float y = LaneYInGeneralRegister(rot) * 0.017453294f;
+    float z = LaneZInGeneralRegister(rot) * 0.017453294f;
+    item->extra = extra;
+    item->pos = pos;
+    item->rot[0] = x;
+    item->rot[1] = y;
+    item->rot[2] = z;
+}
 
 extern "C" void *PjsgeAllocJsg_1E1510(void *, int, int);
 
@@ -1184,7 +1197,44 @@ extern "C" void func_001E4F20(SEQNODE_1E4F20 *pseqnode, TN *ptn)
     }
 }
 
-INCLUDE_ASM(0X1E5000);
+struct PO { char p0[0x1044]; int fLook; float rad; char p1[0x14]; QW look; QW dir; };
+
+struct SEQNODE_1E5000 { char pad0[0x24]; void *psubject; char pad1[0x4C]; void *plook; };
+
+extern "C" QW PosLoWorld(PO *);
+
+extern "C" void GetSeqnodeObjectPosRad(SEQNODE_1E5000 *, void *, QW *, void *);
+
+extern QW g_2a2dd0;
+
+extern "C" void func_001E5000(void *pseqnodeRaw, void *pso)
+{
+    SEQNODE_1E5000 *pseqnode = (SEQNODE_1E5000 *)pseqnodeRaw;
+    PO *ppo;
+    if (pseqnode->psubject != 0 && FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) != 0)
+        ppo = (PO *)pseqnode->psubject;
+    else
+        ppo = 0;
+    if (pseqnode->plook != 0) {
+        if (ppo != 0) {
+            ppo->fLook = 0;
+            QW look = ppo->look;
+            QW pos = PosLoWorld(ppo);
+            ppo->dir = VectorSub(look, pos);
+            ((int *)&ppo->dir)[2] = 0;
+        }
+        pseqnode->plook = 0;
+    }
+    if (pso != 0) {
+        if (ppo != 0) {
+            ppo->fLook = 1;
+            GetSeqnodeObjectPosRad(pseqnode, pso, &ppo->look, 0);
+            ((float *)&ppo->look)[2] += ppo->rad;
+            ppo->dir = g_2a2dd0;
+        }
+        pseqnode->plook = pso;
+    }
+}
 
 struct SEQ { char pad[0x38]; int on; int flags; };
 
@@ -1416,8 +1466,6 @@ extern "C" void SetClockRate(void *, int, float);
 extern "C" void SetSeqnodeDrive_1E5628(SEQNODE_1E5628 *, int, int);
 
 extern "C" void func_001E4F20_1E5628(SEQNODE_1E5628 *, int);
-
-extern "C" void func_001E5000(SEQNODE_1E5628 *, int);
 
 extern "C" void SetSeqnodeHandsOff_1E5628(SEQNODE_1E5628 *, int, int);
 
