@@ -1285,19 +1285,26 @@ class BlockerTests(unittest.TestCase):
         {'name': 'a', 'metadata': {'progress_categories': ['game']}, 'sections': [], 'functions': [
             {'name': 'f', 'size': '100', 'fuzzy_match_percent': 100.0}, {'name': 'g', 'size': '300'}, {'name': 'h', 'size': '100', 'fuzzy_match_percent': 40.0}]}]}
 
-    def test_a_blocker_counts_as_finished(self):
+    def test_a_final_blocker_leaves_the_count(self):
         import copy
         report = copy.deepcopy(self.REPORT)
-        counted = blockers_report.apply(report, {'g'})
-        self.assertEqual(counted, (1, 300))
-        self.assertEqual(report['measures']['matched_code'], '400')
-        self.assertEqual(report['measures']['matched_functions'], 2)
-        self.assertEqual(report['categories'][0]['measures']['matched_code'], '400')
+        left = blockers_report.apply(report, {'g': 'system'})
+        self.assertEqual(left, {'functions': 1, 'bytes': 300, 'kinds': {'system': 1}})
+        self.assertEqual((report['measures']['total_code'], report['measures']['matched_code']), ('200', '100'))
+        self.assertEqual((report['measures']['total_functions'], report['measures']['matched_functions']), (2, 1))
+        self.assertEqual(report['categories'][0]['measures']['total_code'], '200')
 
-    def test_a_function_already_matched_is_not_counted_again(self):
+    def test_a_blocker_left_in_the_report_stays_unmatched(self):
         import copy
         report = copy.deepcopy(self.REPORT)
-        self.assertEqual(blockers_report.apply(report, {'f'}), (0, 0))
+        self.assertEqual(blockers_report.apply(report, {})['functions'], 0)
+        self.assertEqual((report['measures']['total_code'], report['measures']['matched_code']), ('500', '100'))
+
+    def test_a_unit_of_only_final_blockers_is_complete(self):
+        import copy
+        report = copy.deepcopy(self.REPORT)
+        blockers_report.apply(report, {'f': 'vu', 'g': 'vu', 'h': 'vu'})
+        self.assertTrue(report['units'][0]['metadata']['complete'])
 
     def test_recompute_without_blockers_keeps_the_totals(self):
         import copy

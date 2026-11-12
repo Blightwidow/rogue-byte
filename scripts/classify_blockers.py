@@ -180,6 +180,23 @@ def names():
     return found
 
 
+# Kinds that are final: the function stays original assembly for good, so the reports leave it out of the count (scripts/blockers_report.py).
+# `mmi` is not here: some of those functions may still become C through the shared helpers, so they stay counted as unmatched until a survey rules.
+FINAL_KINDS = ('system', 'remnant', 'vu', 'handwritten')
+
+
+def final_names():
+    """{function name: kind} of the committed table's blockers whose kind is final (empty when it does not exist)."""
+    found = {}
+    if os.path.exists(TABLE):
+        with open(TABLE, encoding='utf-8') as handle:
+            for line in list(handle)[1:]:
+                fields = line.rstrip('\n').split('\t')
+                if len(fields) >= 4 and fields[3] in FINAL_KINDS:
+                    found[fields[1]] = fields[3]
+    return found
+
+
 def main():
     blockers, inline = build()
     text, inline_text = render(blockers), render(inline)
