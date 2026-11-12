@@ -42,6 +42,18 @@ static inline QW SqrtX(QW v)
     return root;
 }
 
+/* every lane of `v` times 1 / lane x of `divisor`: vdiv writes Q (vf0w is 1.0), vwaitq waits for it, vmulq.xyzw multiplies by it. Q has no C
+   form, so the three stay together, as in SqrtX; nothing in retail is scheduled inside the chain. The divisor is the second input
+   operand in the C but the first in the asm, as in VectorScaleX: GCC then allocates retail's registers (the divisor in the lowest). A float goes in
+   through VectorFromFloat or VectorFromWord. Retail users: BuildPlainBlend, AddLaserCustomXps, PresetTarmissAccel (near misses at 6, 67 and 46: the
+   chain and its operand registers match; retail's result takes the vector's register, this one the divisor's, and "0" ties make it worse). */
+static inline QW ScaleByReciprocalX(QW v, QW divisor)
+{
+    QW scaled;
+    asm("vdiv $Q, $vf0w, %1x\n\tvwaitq\n\tvmulq.xyzw %0, %2, $Q" : "=j"(scaled) : "j"(divisor), "j"(v));
+    return scaled;
+}
+
 /* vmulx.xyzw: every lane of `v` times lane x of `s` (s from VectorFromFloat or QuadFromFloat for a float). The scale is the first
    input operand, as GCC then allocates retail's registers (RefOpDiv) */
 static inline QW VectorScaleX(QW v, QW s)

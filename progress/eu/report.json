@@ -13482,9 +13482,9 @@
     {
      "name": "BuildPlainBlend",
      "size": "332",
+     "fuzzy_match_percent": 0.0,
      "metadata": {},
-     "address": "2056",
-     "fuzzy_match_percent": 0.0
+     "address": "2056"
     },
     {
      "name": "StaticInitSlotheaps_1a09c0",

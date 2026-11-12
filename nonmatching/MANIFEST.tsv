@@ -323,6 +323,7 @@ address	name	size	file	score
 0X19F7D0	ScoreSafePoint	808	jp/ScoreSafePoint.cpp	166
 0X19FC30	UpdateJtSafePoints	256	jp-stepzap/UpdateJtSafePoints.c	46
 0X19FEB0	AddSafePointOnGeom	408	jp-stepzap/AddSafePointOnGeom.c	102
+0X1A0300	BuildPlainBlend	336	jp-stepzap/BuildPlainBlend.cpp	6
 0X1A0450	SolvePlainBlendWeights	720	jp-stepzap/SolvePlainBlendWeights.c	163
 0X1A0720	SetJtGoalVelocityFromStick	672	jp-stepzap/SetJtGoalVelocityFromStick.c	166
 0X1A16C8	ZapKnockback	728	new_1a1148/ZapKnockback.c	177
