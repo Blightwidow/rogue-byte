@@ -268,6 +268,17 @@ class NonMatchingTests(unittest.TestCase):
         self.assertEqual(export_nonmatching.choose([(None, 'a.c', 'c'), (12, 'b.c', 'c')])[1], 'b.c')
         self.assertIsNone(export_nonmatching.choose([(None, 'a.c', 'c')]))
 
+    def test_flagged_candidate_loses_to_an_honest_one(self):
+        candidates = [(12, 'hand.cpp', 'c++'), (4, 'wrong_call.c', 'c')]
+        self.assertEqual(export_nonmatching.choose(candidates, {'wrong_call.c'})[1], 'hand.cpp')
+
+    def test_flagged_candidate_kept_when_alone(self):
+        self.assertEqual(export_nonmatching.choose([(4, 'wrong_call.c', 'c')], {'wrong_call.c'})[1], 'wrong_call.c')
+
+    def test_flagged_candidate_kept_when_honest_one_does_not_compile(self):
+        candidates = [(None, 'hand.cpp', 'c++'), (4, 'wrong_call.c', 'c')]
+        self.assertEqual(export_nonmatching.choose(candidates, {'wrong_call.c'})[1], 'wrong_call.c')
+
     def test_names_become_file_names(self):
         self.assertEqual(export_nonmatching.file_name('func_001B2940'), 'fun_001b2940')
         self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')

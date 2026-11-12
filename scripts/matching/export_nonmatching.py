@@ -7,7 +7,9 @@ Candidates: a hand-written draft in data/matching/src/fn/<ADDRESS>.cpp and the b
 A candidate that holds a construct AGENTS.md bans (scripts/matching/record.py `scan`: volatile on ordinary data, register pins, an empty asm,
 mfc1 asm) is left out, so a published score never leans on a trick. Each is scored with scripts/matching/try.py (instructions that differ
 from the retail function; 0 would be a match) and the lowest score wins, a hand-written draft on a tie. Sources that do not compile are left
-out. The registry (data/matching/functions.tsv) gets that score as `best` for every unmatched function with a published source, so an
+out. A candidate that scripts/matching/check_calls.py flags (a callee declared with another argument count than src/ agrees on, a struct
+global read as bytes) loses to any unflagged one that compiles, whatever the scores: a wrong call can score lower than the honest draft and
+would then steer the workers and the search. It is published only when no honest candidate compiles. The registry (data/matching/functions.tsv) gets that score as `best` for every unmatched function with a published source, so an
 honest rewrite of an inflated draft lowers or raises it to the truth. The files are never part of the image: they only give
 objdiff something to compare (`make objdiff`), so the progress report counts partial work. Run from the repository root after
 `make elf`; needs the compiler (see docs/build/compiler-identification.md) and your executable."""
@@ -22,6 +24,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import check_calls  # noqa: E402
 from progress import Progress  # noqa: E402
 from record import scan  # noqa: E402  (what AGENTS.md bans because it only steers the compiler)
 
@@ -29,10 +32,13 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 OUTPUT = 'nonmatching'
 
 
-def choose(candidates):
-    """The (score, path, language) with the lowest score; the first wins a tie (so list a hand-written draft first)."""
+def choose(candidates, flagged=()):
+    """The (score, path, language) with the lowest score; the first wins a tie (so list a hand-written draft first). A path in
+    `flagged` (check_calls disagrees with its declarations) is chosen only when no unflagged candidate compiles."""
     scored = [candidate for candidate in candidates if candidate[0] is not None]
-    return min(scored, key=lambda candidate: candidate[0]) if scored else None
+    honest = [candidate for candidate in scored if candidate[1] not in flagged]
+    pool = honest or scored
+    return min(pool, key=lambda candidate: candidate[0]) if pool else None
 
 
 def directory_name(module):
@@ -51,14 +57,19 @@ def score(address, path, language):
 
 
 TRACKER = []  # the Progress of main(), for the worker threads
+PASSED_OVER = []  # functions whose lowest score came from a flagged candidate, an honest one published instead
 
 
 def evaluate(job):
-    address, candidates = job
+    address, candidates, flagged = job
     tracker = TRACKER[0] if TRACKER else None
     if tracker:
         tracker.begin(f'{address:06X}')
-    best = choose([(score(address, path, language), path, language) for path, language in candidates])
+    scored = [(score(address, path, language), path, language) for path, language in candidates]
+    best = choose(scored, flagged)
+    lowest = choose(scored)
+    if best and lowest and lowest[1] != best[1]:
+        PASSED_OVER.append(address)
     if tracker:
         tracker.tick(f'{address:06X}: {best[0] if best else None}', f'{address:06X}')
     return address, best
@@ -73,6 +84,8 @@ def main():
     report = json.load(open(os.path.join('work', 'report.json')))
     swept = {address: (path, 'c' if path.endswith('.c') else 'c++') for address, _, _, path in json.load(open(arguments.sweep)) if path}
     jobs, functions, banned_dropped = [], {}, []
+    arities, types = check_calls.learn((open(path, errors='ignore').read(), path.endswith('.c'))
+                                       for path in check_calls.sources(os.path.join(ROOT, 'src')))
     fragments = {int(row['address'], 16) for row in csv.DictReader(open(os.path.join('data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t')
                  if row['status'] == 'fragment'}  # words between two functions: no source to publish for them
     for function in report['functions']:
@@ -80,15 +93,18 @@ def main():
         if function['status'] == 'c' or function['module'] == 'sdk' or address in fragments:
             continue
         functions[address] = function
-        candidates = []
+        candidates, flagged = [], set()
         hand = os.path.join('data', 'matching', 'src', 'fn', f'{address:06X}.cpp')
         for candidate in ([(hand, 'c++')] if os.path.exists(hand) else []) + ([swept[address]] if address in swept else []):
-            if scan(open(candidate[0], encoding='utf-8').read()):
+            text = open(candidate[0], encoding='utf-8').read()
+            if scan(text):
                 banned_dropped.append(address)
-            else:
-                candidates.append(candidate)
+                continue
+            candidates.append(candidate)
+            if check_calls.flags(text, candidate[1] == 'c', function['name'], arities, types):
+                flagged.add(candidate[0])
         if candidates:
-            jobs.append((address, candidates))
+            jobs.append((address, candidates, flagged))
     progress = Progress(len(jobs), 'nonmatching')
     TRACKER.append(progress)
     results = []
@@ -133,6 +149,7 @@ def main():
             writer.writerows(rows)
         print(f'registry: best set from the published source for {changed} functions')
     print(f'{len(banned_dropped)} candidates left out for a banned construct')
+    print(f'{len(PASSED_OVER)} functions publish an honest candidate over a lower-scoring one that check_calls flags')
     print(f'{len(manifest)} of {len(functions)} unmatched functions have a source that compiles -> {OUTPUT}/')
 
 
