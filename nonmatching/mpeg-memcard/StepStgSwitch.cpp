@@ -33,10 +33,9 @@ void StepStgSwitch(STGSWITCH *sw, int id)
             }
         }
     }
-    int cur = sw->cur;
-    if (cur != target) {
-        if (cur < target) {
-            int forward = cur;
+    if (sw->cur != target) {
+        if (sw->cur < target) {
+            int forward = sw->cur;
             do {
                 sw->cur = forward + 1;
                 NODE *node = &sw->nodes[forward];
@@ -59,10 +58,10 @@ void StepStgSwitch(STGSWITCH *sw, int id)
                 }
                 forward = sw->cur;
             } while (forward < target);
-        } else if (target < cur) {
+        } else if (target < sw->cur) {
             do {
-                sw->cur = cur - 1;
-                NODE *node = (__typeof__(&(sw->nodes)[0]))((cur - 1) * sizeof((sw->nodes)[0]) + (unsigned)(sw->nodes));
+                sw->cur = sw->cur - 1;
+                NODE *node = &sw->nodes[sw->cur];
                 int index = node->count;
                 while (index-- > 0) {
                     ENT *ent = &node->ents[index];
@@ -81,8 +80,7 @@ void StepStgSwitch(STGSWITCH *sw, int id)
                     case 5: func_001F6AC8(sw, ent->arg, obj); break;
                     }
                 }
-                cur = sw->cur;
-            } while (target < cur);
+            } while (target < sw->cur);
         }
         sw->flag = 0;
     }

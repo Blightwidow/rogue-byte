@@ -27,8 +27,8 @@ void LoadStgSwitchFromBrx(STGSWITCH *pstgsw, void *pbis)
     preq->cbAlign = 0x10;
     pstgsw->table = PvAllocSwCopyImpl__FiPv(preq, pstgsw->table);
     if (pstgsw->cGroup != 0) {
-        req.cb = pstgsw->cGroup * 0x10 + 0x10;
         preq->cbAlign = 0x10;
+        req.cb = pstgsw->cGroup * 0x10 + 0x10;
         pstgsw->groups = (SWITCHGROUP *)((char *)PvAllocSwCopyImpl__FiPv(preq, (char *)pstgsw->groups - 0x10) + 0x10);
         for (int iGroup = -1; iGroup < pstgsw->cGroup; iGroup++) {
             SWITCHGROUP *pgroup = pstgsw->groups + iGroup;
@@ -38,9 +38,9 @@ void LoadStgSwitchFromBrx(STGSWITCH *pstgsw, void *pbis)
             for (int iEntry = 0; iEntry < pgroup->count; iEntry++) {
                 SWITCHENTRY *pentry = pgroup->entries + iEntry;
                 if (pentry->kind == 0xC) {
+                    pentry->pv = PvAllocSwCopyImpl__FiPv(preq, pentry->pv);
                     req.cb = 8;
                     preq->cbAlign = 0x10;
-                    pentry->pv = PvAllocSwCopyImpl__FiPv(preq, pentry->pv);
                 }
             }
         }

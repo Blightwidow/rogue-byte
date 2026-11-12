@@ -11,7 +11,7 @@ struct Out { char p0[0x28]; float dot; char p1[0x14]; float len; char p2[0x2C]; 
 extern "C" {
 void GetNormalVectors__FP6VECTORN30(QW, QW, QW, QW *);
 s32 __as__6VECTORG9VU_VECTOR(QW *, QW);
-void BuildJmpEdgeProbes(QW *, JT *, M4 *, int);
+void BuildJmpEdgeProbes(JT *, JT *, M4 *, int);
 int ClsgClipEdgeToObject(Coll *, QW, QW, int, Out *);
 extern QW g_2a2db0;
 extern QW g_2a2dc0;
@@ -31,14 +31,14 @@ int FCheckJtEdgeNormal(JT *jt, QW pos, QW normal)
     ((int *)pmat)[0x4C / 4 - 0xC] = 0;
     ((int *)pmat)[0x3C / 4 - 0xC] = 0;
     ((float *)pmat)[0x3C / 4 - 0xC] = 1.0f;
-    BuildJmpEdgeProbes(l.probe, jt, pmat, 0x16);
+    BuildJmpEdgeProbes(jt, jt, pmat, 0x16);
     for (Node *node = jt->owner->holder->head; node; node = node->next) {
         if (node->obj->body->flags & 4) continue;
         QW *pa = l.probe;
         for (unsigned i = 0; i < 0x16; i += 2, pa += 2) {
             for (Coll *coll = node->obj->body->head; coll; coll = coll->next) {
                 if (coll->flags & (0x8000L << 33)) continue;
-                if (ClsgClipEdgeToObject(coll, *pa, l.probe[i + 1], 1, &l.out) > 0) {
+                if (ClsgClipEdgeToObject(coll, l.probe[i + 1], *pa, 1, &l.out) > 0) {
                     if (i < 4) return 0;
                     if (l.out.len == 0.0f) return 0;
                     if (l.out.dot > 0.7f) hits++;

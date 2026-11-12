@@ -302,7 +302,7 @@ address	name	size	file	score
 0X1991A0	func_001991A0	248	new_1942f0/fun_001991a0.c	54
 0X199298	func_00199298	368	new_1942f0/fun_00199298.cpp	31
 0X1995D8	BuildJmpEdgeProbes	512	jump/BuildJmpEdgeProbes.c	123
-0X1997D8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	504	jump/FCheckJtEdgeNormal__FP2JTP6VECTORT1.cpp	41
+0X1997D8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	504	jump/FCheckJtEdgeNormal__FP2JTP6VECTORT1.cpp	39
 0X19A098	FJtStuck	872	jump/FJtStuck.c	205
 0X19A4A0	MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1	688	stephide_19a4a0/MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1.c	162
 0X19A750	GetJmpLaunchVelocity	776	stephide_19a4a0/GetJmpLaunchVelocity.c	183
@@ -343,7 +343,7 @@ address	name	size	file	score
 0X1A7C18	PxpAdd	504	stepguard-sw/PxpAdd.c	101
 0X1A7E60	RecalcSwXpPos	352	sw-mark/RecalcSwXpPos.c	69
 0X1A81F8	ClsgClipSoBspEdges	536	sw-mark/ClsgClipSoBspEdges.cpp	16
-0X1A8410	CategorizeAlsg__FiP3LSGPiT2PP3LSGT4	680	mark/CategorizeAlsg__FiP3LSGPiT2PP3LSGT4.cpp	46
+0X1A8410	CategorizeAlsg__FiP3LSGPiT2PP3LSGT4	680	mark/CategorizeAlsg__FiP3LSGPiT2PP3LSGT4.cpp	44
 0X1A86B8	CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG	312	mark/CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG.cpp	44
 0X1A9108	bevy_physics_sphere_1a9108	704	mark/bevy_physics_sphere_1a9108.c	170
 0X1A9B28	MarkSoContactsSphereBsp	280	mark-memcard/MarkSoContactsSphereBsp.c	65
@@ -388,8 +388,8 @@ address	name	size	file	score
 0X1B98A0	FMurrayCanUseGadget	360	mpeg-memcard/FMurrayCanUseGadget.cpp	10
 0X1BA018	func_001BA018	160	mpeg-memcard/fun_001ba018.c	34
 0X1BA608	UpdateZoneScriptBeh	544	mpeg-memcard/UpdateZoneScriptBeh.c	94
-0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	43
-0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp	16
+0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	38
+0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp	11
 0X1BB250	func_001BB250	432	mpeg-memcard/fun_001bb250.cpp	82
 0X1BB400	RunStgSwitch	584	mpeg-memcard/RunStgSwitch.c	101
 0X1BB648	RunStgSwitchStage	720	mpeg-memcard/RunStgSwitchStage.c	100
@@ -469,7 +469,7 @@ address	name	size	file	score
 0X1D72A8	UpdateHub	368	new_1d7268/UpdateHub.cpp	77
 0X1D82B8	NPercentCompleteSaveData	504	new_1d7780/NPercentCompleteSaveData.cpp	65
 0X1D8B20	func_001D8B20	240	new_1d7780/fun_001d8b20.cpp	16
-0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	36
+0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	35
 0X1D8FF8	ApplyOptionsFromSave	648	splice-pair-jump/ApplyOptionsFromSave.cpp	19
 0X1D9968	InitMeter	456	splice-gc-wipe/InitMeter.cpp	73
 0X1D9B60	SetMeterState	664	splice-gc-wipe/SetMeterState.c	128
