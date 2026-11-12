@@ -42,36 +42,35 @@ extern "C" void func_001F2500(Node1F2500 *self)
         Node1F2500 *walker = self;
         Slot1F2500 *slot = self->slot;
         if (slot == 0) {
-            Node1F2500 *parent = walker->parent;
 loop:
+            Node1F2500 *parent = walker->parent;
+            s64 word = 0;
             if (parent != 0) {
-                s64 word = (walker->packed << 32) >> 32;
-                if ((((s32)(word << 8)) >> 28) != 1) {
-                    walker = parent;
-                    slot = walker->slot;
-                    if (slot == 0) {
-                        parent = walker->parent;
-                        goto loop;
-                    }
-                    self->slot = slot;
-                    goto increment;
+                word = walker->packed;
+            }
+            if (parent == 0 || (((s32)((word << 32) >> 32) << 8) >> 28) == 1) {
+                Slot1F2500 *fresh = (Slot1F2500 *)PvAllocSlotheapImpl(&B_003E12D4);
+                walker->slot = fresh;
+                self->slot = fresh;
+                fresh->position = (char *)(walker->anchor + 0x70);
+                self->slot->refs = self->slot->refs + 1;
+                self->slot->radius = self->radiusValue;
+                self->slot->owner = self;
+                if (walker == self) {
+                    goto done;
                 }
-            }
-            slot = (Slot1F2500 *)PvAllocSlotheapImpl(&B_003E12D4);
-            slot->position = (char *)(walker->anchor + 0x70);
-            self->slot->refs = self->slot->refs + 1;
-            self->slot->radius = self->radiusValue;
-            self->slot->owner = self;
-            walker->slot = slot;
-            self->slot = slot;
-            if (walker != self) {
                 slot = self->slot;
-                goto increment;
+            } else {
+                walker = parent;
+                slot = walker->slot;
+                if (slot == 0) {
+                    goto loop;
+                }
+                self->slot = slot;
             }
-        } else {
-increment:
-            slot->refs = slot->refs + 1;
         }
+        slot->refs = slot->refs + 1;
+done:
         QW world = PosLoWorld(self);
         Slot1F2500 *held = self->slot;
         QW offset = VectorSub(world, *(QW *)held->position);

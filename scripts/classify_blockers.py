@@ -39,7 +39,7 @@ ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 INSTRUCTION = re.compile(r'^\s*/\*[^*]*\*/\s+(\w[\w.]*)')
 
 VU = re.compile(r'^(lqc2|sqc2|qmtc2|qmfc2|cfc2|ctc2|v(?:add|sub|mul|madd|msub|max|mini|opmsub|opmula|div|sqrt|rsqrt|abs|ftoi|itof|clip|mr32|move|nop|ior|iaddi|lqi|sqi|callms|lq|sq)\w*)(?:\.\w+)?$')
-MMI = re.compile(r'^p(?:extuw|extlw|cpyld|cpyud|extub|extlb|extuh|extlh|ackw|rot3w|sllw|srlw|raw|addw|subw|maxw|minw|and|xor|nor|mfhl|mthl)$')
+MMI = re.compile(r'^(?:p(?:extuw|extlw|cpyld|cpyud|extub|extlb|extuh|extlh|ackw|rot3w|sllw|srlw|raw|addw|subw|maxw|minw|and|xor|nor|mfhl|mthl|addh|subh|sllh|srlh|srah|cgth|maxh|minh|ackb|cpyh|adduw|subb)|qfsrv|mtsab|mtsah)$')  # halfword, byte and funnel-shift forms added 2026-11-12: unmatched code only, never in a matched function
 SYSTEM = re.compile(r'^(mfc0|mtc0|ei|di|sync|eret|cache|syscall|tlbr|tlbwi|tlbwr|tlbp)$')  # not `break`: the compiler emits it for a division by zero
 GLOBAL_POINTER = re.compile(r'\$gp\b')
 
