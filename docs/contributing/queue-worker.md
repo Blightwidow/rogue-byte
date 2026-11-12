@@ -11,11 +11,15 @@ ends early leaves free functions in the queue.
 1. Claim: `python3 scripts/matching/claim.py take $WAVE $ID $COUNT --of $N`. It prints one packet per function: asm, best draft and its diff,
    nearest matched sources, your scratch folder, and the exact `try.py` command. Claim again until `done` says `DONE`. `QUEUE EMPTY` also
    counts as done. `take` claims: to look at the queue without claiming, use `claim.py status WAVE`.
-2. Step 0, one minute: a function that needs VU0 macro code, MMI, a lane move to an FP register or COP0 is a wall (inline asm is not
-   allowed, AGENTS.md): say `SKIP wall <semantics>`, one line of what it computes ("4x4 matrix times vector, w ignored"; add "FPU" when
-   the result depends on PS2 FPU behaviour: no denormals, infinities or NaNs), and take the next function. The lead records it in
-   `config/us/blocker_notes.tsv`. A `nop` that no wording of the C gives is not a wall by itself: the
-   build's assembler pads short loops like retail (docs/build/assembler.md), so look for the real cause first.
+2. Step 0, one minute: a function that needs MMI, a lane move, COP0 or VU0 code is a wall only when no shared helper of
+   `include/vu0inline.h` / `include/ps2inline.h` gives the instructions (inline asm of your own is never allowed, AGENTS.md). Then say
+   `SKIP need-helper <instructions>`, one line of what it computes ("4x4 matrix times vector, w ignored"; add "FPU" when the result
+   depends on PS2 FPU behaviour: no denormals, infinities or NaNs), and take the next function; the lead records it in
+   `config/us/blocker_notes.tsv`. Otherwise use the helpers and run `try.py` with `TRY_VU0=1`. Two VU0 tricks, measured
+   (docs/contributing/matching.md "VU0 near misses"): a scalar quad that retail stores to the stack is a `union VU_SCALE { QW q; VECTOR v; }`
+   local, and a commutative helper's operand order decides register sharing (swap it first at score 2 to 4). A `nop` that no wording
+   of the C gives is not a wall by itself: the build's assembler pads short loops like retail (docs/build/assembler.md), so look for
+   the real cause first.
 3. A packet line `parked source` (`data/matching/cleanup-pending/` or `asm-archive/`) is a source that once scored 0: copy it to your scratch folder
    and start there. A cleanup-pending one only needs its raw `M2C_UNK`/`M2C_FIELD` offsets turned into named struct fields (or its padding local
    removed) with the score still 0; an asm-archive one needs the plain C its inline asm or register pin stood in for.
