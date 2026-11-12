@@ -1859,6 +1859,8 @@ address	name	size	file	whole_file	symbol
 0X150EA0	func_00150EA0	68	tn-rip/fun_00150ea0.c		
 0X150EE8	func_00150EE8	8	tn-rip/fun_00150ee8.c		
 0X150EF0	bevy_classes_k30_cam_150ef0	104	tn-rip/bevy_classes_k30_cam_150ef0.cpp		
+0X150F58	func_00150F58	188	tn-rip/fun_00150f58.cpp		
+0X151018	func_00151018	188	tn-rip/fun_00151018.cpp		
 0X1510D8	func_001510D8	88	tn-rip/fun_001510d8.cpp		
 0X151130	bevy_classes_k30_cam_deactivate_2	212	tn-rip/bevy_classes_k30_cam_deactivate_2.cpp		
 0X151208	func_00151208	52	tn-rip/fun_00151208.c		

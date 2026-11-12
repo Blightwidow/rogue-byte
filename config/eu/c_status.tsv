@@ -1859,6 +1859,8 @@ us_address	name	other_address	pair	score	addresses
 0x150EA0	func_00150EA0	0X150EC8	same	0	ok
 0x150EE8	func_00150EE8	0X150F10	gap	0	ok
 0x150EF0	bevy_classes_k30_cam_150ef0	0X150F18	same	0	ok
+0x150F58	func_00150F58	0X150F80	same	0	ok
+0x151018	func_00151018	0X151040	same	0	ok
 0x1510D8	func_001510D8	0X151100	identical	0	ok
 0x151130	bevy_classes_k30_cam_deactivate_2	0X151158	same	0	ok
 0x151208	func_00151208	0X151230	same	0	ok

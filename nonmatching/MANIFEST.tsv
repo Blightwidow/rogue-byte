@@ -156,8 +156,6 @@ address	name	size	file	score
 0X14FE58	PosCplookAnchor	112	tn-rip/PosCplookAnchor.c	28
 0X14FEC8	PosCplookEye	112	tn-rip/PosCplookEye.c	18
 0X14FF38	ActivateCplook	552	tn-rip/ActivateCplook.cpp	80
-0X150F58	func_00150F58	192	tn-rip/fun_00150f58.c	41
-0X151018	func_00151018	192	tn-rip/fun_00151018.c	41
 0X151340	bevy_camera_looks_update	720	tn-rip/bevy_camera_looks_update.c	179
 0X151700	bevy_camera_policy_update	456	tn-rip/bevy_camera_policy_update.c	140
 0X151950	UpdateCpattach	672	rip/UpdateCpattach.c	161

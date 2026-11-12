@@ -41,6 +41,10 @@ Seen here (SN GCC 2.95.3 build 1.36, `-O2 -G0`):
 - **Branch sense.** Inverting the test text (`x >= 0 {A} else {B}` against `x < 0 {B} else {A}`) changes which arm falls through and
   how the delay slot is filled. Try it before anything else.
 - **A hazard `nop` that is missing** is the assembler, not the source: see [assembler.md](../build/assembler.md).
+- **A constant GCC keeps in a saved FPR across several calls** (frame 0x50 where retail's is 0x40, retail rebuilding `lui`/`ori`/`mtc1` at each
+  call). Wrap the repeated call in a `static inline` function that holds the constant (`static inline int Near(float a, float b) { return
+  FFloatsNear__Ffff(a, b, 0.0001f); }`, as `UpdateStreamAmbPositional` does): each inlined body is a block of its own to CSE. It took func_00150F58 (score 8)
+  and func_00151018 (7) to 0, and `PresetTarmissAccel` from 63 to 46; the draft that named this a wall was wrong.
 - **A callee's argument that is already in place.** A callee declared `f(void)` that reads `$a0` matches in its own bytes, but the
   caller then compiles differently even when the argument is already in `$a0` (no move shows): the dependence graph changes and with it
   the prologue's save order. 0x23FE78 differed only in `sd s6`/`sd s7` order until `func_0023F850(limit)` got its real parameter
