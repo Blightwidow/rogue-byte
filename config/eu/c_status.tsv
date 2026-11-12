@@ -2331,6 +2331,7 @@ us_address	name	other_address	pair	score	addresses
 0x1749C0	GoalAnim_SetState	0X174948	same	0	ok
 0x174B28	func_00174B28	0X174AB0	same	0	ok
 0x174B68	GoalAnim_Update	0X174AF0	same	0	ok
+0x174BD0	GoalAnim_FHandleMessage	0X174B58	same	0	ok
 0x174EA0	func_00174EA0	0X174E28	same	0	ok
 0x174FB8	FGoalAnimDone	0X174F40	gap	0	ok
 0x174FC8	func_00174FC8	0X174F50	same	0	ok
@@ -4582,6 +4583,7 @@ us_address	name	other_address	pair	score	addresses
 0x20F948	FFilterOxa	0X210140	identical	0	ok
 0x20FA10	FFilterOxaBasic	0X210208	identical	0	ok
 0x20FA50	FFilterHitTestDefault	0X210248	same	0	ok
+0x20FAA0	bevy_camera_follow_push_out	0X210298	same	0	ok
 0x20FDC8	ExtractUniqueSosFromGeoms	0X2105C0	same	0	ok
 0x20FEC0	FAddRsmg__FP4RSMGiPii3OIDN24	0X2106B8	identical	0	ok
 0x20FF70	TriggerRsmg	0X210768	same	0	ok

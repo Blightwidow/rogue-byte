@@ -135,4 +135,66 @@ static inline QW VectorFromWord(u32 word)
     return quad;
 }
 
+/* vmax.xyz / vmini.xyz: per-lane maximum or minimum of x, y and z; lane w keeps the destination register's previous contents, so the result is
+   only read through xyz. A box built from two points is a VectorMaxXyz and a VectorMiniXyz over them (FMatchJtXmg, CobstacleFindPathzoneBox,
+   bevy_camera_follow_push_out) */
+static inline QW VectorMaxXyz(QW first, QW second)
+{
+    QW maximum;
+    asm("vmax.xyz %0, %1, %2" : "=j"(maximum) : "j"(first), "j"(second));
+    return maximum;
+}
+
+static inline QW VectorMiniXyz(QW first, QW second)
+{
+    QW minimum;
+    asm("vmini.xyz %0, %1, %2" : "=j"(minimum) : "j"(first), "j"(second));
+    return minimum;
+}
+
+/* x*x' + y*y' + z*z' of two vectors in lane x: SquaredLength with two operands, the same four instructions through ACC (AddStepCustomXps,
+   FillDzgDz, UpdateBombCustomXps, func_001B6DA8, func_0021BD18, func_001467A0). Read the result with LaneX, or VectorWordX for a store */
+static inline QW DotProduct(QW first, QW second)
+{
+    QW products, one;
+    asm("vmul.xyz %0, %2, %3\n\tvaddw.x %1, $vf0, $vf0w\n\tvadday.x $ACC, %0, %0y\n\tvmaddz.x %0, %1, %0z" : "=j"(products), "=&j"(one) : "j"(first), "j"(second));
+    return products;
+}
+
+/* the cross product of two vectors in xyz: vopmula.xyz fills ACC, vopmsub.xyz reads it, so the pair stays in one asm (Obstacle_SetConvexHull,
+   func_001F6C08). The second operand is read by both instructions */
+static inline QW CrossProduct(QW first, QW second)
+{
+    QW product;
+    asm("vopmula.xyz $ACC, %1, %2\n\tvopmsub.xyz %0, %2, %1" : "=j"(product) : "j"(first), "j"(second));
+    return product;
+}
+
+/* v rotated by three rows, no translation: vmulax.xyz, vmadday.xyz, vmaddz.xyz (TransformPoint is the four-row form that ends in vmaddaz and
+   vmaddw). Rows come first so GCC allocates retail's registers (bevy_player_p25_1375d0, GoalAnim_FHandleMessage, ChooseEmitVelocity) */
+static inline QW TransformVector(QW v, QW row0, QW row1, QW row2)
+{
+    QW out;
+    asm("vmulax.xyz $ACC, %2, %1x\n\tvmadday.xyz $ACC, %3, %1y\n\tvmaddz.xyz %0, %4, %1z" : "=j"(out) : "j"(v), "j"(row0), "j"(row1), "j"(row2));
+    return out;
+}
+
+/* a * scaleA.x + b * scaleB.x: vmulax.xyzw then vmaddx.xyzw through ACC, the two-scalar blend (SetRopeSimLength, PresetTarmissAccel); ScaleAddX is
+   the form that adds onto vf0 */
+static inline QW BlendX(QW scaleA, QW a, QW scaleB, QW b)
+{
+    QW sum;
+    asm("vmulax.xyzw $ACC, %2, %1x\n\tvmaddx.xyzw %0, %4, %3x" : "=j"(sum) : "j"(scaleA), "j"(a), "j"(scaleB), "j"(b));
+    return sum;
+}
+
+/* qmfc2.ni: lane x of a VU0 register as a 32-bit word in a general register, for a store (retail: qmfc2.ni then sw). A (u32) cast of a QW adds
+   dsll32 and dsra32 (FillDzgDz, UpdateBombCustomXps, LoadJumpAnim) */
+static inline u32 VectorWordX(QW v)
+{
+    u32 word;
+    asm("qmfc2.ni %0, %1" : "=r"(word) : "j"(v));
+    return word;
+}
+
 #endif

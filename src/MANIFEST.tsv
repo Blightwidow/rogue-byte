@@ -2331,6 +2331,7 @@ address	name	size	file	whole_file	symbol
 0X1749C0	GoalAnim_SetState	356	new_1715f0/GoalAnim_SetState.cpp		
 0X174B28	func_00174B28	60	new_1715f0/fun_00174b28.c		
 0X174B68	GoalAnim_Update	100	new_1715f0/GoalAnim_Update.cpp		
+0X174BD0	GoalAnim_FHandleMessage	716	new_1715f0/GoalAnim_FHandleMessage.cpp		
 0X174EA0	func_00174EA0	104	new_1715f0/fun_00174ea0.cpp		
 0X174FB8	FGoalAnimDone	16	new_1715f0/FGoalAnimDone.c		
 0X174FC8	func_00174FC8	44	new_1715f0/fun_00174fc8.cpp		
@@ -4582,6 +4583,7 @@ address	name	size	file	whole_file	symbol
 0X20F948	FFilterOxa	196	sw-button/FFilterOxa.cpp		
 0X20FA10	FFilterOxaBasic	60	sw-button/FFilterOxaBasic.cpp		
 0X20FA50	FFilterHitTestDefault	76	sw-button/FFilterHitTestDefault.cpp		
+0X20FAA0	bevy_camera_follow_push_out	448	sw-button/bevy_camera_follow_push_out.cpp		
 0X20FDC8	ExtractUniqueSosFromGeoms	244	sw-button/ExtractUniqueSosFromGeoms.cpp		
 0X20FEC0	FAddRsmg__FP4RSMGiPii3OIDN24	176	button/FAddRsmg__FP4RSMGiPii3OIDN24.cpp		
 0X20FF70	TriggerRsmg	128	button-po/TriggerRsmg.cpp		
