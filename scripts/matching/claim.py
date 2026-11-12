@@ -196,6 +196,11 @@ def packet(wave, worker, address, budget):
                 for score, other, example, _ in similar.similar(address, 3, index_rows, gold) if score >= 0.25]
     if examples:
         lines.append('- similar matched sources: ' + '; '.join(examples))
+    import check_calls
+    flagged = check_calls.read_flags().get(address)
+    if flagged:
+        lines.append(f'- declarations that disagree with matched code (check_calls.py: confirm each in the diff, by the argument registers '
+                     f'retail sets before the call; fix the real ones first): {flagged}')
     note = os.path.join(LAB, 'data', 'matching', 'notes', f'{address:06X}.md')
     if os.path.exists(note):
         lines.append(f'- earlier notes: `data/matching/notes/{address:06X}.md`')

@@ -2090,5 +2090,31 @@ class CheckCallsTests(unittest.TestCase):
         self.assertEqual(self.flags('void RestartBootQueue(void);\nextern SW B_003DD490;\n'), [])
 
 
+class LandingToolTests(unittest.TestCase):
+    WHOLES = [(0x100000, 0x100100, 'm/file.cpp')]
+
+    def test_a_function_in_its_whole_file_counts_as_landed(self):
+        text = '#include "include_asm.h"\nINCLUDE_ASM(0X100080);\nextern "C" void LoadSndFromBrx(int a)\n{\n}\n'
+        self.assertTrue(make_whole_files.already_landed(0x100000, 'LoadSndFromBrx', self.WHOLES, text))
+
+    def test_a_function_still_from_assembly_is_not_landed(self):
+        text = '#include "include_asm.h"\nINCLUDE_ASM(0X100000);\nvoid LoadSndFromBrx(int a);\n'
+        self.assertFalse(make_whole_files.already_landed(0x100000, 'LoadSndFromBrx', self.WHOLES, text))
+
+    def test_a_local_holding_a_global_address_is_reported(self):
+        text = 'extern GSR D_002DEB80;\nvoid f()\n{\n    GSR *gs = &D_002DEB80;\n    gs->a = 1;\n}\n'
+        self.assertEqual(check_source.global_address_locals(text), [(4, 'GSR *gs = &D_002DEB80;')])
+
+    def test_a_pointer_to_a_local_is_not_reported(self):
+        text = 'void f()\n{\n    VECTOR v;\n    VECTOR *pv = &v;\n    pv->x = 1;\n}\n'
+        self.assertEqual(check_source.global_address_locals(text), [])
+
+    def test_a_c_definition_does_not_outvote_the_callers(self):
+        matched = [('float func_00153638(float g) { return g; }\n', True), ('float func_00153638(void *p, float g);\n', False),
+                   ('float func_00153638(void *p, float g);\n', False)]
+        arities, types = check_calls.learn(matched)
+        self.assertEqual(check_calls.flags('float func_00153638(void *p, float g);\n', False, 'Draft', arities, types), [])
+
+
 if __name__ == '__main__':
     unittest.main()

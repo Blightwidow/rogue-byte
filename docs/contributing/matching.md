@@ -122,6 +122,25 @@ Several workers (people or AI assistants) can match in parallel; AGENTS.md has t
 6. Workers use the shared types of `include/` when they exist (AGENTS.md "Preservation first"). A type a worker has to define
    locally carries the function's address as a suffix (`List_11A338`) so files merge without clashes; the lead moves it into a
    shared header (or renames it) when it lands related functions together.
+7. **At score 0, read what `try.py` prints after the diff.** `RULES` is check_source.py's verdict (a source that breaks a rule is parked,
+   not matched); `WARNING` lines are for the reader. `WHOLE FILE` is a trial merge into the function's whole file, proved and written
+   nowhere: `would land`, or the declaration the file has differently. A worker fixes that before saying `EXACT`: it costs the lead a
+   landing otherwise. A C++ function in a C whole file lands by turning the file into C++ (`land()` renames it and its
+   `whole_files.tsv` row once the C++ text proves). A function the lead merged by hand registers on the next `make land`.
+
+**Which near misses to send workers to (2026-11-12).** Three batches of eight to nine workers, scored by `try.py`:
+
+| Batch | Drafts | Brief | Matched |
+|---|---|---|---|
+| 1 | score 40 or less, same instruction count as retail | reword toward the registers | 0 of 9 |
+| 2 | instruction count or shape differs, score 30 to 110 | list what retail does differently (offsets, widths, calls, arguments, branches) before touching registers | 4 of 9 |
+| 3 | flagged by `check_calls.py` | confirm each flag by the argument registers, fix the real ones, then the rest | 2 of 12 |
+
+A draft with retail's instruction count and a low score is a register or scheduling difference: leave it to `make search`. A draft
+whose count or shape differs usually has a real mistake: a callee given the wrong arguments, a global read as bytes, a missing
+call or iterator, fields in the wrong order. `check_calls.py` (run by `make nonmatching`, table in `build/check_calls.tsv`, shown in
+`claim.py`'s packets) lists the drafts whose declarations disagree with matched code; about two thirds of its flags were real. A
+draft's recorded score can come from a wrong call: `try.py --record --replace-best` records the honest, higher one.
 
 ## Picking work and running a local model (2026-11-06)
 

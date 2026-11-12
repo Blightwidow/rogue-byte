@@ -171,6 +171,19 @@ def destination(found):
     return 'asm-archive' if any(kind == 'banned' for _, kind, _ in found) else 'cleanup-pending'
 
 
+GLOBAL_ADDRESS_LOCAL = re.compile(r'^\s+(?:const\s+)?(?:struct\s+)?\w+\s*\*\s*(\w+)\s*=\s*&\s*(\w+)\s*;')
+
+
+def global_address_locals(text):
+    """[(line number, line)] of locals that hold the address of a global the source declares `extern` (`GSR *gs = &D_002DEB80;`). AGENTS.md bans
+    a local whose only purpose is to keep a global's address in a register so its constant does not fold; a pointer that names the object
+    for readable code looks the same, so this is a warning for the reader, never a ban (PauseMenu_AdjustOption, 2026-11-12)."""
+    clean = strip_comments(text)
+    externs = set(re.findall(r'\bextern\b[^;(]*?\b(\w+)\s*(?:\[[^\]]*\])?\s*;', clean))
+    return [(number, line.strip()[:100]) for number, line in enumerate(clean.split('\n'), 1)
+            if (match := GLOBAL_ADDRESS_LOCAL.match(line)) and match.group(2) in externs]
+
+
 LITERAL_LOCAL = re.compile(r'^\s+(?:(?:unsigned|signed|const)\s+)*(?:int|char|short|long|float|double|[su](?:8|16|32|64)|f(?:32|64))\s+(\w+)\s*=\s*'
                            r'(-?(?:0[xX][0-9a-fA-F]+|\d+(?:\.\d*)?f?))\s*;')
 CONSTANT_CONDITION = re.compile(r'\|\|\s*(?:1|true)\s*[)|&]|&&\s*(?:0|false)\s*[)|&]')

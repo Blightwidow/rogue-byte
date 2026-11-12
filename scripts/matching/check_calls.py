@@ -3,10 +3,13 @@
 """check_calls.py [--out FILE] : flags the drafts in nonmatching/ whose declarations disagree with the matched code in src/.
 
 Two checks, each a lead for a worker, not a verdict:
-- arity: a callee that src/ declares or defines with one agreed number of arguments (a definition counts five votes, a
-  declaration one; the agreed count needs three times the votes of all others) is declared with another count in the draft;
+- arity: a callee that src/ declares or defines with one agreed number of arguments (the agreed count needs three times the
+  votes of all others) is declared with another count in the draft;
 - global type: a global that src/ declares `extern` with a struct type (SW, SAVE ...) is declared as a byte or int array or an int
   in the draft.
+
+A definition in C++ counts five votes; a C definition counts one, like a declaration: a matched C function that never reads an
+argument compiles the same without it, and m2c's signatures often leave it out.
 
 A wrong prototype or a global read as raw bytes was the real cause behind most matches of 2026-11-12 (an extra argument costs
 instructions and moves registers; a char-array global changes how its address is built). Confirm each flag in the diff: the
@@ -107,7 +110,7 @@ def learn(texts):
     for text, c_file in texts:
         functions, globals_ = scan(text, c_file)
         for name, count, definition in functions:
-            arities[name][count] += 5 if definition else 1
+            arities[name][count] += 5 if definition and not c_file else 1  # a C definition is often m2c's guess (fun_00153638.c drops an argument it never reads)
         for name, type_name, pointer, array in globals_:
             if not pointer and not array and type_name not in SCALARS:
                 types[name][type_name] += 1
@@ -131,6 +134,15 @@ def flags(text, c_file, function, arities, types):
         if name in types and not pointer and (array or type_name in RAW):
             found.append(f'global {name}: declared {type_name}{"[]" if array else ""}, matched code {types[name].most_common(1)[0][0]}')
     return found
+
+
+def read_flags(path=None):
+    """{address: flags} from the last run's table (build/check_calls.tsv), or {} when it was never written."""
+    path = path or os.path.join(ROOT, 'build', 'check_calls.tsv')
+    if not os.path.exists(path):
+        return {}
+    rows = [line.rstrip('\n').split('\t') for line in open(path).read().splitlines()[1:]]
+    return {int(row[0], 16): row[4] for row in rows if len(row) > 4}
 
 
 def main():

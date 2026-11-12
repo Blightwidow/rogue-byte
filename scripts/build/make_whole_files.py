@@ -902,6 +902,35 @@ def registry_source(address):
     return None
 
 
+def already_landed(address, name, wholes=None, text=None):
+    """True when `address`'s whole file has no INCLUDE_ASM line for it left and defines a function called `name`: it was landed there
+    already (by hand, or by an earlier make_whole_files.py --land), so the whole file is its record and `make elf` its proof."""
+    found = whole_file_of(address, wholes)
+    if found is None:
+        return False
+    if text is None:
+        path = os.path.join(ROOT, 'src', found[2])
+        if not os.path.isfile(path):
+            return False
+        text = open(path).read()
+    if include_asm_marker(address).search(text):
+        return False
+    return re.search(r'\b%s\s*\([^;{}]*\)\s*(?:const\s*)?\{' % re.escape(name), code_only(text)) is not None
+
+
+def promote_to_cpp(file, wholes_path=None):
+    """Renames the C whole file src/<file> to .cpp and its config/us/whole_files.tsv row with it: a whole file is built as one language, so a
+    C file takes a C++ function by becoming C++ (land() does this only once the C++ text proves). Returns the new relative path."""
+    new_file = file[:-2] + '.cpp'
+    os.replace(os.path.join(ROOT, 'src', file), os.path.join(ROOT, 'src', new_file))
+    wholes_path = wholes_path or os.path.join(ROOT, 'config', 'us', 'whole_files.tsv')
+    text = open(wholes_path).read()
+    text = re.sub(r'(\t)%s$' % re.escape(file), lambda match: match.group(1) + new_file, text, count=1, flags=re.M)
+    with open(wholes_path, 'w') as handle:
+        handle.write(text)
+    return new_file
+
+
 def land(address, source_path, wholes=None, compile_source=None, prove=None, write=True):
     """(ok, message, text) of landing a function that scores 0 on its own in its whole file: its INCLUDE_ASM line becomes its source
     (insert_function), the conflicts the merge leaves are resolved by compiling (resolve), and the whole range is compiled and compared with
@@ -927,6 +956,9 @@ def land(address, source_path, wholes=None, compile_source=None, prove=None, wri
         return False, f'no source for {address:#X} ({source_path}): src/{file} not changed', None
     language = 'c' if file.endswith('.c') else 'c++'
     source_text, source_is_c = open(source_path).read(), source_path.endswith('.c')
+    promote = language == 'c' and not source_is_c  # a C++ function in a C file: the file can only take it as C++
+    if promote:
+        language = 'c++'
     name = f'land_{address:X}'
     compile_source = compile_source or compiler(name, vu0)
     prove = prove or (lambda: compare_object(os.path.join(SCRATCH, name + '.o'), start, end))
@@ -951,13 +983,17 @@ def land(address, source_path, wholes=None, compile_source=None, prove=None, wri
         if left:
             return False, f'src/{file} not changed: cleanup left in the source: {", ".join(left[:3])}', text
         if write:
+            if promote:
+                file = promote_to_cpp(file)
+                path = os.path.join(ROOT, 'src', file)
+                notes = notes + [f'the whole file becomes C++ (src/{file}, config/us/whole_files.tsv), as the function is C++']
             with open(path, 'w') as handle:
                 handle.write(text)
             if vu0 and start not in vu0_list:
                 with open(os.path.join(ROOT, 'config', 'us', 'vu0_regs.txt'), 'a') as handle:
                     handle.write(f'0x{start:X}\n')
                 notes = notes + [f'the whole file now takes the VU0 flag ({start:#X} listed in config/us/vu0_regs.txt)']
-        notes = notes + dropped
+        notes = notes + dropped + ([] if write or not promote else [f'the whole file would become C++ ({file[:-2]}.cpp)'])
         return True, f'src/{file}: {address:#X} {"would land" if not write else "landed"}, {start:#X}-{end:#X} proved' + \
             (f' ({"; ".join(notes)})' if notes else ''), text
     return False, f'src/{file} not changed: {cause}', None

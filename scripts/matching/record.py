@@ -134,7 +134,10 @@ def main():
                 tried += 1
                 continue
             if make_whole_files.whole_file_of(address) is not None:  # its whole file is its record: it lands there or stays unmatched
-                landed, message, _ = make_whole_files.land(address, path, write=not arguments.dry_run)
+                if make_whole_files.already_landed(address, row['name']):  # landed by hand (make_whole_files.py --land): make elf proves it
+                    landed, message = True, f'{row["name"]} is in its whole file already (no INCLUDE_ASM left): registered'
+                else:
+                    landed, message, _ = make_whole_files.land(address, path, write=not arguments.dry_run)
                 print(message if landed else f'not landed: {message}')
                 if not landed:
                     row['source'], row['status'] = path, 'tried'
