@@ -3,7 +3,8 @@
 """export_nonmatching.py [--sweep results.json] [--jobs N]: publishes, for every function that is not matched yet, the best source that
 compiles with the original compiler, to nonmatching/<module>/<function>.<c|cpp> and nonmatching/MANIFEST.tsv (address, name, size, file, score).
 
-Candidates: a hand-written draft in data/matching/src/fn/<ADDRESS>.cpp and the best m2c draft the sweep found (work/matching/sweep/results.json).
+Candidates: a hand-written draft in data/matching/src/fn/<ADDRESS>.cpp or .c (the SDK range included, scored with its own
+compiler through try.py) and the best m2c draft the sweep found (work/matching/sweep/results.json).
 A candidate that holds a construct AGENTS.md bans (scripts/matching/record.py `scan`: volatile on ordinary data, register pins, an empty asm,
 mfc1 asm) is left out, so a published score never leans on a trick. Each is scored with scripts/matching/try.py (instructions that differ
 from the retail function; 0 would be a match) and the lowest score wins, a hand-written draft on a tie. Sources that do not compile are left
@@ -77,12 +78,13 @@ def main():
                  if row['status'] == 'fragment'}  # words between two functions: no source to publish for them
     for function in report['functions']:
         address = int(function['address'], 16)
-        if function['status'] == 'c' or function['module'] == 'sdk' or address in fragments:
+        if function['status'] == 'c' or address in fragments:
             continue
         functions[address] = function
         candidates = []
-        hand = os.path.join('data', 'matching', 'src', 'fn', f'{address:06X}.cpp')
-        for candidate in ([(hand, 'c++')] if os.path.exists(hand) else []) + ([swept[address]] if address in swept else []):
+        hand = [(os.path.join('data', 'matching', 'src', 'fn', f'{address:06X}{extension}'), language)
+                for extension, language in (('.cpp', 'c++'), ('.c', 'c'))]
+        for candidate in [entry for entry in hand if os.path.exists(entry[0])] + ([swept[address]] if address in swept else []):
             if scan(open(candidate[0], encoding='utf-8').read()):
                 banned_dropped.append(address)
             else:
