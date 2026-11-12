@@ -316,3 +316,39 @@ controls, not whole files) and every open SDK draft (109, registry status `tried
 Negative: the build's delay-slot filling by the compiler is right for the range. The three that improve (0x23D338 83 to 75, 0x2418C8 77 to
 71, 0x243CB0 166 to 148) stay far and are scattered across libraries, so no library hides a reorder-mode build. Under the build's flags none
 of the 109 open drafts reaches 0 either; their scores are the drafts', not a toolchain wall.
+
+## SDK range on other Sony 2.9 builds (2026-11-12)
+
+Hypothesis: the SDK range was not all built by one compiler build; libraries may date from different Sony toolchain updates. Komasia's
+sly2-decomp (no licence: ideas only) names `ee-gcc2.9-991111-01-dtls13010` in its setup list, the one decomp.me build we did not have
+(`work/toolchains/`, from `github.com/decompme/compilers/releases/download/compilers/ee-gcc2.9-991111-01-dtls13010.tar.gz`). Measured with
+the Linux builds under Docker (`scripts/matching/cc.sh`, `-O2 -G0`, `-I include`), judged with `compare.py`; the language follows the file
+extension (`.c` as C: a `.c` source built as C++ compiles but gives other code). Build 2.9-991111-01 is the control: it reproduces the
+Win32 991111b output on every function tried.
+
+The dtls13010 wrappers export `LD_LIBRARY_PATH` to their bundled glibc 2.3.6, which breaks the `env bash` of the nested wrappers under a
+modern glibc. The local copy was patched to `ld-2.3.6.so --library-path <dir>` instead (untracked, `work/`).
+
+Matched controls (the 225 functions of `config/us/sony_gcc29.txt` that have a source; 145 from `data/matching/src/fn/`, 80 from `src/`):
+
+| Build | Controls at 0 | Notes |
+| :--- | ---: | :--- |
+| 2.9-991111-01 (control), 2.9-991111a | 225 | the same output |
+| 2.9-991111-01-dtls13010 | 223 | loses `__floatdisf` (0x23C078, 0 to 4) and newlib scalbn `func_00249EE0` (0 to 6); gains none |
+| 2.9-990721 | 179 | loses 46, in libc, libm, libpad, libkernel and libmpeg (0x24B828: 7); its gains are SN-built functions and small stubs |
+| 2.96 | 10 of 145 | far worse (first run, before the 80 from `src/`) |
+
+Of the 90 matched SDK-range functions built with the default toolchain, 9 (0x256298 up: Construct*, Splice code) cannot compile under
+Sony's gcc at all; they are game code, not SDK.
+
+Open drafts (98 registry `tried`, not blockers), control against dtls13010: 94 compile under both, 87 score the same. Better: 0x24C670
+13 to 5 (libmpeg), 0x24B480 29 to 27, 0x248CA8 78 to 76, 0x245B58 258 to 257. Worse: 0x247DE8 124 to 132. None reaches 0. Three drafts do
+not compile as written (0x2333B4 and 0x256CE8 use a 128-bit `long long`, 0x254CA0 has a parse error at line 9); 0x24BF40 has no draft.
+
+Negative, with one open lead: no matched function needs another build, so there is no evidence that the range was built by more than one
+Sony 2.9 compiler. dtls13010 is the same compiler for 223 of 225 controls and differs on exactly two libraries (libgcc fp-bit
+`__floatdisf`, newlib scalbn), which is the only sign of a build difference by library. The libmpeg controls (0x24B540, 0x24B760, 0x24B8F8,
+0x24C360, 0x24C420) score 0 under both builds, so they do not say which one built libmpeg. `func_0024C670` stops at 5 words under
+dtls13010: seven source variants (a `ctrl` or `status` temporary, a hoisted constant, a local volatile pointer, `>> 14 & 1`, a volatile
+store) leave the same diff: retail holds the IPU_CTRL address in `$v1` and the value in `$v0` at 0x24C6BC, the build the reverse. That is a
+register-allocation order, not a source form. It does not count as a match.
