@@ -41,6 +41,16 @@ Seen here (SN GCC 2.95.3 build 1.36, `-O2 -G0`):
 - **Branch sense.** Inverting the test text (`x >= 0 {A} else {B}` against `x < 0 {B} else {A}`) changes which arm falls through and
   how the delay slot is filled. Try it before anything else.
 - **A hazard `nop` that is missing** is the assembler, not the source: see [assembler.md](../build/assembler.md).
+- **A callee's argument that is already in place.** A callee declared `f(void)` that reads `$a0` matches in its own bytes, but the
+  caller then compiles differently even when the argument is already in `$a0` (no move shows): the dependence graph changes and with it
+  the prologue's save order. 0x23FE78 differed only in `sd s6`/`sd s7` order until `func_0023F850(limit)` got its real parameter
+  (2026-11-12). Read the callee's first instructions for `$a0`-`$a3` before blaming the scheduler.
+- **A store retail puts in a delay slot** must be a plain store: a `volatile` one never fills a slot. Keep the volatile read and write
+  that one store through a plain pointer (`sceDmaReset`, 2026-11-12; the packet-writer lesson in [lessons.md](lessons.md) is the same
+  for a read).
+- **SDK range: `sd` saves.** Retail saving with `sd` (not `sq`) means Sony's gcc 2.9; score with `TRY_ASSEMBLER=sony29` when the
+  address is not yet in `config/us/sony_gcc29.txt`. `sq` saves in the range mean SN's compiler (0x2325E0 was listed by mistake). Sony's
+  gcc also emits `mult1`/`multu1` from plain C: [compiler-identification.md](../build/compiler-identification.md).
 
 Reported by other PS2 decompilations with the same compiler family (Ratchet & Clank 1, [rac1-decomp](https://github.com/OpenRAC/rac1-decomp)
 `docs/LEVERS.md`, build 1.14 at `-G2`, so verify before relying on one):

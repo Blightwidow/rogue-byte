@@ -352,3 +352,90 @@ Sony 2.9 compiler. dtls13010 is the same compiler for 223 of 225 controls and di
 dtls13010: seven source variants (a `ctrl` or `status` temporary, a hoisted constant, a local volatile pointer, `>> 14 & 1`, a volatile
 store) leave the same diff: retail holds the IPU_CTRL address in `$v1` and the value in `$v0` at 0x24C6BC, the build the reverse. That is a
 register-allocation order, not a source form. It does not count as a match.
+
+## SDK range: findings of wave A1 and its follow-up (2026-11-12)
+
+Wave A1 attempted every function still untouched on `main` (184, 146 of them in the SDK range); four follow-up agents then took the causes
+that came back from more than one function. Evidence: `work/matching/waves/A1*/`, `work/matching/followup/` (local), commits `12ce952a`
+to `f5413b76`.
+
+### `nop; nop` before `div.s`: a compiler option 2.9 does not have
+
+- **Retail:** in the SDK range, all 27 `div.s` have exactly two `nop`s before them, and none sits in a delay slot. They are in eight libm
+  functions: atanf, `__ieee754_acosf`, `__ieee754_asinf`, `__ieee754_atan2f`, `__ieee754_fmodf`, `__ieee754_powf`, `__ieee754_sqrtf`,
+  `__kernel_tanf`. None is matched. The matched libm functions (cosf, `__kernel_cosf`, `__kernel_rem_pio2f`, `__kernel_sinf`...) have
+  no `div.s`, so the rest of libm is ordinary 2.9-991111b code. Game code differs: of its 408 `div.s`, 331 have no `nop`, 45 one, 32 two.
+- **It is the compiler, not the assembler.** At 0x2473A0 retail has `sub.s; nop; nop; div.s; b; lwc1 $f22`, where our 2.9 build puts the
+  `div.s` in the delay slot of the `b`. Only the compiler decides what fills a delay slot, so retail's compiler treated `div.s` as three
+  words long.
+- **The option:** Sony's 2.96 and 3.2 `cc1` carry the template `%(nop\n\tnop\n\tdiv.s\t%0,%1,%2%)`, enabled by
+  `-mhandle-ee-div-pipeline-bug` ("Don't put divide insns in branch delay slot"). `ee-gcc2.96 -mhandle-ee-div-pipeline-bug -S` on the
+  acosf draft prints `nop; nop; div.s` at every site. But 2.96 scores acosf at 192 where 2.9 gives 22, so 2.96 is not libm's compiler.
+- **Ruled out:** 2.9-990721, 991111, 991111-01, 991111a, 991111b and dtls13010 have no such option and only the plain `div.s\t%0,%1,%2`
+  template; nor do SN's 2.95.x builds (2.95.3-136 included) or sly1-sn273a. `ps2eeas -Wdivbug-on` on Sony's `-S` output only warns
+  ("DIV related opcode used in branch delay slot") and pads near branches, not every `div.s` (acosf 24).
+- **Simulation, evidence only:** Sony 2.9 `-S`, `nop; nop` inserted before every `div.s` outside a delay slot, assembled with
+  `ee/bin/as.exe -G0`: acosf 22 to 9, asinf 59 to 50, `__kernel_tanf` 26 to 21, atanf 39 to 38, fmodf 33 (its only `div.s` stays in
+  the `j $31` slot). What is left is the `div.s` that 2.9 still schedules into a delay slot, plus each draft's own differences.
+- **Decision:** walls (`config/matching/walls.tsv`, class `toolchain`, all eight). The only fix would be a 2.9-991111 compiler with this
+  option: a patch to `cc1.exe` touching both the output template and the insn length, so the delay-slot filler skips `div.s`. That is
+  far more than the assembler's one-byte patch, and no such Sony 2.9 build is known.
+
+### `mult1` and `multu1` come from plain C
+
+- Sony's gcc 2.9 emits `mult1`, `multu1`, `mfhi1` and `mflo1` itself, from its 3-operand and `multu` patterns (`mulsi3_mult3_r5900`,
+  the `%H` suffix of the machine description). No helper is needed; a worker that says "needs a mult1 helper" has not tried the C.
+- **Which multiply gets the `1`:** the suffix alternates in RTL emission order within a block. The first independent multiply stays
+  `mult`, the next becomes `mult1`; the scheduler may then reorder them, which is why retail 0x242F70 shows `mult1` ahead of `mult`.
+  Which one is first follows operand and expression order, so swap the addends before suspecting anything else.
+- **Measured:** `__muldi3` (0x23C7C0) 19 to 15 by writing the cross sum as `low(a) * high(b) + high(a) * low(b)`; what is left is register
+  choice and scheduling. 0x23A598 (`(u64)a * 0x8CA0000 + (u64)b * 0x8CA0000 / 1000000`, a seconds-and-fraction to tick count) reproduces
+  `multu1`, `mfhi1`, `mflo1` and its whole shape from that one line: 8, one temporary in `$v1` where retail has `$a2`. 0x242F70 gets
+  `mult` and `mult1` from a typed `Group { Slot slots[4]; }` table (39; the m2c draft had folded both products into one).
+- **Scoring caveat:** 0x23C7C0 and 0x23A598 are not in `config/us/sony_gcc29.txt` (an address joins it once a source matches with
+  Sony's gcc), so try.py and nonmatching/ score them with SN's compiler, which never emits `mult1`. Measure them with
+  `TRY_ASSEMBLER=sony29`.
+
+### `umul_ppmm`: one `multu` with two results
+
+`__divdi3` (0x23B7F8, 17) and `__udivdi3` (0x23C828, 32) have one `multu` followed by `mfhi` and `mflo` into two separate 32-bit
+registers (an unsigned 32x32 to 64-bit product read as two words). Plain C always splits it: `(u64)q * d >> 32` gives `multu` and
+`mfhi`, the low word `q * d` a 3-operand `mult`, and a `u64` or union product adds `dsll32`/`dsrl32`/`or` (40). The extra `mult` costs a
+register, which shifts the quotient from `$a1` to `$a2` across the function. A shared helper (one `multu`, two outputs) would be the
+form; it has two users. `__udivdi3` also has a 16-byte frame with no `$sp` access, which no plausible local reproduced.
+
+### Prologue save order
+
+- **0x23FE78 matched** once its callee had its real signature. The draft declared `char *func_0023F850(void)`; the callee reads `$a0`
+  (`move $17,$4`), and retail calls it with `limit`, already in `$a0`, so no move shows in the bytes. Declaring
+  `char *func_0023F850(unsigned)` and passing `limit` changes the dependence graph, and the `sd s6`/`sd s7` order flips to retail's.
+  The drafts whose retail saves the lower register first may have the same missing argument: 0x237EA8, 0x252148, 0x23F2D8, 0x23AE70,
+  0x245178, and 0x23F850's own draft.
+- **0x237BD8 is a tie.** In the sched2 dump (`-dR -fsched-verbose-5`; this compiler spells it with `-5`, not `=5`), `sd s1` (insn 476)
+  and `sd s0` (insn 478) both have priority 12 and three dependents, so insn order picks `s1`; retail's `sd s0` first would need `lui s0`
+  at priority 12 or more, and it has 11. Every callee signature checks out, and C, 991111-01 and dtls13010 leave it at 5 (990721: 55).
+  Recorded in walls.tsv as `tie`.
+
+### Delay-slot stores under Sony's gcc
+
+- A `volatile` store never fills a delay slot; a plain one does. `sceDmaReset` (0x241468) matched with a volatile read and a plain
+  `*(int *)0x1000E010 = ...` for the store retail puts in the `jal memclr` slot (the same as the packet-writer lesson for a read,
+  docs/contributing/lessons.md). Its walls.tsv row is gone.
+- The other `toolchain` rows of the SDK range (0x24B480, 0x235780, 0x24C4B0, 0x24C670, 0x2540B0) were measured on 2026-11-08, before
+  Sony's gcc was found for the range. Re-run them with `TRY_ASSEMBLER=sony29` and the plain-store form before trusting them.
+- 0x2539D0's row was not a delay-slot wall: its slot stores are plain field stores the draft already places, and its 37 words are the
+  frame (0x50 against 0x60) and an `sra` where retail has `srl` (an unsigned field). The row is removed. InitIpu (0x254CA0) scores 6
+  under Sony's gcc (30 under SN), only the `lq`/`sq` register choice.
+
+### `$gp` as an ordinary register
+
+13 SDK functions (3,760 bytes) swap `$gp` around an indirect call or store it as a value; no C form exists without a register pin. They
+are the `gp` blocker kind since 2026-11-12: docs/build/vu0-mmi.md.
+
+### Other results
+
+- `pow` (0x2452C0), `__ieee754_pow` (0x246300) and the powf wrapper (0x245B58) matched under Sony's gcc: plain `double` types so the
+  compiler makes the soft-float calls, `dpcmp` called explicitly, constants as `static const double` literals the literal pool places,
+  `fabs` and scalbn called by address (`func_00249C28`, `func_00249EE0`) so they are not expanded inline. `__ieee754_pow` fails under SN:
+  `-ffast-math` folds `y - y`.
+- `0x2325E0` was listed in sony_gcc29.txt by mistake: retail saves with `sq`, and SN's compiler matches it (removed from the list).

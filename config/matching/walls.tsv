@@ -3,7 +3,6 @@ address	name	class	reason	evidence
 0x235780	func_00235780	toolchain	sb in the jr delay slot, same wall (non-volatile folds, volatile is never put in a slot)	2026-11-08 o03: 9 compiles, 25 probes
 0x24C4B0	func_0024C4B0	toolchain	hardware stores in delay slots (libmpeg), same wall; no other Sony gcc build changes it	docs/build/compiler-identification.md, libmpeg on other Sony builds
 0x24C670	func_0024C670	toolchain	hardware stores in delay slots (libmpeg), same wall	docs/build/compiler-identification.md
-0x2539D0	func_002539D0	toolchain	delay-slot store shape found by the o03 scan of retail	2026-11-08 o03 scan
 0x23A420	func_0023A420	toolchain	retail stores $gp into the slot; plain C has no form that reads $gp	2026-11-08 o10
 0x206820	func_00206820	tie	sched1 tie: both stores ready at t=1, the vtable load waits for the copy of a0	2026-11-08 s04: 16 compiles, RTL dumps
 0x22CB90	BuildXfAngularRateMatrix	tie	two instructions before a jal in the other order; only a struct-return temp gives retail order, at score 30	2026-11-08 s11: 14 compiles
