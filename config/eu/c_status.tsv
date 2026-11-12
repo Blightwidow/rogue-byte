@@ -1237,9 +1237,11 @@ us_address	name	other_address	pair	score	addresses
 0x12B590	EvaluateAcrc	0X12B590	same	0	ok
 0x12B5E0	LoadAcrbFromBrx	0X12B5E0	same	0	ok
 0x12B6D8	IkeyFindAcrb	0X12B6D8	identical	0	ok
+0x12B738	func_0012B738	0X12B738	same	0	ok
 0x12B9D0	EvaluateAcrb	0X12B9D0	identical	0	ok
 0x12BA98	func_0012BA98	0X12BA98	same	0	ok
 0x12BB70	func_0012BB70	0X12BB70	identical	0	ok
+0x12BBD0	func_0012BBD0	0X12BBD0	same	0	ok
 0x12BE68	func_0012BE68	0X12BE68	identical	0	ok
 0x12BF30	func_0012BF30	0X12BF30	same	0	ok
 0x12C0E0	func_0012C0E0	0X12C0E0	identical	0	ok
@@ -1633,6 +1635,7 @@ us_address	name	other_address	pair	score	addresses
 0x1444E0	StaticInitSlotheaps_1444e0	0X144520	same	0	ok
 0x144618	GlobalCtorSlotheaps_144618	0X144658	same	0	ok
 0x144638	func_00144638	0X144678	gap	0	ok
+0x144640	func_00144640	0X144680	same	0	ok
 0x1449C8	func_001449C8	0X144A08	gap	0	ok
 0x1449D0	StaticInitSlotheaps_1449d0	0X144A10	same	0	ok
 0x144B08	GlobalCtorSlotheaps_144b08	0X144B48	same	0	ok
@@ -1752,6 +1755,7 @@ us_address	name	other_address	pair	score	addresses
 0x14B1A0	func_0014B1A0	0X14B1E0	same	0	ok
 0x14B1D8	func_0014B1D8	0X14B218	same	0	ok
 0x14B218	func_0014B218	0X14B258	same	0	ok
+0x14B290	func_0014B290	0X14B2D0	same	0	ok
 0x14B460	func_0014B460	0X14B4A0	gap	0	ok
 0x14B468	func_0014B468	0X14B4A8	same	0	ok
 0x14B508	StaticInitSlotheaps_14b508	0X14B548	same	0	ok
@@ -2366,12 +2370,14 @@ us_address	name	other_address	pair	score	addresses
 0x177DC0	GoalBrain_FCmdEqual	0X177D48	same	0	ok
 0x177E80	GoalFollowCrv_Init	0X177E08	same	0	ok
 0x177EF0	GoalFollowCrv_Activate	0X177E78	same	0	ok
+0x1789F8	GoalFollowCrv_Update	0X178980	same	0	ok
 0x178CD8	GoalFollowCrv_SetState	0X178C60	same	0	ok
 0x178D80	GoalFollowCrv_FBlocked	0X178D08	gap	0	ok
 0x178D90	GoalFollowCrv_SetCrv	0X178D18	same	0	ok
 0x178E98	GoalFollowCrvAnim_Init	0X178E20	same	0	ok
 0x1791C8	GoalFollowCrvAnim_SetState	0X179150	same	0	ok
 0x1792E8	func_001792E8	0X179270	identical	0	ok
+0x179328	GoalHit_Activate	0X1792B0	same	0	ok
 0x179598	GoalHit_Deactivate	0X179520	same	0	ok
 0x1795E8	GoalHit_Update	0X179570	same	0	ok
 0x1796A0	func_001796A0	0X179628	same	0	ok
@@ -2686,6 +2692,7 @@ us_address	name	other_address	pair	score	addresses
 0x18E3E8	func_0018E3E8	0X18E370	same	0	ok
 0x18E520	StaticInitSly_thunk	0X18E4A8	same	0	ok
 0x18ED70	EnsureAloSfx__FP3ALO	0X18ECF8	same	0	ok
+0x18EE38	ChooseJtCaneSwing	0X18EDC0	same	0	ok
 0x18F050	ChooseJtCaneAlternateSwing	0X18EFD8	same	0	ok
 0x18F560	ChooseJtSweepTarget__FP2JTP2BLP6ASEGBL	0X18F4E8	same	0	ok
 0x18F688	ChooseJtRushTarget__FP2JT	0X18F610	same	0	ok
@@ -4812,6 +4819,7 @@ us_address	name	other_address	pair	score	addresses
 0x224610	FGadgetObjKept	0X224E30	identical	0	ok
 0x224638	FGadgetObjCanStick	0X224E58	same	0	ok
 0x224688	FGadgetObjIsKindB	0X224EA8	gap	0	ok
+0x224BF8	ExplodeGadgetBurst	0X225418	same	0	ok
 0x224E70	DetonateGadgetObj	0X225690	same	0	ok
 0x2252E0	InitDysh__FP4DYSH	0X225B00	same	0	ok
 0x225880	StaticInitSlotheaps_225880	0X2260A0	same	0	ok
@@ -4909,6 +4917,7 @@ us_address	name	other_address	pair	score	addresses
 0x229ED0	func_00229ED0	0X22A6F0	same	0	ok
 0x229EF0	func_00229EF0	0X22A710	same	0	ok
 0x229F88	func_00229F88	0X22A7A8	same	0	ok
+0x22A060	func_0022A060	0X22A880	same	0	ok
 0x22AEE8	func_0022AEE8	0X22B708	same	0	ok
 0x22B020	func_0022B020	0X22B840	same	0	ok
 0x22B050	bevy_gfx_screen_22b050	0X22B870	same	0	ok

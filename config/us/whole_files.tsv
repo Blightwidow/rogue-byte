@@ -53,7 +53,7 @@ start	end	file
 0x13DA18	0x13E368	new_13d8b8/LoadSwStringsFromBrx_file.cpp
 0x13F8A8	0x13FF70	new_13f888/AppendPloarray_file.cpp
 0x143CF8	0x144638	new_13f888/JT_TranslateToPos_file.cpp
-0x144638	0x144B28	new_13f888/new_13f888_144638.c
+0x144638	0x144B28	new_13f888/new_13f888_144638.cpp
 0x146E18	0x1471C0	new_144b58/new_144b58_146e18.cpp
 0x147410	0x147E20	new_144b58/SetWipeState_file.cpp
 0x148300	0x148620	new_147f40/StaticInitSwSlotheaps_3_file.c
