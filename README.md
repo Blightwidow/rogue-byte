@@ -28,6 +28,24 @@ A function counts when `make elf` links its C and the image still equals retail 
 
 Live numbers on [bytematch.dev](https://bytematch.dev/Blightwidow/sly2-decomp).
 
+## Versions
+
+Sly 2 shipped on several PS2 discs. The US release is the one the C is matched against; the European v2.01 release is checked
+against the same C. The others are not supported yet: they may be added later, as checks like PAL's (`make pal`).
+
+| Release | Disc serial | Executable | Status |
+| :--- | :--- | :--- | :--- |
+| USA | [SCUS-97316](http://redump.org/disc/4360/) | `SCUS_973.16` | matched: the reference, rebuilt byte for byte |
+| Europe, v2.01 | [SCES-52529](http://redump.org/disc/41730/) | `SCES_525.29` | checked: the same C against its code (`make pal`) |
+| Europe, v1.00 | [SCES-52529](http://redump.org/disc/10514/) | | potentially in the future |
+| Japan | [SCPS-15090](http://redump.org/disc/43937/) | | potentially in the future |
+| Korea | [SCKA-20044, SCKA-20074](http://redump.org/disc/115499/) | | potentially in the future |
+| USA, demo | [SCUS-97415](http://redump.org/disc/49354/) | | potentially in the future |
+| USA, demo | [SCUS-97457](http://redump.org/disc/57317/) | | potentially in the future |
+
+Disc entries link to [redump.org](http://redump.org), the preservation database of verified disc dumps. Only retail and demo discs are
+listed: prototypes are out of scope ([AGENTS.md](AGENTS.md) "Nothing from the prototype").
+
 ## Layout
 
 | Path | What |
