@@ -125,6 +125,15 @@ def warn_ignored(wave):
               '(the assembler, the flags, config/us/sony_gcc29.txt, the symbol file or include/ changed since)', file=sys.stderr)
 
 
+def function_names():
+    """address -> name, from the registry (data/matching/functions.tsv); {} without one."""
+    path = os.path.join(LAB, 'data/matching/functions.tsv')
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as handle:
+        return {int(row['address'], 16): row['name'] for row in csv.DictReader(handle, delimiter='\t')}
+
+
 def draft_source(address):
     """The source in data/matching/src/fn for a registry address (`0x1234`), or None."""
     stem = os.path.join(LAB, 'data', 'matching', 'src', 'fn', f'{int(address, 16):06X}')
@@ -246,15 +255,46 @@ def done(arguments):
     return 1
 
 
+def flagged(path, name):
+    """True when check_calls.py disagrees with the declarations of one kept copy (a callee's argument count, a struct global read as
+    bytes); False when it agrees or the file cannot be read."""
+    import check_calls
+    if not CALL_VOTES:
+        CALL_VOTES.extend(check_calls.learn((open(source, errors='ignore').read(), source.endswith('.c'))
+                                            for source in check_calls.sources(os.path.join(LAB, 'src'))))
+    try:
+        with open(os.path.join(LAB, path), encoding='utf-8') as handle:
+            text = handle.read()
+    except OSError:
+        return False
+    return bool(check_calls.flags(text, path.endswith('.c'), name, *CALL_VOTES))
+
+
+CALL_VOTES = []  # (arities, types) that src/ agrees on, learned once
+
+
+def honest(scored, name):
+    """The kept copies to choose from: when the lowest score is not a match and some copy has declarations check_calls agrees with,
+    only those. A wrong call can score lower than the corrected draft; landing it would hand the wrong declaration to the next
+    worker and the search. A match is bytes, whatever its declarations, so a 0 is never passed over."""
+    if min(entry[1] for _, entry in scored) == 0:
+        return scored
+    agreed = [item for item in scored if not flagged(item[1][2], name)]
+    return agreed or scored
+
+
 def best_runs(wave):
-    """address -> the run to land: the lowest score; among equal scores a source that passes check_source.py (a worker's first run is often the
-    untouched draft, which ties at 0 and breaks a rule), then the latest run, as workers end on their cleanest file."""
+    """address -> the run to land: the lowest score among the copies check_calls agrees with (honest()); among equal scores a source that
+    passes check_source.py (a worker's first run is often the untouched draft, which ties at 0 and breaks a rule), then the latest run,
+    as workers end on their cleanest file."""
     import check_source
     best = {}
+    names = function_names()
     for address, entries in runs(wave).items():
         scored = [(index, entry) for index, entry in enumerate(entries) if entry[1] is not None]
         if not scored:
             continue
+        scored = honest(scored, names.get(address, ''))
 
         def clean(entry):
             try:

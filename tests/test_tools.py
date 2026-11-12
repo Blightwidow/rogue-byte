@@ -268,17 +268,6 @@ class NonMatchingTests(unittest.TestCase):
         self.assertEqual(export_nonmatching.choose([(None, 'a.c', 'c'), (12, 'b.c', 'c')])[1], 'b.c')
         self.assertIsNone(export_nonmatching.choose([(None, 'a.c', 'c')]))
 
-    def test_flagged_candidate_loses_to_an_honest_one(self):
-        candidates = [(12, 'hand.cpp', 'c++'), (4, 'wrong_call.c', 'c')]
-        self.assertEqual(export_nonmatching.choose(candidates, {'wrong_call.c'})[1], 'hand.cpp')
-
-    def test_flagged_candidate_kept_when_alone(self):
-        self.assertEqual(export_nonmatching.choose([(4, 'wrong_call.c', 'c')], {'wrong_call.c'})[1], 'wrong_call.c')
-
-    def test_flagged_candidate_kept_when_honest_one_does_not_compile(self):
-        candidates = [(None, 'hand.cpp', 'c++'), (4, 'wrong_call.c', 'c')]
-        self.assertEqual(export_nonmatching.choose(candidates, {'wrong_call.c'})[1], 'wrong_call.c')
-
     def test_names_become_file_names(self):
         self.assertEqual(export_nonmatching.file_name('func_001B2940'), 'fun_001b2940')
         self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')
@@ -887,6 +876,26 @@ class ClaimTests(unittest.TestCase):
     def test_a_run_from_another_toolchain_is_ignored(self):
         self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\told\n2\tW1-a\t100000\t5\tdigest\tkept/b.cpp\tnow\n')
         self.assertEqual(claim.runs('W1'), {0x100000: [('W1-a', 5, 'kept/b.cpp')]})
+
+    def honest_paths(self, scored, flagged_paths):
+        saved = claim.flagged
+        claim.flagged = lambda path, name: path in flagged_paths
+        try:
+            return [entry[2] for _, entry in claim.honest(scored, 'f')]
+        finally:
+            claim.flagged = saved
+
+    def test_a_flagged_copy_loses_to_an_agreed_one(self):
+        scored = [(0, ('W1-a', 4, 'kept/wrong_call.cpp')), (1, ('W1-a', 9, 'kept/fixed.cpp'))]
+        self.assertEqual(self.honest_paths(scored, {'kept/wrong_call.cpp'}), ['kept/fixed.cpp'])
+
+    def test_flagged_copies_are_kept_when_none_agrees(self):
+        scored = [(0, ('W1-a', 4, 'kept/a.cpp')), (1, ('W1-a', 9, 'kept/b.cpp'))]
+        self.assertEqual(len(self.honest_paths(scored, {'kept/a.cpp', 'kept/b.cpp'})), 2)
+
+    def test_a_flagged_match_is_never_passed_over(self):
+        scored = [(0, ('W1-a', 0, 'kept/wrong_call.cpp')), (1, ('W1-a', 9, 'kept/fixed.cpp'))]
+        self.assertIn('kept/wrong_call.cpp', self.honest_paths(scored, {'kept/wrong_call.cpp'}))
 
     def test_a_run_with_no_fingerprint_is_ignored(self):
         self.write('runs.log', '1\tW1-a\t100000\t0\tdigest\tkept/a.cpp\n')
