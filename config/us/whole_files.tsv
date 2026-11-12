@@ -18,7 +18,7 @@ start	end	file
 0x11B300	0x11CCA8	jsg/FInvertMatrix3_file.cpp
 0x11CCA8	0x11CF60	util-alo/CreateSlotheapSwAlign_file.cpp
 0x11CF60	0x11E198	util/RadNormalize_file.cpp
-0x11E198	0x11F440	util-splice-bif/bif_file.c
+0x11E198	0x11F440	util-splice-bif/bif_file.cpp
 0x1258F0	0x126188	splice-bif-splice-eval/splice_bif_splice_eval_1258f0.cpp
 0x126188	0x1262E0	splice-bif-splice-eval/splice_bif_splice_eval_126188.c
 0x1262E0	0x126438	splice-bif-splice-eval/splice_bif_splice_eval_1262e0.c

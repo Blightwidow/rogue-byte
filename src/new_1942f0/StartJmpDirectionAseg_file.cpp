@@ -7,6 +7,7 @@
 #include "include_asm.h"
 #include "so.h"
 #include "sw.h"
+#include "ps2inline.h"
 
 INCLUDE_ASM(0X195FB8);
 
@@ -167,7 +168,32 @@ INCLUDE_ASM(0X199D48);
 
 INCLUDE_ASM(0X19A098);
 
-INCLUDE_ASM(0X19A400);
+extern "C" int CSolveQuadratic(float, float, float, float *);
+
+struct JMP_19A400 {
+    char *pjt;
+};
+
+int FTimeJtJumpToTarget(JMP_19A400 *pjmp, QW pos, QW vJump, QW posTarget, QW vTarget, float *pdtPredict)
+{
+    float roots[4];
+    char *pjt = pjmp->pjt;
+    float gravityZ = *(float *)(*(char **)(pjt + 0xE8) + 0x88);
+    float jumpZ = LaneZInGeneralRegister(vJump);
+    float targetVelocityZ = LaneZInGeneralRegister(vTarget);
+    float posZ = LaneZInGeneralRegister(pos);
+    float targetZ = LaneZInGeneralRegister(posTarget);
+    int count = CSolveQuadratic(gravityZ * 0.5f, jumpZ - targetVelocityZ, posZ - targetZ, roots);
+    if (count < 1) {
+        return 0;
+    }
+    float latest = roots[count - 1];
+    if (latest <= 0.0f) {
+        return 0;
+    }
+    *pdtPredict = latest;
+    return 1;
+}
 
 INCLUDE_ASM(0X19A4A0);
 
