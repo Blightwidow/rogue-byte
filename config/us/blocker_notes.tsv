@@ -7,5 +7,3 @@ address	name	semantics	fpu	source
 0X24F790	sceMpegAddStrCallback	stores the current $gp (daddu a0,$gp,$zero) as a 32-bit word into a callback table entry: needs to read $gp	no	worker SDK1 k07, asm read; wall kind: $gp read, not in blockers.tsv
 0X23AA68	func_0023AA68	remnant: 0x23AA68-0x23AA97 is three stack adjustments and stores that nothing reaches; the live function starts at 0x23AA98	no	worker SDK1 k06, asm read; not yet in blockers.tsv
 0X23E614	func_0023E614	remnant: first instruction is lw $sp,0x8($v1) with $v1 unset, an EH/sjlj resume fragment, not a function	no	worker SDK1 k04, asm read; not yet in blockers.tsv
-0X23A598	func_0023A598	64-bit unsigned multiply of the two arguments by 0x08CA0000 (multu1, mfhi1, mflo1), then divide by 1000000 through __udivdi3	no	worker SDK1 k03, asm read; MMI mult1
-0X23C7C0	__muldi3	64x64-bit integer multiply keeping the low 64 bits (libgcc __muldi3 style), built on mult1	no	worker SDK1 k08, asm read; MMI mult1
