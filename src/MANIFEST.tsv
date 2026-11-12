@@ -4980,6 +4980,7 @@ address	name	size	file	whole_file	symbol
 0X233088	func_00233088	72	sdk/fun_00233088.cpp		
 0X233130	func_00233130	64	sdk/fun_00233130.cpp		
 0X233800	AtoiPchz	40	sdk/AtoiPchz.cpp		
+0X2338C0	qsort	2524	sdk/qsort.c		
 0X2342A0	rand	48	sdk/rand.cpp		
 0X2342D0	StricmpPchz	124	sdk/StricmpPchz.c		
 0X234580	func_00234580	52	sdk/fun_00234580.cpp		
@@ -4988,6 +4989,7 @@ address	name	size	file	whole_file	symbol
 0X235388	func_00235388	236	sdk/fun_00235388.cpp		
 0X2357B8	func_002357B8	176	sdk/fun_002357b8.c		
 0X235868	func_00235868	52	sdk/fun_00235868.c		
+0X235B08	func_00235B08	3348	sdk/fun_00235b08.c		
 0X236820	func_00236820	88	unsorted/fun_00236820.c		
 0X236878	func_00236878	40	sdk/fun_00236878.cpp		
 0X2368A0	func_002368A0	40	sdk/fun_002368a0.cpp		
@@ -5171,6 +5173,7 @@ address	name	size	file	whole_file	symbol
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
 0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp		
+0X248F38	__kernel_rem_pio2f	2380	sdk/__kernel_rem_pio2f.c		
 0X249888	__kernel_sinf	260	sdk/__kernel_sinf.cpp		
 0X249C28	fabs	52	sdk/fabs.cpp		
 0X249C60	func_00249C60	32	sdk/fun_00249c60.c		
@@ -5201,11 +5204,14 @@ address	name	size	file	whole_file	symbol
 0X24B9C8	func_0024B9C8	36	sdk/fun_0024b9c8.cpp		
 0X24C360	func_0024C360	192	sdk/fun_0024c360.cpp		
 0X24C420	func_0024C420	144	sdk/fun_0024c420.cpp		
+0X24CF40	func_0024CF40	1704	sdk/fun_0024cf40.cpp		
 0X24F770	SceMpegDemuxPss	32	sdk/SceMpegDemuxPss.cpp		
 0X24F8C0	func_0024F8C0	16	sdk/fun_0024f8c0.c		
 0X24F8D0	func_0024F8D0	160	sdk/fun_0024f8d0.cpp		
 0X24FA38	func_0024FA38	84	sdk/fun_0024fa38.cpp		
 0X24FA90	func_0024FA90	64	sdk/fun_0024fa90.cpp		
+0X2511C8	func_002511C8	1064	sdk/fun_002511c8.cpp		
+0X251790	func_00251790	1368	sdk/fun_00251790.cpp		
 0X251E60	func_00251E60	360	sdk/fun_00251e60.cpp		
 0X251FC8	func_00251FC8	384	sdk/fun_00251fc8.cpp		
 0X252230	func_00252230	140	sdk/fun_00252230.cpp		

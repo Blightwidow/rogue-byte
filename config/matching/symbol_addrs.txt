@@ -7187,6 +7187,7 @@ RO_STR_002A8AC0 = 0x002A8AC0; // source:provisional alias-of:RO_STR_2A8AC0
 RO_STR_002A8AC8 = 0x002A8AC8; // source:provisional alias-of:RO_STR_2A8AC8
 RO_STR_002A8AD0 = 0x002A8AD0; // source:provisional alias-of:RO_STR_2A8AD0
 RO_STR_002A8AD8 = 0x002A8AD8; // source:provisional alias-of:RO_STR_2A8AD8
+RO_STR_002AC620 = 0x002AC620; // source:provisional (read by func_00251790)
 D_FLT_002BF660 = 0x002BF660; // source:provisional
 RO_FLT_002A83B8 = 0x002A83B8; // source:provisional
 RO_FLT_002A83C0 = 0x002A83C0; // source:provisional

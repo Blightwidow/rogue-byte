@@ -4980,6 +4980,7 @@ us_address	name	other_address	pair	score	addresses
 0x233088	func_00233088	0X2338D0	same	0	ok
 0x233130	func_00233130	0X233978	same	0	ok
 0x233800	AtoiPchz	0X234048	same	0	ok
+0x2338C0	qsort	0X234108	same	0	ok
 0x2342A0	rand	0X234AE8	same	0	ok
 0x2342D0	StricmpPchz	0X234B18	same	0	ok
 0x234580	func_00234580	0X234DC8	same	0	ok
@@ -4988,6 +4989,7 @@ us_address	name	other_address	pair	score	addresses
 0x235388	func_00235388	0X235BC8	same	0	ok
 0x2357B8	func_002357B8	0X235FF8	same	0	ok
 0x235868	func_00235868	0X2360A8	same	0	ok
+0x235B08	func_00235B08	0X236348	same	0	ok
 0x236820	func_00236820	0X237060	identical	0	ok
 0x236878	func_00236878	0X2370B8	same	0	ok
 0x2368A0	func_002368A0	0X2370E0	same	0	ok
@@ -5171,6 +5173,7 @@ us_address	name	other_address	pair	score	addresses
 0x246060	sqrtf	0X246AA8	same	0	ok
 0x2488C8	__ieee754_rem_pio2f	0X249310	same	0	ok
 0x248DE0	__kernel_cosf	0X249828	identical	0	ok
+0x248F38	__kernel_rem_pio2f	0X249980	same	0	ok
 0x249888	__kernel_sinf	0X24A2D0	identical	0	ok
 0x249C28	fabs	0X24A670	identical	0	ok
 0x249C60	func_00249C60	0X24A6A8	identical	0	ok
@@ -5201,11 +5204,14 @@ us_address	name	other_address	pair	score	addresses
 0x24B9C8	func_0024B9C8	0X24C410	same	0	ok
 0x24C360	func_0024C360	0X24CDA8	same	0	ok
 0x24C420	func_0024C420	0X24CE68	same	0	ok
+0x24CF40	func_0024CF40	0X24D988	same	0	ok
 0x24F770	SceMpegDemuxPss	0X2501B8	same	0	ok
 0x24F8C0	func_0024F8C0	0X250308	gap	0	ok
 0x24F8D0	func_0024F8D0	0X250318	same	0	ok
 0x24FA38	func_0024FA38	0X250480	same	0	ok
 0x24FA90	func_0024FA90	0X2504D8	same	0	ok
+0x2511C8	func_002511C8	0X251C18	same	0	ok
+0x251790	func_00251790	0X2521E0	same	0	ok
 0x251E60	func_00251E60	0X2528B0	same	0	ok
 0x251FC8	func_00251FC8	0X252A18	same	0	ok
 0x252230	func_00252230	0X252C80	same	0	ok
