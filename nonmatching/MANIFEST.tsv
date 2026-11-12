@@ -91,10 +91,10 @@ address	name	size	file	score
 0X13AEB0	func_0013AEB0	792	bomb/fun_0013aeb0.c	183
 0X13B428	PrepareBombDetonation	416	bomb/PrepareBombDetonation.c	109
 0X13D328	Crfodb_SetLootId	216	new_13cf38/Crfodb_SetLootId.cpp	20
-0X13DA18	LoadSwFromBrx	1384	new_13d8b8/LoadSwFromBrx.cpp	13
-0X13E818	LoadOptionFromBrx	4088	new_13d8b8/LoadOptionFromBrx.cpp	154
+0X13DA18	LoadSwFromBrx	1384	new_13d8b8/LoadSwFromBrx.cpp	7
+0X13E818	LoadOptionFromBrx	4088	new_13d8b8/LoadOptionFromBrx.cpp	152
 0X13FAD0	func_0013FAD0	112	new_13f888/fun_0013fad0.cpp	9
-0X13FB40	LoadSwObjectsFromBrx	728	new_13f888/LoadSwObjectsFromBrx.cpp	31
+0X13FB40	LoadSwObjectsFromBrx	728	new_13f888/LoadSwObjectsFromBrx.cpp	30
 0X140750	func_00140750	616	new_13f888/fun_00140750.c	102
 0X140C30	func_00140C30	88	new_13f888/fun_00140c30.c	6
 0X140DB0	AdjustJtXpVelocity	256	new_13f888/AdjustJtXpVelocity.c	45
