@@ -12,7 +12,12 @@ side-by-side diff (binary left, ours right). The function in the object is the o
 registry's name for the address, else the only function in the object.
 
 --record: counts the try in data/matching/functions.tsv (tries, best score; status `tried`, or `matched` with the
-source path at score 0).
+source path at score 0). --replace-best (with --record) sets `best` to this score even when it is higher: for a draft whose lower
+score came from a wrong call (a callee given the wrong arguments), so the registry shows the honest one.
+
+At score 0 (not --quiet) it also says what would stop the match from landing: the rule check of check_source.py (RULES; WARNING
+lines are for the reader, never a ban) and, for a function inside a whole file (config/us/whole_files.tsv), a trial merge into that
+file, proved and written nowhere (WHOLE FILE: `would land`, or why not: a callee or global the file declares otherwise).
 
 Every run is also appended to work/matching/runs.log (time, TRY_ARM, address, score, sha1, kept copy under work/matching/kept/, fingerprint of the
 toolchain: claim.py ignores a run made under another one);
@@ -102,6 +107,26 @@ def log_run(arm, address, score, source, lang, quiet):
                      f'\t{toolchain_fingerprint()}\n')
 
 
+def landing_report(address, name, source):
+    """Lines saying whether a source that scores 0 can land: its rule check (check_source.py) and, inside a whole file, a trial merge."""
+    sys.path[:0] = [os.path.join(LAB, 'scripts', 'matching'), os.path.join(LAB, 'scripts', 'build'), os.path.join(LAB, 'scripts')]
+    import check_source
+    import make_whole_files
+    text = open(source, encoding='utf-8').read()
+    found = check_source.problems(text)
+    lines = [f'RULES: {kind}: line {number}: {what}' for number, kind, what in found] or ['RULES: ok']
+    lines += [f'WARNING: line {number}: a local holding a global\'s address (banned if it only keeps the address in a register): {what}'
+              for number, what in check_source.global_address_locals(text)]
+    lines += [f'WARNING: line {number}: a literal given its own name: {what}' for number, what in check_source.literal_locals(text)]
+    if make_whole_files.whole_file_of(address) is not None:
+        if make_whole_files.already_landed(address, name):
+            lines.append('WHOLE FILE: the function is in its whole file already')
+        else:
+            landed, message, _ = make_whole_files.land(address, source, write=False)
+            lines.append(f'WHOLE FILE: {message}' if landed else f'WHOLE FILE: would not land: {message}')
+    return lines
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('address', type=lambda text: int(text, 16))
@@ -109,6 +134,7 @@ def main():
     parser.add_argument('--symbol')
     parser.add_argument('--record', action='store_true')
     parser.add_argument('--quiet', action='store_true')
+    parser.add_argument('--replace-best', action='store_true', help='with --record: set best to this score even when it is higher')
     parser.add_argument('--lang', default=None, choices=['c', 'c++'], help='source language (default: C for a .c file, C++ otherwise; Sony\'s sibling calls (`j callee`) and the SDK range need C)')
     arguments = parser.parse_args()
     arguments.lang = arguments.lang or ('c' if arguments.source.endswith('.c') else 'c++')
@@ -153,6 +179,9 @@ def main():
         score = int(output.split()[1]) if output.startswith('score ') else None
     if os.path.exists(obj):
         os.remove(obj)
+    if score == 0 and not arguments.quiet:
+        for line in landing_report(arguments.address, row['name'], source):
+            print(line)
     log_run(arm or '-', arguments.address, score, source, arguments.lang, arguments.quiet)
     if not arguments.quiet:
         repeated = note_repeat(arguments.address, source, score)
@@ -160,7 +189,7 @@ def main():
             print(repeated)
     if arguments.record:
         row['tries'] = str(int(row['tries'] or 0) + 1)
-        if score is not None and (row['best'] == '' or score < int(row['best'])):
+        if score is not None and (row['best'] == '' or score < int(row['best']) or arguments.replace_best):
             row['best'] = str(score)
         if row['status'] != 'matched':
             row['status'] = 'matched' if score == 0 else 'tried'

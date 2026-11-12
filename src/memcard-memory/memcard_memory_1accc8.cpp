@@ -6,15 +6,148 @@
 #include "types.h"
 #include "include_asm.h"
 
-INCLUDE_ASM(0X1ACCC8);
+struct MENU;
+
+struct B8 { long v; } __attribute__((packed));
+
+struct MEMCARD;
+
+struct SLOTSCREEN { char pad[0x24]; int icur; };
+
+struct AUTOSAVE { char pad[0xFD50]; void *pslotCur; void *pad2; void *pslotOther; char pad3[0xFD6C - 0xFD5C]; int field_FD6C; };
+
+extern "C" void CreateMemcardThread__FP7MEMCARDii_1ACCC8(MEMCARD *, long);
+
+extern "C" int FJoyButtonPressed(int, int);
+
+extern "C" int FMemcardThreadValid__FP7MEMCARD_1ACCC8(void *);
+
+extern "C" int FSwLoadBusy(void *);
+
+extern "C" void MemcardMenu_ClearState(void *);
+
+extern "C" int MemcardMenu_KindOfState(void *);
+
+extern "C" void MemcardMenu_SetState(MENU *, int);
+
+extern "C" void PauseMenu_Close(void *);
+
+extern "C" void RestartBootQueue(void);
+
+extern "C" void func_001ACFE0(void *);
+
+extern "C" void func_001AD168_1ACCC8(MENU *);
+
+extern "C" AUTOSAVE B_002E65E0;
+
+extern "C" int B_002E65E8;
+
+extern "C" char B_002F633C[];
+
+extern "C" SLOTSCREEN B_003D9ED0;
+
+extern "C" s32 B_003DD490;
+
+extern "C" const B8 RO_002A6D88;
+
+extern "C" float g_2ddf0c;
+
+#define F(type, base, off) (*(type *)((char *)(base) + (off)))
+
+extern "C" void MemcardMenu_Update(MENU *self)
+{
+    void *owner = F(void *, self, 0x24);
+    if (owner == 0 || F(int, owner, 0x58) != 2 || F(int, owner, 0x64) != 2 || FSwLoadBusy(&B_003DD490) != 0)
+        return;
+    if (g_2ddf0c - F(float, F(void *, self, 0x24), 0x5C) <= 0.1f)
+        return;
+    {
+        int kind = MemcardMenu_KindOfState(self);
+        if (kind != 1) {
+            if (kind == 2 && F(int, self, 0x10) != 0) {
+                if (FJoyButtonPressed(F(int, self, 0x10), 0x80) != 0) {
+                    func_001AD168_1ACCC8(self);
+                    return;
+                }
+                if (F(int, self, 0x10) != 0 && FJoyButtonPressed(F(int, self, 0x10), 0x10) != 0) {
+                    func_001ACFE0(self);
+                    return;
+                }
+            }
+        } else if (F(int, self, 0x10) != 0 && FJoyButtonPressed(F(int, self, 0x10), 0x80) != 0) {
+            func_001ACFE0(self);
+            return;
+        }
+        switch (F(int, self, 0x40)) {
+        case 32:
+        case 34:
+            if (F(int, self, 0x44) != 1)
+                MemcardMenu_ClearState(self);
+            break;
+        case 17:
+        case 18:
+        case 21:
+        case 24:
+        case 46:
+            if (B_002E65E8 == 6)
+                MemcardMenu_ClearState(self);
+            break;
+        case 19:
+            if (FMemcardThreadValid__FP7MEMCARD_1ACCC8(B_002F633C) == 0) {
+                if (B_002E65E0.field_FD6C == 0) {
+                    CreateMemcardThread__FP7MEMCARDii_1ACCC8((MEMCARD *)B_002F633C, RO_002A6D88.v);
+                    MemcardMenu_SetState(self, 0x16);
+                } else {
+                    MemcardMenu_SetState(self, 0x14);
+                }
+            }
+            break;
+        case 22:
+            if (FMemcardThreadValid__FP7MEMCARD_1ACCC8(B_002F633C) == 0) {
+                if (B_002E65E0.field_FD6C != 0)
+                    MemcardMenu_SetState(self, 0x17);
+                else
+                    MemcardMenu_ClearState(self);
+            }
+            break;
+        case 26:
+            if (FMemcardThreadValid__FP7MEMCARD_1ACCC8(B_002F633C) == 0) {
+                if (B_002E65E0.field_FD6C == 0) {
+                    MemcardMenu_ClearState(self);
+                    int next = F(int, self, 0x4C);
+                    switch (next) {
+                    case 1:
+                        RestartBootQueue();
+                        break;
+                    case 2:
+                        PauseMenu_Close(&B_003D9ED0);
+                        break;
+                    }
+                } else if (F(int, self, 0x4C) == 3) {
+                    MemcardMenu_SetState(self, 0x23);
+                } else {
+                    MemcardMenu_SetState(self, 0x1D);
+                }
+            }
+            break;
+        case 33:
+            if (FMemcardThreadValid__FP7MEMCARD_1ACCC8(B_002F633C) == 0) {
+                B_002E65E0.pslotOther = 0;
+                if (B_002E65E0.field_FD6C == 0)
+                    MemcardMenu_ClearState(self);
+                else
+                    MemcardMenu_SetState(self, 0x1D);
+            }
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM(0X1ACFE0);
 
 struct MEMCARD;
 
 struct MENU { char pad[0x40]; int state; };
-
-struct B8 { long v; } __attribute__((packed));
 
 extern "C" void CreateMemcardThread__FP7MEMCARDii(MEMCARD *, long);
 
@@ -131,8 +264,6 @@ struct CRef_1AD3E0 { int tag; int n; int a; int b; };
 
 struct MENU_1AD3E0 { char pad[0x4C]; int mode; };
 
-struct AUTOSAVE { char pad[0xFD50]; void *pslotCur; void *pad2; void *pslotOther; };
-
 extern AUTOSAVE B_002E65E0;
 
 extern MENU_1AD3E0 B_002E6550;
@@ -206,8 +337,6 @@ INCLUDE_ASM(0X1AD538);
 struct ITEM_1AD740 { int unk0; int unk4; int islot; };
 
 struct SLOTENT { int unk0; int unk4; void *pblot; char pad[0x14 - 0xC]; int selected; char pad2[0x1C - 0x18]; };
-
-struct SLOTSCREEN { char pad[0x24]; int icur; };
 
 extern int g_2e6594;
 

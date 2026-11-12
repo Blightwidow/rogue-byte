@@ -183,7 +183,7 @@ start	end	file
 0x223A10	0x223F70	tn-screen/tn_screen_223a10.c
 0x225660	0x2259D8	new_225300/new_225300_225660.c
 0x225E98	0x226550	new_225aa8/UpdateTankFire_file.cpp
-0x226550	0x226AB8	new_225aa8/new_225aa8_226550.c
+0x226550	0x226AB8	new_225aa8/new_225aa8_226550.cpp
 0x226AB8	0x226C10	new_225aa8/new_225aa8_226ab8.c
 0x226C10	0x227350	vifs/__4VIFS_file.cpp
 0x227350	0x2275B8	new_2271f8/new_2271f8_227350.cpp

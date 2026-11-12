@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.join(HERE, 'build'))
 
 import asm_units  # noqa: E402
 import blockers_report  # noqa: E402
+import check_calls  # noqa: E402
 import check_cleanup  # noqa: E402
 import claim  # noqa: E402
 import check_source  # noqa: E402
@@ -2061,6 +2062,59 @@ class RodataFileTests(unittest.TestCase):
         groups, skipped = self.module.groups_of('rodata/x', 0x2A0000, 12, {}, set(), owned=[(0x2A0004, 0x2A0008)])
         self.assertEqual(([(start, size) for start, size, _ in groups], [row[0] for row in skipped]),
                          ([(0x2A0000, 4), (0x2A0008, 4)], ['D_002A0004']))
+
+
+class CheckCallsTests(unittest.TestCase):
+    MATCHED = [('struct SW;\nvoid RestartBootQueue(void) { }\nextern SW B_003DD490;\n', False),
+               ('void RestartBootQueue(void);\n', False)]
+
+    def flags(self, draft, c_file=False):
+        arities, types = check_calls.learn(self.MATCHED)
+        return check_calls.flags(draft, c_file, 'Draft', arities, types)
+
+    def test_a_callee_with_an_extra_argument_is_flagged(self):
+        self.assertEqual(self.flags('void RestartBootQueue(int next);\n'), ['RestartBootQueue: 1 args, matched code 0'])
+
+    def test_unspecified_arguments_in_c_are_not_flagged(self):
+        self.assertEqual(self.flags('void RestartBootQueue();\n', c_file=True), [])
+
+    def test_a_struct_global_declared_as_bytes_is_flagged(self):
+        self.assertEqual(self.flags('extern char B_003DD490[];\n'), ['global B_003DD490: declared char[], matched code SW'])
+
+    def test_a_struct_return_counts_its_hidden_address(self):
+        arities, types = check_calls.learn([('struct CRef { int a, b; };\nvoid RefEval(CRef *pref, int p, int f);\n', False)])
+        draft = 'struct CRef { int a, b; };\nCRef RefEval(int p, int f);\n'
+        self.assertEqual(check_calls.flags(draft, False, 'Draft', arities, types), [])
+
+    def test_a_matching_declaration_is_not_flagged(self):
+        self.assertEqual(self.flags('void RestartBootQueue(void);\nextern SW B_003DD490;\n'), [])
+
+
+class LandingToolTests(unittest.TestCase):
+    WHOLES = [(0x100000, 0x100100, 'm/file.cpp')]
+
+    def test_a_function_in_its_whole_file_counts_as_landed(self):
+        text = '#include "include_asm.h"\nINCLUDE_ASM(0X100080);\nextern "C" void LoadSndFromBrx(int a)\n{\n}\n'
+        self.assertTrue(make_whole_files.already_landed(0x100000, 'LoadSndFromBrx', self.WHOLES, text))
+
+    def test_a_function_still_from_assembly_is_not_landed(self):
+        text = '#include "include_asm.h"\nINCLUDE_ASM(0X100000);\nvoid LoadSndFromBrx(int a);\n'
+        self.assertFalse(make_whole_files.already_landed(0x100000, 'LoadSndFromBrx', self.WHOLES, text))
+
+    def test_a_local_holding_a_global_address_is_reported(self):
+        text = 'extern GSR D_002DEB80;\nvoid f()\n{\n    GSR *gs = &D_002DEB80;\n    gs->a = 1;\n}\n'
+        self.assertEqual(check_source.global_address_locals(text), [(4, 'GSR *gs = &D_002DEB80;')])
+
+    def test_a_pointer_to_a_local_is_not_reported(self):
+        text = 'void f()\n{\n    VECTOR v;\n    VECTOR *pv = &v;\n    pv->x = 1;\n}\n'
+        self.assertEqual(check_source.global_address_locals(text), [])
+
+    def test_a_c_definition_does_not_outvote_the_callers(self):
+        matched = [('float func_00153638(float g) { return g; }\n', True), ('float func_00153638(void *p, float g);\n', False),
+                   ('float func_00153638(void *p, float g);\n', False)]
+        arities, types = check_calls.learn(matched)
+        self.assertEqual(check_calls.flags('float func_00153638(void *p, float g);\n', False, 'Draft', arities, types), [])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,7 +6,7 @@ struct GLOBALS_1D8D80 { char pad0[0x3B2C]; SAVEPATH *akey[11]; };
 extern "C" {
 extern GLOBALS_1D8D80 B_003DD490;
 extern SAVEVARS B_003E0EA8;
-void *CStackFrame_Construct(void *);
+void *CStackFrame_Construct(void *, int);
 void CStackFrame_Destructor(void *, int);
 int FSaveDataMatchesLayout(SAVEVARS *, char *);
 CRef RefGetSaveValue(SAVEVARS *, SAVEPATH *, char *);
@@ -25,7 +25,7 @@ static inline void SetGameSaveValue(SAVEPATH *ppath, CRef ref, char *pbSave)
 extern "C" void ResetSaveKeepingOptions(char *pbSave, int fKeepOptions)
 {
     char frame[0x10];
-    CStackFrame_Construct(frame);
+    CStackFrame_Construct(frame, fKeepOptions);
     {
     GLOBALS_1D8D80 *pglobals = &B_003DD490;
     SAVEPATH *apath[11] = { pglobals->akey[0], pglobals->akey[7], pglobals->akey[10], pglobals->akey[8], pglobals->akey[9],

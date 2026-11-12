@@ -120,7 +120,7 @@ address	name	size	file	score
 0X149C80	UpdateSwCallbacks	560	button-cd/UpdateSwCallbacks.cpp	28
 0X14A2A0	func_0014A2A0	472	button-cd/fun_0014a2a0.cpp	70
 0X14A4D0	func_0014A4D0	1376	button-cd/fun_0014a4d0.c	383
-0X14AE38	func_0014AE38	872	button-cd/fun_0014ae38.cpp	67
+0X14AE38	func_0014AE38	872	button-cd/fun_0014ae38.cpp	14
 0X14B290	func_0014B290	464	button-cd/fun_0014b290.c	90
 0X14B7F8	CpchzTokenizePath__FPc	448	cd/CpchzTokenizePath__FPc.cpp	62
 0X14C748	ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG	688	clip/ClsgClipEdgeToSphere__FP6VECTORfT0T0iP3LSG.c	169
@@ -164,7 +164,6 @@ address	name	size	file	score
 0X156918	FHitFxCoversPos	160	lo_156918/FHitFxCoversPos.c	33
 0X1569B8	InitSwHitFxParms	480	new_1569b8/InitSwHitFxParms.c	63
 0X156FE8	FHitFxSensorReaches	192	new_1569b8/FHitFxSensorReaches.c	39
-0X157CF0	DrawPassSetupCamera	688	dmas-dzg/DrawPassSetupCamera.cpp	31
 0X158988	SolveDzg__FP3DZGiiPP2XPPiPPP2SO	408	dzg_158668/SolveDzg__FP3DZGiiPP2XPPiPPP2SO.c	55
 0X158E20	ApplyDzg	416	dzg-emitter/ApplyDzg.c	104
 0X159240	LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream	664	emitter_1591b0/LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream.c	170
@@ -175,7 +174,7 @@ address	name	size	file	score
 0X15BF40	SetEmitdvEmitb__FP6EMITDVP5EMITB	152	emitter_1591b0/SetEmitdvEmitb__FP6EMITDVP5EMITB.c	30
 0X15CAD8	expl__static_initialization_and_destruction_0	624	emitter-font/expl__static_initialization_and_destruction_0.cpp	68
 0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	8
-0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	56
+0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	36
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
 0X160CE0	ClearPendingFrame__FP3FRM	392	frm/ClearPendingFrame__FP3FRM.cpp	43
@@ -185,7 +184,6 @@ address	name	size	file	score
 0X163460	SaveJobVariables	320	new_161458/SaveJobVariables.cpp	23
 0X1643B0	SaveTaskVariables	544	sensor-geom/SaveTaskVariables.cpp	84
 0X164DF0	SetTaskState	808	sensor-geom/SetTaskState.cpp	106
-0X165538	RestartAtTask	624	sensor-geom/RestartAtTask.cpp	4
 0X165B40	UpdateDependentTaskState	232	sensor-geom/UpdateDependentTaskState.cpp	22
 0X165E38	StartGameFromSave	464	sensor-geom/StartGameFromSave.cpp	38
 0X166428	TransformPoints	120	sensor-geom/TransformPoints.c	24
@@ -198,7 +196,6 @@ address	name	size	file	score
 0X16A000	LoadGlobFromBrx	10464	new_167320/LoadGlobFromBrx.cpp	695
 0X16C8E0	func_0016C8E0	448	new_167320/fun_0016c8e0.cpp	98
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	159
-0X16D6C8	func_0016D6C8	896	new_167320/fun_0016d6c8.cpp	63
 0X16DA48	func_0016DA48	784	new_167320/fun_0016da48.cpp	95
 0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	4
 0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	28
@@ -302,7 +299,7 @@ address	name	size	file	score
 0X1991A0	func_001991A0	248	new_1942f0/fun_001991a0.c	54
 0X199298	func_00199298	368	new_1942f0/fun_00199298.cpp	31
 0X1995D8	BuildJmpEdgeProbes	512	jump/BuildJmpEdgeProbes.c	123
-0X1997D8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	504	jump/FCheckJtEdgeNormal__FP2JTP6VECTORT1.cpp	41
+0X1997D8	FCheckJtEdgeNormal__FP2JTP6VECTORT1	504	jump/FCheckJtEdgeNormal__FP2JTP6VECTORT1.cpp	39
 0X19A098	FJtStuck	872	jump/FJtStuck.c	205
 0X19A4A0	MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1	688	stephide_19a4a0/MeasureJtJumpToTarget__FP2JTP6VECTORP3ALOT1T1PfT5T1T1.c	162
 0X19A750	GetJmpLaunchVelocity	776	stephide_19a4a0/GetJmpLaunchVelocity.c	183
@@ -343,7 +340,7 @@ address	name	size	file	score
 0X1A7C18	PxpAdd	504	stepguard-sw/PxpAdd.c	101
 0X1A7E60	RecalcSwXpPos	352	sw-mark/RecalcSwXpPos.c	69
 0X1A81F8	ClsgClipSoBspEdges	536	sw-mark/ClsgClipSoBspEdges.cpp	16
-0X1A8410	CategorizeAlsg__FiP3LSGPiT2PP3LSGT4	680	mark/CategorizeAlsg__FiP3LSGPiT2PP3LSGT4.cpp	46
+0X1A8410	CategorizeAlsg__FiP3LSGPiT2PP3LSGT4	680	mark/CategorizeAlsg__FiP3LSGPiT2PP3LSGT4.cpp	44
 0X1A86B8	CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG	312	mark/CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG.cpp	44
 0X1A9108	bevy_physics_sphere_1a9108	704	mark/bevy_physics_sphere_1a9108.c	170
 0X1A9B28	MarkSoContactsSphereBsp	280	mark-memcard/MarkSoContactsSphereBsp.c	65
@@ -352,15 +349,14 @@ address	name	size	file	score
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.c	324
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	31
 0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	6
-0X1ACCC8	MemcardMenu_Update	792	memcard-memory/MemcardMenu_Update.cpp	66
 0X1ACFE0	func_001ACFE0	392	memcard-memory/fun_001acfe0.cpp	16
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
 0X1ADA20	func_001ADA20	408	memcard-memory/fun_001ada20.c	107
 0X1ADC40	func_001ADC40	432	memcard-memory/fun_001adc40.c	124
-0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.cpp	66
+0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.cpp	33
 0X1AF9C8	RefreshOptionItem	448	smartguard-ac/RefreshOptionItem.cpp	57
 0X1AFFC0	CycleOptionItem	184	smartguard-ac/CycleOptionItem.cpp	15
-0X1B0290	OpenPauseMenu	592	smartguard-ac/OpenPauseMenu.cpp	19
+0X1B0290	OpenPauseMenu	592	smartguard-ac/OpenPauseMenu.cpp	2
 0X1B1160	SteerSlotSoAlongCrv	456	ac-rog/SteerSlotSoAlongCrv.c	107
 0X1B1900	SenseSlotSoTargetState	312	ac-rog/SenseSlotSoTargetState.c	63
 0X1B1E88	FireMissile	136	ac-rog/FireMissile.cpp	6
@@ -388,8 +384,7 @@ address	name	size	file	score
 0X1B98A0	FMurrayCanUseGadget	360	mpeg-memcard/FMurrayCanUseGadget.cpp	10
 0X1BA018	func_001BA018	160	mpeg-memcard/fun_001ba018.c	34
 0X1BA608	UpdateZoneScriptBeh	544	mpeg-memcard/UpdateZoneScriptBeh.c	94
-0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	43
-0X1BAF18	StepStgSwitch	824	mpeg-memcard/StepStgSwitch.cpp	16
+0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	38
 0X1BB250	func_001BB250	432	mpeg-memcard/fun_001bb250.cpp	82
 0X1BB400	RunStgSwitch	584	mpeg-memcard/RunStgSwitch.c	101
 0X1BB648	RunStgSwitchStage	720	mpeg-memcard/RunStgSwitchStage.c	100
@@ -436,8 +431,8 @@ address	name	size	file	score
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	65
 0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	45
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	21
-0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	66
-0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	100
+0X1CAA60	ReleaseLease	896	new_1c90d0/ReleaseLease.cpp	32
+0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	74
 0X1CBB58	func_001CBB58	80	new_1c90d0/fun_001cbb58.c	17
 0X1CBBA8	func_001CBBA8	432	new_1c90d0/fun_001cbba8.c	99
 0X1CCAC0	Carry_SetState	456	new_1c90d0/Carry_SetState.cpp	56
@@ -469,7 +464,7 @@ address	name	size	file	score
 0X1D72A8	UpdateHub	368	new_1d7268/UpdateHub.cpp	77
 0X1D82B8	NPercentCompleteSaveData	504	new_1d7780/NPercentCompleteSaveData.cpp	65
 0X1D8B20	func_001D8B20	240	new_1d7780/fun_001d8b20.cpp	16
-0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	36
+0X1D8D80	ResetSaveKeepingOptions	632	splice-pair-jump/ResetSaveKeepingOptions.cpp	35
 0X1D8FF8	ApplyOptionsFromSave	648	splice-pair-jump/ApplyOptionsFromSave.cpp	19
 0X1D9968	InitMeter	456	splice-gc-wipe/InitMeter.cpp	73
 0X1D9B60	SetMeterState	664	splice-gc-wipe/SetMeterState.c	128
@@ -507,7 +502,7 @@ address	name	size	file	score
 0X1EFAC0	CSm_LoadFromBrx	1544	sm/CSm_LoadFromBrx.cpp	88
 0X1F0D88	ChooseSmaTransition	536	sm-so/ChooseSmaTransition.cpp	108
 0X1F11A8	DtSmaReachState	424	sm-so/DtSmaReachState.cpp	16
-0X1F1A40	func_001F1A40	696	sm-so/fun_001f1a40.cpp	26
+0X1F1A40	func_001F1A40	696	sm-so/fun_001f1a40.cpp	21
 0X1F2500	func_001F2500	392	sm-so/fun_001f2500.c	96
 0X1F2D48	RemoveSoLoHierarchy	304	sm-so/RemoveSoLoHierarchy.c	59
 0X1F2E78	UpdateSoRoot	360	sm-so/UpdateSoRoot.cpp	105
@@ -627,7 +622,6 @@ address	name	size	file	score
 0X2255C8	func_002255C8	152	new_225300/fun_002255c8.c	33
 0X225660	SetDyshState	544	new_225300/SetDyshState.c	102
 0X226370	func_00226370	136	new_225aa8/fun_00226370.c	26
-0X226550	UpdateSw	624	new_225aa8/UpdateSw.cpp	76
 0X2267C0	UpdateSwPaused	416	new_225aa8/UpdateSwPaused.cpp	42
 0X2275B8	func_002275B8	368	new_2271f8/fun_002275b8.cpp	74
 0X227C90	func_00227C90	144	new_2271f8/fun_00227c90.c	20

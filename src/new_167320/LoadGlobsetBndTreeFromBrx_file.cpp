@@ -537,7 +537,81 @@ void func_0016D698(short tag, Src *src, Entry **cursor)
     out->count = (short)(((src->end - src->begin) >> 4) + 0x23);
 }
 
-INCLUDE_ASM(0X16D6C8);
+struct GIFS;
+
+extern "C" void AddPrimPack__4GIFSiiUl(GIFS *, int, int, unsigned long);
+
+extern "C" void PackAD__4GIFSll(GIFS *, int, long);
+
+extern "C" void AddPrimList__4GIFSiUl(GIFS *, int, unsigned long);
+
+extern "C" void ListUV__4GIFSii(GIFS *, int, int);
+
+extern "C" void GIFS_ListXYZ(GIFS *, int, int, int);
+
+extern "C" void func_0016D698(int, GIFS *, void **);
+
+extern "C" void func_0016D6C8(GIFS *pgifs, int flags, void **pcursor)
+{
+    AddPrimPack__4GIFSiiUl(pgifs, 0x200, 1, 0xE);
+    func_0016D698((flags & 4) ? 4 : 5, pgifs, pcursor);
+    if (flags & 0x200) {
+        PackAD__4GIFSll(pgifs, 0x4D, ((0xFFFCL << 20) | 0x8000L) << 10);
+    } else if (flags & 0x100) {
+        PackAD__4GIFSll(pgifs, 0x4D, ((-0x80000000L << 5) | 0x8000L) << 10);
+    } else {
+        unsigned int mask = (flags & 0x800000) ? 0x7FFFFFFF : 0xFFFFFFFF;
+        if (flags & 0x400000)
+            mask &= 0xFF7FFFFF;
+        if (flags & 0x200000)
+            mask &= 0xFFBFFFFF;
+        if (flags & 0x100000)
+            mask &= 0xFFDFFFFF;
+        if (flags & 0x80000)
+            mask &= 0xFFEFFFFF;
+        if (flags & 0x40000)
+            mask &= 0xFFF0FFFF;
+        if (flags & 0x20000)
+            mask &= 0xFFFF7FFF;
+        if (flags & 0x10000)
+            mask &= 0xFFFFBFFF;
+        PackAD__4GIFSll(pgifs, 0x4D, ((long)mask << 32) | 0x02000000);
+    }
+    func_0016D698((flags & 1) ? 6 : 7, pgifs, pcursor);
+    PackAD__4GIFSll(pgifs, 7, 0xEA82L << 20);
+    PackAD__4GIFSll(pgifs, 0x15, 1);
+    PackAD__4GIFSll(pgifs, 0x3F, 0);
+    PackAD__4GIFSll(pgifs, 0x45, 0);
+    PackAD__4GIFSll(pgifs, 0x19, 0);
+    PackAD__4GIFSll(pgifs, 0x41, ((0xE000L << 31) | 0x8000L) << 10);
+    PackAD__4GIFSll(pgifs, 0x48, 0x31001);
+    PackAD__4GIFSll(pgifs, 0x43, 0x2A);
+    PackAD__4GIFSll(pgifs, 0x3B, 0x8000L << 24);
+    PackAD__4GIFSll(pgifs, 1, (0xC040L << 17) | 0x8080L);
+    PackAD__4GIFSll(pgifs, 0, 0x356);
+    AddPrimList__4GIFSiUl(pgifs, 4, 0x5353);
+    int column = (flags & 0x40) ? 0 : 8;
+    int row = (flags & 0x10) ? 0 : 8;
+    if (column < 0x200) {
+        int uvB = row * 0x10 + 0x88;
+        int uvA = row * 0x10 + 8;
+        int xyzB = column * 0x10 + 0x80;
+        do {
+            int current = uvA;
+            uvA += 0x100;
+            ListUV__4GIFSii(pgifs, current, 8);
+            GIFS_ListXYZ(pgifs, column * 0x10, 0, 0);
+            column += 0x10;
+            int currentB = uvB;
+            uvB += 0x100;
+            ListUV__4GIFSii(pgifs, currentB, 0x1C08);
+            GIFS_ListXYZ(pgifs, xyzB, 0x1C00, 0);
+            xyzB += 0x100;
+        } while (column < 0x200);
+    }
+    AddPrimPack__4GIFSiiUl(pgifs, 0x200, 1, 0xE);
+    PackAD__4GIFSll(pgifs, 0x41, ((0xE000L << 30) | 0x8000L) << 10);
+}
 
 INCLUDE_ASM(0X16DA48);
 

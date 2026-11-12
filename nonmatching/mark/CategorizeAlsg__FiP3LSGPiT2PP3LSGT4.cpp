@@ -4,8 +4,8 @@ struct LSG {
     VECTOR pos1;
     VECTOR posA;
     VECTOR posB;
-    float s0;
     float s1;
+    float s0;
     int unk48;
     int fBlock0;
     int fBlock1;
@@ -45,8 +45,8 @@ void CategorizeAlsg(int clsg, LSG *alsg, int *pcpos, int *apos, LSG **aplsg, LSG
             }
             goto LSearch;
         }
-        Swap(plsg->pos0, plsg->pos1);
         Swap(plsg->posA, plsg->posB);
+        Swap(plsg->pos0, plsg->pos1);
         Swap(plsg->s0, plsg->s1);
         Swap(plsg->fBlock0, plsg->fBlock1);
         plsg->iipos = 1;
