@@ -13,15 +13,15 @@ inline Iter_2267C0::Iter_2267C0(List_2267C0 *source)
 {
     link = (char *)source;
     list = source;
-    prev = g_2dd2fc;
     offset = source->offset;
+    prev = g_2dd2fc;
     g_2dd2fc = this;
 }
 struct Sw_2267C0 {
     char pad0[0x3D88]; List_2267C0 list;
     char pad2[0x3F14 - 0x3D94]; int count; char pad3[0x3F1C - 0x3F18]; int *pindex; Entry_2267C0 *entries;
 };
-extern "C" void UpdateAsega(void *, void *);
+extern "C" float UpdateAsega(void *, void *);
 
 void UpdateSwPaused(Sw_2267C0 *self)
 {
@@ -43,8 +43,8 @@ void UpdateSwPaused(Sw_2267C0 *self)
             index = ++i;
         } while (index < self->count);
     }
-    self->pindex = 0;
     Iter_2267C0 it(&self->list);
+    self->pindex = 0;
     Item_2267C0 *cur = self->list.head;
     it.link = (char *)cur + it.offset;
     if (cur != 0) {

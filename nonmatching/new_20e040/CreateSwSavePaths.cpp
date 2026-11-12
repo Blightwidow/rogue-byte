@@ -12,7 +12,7 @@ Ref *RefSetGameSaveValue(Ref *, SAVEPATH *, Ref *, void *);
 int IdCurrentLevel(void);
 int IEpisodeCurrent(void);
 int NEpisodeBest(void);
-void func_001D8B20(Ref *, Ref *, const char *, int);
+void func_001D8B20(Ref *, Ref *, const char *);
 void bevy_camera_follow_activity(void *, int, int);
 extern char B_002DEB30[];
 extern int B_002E1E54;
@@ -54,7 +54,7 @@ void CreateSwSavePaths(SW *self)
     if (NEpisodeBest() < current) {
         Ref result;
         Ref value; value.tag = 0x15; value.n = IEpisodeCurrent();
-        func_001D8B20(&result, &value, RO_002A8A78, 0);
+        func_001D8B20(&result, &value, RO_002A8A78);
     }
     bevy_camera_follow_activity(B_002DEB30, 3, 0);
 }

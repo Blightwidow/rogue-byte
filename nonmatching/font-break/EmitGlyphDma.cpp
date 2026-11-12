@@ -50,8 +50,8 @@ void EmitGlyphDma(char *self, char *src, char *tail, int flags)
             n -= 4;
             int w0 = from[0]; int w1 = from[1]; int w2 = from[2]; int w3 = from[3];
             from += 4;
-            to[0] = w0; to[1] = w1; to[2] = w2; to[3] = w3;
             to += 4;
+            to[0] = w0; to[1] = w1; to[2] = w2; to[3] = w3;
         } while (n >= 0);
         g_2dea28.p = g_2dea28.p + 0x10;
     }

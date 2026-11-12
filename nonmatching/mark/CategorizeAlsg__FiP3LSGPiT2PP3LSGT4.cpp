@@ -18,8 +18,8 @@ extern "C" void *memmove(void *, const void *, unsigned int);
 template <class T> static inline void Swap(T &a, T &b)
 {
     T t = a;
-    a = b;
     b = t;
+    a = b;
 }
 
 void CategorizeAlsg(int clsg, LSG *alsg, int *pcpos, int *apos, LSG **aplsg, LSG **pplsgFree)
@@ -65,11 +65,10 @@ void CategorizeAlsg(int clsg, LSG *alsg, int *pcpos, int *apos, LSG **aplsg, LSG
     }
     for (ipos = 0; ipos < cpos; ipos++) {
         LSG **pplsg = &aplsg[ipos];
-        int *pipos = &apos[ipos];
         if ((*pplsg)->plsgNext == 0) {
             LSG *plsg = plsgBoth;
             if (plsg) {
-                int iposT = *pipos;
+                int iposT = *(&apos[ipos]);
                 do {
                     unsigned short *aipos = plsg->aipos;
                     if (aipos[0] == iposT || aipos[1] == iposT)
@@ -82,9 +81,9 @@ void CategorizeAlsg(int clsg, LSG *alsg, int *pcpos, int *apos, LSG **aplsg, LSG
                 (*pplsg)->plsgNext = *pplsgFree;
                 *pplsgFree = *pplsg;
                 memmove(pplsg, pplsg + 1, cb);
-                memmove(pipos, pipos + 1, cb);
-                cpos--;
+                memmove((&apos[ipos]), (&apos[ipos]) + 1, cb);
                 ipos--;
+                cpos--;
             }
         }
     LNext:;

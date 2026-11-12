@@ -13,7 +13,7 @@ void UnlinkPairNode(CPair *);
 void FreeSlotheapPv(SLOTHEAP *, void *);
 void SetTag__4CRef4TAGK(CRef *, int);
 void CRef_ConstructPair(CRef *, CPair *);
-void CRef_CopyConstruct(CRef *, CRef *);
+void CRef_CopyConstruct(CRef *);
 void bevy_splice_value_list_ref(CRef *);
 extern SLOTHEAP B_004520A8;
 }
@@ -34,7 +34,7 @@ extern "C" CRef *RefOpAppend(CRef *pret, int carg, CRef *aref)
     PairHandle copy;
     PairHandle clone;
     if (aref->tagk == 0) {
-        CRef_CopyConstruct(pret, aref);
+        CRef_CopyConstruct(pret);
         return pret;
     }
     CPair *tail;

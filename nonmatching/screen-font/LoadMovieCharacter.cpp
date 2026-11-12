@@ -1,6 +1,7 @@
 #include "sly2.h"
+#include "bis.h"
+typedef CBinaryInputStream Bis;
 struct SLOTHEAP;
-struct Bis;
 struct BLOT { char pad[0xC4]; SLOTHEAP *heap; };
 struct B4 { char b[4]; };
 struct M3 { QW r[3]; };
@@ -14,14 +15,6 @@ struct PL { long v; } __attribute__((packed));
 struct GIFSX { char pad0[4]; char *ab; char pad1[4]; char *pb; char pad2[0x20]; };
 struct L { char frame[0x10] __attribute__((aligned(16))); M3 mat; union { ALLOCREQ req; char vifs[0x30]; M3 mat2; struct { SVEC lt; SVEC pad[3]; SVEC rb; } sv; } a; char frame2[0x10] __attribute__((aligned(16))); union { GIFSX gifs; int cprimBatch; } b; char vifs2[0x30]; };
 extern "C" {
-unsigned short U16Read__18CBinaryInputStream(Bis *);
-unsigned char U8Read__18CBinaryInputStream(Bis *);
-signed char S8Read__18CBinaryInputStream(Bis *);
-short S16Read__18CBinaryInputStream(Bis *);
-unsigned U32Read__18CBinaryInputStream(Bis *);
-int S32Read__18CBinaryInputStream(Bis *);
-float F32Read__18CBinaryInputStream(Bis *);
-void CBinaryInputStream_ReadMatrix(Bis *, M3 *);
 void CBinaryInputStream_Read_thunk(Bis *, int, void *);
 void *PvAllocSlotheapClearImpl__FP8SLOTHEAP(SLOTHEAP *, int, int);
 void *PvAllocStackClearImpl__Fi(ALLOCREQ *);
@@ -52,51 +45,57 @@ extern int D_002C40A4;
 extern char B_003DD490[];
 extern char g_2a2e10[];
 extern const B8 RO_002A8B08;
+extern char VU1_ENTRY_650[], VU1_ENTRY_140[];
+}
+static inline ALLOCREQ *Aligned(ALLOCREQ *preq)
+{
+    preq->cbAlign = 0x10;
+    return preq;
 }
 void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *achar)
 {
     L l;
     CStackFrame_Construct(l.frame);
-    int ichar = U16Read__18CBinaryInputStream(pbis);
+    int ichar = pbis->U16Read();
     CHAR *pchar = (CHAR *)(achar + ichar * 0x40);
     pchar->id = ichar;
     pchar->owner = owner;
-    unsigned kind = U32Read__18CBinaryInputStream(pbis);
+    unsigned kind = pbis->U32Read();
     pchar->kind = kind;
     switch (kind) {
     case 0:
     case 5:
         break;
     case 4:
-        pchar->u.i[0] = U16Read__18CBinaryInputStream(pbis);
+        pchar->u.i[0] = pbis->U16Read();
         break;
     case 8: {
         D_002C40A4 = 1;
         LoadMovieDictionary(pblot, pbis, owner, &pchar->u.i[0], &pchar->u.i[1]);
-        pchar->u.i[4] = U32Read__18CBinaryInputStream(pbis);
+        pchar->u.i[4] = pbis->U32Read();
         pchar->u.i[5] = (int)PvAllocSlotheapClearImpl__FP8SLOTHEAP(pblot->heap, pchar->u.i[4] << 2, 0x13);
         for (int icode = 0; icode < pchar->u.i[4]; icode++)
-            ((unsigned *)pchar->u.i[5])[icode] = U32Read__18CBinaryInputStream(pbis);
-        pchar->u.i[2] = U32Read__18CBinaryInputStream(pbis);
+            ((unsigned *)pchar->u.i[5])[icode] = pbis->U32Read();
+        pchar->u.i[2] = pbis->U32Read();
         pchar->u.i[3] = (int)PvAllocSlotheapClearImpl__FP8SLOTHEAP(pblot->heap, pchar->u.i[2] << 2, 0x13);
         for (int iadvance = 0; iadvance < pchar->u.i[2]; iadvance++)
-            ((float *)pchar->u.i[3])[iadvance] = F32Read__18CBinaryInputStream(pbis);
+            ((float *)pchar->u.i[3])[iadvance] = pbis->F32Read();
         D_002C40A4 = 0;
         break;
     }
     case 3: {
-        pchar->u.i[0] = U32Read__18CBinaryInputStream(pbis);
-        pchar->u.i[3] = U32Read__18CBinaryInputStream(pbis);
-        pchar->u.f[4] = F32Read__18CBinaryInputStream(pbis);
-        pchar->u.f[6] = F32Read__18CBinaryInputStream(pbis);
-        pchar->u.f[5] = F32Read__18CBinaryInputStream(pbis);
-        pchar->u.i[7] = S8Read__18CBinaryInputStream(pbis);
-        int textk = S8Read__18CBinaryInputStream(pbis);
+        pchar->u.i[0] = pbis->U32Read();
+        pchar->u.i[3] = pbis->U32Read();
+        pchar->u.f[4] = pbis->F32Read();
+        pchar->u.f[6] = pbis->F32Read();
+        pchar->u.f[5] = pbis->F32Read();
+        pchar->u.i[7] = pbis->S8Read();
+        int textk = pbis->S8Read();
         pchar->u.i[1] = textk;
         if (textk == 1) goto rd;
         if (textk != 0) goto nord;
     rd:
-        pchar->u.i[2] = S32Read__18CBinaryInputStream(pbis);
+        pchar->u.i[2] = pbis->S32Read();
     nord:
         if (pchar->u.i[1] == 1 && pchar->u.i[2] == 0x2F2)
             pchar->u.i[8] = 1;
@@ -105,16 +104,17 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
         break;
     }
     case 2: {
-        CBinaryInputStream_ReadMatrix(pbis, &l.mat);
+        CBinaryInputStream_ReadMatrix(pbis, (MATRIX3 *)&l.mat);
         l.a.mat2 = l.mat;
         float *pf = &pchar->u.f[0];
-        pf[0] = ((float *)&l.a.mat2)[0];
-        pf[1] = ((float *)&l.a.mat2)[1];
-        pf[2] = ((float *)&l.a.mat2)[4];
-        pf[3] = ((float *)&l.a.mat2)[5];
-        pf[4] = ((float *)&l.a.mat2)[8];
-        pf[5] = ((float *)&l.a.mat2)[9];
-        *(unsigned short *)&pchar->u.i[8] = U16Read__18CBinaryInputStream(pbis);
+        float *pm = (float *)&l.a.mat2;
+        pf[0] = pm[0];
+        pf[1] = pm[1];
+        pf[2] = pm[4];
+        pf[3] = pm[5];
+        pf[4] = pm[8];
+        pf[5] = pm[9];
+        *(unsigned short *)&pchar->u.i[8] = pbis->U16Read();
         void *pv = PvAllocSlotheapClearImpl__FP8SLOTHEAP(pblot->heap, *(unsigned short *)&pchar->u.i[8] * 0x18, 0x14);
         pchar->u.i[9] = (int)pv;
         CBinaryInputStream_Read_thunk(pbis, *(unsigned short *)&pchar->u.i[8] * 0x18, pv);
@@ -122,57 +122,56 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
     }
     case 6:
     case 7: {
-        l.a.sv.lt.x = S16Read__18CBinaryInputStream(pbis);
-        l.a.sv.lt.y = S16Read__18CBinaryInputStream(pbis);
-        l.a.sv.rb.x = S16Read__18CBinaryInputStream(pbis);
-        l.a.sv.rb.y = S16Read__18CBinaryInputStream(pbis);
-        int oid = S32Read__18CBinaryInputStream(pbis);
+        l.a.sv.lt.x = pbis->S16Read();
+        l.a.sv.lt.y = pbis->S16Read();
+        l.a.sv.rb.x = pbis->S16Read();
+        l.a.sv.rb.y = pbis->S16Read();
+        int oid = pbis->S32Read();
         CStackFrame_Construct(l.frame2);
-        GIFSX *gifs = &l.b.gifs;
-        __4GIFS(gifs);
-        AllocStack__4DMASi(gifs, 0x10);
-        AddPrimPack__4GIFSiiUl(gifs, 0, 1, 0xE);
+        __4GIFS(&l.b.gifs);
+        AllocStack__4DMASi(&l.b.gifs, 0x10);
+        AddPrimPack__4GIFSiiUl(&l.b.gifs, 0, 1, 0xE);
         pchar->u.i[0] = oid;
         if (pchar->kind == 6) {
             pchar->u.i[1] = 0;
-            PackAD__4GIFSll(gifs, 0x47, 0x5000F);
-            PackAD__4GIFSll(gifs, 0x42, 0x80000000A8UL);
+            PackAD__4GIFSll(&l.b.gifs, 0x47, 0x5000F);
+            PackAD__4GIFSll(&l.b.gifs, 0x42, 0x80000000A8UL);
         } else {
-            PackAD__4GIFSll(gifs, 0x42, 0x44);
-            PackAD__4GIFSll(gifs, 0x47, 0x50000);
+            PackAD__4GIFSll(&l.b.gifs, 0x42, 0x44);
+            PackAD__4GIFSll(&l.b.gifs, 0x47, 0x50000);
         }
-        AddPrimPack__4GIFSiiUl(gifs, 0x54, 9, 0x525252521UL);
-        PackRGBA__4GIFSUi(gifs, 0x80808080);
+        AddPrimPack__4GIFSiiUl(&l.b.gifs, 0x54, 9, 0x525252521UL);
+        PackRGBA__4GIFSUi(&l.b.gifs, 0x80808080);
         if (pchar->kind == 6) {
-            PackSTQ__4GIFSfff(gifs, 0.0f, 0.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.lt.x, l.a.sv.lt.y, 0);
-            PackSTQ__4GIFSfff(gifs, 1.0f, 0.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.rb.x, l.a.sv.lt.y, 0);
-            PackSTQ__4GIFSfff(gifs, 0.0f, 1.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.lt.x, l.a.sv.rb.y, 0);
-            PackSTQ__4GIFSfff(gifs, 1.0f, 1.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.rb.x, l.a.sv.rb.y, 0);
-            AddPrimPack__4GIFSiiUl(gifs, 0, 1, 0xE);
-            PackAD__4GIFSll(gifs, 0x42, 0x44);
-            PackAD__4GIFSll(gifs, 0x47, 0x50000);
+            PackSTQ__4GIFSfff(&l.b.gifs, 0.0f, 0.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.lt.x, l.a.sv.lt.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 1.0f, 0.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.rb.x, l.a.sv.lt.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 0.0f, 1.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.lt.x, l.a.sv.rb.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 1.0f, 1.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.rb.x, l.a.sv.rb.y, 0);
+            AddPrimPack__4GIFSiiUl(&l.b.gifs, 0, 1, 0xE);
+            PackAD__4GIFSll(&l.b.gifs, 0x42, 0x44);
+            PackAD__4GIFSll(&l.b.gifs, 0x47, 0x50000);
         } else {
-            PackSTQ__4GIFSfff(gifs, 0.0f, 1.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.lt.x, l.a.sv.lt.y, 0);
-            PackSTQ__4GIFSfff(gifs, 1.0f, 1.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.rb.x, l.a.sv.lt.y, 0);
-            PackSTQ__4GIFSfff(gifs, 0.0f, 0.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.lt.x, l.a.sv.rb.y, 0);
-            PackSTQ__4GIFSfff(gifs, 1.0f, 0.0f, 0.0f);
-            PackXYZ__4GIFSiii(gifs, l.a.sv.rb.x, l.a.sv.rb.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 0.0f, 1.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.lt.x, l.a.sv.lt.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 1.0f, 1.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.rb.x, l.a.sv.lt.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 0.0f, 0.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.lt.x, l.a.sv.rb.y, 0);
+            PackSTQ__4GIFSfff(&l.b.gifs, 1.0f, 0.0f, 0.0f);
+            PackXYZ__4GIFSiii(&l.b.gifs, l.a.sv.rb.x, l.a.sv.rb.y, 0);
         }
-        EndPrim__4GIFSi(gifs, 1);
+        EndPrim__4GIFSi(&l.b.gifs, 1);
         __4VIFS(l.vifs2);
         AllocStack__4DMASi(l.vifs2, 0x14);
         AddDmaCnt__4DMAS(l.vifs2);
-        char *pstart = gifs->ab;
-        char *pcur = gifs->pb;
+        char *pstart = l.b.gifs.ab;
+        char *pcur = l.b.gifs.pb;
         AddVifUnpack__4VIFS3UPKiPvi(l.vifs2, 0xC, (unsigned)(pcur - pstart) >> 4, pstart, 7);
-        AddVifMscal__4VIFSPv(l.vifs2, (void *)0x650);
+        AddVifMscal__4VIFSPv(l.vifs2, VU1_ENTRY_650);
         EndDmaCnt__4DMAS(l.vifs2);
         AddDmaRet__4DMAS(l.vifs2);
         if (pchar->kind == 6) {
@@ -185,33 +184,29 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
         break;
     }
     case 1: {
-        pchar->u.shape.cprim = U16Read__18CBinaryInputStream(pbis);
-                l.a.req.cb = pchar->u.shape.cprim * 0x24;
-        l.a.req.cbAlign = 0x10;
-        PRIM *aprim = (PRIM *)PvAllocStackClearImpl__Fi(&l.a.req);
+        pchar->u.shape.cprim = pbis->U16Read();
+        l.a.req.cb = pchar->u.shape.cprim * 0x24;
+        PRIM *aprim = (PRIM *)PvAllocStackClearImpl__Fi(Aligned(&l.a.req));
         l.a.req.cb = pchar->u.shape.cprim * 0x14;
-        l.a.req.cbAlign = 0x10;
-        BATCH *abatch = (BATCH *)PvAllocStackClearImpl__Fi(&l.a.req);
+        BATCH *abatch = (BATCH *)PvAllocStackClearImpl__Fi(Aligned(&l.a.req));
         for (int iprim = 0; iprim < pchar->u.shape.cprim; iprim++) {
             PRIM *pprim = aprim + iprim;
-            pprim->cvtx = U8Read__18CBinaryInputStream(pbis);
-            pprim->b14 = U8Read__18CBinaryInputStream(pbis);
-            pprim->w0 = U8Read__18CBinaryInputStream(pbis);
-            pprim->w4 = U8Read__18CBinaryInputStream(pbis);
-            pprim->hasBytes = U8Read__18CBinaryInputStream(pbis);
+            pprim->cvtx = pbis->U8Read();
+            pprim->b14 = pbis->U8Read();
+            pprim->w0 = pbis->U8Read();
+            pprim->w4 = pbis->U8Read();
+            pprim->hasBytes = pbis->U8Read();
             pprim->cslot = pprim->cvtx + 2;
             l.a.req.cb = pprim->cvtx << 2;
-            l.a.req.cbAlign = 0x10;
-            pprim->axy = (short *)PvAllocStackClearImpl__Fi(&l.a.req);
+            pprim->axy = (short *)PvAllocStackClearImpl__Fi(Aligned(&l.a.req));
             l.a.req.cb = pprim->cvtx;
-            l.a.req.cbAlign = 0x10;
-            pprim->abyte = (unsigned char *)PvAllocStackClearImpl__Fi(&l.a.req);
+            pprim->abyte = (unsigned char *)PvAllocStackClearImpl__Fi(Aligned(&l.a.req));
             for (int ivtx = 0; ivtx < pprim->cvtx; ivtx++) {
                 short *pxy = (short *)((char *)pprim->axy + ivtx * 4);
-                pprim->colour = U32Read__18CBinaryInputStream(pbis);
-                pprim->abyte[ivtx] = U8Read__18CBinaryInputStream(pbis);
-                pxy[0] = S16Read__18CBinaryInputStream(pbis);
-                pxy[1] = S16Read__18CBinaryInputStream(pbis);
+                pprim->colour = pbis->U32Read();
+                pprim->abyte[ivtx] = pbis->U8Read();
+                pxy[0] = pbis->S16Read();
+                pxy[1] = pbis->S16Read();
             }
         }
         pchar->u.shape.cbatch = 0;
@@ -273,7 +268,7 @@ void LoadMovieCharacter(BLOT *pblot, Bis *pbis, void *owner, int cchar, char *ac
                 iqwVtx += pprim->cvtx;
             }
             AddVifStmask__4VIFSUi(l.a.vifs, 0);
-            AddVifMscal__4VIFSPv(l.a.vifs, (void *)0x140);
+            AddVifMscal__4VIFSPv(l.a.vifs, VU1_ENTRY_140);
         }
         EndDmaCnt__4DMAS(l.a.vifs);
         AddDmaRet__4DMAS(l.a.vifs);

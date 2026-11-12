@@ -13,7 +13,7 @@ struct _m2c_stack_func_001A7630 {
 M2C_UNK CdPath__FPcT0i(s8 *, M2C_UNK *, M2C_UNK); /* extern */
 M2C_UNK FCdCompleted__Fi(M2C_UNK);                  /* extern */
 s32 FValidCdMmode__Fv();                            /* extern */
-M2C_UNK FlushCache(M2C_UNK, s32, s32, s32, s32, s32); /* extern */
+M2C_UNK FlushCache(M2C_UNK, s32, s32, s32, s32, f32); /* extern */
 M2C_UNK SetCdMmode__Fv();                           /* extern */
 M2C_UNK func_00238BD0();                            /* extern */
 s32 func_00238C58(s32, s32 *, s32);                 /* extern */

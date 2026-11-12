@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "sly2.h"
 #include "alloc.h"
 struct OBJ { char pad0[0x20]; int flags; char pad24[0x44 - 0x24]; int count44; void **ptr48; };
@@ -86,17 +87,19 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
     req.cbAlign = 0x10;
     self->pdst = (DST *)PvAllocSwCopyImpl__FiPv(&req, self->pdst);
     self->f58 = 0;
+    int cobj = self->cobj;
     int index = 0;
-    if (self->cobj > 0) {
+    if (cobj > 0) {
         do {
             if (((OBJ *)self->pobj[index])->flags & 4) {
-                req.cb = self->cobj * 4;
+                req.cb = cobj * 4;
                 req.cbAlign = 0x10;
                 self->pobj = (void **)PvAllocSwCopyImpl__FiPv(&req, self->pobj);
                 break;
             }
             index++;
-        } while (index < self->cobj);
+            cobj = self->cobj;
+        } while (index < cobj);
     }
     for (int index = 0; index < self->cdst; index++) {
         DST *pdst = &self->pdst[index];
@@ -128,14 +131,14 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                 pold = pdst->p10;
                 req.cb = cdma * 0x10;
                 req.cbAlign = 0x10;
-                pnew = PvAllocSwCopyImpl__FiPv(&req, pold);
-                pdst->p10 = pnew;
+                pdst->p10 = PvAllocSwCopyImpl__FiPv(&req, pold);
+                pnew = pdst->p10;
             } else {
                 if (pdst->pobj != 0) {
                     pnew = pdst->pobj->ptr48;
                     cdma = pdst->pobj->count44;
+                    pold = pnew;
                     if (fresh != 0) {
-                        pold = pnew;
                         req.cb = cdma * 0x10;
                         req.cbAlign = 0x10;
                         pdst->pobj->ptr48 = (void **)PvAllocSwCopyImpl__FiPv(&req, pold);
@@ -145,10 +148,9 @@ extern "C" void CloneGlobset(GS *self, VOBJ *parent, int arg)
                 CopyGlobDmaChain(psrc, pdst, psrc->f10, pdst->p10, cdma, pnew, pold);
             }
             if (pdst->pobj != 0) {
-                unsigned start = pdst->bits.start;
-                unsigned count = pdst->bits.end - start;
+                unsigned count = pdst->bits.end - pdst->bits.start;
                 int dmaBytes = cdma * 0x10;
-                CopyAb__FPvT0Ui(&B_003DA798[B_003DA790], &B_003DA798[start], count * sizeof(SLENT));
+                CopyAb__FPvT0Ui(&B_003DA798[B_003DA790], &B_003DA798[pdst->bits.start], count * sizeof(SLENT));
                 pdst->bits.start = B_003DA790;
                 B_003DA790 += count;
                 pdst->bits.end = B_003DA790;

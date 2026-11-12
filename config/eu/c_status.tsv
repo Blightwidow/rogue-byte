@@ -3791,6 +3791,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E5D60	GlobalCtorSlotheaps_1e5d60	0X1E6520	same	0	ok
 0x1E5D80	InitCrv	0X1E6540	same	0	ok
 0x1E5DB8	CloneCrv	0X1E6578	same	0	ok
+0x1E5DF8	LoadCrvFromBrx	0X1E65B8	same	0	ok
 0x1E6330	InvalidateCrvCache	0X1E6AF0	gap	0	ok
 0x1E6340	func_001E6340	0X1E6B00	same	0	ok
 0x1E63C0	SFromCrvU	0X1E6B80	same	0	ok
@@ -3841,6 +3842,7 @@ us_address	name	other_address	pair	score	addresses
 0x1EB1A8	LoadTexFromBrx__FP18CBinaryInputStreamP3TEX	0X1EB968	same	0	ok
 0x1EB2F0	LoadShdFromBrx	0X1EBAB0	same	0	ok
 0x1EB678	func_001EB678	0X1EBE38	same	0	ok
+0x1EB748	LoadShadersFromBrx	0X1EBF08	same	0	ok
 0x1EB960	FillShaders__Fi	0X1EC120	gap	0	ok
 0x1EC688	func_001EC688	0X1ECE48	same	0	ok
 0x1EC6D0	func_001EC6D0	0X1ECE90	same	0	ok
@@ -4198,6 +4200,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FD070	func_001FD070	0X1FD830	gap	0	ok
 0x1FD080	func_001FD080	0X1FD840	identical	0	ok
 0x1FD0C0	func_001FD0C0	0X1FD880	same	0	ok
+0x1FD0E8	LoadSndFromBrx	0X1FD8A8	same	0	ok
 0x1FD5E8	LoadSndBank	0X1FDDA8	same	0	ok
 0x1FD700	ResetSnd	0X1FDEC0	same	0	ok
 0x1FD830	UpdateSnd	0X1FDFF0	same	0	ok
@@ -4524,6 +4527,7 @@ us_address	name	other_address	pair	score	addresses
 0x20F2B8	SetSwFogHsv	0X20FAB0	same	0	ok
 0x20F2D8	func_0020F2D8	0X20FAD0	same	0	ok
 0x20F2F8	func_0020F2F8	0X20FAF0	same	0	ok
+0x20F318	LoadLevelTableFromBrx	0X20FB10	same	0	ok
 0x20F5D0	func_0020F5D0	0X20FDC8	same	0	ok
 0x20F640	func_0020F640	0X20FE38	same	0	ok
 0x20F710	InitSwHudBlots	0X20FF08	same	0	ok

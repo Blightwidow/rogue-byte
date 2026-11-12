@@ -12,8 +12,8 @@ struct RGF { float f0; int p4, p8, pc, p10, p14, p18; float f1c; float f20; floa
 struct GPARAM { int a; int b; float f8; int c; QW q10; QW q20; };
 extern "C" {
 void CMovieText_SetBaseColor(MT *, COLOR4 *);
-void CMovieText_BuildGsMatrix(MT *, float *, float *);
-void CMovieText_DrawGlyphs(MT *, float *, GPARAM *, QW);
+void CMovieText_BuildGsMatrix(MT *, float *, int);
+void CMovieText_DrawGlyphs(MT *, float *, GPARAM *);
 void CopyAqw__FPvT0i(void *, void *, int);
 PKT *OnGameLoad__FP4GAME();
 extern char B_002DF010[];
@@ -62,13 +62,13 @@ void CMovieText_Draw(MT *pmt, ARGS *pargs, int arg2)
         rgf[0] = pmt->f7C * pmt->f88;
         rgf[5] = pmt->f70 + pmt->f84 * pmt->f80;
         float matrix[16];
-        CMovieText_BuildGsMatrix(pmt, matrix, rgf);
+        CMovieText_BuildGsMatrix(pmt, matrix, pmt->i94);
         GPARAM param;
         QW first = g_2a2e10;
         param.q20 = g_2a2e20;
         param.q10 = first;
         param.f8 = 16.0f;
-        CMovieText_DrawGlyphs(pmt, matrix, &param, first);
+        CMovieText_DrawGlyphs(pmt, matrix, &param);
         unsigned *tag = g_2dea28.pb;
         *(long *)tag = 0x10000000;
         DmaSkip(&g_2dea28);
