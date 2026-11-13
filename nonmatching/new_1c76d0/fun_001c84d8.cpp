@@ -37,6 +37,7 @@ extern "C" void func_001C84D8(void *self)
                 float padX = F(float, pad, 0x10);
                 QW stick = JoinLowDoublewords(zero, InterleaveLowWords(padY, padX));
                 frame.dead[0] = stick;
+                float weight = RO_002C0FE8;
                 float best = RO_002A7798;
                 unsigned bestIndex = -1;
                 QW *slot = D_002C0FF0;
@@ -44,7 +45,7 @@ extern "C" void func_001C84D8(void *self)
                     float length = LaneX(SqrtX(SquaredLength(VectorSub(stick, *slot))));
                     slot++;
                     if (index == current)
-                        length *= RO_002C0FE8;
+                        length *= weight;
                     if (length < best) {
                         best = length;
                         bestIndex = index;
@@ -56,6 +57,12 @@ extern "C" void func_001C84D8(void *self)
                 }
             }
             break;
+        case 1: {
+            float now = g_2dded0.time;
+            if (F(float, F(void *, self, 0x204), 0xA8) <= now)
+                func_001C8918(self, 0);
+            break;
+        }
         case 2: {
             int object = F(int, self, 0x1A0);
             if (object == 0 || FAsegaGone(object) != 0) {
@@ -70,11 +77,6 @@ extern "C" void func_001C84D8(void *self)
             }
             break;
         }
-        case 1:
-            float now = g_2dded0.time;
-            if (F(float, F(void *, self, 0x204), 0xA8) <= now)
-                func_001C8918(self, 0);
-            break;
         }
     } while (F(int, self, 0x188) != previous);
 }

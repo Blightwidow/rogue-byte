@@ -106,8 +106,10 @@ Patterns the source cannot reach (record them in the file and move on):
 - Hand-written assembly: trapping `add`/`addi`, `$at` used as a general register, MMI and VU0 sequences in delay slots.
   `config/us/handwritten_asm.txt` lists the functions spimdisasm marks as hand-written; regenerate it with
   `python3 scripts/matching/handwritten.py`. A lead dealing out work leaves them out of the pool.
-- **VU0, MMI, lane moves and COP0.** C cannot express them and inline asm is not allowed (AGENTS.md): the function stays in
-  `nonmatching/` at the score it reaches without asm. Stop after about ten compiles.
+- **VU0, MMI, lane moves and COP0 outside the inline kind.** A function over the 10% share (`config/us/blockers.tsv`) is a permanent
+  blocker and stays original assembly. A framed function at 10% or less is compiled C that uses the shared helpers of
+  `include/vu0inline.h` and `include/ps2inline.h` (docs/build/inline-asm-helpers.md); run `try.py` with `TRY_VU0=1`. No asm of
+  your own: a vector operation no helper gives is `SKIP need-helper <instructions, semantics>`. Stop after about ten compiles.
 - A chunk of the split that is a fragment of a larger function (`addiu $sp,$sp,N ; nop` remnants, a single instruction) is a splitting
   question, not a C question.
 - A register-allocation difference that three different wordings leave unchanged.
@@ -208,6 +210,27 @@ Read from the RTL dumps (`-dl` local-alloc, `-dg` global-alloc, `-dG` GCSE) of f
   their constructor loop runs where they are declared) gave the frame. A post-increment store of an inline-constructor temporary (`*out++ = CLR(x)`) copies the
   pointer into a register per case and cross-jumping shares the tail; `arr[i].Set(v)` (address as `this`) makes that array the loop's strength-reduction base,
   `arr[i] = v` does not. `static inline int ScaleAlpha(float scale, float alpha)` keeps `scaled * (alpha * 128)` from being re-associated (a steering helper, like `GMin`).
+
+## VU0 near misses: two tricks measured (2026-11-12)
+
+Both come from sly1-decomp's notes (ideas only) and were measured here on matched functions with `try.py` and `TRY_VU0=1`: take the
+trick out, or change it, and read the score. They separate a score of 2 from 0 on code that uses `vu0inline.h`.
+
+- **A scalar quad that retail stores to the stack is a union local.** When retail writes the scalar vector (`VectorFromFloat`,
+  `QuadFromFloat`) to a stack slot and reads it back, declare `union VU_SCALE { QW q; VECTOR v; } scale;` before the other locals and
+  assign `scale.q = ...`. A plain `QW` local stays in a VU0 register and the slot disappears. Removing the union scores
+  `AdjustJtXpVelocity` 0 to 22, `UpdateSwFog` 0 to 14, `UpdateDancer` 0 to 12 (3 of 3, 2026-11-12).
+- **Operand order of a helper decides which registers are shared.** `VectorAdd(position, cylinder)` and `VectorAdd(cylinder, position)` are the same value and
+  different bytes (the cause is not measured; only the effect is). When a VU0
+  function is at 2 to 4 with a swapped `vf` number, swap the operands of every commutative helper (`VectorAdd`, `DotProduct`,
+  `VectorMultiplyXy`) before anything else. Swapping them scores `Member_GetRandomPos` 0 to 2, `AttachCyl_GetRandomPos` 0 to 2,
+  `GoalHit_Activate` 0 to 2, `ExplodeGadgetBurst` 0 to 4 (4 of 4). The non-commutative ones (`VectorSub`) have one order; the helper
+  takes the rows first so retail's registers come out (`TransformVector`, `TransformPoint`).
+
+Other fixes that held in wave I11S: a QW local still needed after the vector op; locals declared in retail's stack order; a typed
+local struct for a global field instead of `char[]` plus a cast offset; `index = 0` inside the branch and the second loop as
+`if (n) do { } while`. Not yet explained: a quad retail loads with `lq` into a general register and moves with `qmtc2.ni` (three near
+misses stop there); a lane retail extracts twice with two `qmfc2`, where ours keeps one copy.
 
 ## Rulings
 

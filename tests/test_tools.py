@@ -1238,6 +1238,20 @@ class BlockerTests(unittest.TestCase):
         lines = self.lines(['pextuw     $v1, $zero, $v0'] + ['lw         $v0, 0x0($a0)'] * 40 + ['jr         $ra', 'nop'])
         self.assertFalse(classify_blockers.is_inline(lines, classify_blockers.mnemonics_of(lines)))
 
+    def test_a_source_that_includes_the_vu0_helpers_is_compiled_with_the_vu0_flag(self):
+        import compile_unit
+        self.assertTrue(compile_unit.includes_vu0_helpers('#include "types.h"\n#include "vu0inline.h"\n'))
+        self.assertFalse(compile_unit.includes_vu0_helpers('#include "types.h"\n#include "ps2inline.h"\n'))
+
+    def test_guard_flags_a_matched_function_with_a_listed_instruction_and_no_helper_header(self):
+        functions = [('Plain', 'a.cpp', ['lw', 'pextuw'], '#include "types.h"')]
+        self.assertEqual(classify_blockers.unhelped_specials(functions), [('Plain', 'a.cpp', 'mmi')])
+
+    def test_guard_passes_a_helper_user_and_instructions_the_compiler_emits(self):
+        functions = [('Helped', 'b.cpp', ['lw', 'lqc2'], '#include "vu0inline.h"'),
+                     ('Compiled', 'c.cpp', ['por', 'mult1', 'max.s', 'min.s'], '')]
+        self.assertEqual(classify_blockers.unhelped_specials(functions), [])
+
     def test_vu_instructions_are_a_blocker(self):
         self.assertEqual(classify_blockers.kind_of(['lw', 'lqc2', 'jr']), 'vu')
         self.assertEqual(classify_blockers.kind_of(['vmulax.xyz', 'jr']), 'vu')

@@ -1,5 +1,5 @@
 address	name	size	kind
-0X100008	func_00100008	528	system
+0X100008	func_00100008	528	mmi
 0X100220	ExitThreadStub	8	system
 0X116D20	func_00116D20	8	remnant
 0X116EA8	func_00116EA8	48	remnant
@@ -774,7 +774,8 @@ address	name	size	kind
 0X24CD68	func_0024CD68	8	remnant
 0X24F390	func_0024F390	992	gp
 0X24F790	sceMpegAddStrCallback	304	gp
-0X252458	func_00252458	240	handwritten
+0X252458	func_00252458	240	mmi
+0X252548	func_00252548	192	mmi
 0X252788	func_00252788	120	mmi
 0X252800	func_00252800	152	mmi
 0X252898	func_00252898	184	mmi

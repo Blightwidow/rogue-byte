@@ -5,6 +5,8 @@
 #include "m2c_macros.h"
 #include "types.h"
 #include "include_asm.h"
+#include "ps2inline.h"
+#include "vu0inline.h"
 
 struct VT_19E950 { char pad[0x290]; short delta; short index; void (*fn)(void *, int, void *, QW, QW, QW); };
 
@@ -76,7 +78,210 @@ extern "C" void SetJtPipeHandFoot(JtPipe *self, s128 foot, s128 hand)
     self->hand = hand;
 }
 
-INCLUDE_ASM(0X19EAB0);
+struct VEC_19EAB0 {
+    float x, y, z, w;
+    void Clear() { x = y = z = 0; }
+} __attribute__((aligned(16)));
+
+union DPOS_19EAB0 { QW q; VECTOR v; };
+
+struct LM_19EAB0 { float gMin; float gMax; };
+
+struct ASEG_19EAB0 { char pad0[0x74]; float duration; };
+
+struct VT_19EAB0 { char pad0[0x18]; short d18; short i18; void (*Notify)(void *, int, int, int, int, int); };
+
+struct PATH_19EAB0 {
+    char pad0[0xC];
+    VT_19EAB0 *vt;
+    char pad10[0x190 - 0x10];
+    int n190;
+    char pad194[0x1D0 - 0x194];
+    int sfxEnter;
+    int sfxExit;
+};
+
+struct JT_19EAB0 {
+    char pad0[0x190];
+    VEC_19EAB0 v190;
+    char pad1A0[0x1010 - 0x1A0];
+    QW posOffset;
+    char pad1020[0x1030 - 0x1020];
+    char asega[4];
+    char sma[0x1060 - 0x1034];
+    QW pos1060;
+    DPOS_19EAB0 dpos1070;
+    char pad1080[0x14D4 - 0x1080];
+    int f14D4;
+};
+
+struct PIPE_19EAB0 {
+    JT_19EAB0 *pjt;
+    int state;
+    float tState;
+    PATH_19EAB0 *ppath;
+    float s;
+    char pad14[0x18 - 0x14];
+    int fReverse;
+    int n1C;
+    int stateExit;
+    char pad24[0x30 - 0x24];
+    QW pos30;
+    char pad40[0x70 - 0x40];
+    ASEG_19EAB0 *pasegSlide;
+    ASEG_19EAB0 *pasegEnter;
+    ASEG_19EAB0 *pasegExit;
+    ASEG_19EAB0 *pasegSpin;
+};
+
+extern "C" void SubscribeLoObject(PATH_19EAB0 *, JT_19EAB0 *);
+
+extern "C" void UnsubscribeLoObject(PATH_19EAB0 *, JT_19EAB0 *);
+
+extern "C" void func_00204F78(JT_19EAB0 *, PATH_19EAB0 *, int);
+
+extern "C" float func_001E6728(PATH_19EAB0 *, float);
+
+extern "C" void bevy_player_p14_19e110(PIPE_19EAB0 *, LM_19EAB0 *);
+
+extern "C" float GLimitLm__FP2LMf(LM_19EAB0 *, float);
+
+extern "C" void func_00140C88(JT_19EAB0 *, int);
+
+extern "C" int NewEmitter(int);
+
+extern "C" void SetEmitterUnpositioned(int, void *);
+
+extern "C" void SetAmbPos(int, QW);
+
+extern "C" QW PosLoWorld(JT_19EAB0 *);
+
+extern "C" void SetJtJtcs(JT_19EAB0 *, int);
+
+extern "C" void RetractSmaRef(void *);
+
+extern "C" void ApplyAsegToHandle(ASEG_19EAB0 *, float, float, JT_19EAB0 *, int, void *);
+
+extern "C" JT_19EAB0 *g_2e1e40;
+
+extern "C" QW g_2a2dc0;
+
+struct CLOCK_19EAB0 { float t; };
+
+extern "C" CLOCK_19EAB0 g_2dded0;
+
+extern "C" void SetJtPipeState(PIPE_19EAB0 *ppipe, int state)
+{
+    struct {
+        QW posAhead;
+        QW posBehind;
+        LM_19EAB0 lm;
+        QW pos;
+        QW posLocal;
+    } l;
+    int stateOld = ppipe->state;
+    if (state == stateOld)
+        return;
+    switch (stateOld) {
+    case -1: {
+        float ds = 50.0f;
+        PATH_19EAB0 *ppath = ppipe->ppath;
+        ppath->vt->Notify((char *)ppath + ppath->vt->d18, 5, 0, 0, 0, 0);
+        SubscribeLoObject(ppipe->ppath, ppipe->pjt);
+        func_00204F78(ppipe->pjt, ppipe->ppath, 1);
+        ppipe->stateExit = stateOld;
+        float sAhead = func_001E6728(ppipe->ppath, ppipe->s + ds);
+        GetPathPosFromS(sAhead, ppipe->ppath, &l.posAhead, 0);
+        float sBehind = func_001E6728(ppipe->ppath, ppipe->s - ds);
+        GetPathPosFromS(sBehind, ppipe->ppath, &l.posBehind, 0);
+        QW dir = g_2a2dc0;
+        QW delta = VectorSub(l.posAhead, l.posBehind);
+        QW length = SqrtX(SquaredLength(delta));
+        if (LaneX(length) < 0.0001f)
+            ;
+        else
+            dir = ScaleByReciprocalX(delta, length);
+        ppipe->fReverse = LaneZInGeneralRegister(dir) < -0.5f;
+        bevy_player_p14_19e110(ppipe, &l.lm);
+        ppipe->s = GLimitLm__FP2LMf(&l.lm, ppipe->s);
+        GetPathPosFromS(ppipe->s, ppipe->ppath, &l.pos, 0);
+        l.posLocal = ConvertAloPos(ppipe->pjt, 0, ppipe->pos30);
+        ppipe->pjt->posOffset = VectorSub(l.pos, l.posLocal);
+        JT_19EAB0 *pjt = ppipe->pjt;
+        pjt->dpos1070.q = VectorSub(pjt->pos1060, l.pos);
+        ppipe->pjt->dpos1070.v.z = 0;
+        func_00140C88(ppipe->pjt, ppipe->ppath->n190);
+        if (ppipe->ppath->sfxEnter) {
+            int emitter = NewEmitter(ppipe->ppath->sfxEnter);
+            SetEmitterUnpositioned(emitter, 0);
+            SetAmbPos(emitter, l.pos);
+        }
+        break;
+    }
+    case 0: {
+        JT_19EAB0 *pjt = ppipe->pjt;
+        if (pjt == g_2e1e40)
+            SetJtJtcs(pjt, pjt->f14D4 ? 10 : 2);
+        break;
+    }
+    }
+    ppipe->state = state;
+    ASEG_19EAB0 *paseg = 0;
+    int grf = 1;
+    float tStart = 0.0f;
+    float svt = 1.0f;
+    ppipe->tState = g_2dded0.t;
+    switch (state) {
+    case -1: {
+        PATH_19EAB0 *ppath = ppipe->ppath;
+        ppath->vt->Notify((char *)ppath + ppath->vt->d18, 6, 0, 0, 0, 0);
+        UnsubscribeLoObject(ppipe->ppath, ppipe->pjt);
+        func_00204F78(ppipe->pjt, ppipe->ppath, 0);
+        JT_19EAB0 *pjt = ppipe->pjt;
+        QW posOld = pjt->pos1060;
+        pjt->dpos1070.q = VectorSub(posOld, PosLoWorld(pjt));
+        ppipe->pjt->dpos1070.v.z = 0;
+        func_00140C88(ppipe->pjt, 0);
+        if (ppipe->ppath->sfxExit) {
+            int emitter = NewEmitter(ppipe->ppath->sfxExit);
+            SetEmitterUnpositioned(emitter, 0);
+            SetAmbPos(emitter, PosLoWorld(ppipe->pjt));
+        }
+        ppipe->ppath = 0;
+        return;
+    }
+    case 0:
+        paseg = ppipe->pasegEnter;
+        if (!paseg) {
+            paseg = ppipe->pasegSpin;
+            tStart = paseg->duration * 0.5f;
+            svt = 0.5f;
+        }
+        ppipe->n1C = 0;
+        break;
+    case 1:
+        paseg = ppipe->pasegExit;
+        grf = 9;
+        break;
+    case 2:
+        paseg = ppipe->pasegSlide;
+        grf = 9;
+        break;
+    case 3:
+        paseg = ppipe->pasegSlide;
+        svt = -1.0f;
+        grf = 9;
+        break;
+    case 4:
+        ppipe->fReverse = !ppipe->fReverse;
+        paseg = ppipe->pasegSpin;
+        break;
+    }
+    RetractSmaRef(ppipe->pjt->sma);
+    JT_19EAB0 *pjt = ppipe->pjt;
+    ApplyAsegToHandle(paseg, tStart, svt, pjt, grf, pjt->asega);
+    ppipe->pjt->v190.Clear();
+}
 
 extern "C" int FActiveCplcy(void *);
 

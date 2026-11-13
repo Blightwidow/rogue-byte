@@ -39,7 +39,7 @@ ELF = os.path.join(ROOT, 'work', 'elf', 'SCUS_973.16')
 INSTRUCTION = re.compile(r'^\s*/\*[^*]*\*/\s+(\w[\w.]*)')
 
 VU = re.compile(r'^(lqc2|sqc2|qmtc2|qmfc2|cfc2|ctc2|v(?:add|sub|mul|madd|msub|max|mini|opmsub|opmula|div|sqrt|rsqrt|abs|ftoi|itof|clip|mr32|move|nop|ior|iaddi|lqi|sqi|callms|lq|sq)\w*)(?:\.\w+)?$')
-MMI = re.compile(r'^p(?:extuw|extlw|cpyld|cpyud|extub|extlb|extuh|extlh|ackw|rot3w|sllw|srlw|raw|addw|subw|maxw|minw|and|xor|nor|mfhl|mthl)$')
+MMI = re.compile(r'^(?:p(?:extuw|extlw|cpyld|cpyud|extub|extlb|extuh|extlh|ackw|rot3w|sllw|srlw|raw|addw|subw|maxw|minw|and|xor|nor|mfhl|mthl|addh|subh|sllh|srlh|srah|cgth|maxh|minh|ackb|cpyh|adduw|subb)|qfsrv|mtsab|mtsah)$')  # halfword, byte and funnel-shift forms added 2026-11-12: unmatched code only, never in a matched function
 SYSTEM = re.compile(r'^(mfc0|mtc0|ei|di|sync|eret|cache|syscall|tlbr|tlbwi|tlbwr|tlbp)$')  # not `break`: the compiler emits it for a division by zero
 GLOBAL_POINTER = re.compile(r'\$gp\b')
 
@@ -208,7 +208,55 @@ def final_names():
     return found
 
 
+HELPER_HEADERS = ('vu0inline.h', 'ps2inline.h')
+MANIFEST = os.path.join(ROOT, 'src', 'MANIFEST.tsv')
+
+
+def unhelped_specials(functions):
+    """Guardrail (2026-11-12): [(name, file, kind)] of matched functions that hold an instruction of the VU0, MMI or system lists
+    in a source that includes none of the shared helper headers. `functions` is [(name, file, mnemonics, text of the file)].
+    Matched C reaches these instructions only through include/vu0inline.h and include/ps2inline.h (AGENTS.md "Matching rules"), so a hit
+    means inline asm or a bare instruction outside the helpers, or a regex that lists something the compiler emits by itself
+    (`por`, `mult1`, `max.s` and `min.s` occur in 143, 12, 16 and 10 matched functions and are rightly not listed)."""
+    return [(name, file, kind_of(mnemonics)) for name, file, mnemonics, text in functions
+            if kind_of(mnemonics) and not any(header in text for header in HELPER_HEADERS)]
+
+
+def guard_matched():
+    """Disassemble every matched function of src/MANIFEST.tsv and run unhelped_specials on it; prints the hits. Needs `make elf`."""
+    import rabbitizer
+    data = open(ELF, 'rb').read()
+    header_offset = struct.unpack_from('<I', data, 0x1C)[0]
+    segments = []
+    for index in range(struct.unpack_from('<H', data, 0x2C)[0]):
+        kind, offset, address, _, size = struct.unpack_from('<5I', data, header_offset + index * 32)
+        if kind == 1 and size:
+            segments.append((address, offset, size))
+    functions, texts = [], {}
+    with open(MANIFEST, encoding='utf-8') as handle:
+        rows = [line.rstrip('\n').split('\t') for line in handle][1:]
+    for row in rows:
+        address, name, size, file = int(row[0], 16), row[1], int(row[2]), row[3]
+        segment = next((s for s in segments if s[0] <= address < s[0] + s[2]), None)
+        if segment is None:
+            continue
+        words = struct.unpack_from(f'<{size // 4}I', data, segment[1] + address - segment[0])
+        mnemonics = [rabbitizer.Instruction(word, address + 4 * index, category=rabbitizer.InstrCategory.R5900).getOpcodeName()
+                     for index, word in enumerate(words)]
+        if file not in texts:
+            path = os.path.join(ROOT, 'src', file)
+            texts[file] = open(path, encoding='utf-8', errors='replace').read() if os.path.exists(path) else ''
+        functions.append((name, file, mnemonics, texts[file]))
+    hits = unhelped_specials(functions)
+    for name, file, kind in hits:
+        print(f'guard: {name} ({file}) holds a {kind} instruction and its source includes no helper header')
+    print(f'guard: {len(functions)} matched functions checked, {len(hits)} outside the helpers')
+    return 1 if hits else 0
+
+
 def main():
+    if '--guard' in sys.argv:
+        return guard_matched()
     blockers, inline = build()
     text, inline_text = render(blockers), render(inline)
     if '--check' in sys.argv:

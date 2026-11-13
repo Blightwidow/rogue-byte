@@ -24,7 +24,8 @@ void IntersectSwBoundingSphere(World20FC60 *world, QW center, int (*filter)(int,
     UpdateSwAaox__FP2SW(world);
     for (Node20FC60 *node = world->nodes; node != 0; node = node->next) {
         float nodeRadius = node->radius;
-        float distanceSquared = LaneX(SquaredLength(VectorSub(req.center, node->center)));
+        QW offset = VectorSub(req.center, node->center);
+        float distanceSquared = LaneX(DotProduct(offset, offset));
         float reach = radius + nodeRadius;
         float reachSquared = reach * reach;
         if (reachSquared < distanceSquared) continue;
