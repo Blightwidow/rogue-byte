@@ -148,17 +148,18 @@ def score_of(output):
     return int(output.split()[1]) if output and output.startswith('score ') else None
 
 
-def cache_key(text, lang):
+def cache_key(text, lang, address=None):
     """The key of a judged source: the toolchain, the language, the assembler an override asks for (TRY_ASSEMBLER: a Sony-toolchain score must not
-    answer for the default build) and the text."""
-    vu0 = compile_unit.includes_vu0_helpers(text)  # judged with the flag: a result cached before this rule (a compile error) must not be reused
-    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if vu0 else b'')).hexdigest()[:20]
+    answer for the default build), whether the VU0 flag is on for it (its text includes vu0inline.h, TRY_VU0=1 asks for it, or its address is
+    in config/us/vu0_regs.txt: a score with the flag must not answer for one without) and the text."""
+    flagged = compile_unit.includes_vu0_helpers(text) or os.environ.get('TRY_VU0') == '1' or (address is not None and compile_unit.vu0_for(address))
+    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if flagged else b'')).hexdigest()[:20]
 
 
 def judge(address, text, lang='c++'):
     """The score of the source for the function at `address` (0 = match), None when it fails to compile or compare."""
     address = address_of(address)
-    key = cache_key(text, lang)
+    key = cache_key(text, lang, address)
     entries = cache_for(address)
     if key in entries:
         return entries[key]
