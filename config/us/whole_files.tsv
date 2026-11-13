@@ -163,6 +163,7 @@ start	end	file
 0x1EFA90	0x1F1768	shdanim-sm/InitSm_file.cpp
 0x1F1900	0x1F2108	sm-so/sm_so_1f1900.cpp
 0x1F77C0	0x1F8DD8	so-sm/so_sm_1f77c0.cpp
+0x1F8DD8	0x1FAF70	new_1f88d8/SolveSw_file.cpp
 0x1FCD38	0x1FF3B8	new_1fbf20/new_1fbf20_1fcd38.cpp
 0x1FF3B8	0x1FF690	button/InitXfmObject_file.cpp
 0x1FF690	0x1FF7E8	button-spliceobj/button_spliceobj_1ff690.c
@@ -194,5 +195,6 @@ start	end	file
 0x228B48	0x229EF0	break-mat/InitBrk_file.cpp
 0x22A908	0x22B040	so-wr/so_wr_22a908.c
 0x22B040	0x22B720	so-wr/so_wr_22b040.cpp
+0x22B720	0x22C818	so-wr/so_wr_22b720.cpp
 0x230710	0x231100	alo-lo/PredictXfTransform_file.cpp
 0x231100	0x2319E8	alo-lo/InitXfm_file.cpp

@@ -41,7 +41,7 @@ separate "100%"s:
 - **Exact C of all code, 57.8%** (matched bytes over code with the blockers back in): the 765 permanent blockers stay original assembly, so exact C
   tops out near 83% of code.
 - **PAL, 67.20%** against US 69.63%: 99 functions (5,416 against 5,515) do not reproduce PAL from the same C. Close it with `make pal` after each land.
-- **Whole files:** 197 of 209 proved (1,821 functions, 2026-11-13; item 2).
+- **Whole files:** 199 of 209 proved (1,847 functions, 2026-11-13; item 2).
 
 - **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. Measured 2026-11-09, not repeated since the shared
   classes landed: `include/sly2.h` is 12 lines; 1,696 files size their structs with padding; 401 struct names have different bodies in different
@@ -164,6 +164,17 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      local copies left (the merged `OnLoAdd_file.cpp` keeps three renamed); `RefOpScheduleCallback` has its own `CRef`, so it keeps its `TIMEDCALL`.
      `NODE` is not a class: 20 sources reuse the name for unrelated list nodes, so no header; it only matters where two sources of one
      file clash, and the merger renames those. `TAGK`, the other name on the 2026-11-11 list, is `cref.h`'s enum; nothing to share.
+   - Whole files, 2026-11-13 (each candidate tried with `make_whole_files.py --only <start> --write`; 199 of 209 whole, 1,847 functions):
+     `SolveSw_file` and `so_wr_22b720` now prove. `SolveSw`: `sw.h`'s `NODE` (the world's list at 0x3D1C) is `SWNODE` (it never was the
+     oxa node of `func_001F8E90`), and the oxa `NODE`, `OXA` and `PHYS` of its three sources are written once. `so_wr_22b720`: the two
+     `UNoise` functions are C++ overloads (`UNoise(int)`, `UNoise(float, float, float)`, same symbols) instead of hand-mangled
+     `extern "C"` names, and `GFromOnz` calls the C `UBias__Fff`. Still not whole (the merger's own error): `po_screen_210eb0` (128
+     functions: `B_003E106C` is a list object in `LoadBlotFromBrx` and a `Node *` in `func_002127C8`/`func_002124F0`, and more of that
+     kind behind it), `SyncVBlank_file` (`B_002DFB40` typed `char`, `CRITSECT` and via a cast, `QW` as a struct, hand-mangled
+     `EnterCritSect__FP8CRITSECT`), `StartupJmt_file` (`func_001AE928(s32 *)` called with a `char *`), `PloFindSpawn_file`
+     (`PloFindSwObject_thunk` declared with two argument types), `QueueSwCallback_file` (0x5C8 against retail's 0x5B8) and
+     `PsoHitTestLineObjects_file` (0x390 against 0x394), plus the four with per-function flag lists (`RefOpRandom`, `PeaFindAsegLabel`,
+     `SetRhythmState`, `rog_path_1be398`). None of the first four is a class: each is one callee or global written with several types.
    - `SW` (2026-11-10): `include/sw.h`, the world, class 1 of the class table (0x4790 bytes, derived from the root class; Sly 1's
      derives from `LO`, Sly 2's does not). The game keeps one, a static global at 0x3DD490 that 440 matched files reach, and the
      `*Sw*` functions take its address, so a field there needs one reader. 61 fields from 0x150 to 0x4774: the job and task
@@ -262,7 +273,7 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    functions, reports unchanged. 206 more rewritten sources (m2c leftovers, C that did not compile as C++ in one unit) then
    brought it to 195 whole files, 1723 matched functions. Left: 5 files whose sources declare one callee or global with
    different types (gs, jump, po-screen, `PloFindSpawn`, so-wr: `InitMeter`, `CploFindSwObjectsByClass`, `UNoise`, ...),
-   (2026-11-13: the `TIMEDCALL` and `CLONESET` files are whole now; the 4 left in this group were `NODE` and `TAGK` and are not blocked by types) 2 that
+   (2026-11-13: see "Whole files, 2026-11-13" below for the 10 left) 2 that
    compile with a different size (0x149A50, 0x14CC4C), 1 waiting on 0x153128 (score 0 typed only through a steering
    local), 2 with per-function flags.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data

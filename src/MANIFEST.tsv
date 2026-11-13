@@ -4204,14 +4204,14 @@ address	name	size	file	whole_file	symbol
 0X1F8BF0	func_001F8BF0	76	so-sm/so_sm_1f77c0.cpp	so-sm/so_sm_1f77c0.cpp	func_001F8BF0
 0X1F8C40	StaticInitSlotheaps_1f8c40	372	so-sm/so_sm_1f77c0.cpp	so-sm/so_sm_1f77c0.cpp	StaticInitSlotheaps_1f8c40
 0X1F8DB8	func_001F8DB8	32	so-sm/so_sm_1f77c0.cpp	so-sm/so_sm_1f77c0.cpp	func_001F8DB8
-0X1F8DD8	SolveSw	184	new_1f88d8/SolveSw.cpp		
-0X1F8E90	func_001F8E90	236	new_1f88d8/fun_001f8e90.cpp		
-0X1F8F80	func_001F8F80	332	new_1f88d8/fun_001f8f80.cpp		
-0X1F90D0	func_001F90D0	364	new_1f88d8/fun_001f90d0.cpp		
-0X1F9B20	AddSoGravityAcceleration	296	new_1f88d8/AddSoGravityAcceleration.cpp		
-0X1FADD0	func_001FADD0	68	new_1f88d8/fun_001fadd0.cpp		
-0X1FAE18	StaticInitSlotheaps_1fae18	308	new_1f88d8/StaticInitSlotheaps_1fae18.c		
-0X1FAF50	func_001FAF50	32	new_1f88d8/fun_001faf50.c		
+0X1F8DD8	SolveSw	184	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	SolveSw
+0X1F8E90	func_001F8E90	236	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	func_001F8E90
+0X1F8F80	func_001F8F80	332	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	func_001F8F80
+0X1F90D0	func_001F90D0	364	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	func_001F90D0
+0X1F9B20	AddSoGravityAcceleration	296	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	AddSoGravityAcceleration
+0X1FADD0	func_001FADD0	68	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	func_001FADD0
+0X1FAE18	StaticInitSlotheaps_1fae18	308	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	StaticInitSlotheaps_1fae18
+0X1FAF50	func_001FAF50	32	new_1f88d8/SolveSw_file.cpp	new_1f88d8/SolveSw_file.cpp	func_001FAF50
 0X1FAF70	NewSfx__FPP3SFX	96	sound/NewSfx__FPP3SFX.cpp		
 0X1FAFD0	InitAmbBase	72	sound/InitAmbBase.cpp		
 0X1FB018	PauseAmb	68	sound/PauseAmb.cpp		
@@ -4961,24 +4961,24 @@ address	name	size	file	whole_file	symbol
 0X22B490	RequestTransition	304	so-wr/so_wr_22b040.cpp	so-wr/so_wr_22b040.cpp	RequestTransition
 0X22B5C0	func_0022B5C0	320	so-wr/so_wr_22b040.cpp	so-wr/so_wr_22b040.cpp	func_0022B5C0
 0X22B700	func_0022B700	32	so-wr/so_wr_22b040.cpp	so-wr/so_wr_22b040.cpp	func_0022B700
-0X22B720	func_0022B720	124	so-wr/fun_0022b720.cpp		
-0X22B7A0	func_0022B7A0	56	so-wr/fun_0022b7a0.cpp		
-0X22BE08	UNoise__Fi	88	wr/UNoise__Fi.cpp		
-0X22BE60	UNoise__Ffff	220	wr/UNoise__Ffff.cpp		
-0X22BF40	UBias__Fff	48	wr/UBias__Fff.c		
-0X22BF70	GFromOnz__FP3ONZ	180	wr/GFromOnz__FP3ONZ.cpp		
-0X22C3B0	AddWrCircleWarp__FP2WR	128	wr/AddWrCircleWarp__FP2WR.cpp		
-0X22C430	AddWrBendWarp__FP2WR	112	wr/AddWrBendWarp__FP2WR.cpp		
-0X22C4A0	PwreGetWrCur__FP2WR4ENSK4WREK	52	wr/PwreGetWrCur__FP2WR4ENSK4WREK.cpp		
-0X22C4D8	PwreGetWrCircle__FP2WR4ENSK	28	wr/PwreGetWrCircle__FP2WR4ENSK.cpp		
-0X22C4F8	PwreGetWrBend__FP2WR4ENSK	28	wr/PwreGetWrBend__FP2WR4ENSK.cpp		
-0X22C518	SetWrWavelength__FP2WRf	84	wr/SetWrWavelength__FP2WRf.cpp		
-0X22C570	GetWrWavelength__FP2WRPf	68	wr/GetWrWavelength__FP2WRPf.cpp		
-0X22C5B8	AddOnzOnze__FP3ONZffff	56	wr/AddOnzOnze__FP3ONZffff.cpp		
-0X22C5F0	AddWrBendNoise	100	wr-vec/AddWrBendNoise.cpp		
-0X22C658	AddWrSwivelNoise	100	wr-vec/AddWrSwivelNoise.cpp		
-0X22C6C0	wr__static_initialization_and_destruction_0	308	wr-vec/wr__static_initialization_and_destruction_0.c		
-0X22C7F8	func_0022C7F8	32	wr-vec/fun_0022c7f8.c		
+0X22B720	func_0022B720	124	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	func_0022B720
+0X22B7A0	func_0022B7A0	56	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	func_0022B7A0
+0X22BE08	UNoise__Fi	88	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	UNoise
+0X22BE60	UNoise__Ffff	220	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	UNoise
+0X22BF40	UBias__Fff	48	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	UBias__Fff
+0X22BF70	GFromOnz__FP3ONZ	180	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	GFromOnz
+0X22C3B0	AddWrCircleWarp__FP2WR	128	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	AddWrCircleWarp__FP2WR
+0X22C430	AddWrBendWarp__FP2WR	112	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	AddWrBendWarp__FP2WR
+0X22C4A0	PwreGetWrCur__FP2WR4ENSK4WREK	52	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	PwreGetWrCur
+0X22C4D8	PwreGetWrCircle__FP2WR4ENSK	28	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	PwreGetWrCircle__FP2WR4ENSK
+0X22C4F8	PwreGetWrBend__FP2WR4ENSK	28	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	PwreGetWrBend__FP2WR4ENSK
+0X22C518	SetWrWavelength__FP2WRf	84	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	SetWrWavelength__FP2WRf
+0X22C570	GetWrWavelength__FP2WRPf	68	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	GetWrWavelength__FP2WRPf
+0X22C5B8	AddOnzOnze__FP3ONZffff	56	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	AddOnzOnze
+0X22C5F0	AddWrBendNoise	100	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	AddWrBendNoise
+0X22C658	AddWrSwivelNoise	100	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	AddWrSwivelNoise
+0X22C6C0	wr__static_initialization_and_destruction_0	308	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	wr__static_initialization_and_destruction_0
+0X22C7F8	func_0022C7F8	32	so-wr/so_wr_22b720.cpp	so-wr/so_wr_22b720.cpp	func_0022C7F8
 0X22C818	func_0022C818	36	wr-vec/fun_0022c818.cpp		
 0X22C840	InvalidateXfSegment	124	wr-vec/InvalidateXfSegment.cpp		
 0X22D670	func_0022D670	40	vec-alo/fun_0022d670.cpp		

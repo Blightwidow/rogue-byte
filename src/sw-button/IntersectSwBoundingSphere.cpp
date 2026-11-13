@@ -5,13 +5,13 @@
 #include "ps2inline.h"
 #include "vu0inline.h"
 
-struct NODE {
+struct SWNODE {
     u8 unknown_0x0[0x20];
     /* 0x20 */ QW posCenter;
     /* 0x30 */ f32 sRadius;
     /* 0x34 */ struct ALO *paloFirst;
     u8 unknown_0x38[0x8];
-    /* 0x40 */ NODE *pnext;
+    /* 0x40 */ SWNODE *pnext;
 };
 
 struct ALO {
@@ -33,7 +33,7 @@ void IntersectSwBoundingSphere(SW *psw, QW posCenter, int (*pfnFilter)(void *, A
     ALO **apalo = (ALO **)PvAllocStackImpl__Fi(&req);
     func_00133E30(psw);
     UpdateSwAaox__FP2SW(psw);
-    for (NODE *pnode = psw->pnodeFirst; pnode != 0; pnode = pnode->pnext) {
+    for (SWNODE *pnode = psw->pnodeFirst; pnode != 0; pnode = pnode->pnext) {
         float sRadiusNode = pnode->sRadius;
         QW dpos = VectorSub(posCenter, pnode->posCenter);
         float sDistanceSquared = LaneX(SquaredLength(dpos));
