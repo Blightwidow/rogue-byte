@@ -2013,6 +2013,7 @@ us_address	name	other_address	pair	score	addresses
 0x159968	AttachEmitterToReference	0X159990	same	0	ok
 0x1599A8	HandleEmitterMessage	0X1599D0	identical	0	ok
 0x159A08	func_00159A08	0X159A30	gap	0	ok
+0x159A20	ModifyEmitterParticles__FP7EMITTER	0X159A48	same	0	ok
 0x15A138	PauseEmitter__FP7EMITTERf	0X15A160	gap	0	ok
 0x15A150	PauseEmitterIndefinite__FP7EMITTER	0X15A178	gap	0	ok
 0x15A160	UnpauseEmitter__FP7EMITTER	0X15A188	gap	0	ok
@@ -2879,6 +2880,7 @@ us_address	name	other_address	pair	score	addresses
 0x1A5D08	func_001A5D08	0X1A5CE8	identical	0	ok
 0x1A5D30	DeferLoRemove	0X1A5D10	same	0	ok
 0x1A5D58	func_001A5D58	0X1A5D38	same	0	ok
+0x1A5D98	func_001A5D98	0X1A5D78	identical	0	ok
 0x1A5E28	UpdateLo	0X1A5E08	same	0	ok
 0x1A5E80	func_001A5E80	0X1A5E60	identical	0	ok
 0x1A5ED8	func_001A5ED8	0X1A5EB8	gap	0	ok
@@ -3333,6 +3335,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C40C0	FIsPoSwFocusBase	0X1C4328	same	0	ok
 0x1C40F8	FIsPoSwFocus	0X1C4360	same	0	ok
 0x1C4130	func_001C4130	0X1C4398	same	0	ok
+0x1C41B8	func_001C41B8	0X1C4420	identical	0	ok
 0x1C4280	VJOY_constructor	0X1C44E8	same	0	ok
 0x1C42E8	ResetVjoy	0X1C4550	same	0	ok
 0x1C4468	UpdateVjoy	0X1C46D0	same	0	ok
@@ -4609,6 +4612,7 @@ us_address	name	other_address	pair	score	addresses
 0x20FA10	FFilterOxaBasic	0X210208	identical	0	ok
 0x20FA50	FFilterHitTestDefault	0X210248	same	0	ok
 0x20FAA0	bevy_camera_follow_push_out	0X210298	same	0	ok
+0x20FC60	IntersectSwBoundingSphere	0X210458	same	0	ok
 0x20FDC8	ExtractUniqueSosFromGeoms	0X2105C0	same	0	ok
 0x20FEC0	FAddRsmg__FP4RSMGiPii3OIDN24	0X2106B8	identical	0	ok
 0x20FF70	TriggerRsmg	0X210768	same	0	ok

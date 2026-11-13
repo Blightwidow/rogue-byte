@@ -83,13 +83,13 @@ address	name	size	file	score
 0X1375D0	bevy_player_p25_1375d0	432	bbmark-blend/bevy_player_p25_1375d0.c	103
 0X137A30	EnsureAsegBlendDynamic	1416	bbmark-blend/EnsureAsegBlendDynamic.cpp	73
 0X138BA0	func_00138BA0	528	ac-blip/fun_00138ba0.cpp	88
-0X139250	OnBlipgRemove__FP5BLIPG	200	blip/OnBlipgRemove__FP5BLIPG.cpp	14
+0X139250	OnBlipgRemove__FP5BLIPG	200	blip/OnBlipgRemove__FP5BLIPG.cpp	12
 0X1394C8	SetBlipgEmitb__FP5BLIPGP5EMITB	1048	blip/SetBlipgEmitb__FP5BLIPGP5EMITB.c	248
 0X139950	CblipeProjectBlipTransformAccel__FP7MATRIX4G8VU_FLOATP5BLIPPP5BLIPVP5BLIPXi6BLIPOKP6VECTORT7	360	blip/CblipeProjectBlipTransformAccel__FP7MATRIX4G8VU_FLOATP5BLIPPP5BLIPVP5BLIPXi6BLIPOKP6VECTORT7.c	88
 0X139AB8	ProjectBlipgTransformAccel__FP5BLIPGf	776	blip/ProjectBlipgTransformAccel__FP5BLIPGf.cpp	98
 0X13A1E8	DrawBlipg	1184	blip-light/DrawBlipg.c	279
 0X13AB58	UpdateBomb__FP4BOMBf	192	bomb/UpdateBomb__FP4BOMBf.c	27
-0X13AC18	UpdateBombCustomXps	464	bomb/UpdateBombCustomXps.c	105
+0X13AC18	UpdateBombCustomXps	464	bomb/UpdateBombCustomXps.c	107
 0X13AEB0	func_0013AEB0	792	bomb/fun_0013aeb0.c	183
 0X13B428	PrepareBombDetonation	416	bomb/PrepareBombDetonation.c	109
 0X13C560	SetLootState	2392	bomb-crusher/SetLootState.cpp	8
@@ -167,7 +167,6 @@ address	name	size	file	score
 0X158988	SolveDzg__FP3DZGiiPP2XPPiPPP2SO	408	dzg_158668/SolveDzg__FP3DZGiiPP2XPPiPPP2SO.c	47
 0X158E20	ApplyDzg	416	dzg-emitter/ApplyDzg.c	100
 0X159240	LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream	664	emitter_1591b0/LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream.c	170
-0X159A20	ModifyEmitterParticles__FP7EMITTER	608	emitter_1591b0/ModifyEmitterParticles__FP7EMITTER.cpp	3
 0X159C80	UpdateEmitter__FP7EMITTERf	1208	emitter_1591b0/UpdateEmitter__FP7EMITTERf.cpp	2
 0X15A2C0	WakeSoWater__FP2SOP5WATERfP6VECTORT3ff	1352	emitter_1591b0/WakeSoWater__FP2SOP5WATERfP6VECTORT3ff.cpp	11
 0X15AF08	ChooseEmitVelocity__FP6EMITVXffP2LMP6VECTORiT4	448	emitter_1591b0/ChooseEmitVelocity__FP6EMITVXffP2LMP6VECTORiT4.c	93
@@ -330,7 +329,6 @@ address	name	size	file	score
 0X1A4478	func_001A4478	1632	light-stepguard/fun_001a4478.c	399
 0X1A4AD8	func_001A4AD8	472	light-stepguard/fun_001a4ad8.cpp	89
 0X1A5478	AddLo	440	light-stepguard/AddLo.cpp	61
-0X1A5D98	func_001A5D98	144	stepguard-jt/fun_001a5d98.cpp	7
 0X1A5FB8	func_001A5FB8	344	stepguard-jt/fun_001a5fb8.c	85
 0X1A6340	GetLoEulerDegrees	112	new_1a6290/GetLoEulerDegrees.c	22
 0X1A63B0	func_001A63B0	160	new_1a6290/fun_001a63b0.cpp	17
@@ -408,7 +406,6 @@ address	name	size	file	score
 0X1C3500	GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3	1112	steppipe_1c3500/GetJtPipeGoalMat__FP2JTP4PIPEfP7MATRIX3.c	233
 0X1C3A08	func_001C3A08	128	new_1c3958/fun_001c3a08.c	25
 0X1C3A88	func_001C3A88	296	new_1c3958/fun_001c3a88.c	57
-0X1C41B8	func_001C41B8	112	new_1c3df8/fun_001c41b8.cpp	5
 0X1C4228	func_001C4228	88	new_1c3df8/fun_001c4228.cpp	11
 0X1C4330	UpdateVjoyStick	312	new_1c3df8/UpdateVjoyStick.c	86
 0X1C4768	bevy_player_p14_1c4768	216	new_1c3df8/bevy_player_p14_1c4768.c	53
@@ -422,7 +419,7 @@ address	name	size	file	score
 0X1C8350	func_001C8350	392	new_1c76d0/fun_001c8350.cpp	53
 0X1C84D8	func_001C84D8	600	new_1c76d0/fun_001c84d8.cpp	44
 0X1C8730	func_001C8730	488	new_1c76d0/fun_001c8730.cpp	67
-0X1C9058	StartLoadingLogo	56	prog-memcard/StartLoadingLogo.cpp	6
+0X1C9058	StartLoadingLogo	56	prog-memcard/StartLoadingLogo.cpp	3
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	65
 0X1C9B08	func_001C9B08	1552	new_1c90d0/fun_001c9b08.cpp	45
 0X1CA118	LO_SetCloneId	496	new_1c90d0/LO_SetCloneId.cpp	21
@@ -467,7 +464,7 @@ address	name	size	file	score
 0X1DBEF0	ShopMenu_UpdateBlot	880	game-stepguard/ShopMenu_UpdateBlot.cpp	127
 0X1DCED8	JobMenu_BuildList	800	game-stepguard/JobMenu_BuildList.cpp	93
 0X1DD300	JobMenu_SetPage	600	game-stepguard/JobMenu_SetPage.cpp	26
-0X1DDB08	StartNewGame	200	game-stepguard/StartNewGame.cpp	9
+0X1DDB08	StartNewGame	200	game-stepguard/StartNewGame.cpp	8
 0X1DF0A0	AddLaserCustomXps	448	game-stepguard/AddLaserCustomXps.c	102
 0X1DF3D0	AdvanceLaserBeams	480	game-stepguard/AdvanceLaserBeams.cpp	72
 0X1DF908	AddLaserBeam	120	game-stepguard/AddLaserBeam.cpp	15
@@ -572,7 +569,6 @@ address	name	size	file	score
 0X20E3C0	CreateSwSavePaths	896	new_20e040/CreateSwSavePaths.cpp	47
 0X20E890	ExecuteSwLoadRequest	1840	new_20e040/ExecuteSwLoadRequest.c	327
 0X20F7E0	UpdateSwHudBlots	360	sw-button/UpdateSwHudBlots.cpp	27
-0X20FC60	IntersectSwBoundingSphere	360	sw-button/IntersectSwBoundingSphere.cpp	11
 0X2124F0	PrepareBlotMovie	656	po-screen/PrepareBlotMovie.cpp	24
 0X2137F0	FBlotObscured	64	screen-font/FBlotObscured.c	12
 0X213F70	FStartSpriteLabelInstance	400	screen-font/FStartSpriteLabelInstance.c	88

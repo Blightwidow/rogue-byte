@@ -2013,6 +2013,7 @@ address	name	size	file	whole_file	symbol
 0X159968	AttachEmitterToReference	64	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	AttachEmitterToReference
 0X1599A8	HandleEmitterMessage	92	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	HandleEmitterMessage
 0X159A08	func_00159A08	20	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	func_00159A08
+0X159A20	ModifyEmitterParticles__FP7EMITTER	604	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	ModifyEmitterParticles__FP7EMITTER
 0X15A138	PauseEmitter__FP7EMITTERf	20	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	PauseEmitter__FP7EMITTERf
 0X15A150	PauseEmitterIndefinite__FP7EMITTER	16	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	PauseEmitterIndefinite__FP7EMITTER
 0X15A160	UnpauseEmitter__FP7EMITTER	16	dzg-emitter/InitEmitb_file.cpp	dzg-emitter/InitEmitb_file.cpp	UnpauseEmitter__FP7EMITTER
@@ -2879,6 +2880,7 @@ address	name	size	file	whole_file	symbol
 0X1A5D08	func_001A5D08	40	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	func_001A5D08
 0X1A5D30	DeferLoRemove	40	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	DeferLoRemove
 0X1A5D58	func_001A5D58	60	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	func_001A5D58
+0X1A5D98	func_001A5D98	144	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	func_001A5D98
 0X1A5E28	UpdateLo	88	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	UpdateLo
 0X1A5E80	func_001A5E80	88	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	func_001A5E80
 0X1A5ED8	func_001A5ED8	8	light-stepguard/light_stepguard_1a53e0.cpp	light-stepguard/light_stepguard_1a53e0.cpp	func_001A5ED8
@@ -3333,6 +3335,7 @@ address	name	size	file	whole_file	symbol
 0X1C40C0	FIsPoSwFocusBase	52	new_1c3df8/FIsPoSwFocusBase.c		
 0X1C40F8	FIsPoSwFocus	52	new_1c3df8/FIsPoSwFocus.c		
 0X1C4130	func_001C4130	136	new_1c3df8/fun_001c4130.cpp		
+0X1C41B8	func_001C41B8	112	new_1c3df8/fun_001c41b8.cpp		
 0X1C4280	VJOY_constructor	100	new_1c3df8/VJOY_constructor.cpp		
 0X1C42E8	ResetVjoy	72	new_1c3df8/ResetVjoy.cpp		
 0X1C4468	UpdateVjoy	320	new_1c3df8/UpdateVjoy.cpp		
@@ -4609,6 +4612,7 @@ address	name	size	file	whole_file	symbol
 0X20FA10	FFilterOxaBasic	60	sw-button/FFilterOxaBasic.cpp		
 0X20FA50	FFilterHitTestDefault	76	sw-button/FFilterHitTestDefault.cpp		
 0X20FAA0	bevy_camera_follow_push_out	448	sw-button/bevy_camera_follow_push_out.cpp		
+0X20FC60	IntersectSwBoundingSphere	356	sw-button/IntersectSwBoundingSphere.cpp		
 0X20FDC8	ExtractUniqueSosFromGeoms	244	sw-button/ExtractUniqueSosFromGeoms.cpp		
 0X20FEC0	FAddRsmg__FP4RSMGiPii3OIDN24	176	button/FAddRsmg__FP4RSMGiPii3OIDN24.cpp		
 0X20FF70	TriggerRsmg	128	button-po/TriggerRsmg.cpp		

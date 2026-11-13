@@ -383,7 +383,25 @@ extern "C" PDCB *func_001A5D58(LoFields *lo) {
     return pdcb;
 }
 
-INCLUDE_ASM(0X1A5D98);
+struct DCB { void (*pfn)(LO *, void *); void *pv; DCB *pdcbNext; };
+
+void func_001A5D98(LO *plo)
+{
+    DCB *apdcb[32];
+    int i;
+    DCB *pdcb = *(DCB **)((u8 *)plo + 0x34);
+    if (pdcb) {
+        i = 0;
+        do {
+            apdcb[i++] = pdcb;
+            pdcb = pdcb->pdcbNext;
+        } while (pdcb);
+        for (i--; i >= 0; i--) {
+            pdcb = apdcb[i];
+            pdcb->pfn(plo, pdcb->pv);
+        }
+    }
+}
 
 extern "C" float g_2dded0;
 
