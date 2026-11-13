@@ -167,6 +167,28 @@ source (wave I11S and I11O), and `record.py` judged a function in a whole file a
 start were listed. Measured: `SetJtPipeState` scores 0 in `try.py` with both lines removed. A judged result cached before the rule (a compile
 error) is not reused: the cache key carries the flag. The existing lines stay; the whole-file build path was not re-tested without them.
 
+## The flag per function (2026-11-13)
+
+`-mvu0-use-vf0-15` is not only for helper users. A sweep of 500 open sources (`data/matching/src/fn`) judged with and without it: 22
+improve, 13 get worse and 464 do not change; four reach 0 only with it and use no helper: `JudgeRhythmPress` (0x1533B0), `CQueueOutputIop_CbWrite`
+(0x1B2BE0), `RunBtnAsegs` (0x1488D8) and `OpenPauseMenu` (0x1B0290). Without the flag the allocator uses fewer callee-saved registers than retail
+(`CQueueOutputIop_CbWrite` saves `$s0` to `$s6` where retail also saves `$s7` and `$fp`): the flag gives it the VU0 registers as an allocatable
+class, which is what the original compiler had. The flag is therefore a per-function setting like the helper users', and those four are listed in
+`config/us/vu0_regs.txt` (a whole file that holds one of them lists its start, as `make_whole_files.py --land` does). It is a global default for
+nothing: 13 of the 500 get worse. `scorer.judge` caches by the effective flag (included header, `TRY_VU0=1` or a listed address).
+
+## Other compiler flags per function (2026-11-13)
+
+The same 484 open sources under 23 more flags (`-fno-gcse`, `-fno-schedule-insns(2)`, `-freduce-all-givs`, `-fno-rerun-cse-after-loop`,
+`-fno-cse-follow-jumps`, `-fno-expensive-optimizations`, `-fforce-addr`, `-fno-rerun-loop-opt`, `-fno-strength-reduce`, `-fno-force-mem`,
+`-fno-inline`, `-fno-regmove`, `-fno-caller-saves`, `-fno-thread-jumps`, `-fno-defer-pop`, `-fno-function-cse` and others; this compiler rejects
+`-fno-cprop-registers`, `-fno-delete-null-pointer-checks`, `-fno-guess-branch-probability`, `-fno-if-conversion` and `-fno-peephole2`).
+140 functions improve under at least one, but no function reaches 0 and only nine end at a score of 12 or less:
+0x159A20 (3 to 1, `-freduce-all-givs`), 0x1C9058 (6 to 3, `-fno-schedule-insns`), 0x1C41B8 (5 to 4), 0x1A5D98 (7 to 5,
+`-fno-schedule-insns2`), 0x20FC60 (11 to 5, `-fno-schedule-insns`), 0x1DDB08, 0x13AC18, 0x2314D0 and 0x139250 by one to four. The broad flags each
+make 100 to 380 of the others worse. So there is no flag to adopt; those nine are the leads if a function-level flag list is ever added for the `-f`
+options (only VU0 and `-fmove-all-movables` have one).
+
 ## Open questions
 
 - ~~Which cutoff: 5% (sly1's top) or 10%?~~ Decided 2026-11-12: 10% (below). 20% waits for a second pilot.
