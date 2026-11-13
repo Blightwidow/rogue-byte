@@ -91,7 +91,7 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
 
     def options(address):
         """The compile_unit.py options of a function: its compiler for the SDK range (config/us/sony_gcc29.txt) --vu0 (config/us/vu0_regs.txt) and --movables (config/us/move_movables.txt)."""
-        return ' '.join(part for part in (f'--assembler {assembler_for(address)}' if assembler_for(address) else '', '--vu0' if compile_unit.vu0_for(address) else '', '--movables' if compile_unit.movables_for(address) else '') if part)
+        return ' '.join(part for part in (f'--assembler {assembler_for(address)}' if assembler_for(address) else '', '--vu0' if compile_unit.vu0_for(address) else '', '--movables' if compile_unit.movables_for(address) else '', f"--flags='{' '.join(compile_unit.flags_for(address))}'" if compile_unit.flags_for(address) else '') if part)
     for language, rule in (('c++', 'compile_cpp'), ('c', 'compile_c')):
         ninja.rule(rule, command=f'python3 scripts/build/compile_unit.py {language} $in $out $assembler', description='CC $in')
     units = []

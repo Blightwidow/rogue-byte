@@ -189,6 +189,15 @@ The same 484 open sources under 23 more flags (`-fno-gcse`, `-fno-schedule-insns
 make 100 to 380 of the others worse. So there is no flag to adopt; those nine are the leads if a function-level flag list is ever added for the `-f`
 options (only VU0 and `-fmove-all-movables` have one).
 
+**Wave I12G: the list exists now, and most of the leads were not flags.** `config/us/function_flags.tsv` (address, flags, note;
+`compile_unit.flags_for`) gives one function extra compiler options in `try.py`, the scorer, the PAL check and the build (`--flags=...`;
+a whole file has one flag set and takes none from it). The nine leads went to three Opus workers. Four of them matched, and for none of the four did
+the flag matter: 0x159A20, 0x20FC60 and 0x1C41B8 match under the default flags (the sweep's improvement was a weaker draft's artifact), and 0x1A5D98 needs
+the second scheduling pass that `-fno-schedule-insns2` removes (retail's prologue order). `-fno-inline` (0x2314D0) stops the shared helpers from
+inlining, so no source can match under it. Three functions do depend on their flag, and stay near misses at 8 to 12: 0x1C9058 and 0x139250 (`-fno-schedule-insns`),
+0x1DDB08 (`-fno-expensive-optimizations`: without it the address is built after the first call); 0x13AC18 (`-fno-gcse`) gains two words. Those four rows are what
+the list holds. Lesson: a flag that lowers the score of a draft is a hint, not evidence; take the flag off first and match the function without it.
+
 ## Open questions
 
 - ~~Which cutoff: 5% (sly1's top) or 10%?~~ Decided 2026-11-12: 10% (below). 20% waits for a second pilot.

@@ -131,6 +131,26 @@ def includes_vu0_helpers(text):
     return 'vu0inline.h' in text
 
 
+@functools.lru_cache(maxsize=None)
+def function_flags():
+    """{address: [flags]} of config/us/function_flags.tsv (address, flags, note): extra compiler options of one function, which is its own source file
+    (a whole file has one flag set: its functions take none from here). Measured, not a build setting: docs/build/inline-asm-helpers.md "Other compiler
+    flags per function"."""
+    path = os.path.join(ROOT, 'config', 'us', 'function_flags.tsv')
+    found = {}
+    if os.path.exists(path):
+        with open(path) as listing:
+            for line in list(listing)[1:]:
+                fields = line.rstrip('\n').split('\t')
+                if len(fields) >= 2 and fields[0].strip():
+                    found[int(fields[0], 16)] = fields[1].split()
+    return found
+
+
+def flags_for(address):
+    return function_flags().get(address, [])
+
+
 MOVE_FLAG = '-fmove-all-movables'  # loop.c treats every loop-invariant movable as worth hoisting, not only the ones it judges profitable
 
 
@@ -193,7 +213,7 @@ def compile_sony(language, source, output, include=None, localize=True):
     return True, ''
 
 
-def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False, movables=False):
+def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False, movables=False, flags=()):
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
     if assembler == 'sony29':
         return compile_sony(language, source, output, include, localize)
@@ -203,7 +223,7 @@ def compile_object(language, source, output, assembler=None, include=None, local
     directory = compiler_directory()
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
-              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else []), *([MOVE_FLAG] if movables else [])]
+              f'-I{include or os.path.join(ROOT, "include")}', *FLAGS, *([VU0_FLAG] if vu0 else []), *([MOVE_FLAG] if movables else []), *flags]
     if EE_AS == EE_AS_BUILD:
         make_assembler()
     if not os.path.isfile(EE_AS):
@@ -251,9 +271,10 @@ def main():
     parser.add_argument('output')
     parser.add_argument('--vu0', action='store_true', help='compile with ' + VU0_FLAG)
     parser.add_argument('--movables', action='store_true', help='compile with ' + MOVE_FLAG)
+    parser.add_argument('--flags', default='', help='more compiler options, space separated (config/us/function_flags.tsv)')
     parser.add_argument('--assembler', choices=['sony29'])
     arguments = parser.parse_args()
-    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0, movables=arguments.movables)
+    ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0, movables=arguments.movables, flags=arguments.flags.split())
     if not ok:
         sys.stderr.write(message)
         sys.exit(1)

@@ -134,7 +134,7 @@ def compile_and_compare(address, text, lang, quiet):
     with open(source, 'w') as handle:
         handle.write(text)
     try:
-        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address))
+        ok, _message = compile_unit.compile_object(lang, source, path, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address), flags=compile_unit.flags_for(address))
         if not ok:
             return None
         return compare_object(address, path, quiet)
@@ -153,7 +153,8 @@ def cache_key(text, lang, address=None):
     answer for the default build), whether the VU0 flag is on for it (its text includes vu0inline.h, TRY_VU0=1 asks for it, or its address is
     in config/us/vu0_regs.txt: a score with the flag must not answer for one without) and the text."""
     flagged = compile_unit.includes_vu0_helpers(text) or os.environ.get('TRY_VU0') == '1' or (address is not None and compile_unit.vu0_for(address))
-    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if flagged else b'')).hexdigest()[:20]
+    extra = ' '.join(compile_unit.flags_for(address)) if address is not None else ''  # a score with function_flags.tsv options must not answer for one without
+    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if flagged else b'') + (f'\0{extra}'.encode() if extra else b'')).hexdigest()[:20]
 
 
 def judge(address, text, lang='c++'):
