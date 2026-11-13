@@ -1418,6 +1418,7 @@ address	name	size	file	whole_file	symbol
 0X133CB8	PoxExtractFromPoxa	80	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	PoxExtractFromPoxa
 0X133D08	FPoxaPairInteracts	292	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	FPoxaPairInteracts
 0X133E30	func_00133E30	80	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	func_00133E30
+0X133E80	UpdateSwAaox__FP2SW	444	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	UpdateSwAaox__FP2SW
 0X134310	IMax	16	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	IMax
 0X134320	RecalcSwOxfFilterForObject	120	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	RecalcSwOxfFilterForObject
 0X134398	StaticInitBbmark	308	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	StaticInitBbmark
@@ -3232,6 +3233,7 @@ address	name	size	file	whole_file	symbol
 0X1BC198	Obstacle_RemoveLoHierarchy	108	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	Obstacle_RemoveLoHierarchy
 0X1BC530	Obstacle_IposWrap	60	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	Obstacle_IposWrap
 0X1BC570	Obstacle_PostLoad	276	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	Obstacle_PostLoad
+0X1BCAC0	func_001BCAC0	540	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	func_001BCAC0
 0X1BCF18	FFindCrvSInPathzone	292	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	FFindCrvSInPathzone
 0X1BD1E0	Obstacle_RemoveFromPathzone	56	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	Obstacle_RemoveFromPathzone
 0X1BD218	ObstacleGroup_Dissolve	244	mpeg-memcard/Obstacle_Init_file.cpp	mpeg-memcard/Obstacle_Init_file.cpp	ObstacleGroup_Dissolve

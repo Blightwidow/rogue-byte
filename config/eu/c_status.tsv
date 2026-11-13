@@ -1418,6 +1418,7 @@ us_address	name	other_address	pair	score	addresses
 0x133CB8	PoxExtractFromPoxa	0X133CB8	identical	0	ok
 0x133D08	FPoxaPairInteracts	0X133D08	identical	0	ok
 0x133E30	func_00133E30	0X133E30	identical	0	ok
+0x133E80	UpdateSwAaox__FP2SW	0X133E80	same	0	ok
 0x134310	IMax	0X134310	gap	0	ok
 0x134320	RecalcSwOxfFilterForObject	0X134320	same	0	ok
 0x134398	StaticInitBbmark	0X134398	same	0	ok
@@ -3232,6 +3233,7 @@ us_address	name	other_address	pair	score	addresses
 0x1BC198	Obstacle_RemoveLoHierarchy	0X1BC400	same	0	ok
 0x1BC530	Obstacle_IposWrap	0X1BC798	identical	0	ok
 0x1BC570	Obstacle_PostLoad	0X1BC7D8	same	0	ok
+0x1BCAC0	func_001BCAC0	0X1BCD28	same	0	ok
 0x1BCF18	FFindCrvSInPathzone	0X1BD180	same	0	ok
 0x1BD1E0	Obstacle_RemoveFromPathzone	0X1BD448	same	0	ok
 0x1BD218	ObstacleGroup_Dissolve	0X1BD480	same	0	ok
