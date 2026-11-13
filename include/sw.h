@@ -24,7 +24,7 @@ struct BSPNODE;
 struct TARGET;
 struct SAVEPATH;
 struct CB;
-struct NODE;
+struct SWNODE;
 struct PZGRAPH;
 
 /* A level load request (SetSwLoadRequest copies one, 0x4C bytes, into the world). func_00165280 and func_0020E180 test and set
@@ -102,7 +102,7 @@ struct SW : BASIC {
     /* 0x3CD0 */ s32 cobr; /* PoxaAllocSw */
     /* 0x3CD4 */ struct OBR *aobr[3]; /* one per axis, PoxaAllocSw */
     u8 unknown_0x3CE0[0x3C];
-    /* 0x3D1C */ struct NODE *pnodeFirst; /* func_001F8F80 walks the list through NODE::pnext */
+    /* 0x3D1C */ struct SWNODE *pnodeFirst; /* func_001F8F80 and IntersectSwBoundingSphere walk the list through SWNODE::pnext (0x40) */
     u8 unknown_0x3D20[0x20];
     /* 0x3D40 */ SLOTHEAP slotheapMq; /* CloneMqList */
     /* 0x3D58 */ s32 generation; /* func_00190D10 increments it */

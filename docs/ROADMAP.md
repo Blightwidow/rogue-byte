@@ -6,38 +6,47 @@ What is done and what comes next. Live numbers: [bytematch.dev](https://bytematc
 
 - The executable splits and rebuilds byte for byte from assembly plus the matched C (`make elf`).
 - The assembler is SN's `ps2eeas` with its short-loop constant changed from 6 to 5, one for all game code (2026-11-05, [build/assembler.md](build/assembler.md) "Short loops"); no inline asm in matched code apart from the shared `Sqrt` helper. The only per-function compile lists are documented exceptions ([contributing/exceptions.md](contributing/exceptions.md)): the SDK range's Sony compiler (`config/us/sony_gcc29.txt`) and `-fmove-all-movables` (`config/us/move_movables.txt`, 2026-11-08); steering helpers carry `// steer-ok:`.
-- Matched C: 6,192 functions in `src/` (2026-11-08); every other function is built from its original assembly, and the best compiling draft of
-  each is in `nonmatching/`.
-- NTSC-U code reached 80% on 2026-11-08 (80.10%, blockers counted as finished; PAL 78.64%). Outside the SDK range it is 85.8% (53.1% exact C); the SDK range
-  (150 KB, libm and libc giants) is 33%.
-- VU0, MMI, COP0 and hand-written functions, and since 2026-11-09 the 162 remnants that are not functions, are flagged as permanent blockers (`config/us/blockers.tsv`) and counted as finished apart from the exact C, as in sly1 ([build/vu0-mmi.md](build/vu0-mmi.md)).
+- Matched C: 5,515 of 6,061 functions (2026-11-13, `progress/us/report.json`; PAL 5,416); every other function is built from its original assembly, and
+  the best compiling draft of each is in `nonmatching/`. The 6,061 leave out the 765 permanent blockers. The count was 6,192 on 2026-11-08, when the
+  report counted every function and the blockers as finished.
+- NTSC-U code reached 80% on 2026-11-08 (80.10%, blockers counted as finished; PAL 78.64%). Rulings since then (remnants, the inline kind, the 10% cutoff)
+  moved the denominator, so the headline is now the exact figure below, not that 80%.
+- VU0, MMI, COP0 and hand-written functions, and since 2026-11-09 the remnants that are not functions, are flagged as permanent blockers (`config/us/blockers.tsv`): 765 functions, 238,272 bytes (419 VU0, 183 system, 163 remnant). The report leaves them out of its totals ([build/vu0-mmi.md](build/vu0-mmi.md)).
 - PAL is checked against the same C (`make pal`); US is the reference.
 - CI is sly1-decomp's: `checks` (unit tests, repository check for game data and licence headers, byte-compile) and `progress`
   (objdiff reports for ByteMatch). Commit messages and the cleanup rules are checked locally (`make commits`, `make cleanup`).
 
-## What is left (2026-11-09)
+## What is left (2026-11-13)
 
-There are three separate "100%"s (numbers from `progress/us/report.json`):
+Numbers from `progress/us/report.json` and `progress/eu/report.json` (after PR #55), `scripts/list_functions.py` and `config/us/`. There are three
+separate "100%"s:
 
-- **Code, 80.25%:** 277 KB in 471 functions (blockers already count as finished).
-  - 261 far near misses, 171 KB. Opus matches about 1 in 8 at about 70k tokens each.
-  - 102 SDK-range functions with no draft, 64 KB (libm and libc giants, Sony gcc 2.9).
-  - 19 held-back rulings, about 0.25 points. Fresh near misses (score 1-16) are used up.
-  - What moved the number so far was systematic unlocks (the loop5 assembler patch, +22 KB; the `-fmove-all-movables` list; RTL-dump work on register-only misses), not worker waves (about 20 bytes per claimed function). Look for the next lever before spending a wave.
-  - Six integer near misses have no known lever: 0x1733C8, 0x1C9058, 0x120548, 0x218748, 0x1A5D98, 0x13FAD0.
-  - 162 chunks of the split were not functions (2,640 bytes): nothing in retail reaches them and they never transfer control. Since
-    2026-11-09 they are the `remnant` kind of `config/us/blockers.tsv` ([build/vu0-mmi.md](build/vu0-mmi.md)); open went from 633 to
-    471 functions, code from 80.10% to 80.25%.
-  - The SDK range is not a reorder-mode or other Sony build ([build/compiler-identification.md](build/compiler-identification.md),
-    2026-11-08 and 2026-11-09): what is left there is drafting, not toolchain.
-- **Data, 20.36%** (205,995 of 1,011,732 bytes, 2026-11-09): ceiling 49% of data (item 3); the irx and vutext regions are not game C. Largest gap, and it needs build work, not matching.
-- **Exact C, 49.97%:** the 1,015 permanent blockers (853 functions C cannot express, 162 remnants) stay original assembly, so exact C tops out near 70% of code unless item 6 reclassifies some.
-- **PAL, 78.78%** against US 80.25%: close it with `make pal` after each land.
+- **Code, 69.63%** (810,660 of 1,164,216 bytes; PAL 67.20%). The report leaves the 765 permanent blockers (238,272 bytes) out of the totals, so
+  this is the share of everything C can express. With the blockers counted as finished, as the 80% line of 2026-11-08 did, it is 74.79% (PAL 72.77%).
+  The fall from 80.25% on 2026-11-09 is the rulings, not lost work: inline functions stopped counting as finished (2026-11-11, item 6, 80.25% to 74.42%)
+  and the cutoff went to 10% (2026-11-12, #51: 144 more functions, 70.62% to 68.05%). Matching has since moved it from 68.05% to 69.63% (#54, #55).
+  - 502 functions, 344,784 bytes, are in the work queues (`list_functions.py`; the report counts 546 unmatched). Their drafts in `nonmatching/`:
+    102 within 16 words of retail, 157 at 17 to 64, 194 above 64; 49 have no draft (49,576 bytes, 20 of them SDK).
+  - 133 of them (133,272 bytes, 11.45% of code) are inline functions: compiled C that needs the shared helpers of `include/ps2inline.h` and
+    `include/vu0inline.h`. 86 of the 219 listed are matched. The largest VU0 functions and near misses that stop on GCC internals are what is left.
+  - 116 are SDK range (65,104 bytes; libm and libc giants, Sony gcc 2.9). The range is not a reorder-mode or other Sony build
+    ([build/compiler-identification.md](build/compiler-identification.md), 2026-11-08 and 2026-11-09): what is left there is drafting, not toolchain.
+  - Opus matched about 1 in 8 far near misses at about 70k tokens each (2026-11-09 measure, not repeated). What moved the number was systematic unlocks
+    (the loop5 assembler patch, +22 KB; `-fmove-all-movables`; per-function flags in `config/us/function_flags.tsv`, #55; the shared helpers; RTL-dump work on register-only
+    misses), not worker waves (about 20 bytes per claimed function). Look for the next lever before spending a wave.
+  - Six integer near misses had no known lever on 2026-11-09: 0x1733C8, 0x1C9058, 0x120548, 0x218748, 0x1A5D98, 0x13FAD0 (0x1C9058 now has a flag row).
+  - `make land` of one function takes about 16 s (was about 215 s, #54).
+- **Data, 33.92%** (343,213 of 1,011,732 bytes; 20.36% on 2026-11-09): ceiling 49% of data (item 3); the irx and vutext regions are not game C. What is
+  left needs types from readers (item 3 "Left"), not matching.
+- **Exact C of all code, 57.8%** (matched bytes over code with the blockers back in): the 765 permanent blockers stay original assembly, so exact C
+  tops out near 83% of code.
+- **PAL, 67.20%** against US 69.63%: 99 functions (5,416 against 5,515) do not reproduce PAL from the same C. Close it with `make pal` after each land.
+- **Whole files:** 199 of 209 proved (1,847 functions, 2026-11-13; item 2).
 
-- **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. `include/sly2.h` is 12 lines; 1,696 files
-  size their structs with padding; 401 struct names have different bodies in different files (`VT` 131, `SO` 65). Measured
-  2026-11-09: [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md). The fixed-width typedefs are shared since 2026-11-09
-  (`include/types.h`, item 1).
+- **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. Measured 2026-11-09, not repeated since the shared
+  classes landed: `include/sly2.h` is 12 lines; 1,696 files size their structs with padding; 401 struct names have different bodies in different
+  files (`VT` 131, `SO` 65). [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md). Shared since: the typedefs, `LO`/`SO`, `SW`, `DL`, `XF`, `CRef`,
+  `ALLOCREQ`, the player classes, `STEPGUARD` and `GOAL` (item 1).
 
 Order (2026-11-09, [PRESERVATION_AND_PORT.md](PRESERVATION_AND_PORT.md)): shared types first (item 1), because every match landed on
 padded local structs adds to the later cost; then one source layout (item 2) and the data build side (item 3); then the port-facing
@@ -131,6 +140,41 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      constants) and `FAbsorbSlotSoWkr` (an object of unknown class at 0x1C8); fields only one guessed reader shows (0x40, 0xB8,
      0x138...); opaque uses; `Carry_Attach`. 288 files still write vtable calls by hand on other classes. Next: the class table's other
      families (`GUARD`, `JT`, `GOAL`...), the `CRef` remainder, and the `aseg` segment type.
+   - `SO` remeasured (2026-11-13): 13 sources in `src/` and 4 drafts in `nonmatching/` still declare a local `struct SO` (the "26" above
+     counted every form). Six sources moved to `so.h` (`make elf` PASS, each scoring 0, `make unit` links, reports unchanged): the
+     world-load scan (`func_001CD9E0`, `stamp` is `islot`), `AdjustVehicleNewXp`, `Pripg_InitSo` (a `PRIPG : SO` with its field at 0x150), `func_00229F88`
+     (0x16C, three `LO *`), `SetPrizeSpewerObject`/`RenderPrizeSpewer` (one `PrizeSpewer : SO`) and `func_0021C0D8` (`FRAGILE : SO`;
+     the hand-written vtable call is `Remove()`, slot 9; this file is not one of the 195 whole files, so `try.py` is its proof). Left in `src/` (7):
+     `func_001F3CC8` (needs `GLOBSET` 0x80), `CSo_LoadFromBrx` (3 virtuals, slots 51, 63 and 64, no signatures, and `GLOBSET`), `func_001F5FF8`
+     (0xB8 count has two readers, the 0xC0 entry pointer one), `func_001F2768` (0xD0 flags, one reader), `UpdateJtStand` (a local `SO` and `JT`; 0x4C is
+     inside `LO`'s unknown range, one reader), `AddJsgContext` (a vtable call on slot 0x298/8 = 83, no signature) and `FBounceLeaf`, whose local `SO` is a
+     two-pointer struct of another type, not the class. Nothing here needs a new field without a second reader.
+   - `LO` remeasured and moved (2026-11-13): 30 sources in `src/` declared a local `struct LO`; 14 now use `lo.h` (11 per-function, 3 whole files;
+     `make elf` PASS, each scoring 0, `make unit` links, reports unchanged). Field readers moved to members (`oid`, `grfo`, `grfSw`, `psoParent`) and
+     hand-written vtable calls became virtuals: `Add()`, `Remove()` (slots 8, 9, `ShowHideLo`, `LoadExplgFromBrx`), `RemoveAloHierarchy()` (22),
+     `HandleSpliceEvent(...)` (3, three one-line wrappers with ids 5, 6 and 0x1A), `PmatWorld()` (31, `GetScriptPose`), `Slot37(void *)` and `Slot32(void *)`.
+     Left (16): fields past `LO`'s 0x50 that only one source reads (`ShowReconLinks` 0x100, `GoalHit_Update` 0x35C, `missile_proxy`
+     0xE4, `sm_so_1f1900` 0x230, `AppendPloarray` 0x64), a pointer typed `int` in the source (`PloNew`: `psoParent` is 0x10), slot signatures to learn
+     (`ReleaseRip` calls slot 5 with an id and a pointer; `fun_001C6CE8` calls 76, beyond `LO`'s slots), a local `ALO` (`CloneAloHierarchy`) and sources
+     I did not open (`UpdateMatch`, `PostLoMessage`, `Subscribe`/`UnsubscribeLoObject`, `fun_00204F78`, `unsorted_194F48`, `ReleaseMurrayObject`).
+   - `CLONESET` and `TIMEDCALL` (2026-11-13): `include/cloneset.h` (0x6C bytes, the world's clone-set table, both readers agree) and
+     `include/timedcall.h` (`TIMEDCALL`, 0x14 bytes, with the Splice `CPair` it keeps). `InitCloneSets`, `InstantiateClone`, `AddSwTimedCall`
+     and `CancelSwTimedCall` moved, each scoring 0. That unblocked two whole files, `lo/OnLoAdd_file.cpp` (28 functions) and
+     `new_1c90d0/MakeCloneId_file.cpp` (33): `make elf` PASS, `make unit` links both whole. 197 of 209 files are whole now. `CPair` itself has 27
+     local copies left (the merged `OnLoAdd_file.cpp` keeps three renamed); `RefOpScheduleCallback` has its own `CRef`, so it keeps its `TIMEDCALL`.
+     `NODE` is not a class: 20 sources reuse the name for unrelated list nodes, so no header; it only matters where two sources of one
+     file clash, and the merger renames those. `TAGK`, the other name on the 2026-11-11 list, is `cref.h`'s enum; nothing to share.
+   - Whole files, 2026-11-13 (each candidate tried with `make_whole_files.py --only <start> --write`; 199 of 209 whole, 1,847 functions):
+     `SolveSw_file` and `so_wr_22b720` now prove. `SolveSw`: `sw.h`'s `NODE` (the world's list at 0x3D1C) is `SWNODE` (it never was the
+     oxa node of `func_001F8E90`), and the oxa `NODE`, `OXA` and `PHYS` of its three sources are written once. `so_wr_22b720`: the two
+     `UNoise` functions are C++ overloads (`UNoise(int)`, `UNoise(float, float, float)`, same symbols) instead of hand-mangled
+     `extern "C"` names, and `GFromOnz` calls the C `UBias__Fff`. Still not whole (the merger's own error): `po_screen_210eb0` (128
+     functions: `B_003E106C` is a list object in `LoadBlotFromBrx` and a `Node *` in `func_002127C8`/`func_002124F0`, and more of that
+     kind behind it), `SyncVBlank_file` (`B_002DFB40` typed `char`, `CRITSECT` and via a cast, `QW` as a struct, hand-mangled
+     `EnterCritSect__FP8CRITSECT`), `StartupJmt_file` (`func_001AE928(s32 *)` called with a `char *`), `PloFindSpawn_file`
+     (`PloFindSwObject_thunk` declared with two argument types), `QueueSwCallback_file` (0x5C8 against retail's 0x5B8) and
+     `PsoHitTestLineObjects_file` (0x390 against 0x394), plus the four with per-function flag lists (`RefOpRandom`, `PeaFindAsegLabel`,
+     `SetRhythmState`, `rog_path_1be398`). None of the first four is a class: each is one callee or global written with several types.
    - `SW` (2026-11-10): `include/sw.h`, the world, class 1 of the class table (0x4790 bytes, derived from the root class; Sly 1's
      derives from `LO`, Sly 2's does not). The game keeps one, a static global at 0x3DD490 that 440 matched files reach, and the
      `*Sw*` functions take its address, so a field there needs one reader. 61 fields from 0x150 to 0x4774: the job and task
@@ -229,12 +273,12 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    functions, reports unchanged. 206 more rewritten sources (m2c leftovers, C that did not compile as C++ in one unit) then
    brought it to 195 whole files, 1723 matched functions. Left: 5 files whose sources declare one callee or global with
    different types (gs, jump, po-screen, `PloFindSpawn`, so-wr: `InitMeter`, `CploFindSwObjectsByClass`, `UNoise`, ...),
-   4 where two sources define one class differently (`TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`: needs shared types), 2 that
+   (2026-11-13: see "Whole files, 2026-11-13" below for the 10 left) 2 that
    compile with a different size (0x149A50, 0x14CC4C), 1 waiting on 0x153128 (score 0 typed only through a steering
    local), 2 with per-function flags.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data
    defined in source"): a global is defined in C only where its initial value reproduces retail's bytes at its address, one file defines it, every other
-   file declares it `extern`; the defined bytes count as matched data. Today 20.36% of data (205,995 of 1,011,732 bytes: 489 typed `.data` groups from
+   file declares it `extern`; the defined bytes count as matched data. On 2026-11-09 20.36% of data (205,995 of 1,011,732 bytes; 33.92% on 2026-11-13: 489 typed `.data` groups from
    `make_data_files.py`, plus a function's own literals and jump tables, `data/rodata-c`). What can ever be C: `data/rodata` 296 KB and `data/data` 199 KB (49% of data); `data/irx` 474 KB (IOP modules) and
    `data/vutext` 34 KB (VU microcode) are not game C. A pilot on `HitFx_GIntensity` (2026-11-08) found the build side missing, not the ruling: the
    two constants it reads (`g_2bdce0`, `g_2bdcf0[3]`) are in `.data`, not `.rodata`; a `const` scalar is folded into `lui`/`mtc1` (score 24) and a

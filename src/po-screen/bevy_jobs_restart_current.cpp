@@ -7,7 +7,10 @@ extern "C" int CGc_FFindScreen(void *);
 extern "C" int FJoyButtonPressed(void *, int);
 extern "C" void ClearHandsOff(void *, int);
 extern "C" void bevy_jobs_162df8(int);
-extern "C" char B_002E6550[], B_003DA4F0[], B_002DFC00[], B_003DD490[];
+extern "C" char B_002E6550[];
+extern "C" char B_003DA4F0[];
+extern "C" char B_002DFC00[];
+extern "C" char B_003DD490[];
 extern "C" int g_2dd318;
 extern "C" float g_2ddf0c;
 void bevy_jobs_restart_current(BLOT *blot)

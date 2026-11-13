@@ -1,15 +1,22 @@
-struct LO { char pad[0x40]; unsigned grf; };
-struct SO { char pad[0x16C]; LO *a; LO *b; LO *c; };
-void PostSoLoad(SO *);
+#include "so.h"
+
+struct SOWATCH : SO {
+    /* 0x150 */ u8 unknown_0x150[0x1C];
+    /* 0x16C */ LO *a;
+    /* 0x170 */ LO *b;
+    /* 0x174 */ LO *c;
+};
+
+void PostSoLoad(SOWATCH *);
 static inline void ClearGrf(LO *plo, unsigned mask)
 {
-    unsigned g = plo->grf;
+    unsigned g = plo->grfSw;
     if (((g ^ 1) & 1) != 0)
         *(unsigned *)g &= ~mask;
     else
-        plo->grf = g & ~mask;
+        plo->grfSw = g & ~mask;
 }
-void func_00229F88(SO *pso)
+void func_00229F88(SOWATCH *pso)
 {
     PostSoLoad(pso);
     if (pso->a) ClearGrf(pso->a, 8);

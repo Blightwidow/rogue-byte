@@ -1,6 +1,5 @@
 #include "sly2.h"
-struct VT { char pad[0xF8]; short delta; short index; float *(*fn)(void *); };
-struct LO { char pad[0xC]; VT *vptr; };
+#include "lo.h"
 extern "C" int FIsBasicDerivedFrom(void *, int);
 extern "C" void FindCrvClosestPointAll(void *, QW, void *, void *, void *, void *, void *);
 extern "C" QW PosLoWorld(void *);
@@ -15,8 +14,8 @@ extern "C" void GetScriptPose(void *pscript, QW posFrom, LO *plo, QW *ppos, floa
             rad = atan2f(l.normal[1], l.normal[0]);
         } else {
             l.pos = PosLoWorld(plo);
-            float *first = plo->vptr->fn((char *)plo + plo->vptr->delta);
-            rad = atan2f(first[1], *plo->vptr->fn((char *)plo + plo->vptr->delta));
+            MATRIX4 *pmat = plo->PmatWorld();
+            rad = atan2f(pmat->mat[0][1], plo->PmatWorld()->mat[0][0]);
         }
     } else {
         l.pos = posFrom;
