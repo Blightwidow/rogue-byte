@@ -7,6 +7,7 @@ matched functions of src/ compiled (targets `pieces` and `units`).
 `pieces` and `units` and runs scripts/build/link_image.py (assembly runs + compiled functions, linked at their retail
 addresses) and scripts/verify_image.py (every loaded byte against the retail executable)."""
 import hashlib
+import importlib.metadata
 import os
 import subprocess
 import sys
@@ -48,11 +49,23 @@ def restore_unchanged_mtimes(before):
 if '--split' in sys.argv:
     subprocess.check_call(['python3', 'scripts/names/combine.py', 'config/recovered/'], cwd=ROOT)
     subprocess.check_call(['python3', 'scripts/names/export_splat_symbols.py'], cwd=ROOT)
-    splat_before = snapshot_tree(os.path.join(ROOT, SPLAT_OUTPUT)) if os.path.isdir(os.path.join(ROOT, SPLAT_OUTPUT)) else {}
-    subprocess.check_call([os.path.join(ROOT, '.venv', 'bin', 'splat'), 'split', 'sly2.us.yaml'],
-                          cwd=os.path.join(ROOT, 'config', 'us'))
-    subprocess.check_call(['python3', 'scripts/build/numeric_constants.py'], cwd=ROOT)
-    restore_unchanged_mtimes(splat_before)
+    # Splat takes 14 s and its output is a function of a few files: skip it when none changed since the run that wrote build/splat
+    stamp_path = os.path.join(ROOT, SPLAT_OUTPUT, '.split_stamp')
+    digest = hashlib.sha1()
+    for path in ('config/us/sly2.us.yaml', 'config/us/symbol_addrs.txt', 'work/elf/SCUS_973.16', 'scripts/build/numeric_constants.py'):
+        with open(os.path.join(ROOT, path), 'rb') as handle:
+            digest.update(handle.read())
+    digest.update(f"{importlib.metadata.version('splat64')} {importlib.metadata.version('spimdisasm')}".encode())
+    if os.path.isfile(stamp_path) and open(stamp_path).read() == digest.hexdigest() and os.path.isdir(os.path.join(ROOT, SPLAT_OUTPUT, 'asm')):
+        print('split: its inputs are unchanged since the last run, build/splat kept')
+    else:
+        splat_before = snapshot_tree(os.path.join(ROOT, SPLAT_OUTPUT)) if os.path.isdir(os.path.join(ROOT, SPLAT_OUTPUT)) else {}
+        subprocess.check_call([os.path.join(ROOT, '.venv', 'bin', 'splat'), 'split', 'sly2.us.yaml'],
+                              cwd=os.path.join(ROOT, 'config', 'us'))
+        subprocess.check_call(['python3', 'scripts/build/numeric_constants.py'], cwd=ROOT)
+        restore_unchanged_mtimes(splat_before)
+        with open(stamp_path, 'w') as handle:
+            handle.write(digest.hexdigest())
 
 with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     ninja = ninja_syntax.Writer(handle, width=120)

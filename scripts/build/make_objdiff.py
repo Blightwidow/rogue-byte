@@ -109,13 +109,77 @@ def unit_source(unit):
             lines.append(f".size {function['name']}, {manifest_size.get(function['address'], function['end'] - function['address'])}\n")
     return ''.join(lines)
 
+import functools  # noqa: E402
+import hashlib  # noqa: E402
+
+
+@functools.lru_cache(maxsize=None)
+def file_digest(path):
+    """sha1 of a file's bytes ('' when it does not exist)."""
+    if not os.path.isfile(path):
+        return ''
+    with open(path, 'rb') as handle:
+        return hashlib.sha1(handle.read()).hexdigest()
+
+
+def global_digest():
+    """What every unit's objects depend on besides its own inputs: the symbol names the renames come from, the manifests that decide which
+    object stands for a function, and this script."""
+    digest = hashlib.sha1()
+    for path in ('build/splat/undefined_syms_auto.txt', 'config/us/symbol_addrs.txt', 'build/image/derived.tsv', 'src/MANIFEST.tsv',
+                 'nonmatching/MANIFEST.tsv', os.path.abspath(__file__)):
+        digest.update(file_digest(path).encode())
+    return digest.hexdigest()
+
+
+GLOBAL_DIGEST = global_digest()
+
+
+def up_to_date(destination, key):
+    """True when `destination` exists and was made for exactly `key` (its sidecar .key file): the unit is then not built again."""
+    sidecar = destination + '.key'
+    return os.path.isfile(destination) and os.path.isfile(sidecar) and open(sidecar).read() == key
+
+
+def stamp(destination, key):
+    with open(destination + '.key', 'w') as handle:
+        handle.write(key)
+
+
+def base_key(unit):
+    """The key of a unit's base object: the objects that stand for its functions (their bytes), which of them are cut out of a whole file or
+    trimmed, and the global digest. The selection mirrors build_base."""
+    digest = hashlib.sha1(GLOBAL_DIGEST.encode())
+    for function in units[unit]:
+        address = function['address']
+        if address in in_whole:
+            file, start = in_whole[address]
+            digest.update(f"w {address} {start} {file_digest(os.path.join('build', 'units', file + '.o'))}\n".encode())
+            continue
+        file = manifest.get(address)
+        path = os.path.join('build', 'units', file + '.o') if file else None
+        if not file and address in drafts:
+            file = drafts[address]
+            path = os.path.join('build', 'nonmatching', file + '.o')
+        trimmed = os.path.join('build', 'image', 'trimmed', file.replace(os.sep, '_').replace('/', '_') + '.o') if file and address in manifest else None
+        if trimmed and os.path.isfile(trimmed):
+            path = trimmed
+        digest.update(f"f {address} {function['name']} {path} {file_digest(path) if path else ''}\n".encode())
+    return digest.hexdigest()
+
+
 def assemble_target(unit):
     destination = os.path.join(EXPECTED, unit + '.o')
     os.makedirs(os.path.dirname(destination), exist_ok=True)
     source = destination[:-2] + '.s'
-    open(source, 'w').write(unit_source(unit))
+    text = unit_source(unit)
+    key = hashlib.sha1((GLOBAL_DIGEST + text).encode()).hexdigest()
+    if up_to_date(destination, key):
+        return
+    open(source, 'w').write(text)
     run([BINUTILS + '-as', '-EL', '-march=r5900', '-mabi=eabi', '-G0', '-no-pad-sections', '-I', 'include',
          '-I', os.path.join('build', 'splat', 'asm'), '-o', destination, source])
+    stamp(destination, key)
 
 def whole_part(function):
     """The base part of a function inside a whole file: the function cut out of the whole object (make_whole_files.cut_function), its
@@ -145,6 +209,9 @@ def whole_part(function):
 def build_base(unit):
     destination = os.path.join(BASE, unit + '.o')
     os.makedirs(os.path.dirname(destination), exist_ok=True)
+    key = base_key(unit)
+    if up_to_date(destination, key):
+        return
     renamed = []
     for function in units[unit]:
         if function['address'] in in_whole:
@@ -183,6 +250,7 @@ def build_base(unit):
         run([BINUTILS + '-ld', '-EL', '-r', '--no-warn-mismatch', '-o', destination, *renamed])
     else:
         run(f'printf \'.section .text, "ax"\\n\' | {BINUTILS}-as -EL -march=r5900 -o {destination} -'.split() if False else ['sh', '-c', f'printf \'.section .text, "ax"\\n\' | {BINUTILS}-as -EL -march=r5900 -o {destination} -'])
+    stamp(destination, key)
 
 with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
     list(pool.map(assemble_target, units))
@@ -196,7 +264,7 @@ DATA_SECTIONS = [('rodata', '.rodata'), ('data', '.data'), ('vutext', '.vutext')
 data_units = []
 
 def owned_rodata(kind='rodata'):
-    """[(address, bytes)] of the rodata that compiled C objects own: the `.ro_<address>` sections of the linked image (build/image/image.elf)
+    """[(address, bytes)] of the rodata that compiled C objects own: the `.ro_<address>` sections of the linked image (build/image/image.bin)
     that link.ld fills from an object rather than from the assembly pieces (kind 'data': the `.dd_<address>` sections of the data files, config/us/data_files.tsv).
     The bytes are the linked ones, with a jump table's relocations resolved."""
     pattern = re.compile(r'(\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.rodata\) \}' if kind == 'rodata' else r'(\.dd_\S+) (0x[0-9A-Fa-f]+) .*\{ \*/(\S+?)\(\.data\) \}')
@@ -206,12 +274,15 @@ def owned_rodata(kind='rodata'):
         if match and '_asm.o' not in match.group(3) and 'NOLOAD' not in line:
             labels[match.group(1)] = int(match.group(2), 16)
     found = []
-    with open(os.path.join('build', 'image', 'image.elf'), 'rb') as handle:
-        linked = ELFFile(handle)
-        for label, address in labels.items():
-            section = linked.get_section_by_name(label)
-            if section is not None and section['sh_size']:
-                found.append((address, section.data()))
+    # the linked bytes of those sections: link_image.py writes build/image/image.bin and the section sizes (it links in chunks, no single image.elf)
+    with open(os.path.join('build', 'image', 'sections.json')) as handle:
+        sizes = json.load(handle)
+    with open(os.path.join('build', 'image', 'image.bin'), 'rb') as handle:
+        image_bytes = handle.read()
+    for label, address in labels.items():
+        size = sizes.get(label)
+        if size:
+            found.append((address, image_bytes[address - 0x100000:address - 0x100000 + size]))
     return sorted(found)
 
 def data_symbols(address, size, owned):

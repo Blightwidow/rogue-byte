@@ -140,16 +140,17 @@ CACHE_PATH = os.path.join(LAB, 'work', 'matching', 'pal_cache.pkl')
 
 
 def tree_digest(directory, suffixes):
-    """sha1 over the names and bytes of every file under `directory` that ends in one of `suffixes`, in name order."""
+    """sha1 over the names, sizes and modification times of every file under `directory` that ends in one of `suffixes`, in name order. Not the
+    bytes: reading all of build/splat/asm took seconds on each run. A file that is touched without a change only costs a recompile; make elf
+    keeps the times of the files Splat rewrites unchanged (configure.py)."""
     digest = hashlib.sha1()
     for folder, names_below, names in sorted(os.walk(directory)):
         names_below.sort()
         for name in sorted(names):
             if name.endswith(suffixes):
                 path = os.path.join(folder, name)
-                digest.update(os.path.relpath(path, directory).encode())
-                with open(path, 'rb') as handle:
-                    digest.update(handle.read())
+                status = os.stat(path)
+                digest.update(f'{os.path.relpath(path, directory)}\0{status.st_size}\0{status.st_mtime_ns}\n'.encode())
     return digest.hexdigest()
 
 

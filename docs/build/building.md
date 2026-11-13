@@ -31,6 +31,22 @@ elsewhere). Nothing proprietary is stored in the repository.
    retail bytes instead. A whole file (`config/us/whole_files.tsv`: one retail file, its unmatched functions included from Splat's
    assembly with `INCLUDE_ASM`) is one object linked over its range and compared as a whole; it is the only source of its functions, so if
    it differs they come from assembly.
+
+   Why a run takes seconds (2026-11-13; a full `make land` of one function went from about 215 s to 15 s):
+   - `export_src.py`, `export_nonmatching.py` and `configure.py --split` write a file only when its bytes changed, so unchanged sources keep
+     their mtime and ninja compiles only what changed. Splat itself is skipped when the yaml, `symbol_addrs.txt`, the retail executable and the
+     tool versions are the same as in the last run (`build/splat/.split_stamp`).
+   - The link runs in chunks (`chunk_groups`, `LINK_RUNS` runs of `ld` in parallel): GNU ld matches each linker-script statement against every
+     input file, so one link costs statements times files, and sixteen chunks cost a fiftieth of it (27 s became 1 s). An object's text and its
+     own rodata stay in the same chunk. `link.ld` still holds the whole script; `build/image/sections.json` holds the sizes of the `.ro_` and
+     `.dd_` sections (make_objdiff.py reads their bytes from `image.bin`; there is no `image.elf` any more).
+   - The functions that fell back in the last settled run are put back to assembly before the first attempt (`build/image/seed.json`), so a
+     normal run links once. `link_image.py --fresh` tests them again, and a new difference is found as before.
+   - `scripts/build/elfmini.py` reads the objects' sections, symbols and relocations with struct (pyelftools was most of the Python time), and
+     `compare.py` reads the target words from a cached copy of the executable.
+   - `make_objdiff.py` rebuilds only the units whose inputs changed (sidecar `.key` files next to the objects), and `version_check.py` (PAL)
+     caches each function's result in `work/matching/pal_cache.pkl`, keyed by toolchain, headers, split assembly, source, the other version's
+     bytes and flags.
 4. `pack_elf.py` assembles the whole file (`build/image/SCUS_973.16`) from the image and the container pieces, and
    `scripts/verify_image.py` compares every loaded byte and then the whole file with the retail executable. A good run
    ends with the SHA-1 of the retail file and `PASS: reconstructed image matches retail`.
