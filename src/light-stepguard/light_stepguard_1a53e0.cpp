@@ -389,7 +389,7 @@ void func_001A5D98(LO *plo)
 {
     DCB *apdcb[32];
     int i;
-    DCB *pdcb = *(DCB **)((u8 *)plo + 0x34);
+    DCB *pdcb = plo->pdcb;
     if (pdcb) {
         i = 0;
         do {

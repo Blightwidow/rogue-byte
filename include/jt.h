@@ -42,6 +42,11 @@ struct JT : STEP {
     virtual const char *Slot103();      /* 103: LoadJtGadgetSlots reads the name it returns */
     virtual void Slot104();             /* 104: func_00141E30 */
     virtual void Slot105();             /* 105: func_00141E70, UpdateBentleyGadgetGlob */
+    /* The parts InitJt starts in place, as the pointers the part's own functions take (their layouts are local to those files): the
+       JMP at 0x2C0 (FJmpAllowsGadget), the attachment at 0x4C0 (FAttachAllowsGadget) and the pipe at 0xF50 (func_0019EEF0) */
+    void *PvJmp() { return (char *)this + 0x2C0; }
+    void *PvAttach() { return (char *)this + 0x4C0; }
+    void *PvPipe() { return (char *)this + 0xF50; }
     u8 unknown_0x2C0[0x4];
     /* 0x2C4 */ s32 field_0x2C4; /* in the JMP: SetMurrayMode (Murray slot 88) */
     u8 unknown_0x2C8[0x14];

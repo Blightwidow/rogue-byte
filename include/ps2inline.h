@@ -86,6 +86,16 @@ static inline QW JoinLowDoublewords(float high, QW low)
     return joined;
 }
 
+/* pand: the 128-bit AND of two quadwords in general registers (a plain C `&` on QW fails: "unsupported wide integer operation"). Retail ANDs two
+   axis bitsets of sixteen bytes each in one instruction (CobstacleFindPathzoneBox); the same instruction appears in three SDK-range functions that
+   stay assembly (0x233470, 0x233638, 0x2401D8) */
+static inline QW QuadAnd(QW first, QW second)
+{
+    QW both;
+    asm("pand %0, %1, %2" : "=r"(both) : "r"(first), "r"(second));
+    return both;
+}
+
 /* mfc1 into a quadword: a float in the low word of a general register, from where GCC moves it to a VU0 register (qmtc2) or stores it
    (FRenderRipPosMat; the scale of PresetJtAccelPipe and UpdateMurrayCarry) */
 static inline QW QuadFromFloat(float value)

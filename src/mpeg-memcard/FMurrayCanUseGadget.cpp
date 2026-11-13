@@ -16,21 +16,20 @@ extern "C" int FMurrayCanUseGadget(MURRAY *pmurray, int gadget)
 {
     if (bevy_player_p15_binoc_active(pmurray) != 0)
         return 0;
-    char *base = (char *)pmurray;
     int allowed;
     switch (pmurray->state) {
     case 0: case 1: case 9: case 10:
         goto second;
     case 2:
-        allowed = FJmpAllowsGadget(base + 0x2c0, gadget);
+        allowed = FJmpAllowsGadget(pmurray->PvJmp(), gadget);
         break;
     case 5:
         goto five;
     case 0xd:
-        allowed = FAttachAllowsGadget(base + 0x4c0, gadget);
+        allowed = FAttachAllowsGadget(pmurray->PvAttach(), gadget);
         break;
     case 0x14:
-        allowed = func_0019EEF0(base + 0xf50, gadget);
+        allowed = func_0019EEF0(pmurray->PvPipe(), gadget);
         break;
     default:
         return 0;
