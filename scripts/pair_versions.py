@@ -14,6 +14,7 @@ code changed in place or its layout did) and `none` when they cannot be paired.
 Writes the map as `us_address, other_address, size, other_size, status` (addresses only, no game bytes) and prints the counts."""
 import argparse
 import csv
+import hashlib
 import os
 import struct
 import sys
@@ -50,6 +51,18 @@ def main():
     parser.add_argument('--other', default=os.path.join(LAB, 'work', 'elf', 'SCES_525.29'))
     parser.add_argument('--out', default=os.path.join(LAB, 'config', 'eu', 'map.tsv'))
     arguments = parser.parse_args()
+    # The map is a function of the two executables, the function list (address, size, name) and this script: skip the work (2 s) when they are
+    # the same as in the run that wrote it
+    digest = hashlib.sha1()
+    for path in (arguments.us, arguments.other, os.path.abspath(__file__)):
+        with open(path, 'rb') as handle:
+            digest.update(handle.read())
+    for row in csv.DictReader(open(os.path.join(LAB, 'data', 'matching', 'functions.tsv'), encoding='utf-8'), delimiter='\t'):
+        digest.update(f"{row['address']} {row['size']} {row['name']}\n".encode())
+    stamp_path = os.path.join(LAB, 'work', 'matching', 'pair_versions.stamp')
+    if os.path.isfile(stamp_path) and os.path.isfile(arguments.out) and open(stamp_path).read() == digest.hexdigest():
+        print(f'pair_versions: {arguments.out} is current (same executables and function list)')
+        return
     us_base, us_words = text_of(arguments.us)
     other_base, other_words = text_of(arguments.other)
     us_norm, other_norm = [normalise(word) for word in us_words], [normalise(word) for word in other_words]
@@ -112,6 +125,9 @@ def main():
     for kind in ('identical', 'same', 'gap', 'none'):
         print(f'{kind:10} {counts[kind]:5} functions  {bytes_by[kind]:8} bytes  {100 * bytes_by[kind] / total_bytes:5.1f}%')
     print(f'{total} US functions, {total_bytes} bytes; the other .text is {len(other_words) * 4} bytes ({len(other_words) * 4 - len(us_words) * 4:+d})')
+    os.makedirs(os.path.dirname(stamp_path), exist_ok=True)
+    with open(stamp_path, 'w') as handle:
+        handle.write(digest.hexdigest())
     return 0
 
 

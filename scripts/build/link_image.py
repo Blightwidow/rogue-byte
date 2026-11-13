@@ -256,13 +256,10 @@ def retarget_rodata(address, object_path):
 def text_and_relocations(object_path):
     """(.text bytes, [(offset, relocation type, symbol name)]) of an object. definitions() asks for each undefined name of an object in turn,
     and parsing the object again for each one was a third of the time of a link: an object does not change during a run."""
-    with open(object_path, 'rb') as handle:
-        elf = ELFFile(handle)
-        data = elf.get_section_by_name('.text').data()
-        symbol_table = elf.get_section_by_name('.symtab')
-        entries = [(r['r_offset'], r['r_info_type'], symbol_table.get_symbol(r['r_info_sym']).name)
-                   for r in elf.get_section_by_name('.rel.text').iter_relocations()]
-    return data, entries
+    elf = elfmini.Elf.read(object_path)
+    text = elf.section('.text')
+    symbols = elf.symbols()
+    return elf.data[text['offset']:text['offset'] + text['size']], [(offset, kind, symbols[index][0]) for offset, kind, index in elf.relocations('.rel.text')]
 
 def derive_addresses(address, object_path, names):
     """Addresses of names the symbol table lacks, read from the retail instructions at their relocation sites: a jal
