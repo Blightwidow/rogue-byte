@@ -3817,6 +3817,7 @@ address	name	size	file	whole_file	symbol
 0X1E1C40	RunSeqnode	260	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	RunSeqnode
 0X1E1D48	UpdateSeqnodeDrive	108	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	UpdateSeqnodeDrive
 0X1E1DB8	PloFindSeqnodeObject	116	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	PloFindSeqnodeObject
+0X1E1E30	StartNextSeqnodeRecord	6748	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	StartNextSeqnodeRecord
 0X1E3890	FSeqnodeRecordDone	3228	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	FSeqnodeRecordDone
 0X1E4530	DtSeqnodeRecord	368	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	DtSeqnodeRecord
 0X1E4EB8	SetSeqnodeDrive	104	stepguard-jsg/AddJsgContext_file.cpp	stepguard-jsg/AddJsgContext_file.cpp	SetSeqnodeDrive

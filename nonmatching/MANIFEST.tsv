@@ -485,7 +485,6 @@ address	name	size	file	score
 0X1DF3D0	AdvanceLaserBeams	480	game-stepguard/AdvanceLaserBeams.cpp	72
 0X1DF908	AddLaserBeam	120	game-stepguard/AddLaserBeam.cpp	15
 0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.c	13
-0X1E1E30	StartNextSeqnodeRecord	6752	splice-ref-crv/StartNextSeqnodeRecord.cpp	0
 0X1E46A0	UpdateSeqnodeVjoy	1696	splice-ref-crv/UpdateSeqnodeVjoy.cpp	4
 0X1E4D40	GetSeqnodeObjectPosRad	376	splice-ref-crv/GetSeqnodeObjectPosRad.cpp	0
 0X1E5280	DetachSeqnodeObject	240	splice-ref-crv/DetachSeqnodeObject.cpp	18
