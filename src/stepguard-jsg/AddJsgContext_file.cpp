@@ -8,6 +8,7 @@
 #include "include_asm.h"
 #include "vu0inline.h"
 #include "ps2inline.h"
+#include "sw.h"
 
 struct ITEM { char pad[0x10]; int value; };
 
@@ -1052,7 +1053,672 @@ extern "C" s32 PloFindSeqnodeObject(Seqnode_1E1DB8 *node, s32 id) {
 
 INCLUDE_ASM(0X1E1E30);
 
-INCLUDE_ASM(0X1E3890);
+/* SEQVT, REC and SEQNODE as the whole file (src/stepguard-jsg/AddJsgContext_file.cpp) declares them for RunSeqnode, which calls this
+   function; RECDONE and SEQNODEDONE below are the fuller views of the same objects this function reads */
+struct Seqnode_1E1DB8;
+
+struct Holder_1E5468;
+
+/* a record argument word: an object id, a count, a time or a distance, by record kind */
+union RECARG {
+    int n;
+    float g;
+    LO *plo;
+};
+
+/* one 0x50-byte record of a sequence (StartNextSeqnodeRecord) */
+struct RECDONE {
+    /* 0x0 */ int kind;
+    /* 0x4 */ int busy;
+    u8 unknown_0x8[0x8];
+    /* 0x10 */ RECARG arg[0x10];
+};
+
+/* the vtable of the player (JT, include/jt.h): slot 88 (SetMode) and slot 89, which returns an int here */
+struct VTPLAYERJT {
+    u8 unknown_0x0[0x2C0];
+    short delta88;
+    short index88;
+    void (*pfnSetMode)(void *, int);
+    short delta89;
+    short index89;
+    int (*pfn89)(void *);
+};
+
+/* the player: JT (include/jt.h, class 52) and its subclasses SLY (53) and MURRAY (54), as far as this function reads them. The whole
+   file cannot include include/jt.h: its local SO and PO clash with JT's base classes. */
+struct PLAYERJT {
+    u8 unknown_0x0[0xC];
+    /* 0xC */ VTPLAYERJT *pvt;
+    u8 unknown_0x10[0x2CC];
+    /* 0x2DC */ s32 jmpState; /* JT */
+    u8 unknown_0x2E0[0x1E8];
+    /* 0x4C8 */ s32 attachKind; /* JT */
+    /* 0x4CC */ s32 field_0x4CC; /* JT */
+    u8 unknown_0x4D0[0xA58];
+    /* 0xF28 */ s32 field_0xF28;
+    u8 unknown_0xF2C[0x24];
+    /* 0xF50 */ s32 field_0xF50; /* JT: the pipe state */
+    u8 unknown_0xF54[0xC];
+    /* 0xF60 */ f32 field_0xF60;
+    u8 unknown_0xF64[0x6C];
+    /* 0xFD0 */ s32 field_0xFD0; /* JT: the part func_00144638 starts */
+    u8 unknown_0xFD4[0x60];
+    /* 0x1034 */ void *field_0x1034; /* JT */
+    u8 unknown_0x1038[0x398];
+    /* 0x13D0 */ s32 state; /* MURRAY, BENTLEY */
+    u8 unknown_0x13D4[0x4F4];
+    /* 0x18C8 */ s32 jts; /* SLY */
+    u8 unknown_0x18CC[0xC];
+    /* 0x18D8 */ s32 field_0x18D8; /* SLY */
+    u8 unknown_0x18DC[0x38];
+    /* 0x1914 */ s32 field_0x1914; /* SLY */
+    u8 unknown_0x1918[0xD8];
+    /* 0x19F0 */ QW field_0x19F0; /* SLY */
+    u8 unknown_0x1A00[0x20];
+    /* 0x1A20 */ QW field_0x1A20; /* SLY */
+};
+
+struct SEQNODEDONE {
+    u8 unknown_0x0[0x14];
+    /* 0x14 */ LO *psw;
+    u8 unknown_0x18[0xC];
+    /* 0x24 */ LO *psubject;
+    u8 unknown_0x28[0xC];
+    /* 0x34 */ float tStart;
+    u8 unknown_0x38[0xC];
+    /* 0x44 */ PLAYERJT *pjt;
+    u8 unknown_0x48[0x4];
+    /* 0x4C */ LO *pasega;
+    /* 0x50 */ LO *pjsg;
+    /* 0x54 */ int pjtPose;
+    /* 0x58 */ int psma;
+    /* 0x5C */ int fSmaCur;
+    /* 0x60 */ LO *ploShown;
+    /* 0x64 */ int ploSw;
+    /* 0x68 */ RECDONE *precStream;
+    u8 unknown_0x6C[0x10];
+    /* 0x7C */ float sCrv;
+    /* 0x80 */ float tCam;
+    u8 unknown_0x84[0x18];
+    /* 0x9C */ int fCamMove;
+    /* 0xA0 */ PLAYERJT *pjtBinoc;
+    u8 unknown_0xA4[0x34];
+    /* 0xD8 */ int ploD8;
+    /* 0xDC */ int ploDC;
+};
+
+extern "C" int CGc_FFindScreen(void *);
+
+extern "C" int ConsumeJoyButton(void *, int);
+
+extern "C" int FAsegaGone(LO *);
+
+extern "C" int FFloatsNear__Ffff(float, float, float);
+
+extern "C" int FJoyButtonPressed(void *, int);
+
+extern "C" int FLoHasOid(int, int);
+
+extern "C" int FSggHasAlarm(LO *, int);
+
+extern "C" int FSmaRetracted(int);
+
+extern "C" int FStreamPlaying(void *, int);
+
+extern "C" int FVjoyButtonPressed(void *, int);
+
+extern "C" float GLimitLm__FP2LMf(QW *, float);
+
+extern "C" void GetSeqnodeObjectPosRad(void *pseqnode, void *pso, QW *ppos, void *prad);
+
+extern "C" int GetSmaCur(void *);
+
+extern "C" int GoalFollowCrv_FAtEnd(int);
+
+extern "C" int GoalGotoPos_FArrived(int);
+
+extern "C" void GoalStack_Clear(void *);
+
+extern "C" void JT_EndPose(int pjt); /* as the whole file declares it */
+
+extern "C" int JT_FPosing(int);
+
+extern "C" float MarkClockTickRealOnly__FP5CLOCK(void *);
+
+extern "C" s32 PloFindSeqnodeObject(struct Seqnode_1E1DB8 *node, s32 id); /* as the whole file defines it */
+
+extern "C" QW PosLoWorld(void *);
+
+extern "C" int PseqnodeFind(LO *, int, SEQNODEDONE *);
+
+extern "C" void ReleaseSeqnodeSma(char *pseqnode); /* as the whole file defines it */
+
+extern "C" void StopSeqnodeCameraMove(char *pseqnode, int fCut); /* as the whole file defines it */
+
+extern "C" float TStream(void *);
+
+extern "C" void bevy_player_p14_19e110(void *, QW *);
+
+extern "C" int func_001423A0(PLAYERJT *);
+
+extern "C" int func_001424C0(PLAYERJT *);
+
+extern "C" int func_001424D0(PLAYERJT *);
+
+extern "C" int func_00142530(PLAYERJT *);
+
+extern "C" void func_001448F0(void *, QW);
+
+extern "C" int func_00150F58(void *);
+
+extern "C" int func_00151018(void *);
+
+extern "C" int func_001510D8(void *);
+
+extern "C" int func_00171DA8(int, int);
+
+extern "C" void func_001E0070(LO *, int);
+
+extern "C" void func_001E5468(struct Holder_1E5468 *pseqnode); /* as the whole file defines it */
+
+extern "C" int func_00205458(PLAYERJT *, int);
+
+extern "C" int func_002121C8(int);
+
+extern "C" char B_002DE460[];
+
+extern "C" char B_002DFC00[];
+
+extern "C" char B_003DA530[];
+
+extern "C" char B_003DD040[];
+
+extern "C" char *B_003E133C;
+
+extern "C" int B_004435F8;
+
+extern "C" float RO_002BD850;
+
+extern "C" float RO_002C3620;
+
+extern "C" float RO_002C3624;
+
+extern "C" float RO_002C3628;
+
+extern "C" float RO_002C362C;
+
+extern "C" char g_2dded0[]; /* the game clock, whose first word is its time; char[] as the whole file declares it */
+
+extern "C" float g_2ddf0c;
+
+/* the time the node has run: the clock its owner's flags pick (0x100: the real-time one), less its start */
+static inline float TSeqnode(SEQNODEDONE *pseqnode) {
+    LO *psw = pseqnode->psw;
+    u32 grf;
+    if ((psw->grfSw ^ 1) & 1) {
+        grf = psw->pgrfentry->grf;
+    } else {
+        grf = psw->grfSw;
+    }
+    float t;
+    if (grf & 0x100) {
+        t = g_2ddf0c;
+    } else {
+        t = *(float *)g_2dded0;
+    }
+    return t - pseqnode->tStart;
+}
+
+/* the distance in the xy plane from the object to a position */
+static inline float DistToObject(void *plo, QW *ppos) {
+    QW offset = VectorSub(PosLoWorld(plo), *ppos);
+    return LaneX(SqrtX(SumXyInX(VectorMultiplyXy(offset, offset))));
+}
+
+extern "C" int FSeqnodeRecordDone(SEQNODE *pseqnodeBase, REC *precBase) {
+    SEQNODEDONE *pseqnode = (SEQNODEDONE *)pseqnodeBase;
+    RECDONE *prec = (RECDONE *)precBase;
+    QW pos;
+    QW posObj;
+    int fDone;
+    PLAYERJT *psly;
+    switch (prec->kind) {
+    case 0x3: {
+        int *aoid = &prec->arg[1].n;
+        fDone = 1;
+        for (int ioid = 0; ioid < prec->arg[0].n; ioid++) {
+            if (PseqnodeFind(pseqnode->psw, aoid[ioid], pseqnode) != 0) {
+                fDone = 0;
+                break;
+            }
+        }
+        break;
+    }
+    case 0x4:
+        fDone = FSggHasAlarm(pseqnode->psw, prec->arg[0].n);
+        if (fDone != 0 && prec->arg[1].n != 0) {
+            func_001E0070(pseqnode->psw, prec->arg[0].n);
+        }
+        return fDone;
+    case 0xA:
+        fDone = 0;
+        if (pseqnode->pjtPose != 0) {
+            if (JT_FPosing(pseqnode->pjtPose) == 0) {
+                pseqnode->pjtPose = 0;
+                fDone = 1;
+            }
+            break;
+        }
+        if (pseqnode->pasega != 0 && FAsegaGone(pseqnode->pasega) != 0) {
+            pseqnode->pasega->Slot2();
+            pseqnode->pasega = 0;
+        }
+        fDone = pseqnode->pasega == 0;
+        break;
+    case 0xB:
+        fDone = pseqnode->pjsg == 0;
+        if (pseqnode->pjsg != 0) {
+            if (*(int *)((char *)pseqnode->pjsg + 0x74) == 0) {
+                pseqnode->pjsg = 0;
+            }
+            fDone = pseqnode->pjsg == 0;
+        }
+        break;
+    case 0xD:
+        if (pseqnode->psma != 0 && (FSmaRetracted(pseqnode->psma) != 0 || pseqnode->fSmaCur != 0)) {
+            ReleaseSeqnodeSma((char *)pseqnode);
+        }
+        fDone = pseqnode->psma == 0;
+        break;
+    case 0xE:
+        if (pseqnode->ploSw != 0 && func_002121C8(pseqnode->ploSw) != 0) {
+            func_001E5468((Holder_1E5468 *)pseqnode);
+        }
+        fDone = pseqnode->ploSw == 0;
+        break;
+    case 0x1A: {
+        if (pseqnode->pjt == 0) {
+            fDone = 1;
+            break;
+        }
+        bevy_player_p14_19e110(&pseqnode->pjt->field_0xF50, &pos);
+        fDone = __builtin_fabsf(pseqnode->pjt->field_0xF60 - GLimitLm__FP2LMf(&pos, pseqnode->sCrv)) <
+                prec->arg[1].g;
+        break;
+    }
+    case 0x1B: {
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) == 0) {
+            fDone = 1;
+            break;
+        }
+        PLAYERJT *pjt = (PLAYERJT *)pseqnode->psubject;
+        if ((unsigned)(pjt->jmpState - 0xB) < 3) {
+            fDone = 0;
+            break;
+        }
+        if (pjt->field_0x4CC == -1) {
+            fDone = 1;
+            break;
+        }
+        if (pjt->attachKind != 0 && pjt->attachKind != 0xD) {
+            fDone = 1;
+            break;
+        }
+        pjt->pvt->pfnSetMode((char *)pjt + pjt->pvt->delta88, 0);
+        fDone = 1;
+        break;
+    }
+    case 0x1C: {
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x35) == 0) {
+            fDone = 1;
+            break;
+        }
+        PLAYERJT *pslySubject = (PLAYERJT *)pseqnode->psubject;
+        switch (prec->arg[1].n) {
+        case 2:
+            fDone = pslySubject->field_0x18D8 == -1;
+            break;
+        case 4:
+            fDone = pslySubject->jts != 2;
+            break;
+        case 8:
+            fDone = pslySubject->jts != 9;
+            break;
+        default:
+            fDone = 1;
+            break;
+        }
+        break;
+    }
+    case 0x1D:
+    case 0x21:
+        fDone = 1;
+        if (pseqnode->pjt != 0) {
+            fDone = func_001423A0(pseqnode->pjt);
+        }
+        break;
+    case 0x1E:
+        fDone = 1;
+        if (pseqnode->pjt != 0) {
+            fDone = func_001424C0(pseqnode->pjt);
+        }
+        break;
+    case 0x1F:
+        fDone = 1;
+        if (pseqnode->pjt != 0) {
+            fDone = func_001424D0(pseqnode->pjt);
+        }
+        break;
+    case 0x22:
+        fDone = 1;
+        if (pseqnode->pjt != 0) {
+            fDone = func_00142530(pseqnode->pjt);
+        }
+        break;
+    case 0x23: {
+        float dt = TSeqnode(pseqnode);
+        fDone = prec->arg[0].g < dt;
+        break;
+    }
+    case 0x24: {
+        PLAYERJT *pjt = pseqnode->pjt;
+        if (pjt == 0) {
+            fDone = 1;
+            break;
+        }
+        LO *plo = (LO *)PloFindSeqnodeObject((Seqnode_1E1DB8 *)pseqnode, prec->arg[0].n);
+        if (plo != 0) {
+            GetSeqnodeObjectPosRad(pseqnode, plo, &posObj, 0);
+            fDone = DistToObject(pjt, &posObj) < prec->arg[2].g;
+            func_001448F0(&pjt->field_0xFD0, posObj);
+        } else {
+            fDone = 1;
+        }
+        if (fDone != 0 && prec->arg[4].n != -1) {
+            JT_EndPose((int)pjt);
+        }
+        return fDone;
+    }
+    case 0x27: {
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) == 0) {
+            fDone = 1;
+            break;
+        }
+        PLAYERJT *pjt = (PLAYERJT *)pseqnode->psubject;
+        fDone = 0;
+        int pgoal = func_00205458(pjt, 0xA8);
+        if (pgoal == 0 || GoalFollowCrv_FAtEnd(pgoal) != 0) {
+            fDone = 1;
+        }
+        if (fDone != 0) {
+            GoalStack_Clear((char *)pjt + 0x26C);
+            if (prec->arg[5].n != -1) {
+                JT_EndPose((int)pjt);
+            }
+        }
+        return fDone;
+    }
+    case 0x28: {
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) == 0) {
+            fDone = 1;
+            break;
+        }
+        PLAYERJT *pjt = (PLAYERJT *)pseqnode->psubject;
+        fDone = 0;
+        int pgoal = func_00205458(pjt, 0xC1);
+        if (pgoal == 0 || GoalGotoPos_FArrived(pgoal) != 0) {
+            fDone = 1;
+        }
+        if (fDone != 0) {
+            GoalStack_Clear((char *)pjt + 0x26C);
+            if (prec->arg[5].n != -1) {
+                JT_EndPose((int)pjt);
+            }
+        }
+        return fDone;
+    }
+    case 0x29: {
+        PLAYERJT *pjt = pseqnode->pjt;
+        if (pjt == 0 || pjt->field_0x4CC == -1) {
+            fDone = 1;
+            break;
+        }
+        if (pjt->attachKind != 8) {
+            fDone = 1;
+            break;
+        }
+        LO *plo = (LO *)PloFindSeqnodeObject((Seqnode_1E1DB8 *)pseqnode, prec->arg[0].n);
+        if (plo == 0) {
+            fDone = 1;
+            break;
+        }
+        GetSeqnodeObjectPosRad(pseqnode, plo, &pos, 0);
+        fDone = DistToObject(pjt, &pos) < prec->arg[2].g;
+        break;
+    }
+    case 0x2A:
+        fDone = 1;
+        if (pseqnode->pjt != 0) {
+            fDone = pseqnode->pjt->jmpState == -1;
+        }
+        break;
+    case 0x2B:
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) == 0) {
+            fDone = 1;
+        } else {
+            fDone = ((PLAYERJT *)pseqnode->psubject)->jmpState == -1;
+        }
+        break;
+    case 0x2C:
+    case 0x2D: {
+        LO *ploShown = pseqnode->ploShown;
+        if (ploShown != 0) {
+            if (prec->kind == 0x2C) {
+                if (((int)(ploShown->grfo >> 0x3C) & 1) && *(float *)((char *)ploShown + 0x12C) == 1.0f) {
+                    pseqnode->ploShown = 0;
+                }
+            } else if (((int)(ploShown->grfo >> 0x3C) & 1) == 0) {
+                pseqnode->ploShown = 0;
+            }
+        }
+        fDone = pseqnode->ploShown == 0;
+        break;
+    }
+    case 0x32: {
+        float dt = TSeqnode(pseqnode);
+        fDone = RO_002BD850 < dt;
+        break;
+    }
+    case 0x33: {
+        float dt = TSeqnode(pseqnode);
+        fDone = prec->arg[0].g < dt;
+        break;
+    }
+    case 0x39:
+        fDone = pseqnode->tCam <= *(float *)g_2dded0;
+        if (fDone) {
+            if (prec->arg[12].n != 0) {
+                StopSeqnodeCameraMove((char *)pseqnode, prec->arg[13].n);
+            } else {
+                pseqnode->fCamMove = 0;
+            }
+        }
+        break;
+    case 0x3B:
+        fDone = 1;
+        if (pseqnode->pjtBinoc != 0) {
+            fDone = pseqnode->pjtBinoc->field_0xF28 == 1;
+        }
+        break;
+    case 0x3C:
+        fDone = 1;
+        if (pseqnode->pjtBinoc != 0) {
+            fDone = pseqnode->pjtBinoc->field_0xF28 == -1;
+        }
+        break;
+    case 0x3D:
+        fDone = func_00150F58(B_002DE460);
+        break;
+    case 0x3E:
+        fDone = func_00151018(B_002DE460);
+        break;
+    case 0x40:
+        fDone = func_001510D8(B_002DE460);
+        break;
+    case 0x42:
+        if (prec->arg[1].n == -1) {
+            fDone = FJoyButtonPressed(B_002DFC00, prec->arg[0].n);
+        } else {
+            char *pvjoy;
+            for (pvjoy = B_003E133C; pvjoy != 0; pvjoy = *(char **)(pvjoy + 0x84)) {
+                fDone = 0;
+                if (FLoHasOid(*(int *)(pvjoy + 0x7C), prec->arg[1].n) != 0) {
+                    break;
+                }
+            }
+            fDone = 0;
+            if (pvjoy == 0 || FVjoyButtonPressed(pvjoy, prec->arg[0].n) != 0) {
+                fDone = 1;
+            }
+            if (fDone == 0) {
+                break;
+            }
+            ConsumeJoyButton(B_002DFC00, prec->arg[0].n);
+        }
+        if (fDone != 0) {
+            B_004435F8 = 0;
+        }
+        break;
+    case 0x43:
+        if (pseqnode->psubject == 0 || FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x34) == 0) {
+            fDone = 1;
+        } else {
+            PLAYERJT *pjt = (PLAYERJT *)pseqnode->psubject;
+            if (pjt->pvt->pfn89((char *)pjt + pjt->pvt->delta89) == prec->arg[0].n) {
+                fDone = 1;
+            } else {
+                fDone = 0;
+            }
+        }
+        break;
+    case 0x44:
+        fDone = CGc_FFindScreen(B_003DA530) == 0;
+        break;
+    case 0x45:
+        fDone = FStreamPlaying(B_003DD040, prec->arg[0].n) == 0;
+        break;
+    case 0x52: {
+        int istream = -1;
+        if (pseqnode->precStream != 0) {
+            istream = pseqnode->precStream->arg[0].n;
+        }
+        if (FStreamPlaying(B_003DD040, istream) == 0) {
+            fDone = 1;
+        } else if (prec->arg[0].g < 0.0f) {
+            fDone = 0;
+        } else {
+            fDone = 0.0f <= TStream(B_003DD040) - prec->arg[0].g;
+        }
+        break;
+    }
+    case 0x4A:
+        fDone = prec->arg[0].g <= MarkClockTickRealOnly__FP5CLOCK(B_003DD040);
+        break;
+    case 0x4E:
+        fDone = prec->arg[0].g <= MarkClockTickRealOnly__FP5CLOCK(B_003DD040);
+        break;
+    case 0x4F:
+        fDone = 0;
+        if (FIsBasicDerivedFrom((s32)pseqnode->psubject, 0x36)) {
+            if (((PLAYERJT *)pseqnode->psubject)->state != 6) {
+                fDone = 1;
+            } else if (prec->arg[3].n != -1) {
+                fDone = GetSmaCur(((PLAYERJT *)pseqnode->psubject)->field_0x1034) == prec->arg[3].n;
+            }
+        }
+        break;
+    case 0x50:
+        fDone = pseqnode->pjt == 0 || pseqnode->pjt->state == 6;
+        break;
+    case 0x51:
+        fDone = pseqnode->pjt == 0 || pseqnode->pjt->state != 6;
+        break;
+    case 0x53: {
+        float dt = TSeqnode(pseqnode);
+        fDone = prec->arg[1].g < dt;
+        break;
+    }
+    case 0x55:
+        if (pseqnode->ploDC != 0 && func_00171DA8(pseqnode->ploD8, pseqnode->ploDC) == 0) {
+            pseqnode->ploD8 = 0;
+            pseqnode->ploDC = 0;
+        }
+        fDone = pseqnode->ploDC == 0;
+        break;
+    case 0x58: {
+        if (pseqnode->pjt == 0) {
+            fDone = 1;
+            break;
+        }
+        LO *plo = (LO *)PloFindSeqnodeObject((Seqnode_1E1DB8 *)pseqnode, prec->arg[0].n);
+        float dt = TSeqnode(pseqnode);
+        if (RO_002C3620 < dt) {
+            fDone = 1;
+            break;
+        }
+        fDone = 0;
+        if (((PLAYERJT *)plo)->field_0x1914 < 7) {
+            fDone = ((PLAYERJT *)plo)->field_0x1914 >= 4;
+        }
+        break;
+    }
+    case 0x59: {
+        psly = (PLAYERJT *)pseqnode->pjt;
+        if (psly == 0) {
+            fDone = 1;
+            break;
+        }
+        float dt = TSeqnode(pseqnode);
+        if (RO_002C3624 < dt) {
+            fDone = 1;
+            break;
+        }
+        QW posA = psly->field_0x1A20;
+        QW posB = psly->field_0x19F0;
+        float eps = RO_002C3628;
+        fDone = FFloatsNear__Ffff(LaneX(posA), LaneX(posB), eps) &&
+                FFloatsNear__Ffff(LaneYInGeneralRegister(posA), LaneYInGeneralRegister(posB), eps) &&
+                FFloatsNear__Ffff(LaneZInGeneralRegister(posA), LaneZInGeneralRegister(posB), eps);
+        break;
+    }
+    case 0x5A: {
+        psly = (PLAYERJT *)pseqnode->pjt;
+        if (psly == 0) {
+            fDone = 1;
+            break;
+        }
+        float dt = TSeqnode(pseqnode);
+        if (RO_002C362C < dt) {
+            fDone = 1;
+            break;
+        }
+        fDone = 0;
+        if ((unsigned)(psly->field_0x1914 + 1) >= 2) {
+            break;
+        }
+        if (psly->field_0x1914 == 0) {
+            psly->pvt->pfnSetMode((char *)psly + psly->pvt->delta88, 0);
+        }
+        fDone = ((PLAYERJT *)prec->arg[2].plo)->jmpState == -1;
+        break;
+    }
+    default:
+        fDone = 1;
+        break;
+    }
+    return fDone;
+}
 
 struct Record_1E4530 { int kind; int skip; char pad[8]; union { int id; float value; } a; union { int sub; float value; } b; int state; };
 
@@ -1200,10 +1866,6 @@ extern "C" void func_001E4F20(SEQNODE_1E4F20 *pseqnode, TN *ptn)
 struct PO { char p0[0x1044]; int fLook; float rad; char p1[0x14]; QW look; QW dir; };
 
 struct SEQNODE_1E5000 { char pad0[0x24]; void *psubject; char pad1[0x4C]; void *plook; };
-
-extern "C" QW PosLoWorld(PO *);
-
-extern "C" void GetSeqnodeObjectPosRad(SEQNODE_1E5000 *, void *, QW *, void *);
 
 extern QW g_2a2dd0;
 

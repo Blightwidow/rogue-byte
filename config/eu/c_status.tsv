@@ -3817,6 +3817,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E1C40	RunSeqnode	0X1E2400	same	0	ok
 0x1E1D48	UpdateSeqnodeDrive	0X1E2508	same	0	ok
 0x1E1DB8	PloFindSeqnodeObject	0X1E2578	same	0	ok
+0x1E3890	FSeqnodeRecordDone	0X1E4050	same	0	ok
 0x1E4530	DtSeqnodeRecord	0X1E4CF0	same	0	ok
 0x1E4EB8	SetSeqnodeDrive	0X1E5678	same	0	ok
 0x1E4F20	func_001E4F20	0X1E56E0	same	0	ok
