@@ -1497,6 +1497,7 @@ address	name	size	file	whole_file	symbol
 0X13B5E8	GetBombVictims	440	bomb-crusher/GetBombVictims.cpp		
 0X13B7A0	func_0013B7A0	24	unsorted/fun_0013b7a0.c		
 0X13B7B8	SortUniquePso	168	bomb-crusher/SortUniquePso.cpp		
+0X13B860	DetonateBomb	800	bomb-crusher/DetonateBomb.cpp		
 0X13BB80	Bomb_OnPoolClaim	120	bomb-crusher/Bomb_OnPoolClaim_file.cpp	bomb-crusher/Bomb_OnPoolClaim_file.cpp	Bomb_OnPoolClaim
 0X13BBF8	FIgnoreBombIntersection	100	bomb-crusher/Bomb_OnPoolClaim_file.cpp	bomb-crusher/Bomb_OnPoolClaim_file.cpp	FIgnoreBombIntersection
 0X13BC60	InferExpl	52	bomb-crusher/Bomb_OnPoolClaim_file.cpp	bomb-crusher/Bomb_OnPoolClaim_file.cpp	InferExpl

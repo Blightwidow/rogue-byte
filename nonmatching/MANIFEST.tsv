@@ -116,7 +116,7 @@ address	name	size	file	score
 0X144BC8	GoalFollowCrvVjoy_FillVjoy	600	new_144b58/GoalFollowCrvVjoy_FillVjoy.c	119
 0X145DB0	func_00145DB0	696	new_144b58/fun_00145db0.c	187
 0X1462A8	func_001462A8	696	new_144b58/fun_001462a8.c	187
-0X1467A0	func_001467A0	888	new_144b58/fun_001467a0.cpp	10
+0X1467A0	func_001467A0	888	new_144b58/fun_001467a0.cpp	2
 0X1477D8	UpdateWipe	1096	new_144b58/UpdateWipe.cpp	90
 0X147F40	func_00147F40	960	new_147f40/fun_00147f40.c	278
 0X148300	func_00148300	456	new_147f40/fun_00148300.cpp	44
@@ -433,7 +433,7 @@ address	name	size	file	score
 0X1C6FD8	CpdprizeAttractSwDprizes	1648	new_1c3df8/CpdprizeAttractSwDprizes.c	450
 0X1C7C30	SetClueFound	208	new_1c76d0/SetClueFound.cpp	12
 0X1C8350	func_001C8350	392	new_1c76d0/fun_001c8350.cpp	53
-0X1C84D8	func_001C84D8	600	new_1c76d0/fun_001c84d8.cpp	50
+0X1C84D8	func_001C84D8	600	new_1c76d0/fun_001c84d8.cpp	44
 0X1C8730	func_001C8730	488	new_1c76d0/fun_001c8730.cpp	67
 0X1C9058	StartLoadingLogo	56	prog-memcard/StartLoadingLogo.cpp	6
 0X1C9688	StaticInitLoadingLogo	664	new_1c90d0/StaticInitLoadingLogo.cpp	65
@@ -485,7 +485,7 @@ address	name	size	file	score
 0X1DF3D0	AdvanceLaserBeams	480	game-stepguard/AdvanceLaserBeams.cpp	72
 0X1DF908	AddLaserBeam	120	game-stepguard/AddLaserBeam.cpp	15
 0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.c	13
-0X1E46A0	UpdateSeqnodeVjoy	1696	splice-ref-crv/UpdateSeqnodeVjoy.cpp	4
+0X1E46A0	UpdateSeqnodeVjoy	1696	splice-ref-crv/UpdateSeqnodeVjoy.cpp	0
 0X1E4D40	GetSeqnodeObjectPosRad	376	splice-ref-crv/GetSeqnodeObjectPosRad.cpp	0
 0X1E5280	DetachSeqnodeObject	240	splice-ref-crv/DetachSeqnodeObject.cpp	18
 0X1E57A0	StartSeqnodeCameraMove	760	splice-ref-crv/StartSeqnodeCameraMove.c	219
@@ -668,7 +668,7 @@ address	name	size	file	score
 0X236918	func_00236918	72	sdk/fun_00236918.c	14
 0X236A60	sceSifInitRpc	416	sdk/sceSifInitRpc.c	26
 0X236D60	func_00236D60	208	sdk/fun_00236d60.cpp	32
-0X236FD8	func_00236FD8	208	sdk/fun_00236fd8.c	2
+0X236FD8	func_00236FD8	208	sdk/fun_00236fd8.c	1
 0X237740	func_00237740	952	sdk/fun_00237740.cpp	142
 0X237BD8	func_00237BD8	520	sdk/fun_00237bd8.cpp	67
 0X237EA8	func_00237EA8	656	sdk/fun_00237ea8.cpp	135

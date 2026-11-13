@@ -40,6 +40,7 @@ void func_00236FD8(Request *request, int arg1)
     entry = func_00236F48(request->field20, arg1);
     packet->field24 = entry;
     if (entry == 0) {
+        packet->field24 = 0;
         packet->field28 = 0;
     } else {
         packet->field28 = entry->field08;

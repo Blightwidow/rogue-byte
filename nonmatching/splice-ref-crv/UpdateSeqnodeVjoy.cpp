@@ -98,9 +98,10 @@ void UpdateSeqnodeVjoy(SEQNODE *pseqnode, VJOY *pvjoy)
                 QW dflt = g_2a2da0;
                 QW length = SqrtX(SquaredLength(tangent));
                 if (LaneX(length) < eps)
-                    l.q1 = dflt;
+                    length = dflt;
                 else
-                    l.q1 = ScaleByReciprocalX(tangent, length);
+                    length = ScaleByReciprocalX(tangent, length);
+                l.q1 = length;
                 int fBackward = 0;
                 pvjoy->radLeft = atan2f(((float *)&l.q1)[1], ((float *)&l.q1)[0]);
                 if (pcrv->closed != 0) {

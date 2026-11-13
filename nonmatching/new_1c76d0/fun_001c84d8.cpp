@@ -19,23 +19,22 @@ extern "C" void func_001C84D8(void *self)
 {
     Frame_1C84D8 frame;
     int previous;
-    float zero = FloatFromWord(0);
     do {
         previous = F(int, self, 0x188);
-        if (FButtonPressedWithin(F(void *, self, 0x150), 0x30, zero) != 0) {
+        if (FButtonPressedWithin(F(void *, self, 0x150), 0x30, 0.0f) != 0) {
             EnsureSggAlarm__FP3SGGP5ALARM(F(int, self, 0x19C), 0x655);
             func_001C8918(self, 3);
         }
         switch (F(int, self, 0x188)) {
         case 0:
-            if (FButtonPressedWithin(F(void *, self, 0x150), 0xC0, zero) != 0) {
+            if (FButtonPressedWithin(F(void *, self, 0x150), 0xC0, 0.0f) != 0) {
                 func_001C8918(self, 2);
             } else {
                 void *pad = F(void *, self, 0x150);
                 unsigned current = F(unsigned, self, 0x194);
                 float padY = F(float, pad, 0x14);
                 float padX = F(float, pad, 0x10);
-                QW stick = JoinLowDoublewords(zero, InterleaveLowWords(padY, padX));
+                QW stick = JoinLowDoublewords(0.0f, InterleaveLowWords(padY, padX));
                 frame.dead[0] = stick;
                 float weight = RO_002C0FE8;
                 float best = RO_002A7798;

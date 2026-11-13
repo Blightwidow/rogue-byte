@@ -19,10 +19,10 @@ float GRandInRange(float, float);
 void func_00146E18(GOAL_1467A0 *, int);
 }
 extern QW g_2a2da0;
-extern float D_FLT_002BD360;
-extern float D_FLT_002BD368;
-extern float D_FLT_002BD36C;
-extern float D_FLT_002BD370;
+extern float D_002BD360[];
+extern float D_002BD368;
+extern float D_002BD36C;
+extern float D_002BD370;
 extern float g_2dded0;
 extern "C" void func_001467A0(GOAL_1467A0 *pgoal)
 {
@@ -45,26 +45,25 @@ extern "C" void func_001467A0(GOAL_1467A0 *pgoal)
         dir.q = *pdefault;
     else
         dir.q = ScaleByReciprocalX(flat, lengthq);
-    float distance = LaneX(lengthq);
+    float distance = FloatFromWord(VectorWordX(lengthq));
     int state;
     do {
         state = pgoal->state;
         switch ((unsigned int)state) {
         case 0:
-            if (distance < D_FLT_002BD360) {
-                QW *pmat = PmatLoWorld(pgoal->pstep);
-                if (0.8f < LaneX(DotProduct(pmat[0], dir.q))) {
+            if (distance < D_002BD360[0]) {
+                if (0.8f < LaneX(DotProduct(*PmatLoWorld(pgoal->pstep), dir.q))) {
                     if (GRandInRange(0.0f, 1.0f) < 0.3f)
                         func_00146E18(pgoal, 3);
                     else
                         func_00146E18(pgoal, 2);
                 }
-            } else if (D_FLT_002BD36C < distance) {
+            } else if (D_002BD36C < distance) {
                 func_00146E18(pgoal, 1);
             }
             break;
         case 1:
-            if (distance < D_FLT_002BD368)
+            if (distance < D_002BD368)
                 func_00146E18(pgoal, 0);
             break;
         case 2:
@@ -76,7 +75,7 @@ extern "C" void func_001467A0(GOAL_1467A0 *pgoal)
                 STEP_1467A0 *pstep = (STEP_1467A0 *)pgoal->pstep;
                 if (pstep->mode2DC != -1) {
                     if (pstep->mode2DC == 1) {
-                        if (D_FLT_002BD370 < g_2dded0 - pstep->t2E0)
+                        if (D_002BD370 < g_2dded0 - pstep->t2E0)
                             func_00146E18(pgoal, 4);
                     }
                 } else {

@@ -1497,6 +1497,7 @@ us_address	name	other_address	pair	score	addresses
 0x13B5E8	GetBombVictims	0X13B5E8	same	0	ok
 0x13B7A0	func_0013B7A0	0X13B7A0	identical	0	ok
 0x13B7B8	SortUniquePso	0X13B7B8	same	0	ok
+0x13B860	DetonateBomb	0X13B860	same	0	ok
 0x13BB80	Bomb_OnPoolClaim	0X13BB80	same	0	ok
 0x13BBF8	FIgnoreBombIntersection	0X13BBF8	same	0	ok
 0x13BC60	InferExpl	0X13BC60	same	0	ok
