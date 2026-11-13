@@ -5,6 +5,7 @@
 #include "types.h"
 #include "m2c_macros.h"
 #include "include_asm.h"
+#include "sw.h"
 
 INCLUDE_ASM(0X22B040);
 
@@ -31,7 +32,7 @@ struct VT { char pad[0x188]; short delta; short index; void (*fnMessage)(void *,
 
 struct BLOTV { char pad[0xC]; VT *vt; };
 
-struct WIPE_22B090 { int wipes; int fHasTrans; char trans[0x4C]; BLOTV *pblot; };
+struct WIPE_22B090 { int wipes; int fHasTrans; char trans[0x4C]; BLOTV *pblot; int oidWipe; };
 
 extern "C" char B_003DD490[];
 
@@ -95,7 +96,47 @@ void bevy_gfx_screen_22b198(WIPE_22B198 *pwipe)
     SetWipeWipes_22B198(pwipe, wipes);
 }
 
-INCLUDE_ASM(0X22B220);
+static inline int FEqualLevel(char *lhs, char *rhs) {
+    if (lhs == rhs) return 1;
+    if (rhs == 0) return 0;
+    if (lhs == 0) return 0;
+    return (*(u32 *)(rhs + 8) ^ *(u32 *)(rhs + 0x38)) == (*(u32 *)(lhs + 8) ^ *(u32 *)(lhs + 0x38));
+}
+
+extern "C" s32 PloFindSwObject_thunk(s32 *, s32, s32, s32);
+
+extern "C" void SetWipeWipes(WIPE_22B090 *, int);
+
+extern "C" char B_003E10D0[];
+
+extern "C" void ActivateWipe(WIPE_22B090 *wipe, LOADREQ *request, int oidWipe, int wipesNew) {
+    switch (wipe->wipes) {
+    case 2:
+        SetWipeWipes(wipe, 0);
+    case 0:
+    default: {
+        char *level = (char *)request + 4;
+        int same = FEqualLevel(level, B_003E10D0);
+        if (same)
+            request->grf |= 2;
+        else
+            request->grf &= ~2;
+        s32 found = PloFindSwObject_thunk((s32 *)B_003DD490, 0x405, oidWipe, 0);
+        wipe->pblot = (BLOTV *)found;
+        if (found == 0) {
+            SetSwLoadRequest(B_003DD490, request);
+            return;
+        }
+        wipe->fHasTrans = 1;
+        *(LOADREQ *)wipe->trans = *request;
+        wipe->oidWipe = oidWipe;
+        SetWipeWipes(wipe, wipesNew);
+    }
+    case 1:
+    case 3:
+        return;
+    }
+}
 
 extern "C" {
 struct Wipe {

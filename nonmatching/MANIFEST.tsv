@@ -84,7 +84,6 @@ address	name	size	file	score
 0X137248	PresetJtOrbitAccel	664	bbmark-blend/PresetJtOrbitAccel.c	194
 0X1375D0	bevy_player_p25_1375d0	432	bbmark-blend/bevy_player_p25_1375d0.c	103
 0X137A30	EnsureAsegBlendDynamic	1416	bbmark-blend/EnsureAsegBlendDynamic.cpp	73
-0X1384C0	ReblendAsegbl	416	blend-ac/ReblendAsegbl.cpp	0
 0X138BA0	func_00138BA0	528	ac-blip/fun_00138ba0.cpp	88
 0X139250	OnBlipgRemove__FP5BLIPG	200	blip/OnBlipgRemove__FP5BLIPG.cpp	14
 0X1394C8	SetBlipgEmitb__FP5BLIPGP5EMITB	1048	blip/SetBlipgEmitb__FP5BLIPGP5EMITB.c	248
@@ -120,7 +119,7 @@ address	name	size	file	score
 0X1467A0	func_001467A0	888	new_144b58/fun_001467a0.cpp	10
 0X1477D8	UpdateWipe	1096	new_144b58/UpdateWipe.cpp	90
 0X147F40	func_00147F40	960	new_147f40/fun_00147f40.c	278
-0X148300	func_00148300	456	new_147f40/fun_00148300.c	122
+0X148300	func_00148300	456	new_147f40/fun_00148300.cpp	44
 0X1488D8	RunBtnAsegs	416	new_147f40/RunBtnAsegs.cpp	3
 0X149440	UpdateVolbtn	728	button-cd/UpdateVolbtn.c	101
 0X149C80	UpdateSwCallbacks	560	button-cd/UpdateSwCallbacks.cpp	28
@@ -174,6 +173,7 @@ address	name	size	file	score
 0X158E20	ApplyDzg	416	dzg-emitter/ApplyDzg.c	100
 0X159240	LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream	664	emitter_1591b0/LoadEmitmeshFromBrx__FP8EMITMESHP18CBinaryInputStream.c	170
 0X159A20	ModifyEmitterParticles__FP7EMITTER	608	emitter_1591b0/ModifyEmitterParticles__FP7EMITTER.cpp	3
+0X159C80	UpdateEmitter__FP7EMITTERf	1208	emitter_1591b0/UpdateEmitter__FP7EMITTERf.cpp	2
 0X15A2C0	WakeSoWater__FP2SOP5WATERfP6VECTORT3ff	1352	emitter_1591b0/WakeSoWater__FP2SOP5WATERfP6VECTORT3ff.cpp	11
 0X15AF08	ChooseEmitVelocity__FP6EMITVXffP2LMP6VECTORiT4	448	emitter_1591b0/ChooseEmitVelocity__FP6EMITVXffP2LMP6VECTORiT4.c	93
 0X15B428	EmitBlips__FP5EMITBP5EMITGiP6VECTORT3PfT5T3T3	960	emitter_1591b0/EmitBlips__FP5EMITBP5EMITGiP6VECTORT3PfT5T3T3.c	244
@@ -219,6 +219,7 @@ address	name	size	file	score
 0X173768	func_00173768	448	new_1715f0/fun_00173768.c	117
 0X173A68	func_00173A68	688	new_1715f0/fun_00173a68.c	163
 0X173D18	func_00173D18	352	new_1715f0/fun_00173d18.cpp	2
+0X1758A0	PsenseFindNotice	1120	new_1715f0/PsenseFindNotice.cpp	24
 0X176098	GoalNotice_Update	960	new_1715f0/GoalNotice_Update.cpp	33
 0X176458	GoalNotice_SetState	640	new_1715f0/GoalNotice_SetState.cpp	0
 0X177F78	GoalFollowCrv_Steer	2688	new_1715f0/GoalFollowCrv_Steer.c	641
@@ -312,6 +313,7 @@ address	name	size	file	score
 0X19D330	UpdateBinoc	416	cnvo-steppipe/UpdateBinoc.cpp	69
 0X19D948	func_0019D948	304	cnvo-steppipe/fun_0019d948.cpp	19
 0X19DF70	PresetJtAccelPipe__FP2JT	416	steppipe/PresetJtAccelPipe__FP2JT.c	91
+0X19E1E0	UpdateJtActivePipe	1904	new_19e110/UpdateJtActivePipe.cpp	62
 0X19EA00	func_0019EA00	96	new_19e110/fun_0019ea00.c	20
 0X19F590	WarpJtToSafePoint	576	transition-jp/WarpJtToSafePoint.cpp	48
 0X19F7D0	ScoreSafePoint	808	jp/ScoreSafePoint.cpp	166
@@ -344,7 +346,6 @@ address	name	size	file	score
 0X1A7630	func_001A7630	608	stepguard-sw/fun_001a7630.cpp	19
 0X1A7C18	PxpAdd	504	stepguard-sw/PxpAdd.cpp	20
 0X1A7E60	RecalcSwXpPos	352	sw-mark/RecalcSwXpPos.c	69
-0X1A7FC0	RecalcSwXpMovement	280	sw-mark/RecalcSwXpMovement.cpp	0
 0X1A81F8	ClsgClipSoBspEdges	536	sw-mark/ClsgClipSoBspEdges.cpp	16
 0X1A8410	CategorizeAlsg__FiP3LSGPiT2PP3LSGT4	680	mark/CategorizeAlsg__FiP3LSGPiT2PP3LSGT4.cpp	44
 0X1A86B8	CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG	312	mark/CplsgFindEdgePath__FP4SURFiiP3LSGPP3LSG.cpp	44
@@ -486,6 +487,7 @@ address	name	size	file	score
 0X1E0180	PseqnodeFind	72	stepguard-jsg/PseqnodeFind.c	13
 0X1E1E30	StartNextSeqnodeRecord	6752	splice-ref-crv/StartNextSeqnodeRecord.cpp	0
 0X1E3890	FSeqnodeRecordDone	3232	splice-ref-crv/FSeqnodeRecordDone.cpp	242
+0X1E46A0	UpdateSeqnodeVjoy	1696	splice-ref-crv/UpdateSeqnodeVjoy.cpp	4
 0X1E4D40	GetSeqnodeObjectPosRad	376	splice-ref-crv/GetSeqnodeObjectPosRad.cpp	0
 0X1E5280	DetachSeqnodeObject	240	splice-ref-crv/DetachSeqnodeObject.cpp	18
 0X1E57A0	StartSeqnodeCameraMove	760	splice-ref-crv/StartSeqnodeCameraMove.c	219
@@ -615,6 +617,7 @@ address	name	size	file	score
 0X21F418	CarryThrow_Update	1792	new_21f188/CarryThrow_Update.c	522
 0X21FB70	CarryThrow_UpdateArc	2072	new_21f188/CarryThrow_UpdateArc.c	455
 0X220508	func_00220508	160	new_21f188/fun_00220508.c	28
+0X2206C8	CarryThrow_SetState	1312	new_21f188/CarryThrow_SetState.cpp	25
 0X220DD8	GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN	248	tn_220dd8/GetTnfnNose__FP4TNFNP6CPDEFIP6VECTORP2TN.c	49
 0X221408	CalculateTnCrv	440	tn_220dd8/CalculateTnCrv.c	93
 0X221A18	ActivateCptn__FP4CPTNPv	680	tn_220dd8/ActivateCptn__FP4CPTNPv.cpp	64
@@ -637,7 +640,6 @@ address	name	size	file	score
 0X228E50	UpdateWater	1160	water-sw/UpdateWater.c	255
 0X229468	UGetWaterSubmerged	536	water-sw/UGetWaterSubmerged.c	113
 0X22A908	func_0022A908	1504	so-wr/fun_0022a908.c	437
-0X22B220	ActivateWipe	512	so-wr/ActivateWipe.cpp	0
 0X22C8C0	BuildXfLocalMatrix	344	wr-vec/BuildXfLocalMatrix.c	77
 0X22CAD0	ConvertDeulToW__FP6VECTORN20	192	vec_22cad0/ConvertDeulToW__FP6VECTORN20.c	45
 0X22CB90	BuildXfAngularRateMatrix	112	vec-alo/BuildXfAngularRateMatrix.cpp	2

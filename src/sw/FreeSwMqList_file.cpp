@@ -7,6 +7,8 @@
 #include "so.h"
 #include "m2c_macros.h"
 #include "include_asm.h"
+#include "vu0inline.h"
+#include "ps2inline.h"
 
 extern "C" void FreeSlotheapPv(s32, s8 *);
 
@@ -24,7 +26,49 @@ extern "C" void FreeSwMqList__FP2SWP2MQ(s32 arg0, s8 *arg1) {
 
 INCLUDE_ASM(0X1A7E60);
 
-INCLUDE_ASM(0X1A7FC0);
+struct VT_1A7FC0 {
+    char pad[0x1C0];
+    short delta0; short index0; void (*fn0)(void *, void *, int);
+    short delta1; short index1; void (*fn1)(void *, void *, int);
+};
+
+struct SO_1A7FC0 { char pad[0xC]; VT_1A7FC0 *vt; };
+
+struct XPD { int unk0; void *pxf; int unk8; SO_1A7FC0 *pso; QW pos; QW unk20; QW vel; };
+
+struct XP { XPD xpd[2]; QW pad80[3]; QW velRel; };
+
+struct SW;
+
+extern "C" QW VelocityXfAtPos(void *, int, QW);
+
+void RecalcSwXpMovement(SW *psw, int cpxp, XP **apxp) {
+    int ixpd;
+    for (int ipxp = 0; ipxp < cpxp; ipxp++) {
+        XP *pxp = apxp[ipxp];
+        XPD *pxpd = pxp->xpd;
+        ixpd = 0;
+        do {
+            if (pxpd->pxf) {
+                pxpd->vel = VelocityXfAtPos(pxpd->pxf, 0, pxpd->pos);
+                SO_1A7FC0 *pso = pxpd->pso;
+                pso->vt->fn0((char *)pso + pso->vt->delta0, pxp, ixpd);
+            }
+            ixpd++;
+            pxpd++;
+        } while (ixpd < 2);
+        ixpd = 0;
+        pxpd = pxp->xpd;
+        SO_1A7FC0 **ppso = &pxpd->pso;
+        do {
+            SO_1A7FC0 *pso = *ppso;
+            if (pso) pso->vt->fn1((char *)pso + pso->vt->delta1, pxp, ixpd);
+            ixpd++;
+            ppso += 0x10;
+        } while (ixpd < 2);
+        pxp->velRel = VectorSub(pxp->xpd[0].vel, pxp->xpd[1].vel);
+    }
+}
 
 struct LSG { char pad[0x54]; void *pedge; char pad2[0x60 - 0x58]; };
 
