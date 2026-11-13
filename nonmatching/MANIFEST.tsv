@@ -195,7 +195,7 @@ address	name	size	file	score
 0X167E58	func_00167E58	288	new_167320/fun_00167e58.cpp	66
 0X167F78	Vif1InterruptHandler	72	new_167320/Vif1InterruptHandler.c	6
 0X167FC0	UploadRelightLights	496	new_167320/UploadRelightLights.cpp	17
-0X1681F8	func_001681F8	728	new_167320/fun_001681f8.cpp	136
+0X1681F8	func_001681F8	728	new_167320/fun_001681f8.cpp	128
 0X169198	func_00169198	2032	new_167320/fun_00169198.cpp	430
 0X16A000	LoadGlobFromBrx	10464	new_167320/LoadGlobFromBrx.cpp	695
 0X16C8E0	func_0016C8E0	448	new_167320/fun_0016c8e0.cpp	98
@@ -431,7 +431,7 @@ address	name	size	file	score
 0X1CAEC8	PleaseAcquire	904	new_1c90d0/PleaseAcquire.cpp	74
 0X1CBB58	func_001CBB58	80	new_1c90d0/fun_001cbb58.c	15
 0X1CBBA8	func_001CBBA8	432	new_1c90d0/fun_001cbba8.c	99
-0X1CC5E8	func_001CC5E8	960	new_1c90d0/fun_001cc5e8.cpp	70
+0X1CC5E8	func_001CC5E8	960	new_1c90d0/fun_001cc5e8.cpp	69
 0X1CCAC0	Carry_SetState	456	new_1c90d0/Carry_SetState.cpp	56
 0X1CCC88	func_001CCC88	1040	new_1c90d0/fun_001ccc88.c	226
 0X1CD5F0	FillScreenRect__FiiiiffffP4GIFS	400	render/FillScreenRect__FiiiiffffP4GIFS.cpp	29
@@ -482,7 +482,6 @@ address	name	size	file	score
 0X1E7BB8	GetCrvBounds	472	new_1e7a28/GetCrvBounds.c	116
 0X1E7D90	SRadiusCrv	608	new_1e7a28/SRadiusCrv.c	144
 0X1E8008	SRandNearCrv	440	new_1e7a28/SRandNearCrv.cpp	66
-0X1E81C0	ConstructRopeSim	440	new_1e7a28/ConstructRopeSim.cpp	8
 0X1E9090	UpdateRopeSimChain	864	new_1e7a28/UpdateRopeSimChain.c	198
 0X1E9858	func_001E9858	616	new_1e7a28/fun_001e9858.c	134
 0X1E9AC0	func_001E9AC0	368	new_1e7a28/fun_001e9ac0.c	81
@@ -544,7 +543,7 @@ address	name	size	file	score
 0X202540	PickReconTarget	440	sprbuf-stepguard/PickReconTarget.c	98
 0X203AF0	CloneStepHullGeom	456	new_203790/CloneStepHullGeom.cpp	38
 0X203D00	func_00203D00	264	new_203790/fun_00203d00.c	54
-0X203E08	UpdateStepPhys__FP4STEP	408	step/UpdateStepPhys__FP4STEP.cpp	35
+0X203E08	UpdateStepPhys__FP4STEP	408	step/UpdateStepPhys__FP4STEP.cpp	31
 0X2044B0	AdjustStepXpVelocity	432	new_204250/AdjustStepXpVelocity.c	105
 0X2046F0	func_002046F0	80	new_204250/fun_002046f0.c	15
 0X204768	AdjustStepXps	352	new_204250/AdjustStepXps.cpp	49

@@ -97,13 +97,15 @@ static inline QW SquaredLengthXy(QW v)
 
 /* a point through a 4x3 matrix given as rows: row0 * v.x + row1 * v.y + row2 * v.z + row3 in xyz (vmulax, vmadday, vmaddaz through
    ACC, then vmaddw with vf0's w = 1). Lane w of the result is not written: it keeps what its register held (GCC's choice, as in
-   retail, where it is a new register, or that of v or of a row whose value dies there). func_00169198, func_001CC5E8, BuildLaserBeams */
+   retail, where it is a new register, or that of v or of a row whose value dies there). The rows come first in the operand list, as in
+   TransformVector: GCC then allocates retail's registers (ConstructRopeSim 8 to 0 and func_001BCAC0 stays 0; func_001681F8 136 to 128,
+   func_001CC5E8 70 to 69, func_00203E08 35 to 31). func_00169198, func_001CC5E8, BuildLaserBeams */
 static inline QW TransformPoint(QW v, QW row0, QW row1, QW row2, QW row3)
 {
     QW point;
-    asm("vmulax.xyz $ACC, %2, %1x\n\tvmadday.xyz $ACC, %3, %1y\n\tvmaddaz.xyz $ACC, %4, %1z\n\tvmaddw.xyz %0, %5, $vf0w"
+    asm("vmulax.xyz $ACC, %1, %5x\n\tvmadday.xyz $ACC, %2, %5y\n\tvmaddaz.xyz $ACC, %3, %5z\n\tvmaddw.xyz %0, %4, $vf0w"
         : "=j"(point)
-        : "j"(v), "j"(row0), "j"(row1), "j"(row2), "j"(row3));
+        : "j"(row0), "j"(row1), "j"(row2), "j"(row3), "j"(v));
     return point;
 }
 

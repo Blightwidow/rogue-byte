@@ -3883,6 +3883,7 @@ us_address	name	other_address	pair	score	addresses
 0x1E7A28	SetCrvRopeMode	0X1E81E8	same	0	ok
 0x1E7B38	SDiffCrv	0X1E82F8	same	0	ok
 0x1E7FF0	func_001E7FF0	0X1E87B0	identical	0	ok
+0x1E81C0	ConstructRopeSim	0X1E8980	same	0	ok
 0x1E93F0	SetRopeSimEnd	0X1E9BB0	same	0	ok
 0x1E94B0	PcrvNew	0X1E9C70	same	0	ok
 0x1E9828	RemeasureRopeSim	0X1E9FE8	same	0	ok
