@@ -97,7 +97,8 @@ struct SW : BASIC {
     /* 0x3C90 */ SLOTHEAP slotheapCb; /* the callbacks, func_00149B58 */
     /* 0x3CA8 */ struct CB *pcbFirst; /* func_00149B58 */
     /* 0x3CAC */ struct CB *pcbLast; /* func_00149B58 */
-    u8 unknown_0x3CB0[0x20];
+    u8 unknown_0x3CB0[0x1C];
+    /* 0x3CCC */ s32 fAaoxDirty; /* UpdateSwAaox: tested and cleared before it sorts the object table */
     /* 0x3CD0 */ s32 cobr; /* PoxaAllocSw */
     /* 0x3CD4 */ struct OBR *aobr[3]; /* one per axis, PoxaAllocSw */
     u8 unknown_0x3CE0[0x3C];
@@ -174,6 +175,7 @@ SLY2_SIZE_CHECK(GRFENTRY, 0x8);
 SLY2_SIZE_CHECK(SW, 0x4790);
 SLY2_OFFSET_CHECK(SW, state, 0x150);
 SLY2_OFFSET_CHECK(SW, pblockCur, 0x39E8);
+SLY2_OFFSET_CHECK(SW, fAaoxDirty, 0x3CCC);
 SLY2_OFFSET_CHECK(SW, ptimedcallFirst, 0x39F0);
 SLY2_OFFSET_CHECK(SW, slotheapTimedcall, 0x39FC);
 SLY2_OFFSET_CHECK(SW, ctask, 0x3AFC);

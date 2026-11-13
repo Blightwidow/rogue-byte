@@ -1218,6 +1218,23 @@ class ParkTests(unittest.TestCase):
         self.assertEqual((row['status'], row['best'], os.path.exists('data/matching/src/fn/100000.cpp')), ('tried', '3', True))
 
 
+class FunctionFlagsTests(unittest.TestCase):
+    def test_a_listed_function_gets_its_flags_and_others_none(self):
+        with tempfile.TemporaryDirectory() as directory:
+            os.makedirs(os.path.join(directory, 'config', 'us'))
+            with open(os.path.join(directory, 'config', 'us', 'function_flags.tsv'), 'w') as handle:
+                handle.write('address\tflags\tnote\n0x1C9058\t-fno-schedule-insns -fno-gcse\t6 to 3\n')
+            saved = compile_unit.ROOT
+            compile_unit.ROOT = directory
+            compile_unit.function_flags.cache_clear()
+            try:
+                self.assertEqual(compile_unit.flags_for(0x1C9058), ['-fno-schedule-insns', '-fno-gcse'])
+                self.assertEqual(compile_unit.flags_for(0x1C905C), [])
+            finally:
+                compile_unit.ROOT = saved
+                compile_unit.function_flags.cache_clear()
+
+
 class WriteTreeTests(unittest.TestCase):
     def test_unchanged_files_keep_their_time_and_stale_files_go(self):
         import export_src

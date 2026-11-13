@@ -90,7 +90,7 @@ def compile_whole(file, start):
     os.makedirs(scorer.BUILD, exist_ok=True)
     path = os.path.join(scorer.BUILD, f'whole-{start:06X}-{os.getpid()}.o')
     ok, _ = compile_unit.compile_object('c' if file.endswith('.c') else 'c++', os.path.join(LAB, 'src', file), path, assembler=compile_unit.assembler_for(start),
-                                        localize=False, vu0=compile_unit.vu0_for(start), movables=compile_unit.movables_for(start))
+                                        localize=False, vu0=compile_unit.vu0_for(start), movables=compile_unit.movables_for(start), flags=compile_unit.flags_for(start))
     return (path, make_whole_files.function_symbols(path)) if ok else (None, {})
 
 
@@ -117,7 +117,7 @@ def check(row, other_address, other_elf, whole=None):
     os.makedirs(scorer.BUILD, exist_ok=True)
     path = stem + '.o'
     try:
-        ok, _ = compile_unit.compile_object(language, source, path, assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address))
+        ok, _ = compile_unit.compile_object(language, source, path, assembler=compile_unit.assembler_for(address), include=scorer.INCLUDE, localize=False, vu0=compile_unit.vu0_for(address), movables=compile_unit.movables_for(address), flags=compile_unit.flags_for(address))
         if not ok:
             return None, []
         arguments = types.SimpleNamespace(object=path, address=other_address, elf=other_elf, symbol=row['name'], size=int(row['size']), export=None, quiet=True, symbols=None)
@@ -176,7 +176,8 @@ def row_key(context, row, other_address, other_elf, whole_file):
     words = compare.read_target_words(other_elf, other_address, int(row['size']))
     digest = hashlib.sha1(context.encode())
     for part in (source, repr(tuple(words)).encode(), f"{row['name']}\0{row['size']}\0{address}\0{other_address}\0{start}".encode(),
-                 repr((compile_unit.assembler_for(start), compile_unit.vu0_for(start), compile_unit.movables_for(start))).encode()):
+                 repr((compile_unit.assembler_for(start), compile_unit.vu0_for(start), compile_unit.movables_for(start))
+                      + ((tuple(compile_unit.flags_for(start)),) if compile_unit.flags_for(start) else ())).encode()):
         digest.update(part)
     return digest.hexdigest()
 

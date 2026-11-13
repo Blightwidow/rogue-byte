@@ -227,6 +227,28 @@ trick out, or change it, and read the score. They separate a score of 2 from 0 o
   `GoalHit_Activate` 0 to 2, `ExplodeGadgetBurst` 0 to 4 (4 of 4). The non-commutative ones (`VectorSub`) have one order; the helper
   takes the rows first so retail's registers come out (`TransformVector`, `TransformPoint`).
 
+**Two more wordings, measured in wave I12Q and I12V (2026-11-13).**
+
+- **A 16-byte default in one arm of an if/else: write both arms back into the same variable and copy it after the join.** When retail
+  loads a default quad with `lq` into a general register early and moves it with `qmtc2.ni` in the branch's delay slot, with one shared
+  `sqc2` after, write `if (LaneX(length) < epsilon) length = fallback; else length = ScaleByReciprocalX(vector, length); result = length;`
+  with `QW fallback = g_...;` read before the vector code. GCC then emits the `lq` into a general register and the `qmtc2.ni` in the delay
+  slot itself. It took `DetonateBomb` 26 to 0 and `UpdateSeqnodeVjoy` 4 to 0 (2 of 2). A `VectorFromQuad` helper (`qmtc2.ni` from a quad in
+  a general register) scored 9 and 12 on the same two: the asm cannot sit in a delay slot, and in `AddSafePointOnGeom` it added an
+  instruction retail does not have. It helped only `AddSphereToRenderTree` (70 to 54, a value converted once outside a loop), so it
+  is not in `include/vu0inline.h`.
+- **A float 0.0 that retail holds in `$f20` for the whole function (a bare `mtc1 $zero,$f20`): write a literal `0.0f` at every use and
+  keep no variable.** GCC hoists the loop-invariant zero. `FloatFromWord(0)` gives `daddu` + `mtc1` + `nop`, and `float zero = 0.0f` lets
+  constant propagation put `mtc1 $zero` at each call (`func_001C84D8`: 50 to 44).
+- **An early-clobber `vsub` (`"=&j"`) is not a helper.** It fixed the register numbers of `func_002082D0` only (7 to 4) and made
+  `func_001C84D8` (+7), `CarryThrow_SetState` (+13) and one `vsub` of `PsenseFindNotice` (+2) worse: retail writes a `vsub` in place
+  (`vsub d,d,s`) more often than into a third register, which the early clobber rules out.
+
+- **A shift that retail issues after the index arithmetic: `1 << (index % 32)`.** A bare `1 << islot` is ready at cycle 1 of its block, so the
+  dual-issue scheduler pairs it with the earlier `movn` and puts the `sllv` ahead of the `sra` that computes the word index. Written with
+  `% 32` the shift is ready only at the `sra`'s cycle, GCC still emits a plain `sllv`, and the `sra` goes first (`CobstacleFindPathzoneBox`
+  2 to 0 with `QuadAnd`; `RemoveLightFromSw` has the same form). `1 << (islot & 31)` adds an `andi`; `1U << islot` turns the test into `srl`.
+
 Other fixes that held in wave I11S: a QW local still needed after the vector op; locals declared in retail's stack order; a typed
 local struct for a global field instead of `char[]` plus a cast offset; `index = 0` inside the branch and the second loop as
 `if (n) do { } while`. Not yet explained: a quad retail loads with `lq` into a general register and moves with `qmtc2.ni` (three near

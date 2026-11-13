@@ -46,14 +46,13 @@ int func_001C0B50(LO *ppathzone, QW pos, QW *pposOut)
     float dBest = D_002A76DC;
     *(QW *)&posPrev = ConvertAloPos(pobstacle, 0, pobstacle->apos[0]);
     posPrev.z = FloatFromWord(LaneWordZ(posClosest));
-    float zClosest = posPrev.z;
     int ipos = 1;
     while (ipos < pobstacle->cpos) {
         *(QW *)&posNext = ConvertAloPos(pobstacle, 0, pobstacle->apos[ipos]);
-        posNext.z = zClosest;
+        posNext.z = FloatFromWord(LaneWordZ(posClosest));
         int clsg = ClsgClipEdgeToPathzone(ppathzone, *(QW *)&posPrev, *(QW *)&posNext, 1, alsg, 2);
-        for (int ilsg = 0; ilsg < clsg; ilsg++) { LSG *plsg = &alsg[ilsg];
-            ClosestPointOnSegment(posClosest, plsg->pos1, plsg->pos2, (QW *)&posSeg, 0, &d);
+        for (int ilsg = 0; ilsg < clsg; ilsg++) {
+            ClosestPointOnSegment(posClosest, (&alsg[ilsg])->pos1, alsg[ilsg].pos2, (QW *)&posSeg, 0, &d);
             if (d < dBest) {
                 dBest = d;
                 posBest = posSeg;

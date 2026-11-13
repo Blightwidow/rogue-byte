@@ -98,7 +98,9 @@ struct LO : BASIC {
                                        list has ibDle 0x24 (InitSo), but this is not declared as a DLE: its prev would be 0x28,
                                        and retail reads grfo there as 64 bits (ld 0x28 in RecalcSoLocked, func_001C4BD8) */
     /* 0x28 */ u64 grfo;               /* RecalcSoLocked, func_001C4BD8, UpdateRip */
-    u8 unknown_0x30[0xC];
+    u8 unknown_0x30[0x4];
+    /* 0x34 */ struct DCB *pdcb;       /* the object's callback table (PdcbAllocSw's result): func_001A5D98 runs its pfn(plo, pv). DCB is declared by its users */
+    u8 unknown_0x38[0x4];
     /* 0x3C */ struct SCOPE *pscope;   /* what PloFindSwObject searches when this object is the context: RefOpFindObject,
                                        func_001241E8, func_00124578, RefOpFindNearestObject; InitCloneSets sets its 0x24 */
     /* 0x40: flags until AddSwGrfEntry enters the object in the world's table (include/sw.h), then its entry, which keeps the
@@ -120,6 +122,7 @@ SLY2_SIZE_CHECK(BASIC, 0x10);
 SLY2_SIZE_CHECK(LO, 0x50);
 SLY2_OFFSET_CHECK(LO, psoParent, 0x10);
 SLY2_OFFSET_CHECK(LO, proot, 0x14);
+SLY2_OFFSET_CHECK(LO, pdcb, 0x34);
 SLY2_OFFSET_CHECK(LO, oid, 0x18);
 SLY2_OFFSET_CHECK(LO, ploNext, 0x24);
 SLY2_OFFSET_CHECK(LO, grfo, 0x28);

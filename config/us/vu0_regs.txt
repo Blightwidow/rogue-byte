@@ -1,5 +1,6 @@
 # Functions compiled with -mvu0-use-vf0-15 (scripts/build/compile_unit.py VU0_FLAG): their inline asm takes `"j"` (VU0 register) operands and the compiler emits the lqc2/sqc2/qmtc2/qmfc2 moves itself.
 # One address per line.
+# Also listed (2026-11-13): functions with no helper that score 0 only with the flag, which gives the allocator retail's callee-saved registers (0x1533B0, 0x1B2BE0, 0x1488D8, 0x1B0290: docs/build/inline-asm-helpers.md "The flag per function").
 0x118A88
 0x11E958
 0x11ED40
@@ -152,3 +153,11 @@
 0x19E950
 0x19EAB0
 0x1A7E10
+0x12E600
+0x14D470
+0x1533B0
+0x1B2BE0
+0x1488D8
+0x1B0290
+0x1BC050
+0x1C0D70

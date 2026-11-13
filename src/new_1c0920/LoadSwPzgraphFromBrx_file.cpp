@@ -6,6 +6,8 @@
 #include "types.h"
 #include "sw.h"
 #include "include_asm.h"
+#include "vu0inline.h"
+#include "ps2inline.h"
 
 INCLUDE_ASM(0X1C0D70);
 
@@ -253,7 +255,64 @@ extern "C" void SweepPathzoneAxis(float gMin, float gMax, SAPEP *aep, int *piepM
     *piepMax = iepMax;
 }
 
-INCLUDE_ASM(0X1C1700);
+extern "C" void ResetPathzoneQuery(PATHZONE *arg0, PATHZONEQUERY *arg1);
+
+extern "C" void SweepPathzoneAxis(float gMin, float gMax, SAPEP *aep, int *piepMin, int *piepMax, unsigned *agrf);
+
+struct Pathzone {
+    char pad0[0xF8];
+    int cobstacle;
+    int cslot;
+    int cep;
+    void *aepX;
+    void *aepY;
+    void **aslot;
+    char pad1[0x114 - 0x110];
+    int stamp;
+};
+
+struct SapQuery_1C1700 {
+    unsigned agrfX[4];
+    unsigned agrfY[4];
+    int stamp;
+    int iepMinX, iepMaxX, iepMinY, iepMaxY;
+    char pad[0xC];
+};
+
+extern "C" int CobstacleFindPathzoneBox(Pathzone *pathzone, void *pquery, QW posA, QW posB, int cobstacleMax, void **apobstacle)
+{
+    struct { SapQuery_1C1700 queryLocal; unsigned agrfBoth[4]; QW grfBoth; } l;
+    if (pathzone->cep == 0)
+        return 0;
+    if (pquery == 0) {
+        l.queryLocal.stamp = -1;
+        pquery = &l.queryLocal;
+    }
+    if (((SapQuery_1C1700 *)pquery)->stamp != pathzone->stamp)
+        ResetPathzoneQuery((PATHZONE *)pathzone, (PATHZONEQUERY *)pquery);
+    QW mins = VectorMiniXyz(posA, posB);
+    QW maxes = VectorMaxXyz(posA, posB);
+    SweepPathzoneAxis(LaneX(mins), LaneX(maxes), (SAPEP *)pathzone->aepX, &((SapQuery_1C1700 *)pquery)->iepMinX, &((SapQuery_1C1700 *)pquery)->iepMaxX, ((SapQuery_1C1700 *)pquery)->agrfX);
+    SweepPathzoneAxis(LaneYInGeneralRegister(mins), LaneYInGeneralRegister(maxes), (SAPEP *)pathzone->aepY, &((SapQuery_1C1700 *)pquery)->iepMinY, &((SapQuery_1C1700 *)pquery)->iepMaxY, ((SapQuery_1C1700 *)pquery)->agrfY);
+    QW anded = QuadAnd(*(QW *)((SapQuery_1C1700 *)pquery)->agrfX, *(QW *)((SapQuery_1C1700 *)pquery)->agrfY);
+    l.grfBoth = anded;
+    *(QW *)l.agrfBoth = anded;
+    int islot = 0;
+    int cobstacle = 0;
+    void **pout = apobstacle;
+    for (; islot < pathzone->cslot; islot++) {
+        unsigned word = l.agrfBoth[islot / 32];
+        int mask = 1 << (islot % 32);
+        if ((word & mask) == 0)
+            continue;
+        if (cobstacleMax < cobstacle)
+            break;
+        *pout++ = pathzone->aslot[islot];
+        cobstacle++;
+    }
+    ((SapQuery_1C1700 *)pquery)->stamp = pathzone->stamp;
+    return cobstacle;
+}
 
 struct SAPEP_1C18B8 { int pad; unsigned short fMin; unsigned short islot; };
 
@@ -312,18 +371,6 @@ void RemovePathzoneObstacle(PZ *pz, int obstacle)
 INCLUDE_ASM(0X1C1A38);
 
 struct Obstacle { char pad0[0x1A0]; QW posMin; QW posMax; char pad1[0x1DC - 0x1C0]; void *pathzone; };
-
-struct Pathzone {
-    char pad0[0xF8];
-    int cobstacle;
-    int cslot;
-    int cep;
-    void *aepX;
-    void *aepY;
-    void **aslot;
-    char pad1[0x114 - 0x110];
-    int stamp;
-};
 
 struct Sw { char pad[0x3D70]; int stamp; };
 

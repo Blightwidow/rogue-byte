@@ -155,7 +155,7 @@ def main():
     obj = os.path.join(build, f'{arguments.address:06X}-{os.getpid()}.o')  # one per run: the permuter judges in parallel
     sys.path.insert(0, os.path.join(LAB, 'scripts', 'build'))
     import compile_unit
-    ok, message = compile_unit.compile_object(arguments.lang, source, obj, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(arguments.address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(arguments.address), movables=compile_unit.movables_for(arguments.address))
+    ok, message = compile_unit.compile_object(arguments.lang, source, obj, assembler=os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(arguments.address), include=INCLUDE, localize=False, vu0=compile_unit.vu0_for(arguments.address), movables=compile_unit.movables_for(arguments.address), flags=compile_unit.flags_for(arguments.address))
     compile_result = subprocess.CompletedProcess([], 0 if ok else 1, '', message)
     if compile_result.returncode != 0:
         print('compile error')
