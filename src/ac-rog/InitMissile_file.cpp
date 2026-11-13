@@ -4,6 +4,7 @@
 #include "types.h"
 #include "m2c_macros.h"
 #include "sly2.h"
+#include "lo.h"
 #include "include_asm.h"
 
 typedef struct MISSILE {
@@ -58,7 +59,6 @@ void StickTrigBomb(s32 arg0) {
     func_0012E460(arg0 + 0x268);
 }
 
-struct LO { char pad[0x18]; int oid; };
 
 struct TRIG { char pad[0x238]; int coid; int aoid[4]; int ccid; int acid[4]; };
 

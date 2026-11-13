@@ -4,6 +4,7 @@
 #include "m2c_macros.h"
 #include "types.h"
 #include "sly2.h"
+#include "lo.h"
 #include "xf.h"
 #include "include_asm.h"
 
@@ -338,10 +339,6 @@ extern "C" void LoadXfmBaseFromBrx(Xfm_231768 *self, void *stream) {
     SetLoGrfzon(self, U32Read__18CBinaryInputStream_231768(stream));
 }
 
-struct VT { char pad[0x128]; short delta; short index; void (*fn)(void *, void *); };
-
-struct LO { char pad[0xC]; VT *vt; };
-
 struct PLOARRAY { char pad[8]; int cplo; LO **aplo; };
 
 struct XFM_2317E0 { char pad[0x10]; void *parent; char pad2[0x3C]; void *xf; char pad3[0xC]; char matLocal[1]; };
@@ -359,8 +356,7 @@ void LoadPloarrayFromBrx(XFM_2317E0 *xfm, void *bis, PLOARRAY *sink)
     func_0022D698(xfm->xf);
     for (int index = 0; index < sink->cplo; index++) {
         LO *object = sink->aplo[index];
-        VT *vt = object->vt;
-        vt->fn((char *)object + vt->delta, xfm->matLocal);
+        object->Slot37(xfm->matLocal);
     }
 }
 

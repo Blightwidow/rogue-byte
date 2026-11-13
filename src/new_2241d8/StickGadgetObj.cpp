@@ -1,7 +1,7 @@
 #include "sly2.h"
+#include "lo.h"
 struct GVT { short delta; short index; void (*fn)(void *, int); };
 struct GADGET { char pad0[0xC]; GVT *vt; char pad1[0x15C - 0x10]; int kind; };
-struct LO { char pad[0x18]; int oid; };
 extern "C" void func_001A58D0(GADGET *, LO *, int);
 
 static inline void SetState(GADGET *pgadget, int state)

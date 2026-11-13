@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sly2.h"
-struct JOB { char pad[0xC0]; void *task; int pad2[2]; struct LO *warp; };
-struct LO { char pad[0x40]; unsigned flags; };
+#include "lo.h"
+struct JOB { char pad[0xC0]; void *task; int pad2[2]; LO *warp; };
 struct BQ;
 extern BQ B_002E1E88;
 extern "C" int FBootQueueHasEntries(BQ *);
@@ -20,11 +20,11 @@ void AdvanceAfterJobEnd(JOB *job)
     }
     LO *warp = job->warp;
     if (warp) {
-        unsigned flags = warp->flags;
+        unsigned flags = warp->grfSw;
         if (!(flags & 1))
             *(unsigned *)flags |= 0x100;
         else
-            warp->flags = flags | 0x100;
+            warp->grfSw = flags | 0x100;
         Warp_Start(job->warp);
     }
 }

@@ -1,5 +1,5 @@
 #include "sly2.h"
-struct LO { char pad[0x28]; unsigned long grfo; };
+#include "lo.h"
 struct SET { int cpalo; LO **apalo; };
 struct POOL { char pad[0xE0]; SET *set; };
 struct LEASE { int locked; int owner; int fixed; };

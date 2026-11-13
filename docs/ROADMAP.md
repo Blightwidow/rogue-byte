@@ -149,6 +149,14 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      (0xB8 count has two readers, the 0xC0 entry pointer one), `func_001F2768` (0xD0 flags, one reader), `UpdateJtStand` (a local `SO` and `JT`; 0x4C is
      inside `LO`'s unknown range, one reader), `AddJsgContext` (a vtable call on slot 0x298/8 = 83, no signature) and `FBounceLeaf`, whose local `SO` is a
      two-pointer struct of another type, not the class. Nothing here needs a new field without a second reader.
+   - `LO` remeasured and moved (2026-11-13): 30 sources in `src/` declared a local `struct LO`; 14 now use `lo.h` (11 per-function, 3 whole files;
+     `make elf` PASS, each scoring 0, `make unit` links, reports unchanged). Field readers moved to members (`oid`, `grfo`, `grfSw`, `psoParent`) and
+     hand-written vtable calls became virtuals: `Add()`, `Remove()` (slots 8, 9, `ShowHideLo`, `LoadExplgFromBrx`), `RemoveAloHierarchy()` (22),
+     `HandleSpliceEvent(...)` (3, three one-line wrappers with ids 5, 6 and 0x1A), `PmatWorld()` (31, `GetScriptPose`), `Slot37(void *)` and `Slot32(void *)`.
+     Left (16): fields past `LO`'s 0x50 that only one source reads (`ShowReconLinks` 0x100, `GoalHit_Update` 0x35C, `missile_proxy`
+     0xE4, `sm_so_1f1900` 0x230, `AppendPloarray` 0x64), a pointer typed `int` in the source (`PloNew`: `psoParent` is 0x10), slot signatures to learn
+     (`ReleaseRip` calls slot 5 with an id and a pointer; `fun_001C6CE8` calls 76, beyond `LO`'s slots), a local `ALO` (`CloneAloHierarchy`) and sources
+     I did not open (`UpdateMatch`, `PostLoMessage`, `Subscribe`/`UnsubscribeLoObject`, `fun_00204F78`, `unsorted_194F48`, `ReleaseMurrayObject`).
    - `SW` (2026-11-10): `include/sw.h`, the world, class 1 of the class table (0x4790 bytes, derived from the root class; Sly 1's
      derives from `LO`, Sly 2's does not). The game keeps one, a static global at 0x3DD490 that 440 matched files reach, and the
      `*Sw*` functions take its address, so a field there needs one reader. 61 fields from 0x150 to 0x4774: the job and task
