@@ -16,7 +16,9 @@ without a score) and prints the counts."""
 import argparse
 import concurrent.futures
 import csv
+import hashlib
 import os
+import pickle
 import sys
 import types
 from collections import Counter
@@ -134,6 +136,58 @@ def check(row, other_address, other_elf, whole=None):
                 os.remove(leftover)
 
 
+CACHE_PATH = os.path.join(LAB, 'work', 'matching', 'pal_cache.pkl')
+
+
+def tree_digest(directory, suffixes):
+    """sha1 over the names and bytes of every file under `directory` that ends in one of `suffixes`, in name order."""
+    digest = hashlib.sha1()
+    for folder, names_below, names in sorted(os.walk(directory)):
+        names_below.sort()
+        for name in sorted(names):
+            if name.endswith(suffixes):
+                path = os.path.join(folder, name)
+                digest.update(os.path.relpath(path, directory).encode())
+                with open(path, 'rb') as handle:
+                    digest.update(handle.read())
+    return digest.hexdigest()
+
+
+def cache_context():
+    """What every cached result depends on besides the function itself: the toolchain, the headers the sources include and the split assembly
+    the whole files include from."""
+    digest = hashlib.sha1(scorer.fingerprint().encode())
+    digest.update(tree_digest(scorer.INCLUDE, ('.h', '.hpp')).encode())
+    digest.update(tree_digest(os.path.join(LAB, 'build', 'splat', 'asm'), ('.s',)).encode())
+    return digest.hexdigest()
+
+
+def row_key(context, row, other_address, other_elf, whole_file):
+    """The cache key of one matched function: the context, its source text (the whole file's text for a function inside one), the other
+    version's bytes it is compared with, and the flags it is compiled with. Two runs with the same key give the same score and sites."""
+    address = int(row['address'], 16)
+    path = os.path.join(LAB, 'src', whole_file[0]) if whole_file else os.path.join(LAB, row['source'])
+    start = whole_file[1] if whole_file else address
+    if not os.path.isfile(path):
+        return None
+    with open(path, 'rb') as handle:
+        source = handle.read()
+    words = compare.read_target_words(other_elf, other_address, int(row['size']))
+    digest = hashlib.sha1(context.encode())
+    for part in (source, repr(tuple(words)).encode(), f"{row['name']}\0{row['size']}\0{address}\0{other_address}\0{start}".encode(),
+                 repr((compile_unit.assembler_for(start), compile_unit.vu0_for(start), compile_unit.movables_for(start))).encode()):
+        digest.update(part)
+    return digest.hexdigest()
+
+
+def load_cache():
+    try:
+        with open(CACHE_PATH, 'rb') as handle:
+            return pickle.load(handle)
+    except (OSError, EOFError, pickle.UnpicklingError, AttributeError):
+        return {}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--other', default=os.path.join(LAB, 'work', 'elf', 'SCES_525.29'))
@@ -153,18 +207,35 @@ def main():
     rows.sort(key=lambda row: int(row['address'], 16))
     if arguments.limit:
         rows = rows[:arguments.limit]
-    needed = sorted({inside[int(row['address'], 16)] for row in rows if int(row['address'], 16) in inside})
+    context = cache_context()
+    cache = load_cache()
+    keys = {}
+    for row in rows:
+        address = int(row['address'], 16)
+        if address in pairs:
+            keys[address] = row_key(context, row, int(pairs[address]['other_address'], 16), arguments.other, inside.get(address))
+    stale = [row for row in rows if int(row['address'], 16) in pairs and keys.get(int(row['address'], 16)) not in cache]
+    needed = sorted({inside[int(row['address'], 16)] for row in stale if int(row['address'], 16) in inside})
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         wholes = dict(zip(needed, pool.map(lambda entry: compile_whole(*entry), needed)))
+    print(f'version-check: {len(rows) - len(stale)} of {len(rows)} results cached, {len(stale)} to compile ({len(needed)} whole files)')
     progress = Progress(len(rows), 'version-check')
+    fresh = {}
 
     def work(row):
         address = int(row['address'], 16)
         pair = pairs.get(address)
         name = row['address'][2:]
         progress.begin(name)
-        whole = (*wholes[inside[address]], inside[address][1]) if address in inside else None
-        score, found = check(row, int(pair['other_address'], 16), arguments.other, whole) if pair else (None, [])
+        key = keys.get(address)
+        if pair and key in cache:
+            score, found = cache[key]
+            fresh[key] = (score, found)
+        else:
+            whole = (*wholes[inside[address]], inside[address][1]) if pair and address in inside else None
+            score, found = check(row, int(pair['other_address'], 16), arguments.other, whole) if pair else (None, [])
+            if pair and key is not None:
+                fresh[key] = (score, found)
         progress.tick(f'{name}: {score}', name)
         return row, pair, score, found
 
@@ -172,6 +243,9 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
         results = list(pool.map(work, rows))
     progress.done()
+    os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
+    with open(CACHE_PATH, 'wb') as handle:  # only the keys of this run: a result of a function that changed or went away is dropped
+        pickle.dump(fresh, handle)
     for object_path, _ in wholes.values():
         if object_path and os.path.exists(object_path):
             os.remove(object_path)

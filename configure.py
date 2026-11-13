@@ -6,6 +6,7 @@ matched functions of src/ compiled (targets `pieces` and `units`).
 --split runs Splat first (config/us/sly2.us.yaml on work/elf/SCUS_973.16, output in build/splat). `make elf` then builds
 `pieces` and `units` and runs scripts/build/link_image.py (assembly runs + compiled functions, linked at their retail
 addresses) and scripts/verify_image.py (every loaded byte against the retail executable)."""
+import hashlib
 import os
 import subprocess
 import sys
@@ -19,12 +20,39 @@ BUILD = os.path.join('build', 'image')
 # (object name, vram of the first byte) of the raw pieces: the symbol Splat's code refers to is defined at their start
 BINARY_PIECES = [('vutext', 0x259DF0), ('irx_gap', 0x2DD250), ('irx', 0x472200)]  # rodata and data pieces: link_image.py
 
+def snapshot_tree(directory):
+    """{path: (mtime in ns, size, sha1 of the bytes)} of every file under `directory`."""
+    found = {}
+    for folder, _, names in os.walk(directory):
+        for name in names:
+            path = os.path.join(folder, name)
+            status = os.stat(path)
+            with open(path, 'rb') as handle:
+                found[path] = (status.st_mtime_ns, status.st_size, hashlib.sha1(handle.read()).digest())
+    return found
+
+
+def restore_unchanged_mtimes(before):
+    """Puts back the modification time of every file of `before` that now holds the same bytes. Splat rewrites all its output on each run; with
+    the new times ninja saw every object that includes assembly (about 200 whole files) as stale after each `make elf`."""
+    restored = 0
+    for path, (mtime, size, digest) in before.items():
+        if os.path.exists(path) and os.stat(path).st_size == size:
+            with open(path, 'rb') as handle:
+                if hashlib.sha1(handle.read()).digest() == digest:
+                    os.utime(path, ns=(mtime, mtime))
+                    restored += 1
+    return restored
+
+
 if '--split' in sys.argv:
     subprocess.check_call(['python3', 'scripts/names/combine.py', 'config/recovered/'], cwd=ROOT)
     subprocess.check_call(['python3', 'scripts/names/export_splat_symbols.py'], cwd=ROOT)
+    splat_before = snapshot_tree(os.path.join(ROOT, SPLAT_OUTPUT)) if os.path.isdir(os.path.join(ROOT, SPLAT_OUTPUT)) else {}
     subprocess.check_call([os.path.join(ROOT, '.venv', 'bin', 'splat'), 'split', 'sly2.us.yaml'],
                           cwd=os.path.join(ROOT, 'config', 'us'))
     subprocess.check_call(['python3', 'scripts/build/numeric_constants.py'], cwd=ROOT)
+    restore_unchanged_mtimes(splat_before)
 
 with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     ninja = ninja_syntax.Writer(handle, width=120)

@@ -9,6 +9,7 @@ function's bytes are compared with the retail ones and the ones that differ (rel
 unresolved names, size) fall back to assembly. A whole file (config/us/whole_files.tsv) is linked as one object over its range and
 compared as a whole; if it differs, its functions come from assembly (a function inside a whole file has no source of its own). Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
 import concurrent.futures
+import functools
 import hashlib
 import os
 import re
@@ -251,16 +252,22 @@ def retarget_rodata(address, object_path):
     open(path, 'wb').write(patched)
     return path
 
-def derive_addresses(address, object_path, names):
-    """Addresses of names the symbol table lacks, read from the retail instructions at their relocation sites: a jal
-    gives its target, a lui/addiu or load pair its hi/lo halves; the addend the object carries is subtracted."""
+@functools.lru_cache(maxsize=None)
+def text_and_relocations(object_path):
+    """(.text bytes, [(offset, relocation type, symbol name)]) of an object. definitions() asks for each undefined name of an object in turn,
+    and parsing the object again for each one was a third of the time of a link: an object does not change during a run."""
     with open(object_path, 'rb') as handle:
         elf = ELFFile(handle)
-        text_section = elf.get_section_by_name('.text')
-        data = text_section.data()
+        data = elf.get_section_by_name('.text').data()
         symbol_table = elf.get_section_by_name('.symtab')
         entries = [(r['r_offset'], r['r_info_type'], symbol_table.get_symbol(r['r_info_sym']).name)
                    for r in elf.get_section_by_name('.rel.text').iter_relocations()]
+    return data, entries
+
+def derive_addresses(address, object_path, names):
+    """Addresses of names the symbol table lacks, read from the retail instructions at their relocation sites: a jal
+    gives its target, a lui/addiu or load pair its hi/lo halves; the addend the object carries is subtracted."""
+    data, entries = text_and_relocations(object_path)
     base = FILE_OFFSET_OF_TEXT + address - TEXT_START
     word = lambda offset, blob, origin: int.from_bytes(blob[origin + offset:origin + offset + 4], 'little')
     found = {}
