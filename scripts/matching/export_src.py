@@ -14,7 +14,6 @@ function's name in the whole file, empty for a per-function source: it defines t
 import csv
 import os
 import re
-import shutil
 import sys
 
 LAB = os.environ.get('SLY2_DECOMP_DIR') or os.environ.get('ROGUE_BYTE_DIR') or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
@@ -93,6 +92,35 @@ def manifest_rows(registry_rows, modules, wholes, whole_texts, read_source=None)
     return sorted(rows, key=lambda entry: entry['address']), copies, unlanded
 
 
+def write_if_changed(path, data):
+    """Writes `data` to `path` unless the file already holds exactly those bytes (its mtime is kept then). True when it wrote."""
+    if os.path.exists(path):
+        with open(path, 'rb') as handle:
+            if handle.read() == data:
+                return False
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    with open(path, 'wb') as handle:
+        handle.write(data)
+    return True
+
+
+def write_tree(root, desired):
+    """Makes `root` hold exactly the files of `desired` ({relative path: bytes}): writes the new and changed ones, removes the stale ones and
+    the directories left empty. Returns the number of files removed."""
+    removed = 0
+    for directory, _, names in os.walk(root, topdown=False):
+        for name in names:
+            relative = os.path.relpath(os.path.join(directory, name), root)
+            if relative not in desired:
+                os.remove(os.path.join(directory, name))
+                removed += 1
+        if directory != root and not os.listdir(directory):
+            os.rmdir(directory)
+    for relative, data in desired.items():
+        write_if_changed(os.path.join(root, relative), data)
+    return removed
+
+
 def main():
     os.chdir(LAB)
     modules = {}
@@ -107,24 +135,22 @@ def main():
     data_texts = {file: open(os.path.join('src', file)).read() for file in data_files if os.path.exists(os.path.join('src', file))}
     registry = list(csv.DictReader(open('data/matching/functions.tsv'), delimiter='\t'))
     rows, copies, unlanded = manifest_rows(registry, modules, wholes, whole_texts)
-    shutil.rmtree('src', ignore_errors=True)
+    # Write only what changed and delete only what is stale: a file whose bytes are the same keeps its mtime, so ninja recompiles just the
+    # sources that changed (removing src/ and copying everything again made every object stale: 4608 compiles on each `make land`)
+    desired = {}
     for source, destination in copies:
-        os.makedirs(os.path.join('src', os.path.dirname(destination)), exist_ok=True)
-        shutil.copyfile(source, os.path.join('src', destination))
-    with open('src/MANIFEST.tsv', 'w') as handle:
-        handle.write('\t'.join(COLUMNS) + '\n')
-        for entry in rows:
-            handle.write('\t'.join(entry[column] for column in COLUMNS) + '\n')
-    for header in os.listdir('data/matching/include'):
-        shutil.copyfile(os.path.join('data/matching/include', header), os.path.join('include', header))
+        with open(source, 'rb') as handle:
+            desired[destination] = handle.read()
+    manifest = '\t'.join(COLUMNS) + '\n' + ''.join('\t'.join(entry[column] for column in COLUMNS) + '\n' for entry in rows)
+    desired['MANIFEST.tsv'] = manifest.encode()
     for file, text in list(whole_texts.items()) + list(data_texts.items()):
-        path = os.path.join('src', file)
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, 'w') as handle:
-            handle.write(text)
+        desired[file] = text.encode()
     if readme is not None:
-        with open('src/README.md', 'w') as handle:
-            handle.write(readme)
+        desired['README.md'] = readme.encode()
+    removed = write_tree('src', desired)
+    for header in os.listdir('data/matching/include'):
+        with open(os.path.join('data/matching/include', header), 'rb') as handle:
+            write_if_changed(os.path.join('include', header), handle.read())
     in_whole = sum(1 for entry in rows if entry['whole_file'])
     print(f'{len(rows)} functions -> src/ ({len(copies)} per-function sources, {in_whole} in {len(whole_texts)} whole files)')
     for row in unlanded:

@@ -1468,6 +1468,7 @@ us_address	name	other_address	pair	score	addresses
 0x1380F0	CalculateBlendAmrsg__FiiPviiP4MRSGPf	0X1380F0	identical	0	ok
 0x138370	ImrsgLookUp__FffiP4MRSGPf	0X138370	identical	0	ok
 0x1383F0	SetAsegblIpasegDominant	0X1383F0	same	0	ok
+0x1384C0	ReblendAsegbl	0X1384C0	identical	0	ok
 0x138DB0	StaticInitSlotheaps_138db0	0X138DB0	same	0	ok
 0x138EE8	func_00138EE8	0X138EE8	identical	0	ok
 0x138F08	BuildBlipAqwGifs__FiPP2QW	0X138F08	same	0	ok
@@ -2922,6 +2923,7 @@ us_address	name	other_address	pair	score	addresses
 0x1A7AC0	StaticInitSlotheaps_1a7ac0	0X1A7BB8	same	0	ok
 0x1A7BF8	GlobalCtorSlotheaps_1a7bf8	0X1A7CF0	same	0	ok
 0x1A7E10	FreeSwMqList__FP2SWP2MQ	0X1A7F08	identical	0	ok
+0x1A7FC0	RecalcSwXpMovement	0X1A80B8	same	0	ok
 0x1A80D8	ClsgClipSoAllEdges	0X1A81D0	identical	0	ok
 0x1A9FE0	PrependMqList	0X1AA0D8	identical	0	ok
 0x1AA020	CloneMqList	0X1AA118	identical	0	ok
@@ -3815,6 +3817,8 @@ us_address	name	other_address	pair	score	addresses
 0x1E1C40	RunSeqnode	0X1E2400	same	0	ok
 0x1E1D48	UpdateSeqnodeDrive	0X1E2508	same	0	ok
 0x1E1DB8	PloFindSeqnodeObject	0X1E2578	same	0	ok
+0x1E1E30	StartNextSeqnodeRecord	0X1E25F0	same	0	ok
+0x1E3890	FSeqnodeRecordDone	0X1E4050	same	0	ok
 0x1E4530	DtSeqnodeRecord	0X1E4CF0	same	0	ok
 0x1E4EB8	SetSeqnodeDrive	0X1E5678	same	0	ok
 0x1E4F20	func_001E4F20	0X1E56E0	same	0	ok
@@ -4928,6 +4932,7 @@ us_address	name	other_address	pair	score	addresses
 0x22B050	bevy_gfx_screen_22b050	0X22B870	same	0	ok
 0x22B090	SetWipeWipes	0X22B8B0	same	0	ok
 0x22B198	bevy_gfx_screen_22b198	0X22B9B8	same	0	ok
+0x22B220	ActivateWipe	0X22BA40	same	0	ok
 0x22B420	PostLoadWipe	0X22BC40	same	0	ok
 0x22B490	RequestTransition	0X22BCB0	same	0	ok
 0x22B5C0	func_0022B5C0	0X22BDE0	same	0	ok

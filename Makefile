@@ -89,7 +89,7 @@ config: ## Regenerate config/us/sly2.us.yaml and pieces.tsv: one unit per module
 	.venv/bin/python configure.py --split
 
 nonmatching: ## Publish the best compiling source of every unmatched function into nonmatching/ (slow: scores each candidate)
-	python3 -I scripts/matching/export_nonmatching.py
+	.venv/bin/python scripts/matching/export_nonmatching.py
 	python3 -I scripts/matching/check_calls.py
 
 src: ## Publish the matched functions from data/matching/src into src/

@@ -18,13 +18,13 @@ import csv
 import json
 import os
 import re
-import shutil
-import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from progress import Progress  # noqa: E402
 from record import scan  # noqa: E402  (what AGENTS.md bans because it only steers the compiler)
+from export_src import write_tree  # noqa: E402
+import scorer  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 OUTPUT = 'nonmatching'
@@ -46,9 +46,10 @@ def file_name(name):
 
 
 def score(address, path, language):
-    out = subprocess.run([sys.executable, 'scripts/matching/try.py', f'{address:#x}', path, '--quiet', '--lang', language], capture_output=True, text=True).stdout
-    found = re.match(r'score (\d+)', out)
-    return int(found.group(1)) if found else None
+    """The score of the source as try.py prints it, from scorer.judge in this process: a source it judged before (same toolchain, same text) is
+    answered from work/matching/cache without a compile. Starting one try.py process per candidate took two minutes on an unchanged tree."""
+    with open(path, encoding='utf-8') as handle:
+        return scorer.judge(address, handle.read(), language)
 
 
 TRACKER = []  # the Progress of main(), for the worker threads
@@ -91,6 +92,7 @@ def main():
                 candidates.append(candidate)
         if candidates:
             jobs.append((address, candidates))
+    scorer.registry()
     progress = Progress(len(jobs), 'nonmatching')
     TRACKER.append(progress)
     results = []
@@ -100,25 +102,23 @@ def main():
                 results.append((address, best))
     progress.done()
     readme = open(os.path.join(OUTPUT, 'README.md')).read() if os.path.exists(os.path.join(OUTPUT, 'README.md')) else None  # documentation, not generated
-    shutil.rmtree(OUTPUT, ignore_errors=True)
-    manifest = []
+    # Write only what changed: an unchanged source keeps its mtime, so ninja recompiles only the sources that changed (removing nonmatching/ and
+    # copying everything again made all 784 objects stale on each `make land`)
+    desired, manifest = {}, []
     for address, (points, path, language) in results:
         function = functions[address]
-        folder = os.path.join(OUTPUT, directory_name(function['module']))
-        os.makedirs(folder, exist_ok=True)
+        folder = directory_name(function['module'])
         extension = '.c' if language == 'c' else '.cpp'
-        destination = os.path.join(folder, file_name(function['name']) + extension)
-        if os.path.exists(destination):
-            destination = os.path.join(folder, f"{file_name(function['name'])}_{address:X}{extension}")
-        shutil.copyfile(path, destination)
-        manifest.append((f'{address:#X}', function['name'], str(function['size']), destination[len(OUTPUT) + 1:], str(points)))
-    with open(os.path.join(OUTPUT, 'MANIFEST.tsv'), 'w') as handle:
-        handle.write('address\tname\tsize\tfile\tscore\n')
-        for entry in sorted(manifest):
-            handle.write('\t'.join(entry) + '\n')
+        relative = os.path.join(folder, file_name(function['name']) + extension)
+        if relative in desired:
+            relative = os.path.join(folder, f"{file_name(function['name'])}_{address:X}{extension}")
+        with open(path, 'rb') as handle:
+            desired[relative] = handle.read()
+        manifest.append((f'{address:#X}', function['name'], str(function['size']), relative, str(points)))
+    desired['MANIFEST.tsv'] = ('address\tname\tsize\tfile\tscore\n' + ''.join('\t'.join(entry) + '\n' for entry in sorted(manifest))).encode()
     if readme is not None:
-        with open(os.path.join(OUTPUT, 'README.md'), 'w') as handle:
-            handle.write(readme)
+        desired['README.md'] = readme.encode()
+    write_tree(OUTPUT, desired)
     registry_path = os.path.join('data', 'matching', 'functions.tsv')
     if os.path.exists(registry_path):
         rows = list(csv.DictReader(open(registry_path, encoding='utf-8'), delimiter='\t'))

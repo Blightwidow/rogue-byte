@@ -11,6 +11,8 @@ import argparse
 import difflib
 import functools
 import json
+import os
+import struct
 import sys
 
 import rabbitizer
@@ -35,14 +37,29 @@ def _target_words(elf_path, address, size):
     return tuple(_read_target_words(elf_path, address, size))
 
 
-def _read_target_words(elf_path, address, size):
+@functools.lru_cache(maxsize=8)
+def _loaded_segments(elf_path, mtime, size):
+    """(file bytes, [(vaddr, file offset, file size)] of the PT_LOAD segments) of an executable, read once. `mtime` and `size` only key the cache:
+    pyelftools parsed the whole file again for every function asked about (7 s for the 5,445 matched functions of the PAL check)."""
     with open(elf_path, "rb") as elf_file:
-        elf = ELFFile(elf_file)
-        for segment in elf.iter_segments():
-            start = segment["p_vaddr"]
-            if segment["p_type"] == "PT_LOAD" and start <= address < start + segment["p_filesz"]:
-                data = segment.data()[address - start:address - start + size]
-                return [int.from_bytes(data[index:index + 4], "little") for index in range(0, len(data), 4)]
+        data = elf_file.read()
+    table = struct.unpack_from("<I", data, 0x1C)[0]
+    entry_size, count = struct.unpack_from("<HH", data, 0x2A)
+    segments = []
+    for index in range(count):
+        kind, offset, vaddr, _, file_size = struct.unpack_from("<5I", data, table + index * entry_size)
+        if kind == 1:
+            segments.append((vaddr, offset, file_size))
+    return data, segments
+
+
+def _read_target_words(elf_path, address, size):
+    status = os.stat(elf_path)
+    data, segments = _loaded_segments(elf_path, status.st_mtime_ns, status.st_size)
+    for start, offset, file_size in segments:
+        if start <= address < start + file_size:
+            blob = data[offset + address - start:offset + min(address - start + size, file_size)]
+            return [int.from_bytes(blob[index:index + 4], "little") for index in range(0, len(blob), 4)]
     sys.exit(f"address {address:#x} not in a loadable segment")
 
 

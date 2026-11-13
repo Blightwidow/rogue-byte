@@ -1218,6 +1218,65 @@ class ParkTests(unittest.TestCase):
         self.assertEqual((row['status'], row['best'], os.path.exists('data/matching/src/fn/100000.cpp')), ('tried', '3', True))
 
 
+class WriteTreeTests(unittest.TestCase):
+    def test_unchanged_files_keep_their_time_and_stale_files_go(self):
+        import export_src
+        with tempfile.TemporaryDirectory() as directory:
+            root = os.path.join(directory, 'src')
+            export_src.write_tree(root, {'a/one.cpp': b'1', 'two.cpp': b'2'})
+            kept = os.path.join(root, 'a', 'one.cpp')
+            os.utime(kept, ns=(1_000_000_000, 1_000_000_000))
+            removed = export_src.write_tree(root, {'a/one.cpp': b'1', 'three.cpp': b'3'})
+            self.assertEqual(os.stat(kept).st_mtime_ns, 1_000_000_000)
+            self.assertFalse(os.path.exists(os.path.join(root, 'two.cpp')))
+            self.assertEqual(removed, 1)
+            self.assertEqual(open(os.path.join(root, 'three.cpp'), 'rb').read(), b'3')
+
+    def test_a_changed_file_is_rewritten(self):
+        import export_src
+        with tempfile.TemporaryDirectory() as directory:
+            root = os.path.join(directory, 'src')
+            export_src.write_tree(root, {'one.cpp': b'old'})
+            os.utime(os.path.join(root, 'one.cpp'), ns=(1_000_000_000, 1_000_000_000))
+            export_src.write_tree(root, {'one.cpp': b'new'})
+            self.assertEqual(open(os.path.join(root, 'one.cpp'), 'rb').read(), b'new')
+            self.assertNotEqual(os.stat(os.path.join(root, 'one.cpp')).st_mtime_ns, 1_000_000_000)
+
+
+class ElfminiTests(unittest.TestCase):
+    @staticmethod
+    def object_bytes():
+        """A relocatable object with a .text of 8 bytes, a function `func` in it, an undefined `ext` and one R_MIPS_26 relocation against `ext`."""
+        text, strings = b'\x00' * 8, b'\0func\0ext\0'
+        symbols = struct.pack('<IIIBBH', 0, 0, 0, 0, 0, 0) + struct.pack('<IIIBBH', 1, 0, 8, 0x12, 0, 1) + struct.pack('<IIIBBH', 6, 0, 0, 0x10, 0, 0)
+        relocations = struct.pack('<II', 4, (2 << 8) | 4)
+        names = b'\0.text\0.symtab\0.strtab\0.rel.text\0.shstrtab\0'
+        bodies = [(b'', 0), (text, 1), (symbols, 2), (strings, 3), (relocations, 9), (names, 3)]
+        offset, headers, blob = 52, [struct.pack('<10I', *([0] * 10))], b''
+        titles = ['.text', '.symtab', '.strtab', '.rel.text', '.shstrtab']
+        for index, (body, kind) in enumerate(bodies[1:]):
+            link = 3 if titles[index] == '.symtab' else 2 if titles[index] == '.rel.text' else 0
+            headers.append(struct.pack('<10I', names.index(titles[index].encode()), kind, 0, 0, offset + len(blob), len(body), link, 0, 4, 0))
+            blob += body
+        section_offset = offset + len(blob)
+        header = b'\x7fELF\x01\x01\x01' + b'\0' * 9 + struct.pack('<HHIIIIIHHHHHH', 1, 8, 1, 0, 0, section_offset, 0, 52, 0, 0, 40, len(headers), len(headers) - 1)
+        return header + blob + b''.join(headers)
+
+    def test_sections_symbols_and_relocations(self):
+        import elfmini
+        elf = elfmini.Elf(self.object_bytes())
+        self.assertEqual(elf.section('.text')['size'], 8)
+        self.assertEqual(elf.symbols()[1], ('func', 0, 8, 0x12, elf.section_index('.text')))
+        self.assertEqual((elf.symbols()[2][0], elf.symbols()[2][4]), ('ext', elfmini.SHN_UNDEF))
+        self.assertEqual(elf.relocations('.rel.text'), [(4, 4, 2)])
+        self.assertEqual(elf.relocations('.rel.data'), [])
+
+    def test_a_big_endian_or_wrong_file_is_refused(self):
+        import elfmini
+        with self.assertRaises(ValueError):
+            elfmini.Elf(b'\x7fELF\x01\x02' + b'\0' * 60)
+
+
 class BlockerTests(unittest.TestCase):
     @staticmethod
     def lines(instructions):

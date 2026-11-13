@@ -9,11 +9,15 @@ function's bytes are compared with the retail ones and the ones that differ (rel
 unresolved names, size) fall back to assembly. A whole file (config/us/whole_files.tsv) is linked as one object over its range and
 compared as a whole; if it differs, its functions come from assembly (a function inside a whole file has no source of its own). Writes build/image/image.bin and config/us/swapped.tsv (address, name)."""
 import concurrent.futures
+import functools
 import hashlib
+import json
 import os
 import re
 import shutil
+import struct
 import subprocess
+import time
 import sys
 
 from elftools.elf.elffile import ELFFile
@@ -49,6 +53,7 @@ piece_ranges = {(start, start + size): name for name, start, size in piece_list}
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asm_units import read_units, whole_files  # noqa: E402
+import elfmini  # noqa: E402
 header, functions = read_units(SPLAT)
 by_address = {function['address']: function for function in functions}
 
@@ -64,11 +69,9 @@ for line in open(os.path.join(SPLAT, 'undefined_syms_auto.txt')):
 
 def function_offset(object_path, name):
     """Offset of the function in the object's .text (the compiler can emit a local helper in front of it), or 0."""
-    with open(object_path, 'rb') as handle:
-        elf = ELFFile(handle)
-        text_index = elf.get_section_index('.text')
-        offsets = [symbol['st_value'] for symbol in elf.get_section_by_name('.symtab').iter_symbols()
-                   if symbol['st_shndx'] == text_index and (symbol.name == name or symbol.name.startswith(name + '__'))]
+    elf = elfmini.Elf.read(object_path)
+    text_index = elf.section_index('.text')
+    offsets = [value for symbol_name, value, _, _, index in elf.symbols() if index == text_index and (symbol_name == name or symbol_name.startswith(name + '__'))]
     return offsets[0] if len(offsets) == 1 else 0
 
 def trim_object(object_path, start, size, keep):
@@ -156,29 +159,27 @@ def inspect(object_path, by_name=None):
     relocation into a section other than .text means the function uses its own data (jump table, literal), which the image
     keeps elsewhere. With a `by_name` set (whole files only), a relocation against a .bss object the file defines under a
     retail address name (B_002DD548) is allowed and its name added to the set: link_whole_data() resolves it to that address."""
-    with open(object_path, 'rb') as handle:
-        elf = ELFFile(handle)
-        text = elf.get_section_by_name('.text')
-        if text is None:
-            return None
-        symbol_table = elf.get_section_by_name('.symtab')
-        undefined = set()
-        uses_rodata = False
-        relocations = elf.get_section_by_name('.rel.text')
-        for relocation in (relocations.iter_relocations() if relocations else []):
-            symbol = symbol_table.get_symbol(relocation['r_info_sym'])
-            if symbol['st_shndx'] == 'SHN_UNDEF':
-                undefined.add(symbol.name)
-            elif isinstance(symbol['st_shndx'], int):
-                section_name = elf.get_section(symbol['st_shndx']).name
-                if section_name == '.rodata':
-                    uses_rodata = True
-                elif by_name is not None and section_name in ('.bss', '.sbss') and ADDRESS_NAME.match(symbol.name):
-                    by_name.add(symbol.name)
-                elif section_name != '.text':
-                    return None
-        rodata = elf.get_section_by_name('.rodata')
-        return text['sh_size'], undefined, (rodata['sh_size'] if uses_rodata and rodata else 0)
+    elf = elfmini.Elf.read(object_path)
+    text = elf.section('.text')
+    if text is None:
+        return None
+    symbols = elf.symbols()
+    undefined = set()
+    uses_rodata = False
+    for _, _, symbol_index in elf.relocations('.rel.text'):
+        symbol_name, _, _, _, index = symbols[symbol_index]
+        if index == elfmini.SHN_UNDEF:
+            undefined.add(symbol_name)
+        elif index < elfmini.SHN_LORESERVE:
+            section_name = elf.sections[index]['name']
+            if section_name == '.rodata':
+                uses_rodata = True
+            elif by_name is not None and section_name in ('.bss', '.sbss') and ADDRESS_NAME.match(symbol_name):
+                by_name.add(symbol_name)
+            elif section_name != '.text':
+                return None
+    rodata = elf.section('.rodata')
+    return text['size'], undefined, (rodata['size'] if uses_rodata and rodata else 0)
 
 def link_whole_data(start, object_path, names):
     """A whole file that defines game objects (a C++ file's globals, built by its static initializer) keeps them in .bss, which
@@ -251,16 +252,19 @@ def retarget_rodata(address, object_path):
     open(path, 'wb').write(patched)
     return path
 
+@functools.lru_cache(maxsize=None)
+def text_and_relocations(object_path):
+    """(.text bytes, [(offset, relocation type, symbol name)]) of an object. definitions() asks for each undefined name of an object in turn,
+    and parsing the object again for each one was a third of the time of a link: an object does not change during a run."""
+    elf = elfmini.Elf.read(object_path)
+    text = elf.section('.text')
+    symbols = elf.symbols()
+    return elf.data[text['offset']:text['offset'] + text['size']], [(offset, kind, symbols[index][0]) for offset, kind, index in elf.relocations('.rel.text')]
+
 def derive_addresses(address, object_path, names):
     """Addresses of names the symbol table lacks, read from the retail instructions at their relocation sites: a jal
     gives its target, a lui/addiu or load pair its hi/lo halves; the addend the object carries is subtracted."""
-    with open(object_path, 'rb') as handle:
-        elf = ELFFile(handle)
-        text_section = elf.get_section_by_name('.text')
-        data = text_section.data()
-        symbol_table = elf.get_section_by_name('.symtab')
-        entries = [(r['r_offset'], r['r_info_type'], symbol_table.get_symbol(r['r_info_sym']).name)
-                   for r in elf.get_section_by_name('.rel.text').iter_relocations()]
+    data, entries = text_and_relocations(object_path)
     base = FILE_OFFSET_OF_TEXT + address - TEXT_START
     word = lambda offset, blob, origin: int.from_bytes(blob[origin + offset:origin + offset + 4], 'little')
     found = {}
@@ -476,12 +480,51 @@ for directory, _, files in os.walk(os.path.join(SPLAT, 'asm')):
             referenced_names.update(re.findall(r'[A-Za-z_][A-Za-z0-9_]*', open(os.path.join(directory, file)).read()))
 piece_sources = {}
 
+def loaded_sections(path):
+    """[(name, address, offset, size)] of the sections of a linked ELF32 that carry bytes at an address (SHT_PROGBITS, SHF_ALLOC), read with struct:
+    pyelftools took seconds per file here."""
+    data = open(path, 'rb').read()
+    section_offset = struct.unpack_from('<I', data, 0x20)[0]
+    entry_size, count, names_index = struct.unpack_from('<HHH', data, 0x2E)
+    headers = [struct.unpack_from('<10I', data, section_offset + index * entry_size) for index in range(count)]
+    names = data[headers[names_index][4]:headers[names_index][4] + headers[names_index][5]]
+    found = []
+    for name, kind, flags, address, offset, size, *_ in headers:
+        if kind == 1 and flags & 2 and size:
+            found.append((names[name:names.index(b'\0', name)].decode(), address, offset, size))
+    return found, data
+
+def chunk_groups(statements, count):
+    """Splits [(line, object path)] into `count` lists that keep every object's statements together (an object's text and its own rodata must
+    link in the same run: its code refers to its rodata) and are about the same size. GNU ld matches each statement against every input
+    file, so one link costs statements times files: eight runs of an eighth of each take about a fiftieth of the time of one."""
+    parent = {}
+    def find(item):
+        while parent.setdefault(item, item) != item:
+            parent[item] = parent[parent[item]]
+            item = parent[item]
+        return item
+    for _, path in statements:
+        find(path)
+    groups = {}
+    for index, (_, path) in enumerate(statements):
+        groups.setdefault(find(path), []).append(index)
+    chunks = [[] for _ in range(count)]
+    for members in sorted(groups.values(), key=len, reverse=True):
+        min(chunks, key=len).extend(members)
+    return [sorted(chunk) for chunk in chunks if chunk]
+
+LINK_RUNS = os.cpu_count() or 4
+
 def build(swapped, active, raw_pieces):
+    started = time.time()
     placed, defined = link(swapped, active)
-    sections = [f'    .t_{address:06X} 0x{address:X} : SUBALIGN(1) {{ */{os.path.basename(path)}(.text) }}'
-                for address, path in sorted(placed)]
-    sections += [f'    .nl_{address:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(candidates[address][0])}(.rodata) }}' for address in sorted(swapped & retargeted)]
-    sections += [f'    .nb_{start:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(wholes[start][1])}(.bss .sbss) }}' for start in sorted(active) if wholes[start][5]]
+    t_runs = time.time() - started
+    statements = [(f'    .t_{address:06X} 0x{address:X} : SUBALIGN(1) {{ */{os.path.basename(path)}(.text) }}', path) for address, path in sorted(placed)]
+    statements += [(f'    .nl_{address:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(candidates[address][0])}(.rodata) }}', candidates[address][0])
+                   for address in sorted(swapped & retargeted)]
+    statements += [(f'    .nb_{start:06X} 0x0 (NOLOAD) : SUBALIGN(1) {{ */{os.path.basename(wholes[start][1])}(.bss .sbss) }}', wholes[start][1])
+                   for start in sorted(active) if wholes[start][5]]
     # rodata and data are linked as pieces (config/us/pieces.tsv); a function's own rodata goes where the retail image
     # has it, so the pieces are cut around those holes
     holes = sorted([(candidates[address][3], candidates[address][3] + candidates[address][2], address)
@@ -509,21 +552,54 @@ def build(swapped, active, raw_pieces):
             subprocess.run(f'printf \'.section .data, "aw"\\n.global {symbol}\\n{symbol}:\\n.incbin "{stem}.bin"\\n\' | {BINUTILS}-as -EL -march=r5900 -o {stem}.o -',
                            shell=True, check=True)
         return a, stem + '.o', '.data'
+    started = time.time()
     with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
         pieces = list(pool.map(wrap, jobs))
+    t_pieces = time.time() - started
     pieces += [(start, data_files[start][1], data_files[start][2]) if start in data_files else
                (start, (wholes[address][1] if address in active else candidates[address][0]), '.rodata') for start, _, address in holes]
-    rodata_sections = [f'    .{"dd" if piece[0] in data_files and piece[1] == data_files[piece[0]][1] else "ro"}_{piece[0]:06X} 0x{piece[0]:X} : SUBALIGN(1) {{ */{os.path.basename(piece[1])}({piece[2]}) }}'
-                       for piece in sorted(pieces)]
+    statements += [(f'    .{"dd" if piece[0] in data_files and piece[1] == data_files[piece[0]][1] else "ro"}_{piece[0]:06X} 0x{piece[0]:X} : SUBALIGN(1) {{ */{os.path.basename(piece[1])}({piece[2]}) }}', piece[1])
+                   for piece in sorted(pieces)]
     tail = [line.rstrip('\n') for line in open(os.path.join('config', 'us', 'image.ld'))
             if not line.lstrip().startswith(('SECTIONS', '. = 0x100000', '.text', '}', '. = 0x262380', '.rodata', '. = 0x2ac880', '.data'))]
-    script = ['SECTIONS {'] + sections + rodata_sections + tail + ['}'] + definitions(swapped, active, defined) + piece_definitions(pieces)
+    extra_objects = [os.path.join(BUILD, f'{name}.o') for name in ('vutext', 'irx_gap', 'irx')]
+    trailer = definitions(swapped, active, defined) + piece_definitions(pieces)
+    # link.ld stays the whole script (make_objdiff.py reads it); the link itself runs in chunks (chunk_groups)
+    script = ['SECTIONS {'] + [line for line, _ in statements] + tail + ['}'] + trailer
     open(os.path.join(BUILD, 'link.ld'), 'w').write('\n'.join(script) + '\n')
-    objects = list(dict.fromkeys([path for _, path in placed] + [piece[1] for piece in pieces] + [os.path.join(BUILD, f'{name}.o') for name in ('vutext', 'irx_gap', 'irx')]))
-    subprocess.check_call([BINUTILS + '-ld', '-EL', '-T', os.path.join(BUILD, 'link.ld'), '-o', os.path.join(BUILD, 'image.elf'),
-                           *objects, '--no-warn-mismatch', '--unresolved-symbols=ignore-all'])
-    subprocess.check_call([BINUTILS + '-objcopy', '-O', 'binary', os.path.join(BUILD, 'image.elf'), os.path.join(BUILD, 'image.bin')])
-    return open(os.path.join(BUILD, 'image.bin'), 'rb').read(), {piece[0] for piece in pieces if piece[1].endswith('_asm.o')}
+    discard = [line for line in tail if '/DISCARD/' in line]
+    jobs = [(f'chunk{index}', [statements[position] for position in chunk]) for index, chunk in enumerate(chunk_groups(statements, LINK_RUNS))]
+    jobs.append(('tail', [(line, None) for line in tail]))
+    def link_chunk(job):
+        name, chunk = job
+        body = [line for line, _ in chunk] if name != 'tail' else [line for line, _ in chunk]
+        paths = list(dict.fromkeys([path for _, path in chunk if path] + (extra_objects if name == 'tail' else [])))
+        script_path, elf_path = os.path.join(BUILD, f'{name}.ld'), os.path.join(BUILD, f'{name}.elf')
+        lines = ['SECTIONS {'] + body + ([] if name == 'tail' else discard) + ['}'] + trailer
+        open(script_path, 'w').write('\n'.join(lines) + '\n')
+        subprocess.check_call([BINUTILS + '-ld', '-EL', '-T', script_path, '-o', elf_path, *paths, '--no-warn-mismatch', '--unresolved-symbols=ignore-all'])
+        return elf_path
+    started = time.time()
+    with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
+        elf_paths = list(pool.map(link_chunk, jobs))
+    t_ld = time.time() - started
+    image_bytes, sizes = bytearray(), {}
+    for elf_path in elf_paths:
+        sections, data = loaded_sections(elf_path)
+        for section_name, address, offset, size in sections:
+            if not TEXT_START <= address:
+                continue
+            end = address - TEXT_START + size
+            if len(image_bytes) < end:
+                image_bytes.extend(b'\0' * (end - len(image_bytes)))
+            image_bytes[address - TEXT_START:end] = data[offset:offset + size]
+            sizes[section_name] = size
+    with open(os.path.join(BUILD, 'image.bin'), 'wb') as handle:
+        handle.write(image_bytes)
+    with open(os.path.join(BUILD, 'sections.json'), 'w') as handle:  # the sizes of the `.ro_` and `.dd_` sections: make_objdiff.py reads their bytes from image.bin
+        json.dump({name: size for name, size in sizes.items() if name.startswith(('.ro_', '.dd_'))}, handle)
+    print(f'build: runs {t_runs:.1f}s, pieces {t_pieces:.1f}s, ld {t_ld:.1f}s ({len(jobs)} chunks)', flush=True)
+    return bytes(image_bytes), {piece[0] for piece in pieces if piece[1].endswith('_asm.o')}
 
 # every range a compiled object may own in .rodata (a function's or a whole file's literals and jump tables): make_data_files.py --section rodata
 # leaves these to their objects. A data file that overlaps one anyway is not linked (its range stays assembly).
@@ -539,6 +615,25 @@ active = set(wholes)
 swapped = {address for address in candidates if not in_whole(address, active)}
 differences = {}
 raw_pieces = set()
+# The first attempt used to fail the same way on every run (a function whose rodata differs, a piece that has to stay raw) and the whole link ran
+# a second time without it: two ld runs of about 27 s each. The last settled run's fallbacks are put in place before the first attempt now;
+# the loop still checks everything that is linked, so a new difference is found and handled as before. A function that was held back and
+# would pass now is not re-tested: run with --fresh to test them all (a gate run for a release should).
+SEED = os.path.join(BUILD, 'seed.json')
+pristine_swapped, pristine_active, pristine_data = set(swapped), set(active), set(data_files)
+if '--fresh' not in sys.argv and os.path.isfile(SEED):
+    seed = json.load(open(SEED))
+    held_functions = {address for address in seed['functions'] if address in swapped}
+    held_wholes = {start for start in seed['wholes'] if start in active}
+    swapped -= held_functions
+    for start in held_wholes:
+        active.discard(start)
+        swapped |= {address for address in candidates if start <= address < wholes[start][0]}
+    raw_pieces |= {name for name in seed['pieces'] if name in piece_ranges.values()}
+    for start in [start for start in seed['data'] if start in data_files]:
+        del data_files[start]
+    print(f"seeded from the last run: {len(held_functions)} functions, {len(held_wholes)} whole files, {len(raw_pieces)} pieces and {len(seed['data'])} data files "
+          'held back (--fresh tests them again)', flush=True)
 for attempt in range(1, 12):
     image, asm_pieces = build(swapped, active, raw_pieces)
     failing = set()
@@ -591,6 +686,9 @@ for attempt in range(1, 12):
     swapped -= failing
 else:
     sys.exit('did not settle')
+with open(SEED, 'w') as handle:
+    json.dump({'functions': sorted(pristine_swapped - swapped), 'wholes': sorted(pristine_active - active), 'pieces': sorted(raw_pieces),
+               'data': sorted(pristine_data - set(data_files))}, handle)
 from_whole = {address for address in manifest_addresses if address in by_address and in_whole(address, active)}  # matched C linked through a whole file
 with open(os.path.join('config', 'us', 'swapped.tsv'), 'w') as handle:
     for address in sorted(swapped | from_whole):
