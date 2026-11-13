@@ -1,13 +1,13 @@
 extern "C" {
 void FlushCache(int);
-void func_00234F48(int *, int *);
+void func_00234F48(unsigned int *, unsigned int *);
 int printf(const char *, ...);
 int sceSifCallRpc(void *, int, int, void *, int, void *, int, int, int);
 int sceSifCheckStatRpc(void *);
 void snd_FlushSoundCommands(void);
 int snd_StreamSafeCdSync(int);
 extern char B_00448440[];
-extern int B_00448480;
+extern unsigned int B_00448480;
 extern int B_004484C0[2];
 extern int D_002C4648;
 extern int D_002C4688;
@@ -15,19 +15,14 @@ extern int D_002C46B8;
 extern char RO_002AA1C8[];
 int snd_BankLoadByLoc(int arg0, int arg1) {
     D_002C4648 = 0;
-    const char *message;
     if (D_002C4688 != 0) {
-        if (D_002C46B8 != 0)
-            return 0;
-        message = "snd_BankLoadByLoc: Load already in progress!\n";
-        goto report;
+        if (D_002C46B8 == 0)
+            printf("snd_BankLoadByLoc: Load already in progress!\n");
+        return 0;
     }
     if (snd_StreamSafeCdSync(1) == 1) {
-        if (D_002C46B8 != 0)
-            return 0;
-        message = "snd_BankLoadByLoc: CD BUSY!\n";
-    report:
-        printf(message);
+        if (D_002C46B8 == 0)
+            printf("snd_BankLoadByLoc: CD BUSY!\n");
         return 0;
     }
     B_00448480 = 0xFFFFFFFF;

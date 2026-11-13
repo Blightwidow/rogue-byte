@@ -1302,6 +1302,7 @@ us_address	name	other_address	pair	score	addresses
 0x12E760	InitCplcyCamobj	0X12E760	same	0	ok
 0x12E798	bevy_classes_k30_cam_activate	0X12E798	same	0	ok
 0x12E7F0	bevy_classes_k30_cam_deactivate	0X12E7F0	same	0	ok
+0x12E858	CplcyCamobj_Update	0X12E858	same	0	ok
 0x12E9F0	func_0012E9F0	0X12E9F0	same	0	ok
 0x12EB28	func_0012EB28	0X12EB28	identical	0	ok
 0x12EB48	func_0012EB48	0X12EB48	same	0	ok
@@ -1699,6 +1700,7 @@ us_address	name	other_address	pair	score	addresses
 0x148740	PostBtnLoad	0X148780	same	0	ok
 0x1487A0	TriggerBtn	0X1487E0	same	0	ok
 0x148860	UntriggerBtn	0X1488A0	same	0	ok
+0x1488D8	RunBtnAsegs	0X148918	same	0	ok
 0x148A78	SetBtnButtons__FP3BTN7BUTTONS	0X148AB8	same	0	ok
 0x148AF8	AddBtnAseg	0X148B38	same	0	ok
 0x148B18	AddBtnOffAseg	0X148B58	same	0	ok
@@ -1817,6 +1819,7 @@ us_address	name	other_address	pair	score	addresses
 0x14E168	SetCmPosMat	0X14E190	same	0	ok
 0x14E270	BuildCmFgfn__FP2CMfP4FGFN	0X14E298	same	0	ok
 0x14E698	CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR	0X14E6C0	identical	0	ok
+0x14E768	AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI	0X14E790	same	0	ok
 0x14E920	ResetCmAdjust__FP2CMP2SOP6CPDEFI	0X14E948	same	0	ok
 0x14F030	func_0014F030	0X14F058	gap	0	ok
 0x14F3C8	func_0014F3C8	0X14F3F0	same	0	ok
@@ -1899,6 +1902,7 @@ us_address	name	other_address	pair	score	addresses
 0x153128	SetRhythmState	0X153150	same	0	ok
 0x1531A8	SetRhythmBeats	0X1531D0	same	4	ok
 0x1532D8	QueueRhythmCue	0X153300	same	0	ok
+0x1533B0	JudgeRhythmPress	0X1533D8	same	0	ok
 0x153638	func_00153638	0X153660	gap	0	ok
 0x153640	AddRhythmScore	0X153668	same	0	ok
 0x153800	ResetRhythmScore	0X153828	gap	0	ok
@@ -2960,6 +2964,7 @@ us_address	name	other_address	pair	score	addresses
 0x1ABD98	TryAutosave	0X1ABE78	same	0	ok
 0x1ABE78	ReadMemcardDirectory	0X1ABF58	same	0	ok
 0x1ABFC0	FindMemcardFile	0X1AC0A0	same	0	ok
+0x1AC008	WriteIconSys	0X1AC0E8	same	0	ok
 0x1AC238	load_sly_icon_from_disc		none		
 0x1AC260	load_file_from_disc		none		
 0x1AC420	WriteSaveSlot	0X1AC468	same	0	ok
@@ -3049,6 +3054,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B0160	func_001B0160	0X1B0320	same	0	ok
 0x1B01E8	func_001B01E8	0X1B03A8	same	0	ok
 0x1B0270	PauseMenu_Close_thunk	0X1B0430	same	0	ok
+0x1B0290	OpenPauseMenu	0X1B0450	same	0	ok
 0x1B04E0	OpenOptionsMenu	0X1B06A0	same	0	ok
 0x1B0668	PauseMenu_PopPage_thunk	0X1B0828	same	0	ok
 0x1B0688	func_001B0688	0X1B0848	same	0	ok
@@ -3101,6 +3107,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B29D0	CQueueOutputIop_FInit	0X1B2C58	same	0	ok
 0x1B2A80	Reset__15CQueueOutputIop	0X1B2D08	identical	0	ok
 0x1B2AA0	CQueueOutputIop_Deinterleave	0X1B2D28	same	0	ok
+0x1B2BE0	CQueueOutputIop_CbWrite	0X1B2E68	same	0	ok
 0x1B2DB8	CQueueOutputIop_SendToIop	0X1B3040	same	0	ok
 0x1B2EB8	CQueueOutputIop_Update	0X1B3140	same	0	ok
 0x1B2FD0	FAsyncDrain__15CQueueOutputIop	0X1B3258	gap	0	ok
@@ -3165,6 +3172,7 @@ us_address	name	other_address	pair	score	addresses
 0x1B92F8	UpdateMurrayLift	0X1B9560	same	0	ok
 0x1B93E8	SetMurrayLiftState	0X1B9650	same	0	ok
 0x1B9880	func_001B9880	0X1B9AE8	same	0	ok
+0x1B98A0	FMurrayCanUseGadget	0X1B9B08	same	0	ok
 0x1B9A08	UseMurrayGadget	0X1B9C70	same	0	ok
 0x1B9B60	GetMurraySaveRoot	0X1B9DC8	gap	0	ok
 0x1B9B70	PredictMurrayLead	0X1B9DD8	same	0	ok
@@ -3252,6 +3260,7 @@ us_address	name	other_address	pair	score	addresses
 0x1BF398	CbskFromG	0X1BF600	same	0	ok
 0x1BF900	FClipEdgeToCg	0X1BFB68	same	0	ok
 0x1BF970	IcgvFromPcgv__FP2CGP3CGV	0X1BFBD8	gap	0	ok
+0x1BF980	FindPathAStar__FP2CGP3CGVT1iPiPP3CGV	0X1BFBE8	same	0	ok
 0x1BFC18	SimplifyApcgvNeighbor__FP4CBSPPiPP3CGV	0X1BFE80	same	0	ok
 0x1C02D0	FFindPathzoneCrv	0X1C0538	same	0	ok
 0x1C0320	FFindClosestPointInCg	0X1C0588	same	0	ok
@@ -3264,6 +3273,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C0980	FClipEdgeToPathzone	0X1C0BE8	same	0	ok
 0x1C09A0	FPosFreeInPathzone	0X1C0C08	same	0	ok
 0x1C0A40	ClsgClipEdgeToPathzoneObstacles	0X1C0CA8	same	0	ok
+0x1C0B50	func_001C0B50	0X1C0DB8	same	0	ok
 0x1C0EC0	LoadSwPzgraphFromBrx	0X1C1128	same	0	ok
 0x1C0F30	LoadPzgraphFromBrx	0X1C1198	same	0	ok
 0x1C10C8	func_001C10C8	0X1C1330	same	0	ok
@@ -4199,6 +4209,7 @@ us_address	name	other_address	pair	score	addresses
 0x1FB018	PauseAmb	0X1FB7D8	same	0	ok
 0x1FB060	ContinueAmb	0X1FB820	same	0	ok
 0x1FB098	StopAmb	0X1FB858	same	0	ok
+0x1FB0C0	func_001FB0C0	0X1FB880	same	0	ok
 0x1FB1F8	SetAmbVolume	0X1FB9B8	same	0	ok
 0x1FB268	SetAmbPan	0X1FBA28	same	0	ok
 0x1FB2C0	SetAmbPitch	0X1FBA80	same	0	ok
@@ -4424,6 +4435,7 @@ us_address	name	other_address	pair	score	addresses
 0x208538	func_00208538	0X208CF8	gap	0	ok
 0x208540	func_00208540	0X208D00	same	0	ok
 0x2085B0	AddGuardSensedObject_thunk	0X208D70	same	0	ok
+0x2085D0	AddGuardSensedObject	0X208D90	same	0	ok
 0x208700	AddGuardPriorityClass	0X208EC0	identical	0	ok
 0x208728	RemoveGuardPriorityClass	0X208EE8	same	0	ok
 0x2087C8	func_002087C8	0X208F88	identical	0	ok
@@ -4705,6 +4717,7 @@ us_address	name	other_address	pair	score	addresses
 0x2161C8	CMovieText_DxMaxLine	0X2169E8	same	0	ok
 0x216260	CMovieText_GetExtents	0X216A80	same	0	ok
 0x2162D8	CMovieText_BuildGsMatrix	0X216AF8	same	2	ok
+0x2163B0	CMovieText_Draw	0X216BD0	same	0	ok
 0x2166B0	CMovieText_DrawAffine	0X216ED0	same	0	ok
 0x216B40	PglyphFromFontCh	0X217360	same	0	ok
 0x216B80	DxFromFontCh	0X2173A0	same	0	ok
@@ -5379,6 +5392,7 @@ us_address	name	other_address	pair	score	addresses
 0x2574F8	func_002574F8	0X257F48	gap	0	ok
 0x257500	func_00257500	0X257F50	gap	0	ok
 0x257508	func_00257508	0X257F58	gap	0	ok
+0x2577E0	SweepPairs	0X258230	same	0	ok
 0x257D80	PsidebagNew	0X2587D0	same	0	ok
 0x257E68	func_00257E68	0X2588B8	identical	0	ok
 0x257E88	ResetPairHeap	0X2588D8	same	0	ok

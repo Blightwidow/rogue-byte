@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 extern "C" void *memmove(void *, const void *, unsigned int);
-extern "C" float g_2dded0;
+struct CLOCK_2085D0 { float t; float dt; };
+extern "C" CLOCK_2085D0 g_2dded0;
 
 struct SensedEntry {
     void *plo;
@@ -25,13 +26,16 @@ struct Guard {
 extern "C" SensedEntry *PentryFindSensorLo(SensedList *list, void *plo);
 
 // Retail keeps the found entry, the count, the insertion index and the entry address in one
-// callee-saved register ($s0): the 8 of the full-list case is loaded straight into it and every
-// step (subtract the tail, scale by 16, add the 0x100 array offset, add the list) writes it in
-// place. Separate count/entry variables put the count and the steps in temporaries (score 21),
-// so the source reuses one word-sized slot variable. PentryFindSensorLo takes (list, plo) and
-// returns the entry (its own disassembly). Still differs (score 5): the two in-place
-// `addu s0, a0, s0` come out as `addu s0, s0, a0`, and the time store is scheduled after the
-// count increment; storing time before the increment fixes that but hoists the %hi load.
+// callee-saved register ($s0): every step (subtract the tail, scale by 16, add the 0x100 array
+// offset, add the list) writes it in place, so the source reuses one word-sized slot variable.
+// The last step goes through an inline helper: written in place (`slot = list + slot`) GCC swaps
+// the operands (`addu s0, s0, a0`); retail has the list first. The time is read from the clock
+// struct (Clock_135248 elsewhere): as a plain float its load is hoisted above the stores.
+static inline unsigned int OffsetInList(SensedList *list, unsigned int offset)
+{
+    return (unsigned int)list + offset;
+}
+
 extern "C" int AddGuardSensedObject(Guard *guard, void *plo, int append)
 {
     if (plo != 0) {
@@ -54,7 +58,7 @@ extern "C" int AddGuardSensedObject(Guard *guard, void *plo, int append)
                 slot -= tail;
                 slot *= sizeof(SensedEntry);
                 slot += 0x100;
-                slot = (unsigned int)list + slot;
+                slot = OffsetInList(list, slot);
                 memmove((SensedEntry *)slot + 1, (SensedEntry *)slot, (tail - 1) * sizeof(SensedEntry));
             } else {
                 return 0;
@@ -66,14 +70,14 @@ extern "C" int AddGuardSensedObject(Guard *guard, void *plo, int append)
             slot -= tail;
             slot *= sizeof(SensedEntry);
             slot += 0x100;
-            slot = (unsigned int)list + slot;
+            slot = OffsetInList(list, slot);
             memmove((SensedEntry *)slot + 1, (SensedEntry *)slot, tail * sizeof(SensedEntry));
         }
         SensedEntry *entry = (SensedEntry *)slot;
-        entry->seen = 0;
         entry->plo = plo;
+        entry->seen = 0;
+        entry->time = g_2dded0.t;
         guard->psensed->count++;
-        entry->time = g_2dded0;
         return 1;
     }
     return 0;

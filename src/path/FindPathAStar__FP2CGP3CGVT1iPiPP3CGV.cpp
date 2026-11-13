@@ -48,9 +48,9 @@ extern "C" void FindPathAStar__FP2CGP3CGVT1iPiPP3CGV(CG *pcg, CGV *pcgvStart, CG
     ASTARNODE *pnodeOpen;
     CStackFrame_Construct(frame);
     int *avisited = (int *)PvAllocStackClear(&req, pcg->ccgv * 4);
-    ASTARNODE *pnode = &nodeStart;
+    *apcgvPath = pcgvStart;
     pnodeOpen = 0;
-    *apcgvPath = (CGV *)pcgvStart;
+    ASTARNODE *pnode = &nodeStart;
     nodeStart.cStep = 1;
     nodeStart.pcgv = pcgvStart;
     nodeStart.sCost = 0;

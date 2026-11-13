@@ -65,7 +65,6 @@ address	name	size	file	score
 0X12D9D0	GetActadjPositionGoal	96	new_12d508/GetActadjPositionGoal.c	20
 0X12DEF0	func_0012DEF0	240	new_12d508/fun_0012def0.cpp	35
 0X12E120	func_0012E120	208	alo-missile/fun_0012e120.c	50
-0X12E858	CplcyCamobj_Update	408	missile-proxy/CplcyCamobj_Update.cpp	12
 0X12F2A8	CAseg_LoadFromBrx	744	aseg/CAseg_LoadFromBrx.cpp	59
 0X1300B8	PredictAsegEffect	976	aseg/PredictAsegEffect.cpp	20
 0X130918	UpdateAsega	512	aseg-asega/UpdateAsega.cpp	14
@@ -73,7 +72,7 @@ address	name	size	file	score
 0X130EB0	UpdateAsegaIeaCur__FP5ASEGA	216	asega/UpdateAsegaIeaCur__FP5ASEGA.cpp	33
 0X1337D0	FreeSwPoxa	616	sensor-bbmark/FreeSwPoxa.cpp	84
 0X133A38	UpdateSwPox	560	sensor-bbmark/UpdateSwPox.cpp	99
-0X133E80	UpdateSwAaox__FP2SW	448	bbmark/UpdateSwAaox__FP2SW.cpp	14
+0X133E80	UpdateSwAaox__FP2SW	448	bbmark/UpdateSwAaox__FP2SW.cpp	0
 0X134040	RecalcSwXpAll	720	bbmark-blend/RecalcSwXpAll.cpp	105
 0X134DA8	UpdateBentley	1184	bbmark-blend/UpdateBentley.c	242
 0X135940	PresetBentleyAccel	264	bbmark-blend/PresetBentleyAccel.cpp	10
@@ -120,7 +119,6 @@ address	name	size	file	score
 0X1477D8	UpdateWipe	1096	new_144b58/UpdateWipe.cpp	90
 0X147F40	func_00147F40	960	new_147f40/fun_00147f40.c	278
 0X148300	func_00148300	456	new_147f40/fun_00148300.cpp	44
-0X1488D8	RunBtnAsegs	416	new_147f40/RunBtnAsegs.cpp	3
 0X149440	UpdateVolbtn	728	button-cd/UpdateVolbtn.c	101
 0X149C80	UpdateSwCallbacks	560	button-cd/UpdateSwCallbacks.cpp	28
 0X14A2A0	func_0014A2A0	472	button-cd/fun_0014a2a0.cpp	70
@@ -137,7 +135,6 @@ address	name	size	file	score
 0X14E328	SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv	416	cm_14e270/SetCmPolicy__FP2CM3CPPP5CPLCYP2SOPv.cpp	9
 0X14E4C8	RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv	464	cm_14e270/RevokeCmPolicy__FP2CMi3CPPP5CPLCYP2SOPv.c	109
 0X14E6D0	SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR	152	cm_14e270/SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR.c	38
-0X14E768	AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI	440	cm_14e270/AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI.cpp	10
 0X14E968	GetCmCpdefi__FP2CMP2SOfP6CPDEFI	160	cm_14e270/GetCmCpdefi__FP2CMP2SOfP6CPDEFI.c	26
 0X14EA08	FFindCmClearInterval	360	cm_14e270/FFindCmClearInterval.cpp	52
 0X14EB70	FindCmClosestClearPos	560	cm_14e270/FindCmClosestClearPos.c	131
@@ -157,7 +154,6 @@ address	name	size	file	score
 0X151950	UpdateCpattach	672	rip/UpdateCpattach.c	161
 0X1526D8	InitRhythm	240	rip-game/InitRhythm.cpp	31
 0X152C58	DrawRhythmHud	1232	rip-game/DrawRhythmHud.cpp	76
-0X1533B0	JudgeRhythmPress	496	rip-game/JudgeRhythmPress.cpp	5
 0X1535A0	GAccuracyRhythmCue	152	rip-game/GAccuracyRhythmCue.cpp	11
 0X153760	GMeanRhythmScore	160	rip-game/GMeanRhythmScore.cpp	16
 0X154A90	OnDifficultyEvent	512	new_154a80/OnDifficultyEvent.c	57
@@ -181,7 +177,7 @@ address	name	size	file	score
 0X15BF40	SetEmitdvEmitb__FP6EMITDVP5EMITB	152	emitter_1591b0/SetEmitdvEmitb__FP6EMITDVP5EMITB.c	30
 0X15BFD8	CalculateEmitdvMatrix	376	emitter_1591b0/CalculateEmitdvMatrix.cpp	60
 0X15CAD8	expl__static_initialization_and_destruction_0	624	emitter-font/expl__static_initialization_and_destruction_0.cpp	68
-0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	8
+0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	0
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	36
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
@@ -355,7 +351,6 @@ address	name	size	file	score
 0X1A9D38	MarkSoContactsSweptPoints	680	mark-memcard/MarkSoContactsSweptPoints.c	148
 0X1AA1D8	PxpMarkSwContactsRoot	1608	mark-memcard/PxpMarkSwContactsRoot.c	324
 0X1AB868	CreateSaveFilesOnCard	424	memcard/CreateSaveFilesOnCard.cpp	31
-0X1AC008	WriteIconSys	560	memcard/WriteIconSys.cpp	6
 0X1ACFE0	func_001ACFE0	392	memcard-memory/fun_001acfe0.cpp	16
 0X1AD538	func_001AD538	520	memcard-memory/fun_001ad538.cpp	108
 0X1ADA20	func_001ADA20	408	memcard-memory/fun_001ada20.c	107
@@ -363,13 +358,11 @@ address	name	size	file	score
 0X1AF6D0	PauseMenu_AdjustOption	760	smartguard-ac/PauseMenu_AdjustOption.cpp	33
 0X1AF9C8	RefreshOptionItem	448	smartguard-ac/RefreshOptionItem.cpp	57
 0X1AFFC0	CycleOptionItem	184	smartguard-ac/CycleOptionItem.cpp	15
-0X1B0290	OpenPauseMenu	592	smartguard-ac/OpenPauseMenu.cpp	2
 0X1B1160	SteerSlotSoAlongCrv	456	ac-rog/SteerSlotSoAlongCrv.c	107
 0X1B1900	SenseSlotSoTargetState	312	ac-rog/SenseSlotSoTargetState.c	63
 0X1B1E88	FireMissile	136	ac-rog/FireMissile.cpp	6
 0X1B20B8	PresetGroundmissAccel	312	new_1b20b8/PresetGroundmissAccel.c	74
 0X1B2398	PosPredictMissileTarget	208	missile-mpeg/PosPredictMissileTarget.c	41
-0X1B2BE0	CQueueOutputIop_CbWrite	472	mpeg/CQueueOutputIop_CbWrite.cpp	13
 0X1B2FD8	CbWrite__15CQueueOutputIpuiPv	96	mpeg/CbWrite__15CQueueOutputIpuiPv.c	23
 0X1B44D8	func_001B44D8	248	mpeg-memcard/fun_001b44d8.c	52
 0X1B50B0	UpdateMurray	720	mpeg-memcard/UpdateMurray.c	160
@@ -389,7 +382,6 @@ address	name	size	file	score
 0X1B8B70	MoveMurrayAttack	448	mpeg-memcard/MoveMurrayAttack.c	101
 0X1B90B8	func_001B90B8	120	mpeg-memcard/fun_001b90b8.c	19
 0X1B9130	AdjustMurrayNewXp	456	mpeg-memcard/AdjustMurrayNewXp.cpp	3
-0X1B98A0	FMurrayCanUseGadget	360	mpeg-memcard/FMurrayCanUseGadget.cpp	10
 0X1BA608	UpdateZoneScriptBeh	544	mpeg-memcard/UpdateZoneScriptBeh.cpp	15
 0X1BABA0	LoadStgSwitchFromBrx	480	mpeg-memcard/LoadStgSwitchFromBrx.cpp	38
 0X1BB250	func_001BB250	432	mpeg-memcard/fun_001bb250.cpp	82
@@ -399,7 +391,7 @@ address	name	size	file	score
 0X1BC278	OrientXy	128	new_1bc198/OrientXy.c	38
 0X1BC2F8	func_001BC2F8	568	new_1bc198/fun_001bc2f8.c	150
 0X1BC9F0	FObstacleContainsPos	208	new_1bc198/FObstacleContainsPos.c	47
-0X1BCAC0	func_001BCAC0	544	new_1bc198/fun_001bcac0.cpp	13
+0X1BCAC0	func_001BCAC0	544	new_1bc198/fun_001bcac0.cpp	0
 0X1BCCE0	func_001BCCE0	568	new_1bc198/fun_001bcce0.cpp	77
 0X1BD040	Obstacle_AddToPathzone	416	new_1bc198/Obstacle_AddToPathzone.c	84
 0X1BD400	Obstacle_UpdatePlanes	352	new_1bc198/Obstacle_UpdatePlanes.c	74
@@ -407,12 +399,10 @@ address	name	size	file	score
 0X1BDA00	PobstacleGroupAlloc	456	new_1bc198/PobstacleGroupAlloc.cpp	66
 0X1BDE80	MergeObstacles	872	new_1bc198/MergeObstacles.c	186
 0X1BE398	func_001BE398	856	rog-path/fun_001be398.cpp	93
-0X1BE6F0	func_001BE6F0	672	rog-path/fun_001be6f0.cpp	7
+0X1BE6F0	func_001BE6F0	672	rog-path/fun_001be6f0.cpp	2
 0X1BF1F8	PcgtPointInCgSafe	416	rog-path/PcgtPointInCgSafe.c	104
-0X1BF980	FindPathAStar__FP2CGP3CGVT1iPiPP3CGV	664	path_1bf970/FindPathAStar__FP2CGP3CGVT1iPiPP3CGV.cpp	6
 0X1BFDB0	PosClosestOnCgt	376	path_1bf970/PosClosestOnCgt.c	92
 0X1C0880	HookupCg__FP2CG	160	path_1bf970/HookupCg__FP2CG.c	32
-0X1C0B50	func_001C0B50	544	new_1c0920/fun_001c0b50.cpp	6
 0X1C14A8	IepSweepPathzoneCursor	336	new_1c0920/IepSweepPathzoneCursor.cpp	46
 0X1C1A38	InsertPathzoneEndpoints	360	new_1c0920/InsertPathzoneEndpoints.cpp	25
 0X1C1FA0	func_001C1FA0	168	new_1c0920/fun_001c1fa0.c	41
@@ -541,7 +531,6 @@ address	name	size	file	score
 0X1FAC30	AddSoAcceleration	104	new_1f88d8/AddSoAcceleration.c	20
 0X1FAC98	AddSoAngularAcceleration	104	new_1f88d8/AddSoAngularAcceleration.c	20
 0X1FAD00	AdjustSoXpVelocity	208	new_1f88d8/AdjustSoXpVelocity.c	50
-0X1FB0C0	func_001FB0C0	312	sound/fun_001fb0c0.cpp	6
 0X1FB3F0	SetAmbPos	256	sound/SetAmbPos.cpp	3
 0X1FB778	CalculateVolPan	360	sound/CalculateVolPan.c	77
 0X1FB8E0	UpdateAmb	536	sound/UpdateAmb.cpp	32
@@ -573,7 +562,6 @@ address	name	size	file	score
 0X207030	SetGuardMode	600	step-rwm/SetGuardMode.cpp	80
 0X207690	RenderStepguardSelf	784	step-rwm/RenderStepguardSelf.cpp	132
 0X2082D0	func_002082D0	616	step-rwm/fun_002082d0.c	129
-0X2085D0	AddGuardSensedObject	304	step-rwm/AddGuardSensedObject.cpp	5
 0X209618	func_00209618	336	step-rwm/fun_00209618.c	73
 0X209C88	func_00209C88	416	step-rwm/fun_00209c88.cpp	48
 0X20A168	NCompareHitfxForGuard	304	step-rwm/NCompareHitfxForGuard.c	43
@@ -596,7 +584,6 @@ address	name	size	file	score
 0X2149D8	LoadMovieCharacter	3048	screen-font/LoadMovieCharacter.cpp	206
 0X215F40	CMovieText_ClineWrap	408	font-break/CMovieText_ClineWrap.cpp	70
 0X2160D8	CMovieText_UpdateFont	240	font-break/CMovieText_UpdateFont.cpp	47
-0X2163B0	CMovieText_Draw	768	font-break/CMovieText_Draw.cpp	10
 0X216750	CMovieText_DrawGlyphs	1008	font-break/CMovieText_DrawGlyphs.cpp	2
 0X217058	EmitGlyphDma	576	font-break/EmitGlyphDma.cpp	49
 0X2174C8	DrawMovieShapeCharacter	792	font-break/DrawMovieShapeCharacter.cpp	123
@@ -652,7 +639,7 @@ address	name	size	file	score
 0X2314D0	GetXfmAngularVelocity	128	lo-sdk/GetXfmAngularVelocity.c	31
 0X2319E8	snd_StartSoundSystem	608	sdk/snd_StartSoundSystem.cpp	150
 0X231E90	snd_GotReturns__Fv	168	sdk/snd_GotReturns__Fv.cpp	0
-0X231FB0	snd_BankLoadByLoc	440	sdk/snd_BankLoadByLoc.cpp	12
+0X231FB0	snd_BankLoadByLoc	440	sdk/snd_BankLoadByLoc.cpp	1
 0X232380	func_00232380	40	sdk/fun_00232380.cpp	9
 0X2324C8	func_002324C8	56	sdk/fun_002324c8.cpp	13
 0X2325A8	func_002325A8	56	sdk/fun_002325a8.cpp	13
@@ -773,7 +760,6 @@ address	name	size	file	score
 0X256D28	__ml__FG8VU_FLOATG9VU_VECTOR	24	splice-bif_256ce8/__ml__FG8VU_FLOATG9VU_VECTOR.c	4
 0X257510	SweepFrames	360	bis-memcard/SweepFrames.cpp	63
 0X257678	SweepVarbs	360	bis-memcard/SweepVarbs.cpp	32
-0X2577E0	SweepPairs	360	bis-memcard/SweepPairs.cpp	6
 0X257948	SweepProcs	360	bis-memcard/SweepProcs.cpp	32
 0X257AB0	SweepSidebags	360	bis-memcard/SweepSidebags.cpp	63
 0X257C18	func_00257C18	360	bis-memcard/fun_00257c18.cpp	32

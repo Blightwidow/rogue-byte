@@ -5,6 +5,7 @@
 #include "sly2.h"
 #include "types.h"
 #include "include_asm.h"
+#include "vu0inline.h"
 
 extern "C" {
 void func_0014D470(void) {
@@ -398,7 +399,41 @@ extern "C" VECTOR *CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR(VECTOR *result, CPDEF
 
 INCLUDE_ASM(0X14E6D0);
 
-INCLUDE_ASM(0X14E768);
+struct CPDEFI;
+
+extern "C" QW CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR_14E768(CM *, CPDEFI *);
+
+extern "C" int FIsBasicDerivedFrom(SO *, int);
+
+extern "C" void SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(CM *, char *, char *, QW, float, float);
+
+extern "C" QW g_2a2dd0;
+
+extern "C" void AdjustCmCpdefi__FP2CMP2SOfP6CPDEFI(CM *cm, SO *so, float, CPDEFI *cpdefi)
+{
+    char *base = (char *)cm;
+    QW adjust = CalcCmAdjust__FP2CMP2SOP6CPDEFIP6VECTOR_14E768(cm, cpdefi);
+    if (FIsBasicDerivedFrom(so, 0x34)) {
+        int mode = *(int *)((char *)so + 0x4F4);
+        switch (mode) {
+        case 0:
+            SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2C0, base + 0x2D0, adjust, 5.0f, -3.5f);
+            SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2E0, base + 0x2F0, g_2a2dd0, 5.0f, -3.5f);
+            break;
+        case 1:
+            SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2C0, base + 0x2D0, adjust, 1.0f, -10.0f);
+            SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2E0, base + 0x2F0, *(QW *)(base + 0x2E0), 0.0f, -10.0f);
+            break;
+        case 2:
+            SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2C0, base + 0x2D0, adjust, 5.0f, -3.5f);
+            break;
+        }
+    } else {
+        SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2C0, base + 0x2D0, adjust, 5.0f, -3.5f);
+        SpringCm__FfffP2CMP6VECTORP6VECTORP6VECTOR_14E768(cm, base + 0x2E0, base + 0x2F0, g_2a2dd0, 5.0f, -3.5f);
+    }
+    *(QW *)((char *)cpdefi + 0x40) = VectorAdd(*(QW *)((char *)cpdefi + 0x10), *(QW *)(base + 0x2C0));
+}
 
 struct CM_14E920 {
     char pad_0x0[0x10];
