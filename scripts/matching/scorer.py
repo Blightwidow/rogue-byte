@@ -151,7 +151,8 @@ def score_of(output):
 def cache_key(text, lang):
     """The key of a judged source: the toolchain, the language, the assembler an override asks for (TRY_ASSEMBLER: a Sony-toolchain score must not
     answer for the default build) and the text."""
-    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode()).hexdigest()[:20]
+    vu0 = compile_unit.includes_vu0_helpers(text)  # judged with the flag: a result cached before this rule (a compile error) must not be reused
+    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if vu0 else b'')).hexdigest()[:20]
 
 
 def judge(address, text, lang='c++'):

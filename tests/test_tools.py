@@ -1238,6 +1238,11 @@ class BlockerTests(unittest.TestCase):
         lines = self.lines(['pextuw     $v1, $zero, $v0'] + ['lw         $v0, 0x0($a0)'] * 40 + ['jr         $ra', 'nop'])
         self.assertFalse(classify_blockers.is_inline(lines, classify_blockers.mnemonics_of(lines)))
 
+    def test_a_source_that_includes_the_vu0_helpers_is_compiled_with_the_vu0_flag(self):
+        import compile_unit
+        self.assertTrue(compile_unit.includes_vu0_helpers('#include "types.h"\n#include "vu0inline.h"\n'))
+        self.assertFalse(compile_unit.includes_vu0_helpers('#include "types.h"\n#include "ps2inline.h"\n'))
+
     def test_guard_flags_a_matched_function_with_a_listed_instruction_and_no_helper_header(self):
         functions = [('Plain', 'a.cpp', ['lw', 'pextuw'], '#include "types.h"')]
         self.assertEqual(classify_blockers.unhelped_specials(functions), [('Plain', 'a.cpp', 'mmi')])

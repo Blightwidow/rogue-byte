@@ -158,6 +158,15 @@ Findings:
   `vmax`/`vmini` clamps. `vcallms` + `vmove` (RenderGlobsetTree) is not a helper candidate: the microprogram reads fixed VU registers
   (vf10-vf17), which needs register pins.
 
+## The VU0 flag follows the include (2026-11-13)
+
+`compile_unit.compile_object` compiles any source that includes `vu0inline.h` with `-mvu0-use-vf0-15`, because its helpers' `"j"` operands
+are rejected without it ("Invalid `asm' statement"). So `claim.py verify`, `adopt.py`, `record.py` and `try.py` judge a helper user right
+without `TRY_VU0=1` and without a `config/us/vu0_regs.txt` line: before, `claim.py verify` reported `MISMATCH ... fresh None` for every VU0
+source (wave I11S and I11O), and `record.py` judged a function in a whole file as "0 new matches" until both the function and the file's
+start were listed. Measured: `SetJtPipeState` scores 0 in `try.py` with both lines removed. A judged result cached before the rule (a compile
+error) is not reused: the cache key carries the flag. The existing lines stay; the whole-file build path was not re-tested without them.
+
 ## Open questions
 
 - ~~Which cutoff: 5% (sly1's top) or 10%?~~ Decided 2026-11-12: 10% (below). 20% waits for a second pilot.

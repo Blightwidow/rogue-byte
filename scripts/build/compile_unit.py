@@ -125,6 +125,12 @@ def vu0_for(address):
     return os.environ.get('TRY_VU0') == '1' or address in vu0_functions()
 
 
+def includes_vu0_helpers(text):
+    """True when a source includes include/vu0inline.h. Its helpers take `"j"` operands, which GCC rejects ("Invalid `asm' statement") without
+    VU0_FLAG, so such a source is always compiled with the flag: claim.py verify, adopt.py and record.py judge it right without TRY_VU0=1."""
+    return 'vu0inline.h' in text
+
+
 MOVE_FLAG = '-fmove-all-movables'  # loop.c treats every loop-invariant movable as worth hoisting, not only the ones it judges profitable
 
 
@@ -191,6 +197,9 @@ def compile_object(language, source, output, assembler=None, include=None, local
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
     if assembler == 'sony29':
         return compile_sony(language, source, output, include, localize)
+    if not vu0:
+        with open(source, encoding='utf-8', errors='replace') as handle:
+            vu0 = includes_vu0_helpers(handle.read())
     directory = compiler_directory()
     version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
     common = [WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
