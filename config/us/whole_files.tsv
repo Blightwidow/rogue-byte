@@ -41,6 +41,7 @@ start	end	file
 0x131F70	0x1320C8	asega-bas/asega_bas_131f70.c
 0x1320C8	0x132570	asega-bas/InitBarrier_file.cpp
 0x132570	0x132B00	bas/__18CBinaryAsyncStreamPv_file.cpp
+0x132B00	0x1336F0	lo/OnLoAdd_file.cpp
 0x1336F0	0x1344F0	sensor-bbmark/PoxaAllocSw_file.cpp
 0x1344F0	0x134648	bbmark-blend/StaticInitBentley_file.c
 0x1374F0	0x1378D8	bbmark-blend/bbmark_blend_1374f0.c
@@ -138,6 +139,7 @@ start	end	file
 0x1C4BD8	0x1C4E50	new_1c3df8/new_1c3df8_1c4bd8.cpp
 0x1C8918	0x1C8CC0	new_1c76d0/new_1c76d0_1c8918.cpp
 0x1C93E0	0x1C9940	new_1c90d0/DrawLoadingLogo_file.cpp
+0x1C9940	0x1CB908	new_1c90d0/MakeCloneId_file.cpp
 0x1CB9B0	0x1CBEB0	new_1c90d0/Pipe_AddLoGrfEntry_file.cpp
 0x1CBEB0	0x1CC158	new_1c90d0/new_1c90d0_1cbeb0.cpp
 0x1CD098	0x1CD5F0	new_1c90d0/Carry_Attach_file.cpp

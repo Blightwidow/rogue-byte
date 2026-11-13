@@ -41,7 +41,7 @@ separate "100%"s:
 - **Exact C of all code, 57.8%** (matched bytes over code with the blockers back in): the 765 permanent blockers stay original assembly, so exact C
   tops out near 83% of code.
 - **PAL, 67.20%** against US 69.63%: 99 functions (5,416 against 5,515) do not reproduce PAL from the same C. Close it with `make pal` after each land.
-- **Whole files:** 195 of 209 proved (1,723 functions, 2026-11-11; item 2).
+- **Whole files:** 197 of 209 proved (1,821 functions, 2026-11-13; item 2).
 
 - **Source form:** the matched C reproduces retail's bytes but not yet the original's shape. Measured 2026-11-09, not repeated since the shared
   classes landed: `include/sly2.h` is 12 lines; 1,696 files size their structs with padding; 401 struct names have different bodies in different
@@ -157,6 +157,13 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
      0xE4, `sm_so_1f1900` 0x230, `AppendPloarray` 0x64), a pointer typed `int` in the source (`PloNew`: `psoParent` is 0x10), slot signatures to learn
      (`ReleaseRip` calls slot 5 with an id and a pointer; `fun_001C6CE8` calls 76, beyond `LO`'s slots), a local `ALO` (`CloneAloHierarchy`) and sources
      I did not open (`UpdateMatch`, `PostLoMessage`, `Subscribe`/`UnsubscribeLoObject`, `fun_00204F78`, `unsorted_194F48`, `ReleaseMurrayObject`).
+   - `CLONESET` and `TIMEDCALL` (2026-11-13): `include/cloneset.h` (0x6C bytes, the world's clone-set table, both readers agree) and
+     `include/timedcall.h` (`TIMEDCALL`, 0x14 bytes, with the Splice `CPair` it keeps). `InitCloneSets`, `InstantiateClone`, `AddSwTimedCall`
+     and `CancelSwTimedCall` moved, each scoring 0. That unblocked two whole files, `lo/OnLoAdd_file.cpp` (28 functions) and
+     `new_1c90d0/MakeCloneId_file.cpp` (33): `make elf` PASS, `make unit` links both whole. 197 of 209 files are whole now. `CPair` itself has 27
+     local copies left (the merged `OnLoAdd_file.cpp` keeps three renamed); `RefOpScheduleCallback` has its own `CRef`, so it keeps its `TIMEDCALL`.
+     `NODE` is not a class: 20 sources reuse the name for unrelated list nodes, so no header; it only matters where two sources of one
+     file clash, and the merger renames those. `TAGK`, the other name on the 2026-11-11 list, is `cref.h`'s enum; nothing to share.
    - `SW` (2026-11-10): `include/sw.h`, the world, class 1 of the class table (0x4790 bytes, derived from the root class; Sly 1's
      derives from `LO`, Sly 2's does not). The game keeps one, a static global at 0x3DD490 that 440 matched files reach, and the
      `*Sw*` functions take its address, so a field there needs one reader. 61 fields from 0x150 to 0x4774: the job and task
@@ -255,7 +262,7 @@ matched bytes or what counts as matched ([PRESERVATION_AND_PORT.md](PRESERVATION
    functions, reports unchanged. 206 more rewritten sources (m2c leftovers, C that did not compile as C++ in one unit) then
    brought it to 195 whole files, 1723 matched functions. Left: 5 files whose sources declare one callee or global with
    different types (gs, jump, po-screen, `PloFindSpawn`, so-wr: `InitMeter`, `CploFindSwObjectsByClass`, `UNoise`, ...),
-   4 where two sources define one class differently (`TIMEDCALL`, `CLONESET`, `NODE`, `TAGK`: needs shared types), 2 that
+   (2026-11-13: the `TIMEDCALL` and `CLONESET` files are whole now; the 4 left in this group were `NODE` and `TAGK` and are not blocked by types) 2 that
    compile with a different size (0x149A50, 0x14CC4C), 1 waiting on 0x153128 (score 0 typed only through a steering
    local), 2 with per-function flags.
 3. Data from C (code passed 80% on 2026-11-08, so this is open), by sly1-decomp's rule, ruled 2026-11-08 ([contributing/exceptions.md](contributing/exceptions.md) "Game data

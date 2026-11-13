@@ -1385,34 +1385,34 @@ address	name	size	file	whole_file	symbol
 0X132998	Skip__18CBinaryAsyncStreami	16	bas/__18CBinaryAsyncStreamPv_file.cpp	bas/__18CBinaryAsyncStreamPv_file.cpp	Skip__18CBinaryAsyncStreami
 0X1329A8	StaticInitSlotheaps_1329a8	308	bas/__18CBinaryAsyncStreamPv_file.cpp	bas/__18CBinaryAsyncStreamPv_file.cpp	StaticInitSlotheaps_1329a8
 0X132AE0	StaticInitSlotheaps_1329a8_thunk	32	bas/__18CBinaryAsyncStreamPv_file.cpp	bas/__18CBinaryAsyncStreamPv_file.cpp	StaticInitSlotheaps_1329a8_thunk
-0X132B00	OnLoAdd__FP2LO	8	lo/OnLoAdd__FP2LO.c		
-0X132B08	func_00132B08	8	new_132b08/fun_00132b08.c		
-0X132B10	FIsBasicDerivedFrom	100	new_132b08/FIsBasicDerivedFrom.cpp		
-0X132B78	func_00132B78	80	new_132b08/fun_00132b78.cpp		
-0X132BC8	EnsureOptionBool	88	new_132b08/EnsureOptionBool.cpp		
-0X132C20	EnsureOptionInt	88	new_132b08/EnsureOptionInt.cpp		
-0X132C78	EnsureOptionFloat	80	new_132b08/EnsureOptionFloat.cpp		
-0X132CC8	EnsureOptionClq	96	new_132b08/EnsureOptionClq.cpp		
-0X132D28	EnsureOptionLm	96	new_132b08/EnsureOptionLm.cpp		
-0X132D88	EnsureOptionInt_132d88	88	new_132b08/EnsureOptionInt_132d88.cpp		
-0X132DE0	EnsureOptionVector	96	new_132b08/EnsureOptionVector.cpp		
-0X132E40	func_00132E40	96	new_132b08/fun_00132e40.cpp		
-0X132EA0	CidGetBasic	44	new_132b08/CidGetBasic.c		
-0X132ED0	func_00132ED0	8	unsorted/fun_00132ed0.c		
-0X132ED8	BuildScriptCall	292	new_132b08/BuildScriptCall.cpp		
-0X133000	EvalScriptCall	64	new_132b08/EvalScriptCall.cpp		
-0X133040	AddSwTimedCall	240	new_132b08/AddSwTimedCall.cpp		
-0X133130	CancelSwTimedCall	196	new_132b08/CancelSwTimedCall.cpp		
-0X1331F8	PostScriptMessage	324	new_132b08/PostScriptMessage.cpp		
-0X133340	EnableLasen__FP5LASEN5SENSM	60	sensor/EnableLasen__FP5LASEN5SENSM.cpp		
-0X133380	func_00133380	60	sensor-bbmark/fun_00133380.cpp		
-0X1333C0	SubscribeLoObject	132	sensor-bbmark/SubscribeLoObject.cpp		
-0X133448	UnsubscribeLoObject	92	sensor-bbmark/UnsubscribeLoObject.cpp		
-0X1334A8	Basic_FreeSubscribers	92	sensor-bbmark/Basic_FreeSubscribers.cpp		
-0X133508	PostLoMessage	136	sensor-bbmark/PostLoMessage.cpp		
-0X133590	HandleLoMessage	8	sensor-bbmark/HandleLoMessage.c		
-0X133598	StaticInitBasic	308	sensor-bbmark/StaticInitBasic.c		
-0X1336D0	GlobalCtorBasic	32	sensor-bbmark/GlobalCtorBasic.c		
+0X132B00	OnLoAdd__FP2LO	8	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	OnLoAdd__FP2LO
+0X132B08	func_00132B08	8	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	func_00132B08
+0X132B10	FIsBasicDerivedFrom	100	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	FIsBasicDerivedFrom
+0X132B78	func_00132B78	80	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	func_00132B78
+0X132BC8	EnsureOptionBool	88	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionBool
+0X132C20	EnsureOptionInt	88	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionInt
+0X132C78	EnsureOptionFloat	80	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionFloat
+0X132CC8	EnsureOptionClq	96	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionClq
+0X132D28	EnsureOptionLm	96	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionLm
+0X132D88	EnsureOptionInt_132d88	88	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionInt_132d88
+0X132DE0	EnsureOptionVector	96	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnsureOptionVector
+0X132E40	func_00132E40	96	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	func_00132E40
+0X132EA0	CidGetBasic	44	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	CidGetBasic
+0X132ED0	func_00132ED0	8	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	func_00132ED0
+0X132ED8	BuildScriptCall	292	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	BuildScriptCall
+0X133000	EvalScriptCall	64	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EvalScriptCall
+0X133040	AddSwTimedCall	240	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	AddSwTimedCall
+0X133130	CancelSwTimedCall	196	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	CancelSwTimedCall
+0X1331F8	PostScriptMessage	324	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	PostScriptMessage
+0X133340	EnableLasen__FP5LASEN5SENSM	60	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	EnableLasen__FP5LASEN5SENSM
+0X133380	func_00133380	60	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	func_00133380
+0X1333C0	SubscribeLoObject	132	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	SubscribeLoObject
+0X133448	UnsubscribeLoObject	92	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	UnsubscribeLoObject
+0X1334A8	Basic_FreeSubscribers	92	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	Basic_FreeSubscribers
+0X133508	PostLoMessage	136	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	PostLoMessage
+0X133590	HandleLoMessage	8	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	HandleLoMessage
+0X133598	StaticInitBasic	308	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	StaticInitBasic
+0X1336D0	GlobalCtorBasic	32	lo/OnLoAdd_file.cpp	lo/OnLoAdd_file.cpp	GlobalCtorBasic
 0X1336F0	PoxaAllocSw	224	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	PoxaAllocSw
 0X133C68	AllocSwOx	76	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	AllocSwOx
 0X133CB8	PoxExtractFromPoxa	80	sensor-bbmark/PoxaAllocSw_file.cpp	sensor-bbmark/PoxaAllocSw_file.cpp	PoxExtractFromPoxa
@@ -3418,39 +3418,39 @@ address	name	size	file	whole_file	symbol
 0X1C9190	LoadingLogoThread	588	new_1c90d0/LoadingLogoThread.cpp		
 0X1C93E0	DrawLoadingLogo	676	new_1c90d0/DrawLoadingLogo_file.cpp	new_1c90d0/DrawLoadingLogo_file.cpp	DrawLoadingLogo
 0X1C9920	StaticInitLoadingLogo_thunk	32	new_1c90d0/DrawLoadingLogo_file.cpp	new_1c90d0/DrawLoadingLogo_file.cpp	StaticInitLoadingLogo_thunk
-0X1C9940	MakeCloneId	16	new_1c90d0/MakeCloneId.c		
-0X1C9950	IsetFromCloneId	8	new_1c90d0/IsetFromCloneId.c		
-0X1C9958	IcloneFromCloneId	12	new_1c90d0/IcloneFromCloneId.c		
-0X1C9968	OidFromCloneId	108	new_1c90d0/OidFromCloneId.cpp		
-0X1C99D8	PcnodeFindOrAddClonePath	300	new_1c90d0/PcnodeFindOrAddClonePath.cpp		
-0X1CA308	ALO_SetCloneId	104	new_1c90d0/ALO_SetCloneId.cpp		
-0X1CA370	InstantiateClone	396	new_1c90d0/InstantiateClone.cpp		
-0X1CA500	InitCloneSets	648	new_1c90d0/InitCloneSets.cpp		
-0X1CA788	func_001CA788	48	new_1c90d0/fun_001ca788.c		
-0X1CA7B8	func_001CA7B8	260	new_1c90d0/fun_001ca7b8.cpp		
-0X1CA8C0	ClonePool_AcquireLeaseCallback	28	new_1c90d0/ClonePool_AcquireLeaseCallback.c		
-0X1CA8E0	ClonePool_AddLoGrfEntry	80	new_1c90d0/ClonePool_AddLoGrfEntry.cpp		
-0X1CA930	IcloneFromLease	40	new_1c90d0/IcloneFromLease.c		
-0X1CA958	PleaseFromIclone	32	new_1c90d0/PleaseFromIclone.c		
-0X1CA978	NGradeLease	228	new_1c90d0/NGradeLease.cpp		
-0X1CADE0	PleaseFindBest	228	new_1c90d0/PleaseFindBest.cpp		
-0X1CB250	PloLeaseCloneObject	112	new_1c90d0/PloLeaseCloneObject.cpp		
-0X1CB2C0	FCanLease	32	new_1c90d0/FCanLease.cpp		
-0X1CB2E0	PloLeased	72	new_1c90d0/PloLeased.cpp		
-0X1CB328	EnsureLeasedObject	56	new_1c90d0/EnsureLeasedObject.c		
-0X1CB360	func_001CB360	172	new_1c90d0/fun_001cb360.cpp		
-0X1CB410	PleaseFromPlo	120	new_1c90d0/PleaseFromPlo.cpp		
-0X1CB488	LockLeaseOfPlo	44	new_1c90d0/LockLeaseOfPlo.cpp		
-0X1CB4B8	UnlockLeaseOfPlo	36	new_1c90d0/UnlockLeaseOfPlo.cpp		
-0X1CB4E0	func_001CB4E0	56	new_1c90d0/fun_001cb4e0.cpp		
-0X1CB518	func_001CB518	172	new_1c90d0/fun_001cb518.cpp		
-0X1CB5C8	func_001CB5C8	8	new_1c90d0/fun_001cb5c8.c		
-0X1CB5D0	func_001CB5D0	132	new_1c90d0/fun_001cb5d0.cpp		
-0X1CB658	PpoolFromLoClone	128	new_1c90d0/PpoolFromLoClone.cpp		
-0X1CB6D8	ClonePool_RemoveLoGrfEntry	152	new_1c90d0/ClonePool_RemoveLoGrfEntry.cpp		
-0X1CB770	func_001CB770	64	new_1c90d0/fun_001cb770.cpp		
-0X1CB7B0	func_001CB7B0	308	new_1c90d0/fun_001cb7b0.c		
-0X1CB8E8	StaticInitCloneFile_thunk	32	new_1c90d0/StaticInitCloneFile_thunk.c		
+0X1C9940	MakeCloneId	16	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	MakeCloneId
+0X1C9950	IsetFromCloneId	8	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	IsetFromCloneId
+0X1C9958	IcloneFromCloneId	12	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	IcloneFromCloneId
+0X1C9968	OidFromCloneId	108	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	OidFromCloneId
+0X1C99D8	PcnodeFindOrAddClonePath	300	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PcnodeFindOrAddClonePath
+0X1CA308	ALO_SetCloneId	104	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	ALO_SetCloneId
+0X1CA370	InstantiateClone	396	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	InstantiateClone
+0X1CA500	InitCloneSets	648	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	InitCloneSets
+0X1CA788	func_001CA788	48	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CA788
+0X1CA7B8	func_001CA7B8	260	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CA7B8
+0X1CA8C0	ClonePool_AcquireLeaseCallback	28	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	ClonePool_AcquireLeaseCallback
+0X1CA8E0	ClonePool_AddLoGrfEntry	80	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	ClonePool_AddLoGrfEntry
+0X1CA930	IcloneFromLease	40	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	IcloneFromLease
+0X1CA958	PleaseFromIclone	32	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PleaseFromIclone
+0X1CA978	NGradeLease	228	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	NGradeLease
+0X1CADE0	PleaseFindBest	228	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PleaseFindBest
+0X1CB250	PloLeaseCloneObject	112	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PloLeaseCloneObject
+0X1CB2C0	FCanLease	32	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	FCanLease
+0X1CB2E0	PloLeased	72	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PloLeased
+0X1CB328	EnsureLeasedObject	56	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	EnsureLeasedObject
+0X1CB360	func_001CB360	172	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB360
+0X1CB410	PleaseFromPlo	120	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PleaseFromPlo
+0X1CB488	LockLeaseOfPlo	44	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	LockLeaseOfPlo
+0X1CB4B8	UnlockLeaseOfPlo	36	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	UnlockLeaseOfPlo
+0X1CB4E0	func_001CB4E0	56	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB4E0
+0X1CB518	func_001CB518	172	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB518
+0X1CB5C8	func_001CB5C8	8	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB5C8
+0X1CB5D0	func_001CB5D0	132	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB5D0
+0X1CB658	PpoolFromLoClone	128	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	PpoolFromLoClone
+0X1CB6D8	ClonePool_RemoveLoGrfEntry	152	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	ClonePool_RemoveLoGrfEntry
+0X1CB770	func_001CB770	64	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB770
+0X1CB7B0	func_001CB7B0	308	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	func_001CB7B0
+0X1CB8E8	StaticInitCloneFile_thunk	32	new_1c90d0/MakeCloneId_file.cpp	new_1c90d0/MakeCloneId_file.cpp	StaticInitCloneFile_thunk
 0X1CB908	func_001CB908	68	new_1c90d0/fun_001cb908.cpp		
 0X1CB950	Pipe_PostLoLoad	96	new_1c90d0/Pipe_PostLoLoad.cpp		
 0X1CB9B0	Pipe_AddLoGrfEntry	52	new_1c90d0/Pipe_AddLoGrfEntry_file.cpp	new_1c90d0/Pipe_AddLoGrfEntry_file.cpp	Pipe_AddLoGrfEntry
