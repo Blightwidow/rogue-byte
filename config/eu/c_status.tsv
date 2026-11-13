@@ -3286,6 +3286,7 @@ us_address	name	other_address	pair	score	addresses
 0x1C1260	BuildPzgraphAdjacency	0X1C14C8	same	0	ok
 0x1C1440	ResetPathzoneQuery	0X1C16A8	same	0	ok
 0x1C15F8	SweepPathzoneAxis	0X1C1860	same	0	ok
+0x1C1700	CobstacleFindPathzoneBox	0X1C1968	same	0	ok
 0x1C18B8	RemovePathzoneEndpoints	0X1C1B20	same	0	ok
 0x1C1968	RemovePathzoneObstacle	0X1C1BD0	same	0	ok
 0x1C1BA0	AddPathzoneObstacle	0X1C1E08	same	0	ok

@@ -244,6 +244,11 @@ trick out, or change it, and read the score. They separate a score of 2 from 0 o
   `func_001C84D8` (+7), `CarryThrow_SetState` (+13) and one `vsub` of `PsenseFindNotice` (+2) worse: retail writes a `vsub` in place
   (`vsub d,d,s`) more often than into a third register, which the early clobber rules out.
 
+- **A shift that retail issues after the index arithmetic: `1 << (index % 32)`.** A bare `1 << islot` is ready at cycle 1 of its block, so the
+  dual-issue scheduler pairs it with the earlier `movn` and puts the `sllv` ahead of the `sra` that computes the word index. Written with
+  `% 32` the shift is ready only at the `sra`'s cycle, GCC still emits a plain `sllv`, and the `sra` goes first (`CobstacleFindPathzoneBox`
+  2 to 0 with `QuadAnd`; `RemoveLightFromSw` has the same form). `1 << (islot & 31)` adds an `andi`; `1U << islot` turns the test into `srl`.
+
 Other fixes that held in wave I11S: a QW local still needed after the vector op; locals declared in retail's stack order; a typed
 local struct for a global field instead of `char[]` plus a cast offset; `index = 0` inside the branch and the second loop as
 `if (n) do { } while`. Not yet explained: a quad retail loads with `lq` into a general register and moves with `qmtc2.ni` (three near
