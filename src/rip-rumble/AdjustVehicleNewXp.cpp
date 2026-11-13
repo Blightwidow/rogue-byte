@@ -1,10 +1,8 @@
 #include "sly2.h"
+#include "so.h"
 #include "ps2inline.h"
 #include "vu0inline.h"
 
-struct SO {
-    char pad[1];
-};
 struct XPR {
     char pad0[8];
     void *plo;
