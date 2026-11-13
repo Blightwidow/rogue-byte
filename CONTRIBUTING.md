@@ -34,6 +34,7 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
   number, path, command, decision and link.
 - Every recovered name keeps its source visible. Measure a new heuristic against a control before trusting it.
 - Tips: [docs/contributing/decompilation-tips.md](docs/contributing/decompilation-tips.md).
+- Names for files, functions and modules: [docs/contributing/naming.md](docs/contributing/naming.md).
 
 ## Commits
 
