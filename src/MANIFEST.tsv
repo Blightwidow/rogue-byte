@@ -2058,6 +2058,7 @@ address	name	size	file	whole_file	symbol
 0X15E3C0	func_0015E3C0	36	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	func_0015E3C0
 0X15E3E8	MatchSwObject	616	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	MatchSwObject
 0X15E650	CploFindSwObjects_thunk	36	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	CploFindSwObjects_thunk
+0X15E678	CploFindSwObjects	700	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	CploFindSwObjects
 0X15E938	PloFindSwObject_thunk	28	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PloFindSwObject_thunk
 0X15E958	PloFindSwObject	48	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	PloFindSwObject
 0X15E988	FIsCidDerivedFrom	64	emitter-font/PdlFromSwOid_file.cpp	emitter-font/PdlFromSwOid_file.cpp	FIsCidDerivedFrom
@@ -5018,6 +5019,7 @@ address	name	size	file	whole_file	symbol
 0X231C48	snd_FlushSoundCommands	556	sdk/snd_FlushSoundCommands.cpp		
 0X231E90	snd_GotReturns__Fv	168	sdk/snd_GotReturns__Fv.cpp		
 0X231F38	func_00231F38	100	sdk/fun_00231f38.cpp		
+0X231FB0	snd_BankLoadByLoc	440	sdk/snd_BankLoadByLoc.cpp		
 0X232188	snd_ResolveBankXREFS	44	sdk/snd_ResolveBankXREFS.cpp		
 0X2321B8	snd_UnloadBank	48	sdk/snd_UnloadBank.cpp		
 0X2321E8	snd_SetMasterVolume	52	sdk/snd_SetMasterVolume.cpp		

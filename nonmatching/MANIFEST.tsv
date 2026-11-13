@@ -176,7 +176,6 @@ address	name	size	file	score
 0X15BF40	SetEmitdvEmitb__FP6EMITDVP5EMITB	152	emitter_1591b0/SetEmitdvEmitb__FP6EMITDVP5EMITB.c	30
 0X15BFD8	CalculateEmitdvMatrix	376	emitter_1591b0/CalculateEmitdvMatrix.cpp	60
 0X15CAD8	expl__static_initialization_and_destruction_0	624	emitter-font/expl__static_initialization_and_destruction_0.cpp	68
-0X15E678	CploFindSwObjects	704	emitter-font/CploFindSwObjects.cpp	0
 0X15E9C8	CploFindSwObjectsByClass	944	emitter-font/CploFindSwObjectsByClass.cpp	36
 0X15F9D0	ChNext__9CRichText	904	font_15f000/ChNext__9CRichText.cpp	86
 0X15FD68	ClineWrap__9CRichTextf	400	font_15f000/ClineWrap__9CRichTextf.cpp	4
@@ -636,7 +635,6 @@ address	name	size	file	score
 0X2314D0	GetXfmAngularVelocity	128	lo-sdk/GetXfmAngularVelocity.c	31
 0X2319E8	snd_StartSoundSystem	608	sdk/snd_StartSoundSystem.cpp	150
 0X231E90	snd_GotReturns__Fv	168	sdk/snd_GotReturns__Fv.cpp	0
-0X231FB0	snd_BankLoadByLoc	440	sdk/snd_BankLoadByLoc.cpp	1
 0X232380	func_00232380	40	sdk/fun_00232380.cpp	9
 0X2324C8	func_002324C8	56	sdk/fun_002324c8.cpp	13
 0X2325A8	func_002325A8	56	sdk/fun_002325a8.cpp	13

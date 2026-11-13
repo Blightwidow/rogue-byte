@@ -2058,6 +2058,7 @@ us_address	name	other_address	pair	score	addresses
 0x15E3C0	func_0015E3C0	0X15E3E8	identical	0	ok
 0x15E3E8	MatchSwObject	0X15E410	same	0	ok
 0x15E650	CploFindSwObjects_thunk	0X15E678	same	0	ok
+0x15E678	CploFindSwObjects	0X15E6A0	same	0	ok
 0x15E938	PloFindSwObject_thunk	0X15E960	same	0	ok
 0x15E958	PloFindSwObject	0X15E980	same	0	ok
 0x15E988	FIsCidDerivedFrom	0X15E9B0	same	0	ok
@@ -5018,6 +5019,7 @@ us_address	name	other_address	pair	score	addresses
 0x231C48	snd_FlushSoundCommands	0X232468	same	0	ok
 0x231E90	snd_GotReturns__Fv	0X2326D8	same	0	ok
 0x231F38	func_00231F38	0X232780	same	0	ok
+0x231FB0	snd_BankLoadByLoc	0X2327F8	same	0	ok
 0x232188	snd_ResolveBankXREFS	0X2329D0	same	0	ok
 0x2321B8	snd_UnloadBank	0X232A00	same	0	ok
 0x2321E8	snd_SetMasterVolume	0X232A30	same	0	ok
