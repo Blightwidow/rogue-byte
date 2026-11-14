@@ -5256,10 +5256,12 @@ us_address	name	other_address	pair	score	addresses
 0x245B58	PowF_245b58	0X2465A0	same	0	ok
 0x246060	sqrtf	0X246AA8	same	0	ok
 0x246300	__ieee754_pow	0X246D48	same	0	ok
+0x247330	__ieee754_acosf	0X247D78	same	0	ok
 0x2488C8	__ieee754_rem_pio2f	0X249310	same	0	ok
 0x248DE0	__kernel_cosf	0X249828	identical	0	ok
 0x248F38	__kernel_rem_pio2f	0X249980	same	0	ok
 0x249888	__kernel_sinf	0X24A2D0	identical	0	ok
+0x249990	__kernel_tanf	0X24A3D8	same	0	ok
 0x249C28	fabs	0X24A670	identical	0	ok
 0x249C60	func_00249C60	0X24A6A8	identical	0	ok
 0x249C80	func_00249C80	0X24A6C8	identical	0	ok

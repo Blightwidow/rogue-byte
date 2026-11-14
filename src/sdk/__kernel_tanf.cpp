@@ -4,7 +4,7 @@ typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i, d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d, i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
 float func_00244EF8(float); // fabsf, called out of line (the compiler inlines the fabsf name)
-extern const float RO_FLT_002AC0F8[13];
+extern const float D_002AC0F8[14];
 float __kernel_tanf(float x, float y, int iy) {
     float z, r, v, w, s, t, a;
     int ix, hx;
@@ -33,11 +33,11 @@ float __kernel_tanf(float x, float y, int iy) {
     }
     z = x * x;
     w = z * z;
-    r = RO_FLT_002AC0F8[1] + w * (RO_FLT_002AC0F8[3] + w * (RO_FLT_002AC0F8[5] + w * (RO_FLT_002AC0F8[7] + w * (RO_FLT_002AC0F8[9] + w * RO_FLT_002AC0F8[11]))));
-    v = z * (RO_FLT_002AC0F8[2] + w * (RO_FLT_002AC0F8[4] + w * (RO_FLT_002AC0F8[6] + w * (RO_FLT_002AC0F8[8] + w * (RO_FLT_002AC0F8[10] + w * RO_FLT_002AC0F8[12])))));
+    r = D_002AC0F8[1] + w * (D_002AC0F8[3] + w * (D_002AC0F8[5] + w * (D_002AC0F8[7] + w * (D_002AC0F8[9] + w * D_002AC0F8[11]))));
+    v = z * (D_002AC0F8[2] + w * (D_002AC0F8[4] + w * (D_002AC0F8[6] + w * (D_002AC0F8[8] + w * (D_002AC0F8[10] + w * D_002AC0F8[12])))));
     s = z * x;
     r = y + z * (s * (r + v) + y);
-    r += RO_FLT_002AC0F8[0] * s;
+    r += D_002AC0F8[0] * s;
     w = x + r;
     if (ix >= 0x3f2ca140) {
         v = (float)iy;

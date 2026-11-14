@@ -712,12 +712,10 @@ address	name	size	file	score
 0X245178	logf	328	sdk/logf.cpp	72
 0X246178	__ieee754_log10	392	sdk/__ieee754_log10.cpp	78
 0X247028	__ieee754_sqrt	776	sdk/__ieee754_sqrt.cpp	226
-0X247330	__ieee754_acosf	1072	sdk/__ieee754_acosf.cpp	173
 0X247760	__ieee754_asinf	928	sdk/__ieee754_asinf.cpp	66
 0X247B00	__ieee754_atan2f	744	sdk/__ieee754_atan2f.cpp	184
 0X247DE8	__ieee754_fmodf	592	sdk/__ieee754_fmodf.cpp	33
 0X248CA8	__ieee754_sqrtf	312	sdk/__ieee754_sqrtf.cpp	69
-0X249990	__kernel_tanf	664	sdk/__kernel_tanf.cpp	72
 0X249CE0	rint	512	sdk/rint.cpp	31
 0X24A248	__ieee754_log	1264	sdk/__ieee754_log.cpp	351
 0X24AE90	func_0024AE90	696	sdk/fun_0024ae90.cpp	134
