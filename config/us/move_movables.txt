@@ -1,5 +1,36 @@
 # Functions compiled with -fmove-all-movables (scripts/build/compile_unit.py MOVE_FLAG): one address per line, listed when the function reaches 0 with it
 # and not without (docs/contributing/exceptions.md). A function is its own source file in src/, so this is that file's flag set. Add a row with `make land`
-# only after `make elf` still reproduces the image.
+# only after `make elf` still reproduces the image. Below the matched rows: hints, drafts that score lower with the flag (scripts/matching/flag_sweep.py, 2026-11-14),
+# listed so every tool scores and builds them with it; a row stays a hint until its source matches, and goes if a better wording needs no flag.
 0x1BEB28
 0x20C0E8
+# hints (draft score without the flag > with it)
+0x12F2A8  # 59 > 6
+0x1300B8  # 20 > 19
+0x136118  # 73 > 49
+0x138BA0  # 88 > 59
+0x139DC0  # 188 > 186
+0x13FB40  # 30 > 26
+0x143410  # 78 > 63
+0x145DB0  # 139 > 137
+0x1462A8  # 139 > 137
+0x152C58  # 76 > 46
+0x16E438  # 4 > 2
+0x17D6C8  # 47 > 17
+0x180668  # 394 > 392
+0x1938C0  # 61 > 40
+0x1A93C8  # 459 > 445
+0x1BF3D8  # 277 > 276
+0x1C9B08  # 45 > 33
+0x1CAEC8  # 74 > 54
+0x1D2610  # 193 > 129
+0x1D2E18  # 304 > 300
+0x1D5808  # 881 > 879
+0x1DBEF0  # 127 > 126
+0x1DF3D0  # 72 > 71
+0x1E57A0  # 184 > 174
+0x1E9858  # 134 > 132
+0x1EFAC0  # 88 > 39
+0x1F6068  # 219 > 135
+0x20F7E0  # 27 > 6
+0x215F40  # 70 > 69
