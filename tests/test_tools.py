@@ -450,6 +450,34 @@ class MakeWholeFilesTests(unittest.TestCase):
     def test_only_the_sony_list_picks_another_assembler(self):
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))
 
+    def test_sony_01_list_picks_its_own_compiler(self):
+        listed = compile_unit.sony_01_functions()
+        self.assertTrue(listed)
+        for address in listed:
+            self.assertEqual(compile_unit.assembler_for(address), 'sony29-01')
+
+    def test_a_function_is_never_on_both_sony_lists(self):
+        self.assertFalse(compile_unit.sony_01_functions() & compile_unit.sony_functions())
+
+    def test_sony_01_without_a_runner_says_what_is_missing(self):
+        original = compile_unit.linux_runner
+        compile_unit.linux_runner = lambda: None
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                source = os.path.join(directory, 'f.cpp')
+                with open(source, 'w') as handle:
+                    handle.write('int f() { return 1; }\n')
+                ok, message = compile_unit.compile_object('c++', source, os.path.join(directory, 'f.o'), assembler='sony29-01')
+        finally:
+            compile_unit.linux_runner = original
+        self.assertFalse(ok)
+        self.assertRegex(message, r'EE_LINUX_RUNNER|not installed')
+
+    def test_a_docker_runner_is_recognised_and_an_override_is_not(self):
+        self.assertTrue(compile_unit.runner_is_docker(['/usr/bin/docker', 'run', '--rm']))
+        self.assertFalse(compile_unit.runner_is_docker([]))
+        self.assertFalse(compile_unit.runner_is_docker(['qemu-i386']))
+
     def test_sony_list_wins_over_every_other_list(self):
         listed = compile_unit.sony_functions()
         self.assertTrue(all(isinstance(address, int) for address in listed))

@@ -359,27 +359,27 @@ Wave A1 attempted every function still untouched on `main` (184, 146 of them in 
 that came back from more than one function. Evidence: `work/matching/waves/A1*/`, `work/matching/followup/` (local), commits `12ce952a`
 to `f5413b76`.
 
-### `nop; nop` before `div.s`: a compiler option 2.9 does not have
+### `nop; nop` before `div.s`: Sony's 2.9-ee-991111-01 writes it (corrected 2026-11-14)
 
 - **Retail:** in the SDK range, all 27 `div.s` have exactly two `nop`s before them, and none sits in a delay slot. They are in eight libm
   functions: atanf, `__ieee754_acosf`, `__ieee754_asinf`, `__ieee754_atan2f`, `__ieee754_fmodf`, `__ieee754_powf`, `__ieee754_sqrtf`,
-  `__kernel_tanf`. None is matched. The matched libm functions (cosf, `__kernel_cosf`, `__kernel_rem_pio2f`, `__kernel_sinf`...) have
-  no `div.s`, so the rest of libm is ordinary 2.9-991111b code. Game code differs: of its 408 `div.s`, 331 have no `nop`, 45 one, 32 two.
-- **It is the compiler, not the assembler.** At 0x2473A0 retail has `sub.s; nop; nop; div.s; b; lwc1 $f22`, where our 2.9 build puts the
-  `div.s` in the delay slot of the `b`. Only the compiler decides what fills a delay slot, so retail's compiler treated `div.s` as three
-  words long.
-- **The option:** Sony's 2.96 and 3.2 `cc1` carry the template `%(nop\n\tnop\n\tdiv.s\t%0,%1,%2%)`, enabled by
-  `-mhandle-ee-div-pipeline-bug` ("Don't put divide insns in branch delay slot"). `ee-gcc2.96 -mhandle-ee-div-pipeline-bug -S` on the
-  acosf draft prints `nop; nop; div.s` at every site. But 2.96 scores acosf at 192 where 2.9 gives 22, so 2.96 is not libm's compiler.
-- **Ruled out:** 2.9-990721, 991111, 991111-01, 991111a, 991111b and dtls13010 have no such option and only the plain `div.s\t%0,%1,%2`
-  template; nor do SN's 2.95.x builds (2.95.3-136 included) or sly1-sn273a. `ps2eeas -Wdivbug-on` on Sony's `-S` output only warns
-  ("DIV related opcode used in branch delay slot") and pads near branches, not every `div.s` (acosf 24).
-- **Simulation, evidence only:** Sony 2.9 `-S`, `nop; nop` inserted before every `div.s` outside a delay slot, assembled with
-  `ee/bin/as.exe -G0`: acosf 22 to 9, asinf 59 to 50, `__kernel_tanf` 26 to 21, atanf 39 to 38, fmodf 33 (its only `div.s` stays in
-  the `j $31` slot). What is left is the `div.s` that 2.9 still schedules into a delay slot, plus each draft's own differences.
-- **Decision:** walls (`config/matching/walls.tsv`, class `toolchain`, all eight). The only fix would be a 2.9-991111 compiler with this
-  option: a patch to `cc1.exe` touching both the output template and the insn length, so the delay-slot filler skips `div.s`. That is
-  far more than the assembler's one-byte patch, and no such Sony 2.9 build is known.
+  `__kernel_tanf`. The matched libm functions (cosf, `__kernel_cosf`, `__kernel_rem_pio2f`, `__kernel_sinf`...) have no `div.s`, so the
+  rest of libm is ordinary 2.9-991111b code. Game code differs: of its 408 `div.s`, 331 have no `nop`, 45 one, 32 two.
+- **The build:** `2.9-ee-991111-01` and `2.9-ee-991111-01-dtls13010` (decompme/compilers; Linux i386 programs) write `nop; nop; div.s` and keep
+  `div.s` out of delay slots; 991111a and 991111b (the build of the rest of the SDK range) write a plain `div.s` and fill delay slots with it.
+  Probe: a function with two float divides, `-S -O2 -G0` (`work/matching/divprobe/`, local). Sly 1's `docs/toolchain/still-to-qualify.md`
+  found the same for its libm (OpenRAC builds Sony's libm objects with 991111-01 as well). The 2026-11-12 wave A1 wrote that 991111-01 "has no
+  such option"; that was wrong, and the eight `toolchain` rows it put in `config/matching/walls.tsv` are removed. The two builds give identical
+  objects here.
+- **Scores** with 991111-01 on the drafts (`-x c++ -O2 -G0`, before the 991111b score): `__ieee754_acosf` 173 to **0**, `__kernel_tanf` 72 to
+  **0** (both landed), atanf 39 to 8, `__ieee754_asinf` 66 to 42, `__ieee754_fmodf` 33 to 26, `__ieee754_atan2f` 184 and `__ieee754_sqrtf` 69
+  unchanged; `__ieee754_powf` (0x248038, 2,176 bytes) has no draft yet.
+- **In the build:** `config/us/sony_gcc29_01.txt` lists the functions built with it (a function joins once a source matches only with it);
+  `compile_unit.py --assembler sony29-01` runs the Linux compiler through `linux_runner()`: nothing on x86 Linux, `docker run --platform linux/386
+  i386/debian:bookworm-slim` otherwise (Docker Desktop's CLI is `/Applications/Docker.app/Contents/Resources/bin/docker`), or the command in
+  `EE_LINUX_RUNNER`. The toolchain is `tools/compilers/ee-gcc2.9-991111-01` or `work/toolchains/ee-gcc2.9-991111-01` (the decompme archive
+  `ee-gcc2.9-991111-01.tar.xz`, not committed). Without the toolchain or a runner `configure.py` leaves those functions' objects out and says so;
+  `link_image.py` takes them from assembly and the image still matches (measured: 5,498 functions from C instead of 5,500, `PASS`).
 
 ### `mult1` and `multu1` come from plain C
 

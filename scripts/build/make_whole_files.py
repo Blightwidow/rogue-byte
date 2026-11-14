@@ -98,7 +98,7 @@ def object_data_use(object_path):
 def exclusion(functions, matched, swapped):
     """Why a file cannot take the whole-file path as it is (None when it can): a matched function with its own data other than .rodata
     (the link sends it back to the per-function path), one in a per-function flag list, or one that does not link from C today."""
-    flagged = listed_addresses('move_movables.txt') | listed_addresses('vu0_regs.txt') | listed_addresses('sony_gcc29.txt')
+    flagged = listed_addresses('move_movables.txt') | listed_addresses('vu0_regs.txt') | listed_addresses('sony_gcc29.txt') | listed_addresses('sony_gcc29_01.txt')
     for address in functions:
         if address not in matched:
             continue
@@ -941,7 +941,7 @@ def land(address, source_path, wholes=None, compile_source=None, prove=None, wri
     if found is None:
         return False, f'{address:#X} is in no whole file', None
     start, end, file = found
-    flagged = listed_addresses('move_movables.txt') | listed_addresses('sony_gcc29.txt')
+    flagged = listed_addresses('move_movables.txt') | listed_addresses('sony_gcc29.txt') | listed_addresses('sony_gcc29_01.txt')
     if address in flagged:
         return False, f'{address:#X} is in a per-function flag list; src/{file} has one flag set: not changed', None
     # the VU0 flag (a function using the VU0 helpers of include/vu0inline.h) becomes the whole file's flag when the whole file proves with

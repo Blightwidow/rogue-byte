@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""compile_unit.py <c|c++> <source> <output.o> [--assembler sony29]: compiles one source the way the retail build did.
+"""compile_unit.py <c|c++> <source> <output.o> [--assembler sony29|sony29-01]: compiles one source the way the retail build did.
 
 SN's compiler (EE-GCC 2.95.3 build 1.36) writes assembly with `-S`, and SN Systems' own assembler `ps2eeas` 1.9.25.758 (the one SN's ProDG
 driver runs; `setup.sh --assembler` downloads it, pinned) assembles the result under wibo, with `-G` from the compile flags. It
@@ -12,7 +12,9 @@ instructions (target through branch) in all 240 short loops of its game code and
 run pads that way (docs/build/assembler.md, "Short loops"). The copy is made from the pinned download on first use, never committed.
 It assembles in one pass and only reaches a global through `$gp` when it has already seen the symbol's size, so the compiler's
 `.extern SYM,SIZE` lines, written at the end of the file, go to the top. `--assembler sony29` builds the SDK range with Sony's own
-ee-gcc 2.9-ee-991111 and its driver (config/us/sony_gcc29.txt). Symbols of the object are made local (objcopy -L) so that objects of
+ee-gcc 2.9-ee-991111 and its driver (config/us/sony_gcc29.txt); `--assembler sony29-01` builds the libm functions that divide with Sony's
+2.9-ee-991111-01 (config/us/sony_gcc29_01.txt), a Linux i386 build that Docker runs on a Mac and that `configure.py` leaves out (their functions
+then come from assembly, the image the same) when nothing can run it. Symbols of the object are made local (objcopy -L) so that objects of
 several functions can be linked together. A whole-file source (config/us/whole_files.tsv) includes its unmatched functions with
 INCLUDE_ASM(address) at file scope: the marker it leaves in the compiler's assembly is replaced by that function's Splat assembly
 (build/splat/asm) before ps2eeas runs, so the file assembles as one object in retail's order.
@@ -23,7 +25,9 @@ them to measure a candidate, and a build never does (docs/build/assembler.md, "B
 import argparse
 import functools
 import os
+import platform
 import re
+import shutil
 import subprocess
 import sys
 
@@ -32,6 +36,10 @@ COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.95.3-136')
 LEGACY_COMPILER = os.path.join(ROOT, 'work', 'matching', 'compilers', 'ee-gcc2.95.3-136')
 SONY_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111b')
 LEGACY_SONY_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111b')
+SONY_01_COMPILER = os.path.join(ROOT, 'tools', 'compilers', 'ee-gcc2.9-991111-01')  # Sony's later 2.9 build: a Linux i386 program (the others are Win32)
+LEGACY_SONY_01_COMPILER = os.path.join(ROOT, 'work', 'toolchains', 'ee-gcc2.9-991111-01')
+LINUX_IMAGE = 'i386/debian:bookworm-slim'  # runs the Linux build on a host that is not x86 Linux
+DOCKER_APPLICATION = '/Applications/Docker.app/Contents/Resources/bin/docker'
 SONY_FLAGS = os.environ['SONY_COMPILE_FLAGS'].split() if os.environ.get('SONY_COMPILE_FLAGS') else ['-O2', '-G0']  # the variable is for SDK-range probes
 WIBO = os.path.join(ROOT, 'tools', 'wibo')
 EE_AS_PINNED = os.path.join(ROOT, 'tools', 'ps2eeas', 'Ps2EeAs.exe')  # SN's binary exactly as downloaded (setup.sh checks its sha256)
@@ -169,9 +177,57 @@ def sony_functions():
     return listed_functions('sony_gcc29.txt')
 
 
+def sony_01_functions():
+    """Addresses of the functions built with Sony's gcc 2.9-ee-991111-01 (config/us/sony_gcc29_01.txt): the libm functions that divide.
+    That build writes `nop; nop; div.s` itself (retail's libm has it before all 27 divides); 991111b, which the rest of the SDK range uses, does not."""
+    return listed_functions('sony_gcc29_01.txt')
+
+
 def assembler_for(address):
-    """'sony29' for a function listed in config/us/sony_gcc29.txt (compiler and assembler both Sony's), else None: the one assembler, tools/ee-as/as.exe."""
+    """'sony29-01' for a function of config/us/sony_gcc29_01.txt, 'sony29' for one of config/us/sony_gcc29.txt (compiler and assembler both Sony's), else None: the one assembler, tools/ps2eeas."""
+    if address in sony_01_functions():
+        return 'sony29-01'
     return 'sony29' if address in sony_functions() else None
+
+
+def sony_01_directory():
+    """The directory of the 2.9-ee-991111-01 build (tools/compilers, else work/toolchains), or None when it is not installed."""
+    for directory in (SONY_01_COMPILER, LEGACY_SONY_01_COMPILER):
+        if os.path.isfile(os.path.join(directory, 'bin', 'ee-gcc')):
+            return directory
+    return None
+
+
+@functools.lru_cache(maxsize=None)
+def linux_runner():
+    """The command words that run a Linux i386 program on this host, or None when nothing can: EE_LINUX_RUNNER (a command prefix, for one run), nothing on x86
+    Linux, else `docker run` (Docker Desktop's CLI is not on PATH on macOS; its socket is ~/.docker/run/docker.sock) when the daemon answers."""
+    if os.environ.get('EE_LINUX_RUNNER'):
+        return os.environ['EE_LINUX_RUNNER'].split()
+    if platform.system() == 'Linux' and platform.machine() in ('x86_64', 'i686', 'i386'):
+        return []
+    docker = shutil.which('docker') or (DOCKER_APPLICATION if os.path.isfile(DOCKER_APPLICATION) else None)
+    if not docker:
+        return None
+    socket_path = os.path.expanduser('~/.docker/run/docker.sock')
+    if not os.environ.get('DOCKER_HOST') and os.path.exists(socket_path):
+        os.environ['DOCKER_HOST'] = f'unix://{socket_path}'
+    try:
+        if subprocess.run([docker, 'info'], capture_output=True, timeout=30).returncode:
+            return None
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    return [docker, 'run', '--rm', '--platform', 'linux/386']
+
+
+def runner_is_docker(runner):
+    """True for the `docker run` prefix of `linux_runner`: the build's directories are mounted into the container at the same paths."""
+    return len(runner) > 1 and os.path.basename(runner[0]) == 'docker' and runner[1] == 'run' and os.environ.get('EE_LINUX_RUNNER') is None
+
+
+def sony_01_available():
+    """True when the 991111-01 build is installed and something can run it (the functions of config/us/sony_gcc29_01.txt then come from C, else from assembly)."""
+    return sony_01_directory() is not None and linux_runner() is not None
 
 
 def compiler_directory():
@@ -203,6 +259,35 @@ def compile_sony(language, source, output, include=None, localize=True):
     temporary = output + '.tmp'
     result = subprocess.run([WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
                              f'-I{include or os.path.join(ROOT, "include")}', *SONY_FLAGS, '-c', os.path.abspath(source), '-o', temporary], capture_output=True, text=True)
+    return finish_sony(result, temporary, output, localize)
+
+
+def compile_sony_01(language, source, output, include=None, localize=True):
+    """The libm functions that divide: Sony's ee-gcc 2.9-ee-991111-01 and its own assembler, a Linux i386 build run by `linux_runner` (Docker on a Mac)."""
+    directory = sony_01_directory()
+    runner = linux_runner()
+    if directory is None:
+        return False, 'ee-gcc2.9-991111-01 is not installed (tools/compilers or work/toolchains)'
+    if runner is None:
+        return False, 'nothing runs the Linux ee-gcc2.9-991111-01: start Docker, or set EE_LINUX_RUNNER'
+    include = os.path.abspath(include or os.path.join(ROOT, 'include'))
+    source = os.path.abspath(source)
+    temporary = os.path.abspath(output) + '.tmp'
+    command = [os.path.join(directory, 'bin', 'ee-gcc'), '-x', language, f'-B{os.path.join(directory, "bin", "ee-")}', f'-I{include}', *SONY_FLAGS, '-c', source, '-o', temporary]
+    if not runner_is_docker(runner):
+        prefix = runner  # a host that runs the program, or a runner the caller gave
+    else:
+        mounts = []
+        for path in (ROOT, directory, include, os.path.dirname(source), os.path.dirname(temporary)):
+            if not any(path == mount or path.startswith(mount + os.sep) for mount in mounts):
+                mounts = [mount for mount in mounts if not mount.startswith(path + os.sep)] + [path]
+        prefix = [*runner, *[word for mount in mounts for word in ('-v', f'{mount}:{mount}')], '-w', ROOT, LINUX_IMAGE]
+    result = subprocess.run([*prefix, *command], capture_output=True, text=True)
+    return finish_sony(result, temporary, output, localize)
+
+
+def finish_sony(result, temporary, output, localize):
+    """The object a Sony build wrote (its symbols local unless `localize` is false), or the compiler's message."""
     if result.returncode or not os.path.exists(temporary):
         return False, result.stderr or result.stdout
     if localize:
@@ -215,6 +300,8 @@ def compile_sony(language, source, output, include=None, localize=True):
 
 def compile_object(language, source, output, assembler=None, include=None, localize=True, vu0=False, movables=False, flags=()):
     """Compiles `source` to `output` (a relocatable object, its symbols local unless `localize` is false). Returns (ok, message)."""
+    if assembler == 'sony29-01':
+        return compile_sony_01(language, source, output, include, localize)
     if assembler == 'sony29':
         return compile_sony(language, source, output, include, localize)
     if not vu0:
@@ -272,7 +359,7 @@ def main():
     parser.add_argument('--vu0', action='store_true', help='compile with ' + VU0_FLAG)
     parser.add_argument('--movables', action='store_true', help='compile with ' + MOVE_FLAG)
     parser.add_argument('--flags', default='', help='more compiler options, space separated (config/us/function_flags.tsv)')
-    parser.add_argument('--assembler', choices=['sony29'])
+    parser.add_argument('--assembler', choices=['sony29', 'sony29-01'])
     arguments = parser.parse_args()
     ok, message = compile_object(arguments.language, arguments.source, arguments.output, arguments.assembler, vu0=arguments.vu0, movables=arguments.movables, flags=arguments.flags.split())
     if not ok:

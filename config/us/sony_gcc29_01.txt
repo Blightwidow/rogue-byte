@@ -1,0 +1,5 @@
+# Functions built with Sony's ee-gcc 2.9-ee-991111-01 instead of 2.9-ee-991111b (config/us/sony_gcc29.txt) or SN 2.95.3: the libm functions that divide.
+# That build writes `nop; nop; div.s` itself, as retail's libm has it before all 27 divides in it; 991111b and the SN builds do not (measured 2026-11-14).
+# One address per line; listed once a source matches only with it. A Linux i386 build: Docker runs it on a Mac (docs/build/compiler-identification.md, "libm").
+0x247330
+0x249990
