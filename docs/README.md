@@ -24,6 +24,8 @@ Then [CONTRIBUTING.md](../CONTRIBUTING.md) and [AGENTS.md](../AGENTS.md).
 | [contributing/exceptions.md](contributing/exceptions.md) | what is allowed beyond plain C and why (`Sqrt`, flag lists, `steer-ok`, data in C) |
 | [contributing/queue-worker.md](contributing/queue-worker.md) | you are a worker claiming functions from a wave |
 | [contributing/search-tools.md](contributing/search-tools.md) | running the tools that search for a near miss's fix |
+| [toolchain/](toolchain/README.md) | when a near miss is about scheduling, aliasing, loops, CSE, stack slots or allocation: how the compiler passes work, per pass |
+| [IDEAS.md](IDEAS.md) | things to try, derived from those notes, with how to measure each |
 | [contributing/lessons.md](contributing/lessons.md) | before matching or touching the tools: what cost time before |
 | [contributing/code-cleanup.md](contributing/code-cleanup.md) | adding code to `src/` (the rules and warnings `make cleanup` applies) |
 | [contributing/commit-messages.md](contributing/commit-messages.md) | writing a commit message |

@@ -61,6 +61,7 @@ another project and not measured here are marked *unverified*.
 - **Bit access in libm code reads the float through `GET_FLOAT_WORD`** (`do { union; } while (0)`): the loop notes put the next label on an 8-byte
   boundary and retail has that extra `nop`; a block-scope union variable does not (atanf 7 to 0). m2c's `M2C_BITWISE(s32, f32)` is a value cast
   (`cvt.w.s`), not a bit read: rewrite it with the macro (sqrtf 69 to 4, atan2f 185 to 0).
+- **A search tool's zero is a lead, not a match: read the edit.** `neighborhood.py`'s `commute` rewrote an asinf polynomial's meaning and `swap_adjacent` moved a store past its use in fmodf, and both still scored better. The fix that matched asinf was structural and plain: `t = x * x` only in the `else` arm of the tiny-argument test, as the original wrote it. Per-pass explanations: [../toolchain/](../toolchain/README.md); things to try: [../IDEAS.md](../IDEAS.md).
 - **Cheap rewrites that found matches:** a chained store `a = b = 0` for two stores (sqrtf's last words); a named constant against a repeated
   expression; a test of a variable both arms set written in each arm; a variable set in every arm instead of before a switch; one index for two loops
   (`tsearch`'s library lists them).
