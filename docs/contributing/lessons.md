@@ -1,267 +1,171 @@
 # Lessons
 
-Things that took more than a few minutes to work out here. Read it before matching or touching the tools, and add to it when something
-costs you time: a dated heading, one bullet per lesson, what you saw and what fixed it. Fixes that are pure source patterns for a near
-miss belong in [matching.md](matching.md); this file is for the surprises around them.
+What cost time here, distilled by topic. Read it before matching or touching the tools; when something costs you time, add a dated bullet to
+the topic it belongs to (what you saw, what fixed it). Source patterns for a near miss are in [matching.md](matching.md), the tools in
+[search-tools.md](search-tools.md). This page replaces the dated log of 2026-10-28 to 2026-11-12 and the procedure notes of sly1-decomp's
+`docs/AGENT_WORKFLOW.md` (same maintainers, AGPL-3.0: [AGENTS.md](../../AGENTS.md) "Rules"); the old text is in git history. Claims taken from
+another project and not measured here are marked *unverified*.
 
-## 2026-10-28: scoring and the assembler
+## 1. The loop, and when to stop
 
-- **The score counts instruction words with relocations masked**, so a function can score 0 and still link to the wrong address; the
-  `link` part of the score catches that (see [matching.md](matching.md)). A score recorded before the assembler switch of 2026-10-28
-  was measured with GNU `as`: judge it again.
-- **The hazard `nop` after `mtc1` and the padding of short loops come from the assembler, never from C.** Chasing them in the source
-  wastes hours; `scripts/build/compile_unit.py` assembles every function with SN's `ps2eeas` (under wibo), one assembler for all ([assembler.md](../build/assembler.md)).
-- **Compile through the same path the build uses.** `ee-gcc -S`, then the `.extern` lines hoisted, then `Ps2EeAs-loop5.exe`, then `objcopy -L`.
-  A source that matches in a hand-run compile can still differ in the image.
+1. Read the disassembly: arguments (`$a0`-`$a3`, floats `$f12`...), return (`$v0`, `$f0`), fields (`lw $v0, 0x708($a0)` is a 32-bit field at
+   0x708), calls, data. Write the C++ with the declarations it needs, then `try.py` until `score 0`.
+2. **Read the diff before rewriting.** A near miss is nearly always a fact about a callee or about order:
+   a register retail loads and ours leaves unused: the callee takes one more argument; `$v0` busy across a call: the callee returns a value
+   (declare it non-`void`, cast the call to `(void)`); a different order of a callee's integer and float parameters moves the argument moves
+   (copy the prototype from a caller that matches); a callee's return type can change the register of an unrelated test.
+3. **Register diff?** `scripts/matching/regalloc.py ADDRESS SOURCE` names the value behind each differing register, who placed it
+   (local-alloc, global-alloc, reload), what took retail's register, and the lever. Use it on a `registers` diff, not on a `code` diff.
+4. **Only the order of statements left?** `permute.py`, `neighborhood.py` (every one-edit rewrite, then a beam) and `rules.py` try them.
+   Most zeros the decomp-permuter finds are tricks (a parameter's address taken, one variable for two values): read each diff and write the real
+   change plainly (one VU0 near miss: 75 of 77 zeros were such tricks).
+5. **Stop** when it is not a function (reads registers it never sets, no `jr $ra`, starts with a stray `addiu $sp,$sp,+N`), is hand-written (a
+   `nop` busy-wait, a jump into another function), needs an instruction C cannot ask for, reads `$t0`-`$t3` as inputs (arguments past the eighth),
+   after about ten compiles without getting closer (about 25 for a worker's last effort), or when three wordings give the same wrong bytes.
+   Keep the attempt in `nonmatching/` with what differs. If the checker says the C is N bytes and retail's M, fix the size first (the split lost
+   or invented a boundary).
+6. **A zero is not a match until the rules pass and the image matches** (`make land`). Old zeros all broke a rule: a padding `volatile`, inline asm,
+   a bare `do { } while (0)`, a constant `|| 1`. Read `--review` before landing.
+7. **Re-score every stuck function after any discovery** (a flag, an assembler change, a compiler build, a new rewrite): saved sources re-run in
+   seconds. Wave A1 found 5 zeros and 21 near misses among sources a toolchain change had hidden; the 2026-11-14 libm finding turned two
+   "walled" functions into matches.
 
-- **Flip a callee's declared return type before rewriting a near miss's body.** A discarded result still steers register allocation and
-  scheduling around the call. `mutate.py` now tries `void` to `int` on `extern "C"` callee declarations (and back, when every call is a
-  statement of its own): on 119 near misses of score 3 or less, with the same seed and 50 compiles each, the earlier rewrites found 0
-  matches and the extended set found 4, all four by the return-type flip (one also with an explicit tail `return;`).
-- **A save-pattern profile separates compiler builds statistically**, not sharply: `scripts/build/prologue_profile.py` shows the SDK range
-  saves registers with `sd` only, game code mixes `sd` and `sq`, but 17 of 366 SDK functions use `sq` and 10 of 52 functions after the
-  SDK end are `sd`-only. Use it to spot ranges worth a second look, not to draw unit boundaries.
+## 2. What moves the bytes (measured on SN 2.95.3 and Sony 2.9)
 
-## 2026-10-28: Sly 2 code is not Sly 1 code
+- **Branch order follows the `if`.** `if (c) A; B;` makes `A` the branch and `B` the fall-through; flip the arms or write `if (x > 0) return ...;
+  return 0;` when retail falls through. `if (c) A; else B;` makes `A` the fall-through. `if (p) do { } while (p);` is a bottom-tested loop; a loop
+  tested at top and bottom is `if (c) do { } while (c);`. A single exit avoids the `move $v0,$zero` of a second return.
+- **Operand order and association.** `if (v != p->f)` against `if (p->f != v)` swap the branch's registers; `i * a` against `a * i` swap `mult`'s
+  operands; the compiler reassociates `(head - 1) + n` (split it); `base + (n*k + c)` adds the constant first when grouped so. Float compares keep
+  the source's operand order. `__builtin_fabsf` gives `abs.s`, `x < 0 ? -x : x` does not.
+- **`if` against `?:`.** A ternary often becomes `movz`/`movn`, an `if` a branch (`if (x >= 16) m = 0; else m = 1 << x;` gives a branch-likely).
+  Clamps: `v = v < lo ? lo : (v > hi ? hi : v);` gives the branchy shape; `if`/`else if` chains and inline helpers if-convert. A switch on 0, 1, 2
+  gives a compare tree an `if` chain does not.
+- **Loads and stores.** `p->items[p->n++] = v` loads `p->n` once, `p->items[p->n] = v; p->n++;` twice. Loads retail hoists above a branch are
+  named locals before it. Runs of stores to one base are rescheduled whatever the source order: try the permutations (five stores: 120) first.
+  A store after a call can land in the call's delay slot: write it before the call when retail has it there. Reloading `self->field` after a
+  call instead of keeping a local saves a callee-saved register. A store through `*(s32*)((u8*)self + 0xNNN)` schedules differently from member
+  access. `extern s32 T[][2]` indexed `[i][1]` fixes the operand order of a stride-8 address add.
+- **Types.** `lb`/`lbu`, `lh`/`lhu`, `lw` give size and sign; `slt` against `sltu`, `slti` against `sltiu` give signedness. A `u8` return adds
+  `andi $v0,$v0,0xff`; no mask means the function and local hold `s32`. Packing 32-bit values into 64 bits matched with `s32` parameters. Native
+  `long` is 64 bits on the EE (m2c's `--context` reads it as 32: give it `long long`).
+- **The frame** shows the locals: `addiu $sp,$sp,-0x60` with `$ra` at 0x50 means 0x50 bytes of locals, in declaration order. A frame that is off
+  while the body matches usually means a missing struct local; GCC 2.95 gives an unused struct local a slot (only a type the original plausibly
+  declared is allowed: [AGENTS.md](../../AGENTS.md)). A local whose address goes to a callee lives in the frame: one struct sized to retail's.
+- **Struct initialisers** (`Pair p = { a, b };`) call `memset`: assign the fields one by one. `aligned(16)` gives `lq`/`sq` copies,
+  `packed` gives `ldl`/`ldr`/`sdl`/`sdr`.
+- **Callee declarations.** A callee takes what it reads (count parameters from its own disassembly); an extra argument changes the caller's
+  prologue and delay slots; a wrapper that passes a float through untouched declares the callee with fewer parameters. `void` to `int` on an
+  `extern "C"` callee fixed 4 of 119 near misses of score 3 or less: the callee's own tail is the evidence (it writes `$v0` before `jr $ra`, as
+  constructors returning `this` do); a caller that merely discards `$v0` says nothing. `scripts/matching/callee_sigs.py` reads them.
+- **Bit access in libm code reads the float through `GET_FLOAT_WORD`** (`do { union; } while (0)`): the loop notes put the next label on an 8-byte
+  boundary and retail has that extra `nop`; a block-scope union variable does not (atanf 7 to 0). m2c's `M2C_BITWISE(s32, f32)` is a value cast
+  (`cvt.w.s`), not a bit read: rewrite it with the macro (sqrtf 69 to 4, atan2f 185 to 0).
+- **Cheap rewrites that found matches:** a chained store `a = b = 0` for two stores (sqrtf's last words); a named constant against a repeated
+  expression; a test of a variable both arms set written in each arm; a variable set in every arm instead of before a switch; one index for two loops
+  (`tsearch`'s library lists them).
+- **What does not move:** a `lui`/`li`/`move` scheduled against a store before a `jal`; a pair of `$s` registers swapped; `$v0`/`$v1` temporaries
+  swapped; an epilogue shared where retail duplicates it. Ten to thirty variants each left these put; record NEAR.
+- **Not the source's doing:** the hazard `nop` after `mtc1` and the padding of short loops come from the assembler (`ps2eeas`), never from C
+  ([assembler.md](../build/assembler.md)). Dead loads are not reproduced by unused locals. Compiling callees first in the same file does nothing on
+  SN 2.95.3 (it was a 2.96 effect).
+- **Two real constraints:** a `volatile` reload of a packet pointer handed back through an out-parameter (retail re-reads it from the stack before
+  every store) is the allowed `Slot(&pqw)[1] = x;` form, plain `((unsigned*)pqw)[0] |= 1;` where retail's delay slot holds the reload (0x13A688:
+  21 to 2). The VU0 flag (`-mvu0-use-vf0-15`) also moves code outside the VU0 block (hoisted constants, strength reduction): read such a diff as the
+  flag's, not the helper's.
 
-- Different compiler setup (`sd`/`ld` register saves), real C++ (8-byte vtable slots, the vtable pointer at `+0xC`), regrouped classes
-  and vectors passed by value in 128-bit registers (`aN_qw`). Expect changed signatures and moved fields; a C++ up- or downcast is
-  not a type error.
-- **Names and offsets from Sly 1 are leads, not facts.** A field named for a Sly 1 offset (`s1_0x...`) is that offset in Sly 1, not in Sly 2.
-- **A decompiler drops VU masks**: `vmul.xy` comes out as a three-component product. Check vector lengths against the disassembly
-  before trusting a rewrite.
+## 3. Compilers, the assembler and scoring
 
-## 2026-10-28: finding the SDK
+- **The score is the count of differing instruction words with relocations masked**, so a zero can link to the wrong address: the `link` part of the
+  score catches it. Compile through the build's own path (`compile_unit.py`: `ee-gcc -S`, `.extern` lines hoisted, `Ps2EeAs-loop5.exe`, `objcopy -L`);
+  a hand-run compile can differ in the image. Scores recorded before a toolchain change need `rejudge.py`.
+- **Three builds in one image.** Game code: SN 2.95.3. SDK range (0x2319E8-0x256CE8): Sony 2.9-ee-991111b (`config/us/sony_gcc29.txt`: saves with
+  `sd` only, `mult1`/`multu1`/`mfhi1`/`mflo1` come from plain C). The libm functions that divide: Sony 2.9-ee-991111-01
+  (`config/us/sony_gcc29_01.txt`, a Linux build run through Docker): it writes `nop; nop; div.s` and keeps `div.s` out of delay slots, as
+  retail has it before all 27 divides there. Two lists, never one address on both; add an address when a draft scores better with the build.
+  `TRY_ASSEMBLER=sony29|sony29-01` scores one source with a build for a probe. The SDK range was once judged by hand-run compiles that missed the
+  difference: "ruled out" needs the probe on the exact build (a two-divide function, `-S`).
+- **A save-pattern profile** (`prologue_profile.py`) separates builds statistically, not sharply (17 of 366 SDK functions use `sq`): spot ranges, never
+  draw unit boundaries from it.
+- **Library members can be named by comparing code with relocated fields masked** plus a three-word anchor (122 exact members from SDK 2.4 covered 242
+  of 751 SDK functions). A stub shared by several members names nothing (a 28-byte `jr $ra` fits 13); Sly 2 was linked against a newer SDK than 2.4
+  (libdma, libpad, libmc, libmpeg, libpkt have no exact member). Compile a library's own source unmodified and compare it with every unmatched function
+  of the same size: matches fall out without names (libgcc's `fp-bit.c`, `libgcc2.c`) *(unverified for others)*.
+- **Sly 2 is not Sly 1 recompiled** (`sd`/`ld` saves, real C++ with 8-byte vtable slots and the vtable at +0xC, regrouped classes, vectors by value in
+  128-bit registers). Sly 1 names, offsets and C are drafts: [AGENTS.md](../../AGENTS.md) "Rules". A name `s1_0x...` is an offset in Sly 1.
+  A decompiler drops VU masks (`vmul.xy` comes out as a three-component product).
 
-- **Library members can be found by comparing code with the relocated fields masked** (call targets, `%hi`/`%lo` halves, `$gp`
-  offsets) and a three-word unrelocated anchor. 122 exact members from SDK 2.4 covered 242 of 751 functions in the SDK range.
-- **A stub shared by several members names nothing**: a bare `jr $ra` of 28 bytes fits 13 members. Only take a name that is unique at
-  its address.
-- **Sly 2 was linked against a newer SDK than 2.4**: libdma, libpad, libmc, libmpeg and libpkt have no exact member, so those need a
-  later SDK build before they can be named this way ([name-recovery.md](../build/name-recovery.md)).
+## 4. Search tools: what found what
 
-## 2026-10-28: sound
+- **Draft first.** A plain m2c draft (`harvest.py`) matched 32 of 1,711 unsourced functions outright, 178 within 5 words; the neighbourhood search then
+  matched 14 more. Yield peaks for 64-300 bytes. Repair drafts from the compiler's own messages (`harvest.py --repair`: casts, an `sp` buffer from
+  `--stack-structs`; drafts that compile 21 to 90, then 61 to 244). Keep a blocker class and the yield per size bucket. `long` is 64-bit for m2c.
+- **Search order.** `scorer.py` judges in process (0.19 s a compile, 12 threads); then `rules.py`, `neighborhood.py`, `mutate.py`; sly1's `tsearch.py` and
+  `sitesearch.py` are the next to port. On fresh drafts a few mechanical edits reach many near misses; on a long-worked source the one-edit
+  neighbourhood is exhausted (300 near misses of score 1-10: 5 improved, none matched): it needs an idea, not compiles.
+- **Dead ends, do not repeat:** return types as a search space (654 sources: 5 improved by 1-2 words, none matched); setting every disputed callee
+  declaration at once (22 of 122 worse); adding zero arguments where callers under-pass (6 improved, none matched); parameter counts from a callee's code
+  (only a lower bound: matched sources pass fewer at 6.2% of calls); handing m2c those counts (worse drafts); real prototypes applied to Ghidra (register
+  leaks rose); compiling callees first (SN 2.95.3); `.lreg`-style guesses without the dump.
+- **Twins:** a function equal to a matched one with call targets, `%hi`/`%lo` and immediates hidden gets its source with those swapped (`twins.py`; the
+  pool is nearly empty). **Split functions can never match:** a branch landing inside another function proves one function (`boundaries.py`,
+  `config/matching/merges.tsv`); a near-miss score kept from the old size is meaningless once the size is corrected.
+- **Report progress in tiers** (`credit_audit.py`): 96.4% of matched functions are plain C or C with VU0 instructions that have no C form; the rest hold
+  a barrier, other inline asm, a volatile cast or a helper. Count code bytes of committed sources, not functions.
 
-- The sound library is 989snd, a build **without MIDI**: banks and streams only. The engine runs on the IOP, from a module embedded
-  in the executable, not from the disc's `IOPRP300.IMG`.
-- The banks are not files: the disc's ISO 9660 listing has four entries and the banks are read by raw sector. A scan for the bank magic
-  finds each bank twice, the raw copy and a compressed copy that starts with the same literal bytes. A parser that "mostly works"
-  on the second copy is reading compressed data ([sound-banks.md](../game/sound-banks.md)).
-- Version 3 banks read with the version 2 layout of OpenGOAL's 989snd (ISC) without changes: tone, LFO and play-sound structures,
-  17 grain types.
+## 5. Globals, data and whole files
 
-## 2026-10-28: VU1
+- **A global is defined in C only** where its initial value reproduces retail's bytes at its address ([exceptions.md](exceptions.md)); until then it is
+  `extern D_XXXXXXXX` (eight digits: `D_00000FA0`, the checker resolves only those). `.rodata` (0x217380-0x250580): `extern const`, since a namespace-scope
+  `const` is file-local in C++ and dropped. `.data` from 0x250580; a C++ global goes to `.data` even with no initialiser; `.bss` (from 0x27B300) is a
+  `static` of the one file that uses it, in the address order. A `lui`/`lwc1` pair aimed at `.rodata` is a literal or an `extern const`; aimed at `.data`
+  a variable. A constant retail builds with `lui`/`mtc1` (0.25f) is pooled when written as a literal: no source form has matched.
+- **A global built at startup** makes the compiler write `__static_initialization_and_destruction_0` and a `_GLOBAL_$I$` (`config/us/generated.tsv`);
+  a **function-local static** with a constructor gets a guard `_$tmp_K.N` (`config/us/statics.tsv`); a brace initialiser that runs once is a CLOBBER
+  (`include/ring_params.h`, docs/toolchain notes).
+- **Proving a file** (`config/us/whole_files.tsv`): the constructor list (`D_0027B130`) names each file's `_GLOBAL_$I$`, so it gives its end; its start comes
+  from its data. GCC aligns a jump table to 16; a literal read once sits before its function's jump table; vtables come after everything else in a file's
+  `.rodata`; the compiler has one read-only section (read-only data apart from the files' code is a file with no code, an empty code range); an aggregate
+  aligns to 8 (16 if asked), so a word array can be the tail of the object before it; the linker pads before a file's `.data`/`.rodata` to its alignment.
+  A cut the data bounds only to a range is a choice: say so in both heads. One file is one flag set.
+- **A match can wait on its whole file** (0x1E1E30: `make_whole_files.py --land` cannot merge a `SEQNODE` with more fields than the file holds; one
+  shared declaration would land four). A registry source without its SPDX line loses it in `src/`: fix the registry copy. `data/matching/include/` is the
+  copy `try.py` compiles against: edit `include/`, then copy. Check a converted data piece against retail on its own (the linked section against the
+  bytes at its address): one build shows every bad conversion, the image diff only the first shift.
+- **The early `%hi` before a save call** (`%hi(B_003D4A60)` kept in a saved register across it; SetGameCoins and three more): CSE1 reuses the `high` when
+  a second use exists. The only wording that gives 0 is a dead helper parameter, which is not allowed; open: a real second use of the table.
 
-- **There is no debug information** in the executable (no DWARF, `.mdebug` or line sections), so names come from the code around.
-- **The `.DVP.overlay.*` sections are zero-filled placeholders.** The microcode is in `.vutext`; programs are uploaded as overlay
-  chunks of at most 256 instructions, one instruction apart in `.vutext` (pitch 257). To place an uploaded chunk, compare it with every
-  instruction offset, not only the 16-byte aligned ones: a program can start on an odd instruction.
-- **Entry addresses are not constants in the code.** Only one function builds `MSCAL` words inline, as
-  `(byte address) >> 3 | 0x14000000`; the rest come from packets. A run that logs the VIF1 uploads and starts finds them all
-  ([vu1-microcode.md](../game/vu1-microcode.md)).
-- Lower-word values `0x14000000` and `0x70000000` in the microcode are constants embedded in code, not instructions.
+## 6. Waves, workers and landing
 
-## 2026-10-29: packet writers
+- Tiers: Haiku up to 400 bytes, Sonnet 401-1,000 (and near misses: 40 of 92 matched against 28 of 420 for Haiku retries), Opus above and for leading.
+  Workers write in scratch, never in `src/`, one function each, contiguous functions to one worker; the brief states the rules and the bound. The lead
+  lands after `make elf`. A wave of 15 workers matched 18 functions at about 241k worker tokens a match. Check `claim.py status` for claimed functions
+  with 0 runs (workers claim past their count). Sly 1's pilot: 270k tokens per code fix from agent review of paired Sly 1 bodies, so run pairing as scripts.
+- **Worker misreports to check:** "needs a mult1 helper" (Sony's gcc emits it from C), "needs sony29" on a listed function, guessed string literals.
+- `adopt.py` keeps the lowest score, banned or not; a clean rewrite must be copied over by hand where it kept inline asm. The export skipped the SDK
+  range and hand `.cpp` drafts once: check `nonmatching/` counts after changing it. A function's draft in `nonmatching/` compiles with the build its
+  address is listed for.
+- Land with `make land PROGRESS=0 ONLY="0x..."`, then commit `config/eu/`, `progress/` and the README table; stage by name. A function that no longer
+  reproduces PAL is a finding for the commit body.
 
-- **A packet pointer returned through an out-parameter is re-read from the stack before every store.** When retail shows
-  `lw $v0, 0($sp)` ahead of each `sw`/`swc1` into a block that `UnpackHelper(..., &slot)` handed back, read the slot through a
-  volatile pointer: `static inline unsigned *Slot(void *const *slot) { return *(unsigned *volatile *)slot; }` and write
-  `Slot(&pqw)[1] = x;`. 0x13A688 went from score 21 to 2. A volatile read cannot fill a branch delay slot, so where retail's
-  delay slot holds the reload (here the `|= 1` under an `if`), use a plain `((unsigned *)pqw)[0] |= 1;` for that one access: score 0.
-  Tested here only on that function; `UploadRelightLights` already reloads and its remaining difference is elsewhere.
+## 7. Domain facts
 
-## 2026-10-29: search tools, what they found
+- **VU1:** no debug info (no DWARF, `.mdebug`, line sections), names come from the code. `.DVP.overlay.*` are zero placeholders; microcode is in `.vutext`
+  as overlay chunks of at most 256 instructions (pitch 257, so compare with every instruction offset). Entry addresses are not constants in code (one
+  function builds `MSCAL` words: `(byte address) >> 3 | 0x14000000`); a run that logs VIF1 uploads finds them. `vuasm.py` round-trips the text (0.9% stay raw
+  `.vu` words); keep the generated source in `work/`. See [vu1-microcode.md](../game/vu1-microcode.md).
+- **Sound:** 989snd without MIDI, engine on the IOP from an embedded module; banks are read by raw sector (a scan finds each bank twice: the compressed
+  copy starts with the same literal bytes); version 3 banks read with OpenGOAL's 989snd v2 layout. See [sound-banks.md](../game/sound-banks.md).
 
-- **Judge in process.** `try.py` spent 0.14 s of every 0.34 s starting Python and `compare.py`; `scripts/matching/scorer.py` keeps the
-  registry, target words and symbols loaded and runs the compare in the calling thread: 0.19 s a compile, 48 against 24 compiles a second on
-  12 threads, and a source judged before is answered from disk. Run searches with `.venv/bin/python` (system `python3` lacks `rabbitizer`
-  and falls back to `try.py`). See [search-tools.md](search-tools.md).
-- **The callee's own tail is the best evidence for its return type.** Of the four near misses fixed by `void` to `int`, three callees write
-  `$v0` before their `jr $ra` (constructors that return `this`) and one has a caller that reads it; a caller that merely discards
-  `$v0` says nothing. A float verdict from a single read of `$f0` after one call is noise: it needs half the callers or a write in the tail.
-- **Return types are exhausted as a search space.** Every single and paired return-type change on the 654 unmatched sources with a
-  score: 5 functions improved by 1 or 2 words, none matched. The four earlier matches were what the random search could reach.
-- **So is the one-edit neighbourhood.** Every `mutate.py` rewrite at every line plus every order of five declarations, then a beam
-  from the best few: 300 near misses of score 1 to 10, 5 improved by 1 to 3 words, none matched. What is left needs an idea about the
-  source, not more compiles. On fresh m2c drafts (see below) the same search matched 14 of 342 new near misses: a draft is far from the
-  shape the original author wrote, so a few mechanical edits reach many more of them.
-- **Wholesale rewrites hurt.** Setting every disputed callee declaration to the inferred type at once made 22 of 122 sources worse and
-  2 better; a declaration only matters where the original compiler's scheduling depended on it.
+## 8. Tools and environment
 
-## 2026-10-29: unsourced functions, boundaries, VU1 source
+- Slice a memory-mapped image with a bounded window (`image[offset:]` on a 2.7 GB disc copied the rest: 20 minutes). Run tools with `.venv/bin/python`
+  (`rabbitizer`, `pyelftools`). macOS `sed -E` has no `\s`; zsh has no `mapfile`, does not word-split variables. A build directory remembers its
+  absolute path. The Linux compiler needs Docker running (`open -a Docker`; `compile_unit.linux_runner`, `EE_LINUX_RUNNER`).
+- The container mounts only the repository: probe files go under `work/`, not `/tmp` or the scratchpad.
 
-- **A plain m2c draft matches a share of unsourced functions with no editing.** `scripts/matching/harvest.py` (m2c with its macro header,
-  `void *` read as `s8 *` because C++ forbids arithmetic on it, callees in an `extern "C"` block, `NULL` defined) judged 1,711 functions in
-  one minute: 32 matched outright, 178 more were within 5 words and 317 within 20. The neighbourhood search on the kept drafts then
-  matched 14 more (100 improved). The smallest functions are not the easy ones here: every function under 64 bytes was already done, and
-  the yield is highest for medium functions (64 to 300 bytes). 531 drafts are refused by m2c (unaligned `ldl`/`ldr`, VU0 and multimedia
-  instructions) and about 580 fail to compile as C++ (implicit pointer conversions).
-- **A function the split cut in two can never match.** A conditional branch that lands inside another function, not at its first
-  instruction, proves the two pieces are one function (a switch behind a second `jr $ra`, or an early return). 11 groups were found
-  (`RefOpMult` with `func_0011FAD8`, `RefOpDiv`, `SetBentleyMode`, ...) and a branch into the gap after a function's recorded end shows
-  the end was lost. A near-miss score kept from the old, partial size is meaningless once the size is corrected, so the merge clears it.
-  `scripts/matching/boundaries.py`, `config/matching/merges.tsv`.
-- **Compiling callees first in the same file does nothing with this compiler.** Another project traced a branch against branch-likely
-  residue on EE GCC 2.96 to file order (functions already compiled in the unit are marked as not throwing, which lets the delay-slot filler
-  use more registers). Defining `GRandInRange` and `FIsSlEmpty` ahead of `UpdatePingpong` in one file left it at score 2 in every
-  arrangement. 126 unmatched diffs still show branch against branch-likely; at least one (`0x120A20`) calls nothing.
-- **Parameter counts read from a callee's code are weak evidence.** The highest argument register a callee reads before writing is only a
-  lower bound, and matched sources pass fewer arguments than that at 6.2% of their calls (10.4% in unmatched ones). Adding zero
-  arguments to the 400 under-passing calls in unmatched sources improved 6 functions by one or two words and matched none. Giving m2c
-  those counts as prototypes made its drafts worse (it then reads registers the caller never set), so the context handed to m2c leaves
-  parameter lists open.
-- **Matched signatures do not clearly help Ghidra.** The real prototypes of 3,086 matched, non-mangled functions applied to Ghidra:
-  unknown-type tokens in 60 callers fell 9% and `extraout_` went from 2 to 0, but register leaks (`in_`) rose from 69 to 80 and `param_`
-  from 592 to 600, because matched C drops parameters the function never uses. Not kept: the project was restored from its backup.
-  `scripts/matching/export_signatures.py` writes the file for another try (restricted to names without a mangling, which already
-  carry their parameter types).
-- **VU1 microcode round-trips through text.** `scripts/vu/vuasm.py` assembles the text of `vudis.py`; each instruction is reassembled and
-  compared with its bytes, and 40 of 4,264 (0.9%) stay as raw `.vu` words because the disassembly leaves out fields the compiler never sets.
-  All sections rebuild identically, and `make elf` checks it. The source is generated (`vuasm.py source`): keep it in `work/`.
-- **Quote progress in tiers.** `scripts/matching/credit_audit.py` over the 3,658 matched sources: 96.4% of functions (91.6% of bytes) are
-  plain C or C with VU0 instructions that have no C form; 1.5% hold an empty `asm` barrier or a register-pinned local, 1.5% other inline
-  assembly, one a volatile cast, 0.6% an inline helper.
+## 9. Reported elsewhere, not tested here (*unverified*)
 
-## 2026-10-29: from other PS2 decompilations (SOTC, DQ8)
-
-Read from two CC0 projects; each item says whether it applied here.
-
-- **Repair a draft from the compiler's own error message.** A decompiler draft is nearly right and the compiler says where it is not: an
-  assignment to `T *` from `U *` needs `(T *)`, an argument the compiler names needs a cast to the parameter type, an address-of-stack
-  name needs a declared buffer. `harvest.py --repair` applies up to eight such edits per draft and judges the result: on the 300 smallest
-  unsourced functions the drafts that compile rose from 21 to 90 (23 within five words). Tested here, kept.
-- **Read the stack area from m2c.** `--stack-structs` prints the frame's size; an undeclared `sp` in a draft becomes a local `s8 sp[N]` of that
-  size (declared `s8`, not `char`: C++ treats the two pointer types as different). Drafts that compile went from 61 to 244.
-- **Keep a blocker class for every function and report yield per size bucket.** `harvest.py` writes `work/matching/harvest/blockers.tsv`
-  (outcome per function: no draft, instruction m2c cannot read, does not compile, compiles with its score) and prints draft yield by size,
-  so effort goes where it pays. Tested here, kept.
-- **A loop the compiler tests once at the top and again at the bottom is `if (c) do { } while (c);`.** Added to `mutate.py` as
-  `while_to_dowhile`. Not yet measured on its own.
-- **Twins and near-twins settle several functions at once.** Hide call targets, `%hi`/`%lo` halves and immediates; a function equal to a
-  matched one in that shape gets its source with the symbols and constants swapped (`twins.py` already does this; after 46 new matches it
-  found one more, and the pool is nearly empty).
-- **Tail-call thunks** (a `j` plus delay-slot setup, written `return target(...)`) are a family worth a tool when there are many; here only
-  3 unmatched functions have the shape, so none was written.
-- **Source-file boundaries can be inferred where a binary has relocations** (a reference to a static is section-relative, to a global by
-  name; `ld -r` keeps a file's code contiguous). The retail executable here is linked and has none; shared static data is a possible
-  substitute, not tried.
-- **The "define the callee first" effect belongs to one compiler.** The branch-likely residue it explains is from EE GCC 2.96; SN GCC
-  2.95.3 showed no effect (see above).
-- **Native `long` is 64 bits on the EE.** m2c's `--context` reads `long` as 32 bits, so contexts handed to it need `long long` for the
-  integer `long`.
-- **Count progress in code bytes of committed sources**, not functions: a generated assembly file or an uncommitted source is not progress.
-
-## 2026-11-12: the early %hi before a save call (negative)
-
-SetGameCoins, SetClueFound, StoreAudioModeInSave and UpdateJtLootSave (about 1.8 KB, drafts at 9 to 13) stop on one thing: retail
-builds `%hi(B_003D4A60)` before a call and keeps it in a saved register across it, and the `%lo` sits at the use after the call. The
-same shape shows in CreateSwSavePaths and UpdateCmLast.
-
-- **The mechanism** (RTL dumps with `-da`): the address expands into `(set P (high sym))` and `(set Q (lo_sum P sym))`. When an earlier
-  `(high sym)` exists before the call and its `lo_sum` is dead, CSE1 reuses P for the use after the call, so P lives across it. No
-  later pass makes the split itself: combine does not move a non-constant `lo_sum` across a call, the scheduler does not move a pseudo
-  above one, local-alloc's equivalence needs `rtx_equal_p` (never true for a `lo_sum`), and the loop pass only runs in real loops
-  (`do { } while (0)` is a phony loop).
-- **Matched functions with the same output have a real second use** of the address: PauseMenu_ApplyOption (GCSE PRE from a later
-  `ApplyOptionsFromSave(&B_003D4A60)`), InitIdHashTables (the address on the left of `global = call()`).
-- **The only wording found** is an inline helper taking the address as a parameter it never uses; its dead copy leaves the `high`. It
-  gives 0 on all four, and it is not allowed: a variable that exists only to move a register (Theo, 2026-11-12). Not tried, and still
-  open: a real second use of the table the original might have had.
-- Also without effect: a `const` parameter, a `do { } while (0)` macro, PauseMenu_ApplyOption's by-value helpers, an inline member
-  passing `this`. Found on the way: UpdateJtLootSave's `CStackFrame_Construct` takes the frame (`$a0 = $sp`), not `self`.
-
-## 2026-11-12: wave A1, the never-attempted functions
-
-Every function `list_functions.py --status asm` still listed after #50: 184 (146 in the SDK range). `claim.py init` queued 158; it skips
-chunks that are not whole functions (13 with no return, 2 that open with the previous function's frame release), chunks under 16 bytes,
-the held `GetJoyXYDeflection` and functions the registry no longer has open. 15 workers (Haiku up to 400 bytes, Sonnet to 1,000, Opus
-above), 12 compiles each, then four follow-up agents on the shared causes. 18 matched in all, 3 more at 0 held back; code 70.62% to
-72.52%. Toolchain findings: [compiler-identification.md](../build/compiler-identification.md) "findings of wave A1"; helpers:
-[inline-asm-helpers.md](../build/inline-asm-helpers.md); the `gp` kind: [vu0-mmi.md](../build/vu0-mmi.md).
-
-- **Old kept sources are worth re-scoring first.** 154 of the 184 "never attempted" functions had a source in `work/matching/kept/`
-  from earlier waves, logged under an older toolchain fingerprint and so invisible to the tools. Re-scoring them took eleven seconds:
-  5 at 0, 21 at 1 to 10. Logging them under each wave's lead arm (`TRY_ARM=<wave>-lead`) let `claim.py land` adopt them even where no
-  worker improved on them.
-- **A score of 0 is not a match until the rules pass.** All five old zeros broke a rule: a padding `volatile`, inline asm, a bare
-  `do { } while (0)` (0x241B18) and a constant `|| 1` condition (0x23D468). `check_source.py` printed ok for the last two: the
-  constant condition is a `--review` warning by design, and the bare do-while had no check. record.py's `scan` now bans `while (0)`
-  outside a macro (0 hits in src/, include/ and nonmatching/); read `--review` output before landing.
-- **`adopt.py` keeps the lowest score, banned or not.** For a dozen VU0 functions it kept an old draft with inline asm or register pins
-  over the workers' clean rewrite, and the export then left the function out of nonmatching/ (so it still counted as untouched asm).
-  The clean rewrites were copied over by hand. A fix would make adopt skip a candidate `record.scan` flags.
-- **Two gaps in the export, fixed:** it skipped the whole SDK range and read only `.cpp` hand drafts. With both lifted, 795 of 1,259
-  unmatched functions have a published draft (was 675 of 901), fuzzy match 87.07% to 90.93%.
-- **`data/matching/include/` is the copy that counts.** try.py compiles against it, and the export copies it over `include/`: a helper
-  added to `include/vu0inline.h` alone is measured by nobody and lost at the next export. Edit `include/`, then copy.
-- **A registry source without its SPDX line loses it in src/.** `make land` rewrote `src/sdk/qsort.c` without the header its
-  registry copy (`data/matching/src/fn/2338C0.c`) lacked; six new matches had the same gap. Fix the registry copy, not only src/.
-- **Workers claim past their count.** One worker took a fourteenth function after `done` printed DONE and never touched it; another
-  claimed its last function and stopped. Both had no kept source. Check `claim.py status` for claimed functions with 0 runs.
-- **A match can wait on its whole file.** `StartNextSeqnodeRecord` (0x1E1E30, 6,752 bytes) scores 0, but `make_whole_files.py --land`
-  cannot merge it into `src/stepguard-jsg/AddJsgContext_file.cpp`: its `SEQNODE` has more fields than the one the file already holds,
-  the merge renames it, and the renamed type breaks a base-class reference (`Seqnode_1E1DB8 is not a base type`). Same state as
-  0x155D90, 0x1E4D40 and 0x200F58: one shared declaration across those sources would land all four.
-- **snd_GotReturns falls back on rodata.** 0x231E90 is matched but the image takes it from assembly ("rodata differs", its printf
-  string); it did so on `main` before the wave too.
-- **The VU0 flag moves code outside the VU0 block.** Under `-mvu0-use-vf0-15` (a function listed in `config/us/vu0_regs.txt`) the loop
-  optimizer hoists float constants into callee-saved FP registers and strength-reduces an index: UpdateWipe (0x1477D8) reproduces its
-  VU block instruction for instruction and still scores 90 (its old inline-asm draft compiled with the flag scores 105 too), and
-  JtbsChooseJtLanding (0x19B110) stops on the registers of its hoisted invariants. Read such a diff as the flag's, not the helper's.
-- **Worker misreports to check:** "needs a mult1 helper" (Sony's gcc emits it from C), "needs sony29" on functions already listed, and
-  string literals a worker guessed (0x243CB0: retail's strings are the `RO_STR_002AB7B0` family).
-- **Cost:** 3.86M worker tokens for the wave (about 241k per match), 0.72M for the follow-up (docs/costs.md, local).
-
-Near misses the wave left, by what still differs (drafts in nonmatching/; worker files under `work/matching/waves/A1*/`):
-
-| Function | Score | What differs |
-| :--- | ---: | :--- |
-| 0x235780 | 2 | `sb` in the `jr` slot (walls.tsv `toolchain`; re-run under Sony's gcc with a plain store) |
-| 0x236FD8 | 2 | retail keeps an explicit `sw $zero, 0x24` on the null path; ours folds it |
-| 0x23A228 | 2 | `sw callback = 0` before the count's `addiu`; retail the reverse |
-| 0x23A668 | 2 | a second `ld $ra` before `ld $s0` on the zero-return path |
-| 0x24B480 | 2 | both hardware pointers built with `lui`/`ori` before the `if` (walls.tsv) |
-| 0x23D468 | 2 | clean version: a `nop` after the exponent-0 `jr`/`sw` |
-| 0x23D808 | 4 | `sd frac` in the `bnel` slot before `cls = 3` (`__muldf3`) |
-| 0x13D1A8 | 5 | `lhu` into `$v1` and the constant 3 into `$a1`, reversed |
-| 0x241A30 | 5 | the `lui` for `D_002C6774` after the 0x6760 store (walls.tsv `tie`) |
-| 0x24F970 | 5 | the address of 0x10002010 in `$v0`, retail `$v1` (Sony's gcc) |
-| 0x241B18 | 6 | clean version: CSE hoists `lui s0, D_002C6760` above the `if` |
-| 0x1C0B50 | 6 | z's first float in `$f0` copied to `$f21`; the inner loop's base |
-| 0x254CA0 | 6 | `lq`/`sq` register choice (Sony's gcc) |
-| 0x188CC8 | matched | `SquaredLengthXy` (was 7) |
-| 0x24CD70 | 7 | a `$v0`/`$v1` swap at the loop tail |
-| 0x256AF0 | 8 | `pelem` copied into `$v1`; the subtract's register order |
-| 0x23A598 | 8 | one temporary's register (Sony's gcc) |
-| 0x13C560 | 8 | the message local's stack slot; one vtable load's position |
-| 0x238138 | 9 | a `$v0`/`$v1` swap; `slti`/`movz` against `slt`/`movn` |
-| 0x1EEE00 | 10 | retail reloads `cgoal` after the if/else |
-| 0x15A2C0 | 11 | two store-order differences |
-| 0x245000 | 11 | `return x - x` folds to 0.0 (retail `sub.s`) |
-
-The open drafts in the SDK range that need Sony's gcc to score near (not listed until they match): 0x235930, 0x2407A8, 0x240C38,
-0x2515F0, 0x237EA8, 0x2382B8, 0x2423D8, 0x238528, 0x23AE70, 0x240050, 0x239CD8, 0x240AE0, 0x241368, 0x2355E0, 0x242C30, 0x237740.
-Still untouched asm after the wave: the split fragments and stubs above, `GetJoyXYDeflection` (held) and 0x250A38 (no draft).
-
-## Tools and environment
-
-- **Slicing a memory-mapped file with an open end copies the rest of it**: `image[offset:]` on a 2.7 GB disc image made a scan run for
-  twenty minutes. Slice a bounded window.
-- Run scripts with the repository's venv (`.venv/bin/python`) when they need `pyelftools`; the system `python3 -I` runs the ones that do not.
-- macOS `sed -E` has no `\s`; use Python for anything non-trivial. zsh has no `mapfile`: use bash 5 for scripts that do.
-- A build directory remembers the absolute path it was configured in; moving or renaming the repository breaks it. Configure a new one.
-
-## Reported by other PS2 decompilations, not tested here
-
-Each of these comes from another project's notes (Bokura no Kazoku, Ratchet & Clank 1) built with related compilers. Verify before relying on one. (The callee return-type flip from the same notes is tested, see above. The inline packet-writer `PUT` form is already used in `src/vifs/`.)
-
-- **A loop that retail does not strength-reduce** can be written `goto test; body: ...; test: e = &T[j++]; if (...) goto body;`.
-- **A dead store kept in retail is a load-order clue**: write the load before the stores.
-- **Clamps**: `v = v < lo ? lo : (v > hi ? hi : v);` gives the branchy shape; `if`/`else if` chains and inline helpers if-convert to `movz`.
-- **Re-test every stuck function's best source after any discovery** (a compiler flag, an assembler change, a new rewrite): saved
-  snippets re-run in seconds.
-- **Check a converted data piece against retail on its own**: compare the object's linked section with the retail bytes at the piece's
-  address. It finds every bad conversion in one build where the image diff shows only the first shift. Literal order follows the first
-  user in the source, split rodata pieces need their `.align`, and a jump table can land 8 bytes late after an included data block.
-- **Compile a library's own source unmodified and compare every function with every unmatched one of the same size**: matches fall out
-  without knowing names (libgcc's `fp-bit.c` and `libgcc2.c` did).
+A loop retail does not strength-reduce: `goto test; body: ...; test: e = &T[j++]; if (...) goto body;`. A dead store kept in retail is a load-order clue:
+write the load before the stores. Tail-call thunks (`j` plus delay-slot setup, `return target(...)`) are a family worth a tool when numerous (here 3).
+Source-file boundaries can be inferred from relocations where a binary keeps them (the retail executable here has none).
