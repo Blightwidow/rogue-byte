@@ -115,7 +115,7 @@ def remember(address, key, score):
 
 def compare_object(address, path, quiet, symbol=None):
     row = registry()[address]
-    arguments = argparse.Namespace(object=path, address=address, elf=ELF, symbol=symbol or row['name'], size=int(row['size']), export=None, quiet=quiet, symbols=SYMBOLS)
+    arguments = argparse.Namespace(object=path, address=address, elf=ELF, symbol=symbol or row['name'], size=int(row['size']), export=None, quiet=quiet, symbols=None if os.environ.get('SCORER_NO_LINK') else SYMBOLS)
     try:
         return compare.compare(arguments)
     except SystemExit:  # the registry's name is not in the object: the only function in it
@@ -154,7 +154,7 @@ def cache_key(text, lang, address=None):
     in config/us/vu0_regs.txt: a score with the flag must not answer for one without) and the text."""
     flagged = compile_unit.includes_vu0_helpers(text) or os.environ.get('TRY_VU0') == '1' or (address is not None and compile_unit.vu0_for(address))
     extra = ' '.join(compile_unit.flags_for(address)) if address is not None else ''  # a score with function_flags.tsv options must not answer for one without
-    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if flagged else b'') + (f'\0{extra}'.encode() if extra else b'')).hexdigest()[:20]
+    return hashlib.sha1(f'{fingerprint()}\0{os.environ.get("TRY_ASSEMBLER", "")}\0{os.environ.get("SCORER_NO_LINK", "")}\0{lang}\0{text}'.encode() + (b'\0vu0' if flagged else b'') + (f'\0{extra}'.encode() if extra else b'')).hexdigest()[:20]
 
 
 def judge(address, text, lang='c++'):
