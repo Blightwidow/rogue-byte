@@ -119,7 +119,11 @@ Details: docs/contributing/matching.md ("Teams of workers").
 ## Rules
 
 - **Derive the code ourselves; names and notes only from open licences.** Work from the retail executable of your own disc and public
-  hardware documentation. Matched C is ours: no code from other decompilations or ports of this game, and no third-party code. Names,
+  hardware documentation. Matched C is ours: no code from other decompilations or ports of this game, and no third-party code, with
+  one exception: [OpenThievius/sly1-decomp](https://github.com/OpenThievius/sly1-decomp) (Sly 1, same maintainers, AGPL-3.0). Its
+  names, types, offsets and C may be used as a draft for a Sly 2 function (read it from a local checkout in `work/`, never vendored).
+  A draft is not a match: it still scores 0 and passes `make elf` like any attempt, and Sly 2 is not Sly 1 recompiled, so expect to
+  rewrite it. A file that keeps its code carries its AGPL notice, and the commit body says `source:sly1-decomp <function>`. Names,
   symbol maps, types, field offsets, splits and notes from another project are allowed only when its licence permits it (CC0, MIT,
   CC BY-SA, GPL-compatible) and it is listed in THIRD_PARTY_NOTICES.md with its terms and what is used, before the material lands.
   Keep every name's source visible (`source:...`) and measure it against retail: a borrowed name is a hypothesis. Never Sony's SDK
