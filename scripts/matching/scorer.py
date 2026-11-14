@@ -160,6 +160,8 @@ def cache_key(text, lang, address=None):
 def judge(address, text, lang='c++'):
     """The score of the source for the function at `address` (0 = match), None when it fails to compile or compare."""
     address = address_of(address)
+    if (os.environ.get('TRY_ASSEMBLER') or compile_unit.assembler_for(address)) == 'sony29-01' and not compile_unit.sony_01_available():
+        return None  # no Docker or no toolchain: say so, but never cache it (a cached None would outlive the daemon)
     key = cache_key(text, lang, address)
     entries = cache_for(address)
     if key in entries:
