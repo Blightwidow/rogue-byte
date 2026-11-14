@@ -17,7 +17,7 @@ polynomial's meaning).
   `dispatch.tsv`, `tables.tsv`, `installers.tsv`) and `include/*.h` (~574 headers, `names.h`) against our `config/recovered/` and `include/`: pair by
   class descriptor and method-table shape, then check every field offset against Sly 2's own code before it lands (Sly 2 regroups classes and moves
   fields). Source tag `source:sly1-decomp`; AGENTS.md "Rules" allows it as a draft.
-- [ ] **Sly 1 bodies as automated seeds.** For each Sly 2 function paired to a Sly 1 body (`exact`/`bsim`, never under ~90 bytes): compile the
+- [x] **Sly 1 bodies as automated seeds.** For each Sly 2 function paired to a Sly 1 body (`exact`/`bsim`, never under ~90 bytes): compile the **Result (2026-11-14):** `sly1_seed_extract.py` and `sly1_seed_run.py`. 195 unmatched Sly 2 functions have a Sly 1 body; 172 compile and score. 9 score 0, 6 at 1-4, 9 at 5-16, 50 at 17-64; the draft beats our best on 69 (56 by 10 or more). Controls (777 matched): 223 at 0, 119 at 1-4, 161 at 5-16. CroutDecomp (99 to 0) landed; the other eight zeros need Sly 1 headers translated first (`PosSmooth`, `BlendDisplayOnBufferMismatch`, `VBlankS_Interrupt`, `ResetGs`, three soft-float `.c`, `__8VU_FLOATf`). Next: the 24 at most 16 words, then feed the 17-64 ones to `neighborhood.py`.
   Sly 1 C as a draft, score it, feed anything within 64 words to `neighborhood.py`. Measure the hit rate on the 300 near misses of score 17-64
   before spending any agent tokens (the 2026-10-23 pilot cost 270k tokens per fix through agent review).
 - [ ] **Make the neighbourhood search keep meaning.** `neighborhood.py` and `mutate.py` rewrote an asinf polynomial (`commute`) and moved a store past its
