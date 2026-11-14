@@ -584,6 +584,14 @@ address	name	size	file	score
 0X219190	ApplySpriteKeySounds	440	font-break/ApplySpriteKeySounds.cpp	23
 0X219400	PlaceSpriteKeyCharacters	3040	font-break/PlaceSpriteKeyCharacters.cpp	265
 0X21AA60	InitDynamicTextStatics	4360	font-break/InitDynamicTextStatics.c	1379
+0X21BB88	InitFragile__FP7FRAGILE	72	break/InitFragile__FP7FRAGILE.c	0
+0X21BBD0	func_0021BBD0	56	break-text/fun_0021bbd0.cpp	0
+0X21BC08	func_0021BC08	272	break-text/fun_0021bc08.cpp	17
+0X21C0D8	func_0021C0D8	240	break-text/fun_0021c0d8.cpp	0
+0X21C1C8	func_0021C1C8	376	break-text/fun_0021c1c8.c	39
+0X21C340	func_0021C340	696	break-text/fun_0021c340.c	211
+0X21C5F8	func_0021C5F8	208	break-text/fun_0021c5f8.cpp	0
+0X21C888	func_0021C888	656	break-text/fun_0021c888.cpp	39
 0X21E1B0	CchAchFromDouble__FPciP3TFTd	776	text/CchAchFromDouble__FPciP3TFTd.cpp	87
 0X21F418	CarryThrow_Update	1792	new_21f188/CarryThrow_Update.c	522
 0X21FB70	CarryThrow_UpdateArc	2072	new_21f188/CarryThrow_UpdateArc.c	455
