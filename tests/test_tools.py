@@ -290,6 +290,18 @@ class RegisterAllocationReportTests(unittest.TestCase):
         self.assertEqual(regalloc.classify([('1', 'nop')], [('2', 'jr ra')])[0], 'code')
 
 
+    def test_the_replay_tools_load_and_find_dumps_by_suffix(self):
+        import globalalloc
+        import regalloc
+        import sched1
+        self.assertTrue(callable(globalalloc.model_from_text) and callable(sched1.replay_function))
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(RuntimeError):
+                regalloc.dump(directory, 'lreg')
+            open(os.path.join(directory, 'unit.cc.lreg'), 'w').close()
+            self.assertEqual(regalloc.dump(directory, 'lreg').name, 'unit.cc.lreg')
+
+
 class CompileUnitTests(unittest.TestCase):
     def test_extern_lines_move_to_the_top(self):
         text = '\t.file 1 "a.c"\nfoo:\n\tlui $2,%hi(g)\n\t.extern g,4\n\t.extern h,8'

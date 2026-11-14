@@ -464,6 +464,27 @@ def function_in_object(path, func):
         return data[start:start + size], section.name, symbol.name, start
 
 
+def dump(folder, kind):
+    """The compiler's `.kind` dump in FOLDER (lreg, greg, sched, regmove, combine...): its name starts with the source's (unit.cc.lreg, unit.ii.lreg), so match by suffix."""
+    found = sorted(Path(folder).glob("*." + kind))
+    if not found:
+        raise RuntimeError("no .%s dump in %s" % (kind, folder))
+    return found[0]
+
+
+def compile_dumps(path, func, address, keep, flags):
+    """Compile PATH with the build's compiler for ADDRESS and the dump FLAGS (-dl, -dg, -dS...), keeping the assembly and the dumps in KEEP; returns KEEP."""
+    keep = Path(keep)
+    keep.mkdir(parents=True, exist_ok=True)
+    unit = keep / ("unit" + Path(path).suffix)
+    shutil.copyfile(path, unit)
+    assembler = os.environ.get("TRY_ASSEMBLER") or compile_unit.assembler_for(address)
+    ok, message = compile_unit.compile_assembly("c" if unit.suffix == ".c" else "c++", unit, keep / "unit.s", assembler, flags)
+    if not ok:
+        raise RuntimeError(message.strip()[:600])
+    return keep
+
+
 def compile_with_dumps(path, func, address, keep):
     """Compile PATH with the build's compiler for ADDRESS (compile_unit.assembler_for: SN's, Sony's 991111b or 991111-01) twice, with the dumps and with -g too for
     the line notes; keep both in KEEP (plain/ and g/). The -g compile is analysed when its code is the same, else the plain one. Returns a Compiled with ours and

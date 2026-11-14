@@ -221,7 +221,7 @@ def linux_runner():
 
 
 def runner_is_docker(runner):
-    """True for the `docker run` prefix of `linux_runner`: the build's directories are mounted into the container at the same paths."""
+    """True for the `docker run` prefix of `linux_runner`: the build's directories are mounted into the container at the same paths; the program runs in `workdir` (default the repository), where a compiler writes its dump files without -g."""
     return len(runner) > 1 and os.path.basename(runner[0]) == 'docker' and runner[1] == 'run' and os.environ.get('EE_LINUX_RUNNER') is None
 
 
@@ -278,7 +278,7 @@ def compile_sony_01(language, source, output, include=None, localize=True):
     return finish_sony(result, temporary, output, localize)
 
 
-def linux_command(runner, command, directory, include, source, output):
+def linux_command(runner, command, directory, include, source, output, workdir=None):
     """`command` (a Linux program) behind `runner`: as it is on a host that runs it, else in the container with the build's directories mounted at the same paths."""
     if not runner_is_docker(runner):
         return [*runner, *command]  # a host that runs the program, or a runner the caller gave
@@ -286,7 +286,7 @@ def linux_command(runner, command, directory, include, source, output):
     for path in (ROOT, directory, include, os.path.dirname(source), os.path.dirname(output)):
         if not any(path == mount or path.startswith(mount + os.sep) for mount in mounts):
             mounts = [mount for mount in mounts if not mount.startswith(path + os.sep)] + [path]
-    return [*runner, *[word for mount in mounts for word in ('-v', f'{mount}:{mount}')], '-w', ROOT, LINUX_IMAGE, *command]
+    return [*runner, *[word for mount in mounts for word in ('-v', f'{mount}:{mount}')], '-w', workdir or ROOT, LINUX_IMAGE, *command]
 
 
 def compile_assembly(language, source, output, assembler=None, extra=(), vu0=False, movables=False, flags=()):
@@ -300,7 +300,7 @@ def compile_assembly(language, source, output, assembler=None, extra=(), vu0=Fal
         if directory is None or runner is None:
             return False, 'ee-gcc2.9-991111-01 is not installed or nothing runs it (start Docker, or set EE_LINUX_RUNNER)'
         command = [os.path.join(directory, 'bin', 'ee-gcc'), '-x', language, f'-B{os.path.join(directory, "bin", "ee-")}', f'-I{include}', *SONY_FLAGS, *extra, '-S', source, '-o', output]
-        result = subprocess.run(linux_command(runner, command, directory, include, source, output), capture_output=True, text=True, cwd=os.path.dirname(output))
+        result = subprocess.run(linux_command(runner, command, directory, include, source, output, os.path.dirname(output)), capture_output=True, text=True, cwd=os.path.dirname(output))
     else:
         if assembler == 'sony29':
             directory = SONY_COMPILER if os.path.isdir(os.path.join(SONY_COMPILER, 'bin')) else LEGACY_SONY_COMPILER
