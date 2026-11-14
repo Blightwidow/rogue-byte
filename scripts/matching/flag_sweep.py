@@ -38,6 +38,16 @@ VARIANTS = {
     'no-peephole': BASE + ['-fno-peephole'],
     'no-inline': BASE + ['-fno-inline'],
     'frame-pointer': BASE + ['-fno-omit-frame-pointer'],
+    # loop.c's hoisting threshold is 1 + the registers the allocator may use, and the vu0 flag family changes that count (docs/toolchain/loops.md)
+    'vf7': BASE + ['-mvu0-use-vf0-7'],
+    'vf15': BASE + ['-mvu0-use-vf0-15'],
+    'vf16': BASE + ['-mvu0-use-vf0-16'],
+    'vf30': BASE + ['-mvu0-use-vf0-30'],
+    'vf31': BASE + ['-mvu0-use-vf0-31'],
+    # the spelling sly1-decomp's notes use: measured 2026-11-14, vf30 and vf31 act like the numeric forms, vf1, vf5 and vf15 do nothing
+    'vfv30': BASE + ['-mvu0-use-vf0-vf30'],
+    'vfv31': BASE + ['-mvu0-use-vf0-vf31'],
+    'movables': BASE + ['-fmove-all-movables'],
 }
 
 
@@ -63,6 +73,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--jobs', type=int, default=12)
     parser.add_argument('--controls', type=int, default=300)
+    parser.add_argument('--variants', help='comma-separated names of VARIANTS to run (default all)')
     parser.add_argument('--out', default=os.path.join(ROOT, 'work', 'matching', 'flagsweep.tsv'))
     arguments = parser.parse_args()
     rows = {int(row['address'], 16): row for row in csv.DictReader(open(os.path.join(ROOT, 'data', 'matching', 'functions.tsv')), delimiter='\t')}
@@ -74,7 +85,7 @@ def main():
     done = set()
     if os.path.exists(arguments.out):
         done = {(int(line.split('\t')[0], 16), line.split('\t')[3]) for line in open(arguments.out) if line.strip()}
-    jobs = [(address, source_of(address, rows[address]), variant) for address, status in chosen for variant in VARIANTS if (address, variant) not in done]
+    jobs = [(address, source_of(address, rows[address]), variant) for address, status in chosen for variant in (arguments.variants.split(',') if arguments.variants else VARIANTS) if (address, variant) not in done]
     status_of = dict(chosen)
     os.makedirs(os.path.dirname(arguments.out), exist_ok=True)
     with open(arguments.out, 'a') as out, concurrent.futures.ThreadPoolExecutor(arguments.jobs) as pool:
