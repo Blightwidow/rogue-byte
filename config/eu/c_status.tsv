@@ -5244,6 +5244,7 @@ us_address	name	other_address	pair	score	addresses
 0x244848	sceMcFormat	0X245290	same	0	ok
 0x244918	sceMcDelete	0X245360	same	0	ok
 0x244A58	sceMcGetEntSpace	0X2454A0	same	0	ok
+0x244B68	atanf	0X2455B0	same	0	ok
 0x244E10	cosf	0X245858	same	0	ok
 0x244EF8	fabsf	0X245940	identical	0	ok
 0x244F18	floorf	0X245960	identical	0	ok
@@ -5257,7 +5258,9 @@ us_address	name	other_address	pair	score	addresses
 0x246060	sqrtf	0X246AA8	same	0	ok
 0x246300	__ieee754_pow	0X246D48	same	0	ok
 0x247330	__ieee754_acosf	0X247D78	same	0	ok
+0x247B00	__ieee754_atan2f	0X248548	same	0	ok
 0x2488C8	__ieee754_rem_pio2f	0X249310	same	0	ok
+0x248CA8	__ieee754_sqrtf	0X2496F0	identical	0	ok
 0x248DE0	__kernel_cosf	0X249828	identical	0	ok
 0x248F38	__kernel_rem_pio2f	0X249980	same	0	ok
 0x249888	__kernel_sinf	0X24A2D0	identical	0	ok

@@ -3,3 +3,6 @@
 # One address per line; listed once a source matches only with it. A Linux i386 build: Docker runs it on a Mac (docs/build/compiler-identification.md, "libm").
 0x247330
 0x249990
+0x248CA8
+0x247B00
+0x244B68
