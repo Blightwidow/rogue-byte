@@ -5258,6 +5258,7 @@ address	name	size	file	whole_file	symbol
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
 0X246300	__ieee754_pow	3368	sdk/__ieee754_pow.cpp		
 0X247330	__ieee754_acosf	1072	sdk/__ieee754_acosf.cpp		
+0X247760	__ieee754_asinf	924	sdk/__ieee754_asinf.cpp		
 0X247B00	__ieee754_atan2f	744	sdk/__ieee754_atan2f.cpp		
 0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
 0X248CA8	__ieee754_sqrtf	308	sdk/__ieee754_sqrtf.cpp		

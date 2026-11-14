@@ -5258,6 +5258,7 @@ us_address	name	other_address	pair	score	addresses
 0x246060	sqrtf	0X246AA8	same	0	ok
 0x246300	__ieee754_pow	0X246D48	same	0	ok
 0x247330	__ieee754_acosf	0X247D78	same	0	ok
+0x247760	__ieee754_asinf	0X2481A8	same	0	ok
 0x247B00	__ieee754_atan2f	0X248548	same	0	ok
 0x2488C8	__ieee754_rem_pio2f	0X249310	same	0	ok
 0x248CA8	__ieee754_sqrtf	0X2496F0	identical	0	ok
