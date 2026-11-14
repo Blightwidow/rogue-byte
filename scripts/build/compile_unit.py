@@ -274,16 +274,49 @@ def compile_sony_01(language, source, output, include=None, localize=True):
     source = os.path.abspath(source)
     temporary = os.path.abspath(output) + '.tmp'
     command = [os.path.join(directory, 'bin', 'ee-gcc'), '-x', language, f'-B{os.path.join(directory, "bin", "ee-")}', f'-I{include}', *SONY_FLAGS, '-c', source, '-o', temporary]
-    if not runner_is_docker(runner):
-        prefix = runner  # a host that runs the program, or a runner the caller gave
-    else:
-        mounts = []
-        for path in (ROOT, directory, include, os.path.dirname(source), os.path.dirname(temporary)):
-            if not any(path == mount or path.startswith(mount + os.sep) for mount in mounts):
-                mounts = [mount for mount in mounts if not mount.startswith(path + os.sep)] + [path]
-        prefix = [*runner, *[word for mount in mounts for word in ('-v', f'{mount}:{mount}')], '-w', ROOT, LINUX_IMAGE]
-    result = subprocess.run([*prefix, *command], capture_output=True, text=True)
+    result = subprocess.run(linux_command(runner, command, directory, include, source, temporary), capture_output=True, text=True)
     return finish_sony(result, temporary, output, localize)
+
+
+def linux_command(runner, command, directory, include, source, output):
+    """`command` (a Linux program) behind `runner`: as it is on a host that runs it, else in the container with the build's directories mounted at the same paths."""
+    if not runner_is_docker(runner):
+        return [*runner, *command]  # a host that runs the program, or a runner the caller gave
+    mounts = []
+    for path in (ROOT, directory, include, os.path.dirname(source), os.path.dirname(output)):
+        if not any(path == mount or path.startswith(mount + os.sep) for mount in mounts):
+            mounts = [mount for mount in mounts if not mount.startswith(path + os.sep)] + [path]
+    return [*runner, *[word for mount in mounts for word in ('-v', f'{mount}:{mount}')], '-w', ROOT, LINUX_IMAGE, *command]
+
+
+def compile_assembly(language, source, output, assembler=None, extra=(), vu0=False, movables=False, flags=()):
+    """The compiler's assembly (`-S`) for `source` in `output` with the build's compiler and flags plus `extra` (the register allocator's dumps, `-dl -dg -dp`, land
+    beside it): scripts/matching/regalloc.py reads them. Returns (ok, message). No INCLUDE_ASM expansion and no assembler run."""
+    source = os.path.abspath(source)
+    output = os.path.abspath(output)
+    include = os.path.join(ROOT, 'include')
+    if assembler == 'sony29-01':
+        directory, runner = sony_01_directory(), linux_runner()
+        if directory is None or runner is None:
+            return False, 'ee-gcc2.9-991111-01 is not installed or nothing runs it (start Docker, or set EE_LINUX_RUNNER)'
+        command = [os.path.join(directory, 'bin', 'ee-gcc'), '-x', language, f'-B{os.path.join(directory, "bin", "ee-")}', f'-I{include}', *SONY_FLAGS, *extra, '-S', source, '-o', output]
+        result = subprocess.run(linux_command(runner, command, directory, include, source, output), capture_output=True, text=True, cwd=os.path.dirname(output))
+    else:
+        if assembler == 'sony29':
+            directory = SONY_COMPILER if os.path.isdir(os.path.join(SONY_COMPILER, 'bin')) else LEGACY_SONY_COMPILER
+            options = SONY_FLAGS
+        else:
+            directory = compiler_directory()
+            if not vu0:
+                with open(source, encoding='utf-8', errors='replace') as handle:
+                    vu0 = includes_vu0_helpers(handle.read())
+            options = [*FLAGS, *([VU0_FLAG] if vu0 else []), *([MOVE_FLAG] if movables else []), *flags]
+        version = os.listdir(os.path.join(directory, 'lib', 'gcc-lib', 'ee'))[0]
+        result = subprocess.run([WIBO, os.path.join(directory, 'bin', 'ee-gcc.exe'), '-x', language, f'-B{os.path.join(directory, "lib", "gcc-lib", "ee", version)}/',
+                                 f'-I{include}', *options, *extra, '-S', source, '-o', output], capture_output=True, text=True, cwd=os.path.dirname(output))
+    if result.returncode or not os.path.exists(output):
+        return False, result.stderr or result.stdout
+    return True, ''
 
 
 def finish_sony(result, temporary, output, localize):

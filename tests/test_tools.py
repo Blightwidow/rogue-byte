@@ -273,6 +273,23 @@ class NonMatchingTests(unittest.TestCase):
         self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')
 
 
+class RegisterAllocationReportTests(unittest.TestCase):
+    def test_a_register_swap_is_classified_as_registers(self):
+        import regalloc
+        ours = [('00000001', 'addu a0,a1,a2'), ('00000002', 'jr ra')]
+        retail = [('00000003', 'addu v1,a1,a2'), ('00000002', 'jr ra')]
+        self.assertEqual(regalloc.classify(ours, retail), ('registers', 2, 2))
+
+    def test_the_same_words_are_exact(self):
+        import regalloc
+        rows = [('00000001', 'nop')]
+        self.assertEqual(regalloc.classify(rows, rows)[0], 'EXACT')
+
+    def test_other_instructions_are_code(self):
+        import regalloc
+        self.assertEqual(regalloc.classify([('1', 'nop')], [('2', 'jr ra')])[0], 'code')
+
+
 class CompileUnitTests(unittest.TestCase):
     def test_extern_lines_move_to_the_top(self):
         text = '\t.file 1 "a.c"\nfoo:\n\tlui $2,%hi(g)\n\t.extern g,4\n\t.extern h,8'
