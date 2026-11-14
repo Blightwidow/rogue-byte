@@ -273,6 +273,35 @@ class NonMatchingTests(unittest.TestCase):
         self.assertEqual(export_nonmatching.file_name('Foo::Bar'), 'Foo__Bar')
 
 
+class RegisterAllocationReportTests(unittest.TestCase):
+    def test_a_register_swap_is_classified_as_registers(self):
+        import regalloc
+        ours = [('00000001', 'addu a0,a1,a2'), ('00000002', 'jr ra')]
+        retail = [('00000003', 'addu v1,a1,a2'), ('00000002', 'jr ra')]
+        self.assertEqual(regalloc.classify(ours, retail), ('registers', 2, 2))
+
+    def test_the_same_words_are_exact(self):
+        import regalloc
+        rows = [('00000001', 'nop')]
+        self.assertEqual(regalloc.classify(rows, rows)[0], 'EXACT')
+
+    def test_other_instructions_are_code(self):
+        import regalloc
+        self.assertEqual(regalloc.classify([('1', 'nop')], [('2', 'jr ra')])[0], 'code')
+
+
+    def test_the_replay_tools_load_and_find_dumps_by_suffix(self):
+        import globalalloc
+        import regalloc
+        import sched1
+        self.assertTrue(callable(globalalloc.model_from_text) and callable(sched1.replay_function))
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(RuntimeError):
+                regalloc.dump(directory, 'lreg')
+            open(os.path.join(directory, 'unit.cc.lreg'), 'w').close()
+            self.assertEqual(regalloc.dump(directory, 'lreg').name, 'unit.cc.lreg')
+
+
 class CompileUnitTests(unittest.TestCase):
     def test_extern_lines_move_to_the_top(self):
         text = '\t.file 1 "a.c"\nfoo:\n\tlui $2,%hi(g)\n\t.extern g,4\n\t.extern h,8'
@@ -449,6 +478,34 @@ class MakeWholeFilesTests(unittest.TestCase):
 
     def test_only_the_sony_list_picks_another_assembler(self):
         self.assertIsNone(compile_unit.assembler_for(0xDEADBEEF))
+
+    def test_sony_01_list_picks_its_own_compiler(self):
+        listed = compile_unit.sony_01_functions()
+        self.assertTrue(listed)
+        for address in listed:
+            self.assertEqual(compile_unit.assembler_for(address), 'sony29-01')
+
+    def test_a_function_is_never_on_both_sony_lists(self):
+        self.assertFalse(compile_unit.sony_01_functions() & compile_unit.sony_functions())
+
+    def test_sony_01_without_a_runner_says_what_is_missing(self):
+        original = compile_unit.linux_runner
+        compile_unit.linux_runner = lambda: None
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                source = os.path.join(directory, 'f.cpp')
+                with open(source, 'w') as handle:
+                    handle.write('int f() { return 1; }\n')
+                ok, message = compile_unit.compile_object('c++', source, os.path.join(directory, 'f.o'), assembler='sony29-01')
+        finally:
+            compile_unit.linux_runner = original
+        self.assertFalse(ok)
+        self.assertRegex(message, r'EE_LINUX_RUNNER|not installed')
+
+    def test_a_docker_runner_is_recognised_and_an_override_is_not(self):
+        self.assertTrue(compile_unit.runner_is_docker(['/usr/bin/docker', 'run', '--rm']))
+        self.assertFalse(compile_unit.runner_is_docker([]))
+        self.assertFalse(compile_unit.runner_is_docker(['qemu-i386']))
 
     def test_sony_list_wins_over_every_other_list(self):
         listed = compile_unit.sony_functions()

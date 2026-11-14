@@ -7,7 +7,9 @@ make elf
 
 `setup.sh` checks the executable's SHA-1, copies it to `work/elf/`, creates `.venv` from `requirements.txt` and
 downloads the R5900 binutils into `tools/` (pinned SHA-256; Linux x86-64 and macOS arm64 builds; use WSL or Docker
-elsewhere). Nothing proprietary is stored in the repository.
+elsewhere). It also downloads Sony's ee-gcc 2.9-ee-991111-01 (pinned SHA-256), a Linux i386 build that compiles the libm functions that divide:
+x86 Linux runs it, a Mac needs Docker running (`scripts/build/compile_unit.py`, `EE_LINUX_RUNNER` for another runner). Without it those
+functions come from assembly and `make elf` still matches. Nothing proprietary is stored in the repository.
 
 `make elf` runs `configure.py --split`, ninja, `scripts/build/link_image.py` and `scripts/verify_image.py`:
 

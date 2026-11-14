@@ -21,7 +21,8 @@ Matching a function, recovering a name, fixing a tool and improving the docs all
 - **No game data.** No executables, disc images, Ghidra projects, raw decompiler output or disassembly. `.gitignore`
   keeps them local. Matched functions go in `src/` (`python3 scripts/matching/export_src.py` publishes them). Recovered names, addresses and types are fine.
 - **Derive the code yourself.** Work from the retail executable of your own disc and public hardware documentation. No code from
-  other decompilations or ports of this game and no third-party code; names, symbol maps and notes only from openly licensed projects
+  other decompilations or ports of this game and no third-party code, except [sly1-decomp](https://github.com/OpenThievius/sly1-decomp)
+  (same maintainers, AGPL-3.0) as a draft that must still match, recorded as `source:sly1-decomp` in the commit body; names, symbol maps and notes only from openly licensed projects
   listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Nothing from any prototype build, and never Sony's SDK source,
   samples or headers, or leaked or NDA material ([AGENTS.md](AGENTS.md)).
 - **Plain C++.** No inline assembly in functions (one shared `Sqrt` helper aside), no register pins, no tricks whose only purpose is

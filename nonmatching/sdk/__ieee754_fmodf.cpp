@@ -48,7 +48,7 @@ float __ieee754_fmodf(float x, float y) {
         hy = hy << n;
     }
     n = ix - iy;
-    while (n--) {
+    while (n-- > 0) {
         hz = hx - hy;
         if (hz < 0) {
             hx = hx + hx;
@@ -71,8 +71,8 @@ float __ieee754_fmodf(float x, float y) {
         iy -= 1;
     }
     if (iy >= -126) {
-        hx = hx - 0x00800000;
-        SET_FLOAT_WORD(x, hx | ((iy + 127) << 23) | sx);
+        hx = (hx - 0x00800000) | ((iy + 127) << 23);
+        SET_FLOAT_WORD(x, hx | sx);
     } else {
         n = -126 - iy;
         hx = hx >> n;

@@ -14,6 +14,7 @@ Everything here describes the retail executable; no game bytes.
 | `us/whole_files.tsv` | Whole source files proved from the constructor list: range and file under `src/` ([docs/ROADMAP.md](../docs/ROADMAP.md) "Next", item 2) |
 | `us/data_files.tsv` | Data defined in C, linked at retail's address: range and file under `src/` (item 3) |
 | `us/sony_gcc29.txt` | The SDK-range functions built with Sony's ee-gcc 2.9 ([docs/build/compiler-identification.md](../docs/build/compiler-identification.md)) |
+| `us/sony_gcc29_01.txt` | The libm functions that divide, built with Sony's ee-gcc 2.9-ee-991111-01 (a Linux build, run by Docker; [docs/build/compiler-identification.md](../docs/build/compiler-identification.md)) |
 | `us/move_movables.txt` | Functions compiled with `-fmove-all-movables` ([docs/contributing/exceptions.md](../docs/contributing/exceptions.md)) |
 | `us/vu0_regs.txt` | Functions compiled with `-mvu0-use-vf0-15`, for inline-asm VU0 operands |
 | `us/categories.json` | The categories of the objdiff report (`scripts/build/make_objdiff.py`) |

@@ -72,6 +72,26 @@ install_compiler() {
   fi
 }
 
+install_libm_compiler() {
+  # Sony's ee-gcc 2.9-ee-991111-01, which builds the libm functions that divide (config/us/sony_gcc29_01.txt): retail has nop; nop before every div.s there
+  # and only this build writes them (docs/build/compiler-identification.md). A Linux i386 program: x86 Linux runs it, a Mac needs Docker running
+  # (scripts/build/compile_unit.py linux_runner). Optional: without it those functions come from assembly and the image still matches.
+  local sha256=ed684fd98f89d36b0121caab311052089103e3b36241fcef4338cc9ea41c75b8 directory=tools/compilers/ee-gcc2.9-991111-01
+  [[ -f $directory/bin/ee-gcc ]] && return
+  mkdir -p "$directory"
+  if ! curl -fsSL -o tools/ee-gcc2.9-991111-01.tar.xz "https://github.com/decompme/compilers/releases/download/compilers/ee-gcc2.9-991111-01.tar.xz"; then
+    echo "warning: could not download ee-gcc2.9-991111-01; the libm functions that divide will come from assembly" >&2
+    rm -f tools/ee-gcc2.9-991111-01.tar.xz; return 0
+  fi
+  echo "$sha256  tools/ee-gcc2.9-991111-01.tar.xz" | shasum -a 256 -c - || { rm -f tools/ee-gcc2.9-991111-01.tar.xz; exit 1; }
+  tar -xJf tools/ee-gcc2.9-991111-01.tar.xz -C "$directory"
+  rm -f tools/ee-gcc2.9-991111-01.tar.xz
+  echo "ok: $directory (Linux i386: needs Docker on a Mac, see compile_unit.py)"
+  if [[ "$(uname -s)-$(uname -m)" != Linux-x86_64 ]] && ! command -v docker >/dev/null && [[ ! -x /Applications/Docker.app/Contents/Resources/bin/docker ]]; then
+    echo "note: no Docker found; those functions will come from assembly until it runs" >&2
+  fi
+}
+
 install_assembler() {
   # SN Systems' own assembler (ps2eeas 1.9.25.758), the one SN's ProDG driver runs. It puts the hazard nop after mtc1 only where the next
   # instruction reads the register, and pads short loops, as Sly 2's retail does. Retail pads them one nop less than this build does, so the
@@ -110,6 +130,7 @@ if [[ ! -x .venv/bin/python ]]; then
 fi
 install_binutils
 install_compiler
+install_libm_compiler
 install_assembler
 install_objdiff
 

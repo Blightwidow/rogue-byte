@@ -5244,6 +5244,7 @@ address	name	size	file	whole_file	symbol
 0X244848	sceMcFormat	204	sdk/sceMcFormat.cpp		
 0X244918	sceMcDelete	284	sdk/sceMcDelete.cpp		
 0X244A58	sceMcGetEntSpace	268	sdk/sceMcGetEntSpace.cpp		
+0X244B68	atanf	680	sdk/atanf.cpp		
 0X244E10	cosf	232	sdk/cosf.c		
 0X244EF8	fabsf	28	sdk/fabsf.c		
 0X244F18	floorf	228	sdk/floorf.cpp		
@@ -5256,10 +5257,15 @@ address	name	size	file	whole_file	symbol
 0X245B58	PowF_245b58	1288	sdk/PowF_245b58.c		
 0X246060	sqrtf	276	sdk/sqrtf.cpp		
 0X246300	__ieee754_pow	3368	sdk/__ieee754_pow.cpp		
+0X247330	__ieee754_acosf	1072	sdk/__ieee754_acosf.cpp		
+0X247760	__ieee754_asinf	924	sdk/__ieee754_asinf.cpp		
+0X247B00	__ieee754_atan2f	744	sdk/__ieee754_atan2f.cpp		
 0X2488C8	__ieee754_rem_pio2f	992	sdk/__ieee754_rem_pio2f.cpp		
+0X248CA8	__ieee754_sqrtf	308	sdk/__ieee754_sqrtf.cpp		
 0X248DE0	__kernel_cosf	344	sdk/__kernel_cosf.cpp		
 0X248F38	__kernel_rem_pio2f	2380	sdk/__kernel_rem_pio2f.c		
 0X249888	__kernel_sinf	260	sdk/__kernel_sinf.cpp		
+0X249990	__kernel_tanf	660	sdk/__kernel_tanf.cpp		
 0X249C28	fabs	52	sdk/fabs.cpp		
 0X249C60	func_00249C60	32	sdk/fun_00249c60.c		
 0X249C80	func_00249C80	56	sdk/fun_00249c80.cpp		

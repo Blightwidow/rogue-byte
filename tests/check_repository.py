@@ -7,7 +7,8 @@ CI runs it on every pull request. It looks at what git would commit (tracked fil
 needs no disc and no compiler.
 
 1. scripts/proprietary.py: no binaries, disc images, game data, generated assembly, toolchains, Sony SDK headers or banners.
-2. Every source file starts with the GPL-3.0-or-later SPDX line.
+2. Every source file starts with the GPL-3.0-or-later SPDX line (a file that keeps code from sly1-decomp, same maintainers, AGPL-3.0, may
+   start with the AGPL-3.0-or-later line and name sly1-decomp in its first lines: AGENTS.md "Rules", THIRD_PARTY_NOTICES.md).
 3. LICENSE is the GNU General Public License.
 """
 import re
@@ -23,6 +24,8 @@ import check_source  # noqa: E402
 INLINE_HEADERS = {'ps2inline.h', 'vu0inline.h'}
 
 SPDX = 'SPDX-License-Identifier: GPL-3.0-or-later'
+SPDX_AGPL = 'SPDX-License-Identifier: AGPL-3.0-or-later'
+AGPL_ORIGIN = 'sly1-decomp'
 NEEDS_SPDX = {'.py', '.sh', '.c', '.cpp', '.h', '.hpp', '.s', '.inc', '.ld'}
 # Reconstructed game code (src/, nonmatching/) and the data-like generated headers carry no tool header.
 EXEMPT = ('src/', 'nonmatching/', 'include/', 'data/', 'config/')
@@ -34,7 +37,8 @@ def main():
         path = ROOT / relative
         if relative.startswith(EXEMPT) or path.suffix not in NEEDS_SPDX:
             continue
-        if SPDX not in path.read_text(encoding='utf-8', errors='replace')[:400]:
+        head = path.read_text(encoding='utf-8', errors='replace')[:400]
+        if SPDX not in head and not (SPDX_AGPL in head and AGPL_ORIGIN in head):
             errors.append(f"{relative}: no '{SPDX}' line at the top")
     # game data defined in source (config/us/data_files.tsv): the marker on every definition, no dump in bytes or plain words
     # (docs/contributing/exceptions.md "Game data defined in source")

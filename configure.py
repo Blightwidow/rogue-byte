@@ -89,6 +89,16 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
     import compile_unit
     assembler_for = compile_unit.assembler_for
 
+    sony_01_missing = []
+
+    def buildable(address):
+        """False for a function of config/us/sony_gcc29_01.txt when nothing runs Sony's Linux gcc 2.9-ee-991111-01 (no Docker, no install): its object is left out, link_image.py
+        takes the function from assembly and the image still matches."""
+        if assembler_for(address) == 'sony29-01' and not compile_unit.sony_01_available():
+            sony_01_missing.append(address)
+            return False
+        return True
+
     def options(address):
         """The compile_unit.py options of a function: its compiler for the SDK range (config/us/sony_gcc29.txt) --vu0 (config/us/vu0_regs.txt) and --movables (config/us/move_movables.txt)."""
         return ' '.join(part for part in (f'--assembler {assembler_for(address)}' if assembler_for(address) else '', '--vu0' if compile_unit.vu0_for(address) else '', '--movables' if compile_unit.movables_for(address) else '', f"--flags='{' '.join(compile_unit.flags_for(address))}'" if compile_unit.flags_for(address) else '') if part)
@@ -104,6 +114,8 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             source = os.path.join('src', columns[3])
             unit = os.path.join('build', 'units', source[len('src/'):] + '.o')
             address = int(columns[0], 16)
+            if not buildable(address):
+                continue
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
                         variables={'assembler': options(address)})
             units.append(unit)
@@ -132,8 +144,12 @@ with open(os.path.join(ROOT, 'build.ninja'), 'w') as handle:
             source = os.path.join('nonmatching', line.rstrip('\n').split('\t')[3])
             unit = os.path.join('build', 'nonmatching', source[len('nonmatching/'):] + '.o')
             address = int(line.split('\t')[0], 16)
+            if not buildable(address):
+                continue
             ninja.build(unit, 'compile_c' if source.endswith('.c') else 'compile_cpp', source, implicit=['include/sly2.h', 'include/m2c_macros.h'],
                         variables={'assembler': options(address)})
             drafts.append(unit)
         ninja.build('nonmatching', 'phony', drafts)
+if sony_01_missing:
+    print(f'{len(set(sony_01_missing))} functions of config/us/sony_gcc29_01.txt come from assembly: Sony gcc 2.9-ee-991111-01 is not installed or nothing runs it (start Docker); the image still matches')
 print('wrote build.ninja')
