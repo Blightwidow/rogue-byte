@@ -885,6 +885,7 @@ us_address	name	other_address	pair	score	addresses
 0x1193C0	SetPlane	0X1193C0	gap	0	ok
 0x119488	bsp__static_initialization_and_destruction_0	0X119488	same	0	ok
 0x1195C0	func_001195C0	0X1195C0	identical	0	ok
+0x1195E0	CroutDecomp__FiPfT1	0X1195E0	identical	0	ok
 0x1198F8	CroutSolve__FiPfN21	0X1198F8	identical	0	ok
 0x119A68	StaticInitSlotheaps_119a68	0X119A68	same	0	ok
 0x119BA0	func_00119BA0	0X119BA0	identical	0	ok
@@ -2246,10 +2247,13 @@ us_address	name	other_address	pair	score	addresses
 0x16F148	func_0016F148	0X16F0D0	same	0	ok
 0x16F178	Blend__static_initialization_and_destruction_0	0X16F100	same	0	ok
 0x16F2B0	GlobalCtorBlend	0X16F238	same	0	ok
+0x16F2D0	BlendDisplayOnBufferMismatch__Fv	0X16F258	same	0	ok
+0x16F468	VBlankS_Interrupt__Fi	0X16F3F0	same	0	ok
 0x16F560	SyncVBlank__Fv	0X16F4E8	same	0	ok
 0x16F590	SwapGsBuffers__Fv	0X16F518	same	0	ok
 0x16F6B8	RestoreGsBuffers__Fv	0X16F640	same	0	ok
 0x16F788	GS_Interrupt__Fi	0X16F710	same	1	ok
+0x16F868	ResetGs__Fv	0X16F7F0	same	0	ok
 0x16F8B8	SendDmaSyncGsFinish__FP10sceDmaChanP2QW	0X16F840	same	0	ok
 0x16F960	BuildClearGifs__FP2QWG4RGBAi	0X16F8E8	same	2	ok
 0x16FAF8	BuildFbaGif	0X16FA80	same	0	ok
@@ -5152,14 +5156,17 @@ us_address	name	other_address	pair	score	addresses
 0x23BFE0	__floatdidf	0X23C9A0	same	0	ok
 0x23C078	__floatdisf	0X23CA38	same	0	ok
 0x23C820	func_0023C820	0X23D1E0	gap	0	ok
+0x23D468	func_0023D468	0X23DE28	identical	0	ok
 0x23D748	__adddf3	0X23E108	same	0	ok
 0x23D7A0	__subdf3	0X23E160	same	0	ok
+0x23DC18	func_0023DC18	0X23E5D8	identical	0	ok
 0x23DD30	dpcmp	0X23E6F0	same	0	ok
 0x23DD80	__floatsidf	0X23E740	same	0	ok
 0x23DE38	__fixdfsi	0X23E7F8	same	0	ok
 0x23DED0	func_0023DED0	0X23E890	same	0	ok
 0x23DF70	func_0023DF70	0X23E930	same	0	ok
 0x23DFA0	func_0023DFA0	0X23E960	same	0	ok
+0x23DFF8	func_0023DFF8	0X23E9B8	identical	0	ok
 0x23E108	func_0023E108	0X23EAC8	identical	0	ok
 0x23E1C8	func_0023E1C8	0X23EB88	same	0	ok
 0x23E260	func_0023E260	0X23EC20	same	0	ok
@@ -5387,6 +5394,7 @@ us_address	name	other_address	pair	score	addresses
 0x256B48	PpairNew	0X257598	same	0	ok
 0x256C38	PairHandle_Init	0X257688	identical	0	ok
 0x256C58	PairHandle_Assign	0X2576A8	same	0	ok
+0x256CE8	__8VU_FLOATf	0X257738	identical	0	ok
 0x256D08	__9VU_VECTORRC6VECTOR	0X257758	gap	0	ok
 0x256D18	__as__6VECTORG9VU_VECTOR	0X257768	gap	0	ok
 0x256D40	CPairPtr_Destructor	0X257790	same	0	ok

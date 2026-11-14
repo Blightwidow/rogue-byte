@@ -111,4 +111,11 @@ static inline void MemoryBarrier(void)
     asm volatile("sync");
 }
 
+/* ei: enable interrupts, volatile like sync so that it stays where it is. An interrupt handler ends with MemoryBarrier(); EnableInterrupts();
+   (sly1-decomp's SyncAndEnableInterrupts: ResetGs, VBlankS_Interrupt) */
+static inline void EnableInterrupts(void)
+{
+    asm volatile("ei");
+}
+
 #endif
