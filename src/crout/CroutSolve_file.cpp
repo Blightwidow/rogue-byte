@@ -4,9 +4,7 @@
 #include "m2c_macros.h"
 
 // source:sly1-decomp FactorSymmetricMatrix (src/main/symmetric_solve.cpp, AGPL-3.0, same maintainers), a draft that scores 0
-typedef int s32;
-
-typedef float f32;
+#include "types.h"
 
 void CroutDecomp(s32 n, f32* a, f32* l)
 {
