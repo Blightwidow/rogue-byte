@@ -199,8 +199,6 @@ address	name	size	file	score
 0X16CF78	LoadGlobIndexedFromBrx	1824	new_167320/LoadGlobIndexedFromBrx.cpp	159
 0X16E438	LoadGlobSkinnedFromBrx	1512	new_167320/LoadGlobSkinnedFromBrx.cpp	2
 0X16EA80	CloneGlobset	1152	new_167320/CloneGlobset.cpp	28
-0X16F2D0	BlendDisplayOnBufferMismatch__Fv	408	gs/BlendDisplayOnBufferMismatch__Fv.cpp	69
-0X16F868	ResetGs__Fv	80	gs/ResetGs__Fv.c	11
 0X170548	AllocZpr	264	new_170448/AllocZpr.cpp	20
 0X170E90	FindClosestScriptCmd	616	jsg-jt/FindClosestScriptCmd.c	108
 0X172018	UpdateSearchBeh	776	new_1715f0/UpdateSearchBeh.cpp	24
@@ -676,12 +674,9 @@ address	name	size	file	score
 0X23C7C0	__muldi3	96	sdk/__muldi3.c	17
 0X23C828	__udivdi3	1488	sdk/__udivdi3.c	32
 0X23D338	func_0023D338	304	sdk/fun_0023d338.cpp	83
-0X23D468	func_0023D468	160	sdk/fun_0023d468.cpp	23
 0X23D508	func_0023D508	576	sdk/fun_0023d508.cpp	27
 0X23D808	__muldf3	680	sdk/__muldf3.cpp	4
 0X23DAB0	func_0023DAB0	360	sdk/fun_0023dab0.c	68
-0X23DC18	func_0023DC18	280	sdk/fun_0023dc18.cpp	75
-0X23DFF8	func_0023DFF8	272	sdk/fun_0023dff8.cpp	89
 0X23E198	func_0023E198	48	sdk/fun_0023e198.cpp	10
 0X23E788	old_find_exception_handler	216	sdk/old_find_exception_handler.cpp	37
 0X23E860	find_exception_handler	328	sdk/find_exception_handler.c	70
@@ -744,7 +739,6 @@ address	name	size	file	score
 0X254CA0	InitIpu	568	sdk/InitIpu.c	30
 0X254EF0	func_00254EF0	16	sdk/fun_00254ef0.cpp	6
 0X256AF0	func_00256AF0	88	sdk/fun_00256af0.cpp	7
-0X256CE8	__8VU_FLOATf	32	splice-bif_256ce8/__8VU_FLOATf.cpp	6
 0X256D28	__ml__FG8VU_FLOATG9VU_VECTOR	24	splice-bif_256ce8/__ml__FG8VU_FLOATG9VU_VECTOR.c	4
 0X257510	SweepFrames	360	bis-memcard/SweepFrames.cpp	63
 0X257678	SweepVarbs	360	bis-memcard/SweepVarbs.cpp	32
