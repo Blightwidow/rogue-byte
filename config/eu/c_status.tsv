@@ -885,6 +885,7 @@ us_address	name	other_address	pair	score	addresses
 0x1193C0	SetPlane	0X1193C0	gap	0	ok
 0x119488	bsp__static_initialization_and_destruction_0	0X119488	same	0	ok
 0x1195C0	func_001195C0	0X1195C0	identical	0	ok
+0x1195E0	CroutDecomp__FiPfT1	0X1195E0	identical	0	ok
 0x1198F8	CroutSolve__FiPfN21	0X1198F8	identical	0	ok
 0x119A68	StaticInitSlotheaps_119a68	0X119A68	same	0	ok
 0x119BA0	func_00119BA0	0X119BA0	identical	0	ok

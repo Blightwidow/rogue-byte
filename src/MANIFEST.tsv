@@ -885,6 +885,7 @@ address	name	size	file	whole_file	symbol
 0X1193C0	SetPlane	12	bsp/CloneBspc_file.cpp	bsp/CloneBspc_file.cpp	SetPlane
 0X119488	bsp__static_initialization_and_destruction_0	308	bsp/CloneBspc_file.cpp	bsp/CloneBspc_file.cpp	bsp__static_initialization_and_destruction_0
 0X1195C0	func_001195C0	32	bsp/CloneBspc_file.cpp	bsp/CloneBspc_file.cpp	func_001195C0
+0X1195E0	CroutDecomp__FiPfT1	792	crout/CroutSolve_file.cpp	crout/CroutSolve_file.cpp	CroutDecomp
 0X1198F8	CroutSolve__FiPfN21	364	crout/CroutSolve_file.cpp	crout/CroutSolve_file.cpp	CroutSolve__FiPfN21
 0X119A68	StaticInitSlotheaps_119a68	308	crout/CroutSolve_file.cpp	crout/CroutSolve_file.cpp	StaticInitSlotheaps_119a68
 0X119BA0	func_00119BA0	32	crout/CroutSolve_file.cpp	crout/CroutSolve_file.cpp	func_00119BA0
